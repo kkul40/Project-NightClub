@@ -12,8 +12,13 @@ public class UISlot : MonoBehaviour
 
     private void OnValidate()
     {
-        textMeshPro.font = textStyleSo.FontAsset;
-        textMeshPro.fontSize = textStyleSo.FontSize;
+        if (textStyleSo)
+        {
+            textMeshPro.font = textStyleSo.FontAsset;
+            textMeshPro.fontSize = textStyleSo.FontSize;
+            
+        }
+            
     }
     
     public void SetUp(ItemSo itemSo)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 public class BuildingManager : MonoBehaviour
@@ -11,20 +10,24 @@ public class BuildingManager : MonoBehaviour
     public LayerMask placableLayers;
     public PropSo propSo;
     public Transform tempPropTransform;
-    
-    private MeshRenderer tempPropMesh;
+    private BoxCollider tempBoxCollider;
 
     // Helper
     private Quaternion lastRotation;
     public Vector3 extractOffset;
     public Vector3 spawnPos;
     
-    
     // Lerp Varriable
     public float duration = 0.5f;
     private float startTime = 0;
     private Vector3 snappedPos;
     private Vector3 lastPos;
+    
+    // Temp Varriable
+    private Vector3 hitSnappedPos;
+    private Transform hitTransform;
+    private Quaternion hitRotation;
+    private BoxCollider hitCollider;
     
     private void Awake()
     {
@@ -37,10 +40,6 @@ public class BuildingManager : MonoBehaviour
         
         var ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
-        var hitSnappedPos = Vector3.zero;
-        Transform hitTransform = new RectTransform();
-        BoxCollider hitCollider = new BoxCollider();
-        
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, placableLayers))
         {
@@ -51,7 +50,9 @@ public class BuildingManager : MonoBehaviour
             
             hitTransform = hitInfo.transform;
             hitSnappedPos = hitInfo.transform.position;
+            hitRotation = hitInfo.transform.rotation;
             hitCollider = hitInfo.transform.gameObject.GetComponent<BoxCollider>();
+            
 
             // Smooth Snapping
             if (tempPropTransform.position != hitSnappedPos)
@@ -77,18 +78,8 @@ public class BuildingManager : MonoBehaviour
         }
         else
         {
-            
+            // Out of Map Logic
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
         if (propSo == null) return;
         
@@ -102,7 +93,7 @@ public class BuildingManager : MonoBehaviour
                 }
                 break;
             case PlacableType.Wall:
-                tempPropTransform.rotation = hitInfo.transform.rotation;
+                tempPropTransform.rotation = hitRotation;
                 break;
         }
         
@@ -130,8 +121,7 @@ public class BuildingManager : MonoBehaviour
         Debug.Log(checkPos.position);
         
         
-        
-        var colliders = Physics.OverlapBox(checkPos.position, tempPropMesh.bounds.extents - extractOffset);
+        var colliders = Physics.OverlapBox(checkPos.position, tempBoxCollider.bounds.extents - extractOffset / 2);
         
         foreach (var hit in colliders) // Floor objeleri duvara tirmaniyor
         {
@@ -169,7 +159,7 @@ public class BuildingManager : MonoBehaviour
         this.propSo = propSo;
         tempPropTransform = Instantiate(this.propSo.Prefab, spawnPos, Quaternion.identity).transform;
         tempPropTransform.rotation = lastRotation;
-        tempPropMesh = tempPropTransform.GetComponent<MeshRenderer>();
+        tempBoxCollider = tempPropTransform.GetComponent<BoxCollider>();
     }
 
     private void DestroyTempPrefab()
@@ -183,13 +173,10 @@ public class BuildingManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // MeshRenderer meshRenderer = avaliablePlacingTransform.GetComponent<MeshRenderer>();
-        // if (meshRenderer != null)
-        // {
-        //     meshRenderer.material.color = Color.white;
-        //     Gizmos.DrawWireCube(meshRenderer.bounds.center, meshRenderer.bounds.size - extractOffset);
-        // }
-        //
-        
+        if (tempBoxCollider != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(tempBoxCollider.bounds.center, tempBoxCollider.bounds.size - extractOffset);
+        }
     }
 }

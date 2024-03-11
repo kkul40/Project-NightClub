@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b537692c24a864fbc4db4f1d51599f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textStyleSo: {fileID: 11400000, guid: aa8913dc3fc25354485c45836cf98e3f, type: 2}
   ItemSo: {fileID: 0}
-  textSo: {fileID: 11400000, guid: 74cb437695e0ce2459f05ed830c72e7a, type: 2}
   image: {fileID: 7687486555382714057}
   textMeshPro: {fileID: 5490302685624449183}
 --- !u!114 &2766407038787219817
