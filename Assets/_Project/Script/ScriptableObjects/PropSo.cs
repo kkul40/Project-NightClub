@@ -10,7 +10,6 @@ public class PropSo : ItemSo
 
     private void OnValidate()
     {
-        // Convert integer of an enum to layerMask
         placableLayer = 1 << (int)placableType;
     }
     
