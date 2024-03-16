@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -11,6 +13,7 @@ public class BuildingManager : MonoBehaviour
     public PropSo propSo;
     public Transform tempPropTransform;
     private BoxCollider tempBoxCollider;
+    private List<Material> tempMaterials;
 
     // Helper
     private Quaternion lastRotation;
@@ -41,7 +44,7 @@ public class BuildingManager : MonoBehaviour
         var ray = mainCam.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, placableLayers))
+        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, propSo.GetPlacableLayer()))
         {
             var hitPoint = hitInfo.point;
             // Duvar ustunu gormezden gelsin diye
@@ -72,13 +75,13 @@ public class BuildingManager : MonoBehaviour
             
             if (CanBePlacable(hitTransform) && Input.GetMouseButtonDown(0))
             {
-                PlaceObject(hitTransform.position, tempPropTransform.rotation);
+                PlaceObject(hitTransform, tempPropTransform.rotation);
                 return;
             }
         }
         else
         {
-            // Out of Map Logic
+            ChangeMaterialColor(Color.red);
         }
 
         if (propSo == null) return;
@@ -118,9 +121,6 @@ public class BuildingManager : MonoBehaviour
 
     private bool CanBePlacable(Transform checkPos)
     {
-        Debug.Log(checkPos.position);
-        
-        
         var colliders = Physics.OverlapBox(checkPos.position, tempBoxCollider.bounds.extents - extractOffset / 2);
         
         foreach (var hit in colliders) // Floor objeleri duvara tirmaniyor
@@ -128,21 +128,35 @@ public class BuildingManager : MonoBehaviour
             if (hit.gameObject == tempPropTransform.gameObject)
                 continue;
         
-            if (propSo.GetPlacableLayer != 1 << hit.gameObject.layer)
+            if (propSo.GetPlacableLayer() != 1 << hit.gameObject.layer)
             {
-                Debug.LogWarning("Nooo");
+                ChangeMaterialColor(Color.yellow);
                 return false;
             }
         }
         
-        Debug.LogWarning("Yess");
+        ChangeMaterialColor(Color.green);
         return true;
     }
-    
-    
-    private void PlaceObject(Vector3 placePos, Quaternion placeRotation)
+
+    protected void ChangeMaterialColor(Color color)
     {
-        Instantiate(propSo.Prefab, placePos, placeRotation);
+        if (tempMaterials.Count > 0)
+        {
+            if (tempMaterials[0].color == color) return;
+        }
+        else return;
+        
+        foreach (var material in tempMaterials)
+        {
+            material.color = color;
+        }
+    }
+
+
+    private void PlaceObject(Transform placePos, Quaternion placeRotation)
+    {
+        Instantiate(propSo.Prefab, placePos.position, placeRotation);
         DestroyTempPrefab();
         propSo = null;
     }
@@ -160,6 +174,7 @@ public class BuildingManager : MonoBehaviour
         tempPropTransform = Instantiate(this.propSo.Prefab, spawnPos, Quaternion.identity).transform;
         tempPropTransform.rotation = lastRotation;
         tempBoxCollider = tempPropTransform.GetComponent<BoxCollider>();
+        tempMaterials = tempPropTransform.GetComponent<MeshRenderer>().materials.ToList();
     }
 
     private void DestroyTempPrefab()

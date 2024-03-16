@@ -16,9 +16,7 @@ public class UISlot : MonoBehaviour
         {
             textMeshPro.font = textStyleSo.FontAsset;
             textMeshPro.fontSize = textStyleSo.FontSize;
-            
         }
-            
     }
     
     public void SetUp(ItemSo itemSo)
@@ -32,7 +30,7 @@ public class UISlot : MonoBehaviour
     {
         if (ItemSo is PropSo placableObjectSo)
         {
-            BuildingManager.instance.StartBuilding(placableObjectSo);
+            BuildingSystem.instance.StartPlacement(placableObjectSo);
         }
     }
 }

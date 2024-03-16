@@ -4,6 +4,7 @@
 public class PropSo : ItemSo
 {
     public GameObject Prefab;
+    public Vector2Int ObjectSize = Vector2Int.one;
     public PlacableType placableType;
 
     public LayerMask placableLayer;
@@ -13,5 +14,13 @@ public class PropSo : ItemSo
         placableLayer = 1 << (int)placableType;
     }
     
-    public LayerMask GetPlacableLayer => placableLayer;
+    public int GetPlacableLayer() => placableLayer;
+}
+
+public enum PropType
+{
+    Tile,
+    Wall,
+    Chair,
+    Table,
 }

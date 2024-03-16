@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   price: 0
   Prefab: {fileID: 0}
-  placableType: 0
+  placableType: 7
   placableLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 128
