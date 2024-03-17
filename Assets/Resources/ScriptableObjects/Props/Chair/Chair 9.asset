@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  Prefab: {fileID: 215136183336330695, guid: 4be074943f918404b88ec94ab7e51a5b, type: 3}
+  Prefab: {fileID: 5209896738583758021, guid: 67fd479151a60984c87ba8f0d96c01df, type: 3}
+  ObjectSize: {x: 1, y: 1}
   placableType: 7
   placableLayer:
     serializedVersion: 2

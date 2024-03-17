@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default Text
   m_EditorClassIdentifier: 
   FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  FontSize: 36
+  FontSize: 25
