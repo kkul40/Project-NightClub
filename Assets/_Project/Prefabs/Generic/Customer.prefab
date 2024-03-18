@@ -1433,6 +1433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6604356279042201939}
   - component: {fileID: 2089161871922913227}
+  - component: {fileID: 6604356278951084145}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -1469,6 +1470,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
+  speed: 0
+--- !u!195 &6604356278951084145
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604356279042201940}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.4
+  m_Speed: 1.5
+  m_Acceleration: 1.5
+  avoidancePriority: 1
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 0
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 0
 --- !u!1 &6831176944823288609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1791,6 +1815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcAnimationSo: {fileID: 11400000, guid: 0e2af1eab414f16459275b5c12d41b35, type: 2}
+  transitionDuration: 0.3
 --- !u!1 &8106909480321694754
 GameObject:
   m_ObjectHideFlags: 0

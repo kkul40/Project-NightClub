@@ -22,19 +22,32 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(test());
+        StartCoroutine(StartWalkingCoTest());
     }
-
+    private void Update()
+    {
+        if (!_navMeshAgent.hasPath)
+        {
+            _state = NpcState.Idle;
+        }
+        else
+        {
+            _state = NpcState.Walk;
+        }
+        _npcAnimationControl.PlayAnimation(_state);
+        // transform.position += transform.forward * Time.deltaTime * speed;
+    }
+    
+    
 
     [ContextMenu("Random Target")]
     public void SetRandomTarget()
     {
         target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count - 1)];
         _navMeshAgent.SetDestination(target);
-        _state = NpcState.Walk;
     }
 
-    IEnumerator test()
+    private IEnumerator StartWalkingCoTest()
     {
         yield return new WaitForSeconds(0.1f);
         SetRandomTarget();
@@ -43,21 +56,17 @@ public class NPC : MonoBehaviour
             Debug.Log(_navMeshAgent.hasPath);
             if (!_navMeshAgent.hasPath)
             {
-                _state = NpcState.Idle;
                 yield return new WaitForSeconds(2);
                 SetRandomTarget();
             }
             yield return new WaitForFixedUpdate();
         }
-    }
-    
-    
-    private void Update()
-    {
         
-        _npcAnimationControl.PlayAnimation(_state);
-        // transform.position += transform.forward * Time.deltaTime * speed;
+        yield break;
     }
+    
+    
+   
 }
 
 public enum NpcState
