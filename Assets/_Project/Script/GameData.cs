@@ -15,6 +15,7 @@ public class GameData : MonoBehaviour
 
     [Header("Data")] 
     public Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    public List<Prop> placedProps = new ();
     public List<Vector3> FloorMap;
 
     private void Awake()

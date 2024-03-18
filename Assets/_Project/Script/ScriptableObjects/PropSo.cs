@@ -24,4 +24,5 @@ public enum PropType
     Wall,
     Chair,
     Table,
+    Decoration,
 }

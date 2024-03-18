@@ -10,9 +10,11 @@ public class NPC : MonoBehaviour
     [SerializeField] private NpcState _state;
     private NPCAnimationControl _npcAnimationControl;
     public float speed;
-    
-    private NavMeshAgent _navMeshAgent;
+
+    public NavMeshAgent _navMeshAgent { get ; private set; }
     private Vector3 target;
+
+    private Activity currentActivity;
 
     private void Awake()
     {
@@ -22,24 +24,65 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartWalkingCoTest());
+        _state = NpcState.Idle;
     }
+
     private void Update()
     {
-        if (!_navMeshAgent.hasPath)
-        {
-            _state = NpcState.Idle;
-        }
-        else
-        {
-            _state = NpcState.Walk;
-        }
+        UpdateActivity();
+        
         _npcAnimationControl.PlayAnimation(_state);
-        // transform.position += transform.forward * Time.deltaTime * speed;
+        // Test
+    }
+
+    private void UpdateActivity()
+    {
+        if (currentActivity == null)
+        {
+            //TODO SImdilik Random
+            ChangeActivitiy(ActivitySystem.Instance.GetRandomActivity());
+            return;
+        }
+
+        if (currentActivity.isCanceled || currentActivity.isEnded)
+        {
+            ChangeActivitiy(ActivitySystem.Instance.GetRandomActivity());
+            return;
+        }
+
+        if (!currentActivity.isEnded)
+        {
+            currentActivity.UpdateActivity(this);
+        }
+    }
+
+    public void SetNewTarget(Vector3 targetPos)
+    {
+        _navMeshAgent.SetDestination(targetPos);
+        _state = NpcState.Walk;
+    }
+
+    public void ChangeState(NpcState newState)
+    {
+        _state = newState;
+    }
+
+    public void ChangeActivitiy(Activity newActivity)
+    {
+        if (newActivity == null) return;
+        
+        if (currentActivity == null)
+        {
+            currentActivity = newActivity;
+            currentActivity.StartActivity(this);
+            return;
+        }
+        
+        currentActivity.EndActivity(this);
+        currentActivity = newActivity;
+        currentActivity.StartActivity(this);
     }
     
-    
-
     [ContextMenu("Random Target")]
     public void SetRandomTarget()
     {
@@ -47,7 +90,7 @@ public class NPC : MonoBehaviour
         _navMeshAgent.SetDestination(target);
     }
 
-    private IEnumerator StartWalkingCoTest()
+    private IEnumerator StartRandomWalkingCo()
     {
         yield return new WaitForSeconds(0.1f);
         SetRandomTarget();
@@ -61,18 +104,15 @@ public class NPC : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
-        
-        yield break;
     }
-    
-    
-   
 }
+
 
 public enum NpcState
 {
     Idle,
     Walk,
+    WalkAround,
     Sit,
     Dance,
 }

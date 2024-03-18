@@ -9,7 +9,11 @@ public class Prop : MonoBehaviour
     {
         this.propSo = propSo;
         this.propPosition = propPos;
+        GameData.Instance.placedProps.Add(this);
     }
 
-    public Vector3 GetPropPositionVector3Int() => propPosition;
+    public Vector3 GetPropPosition() => propPosition;
+
+    public Quaternion GetPropRotation() => transform.rotation;
+    public PropSo GetPropSo() => propSo;
 }

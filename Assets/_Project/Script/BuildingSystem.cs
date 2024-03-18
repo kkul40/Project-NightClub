@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using _Project.Script.NewSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +13,8 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private TileIndicator tileIndicator;
     [SerializeField] private Material redPlacement;
     [SerializeField] private Material bluePlacement;
+    [Tooltip("Placable Object Move Speed")]
+    [SerializeField] private float objectMoveSpeedMultiplier;
     private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
     
 
@@ -49,7 +50,8 @@ public class BuildingSystem : MonoBehaviour
         switch (placingType)
         {
             case PlacingType.Place:
-                temp_object.transform.position = _grid.GetCellCenterWorld(cellPos) + placingOffset;
+                var nextPlacableGridPos = _grid.GetCellCenterWorld(cellPos) + placingOffset;
+                temp_object.transform.position = Vector3.Lerp(temp_object.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier); 
 
                 // Her Yeni Cell Secildiginde calisacak
                 if (lastCell != cellPos)
@@ -59,6 +61,7 @@ public class BuildingSystem : MonoBehaviour
                 //TODO Inputlari Input Syteme Tasi
                 if (ValidatePosition(cellPos, temp_propSo.ObjectSize) && leftClickPressed)
                 {
+                    temp_object.transform.position = nextPlacableGridPos;
                     Place(cellPos);
                     break;
                 }
