@@ -9,9 +9,10 @@ public class NPC : MonoBehaviour
 {
     [SerializeField] private NpcState _state;
     private NPCAnimationControl _npcAnimationControl;
+    public float speed;
+    
     private NavMeshAgent _navMeshAgent;
     private Vector3 target;
-    public float speed;
 
     private void Awake()
     {
@@ -21,27 +22,40 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SetTarget());
+        StartCoroutine(test());
     }
 
-    private IEnumerator SetTarget()
+
+    [ContextMenu("Random Target")]
+    public void SetRandomTarget()
     {
-        yield return new WaitForSeconds(0.5f);
+        target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count - 1)];
+        _navMeshAgent.SetDestination(target);
+        _state = NpcState.Walk;
+    }
+
+    IEnumerator test()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SetRandomTarget();
         while (true)
         {
-            if (_navMeshAgent.remainingDistance < 0.1f)
+            Debug.Log(_navMeshAgent.hasPath);
+            if (!_navMeshAgent.hasPath)
             {
-                target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count - 1)];
-                _navMeshAgent.SetDestination(target);
+                _state = NpcState.Idle;
+                yield return new WaitForSeconds(2);
+                SetRandomTarget();
             }
+            yield return new WaitForFixedUpdate();
         }
     }
     
     
     private void Update()
     {
+        
         _npcAnimationControl.PlayAnimation(_state);
-
         // transform.position += transform.forward * Time.deltaTime * speed;
     }
 }

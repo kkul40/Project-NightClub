@@ -12,7 +12,7 @@ public class GameData : MonoBehaviour
 
     [Header("Data")] 
     public Dictionary<Vector3Int, PlacementData> placedObjects = new();
-    public List<Vector3Int> FloorMap;
+    public List<Vector3> FloorMap;
 
     private void Awake()
     {
@@ -29,13 +29,13 @@ public class GameData : MonoBehaviour
         int xMax = initialMapSize.x;
         int zMax = initialMapSize.z;
         
+        Vector3 offset = floorTileHolder.transform.position; // 0.5f, 0, 0.5f
         for (int i = 0; i < xMax; i++)
         {
             for (int j = 0; j < zMax; j++)
             {
-                Vector3Int pos = new Vector3Int(i, 0, j);
-                Vector3 offset = floorTileHolder.transform.position; // 0.5f, 0, 0.5f
-                var newObject = Instantiate(floorTilePrefab, pos + offset, Quaternion.identity);
+                Vector3 pos = new Vector3Int(i, 0, j) + offset;
+                var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
                 newObject.transform.SetParent(floorTileHolder);
                 FloorMap.Add(pos);
             }

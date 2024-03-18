@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
   m_Name: Default NPC
   m_EditorClassIdentifier: 
+  <Idle>k__BackingField: {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
+  <Walk>k__BackingField: {fileID: 7400000, guid: 53a89e9ddf7958347ac638335daa68a0, type: 2}
+  <Sit>k__BackingField: {fileID: 7400000, guid: 433f14cee6a331a47b03823cc11b9149, type: 2}
+  <Dance>k__BackingField: {fileID: 7400000, guid: a94861d93b9ecce44a8a45b9c8206d99, type: 2}
+  <Debug>k__BackingField: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}

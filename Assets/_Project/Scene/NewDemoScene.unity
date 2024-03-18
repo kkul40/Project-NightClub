@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 5c9ffc3708ead75499852c2367a9ff2f, type: 2}
 --- !u!4 &27856215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2418783031515046750, guid: 9bd05772a7539064596ab72d9fce5114, type: 3}
@@ -3415,7 +3415,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &1206130773
 MeshCollider:
@@ -5531,6 +5531,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1596686418422915085, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
+      propertyPath: transitionDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6604356279042201939, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -5579,5 +5583,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Customer
       objectReference: {fileID: 0}
+    - target: {fileID: 8634227184986101770, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
+--- !u!1 &6604356278951084144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
+  m_PrefabInstance: {fileID: 6604356278951084143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &6604356278951084145
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604356278951084144}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.4
+  m_Speed: 1.5
+  m_Acceleration: 1.5
+  avoidancePriority: 1
+  m_AngularSpeed: 360
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 0
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 0
