@@ -23,7 +23,6 @@ public class DinnerActivity : Activity
     {
         if (isCanceled) return;
         
-        Debug.Log("Dinner Activity Start");
         chairProp = GetAvaliablePropByType<Chair>(npc);
         
         if (chairProp == null || chairProp.IsOccupied)
@@ -41,7 +40,6 @@ public class DinnerActivity : Activity
         if (isCanceled) return;
         
         //TODO Use DinnerState here
-        Debug.Log("Dinner Activity Update");
         switch (_dinnerState)
         {
             case DinnerState.None:

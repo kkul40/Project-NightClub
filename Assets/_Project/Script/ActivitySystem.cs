@@ -24,7 +24,7 @@ public class ActivitySystem : MonoBehaviour
         if (_activities.Count <= 0)
         {
             Debug.LogError("No Activities Added To The List");
-            return new EmptyActivity();
+            return new NoneActivity();
         }
 
         Activity tempActivity = _activities[Random.Range(0, _activities.Count - 1)];
@@ -34,6 +34,6 @@ public class ActivitySystem : MonoBehaviour
             return new DinnerActivity();
         }
 
-        return new EmptyActivity();
+        return new NoneActivity();
     }
 }

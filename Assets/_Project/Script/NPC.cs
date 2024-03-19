@@ -31,8 +31,6 @@ public class NPC : MonoBehaviour
     {
         UpdateActivity();
         
-        Debug.Log(_state.ToString());
-        
         _npcAnimationControl.PlayAnimation(_state);
         // Test
     }

@@ -1,4 +1,4 @@
-﻿public class EmptyActivity : Activity
+﻿public class NoneActivity : Activity
 {
     public override bool isEnded { get; protected set; }
     public override bool isCanceled { get; protected set; }

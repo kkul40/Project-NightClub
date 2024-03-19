@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Prop")]
 public class PropSo : ItemSo
 {
-    public PropType PropType;
     public GameObject Prefab;
     public Vector2Int ObjectSize = Vector2Int.one;
-    public PlacableType placableType;
+}
 
-    public LayerMask placableLayer;
 
-    private void OnValidate()
-    {
-        placableLayer = 1 << (int)placableType;
-    }
-    
-    public int GetPlacableLayer() => placableLayer;
+[CreateAssetMenu(fileName = "New FloorProp")]
+public class FloorPropSo : PropSo
+{
+    public PropType PropType;
 }
 
 public enum PropType
@@ -26,3 +21,4 @@ public enum PropType
     Table,
     Decoration,
 }
+

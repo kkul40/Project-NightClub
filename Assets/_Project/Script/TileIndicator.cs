@@ -1,3 +1,5 @@
+using System;
+using _Project.Script.NewSystem;
 using UnityEngine;
 
 public class TileIndicator : MonoBehaviour
@@ -6,7 +8,12 @@ public class TileIndicator : MonoBehaviour
     [SerializeField] private GameObject removingTileIndicator;
 
     private bool isDirty = true;
-    
+
+    private void Start()
+    {
+        CloseTileIndicator();
+    }
+
     public void SetTileIndicator(PlacingType placingType)
     {
         CloseTileIndicator();
@@ -19,7 +26,6 @@ public class TileIndicator : MonoBehaviour
                 removingTileIndicator.SetActive(true);
                 break;
         }
-
         isDirty = true;
     }
 

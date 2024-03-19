@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace _Project.Script.NewSystem
 {
@@ -11,12 +12,12 @@ namespace _Project.Script.NewSystem
 
         [SerializeField] private LayerMask placementLayer;
         [SerializeField] private LayerMask groundLayer;
-
+        
         public event Action OnClicked, OnExit;
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 OnClicked?.Invoke();
             }
