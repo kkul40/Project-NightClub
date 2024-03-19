@@ -139,8 +139,16 @@ public class BuildingSystem : MonoBehaviour
         newObject.transform.SetParent(propHolder);
         GameData.Instance.placedObjects.Add(cellPos, new PlacementData(temp_propSo, newObject));
 
-        Prop newProp = newObject.AddComponent<Prop>();
-        newProp.Initialize(temp_propSo,temp_object.transform.position);
+        if (newObject.TryGetComponent(out Prop prop))
+        {
+            prop.Initialize(temp_propSo, temp_object.transform.position);
+        }
+        else
+        {
+            // TODO Buna daha sonra bak ama silme
+            // Prop newProp = newObject.AddComponent<Prop>();
+            // newProp.Initialize(temp_propSo,temp_object.transform.position);
+        }
         
         StopPlacement();
     }

@@ -13,7 +13,6 @@ public class Prop : MonoBehaviour
     }
 
     public Vector3 GetPropPosition() => propPosition;
-
     public Quaternion GetPropRotation() => transform.rotation;
     public PropSo GetPropSo() => propSo;
 }

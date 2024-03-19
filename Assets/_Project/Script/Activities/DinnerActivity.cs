@@ -7,13 +7,13 @@ public class DinnerActivity : Activity
     private enum DinnerState
     {
         None,
-        Waiting,
+        Sitting,
         Eating,
         Drinking,
     }
     
-    private Prop prop;
-    private Vector3 positionBeforeSit = Vector3.one;
+    private Chair chairProp;
+    private Vector3 positionBeforeSit = -Vector3.one;
     private DinnerState _dinnerState = DinnerState.None;
 
     public override bool isEnded { get; protected set; }
@@ -24,15 +24,16 @@ public class DinnerActivity : Activity
         if (isCanceled) return;
         
         Debug.Log("Dinner Activity Start");
-        prop = GetClosestPropByType(PropType.Chair, npc);
+        chairProp = GetAvaliablePropByType<Chair>(npc);
         
-        if (prop == null)
+        if (chairProp == null || chairProp.IsOccupied)
         {
             isCanceled = true;
-            npc.ChangeActivitiy(new EmptyActivity());
             return;
         }
-        npc.SetNewTarget(prop.GetPropPosition());
+        
+        npc.SetNewTarget(chairProp.GetPropPosition());
+        chairProp.IsOccupied = true;
     }
 
     public override void UpdateActivity(NPC npc)
@@ -41,24 +42,23 @@ public class DinnerActivity : Activity
         
         //TODO Use DinnerState here
         Debug.Log("Dinner Activity Update");
-
         switch (_dinnerState)
         {
             case DinnerState.None:
-                var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
+                var distance = Vector3.Distance(npc.transform.position, chairProp.GetPropPosition());
                 if (distance < 0.74f)
                 {
                     //Deactivate Navmesh
                     //Sit
                     positionBeforeSit = npc.transform.position;
                     npc._navMeshAgent.enabled = false;
-                    npc.transform.position = prop.GetPropPosition();
-                    npc.transform.rotation = prop.GetPropRotation();
+                    npc.transform.position = chairProp.GetItOccupied();
+                    npc.transform.rotation = chairProp.GetPropRotation();
                     npc.ChangeState(NpcState.Sit);
-                    _dinnerState = DinnerState.Waiting;
+                    _dinnerState = DinnerState.Sitting;
                 }
                 break;
-            case DinnerState.Waiting:
+            case DinnerState.Sitting:
                 // Waiting logic here
                 break;
             case DinnerState.Eating:
@@ -78,6 +78,7 @@ public class DinnerActivity : Activity
         npc.ChangeState(NpcState.Idle);
         npc._navMeshAgent.enabled = true;
         npc.transform.position = positionBeforeSit;
+        chairProp.IsOccupied = false;
         isEnded = true;
     }
 }

@@ -31,6 +31,8 @@ public class NPC : MonoBehaviour
     {
         UpdateActivity();
         
+        Debug.Log(_state.ToString());
+        
         _npcAnimationControl.PlayAnimation(_state);
         // Test
     }
@@ -112,7 +114,6 @@ public enum NpcState
 {
     Idle,
     Walk,
-    WalkAround,
     Sit,
     Dance,
 }

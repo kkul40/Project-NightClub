@@ -15,7 +15,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   price: 0
   PropType: 2
-  Prefab: {fileID: 5379628326374846942, guid: 88c4eb7c729418d44a25f1672d9dcae2, type: 3}
+  Prefab: {fileID: 7199139198368273009, guid: e5d8bd9bd8ed2124dab484d3154bb05f, type: 3}
   ObjectSize: {x: 1, y: 1}
   placableType: 7
   placableLayer:

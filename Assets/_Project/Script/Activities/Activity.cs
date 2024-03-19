@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -11,33 +12,40 @@ public abstract class Activity
     public abstract void UpdateActivity(NPC npc);
     public abstract void EndActivity(NPC npc);
 
-    protected Prop GetClosestPropByType(PropType propType, NPC npc)
+    protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
     {
         if (GameData.Instance.placedProps.Count <= 0)
         {
             // Debug.LogWarning("Yerlestirilmis Prop Bulunamadi!");
             return null;
         }
-        
+
         float lastDistance = 9999;
-        Prop closestProp = null;
+        T closestProp = null;
         foreach (var prop in GameData.Instance.placedProps)
         {
-            if (prop.GetPropSo().PropType != propType) continue;
-
-            var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
-            if (distance < lastDistance)
+            if (prop.transform.TryGetComponent(out IOccupieable occupieable))
             {
-                closestProp = prop;
-                lastDistance = distance;
+                if(occupieable.IsOccupied) continue;
+            }
+            
+            if (prop is T propType)
+            {
+                var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
+                if (distance < lastDistance)
+                {
+                    closestProp = propType;
+                    lastDistance = distance;
+                }
             }
         }
+
         if (closestProp == null)
         {
-            Debug.LogWarning(propType.ToString() + " Turunde Prop Ogesi Bulunamadi!");
+            Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
             return null;
         }
-        
+
         return closestProp;
     }
 }
