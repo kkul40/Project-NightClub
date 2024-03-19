@@ -49,8 +49,7 @@ public class BuildingSystem : MonoBehaviour
     
     public void StartPlacement(PropSo propSo)
     {
-        if (currentPlacer != null)
-            currentPlacer.StopPlacing();
+        StopPlacerAndRemover();
         
         currentPlacer = transform.GetComponent<Placer>();
         currentPlacer.StartPlacing(propSo);
@@ -66,13 +65,20 @@ public class BuildingSystem : MonoBehaviour
 
         return cellPos;
     }
-    
+
+    private void StopPlacerAndRemover()
+    {
+        if (currentPlacer != null)
+            currentPlacer.StopPlacing();
+        
+        if (currentRemover != null)
+            currentRemover.StopRemoving();
+    }
     
     // IRemover Section
     public void StartRemoving()
     {
-        if (currentRemover != null)
-            currentRemover.StopRemoving();
+        StopPlacerAndRemover();
 
         currentRemover = transform.GetComponent<Remover>();
         currentRemover.StartRemoving();

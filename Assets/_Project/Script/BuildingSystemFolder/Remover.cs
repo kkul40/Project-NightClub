@@ -25,10 +25,9 @@ namespace _Project.Script.NewSystem
 
             SetMaterial(placedObject);
 
-            if (placedObject == null) return;
             if (Input.GetMouseButtonDown(0))
             {
-                if (placedObject.transform.TryGetComponent(out IOccupieable occupieable))
+                if (placedObject != null && placedObject.transform.TryGetComponent(out IOccupieable occupieable))
                 {
                     if (occupieable.IsOccupied)
                     {
@@ -38,11 +37,28 @@ namespace _Project.Script.NewSystem
                     RemovePlacedObject(cellPos, placedObject);
                 }
             }
+            
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                StopRemoving();
+            }
         }
 
         protected virtual void SetMaterial(GameObject placedObject)
         {
-            //TODO Daha sonra bak
+            // Hiraeth Yardimlariyla
+            if (selectedMeshRenderer != null)
+            {
+                selectedMeshRenderer.material = defaultMaterial;
+                selectedMeshRenderer = null;
+            }
+
+            if (placedObject != null)
+            {
+                selectedMeshRenderer = placedObject.GetComponent<MeshRenderer>();
+                defaultMaterial = selectedMeshRenderer.material;
+                selectedMeshRenderer.material = yellowRemover;
+            }            
         }
 
         private GameObject GetPlacedObjectFromTile(Vector3Int cellPos)
