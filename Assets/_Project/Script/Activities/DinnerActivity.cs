@@ -52,7 +52,7 @@ public class DinnerActivity : Activity
                     //Sit
                     positionBeforeSit = npc.transform.position;
                     npc._navMeshAgent.enabled = false;
-                    npc.transform.position = chairProp.GetItOccupied();
+                    npc.transform.position = chairProp.GetItOccupied(npc);
                     npc.transform.rotation = chairProp.GetPropRotation();
                     npc.ChangeState(NpcState.Sit);
                     _dinnerState = DinnerState.Sitting;
