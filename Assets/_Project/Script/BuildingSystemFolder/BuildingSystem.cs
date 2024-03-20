@@ -71,7 +71,7 @@ public class BuildingSystem : MonoBehaviour
     {
         var mousePos = inputSystem.GetMouseMapPosition();
         Vector3Int cellPos = grid.WorldToCell(mousePos);
-        
+
         tileIndicator.SetPosition(grid.CellToWorld(cellPos));
 
         return cellPos;

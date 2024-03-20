@@ -7745,6 +7745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placedProps: []
   FloorMap: []
+  Test: []
   WallMap: []
 --- !u!1 &1466197924
 GameObject:

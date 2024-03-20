@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Script.NewSystem;
 using UnityEngine;
 
 public class MapSystem : MonoBehaviour
@@ -40,23 +41,25 @@ public class MapSystem : MonoBehaviour
                     if (i == wallDoorIndex)
                     {
                         var newWallDoorObject = Instantiate(wallDoorPrefab, pos2, Quaternion.identity);
+                        Wall newWall = newWallDoorObject.AddComponent<Wall>();
                         newWallDoorObject.transform.SetParent(wallHolder);
-                        GameData.Instance.WallMap.Add(pos2);
+                        GameData.Instance.WallMap.Add(newWall);
                     }
                     else
                     {
                         var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
+                        Wall newWall = newWallObject.AddComponent<Wall>();
                         newWallObject.transform.SetParent(wallHolder);
-                        GameData.Instance.WallMap.Add(pos2);
-
+                        GameData.Instance.WallMap.Add(newWall);
                     }
                 }
                 if (i == 0)
                 {
                     Vector3 pos2 = new Vector3(0, 0, j + 1);
                     var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0,90,0));
+                    Wall newWall = newWallObject.AddComponent<Wall>();
                     newWallObject.transform.SetParent(wallHolder);
-                    GameData.Instance.WallMap.Add(pos2);
+                    GameData.Instance.WallMap.Add(newWall);
                 }
                 
             }

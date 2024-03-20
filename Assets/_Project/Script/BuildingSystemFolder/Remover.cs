@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _Project.Script.NewSystem
 {
@@ -32,14 +33,23 @@ namespace _Project.Script.NewSystem
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (placedObject != null && placedObject.transform.TryGetComponent(out IOccupieable occupieable))
+                if (placedObject != null)
                 {
-                    if (occupieable.IsOccupied)
+                    if (placedObject.transform.TryGetComponent(out IOccupieable occupieable))
                     {
-                        Debug.LogError("This Object Is Occupied Do Not Remove");
-                        return;
+                        if (occupieable.IsOccupied)
+                        {
+                            Debug.LogError("This Object Is Occupied Do Not Remove");
+                        }
+                        else
+                        {
+                            RemovePlacedObject(cellPos, placedObject);
+                        }
                     }
-                    RemovePlacedObject(cellPos, placedObject);
+                    else
+                    {
+                        RemovePlacedObject(cellPos, placedObject);
+                    }
                 }
             }
             

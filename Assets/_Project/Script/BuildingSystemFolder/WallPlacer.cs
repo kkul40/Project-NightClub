@@ -23,8 +23,6 @@ namespace _Project.Script.NewSystem
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
 
-        private Transform closestWall;
-        
         public void Setup(PlacablePropSo placablePropSo)
         {
             _placablePropSo = placablePropSo;
@@ -47,9 +45,10 @@ namespace _Project.Script.NewSystem
         public void TryPlacing()
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
+            Vector3Int offset = Vector3Int.up * new Vector3Int(0, cellPos.z, 0);
             
-            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(cellPos));
-            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos) + Vector3Int.right * cellPos;
+            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(cellPos)) + offset;
+            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos);
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
             
@@ -73,8 +72,7 @@ namespace _Project.Script.NewSystem
 
         public void TryRotating()
         {
-            var rotation = Quaternion.identity;
-            tempPrefab.transform.rotation = rotation;
+            tempPrefab.transform.rotation = lastRotation;
         }
 
         private Vector3Int GetClosestWall(Vector3Int cellPos)
@@ -83,12 +81,13 @@ namespace _Project.Script.NewSystem
             
             float lastDis = 9999;
             Vector3 closestWall = Vector3.zero;
-            foreach (var pos in GameData.Instance.GetWallMapPosList())
+            foreach(var pos in GameData.Instance.GetWallMapPosList())
             {
-                var dis = Vector3.Distance(newCellPos, pos);
+                var dis = Vector3.Distance(newCellPos, pos.transform.position);
                 if (dis < lastDis)
                 {
-                    closestWall = pos;
+                    closestWall = pos.transform.position;
+                    lastRotation = pos.transform.localRotation;
                     lastDis = dis;
                 }
             }

@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using _Project.Script.NewSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 public class GameData : MonoBehaviour
@@ -10,11 +13,21 @@ public class GameData : MonoBehaviour
     [Header("Data")]
     public List<Prop> placedProps = new ();
     public List<Vector3> FloorMap = new ();
-    public List<Vector3> WallMap = new();
+    public List<Vector3> Test = new ();
+    public List<Wall> WallMap = new();
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Update()
+    {
+        Test.Clear();
+        foreach (var t in placementDatas)
+        {
+            Test.Add(t.Key);
+        }
     }
 
     public bool ValidatePosition(Vector3Int cellPos, Vector2Int objectSize)
@@ -49,7 +62,7 @@ public class GameData : MonoBehaviour
         return ValidatePosition(cellPos, Vector2Int.one);
     }
 
-    public List<Vector3> GetWallMapPosList() => WallMap;
+    public List<Wall> GetWallMapPosList() => WallMap;
 }
 
 public class PlacementData
