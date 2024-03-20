@@ -49,7 +49,7 @@ namespace _Project.Script.NewSystem
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             
             var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(cellPos));
-            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos);
+            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos) + Vector3Int.right * cellPos;
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
             

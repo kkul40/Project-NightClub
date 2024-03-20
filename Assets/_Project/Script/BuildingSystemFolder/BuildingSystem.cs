@@ -38,6 +38,15 @@ public class BuildingSystem : MonoBehaviour
     public void StartPlacement(PlacablePropSo placablePropSo)
     {
         StopBuild();
+
+        if (placablePropSo != null)
+        {
+            if (placablePropSo.Prefab == null)
+            {
+                Debug.LogWarning("PlacablePropSo is Not Valid");
+                return;
+            }
+        }
         
         switch (placablePropSo.placementType)
         {
