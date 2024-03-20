@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd310f167114279b73fab96d32f25ca, type: 3}
-  m_Name: Led Screen 2
+  m_Name: Art Frame 1
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  PropType: 4
-  Prefab: {fileID: 919132149155446097, guid: 7d230775e14319c4ea80c2351d10a8e3, type: 3}
+  <Prefab>k__BackingField: {fileID: 7104064598758118830, guid: 7eeaf5d28beb1ed429a60493c7f5f46d, type: 3}
   ObjectSize: {x: 1, y: 1}
-  placableType: 8
-  placableLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  placementType: 1

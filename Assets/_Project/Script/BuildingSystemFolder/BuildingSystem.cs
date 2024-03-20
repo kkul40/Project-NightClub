@@ -7,12 +7,15 @@ using UnityEngine.EventSystems;
 public class BuildingSystem : MonoBehaviour
 {
     public static BuildingSystem Instance;
+    
+    [SerializeField] private InputSystem inputSystem;
+    [SerializeField] private Grid grid;
+    
+    
     [SerializeField] private PlacingType placingType;
     [SerializeField] private TileIndicator tileIndicator;
 
-    
-    [SerializeField] private IPlacer currentPlacer;
-    [SerializeField] private IRemover currentRemover;
+    private IBuild currentBuild = null;
 
     private void Awake()
     {
@@ -22,85 +25,82 @@ public class BuildingSystem : MonoBehaviour
 
     private void Update()
     {
-        UpdatePlacer();
-        UpdateRemover();
-    }
-
-    private void UpdateRemover()
-    {
-        if (currentRemover == null) return;
-        currentRemover.TryRemoving();
-    }
-
-    private void UpdatePlacer()
-    {
-        if (currentPlacer == null) return;
-        
-        currentPlacer.TryRotating();
-        currentPlacer.TryPlacing();
+        if(currentBuild != null) 
+            currentBuild.BuildUpdate();
     }
 
     public void ResetPlacerAndRemover()
     {
         tileIndicator.CloseTileIndicator();
-        currentPlacer = null;
-        currentRemover = null;
+        currentBuild = null;
     }
     
-    public void StartPlacement(PropSo propSo)
+    public void StartPlacement(PlacablePropSo placablePropSo)
     {
-        StopPlacerAndRemover();
+        StopBuild();
         
-        currentPlacer = transform.GetComponent<Placer>();
-        currentPlacer.StartPlacing(propSo);
+        switch (placablePropSo.placementType)
+        {
+            case PlacementType.FloorProp:
+                currentBuild = transform.GetComponent<Placer>();
+                currentBuild.Setup(placablePropSo);
+                break;
+            case PlacementType.WallProp:
+                currentBuild = transform.GetComponent<WallPlacer>();
+                currentBuild.Setup(placablePropSo);
+                break;
+            default:
+                Debug.LogWarning(placablePropSo.name + " is Missing Something");
+                return;
+                break;
+        }
         
         tileIndicator.SetTileIndicator(PlacingType.Place);
     }
 
-    public Vector3Int GetMouseCellPosition(InputSystem inputSystem, Grid grid)
+    public Vector3Int GetMouseCellPosition()
     {
         var mousePos = inputSystem.GetMouseMapPosition();
         Vector3Int cellPos = grid.WorldToCell(mousePos);
+        
         tileIndicator.SetPosition(grid.CellToWorld(cellPos));
 
         return cellPos;
     }
 
-    private void StopPlacerAndRemover()
+    private void StopBuild()
     {
-        if (currentPlacer != null)
-            currentPlacer.StopPlacing();
-        
-        if (currentRemover != null)
-            currentRemover.StopRemoving();
+        if (currentBuild != null)
+            currentBuild.Exit();
     }
     
     // IRemover Section
     public void StartRemoving()
     {
-        StopPlacerAndRemover();
+        StopBuild();
 
-        currentRemover = transform.GetComponent<Remover>();
-        currentRemover.StartRemoving();
+        currentBuild = transform.GetComponent<Remover>();
+        currentBuild.Setup(new PlacablePropSo());
         
         tileIndicator.SetTileIndicator(PlacingType.Remove);
     }
     
     private void RemovePlacedObject(Vector3Int cellPos ,GameObject placedObject)
     {
-        GameData.Instance.placedObjects.Remove(cellPos);
+        GameData.Instance.RemovePlacementData(cellPos);
         Destroy(placedObject);
     }
     
     private GameObject GetPlacedObjectFromTile(Vector3Int cellPos)
     {
-        if (GameData.Instance.placedObjects.TryGetValue(cellPos, out var placedObject))
+        if (GameData.Instance.placementDatas.TryGetValue(cellPos, out var placedObject))
         {
             return placedObject.Prefab;
         }
         return null;
     }
-
+    
+    
     public PlacingType GetPlacingType() => placingType;
 }
 

@@ -41,11 +41,14 @@ public class MapSystem : MonoBehaviour
                     {
                         var newWallDoorObject = Instantiate(wallDoorPrefab, pos2, Quaternion.identity);
                         newWallDoorObject.transform.SetParent(wallHolder);
+                        GameData.Instance.WallMap.Add(pos2);
                     }
                     else
                     {
                         var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
                         newWallObject.transform.SetParent(wallHolder);
+                        GameData.Instance.WallMap.Add(pos2);
+
                     }
                 }
                 if (i == 0)
@@ -53,6 +56,7 @@ public class MapSystem : MonoBehaviour
                     Vector3 pos2 = new Vector3(0, 0, j + 1);
                     var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0,90,0));
                     newWallObject.transform.SetParent(wallHolder);
+                    GameData.Instance.WallMap.Add(pos2);
                 }
                 
             }

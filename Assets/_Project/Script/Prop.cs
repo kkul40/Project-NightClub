@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Prop : MonoBehaviour
 {
-    private PropSo propSo;
+    private PlacablePropSo _placablePropSo;
     public Vector3 propPosition;
 
-    public void Initialize(PropSo propSo, Vector3 propPos)
+    public void Initialize(PlacablePropSo placablePropSo, Vector3 propPos)
     {
-        this.propSo = propSo;
+        this._placablePropSo = placablePropSo;
         this.propPosition = propPos;
-        GameData.Instance.placedProps.Add(this);
+        GameData.Instance.AddProp(this);
     }
 
     public Vector3 GetPropPosition() => propPosition;
     public Quaternion GetPropRotation() => transform.rotation;
-    public PropSo GetPropSo() => propSo;
+    public PlacablePropSo GetPropSo() => _placablePropSo;
 }

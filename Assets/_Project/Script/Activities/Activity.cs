@@ -14,7 +14,7 @@ public abstract class Activity
 
     protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
     {
-        if (GameData.Instance.placedProps.Count <= 0)
+        if (GameData.Instance.placementDatas.Count <= 0)
         {
             // Debug.LogWarning("Yerlestirilmis Prop Bulunamadi!");
             return null;

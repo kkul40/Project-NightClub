@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  PropType: 2
-  Prefab: {fileID: 7199139198368273009, guid: ab05570e0ed2d0749b7e30ff80c4eb14, type: 3}
+  <Prefab>k__BackingField: {fileID: 7199139198368273009, guid: ab05570e0ed2d0749b7e30ff80c4eb14, type: 3}
   ObjectSize: {x: 1, y: 1}
-  placableType: 7
-  placableLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  placementType: 0

@@ -7,6 +7,7 @@ namespace _Project.Script.NewSystem
     [DisallowMultipleComponent]
     public class InputSystem : MonoBehaviour
     {
+        public static InputSystem Instance;
         [SerializeField] private Camera mainCam;
         [SerializeField] private RaycastHit lastHit;
 
@@ -14,6 +15,11 @@ namespace _Project.Script.NewSystem
         [SerializeField] private LayerMask groundLayer;
         
         public event Action OnClicked, OnExit;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Update()
         {
@@ -47,7 +53,7 @@ namespace _Project.Script.NewSystem
                 lastHit = hit;
                 return hit.point;
             }
-
+            
             return Vector3.zero;
         }
 

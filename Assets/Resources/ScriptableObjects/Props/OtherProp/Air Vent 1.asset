@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd310f167114279b73fab96d32f25ca, type: 3}
-  m_Name: Chair 2
+  m_Name: Air Vent 1
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  <Prefab>k__BackingField: {fileID: 7199139198368273009, guid: e5d8bd9bd8ed2124dab484d3154bb05f, type: 3}
+  <Prefab>k__BackingField: {fileID: 573951482451576935, guid: 5f313e757246abb4dbe80cdb01792ba8, type: 3}
   ObjectSize: {x: 1, y: 1}
-  placementType: 0
+  placementType: 1

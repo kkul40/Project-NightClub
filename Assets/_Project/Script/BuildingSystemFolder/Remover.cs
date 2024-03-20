@@ -2,25 +2,30 @@
 
 namespace _Project.Script.NewSystem
 {
-    public class Remover : MonoBehaviour, IRemover
+    public class Remover : MonoBehaviour, IBuild
     {
-        [SerializeField] private InputSystem inputSystem;
-        [SerializeField] private Grid grid;
         [SerializeField] private Material yellowRemover;
 
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
         
-        
-        public void StartRemoving()
+        public void Setup(PlacablePropSo placablePropSo)
         {
-            
         }
-        
+
+        public void BuildUpdate()
+        {
+            TryRemoving();
+        }
+
+        public void Exit()
+        {
+            BuildingSystem.Instance.ResetPlacerAndRemover();
+        }
         
         public void TryRemoving()
         {
-            Vector3Int cellPos = BuildingSystem.Instance.GetMouseCellPosition(inputSystem, grid);
+            Vector3Int cellPos = BuildingSystem.Instance.GetMouseCellPosition();
             var placedObject = GetPlacedObjectFromTile(cellPos);
 
             SetMaterial(placedObject);
@@ -40,7 +45,7 @@ namespace _Project.Script.NewSystem
             
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                StopRemoving();
+                Exit();
             }
         }
 
@@ -63,7 +68,7 @@ namespace _Project.Script.NewSystem
 
         private GameObject GetPlacedObjectFromTile(Vector3Int cellPos)
         {
-            if (GameData.Instance.placedObjects.TryGetValue(cellPos, out var placedObject))
+            if (GameData.Instance.placementDatas.TryGetValue(cellPos, out var placedObject))
             {
                 return placedObject.Prefab;
             }
@@ -72,14 +77,8 @@ namespace _Project.Script.NewSystem
 
         protected virtual void RemovePlacedObject(Vector3Int cellPos, GameObject placedObject)
         {
-            GameData.Instance.placedObjects.Remove(cellPos);
+            GameData.Instance.placementDatas.Remove(cellPos);
             Destroy(placedObject);
-            StopRemoving();
-        }
-        
-        public void StopRemoving()
-        {
-            BuildingSystem.Instance.ResetPlacerAndRemover();
         }
     }
 }

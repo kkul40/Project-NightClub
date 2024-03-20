@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace _Project.Script.NewSystem
 {
-    public class Placer : MonoBehaviour , IBuild
+    public class WallPlacer : MonoBehaviour, IBuild
     {
         [SerializeField] private BuildingSystem _buildingSystem;
         [SerializeField] private Grid grid;
@@ -12,16 +12,18 @@ namespace _Project.Script.NewSystem
         [SerializeField] private LayerMask placableLayer;
         [SerializeField] private float objectMoveSpeedMultiplier = 10;
         
-        [Header("Placing Materials")]
+        [Header("Wall Placing Materials")]
         [SerializeField] public Material redPlacement;
         [SerializeField] public Material bluePlacement;
         
-        private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
+        private Vector3 placingOffset = new Vector3(0f,0,0f);
         private Quaternion lastRotation = Quaternion.identity;
 
         private PlacablePropSo _placablePropSo;
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
+
+        private Transform closestWall;
         
         public void Setup(PlacablePropSo placablePropSo)
         {
@@ -29,11 +31,11 @@ namespace _Project.Script.NewSystem
             tempPrefab = Instantiate(placablePropSo.Prefab, Vector3.zero, lastRotation);
             tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
         }
-        
+
         public void BuildUpdate()
         {
-            TryRotating();
             TryPlacing();
+            TryRotating();
         }
 
         public void Exit()
@@ -41,15 +43,17 @@ namespace _Project.Script.NewSystem
             Destroy(tempPrefab);
             BuildingSystem.Instance.ResetPlacerAndRemover();
         }
-
+      
         public void TryPlacing()
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             
-            var nextPlacableGridPos = grid.GetCellCenterWorld(cellPos) + placingOffset;
+            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(cellPos));
+            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos);
+            
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
-
-            bool isValidated = ValidatePosition(cellPos, _placablePropSo.ObjectSize, placableLayer);
+            
+            bool isValidated = GameData.Instance.ValidatePosition(snappedCellPos, _placablePropSo.ObjectSize);
             SetMaterialsColor(isValidated);
             
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -57,7 +61,7 @@ namespace _Project.Script.NewSystem
                 if (isValidated)
                 {
                     tempPrefab.transform.position = nextPlacableGridPos;
-                    Place(cellPos);
+                    Place(snappedCellPos);
                 }
             }
 
@@ -66,21 +70,37 @@ namespace _Project.Script.NewSystem
                 Exit();
             }
         }
-        
+
         public void TryRotating()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                tempPrefab.transform.Rotate(Vector3.up * 90);
-                lastRotation = tempPrefab.transform.rotation;
-            }
+            var rotation = Quaternion.identity;
+            tempPrefab.transform.rotation = rotation;
         }
 
-        protected void Place(Vector3Int CellPosition)
+        private Vector3Int GetClosestWall(Vector3Int cellPos)
+        {
+            var newCellPos = new Vector3Int(cellPos.x, 0, cellPos.y);
+            
+            float lastDis = 9999;
+            Vector3 closestWall = Vector3.zero;
+            foreach (var pos in GameData.Instance.GetWallMapPosList())
+            {
+                var dis = Vector3.Distance(newCellPos, pos);
+                if (dis < lastDis)
+                {
+                    closestWall = pos;
+                    lastDis = dis;
+                }
+            }
+
+            return grid.WorldToCell(closestWall);
+        }
+        
+        private void Place(Vector3Int CellPosition)
         {
             var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
+            GameData.Instance.AddPlacementData(CellPosition,new PlacementData(_placablePropSo, newObject));
 
             if (newObject.TryGetComponent(out Prop prop))
             {
@@ -93,17 +113,5 @@ namespace _Project.Script.NewSystem
             Material placementMaterial = isCellPosValid ? bluePlacement : redPlacement;
             tempMeshRenderer.material = placementMaterial;
         }
-        
-        public bool ValidatePosition(Vector3Int cellPos, Vector2Int objectSize, LayerMask placableLayer)
-        {
-            LayerMask hitLayer = InputSystem.Instance.GetLastHit().transform.gameObject.layer;
-            if (!GameData.Instance.ValidatePosition(cellPos, objectSize) || (placableLayer.value & (1 << hitLayer)) == 0)
-            {
-                return false;
-            }
-            return true;
-        }
-        
-        
     }
 }

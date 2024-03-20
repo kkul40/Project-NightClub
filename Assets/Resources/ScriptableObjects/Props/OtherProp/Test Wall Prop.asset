@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dd310f167114279b73fab96d32f25ca, type: 3}
-  m_Name: Art Frame 1
+  m_Name: Test Wall Prop
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  PropType: 4
-  Prefab: {fileID: 919132149155446097, guid: 52269a4fd043be144a0c423bd4113ae8, type: 3}
+  <Prefab>k__BackingField: {fileID: 8901886704299321990, guid: 78724280fc365af409c3083db27ec1a7, type: 3}
   ObjectSize: {x: 1, y: 1}
-  placableType: 8
-  placableLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  placementType: 1

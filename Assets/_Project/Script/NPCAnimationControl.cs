@@ -12,6 +12,7 @@ public class NPCAnimationControl : MonoBehaviour
 
     private void Awake()
     {
+        // TODO Animation Ile dene
         _animator = GetComponent<Animator>();
     }
 

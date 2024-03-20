@@ -31,7 +31,7 @@ public class UISlot : MonoBehaviour
 
     public void OnClick()
     {
-        if (ItemSo is PropSo placableObjectSo)
+        if (ItemSo is PlacablePropSo placableObjectSo)
         {
             BuildingSystem.Instance.StartPlacement(placableObjectSo);
         }
