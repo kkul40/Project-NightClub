@@ -22,7 +22,7 @@ public class MapSystem : MonoBehaviour
         int xMax = initialMapSize.x;
         int zMax = initialMapSize.z;
         
-        Vector3 offset = floorTileHolder.transform.position; // 0.5f, 0, 0.5f
+        Vector3 offset = new Vector3(0.5f, 0, 0.5f);
         for (int i = 0; i < xMax; i++)
         {
             for (int j = 0; j < zMax; j++)
@@ -36,30 +36,24 @@ public class MapSystem : MonoBehaviour
                 // Instantiate Wall
                 if (j == 0)
                 {
-                    Vector3 pos2 = new Vector3(i, 0, 0);
+                    Vector3 pos2 = new Vector3(i + 0.5f, 0, 0);
                     var wallDoorIndex = 4;
                     if (i == wallDoorIndex)
                     {
                         var newWallDoorObject = Instantiate(wallDoorPrefab, pos2, Quaternion.identity);
-                        Wall newWall = newWallDoorObject.AddComponent<Wall>();
                         newWallDoorObject.transform.SetParent(wallHolder);
-                        GameData.Instance.WallMap.Add(newWall);
                     }
                     else
                     {
                         var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
-                        Wall newWall = newWallObject.AddComponent<Wall>();
                         newWallObject.transform.SetParent(wallHolder);
-                        GameData.Instance.WallMap.Add(newWall);
                     }
                 }
                 if (i == 0)
                 {
-                    Vector3 pos2 = new Vector3(0, 0, j + 1);
+                    Vector3 pos2 = new Vector3(0, 0, j + 0.5f);
                     var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0,90,0));
-                    Wall newWall = newWallObject.AddComponent<Wall>();
                     newWallObject.transform.SetParent(wallHolder);
-                    GameData.Instance.WallMap.Add(newWall);
                 }
                 
             }
