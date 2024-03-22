@@ -20,6 +20,13 @@ namespace _Project.Script.NewSystem
             _meshRenderer.materials = materials;
         }
 
+        public virtual void ResetWallPaper(Material[] defaultMaterials)
+        {
+            var materials = _meshRenderer.materials;
+            materials = defaultMaterials;
+            _meshRenderer.materials = materials;
+        }
+
         public Material[] GetCurrentMaterial() => _meshRenderer.materials;
     }
 }

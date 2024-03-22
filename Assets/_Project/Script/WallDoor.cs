@@ -16,7 +16,6 @@ namespace _Project.Script.NewSystem
         {
             var materials = _meshRenderer.materials;
             materials[0] = newWallPaper;
-            materials[1] = newWallPaper;
             _meshRenderer.materials = materials;
         }
     }
