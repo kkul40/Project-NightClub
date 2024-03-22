@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,15 +9,14 @@ public class ActivitySystem : MonoBehaviour
     public static ActivitySystem Instance;
     [SerializeField] private List<Activity> _activities;
 
-    private Activity Dinner = new DinnerActivity();
-
     private void Awake()
     {
         Instance = this;
         
         // TODO Add All Activitie Here
         _activities = new List<Activity>();
-        _activities.Add(Dinner);
+        _activities.Add(new DinnerActivity());
+        // _activities.Add(new WalkRandomActivity());
     }
 
     public Activity GetRandomActivity()
@@ -27,13 +27,19 @@ public class ActivitySystem : MonoBehaviour
             return new NoneActivity();
         }
 
-        Activity tempActivity = _activities[Random.Range(0, _activities.Count - 1)];
+        var activityIndex = Random.Range(0, _activities.Count);
+        Activity temp = _activities[activityIndex];
 
-        if (tempActivity is DinnerActivity)
+        if (temp is DinnerActivity)
         {
             return new DinnerActivity();
         }
-
+        else if (temp is WalkRandomActivity)
+        {
+            return new WalkRandomActivity();
+        }
+        
+        
         return new NoneActivity();
     }
 }

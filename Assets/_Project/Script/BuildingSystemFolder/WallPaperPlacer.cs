@@ -30,7 +30,7 @@ namespace _Project.Script.NewSystem
             {
                 if (lastWall != null)
                 {
-                    lastWall.ChangeWallpaper(savedMaterials[1]);
+                    lastWall.ResetWallPaper(savedMaterials);
                     lastWall = null;
                 }
             

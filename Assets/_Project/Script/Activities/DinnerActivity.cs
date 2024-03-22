@@ -21,8 +21,10 @@ public class DinnerActivity : Activity
 
     public override void StartActivity(NPC npc)
     {
+        Debug.LogWarning("Dinner Basladi");
         if (isCanceled) return;
-        
+        Debug.LogWarning("Dinner Basladi 222");
+
         chairProp = GetAvaliablePropByType<Chair>(npc);
         
         if (chairProp == null || chairProp.IsOccupied)
@@ -37,6 +39,7 @@ public class DinnerActivity : Activity
 
     public override void UpdateActivity(NPC npc)
     {
+        Debug.LogWarning("Dinner Updated");
         if (isCanceled) return;
         
         //TODO Use DinnerState here

@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6541618308937833375
 Transform:
@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8353836707499770821, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: -4013860017496389105, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -114,10 +118,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base_Wall_Door_02
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5175158281554701992, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d389591a47e876f4c968891567d3cd54, type: 2}
+    - target: {fileID: 6704704201921907136, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 7256007482193243562, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.4

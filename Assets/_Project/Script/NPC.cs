@@ -29,6 +29,7 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
+        Debug.LogWarning(currentActivity);
         UpdateActivity();
         
         _npcAnimationControl.PlayAnimation(_state);
@@ -49,8 +50,7 @@ public class NPC : MonoBehaviour
             ChangeActivitiy(ActivitySystem.Instance.GetRandomActivity());
             return;
         }
-
-        if (!currentActivity.isEnded)
+        else
         {
             currentActivity.UpdateActivity(this);
         }
@@ -86,7 +86,7 @@ public class NPC : MonoBehaviour
     [ContextMenu("Random Target")]
     public void SetRandomTarget()
     {
-        target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count - 1)];
+        target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
         _navMeshAgent.SetDestination(target);
     }
 
