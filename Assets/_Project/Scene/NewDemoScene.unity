@@ -205,7 +205,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22764561}
-  m_Mesh: {fileID: -5780539018181982405, guid: 037ed317c74c5fa42b5e565db7ed9d5b, type: 3}
+  m_Mesh: {fileID: -6590194288319917670, guid: 6f3d5375c8d162149869b1938890a8c8, type: 3}
 --- !u!1 &23488463
 GameObject:
   m_ObjectHideFlags: 0
@@ -10631,7 +10631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1b452463c6de24784438ac47915386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcAnimationSo: {fileID: 11400000, guid: 0e2af1eab414f16459275b5c12d41b35, type: 2}
+  _npcAnimationSo: {fileID: 11400000, guid: 844e70090af7a0c49a4eedb729407f0a, type: 2}
   transitionDuration: 0.3
 --- !u!95 &2083179951
 Animator:
