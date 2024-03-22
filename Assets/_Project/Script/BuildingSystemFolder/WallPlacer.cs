@@ -45,16 +45,16 @@ namespace _Project.Script.NewSystem
         public void TryPlacing()
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
-            Vector3Int offset = Vector3Int.up * new Vector3Int(0, cellPos.z, 0);
-            
-            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(cellPos)) + offset;
+            Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
+            Vector3Int offset = Vector3Int.forward * cellPos.z;
+
+            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
             Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos);
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
             
             bool isValidated = GameData.Instance.ValidatePosition(snappedCellPos, _placablePropSo.ObjectSize);
             SetMaterialsColor(isValidated);
-            
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 if (isValidated)
@@ -75,15 +75,13 @@ namespace _Project.Script.NewSystem
             tempPrefab.transform.rotation = lastRotation;
         }
 
-        private Vector3Int GetClosestWall(Vector3Int cellPos)
+        private Vector3Int GetClosestWall(Vector3 cellPos)
         {
-            var newCellPos = new Vector3Int(cellPos.x, 0, cellPos.y);
-            
             float lastDis = 9999;
             Vector3 closestWall = Vector3.zero;
             foreach(var pos in GameData.Instance.GetWallMapPosList())
             {
-                var dis = Vector3.Distance(newCellPos, pos.transform.position);
+                var dis = Vector3.Distance(cellPos, pos.transform.position);
                 if (dis < lastDis)
                 {
                     closestWall = pos.transform.position;
