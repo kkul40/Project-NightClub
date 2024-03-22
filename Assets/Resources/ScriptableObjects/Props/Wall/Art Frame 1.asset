@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  <Prefab>k__BackingField: {fileID: 7104064598758118830, guid: 7eeaf5d28beb1ed429a60493c7f5f46d, type: 3}
+  <Prefab>k__BackingField: {fileID: 6787370971152940404, guid: 92987c975f7336e4aa04189b37fde190, type: 3}
   ObjectSize: {x: 1, y: 1}
   placementType: 1
