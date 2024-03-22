@@ -35,34 +35,62 @@ public class BuildingSystem : MonoBehaviour
         currentBuild = null;
     }
     
-    public void StartPlacement(PlacablePropSo placablePropSo)
+    public void StartPlacement<T>(T itemSo) where T : ItemSo
     {
         StopBuild();
 
-        if (placablePropSo != null)
+        if (itemSo is PlacablePropSo placablePropSo)
         {
-            if (placablePropSo.Prefab == null)
+            switch (placablePropSo.placementType)
             {
-                Debug.LogWarning("PlacablePropSo is Not Valid");
-                return;
+                case PlacementType.FloorProp:
+                    currentBuild = transform.GetComponent<Placer>();
+                    currentBuild.Setup(placablePropSo);
+                    break;
+                case PlacementType.WallProp:
+                    currentBuild = transform.GetComponent<WallPropPlacer>();
+                    currentBuild.Setup(placablePropSo);
+                    break;
+                default:
+                    Debug.LogWarning(placablePropSo.name + " is Missing Something");
+                    return;
+                    break;
             }
         }
-        
-        switch (placablePropSo.placementType)
+        else if (itemSo is WallPaperSo wallPaperSo)
         {
-            case PlacementType.FloorProp:
-                currentBuild = transform.GetComponent<Placer>();
-                currentBuild.Setup(placablePropSo);
-                break;
-            case PlacementType.WallProp:
-                currentBuild = transform.GetComponent<WallPlacer>();
-                currentBuild.Setup(placablePropSo);
-                break;
-            default:
-                Debug.LogWarning(placablePropSo.name + " is Missing Something");
-                return;
-                break;
+            currentBuild = GetComponent<WallPaperPlacer>();
+            currentBuild.Setup(wallPaperSo);
         }
+
+        // if (placablePropSo != null)
+        // {
+        //     if (placablePropSo.Prefab == null)
+        //     {
+        //         Debug.LogWarning("PlacablePropSo is Not Valid");
+        //         return;
+        //     }
+        // }
+        //
+        // switch (placablePropSo.placementType)
+        // {
+        //     case PlacementType.FloorProp:
+        //         currentBuild = transform.GetComponent<Placer>();
+        //         currentBuild.Setup(placablePropSo);
+        //         break;
+        //     case PlacementType.WallProp:
+        //         currentBuild = transform.GetComponent<WallPropPlacer>();
+        //         currentBuild.Setup(placablePropSo);
+        //         break;
+        //     case PlacementType.WallPaper:
+        //         currentBuild = transform.GetComponent<WallPaperPlacer>();
+        //         currentBuild.Setup(placablePropSo);
+        //         break;
+        //     default:
+        //         Debug.LogWarning(placablePropSo.name + " is Missing Something");
+        //         return;
+        //         break;
+        // }
         
         tileIndicator.SetTileIndicator(PlacingType.Place);
     }

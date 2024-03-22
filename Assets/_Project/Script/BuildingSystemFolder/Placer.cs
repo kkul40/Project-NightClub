@@ -23,13 +23,16 @@ namespace _Project.Script.NewSystem
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
         
-        public void Setup(PlacablePropSo placablePropSo)
+        public void Setup<T>(T itemSo) where T : ItemSo
         {
-            _placablePropSo = placablePropSo;
-            tempPrefab = Instantiate(placablePropSo.Prefab, Vector3.zero, lastRotation);
-            tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
+            if (itemSo is PlacablePropSo placablePropSo)
+            {
+                _placablePropSo = placablePropSo;
+                tempPrefab = Instantiate(placablePropSo.Prefab, Vector3.zero, lastRotation);
+                tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
+            }
         }
-        
+
         public void BuildUpdate()
         {
             TryRotating();

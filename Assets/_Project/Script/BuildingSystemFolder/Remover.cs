@@ -10,7 +10,7 @@ namespace _Project.Script.NewSystem
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
         
-        public void Setup(PlacablePropSo placablePropSo)
+        public void Setup<T>(T itemSo) where T : ItemSo
         {
         }
 

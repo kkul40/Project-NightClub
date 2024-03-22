@@ -2016,7 +2016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4780370644573198494, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: ItemSoPath
-      value: ScriptableObjects/Props/WallPapers
+      value: ScriptableObjects/Props/WallPaper
       objectReference: {fileID: 0}
     - target: {fileID: 5832056073447775548, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_Name
@@ -7248,6 +7248,7 @@ GameObject:
   - component: {fileID: 1263105098}
   - component: {fileID: 1263105099}
   - component: {fileID: 1263105101}
+  - component: {fileID: 1263105102}
   - component: {fileID: 1263105100}
   m_Layer: 0
   m_Name: BuildingSystem
@@ -7332,7 +7333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1263105096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30ad46d96a14343a8ddb2fb5d2f2f22, type: 3}
+  m_Script: {fileID: 11500000, guid: 6297a15cb74268a4894863de5396945a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingSystem: {fileID: 1263105098}
@@ -7344,6 +7345,18 @@ MonoBehaviour:
   objectMoveSpeedMultiplier: 10
   redPlacement: {fileID: 2100000, guid: daf573990136e0c449efda2b471dcc0f, type: 2}
   bluePlacement: {fileID: 2100000, guid: a7422f727e59f5049be3760b450a4f52, type: 2}
+--- !u!114 &1263105102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263105096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0273369a91104051938f904662d4aa79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1281893185
 GameObject:
   m_ObjectHideFlags: 0
@@ -10435,7 +10448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
