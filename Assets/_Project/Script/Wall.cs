@@ -5,19 +5,16 @@ namespace _Project.Script.NewSystem
 {
     public class Wall : MonoBehaviour
     {
-        private MeshRenderer _meshRenderer;
+        protected MeshRenderer _meshRenderer;
 
-        public Material currentMaterial;
-        
-        private void Start()
+        protected virtual void Start()
         {
             GameData.Instance.WallMap.Add(this);
             _meshRenderer = GetComponentInChildren<MeshRenderer>();
         }
 
-        public void ChangeWallpaper(Material newWallPaper)
+        public virtual void ChangeWallpaper(Material newWallPaper)
         {
-            Debug.Log("material has changed");
             var materials = _meshRenderer.materials;
             materials[1] = newWallPaper;
             _meshRenderer.materials = materials;
@@ -26,3 +23,4 @@ namespace _Project.Script.NewSystem
         public Material[] GetCurrentMaterial() => _meshRenderer.materials;
     }
 }
+

@@ -84,6 +84,8 @@ namespace _Project.Script.NewSystem
             Vector3 closestWall = Vector3.zero;
             foreach(var pos in GameData.Instance.GetWallMapPosList())
             {
+                if (pos is WallDoor) continue;
+                
                 var dis = Vector3.Distance(cellPos, pos.transform.position);
                 if (dis < lastDis)
                 {

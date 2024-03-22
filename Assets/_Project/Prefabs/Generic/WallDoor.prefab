@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6541618308937833375}
+  - component: {fileID: 1618385793649513594}
   m_Layer: 0
   m_Name: WallDoor
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   - {fileID: 6720151624068582755}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1618385793649513594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6541618308937833374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 194a0d20612a42b3a3f5d054e801a2ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChieldWallTransform: {fileID: 1451962102083895278}
 --- !u!1001 &6541618308995754632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,6 +179,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8, y: 1.9, z: 0}
   m_Center: {x: -0.40000004, y: 1, z: 0}
+--- !u!4 &1451962102083895278 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3535861274306407066, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
+  m_PrefabInstance: {fileID: 6541618308995754632}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6258115581962704563 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8353836707499770821, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
