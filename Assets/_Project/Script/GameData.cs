@@ -11,7 +11,7 @@ public class GameData : MonoBehaviour
 
     public Dictionary<Vector3Int, PlacementData> placementDatas { get; private set; } = new();
     [Header("Data")]
-    public List<Prop> placedProps = new ();
+    [SerializeField] private List<Prop> placedProps = new ();
     public List<Vector3> FloorMap = new ();
     public List<Vector3> Test = new ();
     public List<Wall> WallMap = new();
@@ -51,6 +51,11 @@ public class GameData : MonoBehaviour
     {
         placedProps.Add(prop);
     }
+
+    public void RemoveProp(Prop prop)
+    {
+        placedProps.Remove(prop);
+    }
     
     public void AddPlacementData(Vector3Int cellPos, PlacementData placementData)
     {
@@ -63,6 +68,7 @@ public class GameData : MonoBehaviour
     }
 
     public List<Wall> GetWallMapPosList() => WallMap;
+    public List<Prop> GetPropList() => placedProps;
 }
 
 public class PlacementData

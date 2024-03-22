@@ -5,7 +5,7 @@ public class Prop : MonoBehaviour
     private PlacablePropSo _placablePropSo;
     public Vector3 propPosition;
 
-    public void Initialize(PlacablePropSo placablePropSo, Vector3 propPos)
+    public virtual void Initialize(PlacablePropSo placablePropSo, Vector3 propPos)
     {
         this._placablePropSo = placablePropSo;
         this.propPosition = propPos;

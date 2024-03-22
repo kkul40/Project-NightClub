@@ -22,7 +22,7 @@ public abstract class Activity
 
         float lastDistance = 9999;
         T closestProp = null;
-        foreach (var prop in GameData.Instance.placedProps)
+        foreach (var prop in GameData.Instance.GetPropList())
         {
             if (prop.transform.TryGetComponent(out IOccupieable occupieable))
             {

@@ -17,10 +17,3 @@ public class Chair : Prop, IOccupieable
         return sitPosition.position - new Vector3(0, 0.375f, 0);
     }
 }
-
-public interface IOccupieable
-{
-    public NPC Owner { get; set; }
-    bool IsOccupied { get; set; }
-    public Vector3 GetItOccupied(NPC owner);
-}
