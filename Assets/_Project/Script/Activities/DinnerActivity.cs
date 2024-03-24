@@ -47,7 +47,7 @@ public class DinnerActivity : Activity
         {
             case DinnerState.None:
                 var distance = Vector3.Distance(npc.transform.position, chairProp.GetPropPosition());
-                if (distance < 0.74f)
+                if (distance < 0.05f)
                 {
                     //Deactivate Navmesh
                     //Sit

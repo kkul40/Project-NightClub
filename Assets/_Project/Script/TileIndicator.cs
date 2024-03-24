@@ -6,6 +6,7 @@ public class TileIndicator : MonoBehaviour
 {
     [SerializeField] private GameObject placingTileIndicator;
     [SerializeField] private GameObject removingTileIndicator;
+    [SerializeField] private GameObject directionIndicator;
 
     private bool isDirty = true;
 
@@ -22,6 +23,9 @@ public class TileIndicator : MonoBehaviour
             case PlacingType.Place:
                 placingTileIndicator.SetActive(true);
                 break;
+            case PlacingType.Direction:
+                directionIndicator.SetActive(true);
+                break;
             case PlacingType.Remove:
                 removingTileIndicator.SetActive(true);
                 break;
@@ -34,12 +38,18 @@ public class TileIndicator : MonoBehaviour
         transform.position = newPos;
     }
 
+    public void RoateDirectionIndicator(Quaternion quaternion)
+    {
+        directionIndicator.transform.rotation = quaternion;
+    }
+
     public void CloseTileIndicator()
     {
         if (!isDirty) return;
         
         placingTileIndicator.SetActive(false);
         removingTileIndicator.SetActive(false);
+        directionIndicator.SetActive(false);
         isDirty = false;
     }
 }

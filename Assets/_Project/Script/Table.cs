@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace _Project.Script.NewSystem
 {
@@ -6,9 +8,18 @@ namespace _Project.Script.NewSystem
     {
         public GameObject CubePrefab;
 
-        public override void Initialize(PlacablePropSo placablePropSo, Vector3 propPos)
+        [SerializeField] private List<MarkedArea> _markedAreas;
+        
+        public void Initialize(PlacablePropSo placablePropSo, Vector3 propPos, Direction direction)
         {
-            base.Initialize(placablePropSo, propPos);
+            base.Initialize(placablePropSo, propPos, direction);
         }
+    }
+
+
+    [Serializable]
+    public class MarkedArea
+    {
+        public Vector3Int Pos;
     }
 }

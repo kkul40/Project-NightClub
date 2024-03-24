@@ -74,8 +74,17 @@ namespace _Project.Script.NewSystem
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                tempPrefab.transform.Rotate(Vector3.up * 90);
+                Quaternion tempQ = tempPrefab.transform.rotation;
+                tempPrefab.transform.rotation = DirectionHelper.RotateClockWise(tempQ);
                 lastRotation = tempPrefab.transform.rotation;
+                _buildingSystem.RotateDirectionIndicator(lastRotation);
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Quaternion tempQ = tempPrefab.transform.rotation;
+                tempPrefab.transform.rotation = DirectionHelper.RotateCounterClockWise(tempQ);
+                lastRotation = tempPrefab.transform.rotation;
+                _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
         }
 
@@ -87,7 +96,7 @@ namespace _Project.Script.NewSystem
 
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_placablePropSo, tempPrefab.transform.position);
+                prop.Initialize(_placablePropSo, tempPrefab.transform.position, Direction.Up);
             }
         }
         

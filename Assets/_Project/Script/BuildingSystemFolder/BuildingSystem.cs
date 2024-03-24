@@ -11,7 +11,6 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private InputSystem inputSystem;
     [SerializeField] private Grid grid;
     
-    
     [SerializeField] private PlacingType placingType;
     [SerializeField] private TileIndicator tileIndicator;
 
@@ -46,10 +45,12 @@ public class BuildingSystem : MonoBehaviour
                 case PlacementType.FloorProp:
                     currentBuild = transform.GetComponent<Placer>();
                     currentBuild.Setup(placablePropSo);
+                    tileIndicator.SetTileIndicator(PlacingType.Direction);
                     break;
                 case PlacementType.WallProp:
                     currentBuild = transform.GetComponent<WallPropPlacer>();
                     currentBuild.Setup(placablePropSo);
+                    tileIndicator.SetTileIndicator(PlacingType.Place);
                     break;
                 default:
                     Debug.LogWarning(placablePropSo.name + " is Missing Something");
@@ -61,38 +62,9 @@ public class BuildingSystem : MonoBehaviour
         {
             currentBuild = GetComponent<WallPaperPlacer>();
             currentBuild.Setup(wallPaperSo);
+            tileIndicator.SetTileIndicator(PlacingType.Place);
         }
-
-        // if (placablePropSo != null)
-        // {
-        //     if (placablePropSo.Prefab == null)
-        //     {
-        //         Debug.LogWarning("PlacablePropSo is Not Valid");
-        //         return;
-        //     }
-        // }
-        //
-        // switch (placablePropSo.placementType)
-        // {
-        //     case PlacementType.FloorProp:
-        //         currentBuild = transform.GetComponent<Placer>();
-        //         currentBuild.Setup(placablePropSo);
-        //         break;
-        //     case PlacementType.WallProp:
-        //         currentBuild = transform.GetComponent<WallPropPlacer>();
-        //         currentBuild.Setup(placablePropSo);
-        //         break;
-        //     case PlacementType.WallPaper:
-        //         currentBuild = transform.GetComponent<WallPaperPlacer>();
-        //         currentBuild.Setup(placablePropSo);
-        //         break;
-        //     default:
-        //         Debug.LogWarning(placablePropSo.name + " is Missing Something");
-        //         return;
-        //         break;
-        // }
         
-        tileIndicator.SetTileIndicator(PlacingType.Place);
     }
 
     public Vector3Int GetMouseCellPosition()
@@ -101,14 +73,20 @@ public class BuildingSystem : MonoBehaviour
         Vector3Int cellPos = grid.WorldToCell(mousePos);
 
         tileIndicator.SetPosition(grid.CellToWorld(cellPos));
-
         return cellPos;
+    }
+
+    public void RotateDirectionIndicator(Quaternion quaternion)
+    {
+        tileIndicator.RoateDirectionIndicator(quaternion);
     }
 
     private void StopBuild()
     {
         if (currentBuild != null)
             currentBuild.Exit();
+        
+        tileIndicator.transform.rotation = Quaternion.identity;
     }
     
     // IRemover Section
@@ -145,5 +123,6 @@ public enum PlacingType
 {
     None,
     Place,
+    Direction,
     Remove,
 }

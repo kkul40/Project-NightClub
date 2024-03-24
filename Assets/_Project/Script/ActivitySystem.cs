@@ -16,7 +16,7 @@ public class ActivitySystem : MonoBehaviour
         // TODO Add All Activitie Here
         _activities = new List<Activity>();
         _activities.Add(new DinnerActivity());
-        _activities.Add(new WalkRandomActivity());
+        // _activities.Add(new WalkRandomActivity());
     }
 
     public Activity GetRandomActivity()

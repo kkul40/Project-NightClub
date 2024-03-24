@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CharacterRotate : MonoBehaviour
+{
+    [SerializeField] private Transform characterTransform;
+    [SerializeField] private float ratateAmount;
+    
+    public void OnLeftButton()
+    {
+        characterTransform.Rotate(Vector3.up * ratateAmount);
+    }
+
+    public void OnRightButton()
+    {
+        characterTransform.Rotate(Vector3.up * -ratateAmount);
+    }
+}

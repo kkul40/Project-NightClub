@@ -106,7 +106,7 @@ namespace _Project.Script.NewSystem
 
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_placablePropSo, tempPrefab.transform.position);
+                prop.Initialize(_placablePropSo, tempPrefab.transform.position, Direction.Up);
             }
         }
         
