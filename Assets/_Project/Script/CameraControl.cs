@@ -7,8 +7,8 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float zoomMultiplier;
 
-    [Range(2,9)]
-    [SerializeField] private int cameraSize = 5;
+    [Range(1,9)]
+    [SerializeField] private float cameraSize = 5;
 
     private float timeElapsed = 0;
 
@@ -30,8 +30,8 @@ public class CameraControl : MonoBehaviour
 
     private void SetCameraSize()
     {
-        cameraSize -= (int)(Input.GetAxis("Mouse ScrollWheel") * 10);
-        cameraSize = Mathf.Clamp(cameraSize, 2, 9);
+        cameraSize -= (Input.GetAxis("Mouse ScrollWheel") * zoomMultiplier);
+        cameraSize = Mathf.Clamp(cameraSize, 1, 9);
         mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomMultiplier * 2);
     }
 }

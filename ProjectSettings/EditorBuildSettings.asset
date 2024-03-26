@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scene/Character Creation.unity
+    path: Assets/_Project/Scene/CharacterCreation-Demo.unity
     guid: 1c0c1f23587bd134fb590d7da5c34713
   - enabled: 1
-    path: Assets/_Project/Scene/NewDemoScene.unity
+    path: Assets/_Project/Scene/NightClub-Demo.unity
     guid: 4e4517d321554a54d993e9dbc84b7b55
   m_configObjects: {}

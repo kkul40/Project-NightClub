@@ -119,19 +119,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7719985994838646826}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4900305280450859506}
-        m_TargetAssemblyTypeName: CharacterPart, Assembly-CSharp
-        m_MethodName: OnLeftButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &2089921908489156445
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +129,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5595491911738364252}
-  - component: {fileID: 4900305280450859506}
   m_Layer: 5
   m_Name: Part Changer
   m_TagString: Untagged
@@ -172,29 +159,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 350}
   m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4900305280450859506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089921908489156445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb92a14194b456a42b4b2fd297546bd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  partHolder: {fileID: 0}
-  parts:
-  - {fileID: 5980733433742310762, guid: 2384c1a2520f8c445b57347b1eed5e03, type: 3}
-  - {fileID: 1741968832456283258, guid: 094c1d79548130a4c973cf081d852b18, type: 3}
-  - {fileID: 5781966989213718969, guid: 8ebdcff62172bde45b977c72f56026a7, type: 3}
-  - {fileID: 7813970108826275311, guid: a52ad10942f519e43b8e3d7046b7635e, type: 3}
-  - {fileID: 8786988177040980282, guid: 33ac8a3aa7f93cc49b68735954e1798a, type: 3}
-  - {fileID: 857952140530516710, guid: 76784169a1b117640a215ba8c5cf8163, type: 3}
-  - {fileID: 7388014777072259509, guid: 1fbdcd4a8acb91f4ca44d3eb6a64d32c, type: 3}
-  - {fileID: 3789722783797298395, guid: d16e212bf13fff04f8264ba18b670ca4, type: 3}
-  - {fileID: 934686506106338681, guid: dcc8c66ef6719d346b3fbf81fc2e9599, type: 3}
 --- !u!1 &2577467226227031275
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,19 +278,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1315303505476928461}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4900305280450859506}
-        m_TargetAssemblyTypeName: CharacterPart, Assembly-CSharp
-        m_MethodName: OnRightButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &6557884976768393250
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +387,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

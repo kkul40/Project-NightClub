@@ -30,6 +30,7 @@ namespace _Project.Script.NewSystem
                 _placablePropSo = placablePropSo;
                 tempPrefab = Instantiate(placablePropSo.Prefab, Vector3.zero, lastRotation);
                 tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
+                tempPrefab.transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
             }
         }
 

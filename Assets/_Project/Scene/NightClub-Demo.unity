@@ -2083,6 +2083,10 @@ PrefabInstance:
       propertyPath: ItemSoPath
       value: ScriptableObjects/Props/WallPaper
       objectReference: {fileID: 0}
+    - target: {fileID: 4780370644573198494, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
+      propertyPath: UISlotPrefab
+      value: 
+      objectReference: {fileID: 8243616770128476232, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
     - target: {fileID: 5832056073447775548, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_Name
       value: Wallpaper Inventory
@@ -2699,6 +2703,10 @@ PrefabInstance:
       propertyPath: ItemSoPath
       value: ScriptableObjects/Props/Tables
       objectReference: {fileID: 0}
+    - target: {fileID: 4780370644573198494, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
+      propertyPath: UISlotPrefab
+      value: 
+      objectReference: {fileID: 8243616770128476232, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
     - target: {fileID: 5832056073447775548, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_Name
       value: Table Inventory
@@ -6131,7 +6139,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -7223,6 +7231,10 @@ PrefabInstance:
       propertyPath: ItemSoPath
       value: ScriptableObjects/Props/Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 4780370644573198494, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
+      propertyPath: UISlotPrefab
+      value: 
+      objectReference: {fileID: 8243616770128476232, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
     - target: {fileID: 5832056073447775548, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_Name
       value: Wall Prop Inventory
@@ -8286,55 +8298,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 196039212}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1386135840
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1386135842}
-  - component: {fileID: 1386135841}
-  m_Layer: 13
-  m_Name: Post Proccessing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1386135841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386135840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: e025175284e666f4890e77666cc78acb, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
---- !u!4 &1386135842
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386135840}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1391605442
 GameObject:
   m_ObjectHideFlags: 0
@@ -8896,6 +8859,63 @@ Transform:
   - {fileID: 1523393860}
   m_Father: {fileID: 949128689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1525755499
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747703780476756041, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7347895219125945877, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cc5e78e2c778df74d9fda708f52f3afa, type: 3}
 --- !u!1 &1530055937
 GameObject:
   m_ObjectHideFlags: 0
@@ -13407,6 +13427,10 @@ PrefabInstance:
       propertyPath: ItemSoPath
       value: ScriptableObjects/Props/Chairs
       objectReference: {fileID: 0}
+    - target: {fileID: 4780370644573198494, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
+      propertyPath: UISlotPrefab
+      value: 
+      objectReference: {fileID: 8243616770128476232, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
     - target: {fileID: 5832056073447775548, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_Name
       value: Chair Inventory
@@ -13936,5 +13960,5 @@ SceneRoots:
   - {fileID: 212570297}
   - {fileID: 1206130776}
   - {fileID: 16415904}
-  - {fileID: 1386135842}
   - {fileID: 308833303}
+  - {fileID: 1525755499}
