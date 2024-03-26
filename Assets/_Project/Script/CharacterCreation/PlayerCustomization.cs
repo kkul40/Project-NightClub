@@ -9,14 +9,13 @@ public class PlayerCustomization : MonoBehaviour
 {
     public static PlayerCustomization Instance;
 
+    //TODO CustomizationData dan cek bu degiskenleri
     public int playerGenderIndex;
     public int playerHairIndex;
     public int playerBeardIndex;
     public int playerAttachmentIndex;
     public int playerEaringIndex;
     
-    [FormerlySerializedAs("playerCustomizationDataSo")]
-    [FormerlySerializedAs("playerCustomizationData")]
     [Header("Customization Variables")] 
     [SerializeField] private PlayerCustomizationDataSo playerCDS;
     [SerializeField] private SkinnedMeshRenderer playerGenderHolder;
@@ -28,7 +27,15 @@ public class PlayerCustomization : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
 
+    private void Start()
+    {
+        LoadCustomizedPlayer();
+    }
+
+    private void LoadCustomizedPlayer()
+    {
         PlayerCustomizationIndexData data = SaveSystem.LoadCustomizedPlayer();
         if (data != null)
         {
@@ -45,7 +52,7 @@ public class PlayerCustomization : MonoBehaviour
         ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex]);
         ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex]);
     }
-    
+
     public void OnMaleButton()
     {
         playerGenderIndex = 0;

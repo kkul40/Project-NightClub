@@ -42,7 +42,6 @@ public class DinnerActivity : Activity
         Debug.LogWarning("Dinner Updated");
         if (isCanceled) return;
         
-        //TODO Use DinnerState here
         switch (_dinnerState)
         {
             case DinnerState.None:
