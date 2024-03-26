@@ -56,7 +56,7 @@ namespace _Project.Script.NewSystem
             bool isValidated = ValidatePosition(cellPos, _placablePropSo.ObjectSize, placableLayer);
             SetMaterialsColor(isValidated);
             
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (isValidated)
                 {
@@ -65,7 +65,7 @@ namespace _Project.Script.NewSystem
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (InputSystem.Instance.Esc)
             {
                 Exit();
             }
@@ -73,14 +73,14 @@ namespace _Project.Script.NewSystem
         
         public void TryRotating()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (InputSystem.Instance.E)
             {
                 Quaternion tempQ = tempPrefab.transform.rotation;
                 tempPrefab.transform.rotation = DirectionHelper.RotateClockWise(tempQ);
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (InputSystem.Instance.Q)
             {
                 Quaternion tempQ = tempPrefab.transform.rotation;
                 tempPrefab.transform.rotation = DirectionHelper.RotateCounterClockWise(tempQ);

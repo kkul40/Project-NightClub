@@ -31,7 +31,7 @@ namespace _Project.Script.NewSystem
 
             SetMaterial(placedObject);
 
-            if (Input.GetMouseButtonDown(0))
+            if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (placedObject != null)
                 {
@@ -53,7 +53,7 @@ namespace _Project.Script.NewSystem
                 }
             }
             
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (InputSystem.Instance.Esc)
             {
                 Exit();
             }

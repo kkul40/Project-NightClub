@@ -13,8 +13,14 @@ namespace _Project.Script.NewSystem
 
         [SerializeField] private LayerMask placementLayer;
         [SerializeField] private LayerMask groundLayer;
-        
-        public event Action OnClicked, OnExit;
+
+        public Vector2 MoveDelta;
+        public float ScrollWheelDelta;
+        [HideInInspector] public bool Esc;
+        [HideInInspector] public bool E;
+        [HideInInspector] public bool Q;
+        [HideInInspector] public bool LeftClickOnWorld;
+        public bool RightClickOnWorld;
 
         private void Awake()
         {
@@ -23,15 +29,15 @@ namespace _Project.Script.NewSystem
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                OnClicked?.Invoke();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                OnExit?.Invoke();
-            }
+            MoveDelta.x = Input.GetAxis("Horizontal");
+            MoveDelta.y = Input.GetAxis("Vertical");
+            ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+            
+            Esc = Input.GetKeyDown(KeyCode.Escape);
+            E = Input.GetKeyDown(KeyCode.E);
+            Q = Input.GetKeyDown(KeyCode.Q);
+            LeftClickOnWorld = Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
+            RightClickOnWorld = Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject();
         }
 
         public Vector3 GetMouseMapPosition()

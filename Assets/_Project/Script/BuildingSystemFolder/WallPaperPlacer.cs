@@ -42,7 +42,7 @@ namespace _Project.Script.NewSystem
                 }
             }
             
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (tempWall != null)
                 {
@@ -51,7 +51,7 @@ namespace _Project.Script.NewSystem
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (InputSystem.Instance.Esc)
             {
                 Exit();
             }

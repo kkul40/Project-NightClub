@@ -58,7 +58,7 @@ namespace _Project.Script.NewSystem
             
             bool isValidated = GameData.Instance.ValidatePosition(snappedCellPos, _placablePropSo.ObjectSize);
             SetMaterialsColor(isValidated);
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (isValidated)
                 {
@@ -67,7 +67,7 @@ namespace _Project.Script.NewSystem
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (InputSystem.Instance.Esc)
             {
                 Exit();
             }

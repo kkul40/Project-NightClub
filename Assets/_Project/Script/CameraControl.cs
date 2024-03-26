@@ -1,3 +1,4 @@
+using _Project.Script.NewSystem;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
@@ -15,22 +16,20 @@ public class CameraControl : MonoBehaviour
 
     private void LateUpdate()
     {
-        var moveDelta = Vector3.zero;
-        moveDelta.x = Input.GetAxis("Horizontal");
-        moveDelta.z = Input.GetAxis("Vertical");
+        var moveDelta = InputSystem.Instance.MoveDelta;
 
         if (moveDelta.magnitude > 1)
         {
             moveDelta = moveDelta.normalized;
         }
 
-        transform.position += (transform.forward * moveDelta.z + transform.right * moveDelta.x) * speed * Time.deltaTime;
+        transform.position += (transform.forward * moveDelta.y + transform.right * moveDelta.x) * speed * Time.deltaTime;
         SetCameraSize();
     }
 
     private void SetCameraSize()
     {
-        cameraSize -= (Input.GetAxis("Mouse ScrollWheel") * zoomMultiplier);
+        cameraSize -= InputSystem.Instance.ScrollWheelDelta * zoomMultiplier;
         cameraSize = Mathf.Clamp(cameraSize, 1, 9);
         mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomMultiplier * 2);
     }
