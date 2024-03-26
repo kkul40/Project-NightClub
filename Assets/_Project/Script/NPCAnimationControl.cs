@@ -10,12 +10,13 @@ public class NPCAnimationControl : MonoBehaviour
     private AnimationClip currentAnimation;
     private AnimationClip selectedAnimationClip;
 
+    private Transform mTransform;
+
     private void Awake()
     {
         // TODO Animation Ile dene
         _animator = GetComponent<Animator>();
     }
-
     public void PlayAnimation(NpcState npcState)
     {
         switch (npcState)
@@ -39,6 +40,9 @@ public class NPCAnimationControl : MonoBehaviour
 
         if (currentAnimation == selectedAnimationClip) return;
 
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+        
         currentAnimation = selectedAnimationClip;
         _animator.CrossFadeInFixedTime(selectedAnimationClip.name, transitionDuration, 0);
     }
