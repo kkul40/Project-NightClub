@@ -1221,6 +1221,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
+  MoveDelta: {x: 0, y: 0}
+  ScrollWheelDelta: 0
+  Esc: 0
+  E: 0
+  Q: 0
+  LeftClickOnWorld: 0
+  RightClickOnWorld: 0
 --- !u!1001 &169661725
 PrefabInstance:
   m_ObjectHideFlags: 0

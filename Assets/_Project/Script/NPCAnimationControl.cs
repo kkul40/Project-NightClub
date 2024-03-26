@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCAnimationControl : MonoBehaviour
 {
     private Animator _animator;
+    private Animation _animation;
     [SerializeField] private NpcAnimationSo _npcAnimationSo;
     [SerializeField] private float transitionDuration;
     private AnimationClip currentAnimation;
@@ -16,6 +17,7 @@ public class NPCAnimationControl : MonoBehaviour
     {
         // TODO Animation Ile dene
         _animator = GetComponent<Animator>();
+        _animation = GetComponent<Animation>();
     }
     public void PlayAnimation(NpcState npcState)
     {
@@ -42,7 +44,7 @@ public class NPCAnimationControl : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
-        
+
         currentAnimation = selectedAnimationClip;
         _animator.CrossFadeInFixedTime(selectedAnimationClip.name, transitionDuration, 0);
     }
