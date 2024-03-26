@@ -13,7 +13,6 @@ public class CameraControl : MonoBehaviour
 
     private float timeElapsed = 0;
 
-
     private void LateUpdate()
     {
         var moveDelta = InputSystem.Instance.MoveDelta;

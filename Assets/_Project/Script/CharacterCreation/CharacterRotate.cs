@@ -16,4 +16,11 @@ public class CharacterRotate : MonoBehaviour
     {
         characterTransform.Rotate(Vector3.up * -ratateAmount);
     }
+
+    public void DragRotate()
+    {
+        float rotX = Input.GetAxis("Mouse X") * 10;
+        
+        characterTransform.Rotate(Vector3.up * -rotX);
+    }
 }

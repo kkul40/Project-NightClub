@@ -47,10 +47,10 @@ public class PlayerCustomization : MonoBehaviour
         }
 
         playerGenderHolder.sharedMesh = playerCDS.playerGenders[playerGenderIndex];
-        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex]);
-        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex]);
-        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex]);
-        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex]);
+        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
+        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
+        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);
+        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);
     }
 
     public void OnMaleButton()
@@ -86,7 +86,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerHairIndex < 0)
             playerHairIndex = playerCDS.playerHairPrefabs.Count - 1;
         
-        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex]);
+        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
     }
 
     public void OnHairNextButton()
@@ -95,7 +95,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerHairIndex > playerCDS.playerHairPrefabs.Count - 1)
             playerHairIndex = 0;
         
-        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex]);
+        ChangePart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
     }
 
     public void OnBeardPreviousButton()
@@ -104,7 +104,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerBeardIndex < 0)
             playerBeardIndex = playerCDS.playerBeardPrefabs.Count - 1;
         
-        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex]);
+        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
     }
 
     public void OnBeardNextButton()
@@ -113,7 +113,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerBeardIndex > playerCDS.playerBeardPrefabs.Count - 1)
             playerBeardIndex = 0;
         
-        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex]);
+        ChangePart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
     }
 
     public void OnAttachmentPreviousButton()
@@ -122,7 +122,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerAttachmentIndex < 0)                                         
             playerAttachmentIndex = playerCDS.playerAttachtmentPrefabs.Count - 1;                     
                                                                   
-        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex]);      
+        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);      
     }
 
     public void OnAttachmentNextButton()
@@ -131,7 +131,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerAttachmentIndex > playerCDS.playerAttachtmentPrefabs.Count - 1)                                
             playerAttachmentIndex = 0;                                                    
                                                                             
-        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex]);                 
+        ChangePart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);                 
     }
 
     public void OnEaringPreviousButton()
@@ -140,7 +140,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerEaringIndex < 0)                                                          
             playerEaringIndex = playerCDS.playerEaringPrefabs.Count - 1;                                
                                                                                         
-        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex]);           
+        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);           
     }
 
     public void OnEaringNextButton()
@@ -149,7 +149,7 @@ public class PlayerCustomization : MonoBehaviour
         if (playerEaringIndex > playerCDS.playerEaringPrefabs.Count - 1)                                   
             playerEaringIndex = 0;                                                             
                                                                                            
-        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex]);              
+        ChangePart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);              
     }
 
     public void FinishUpCustomization()
