@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
+using Activities;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 [SelectionBase]
 public class NPC : MonoBehaviour
@@ -29,11 +28,9 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        Debug.LogWarning(currentActivity);
         UpdateActivity();
         
         _npcAnimationControl.PlayAnimation(_state);
-        // Test
     }
 
     private void UpdateActivity()
@@ -52,6 +49,7 @@ public class NPC : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning(currentActivity);
             currentActivity.UpdateActivity(this);
         }
     }
@@ -59,7 +57,8 @@ public class NPC : MonoBehaviour
     public void SetNewTarget(Vector3 targetPos)
     {
         _navMeshAgent.SetDestination(targetPos);
-        _state = NpcState.Walk;
+        Quaternion rotation = Quaternion.LookRotation(targetPos - transform.position);
+        transform.rotation = rotation;
     }
 
     public void ChangeState(NpcState newState)
@@ -87,23 +86,7 @@ public class NPC : MonoBehaviour
     public void SetRandomTarget()
     {
         target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-        _navMeshAgent.SetDestination(target);
-    }
-
-    private IEnumerator StartRandomWalkingCo()
-    {
-        yield return new WaitForSeconds(0.1f);
-        SetRandomTarget();
-        while (true)
-        {
-            Debug.Log(_navMeshAgent.hasPath);
-            if (!_navMeshAgent.hasPath)
-            {
-                yield return new WaitForSeconds(2);
-                SetRandomTarget();
-            }
-            yield return new WaitForFixedUpdate();
-        }
+        SetNewTarget(target);
     }
 }
 

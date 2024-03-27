@@ -1,25 +1,16 @@
-using System;
 using System.Collections.Generic;
-using _Project.Script.NewSystem;
+using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
-public class GameData : MonoBehaviour
+public class GameData : Singleton<GameData>
 {
-    public static GameData Instance;
-
     public Dictionary<Vector3Int, PlacementData> placementDatas { get; private set; } = new();
     [Header("Data")]
     [SerializeField] private List<Prop> placedProps = new ();
     public List<Vector3> FloorMap = new ();
     public List<Vector3> Test = new ();
     public List<Wall> WallMap = new();
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     private void Update()
     {

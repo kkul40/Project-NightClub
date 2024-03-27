@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 5606287635665740461, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
   - {fileID: -8797027551963478419, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
   playerHairPrefabs:
+  - Prefab: {fileID: 0}
+    Icon: {fileID: 0}
   - Prefab: {fileID: 5980733433742310762, guid: 2384c1a2520f8c445b57347b1eed5e03, type: 3}
     Icon: {fileID: 0}
   - Prefab: {fileID: 1741968832456283258, guid: 094c1d79548130a4c973cf081d852b18, type: 3}

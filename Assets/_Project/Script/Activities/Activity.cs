@@ -1,51 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
-[Serializable]
-public abstract class Activity
+namespace Activities
 {
-    public abstract bool isEnded { get; protected set; }
-    public abstract bool isCanceled { get; protected set; }
-    
-    public abstract void StartActivity(NPC npc);
-    public abstract void UpdateActivity(NPC npc);
-    public abstract void EndActivity(NPC npc);
-
-    protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
+    [Serializable]
+    public abstract class Activity
     {
-        if (GameData.Instance.placementDatas.Count <= 0)
-        {
-            // Debug.LogWarning("Yerlestirilmis Prop Bulunamadi!");
-            return null;
-        }
+        public abstract bool isEnded { get; protected set; }
+        public abstract bool isCanceled { get; protected set; }
+    
+        public abstract void StartActivity(NPC npc);
+        public abstract void UpdateActivity(NPC npc);
+        public abstract void EndActivity(NPC npc);
 
-        float lastDistance = 9999;
-        T closestProp = null;
-        foreach (var prop in GameData.Instance.GetPropList())
+        protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
         {
-            if (prop.transform.TryGetComponent(out IOccupieable occupieable))
+            if (GameData.Instance.placementDatas.Count <= 0)
             {
-                if(occupieable.IsOccupied) continue;
+                Debug.LogWarning("Yerlestirilmis Prop Bulunamadi!");
+                return null;
             }
-            
-            if (prop is T propType)
+
+            float lastDistance = 9999;
+            T closestProp = null;
+            foreach (var prop in GameData.Instance.GetPropList())
             {
-                var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
-                if (distance < lastDistance)
+                if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                 {
-                    closestProp = propType;
-                    lastDistance = distance;
+                    if(occupieable.IsOccupied) continue;
+                }
+            
+                if (prop is T propType)
+                {
+                    var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
+                    if (distance < lastDistance)
+                    {
+                        closestProp = propType;
+                        lastDistance = distance;
+                    }
                 }
             }
-        }
 
-        if (closestProp == null)
-        {
-            Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
-            return null;
-        }
+            if (closestProp == null)
+            {
+                Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
+                return null;
+            }
 
-        return closestProp;
+            return closestProp;
+        }
     }
 }

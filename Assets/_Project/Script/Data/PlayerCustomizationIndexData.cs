@@ -1,6 +1,7 @@
 ﻿using System;
+using CharacterCreation;
 
-namespace _Project.Script.NewSystem.Data
+namespace Data
 {
     [Serializable]
     public class PlayerCustomizationIndexData

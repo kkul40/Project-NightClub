@@ -1,20 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+﻿using ScriptableObjects;
+using UnityEngine;
 
-namespace _Project.Script.NewSystem
+namespace BuildingSystemFolder
 {
     public class Placer : MonoBehaviour , IBuild
     {
         [SerializeField] private BuildingSystem _buildingSystem;
-        [SerializeField] private Grid grid;
         [SerializeField] private Transform propHolder;
         [SerializeField] private LayerMask placableLayer;
-        [SerializeField] private float objectMoveSpeedMultiplier = 10;
         
-        [Header("Placing Materials")]
-        [SerializeField] public Material redPlacement;
-        [SerializeField] public Material bluePlacement;
+        
         
         private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
         private Quaternion lastRotation = Quaternion.identity;
@@ -50,8 +45,8 @@ namespace _Project.Script.NewSystem
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             
-            var nextPlacableGridPos = grid.GetCellCenterWorld(cellPos) + placingOffset;
-            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
+            var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(cellPos) + placingOffset;
+            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
 
             bool isValidated = ValidatePosition(cellPos, _placablePropSo.ObjectSize, placableLayer);
             SetMaterialsColor(isValidated);
@@ -103,7 +98,7 @@ namespace _Project.Script.NewSystem
         
         private void SetMaterialsColor(bool isCellPosValid)
         {
-            Material placementMaterial = isCellPosValid ? bluePlacement : redPlacement;
+            Material placementMaterial = isCellPosValid ? _buildingSystem.blueMaterial : _buildingSystem.redMaterial;
             tempMeshRenderer.material = placementMaterial;
         }
         
@@ -116,7 +111,5 @@ namespace _Project.Script.NewSystem
             }
             return true;
         }
-        
-        
     }
 }

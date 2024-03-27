@@ -1,20 +1,13 @@
-﻿using System;
+﻿using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace _Project.Script.NewSystem
+namespace BuildingSystemFolder
 {
     public class WallPropPlacer : MonoBehaviour, IBuild
     {
         [SerializeField] private BuildingSystem _buildingSystem;
-        [SerializeField] private Grid grid;
         [SerializeField] private Transform propHolder;
         [SerializeField] private LayerMask placableLayer;
-        [SerializeField] private float objectMoveSpeedMultiplier = 10;
-        
-        [Header("Wall Placing Materials")]
-        [SerializeField] public Material redPlacement;
-        [SerializeField] public Material bluePlacement;
         
         private Vector3 placingOffset = new Vector3(0f,0,0f);
         private Quaternion lastRotation = Quaternion.identity;
@@ -51,10 +44,10 @@ namespace _Project.Script.NewSystem
             Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
             Vector3Int offset = Vector3Int.forward * cellPos.z;
 
-            var nextPlacableGridPos = grid.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
-            Vector3Int snappedCellPos = grid.WorldToCell(nextPlacableGridPos);
+            var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(GetClosestWall(mousePos) + offset);
+            Vector3Int snappedCellPos = _buildingSystem.GetGrid().WorldToCell(nextPlacableGridPos);
             
-            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * objectMoveSpeedMultiplier);
+            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
             bool isValidated = GameData.Instance.ValidatePosition(snappedCellPos, _placablePropSo.ObjectSize);
             SetMaterialsColor(isValidated);
@@ -95,7 +88,7 @@ namespace _Project.Script.NewSystem
                 }
             }
 
-            return grid.WorldToCell(closestWall);
+            return _buildingSystem.GetGrid().WorldToCell(closestWall);
         }
         
         private void Place(Vector3Int CellPosition)
@@ -112,7 +105,7 @@ namespace _Project.Script.NewSystem
         
         private void SetMaterialsColor(bool isCellPosValid)
         {
-            Material placementMaterial = isCellPosValid ? bluePlacement : redPlacement;
+            Material placementMaterial = isCellPosValid ? _buildingSystem.blueMaterial : _buildingSystem.redMaterial;
             tempMeshRenderer.material = placementMaterial;
         }
     }

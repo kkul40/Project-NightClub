@@ -1,16 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Project.Script.NewSystem
+[DisallowMultipleComponent]
+public class PropFactory : MonoBehaviour
 {
-    [DisallowMultipleComponent]
-    public class PropFactory : MonoBehaviour
-    {
-        public static PropFactory Instance;
+    public static PropFactory Instance;
 
-        private void Awake()
-        {
-            Instance = this;
-        }
+    private void Awake()
+    {
+        Instance = this;
     }
 }

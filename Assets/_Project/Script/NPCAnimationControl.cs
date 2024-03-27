@@ -1,5 +1,4 @@
-using System;
-using _Project.Script.NewSystem.ScriptableObjects;
+using ScriptableObjects;
 using UnityEngine;
 
 public class NPCAnimationControl : MonoBehaviour

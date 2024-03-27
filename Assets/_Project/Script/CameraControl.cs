@@ -1,4 +1,3 @@
-using _Project.Script.NewSystem;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour

@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
-namespace _Project.Script.NewSystem
+public class Table : Prop
 {
-    public class Table : Prop
-    {
-        public GameObject CubePrefab;
+    public GameObject CubePrefab;
 
-        [SerializeField] private List<MarkedArea> _markedAreas;
+    [SerializeField] private List<MarkedArea> _markedAreas;
         
-        public void Initialize(PlacablePropSo placablePropSo, Vector3 propPos, Direction direction)
-        {
-            base.Initialize(placablePropSo, propPos, direction);
-        }
-    }
-
-
-    [Serializable]
-    public class MarkedArea
+    public void Initialize(PlacablePropSo placablePropSo, Vector3 propPos, Direction direction)
     {
-        public Vector3Int Pos;
+        base.Initialize(placablePropSo, propPos, direction);
     }
+}
+
+
+[Serializable]
+public class MarkedArea
+{
+    public Vector3Int Pos;
 }

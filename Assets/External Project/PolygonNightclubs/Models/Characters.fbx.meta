@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 8327566c71d95324a8736ae100bfc4b2
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
@@ -43,6 +43,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
@@ -70,6 +71,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 3
     normalImportMode: 1
@@ -102,11 +104,11 @@ ModelImporter:
     - boneName: LowerLeg_R
       humanName: RightLowerLeg
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -40, y: 0, z: -80}
+        max: {x: 40, y: 0, z: 80}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Ankle_R
       humanName: RightFoot
       limit:
@@ -134,11 +136,11 @@ ModelImporter:
     - boneName: Spine_02
       humanName: Chest
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -70, y: -40, z: -40}
+        max: {x: 70, y: 40, z: 40}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Spine_03
       humanName: UpperChest
       limit:
@@ -166,11 +168,11 @@ ModelImporter:
     - boneName: Elbow_R
       humanName: RightLowerArm
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -90, y: 0, z: -70}
+        max: {x: 90, y: 0, z: 80}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Hand_R
       humanName: RightHand
       limit:
@@ -230,11 +232,11 @@ ModelImporter:
     - boneName: Elbow_L
       humanName: LeftLowerArm
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -90, y: 0, z: -70}
+        max: {x: 90, y: 0, z: 80.00001}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Hand_L
       humanName: LeftHand
       limit:
@@ -254,11 +256,11 @@ ModelImporter:
     - boneName: LowerLeg_L
       humanName: LeftLowerLeg
       limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
+        min: {x: -40, y: 0, z: -80}
+        max: {x: 40, y: 0, z: 80}
         value: {x: 0, y: 0, z: 0}
         length: 0
-        modified: 0
+        modified: 1
     - boneName: Ankle_L
       humanName: LeftFoot
       limit:
@@ -715,11 +717,11 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    armTwist: 0.5
-    foreArmTwist: 0.5
-    upperLegTwist: 0.5
+    armTwist: 0.225
+    foreArmTwist: 0.486
+    upperLegTwist: 0.444
     legTwist: 0.5
-    armStretch: 0.05
+    armStretch: 0.33
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
@@ -733,6 +735,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 

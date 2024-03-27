@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using ScriptableObjects;
+using UnityEngine;
 
-namespace _Project.Script.NewSystem
+namespace BuildingSystemFolder
 {
     public class WallPaperPlacer : MonoBehaviour, IBuild
     {

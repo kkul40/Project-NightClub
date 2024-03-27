@@ -1,5 +1,4 @@
-using System;
-using _Project.Script.NewSystem;
+using BuildingSystemFolder;
 using UnityEngine;
 
 public class TileIndicator : MonoBehaviour

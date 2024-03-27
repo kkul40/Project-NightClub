@@ -1,5 +1,8 @@
-﻿public enum PlacableType
+﻿namespace ScriptableObjects
 {
-    Floor = 7,
-    Wall = 8,
+    public enum PlacableType
+    {
+        Floor = 7,
+        Wall = 8,
+    }
 }

@@ -1,9 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Text Style")]
-public class TextStyleSo : ScriptableObject
+namespace ScriptableObjects
 {
-    public TMP_FontAsset FontAsset;
-    public float FontSize;
+    [CreateAssetMenu(fileName = "New Text Style")]
+    public class TextStyleSo : ScriptableObject
+    {
+        public TMP_FontAsset FontAsset;
+        public float FontSize;
+    }
 }

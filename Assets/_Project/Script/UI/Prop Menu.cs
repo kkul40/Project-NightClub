@@ -1,27 +1,29 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 // TODO Daha Sonra uidan kalitim alsin
-public class PropMenu : MonoBehaviour
+namespace UI
 {
-    [SerializeField] public List<GameObject> uiInventories;
-
-    private void Start()
+    public class PropMenu : MonoBehaviour
     {
-        for (int i = 0; i < uiInventories.Count; i++)
-        {
-            uiInventories[i].SetActive(false);
-        }
-    }
+        [SerializeField] public List<GameObject> uiInventories;
 
-    public void OpenUpInventory(GameObject inventory)
-    {
-        for (int i = 0; i < uiInventories.Count; i++)
+        private void Start()
         {
-            uiInventories[i].SetActive(false);
+            for (int i = 0; i < uiInventories.Count; i++)
+            {
+                uiInventories[i].SetActive(false);
+            }
         }
 
-        inventory.SetActive(true);
+        public void OpenUpInventory(GameObject inventory)
+        {
+            for (int i = 0; i < uiInventories.Count; i++)
+            {
+                uiInventories[i].SetActive(false);
+            }
+
+            inventory.SetActive(true);
+        }
     }
 }

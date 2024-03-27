@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using _Project.Script.NewSystem;
 using UnityEngine;
 
-public class MapSystem : MonoBehaviour
+public class MapGeneratorSystem : MonoBehaviour
 {
     [SerializeField] private Vector3Int initialMapSize;
     [SerializeField] private Transform floorTileHolder;

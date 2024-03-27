@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public abstract class ItemSo : ScriptableObject
+namespace ScriptableObjects
 {
-    public Sprite icon;
-    public int price;
+    public abstract class ItemSo : ScriptableObject
+    {
+        public Sprite icon;
+        public int price;
+    }
 }

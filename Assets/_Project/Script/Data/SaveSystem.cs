@@ -1,8 +1,9 @@
-﻿using UnityEngine;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using CharacterCreation;
+using UnityEngine;
 
-namespace _Project.Script.NewSystem.Data
+namespace Data
 {
     public static class SaveSystem
     {
@@ -16,6 +17,7 @@ namespace _Project.Script.NewSystem.Data
             PlayerCustomizationIndexData data = new PlayerCustomizationIndexData(playerCustomization);
             formatter.Serialize(stream, data);
             stream.Close();
+            Debug.Log("SAVED");
         }
 
         public static PlayerCustomizationIndexData LoadCustomizedPlayer()
@@ -30,6 +32,7 @@ namespace _Project.Script.NewSystem.Data
                 PlayerCustomizationIndexData data = formatter.Deserialize(stream) as PlayerCustomizationIndexData;
                 stream.Close();
 
+                Debug.Log("LOADED");
                 return data;
             }
 

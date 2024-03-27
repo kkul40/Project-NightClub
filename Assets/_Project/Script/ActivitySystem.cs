@@ -1,22 +1,18 @@
-using System;
 using System.Collections.Generic;
+using Activities;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [DisallowMultipleComponent]
-public class ActivitySystem : MonoBehaviour
+public class ActivitySystem : Singleton<ActivitySystem>
 {
-    public static ActivitySystem Instance;
     [SerializeField] private List<Activity> _activities;
 
     private void Awake()
     {
-        Instance = this;
-        
         // TODO Add All Activitie Here
         _activities = new List<Activity>();
         _activities.Add(new DinnerActivity());
-        // _activities.Add(new WalkRandomActivity());
+        _activities.Add(new WalkRandomActivity());
     }
 
     public Activity GetRandomActivity()

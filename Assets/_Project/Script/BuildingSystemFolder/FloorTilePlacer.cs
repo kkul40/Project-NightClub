@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using ScriptableObjects;
+using UnityEngine;
 
-namespace _Project.Script.NewSystem
+namespace BuildingSystemFolder
 {
     public class FloorTilePlacer : MonoBehaviour, IBuild
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Project.Script.NewSystem.ScriptableObjects
+namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "new Npc Animation Set")]
     public class NpcAnimationSo : ScriptableObject

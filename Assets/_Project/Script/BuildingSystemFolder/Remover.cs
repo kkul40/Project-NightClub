@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using ScriptableObjects;
+using UnityEngine;
 
-namespace _Project.Script.NewSystem
+namespace BuildingSystemFolder
 {
     public class Remover : MonoBehaviour, IBuild
     {
-        [SerializeField] private Material yellowRemover;
-
+        [SerializeField] private BuildingSystem _buildingSystem;
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
         
@@ -72,7 +71,7 @@ namespace _Project.Script.NewSystem
             {
                 selectedMeshRenderer = placedObject.GetComponent<MeshRenderer>();
                 defaultMaterial = selectedMeshRenderer.material;
-                selectedMeshRenderer.material = yellowRemover;
+                selectedMeshRenderer.material = _buildingSystem.yellowMaterial;
             }            
         }
 
