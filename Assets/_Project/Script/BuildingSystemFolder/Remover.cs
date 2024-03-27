@@ -20,6 +20,12 @@ namespace BuildingSystemFolder
 
         public void Exit()
         {
+            if (selectedMeshRenderer != null)
+            {
+                selectedMeshRenderer.material = defaultMaterial;
+                selectedMeshRenderer = null;
+            }
+            
             BuildingSystem.Instance.ResetPlacerAndRemover();
         }
         

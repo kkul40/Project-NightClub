@@ -5,6 +5,8 @@ namespace BuildingSystemFolder
 {
     public class WallPaperPlacer : MonoBehaviour, IBuild
     {
+        [SerializeField] private Transform fx_Wall;
+        
         private WallPaperSo tempWallPaperSo;
         private Wall tempWall;
         private Wall lastWall;
@@ -47,6 +49,7 @@ namespace BuildingSystemFolder
                 if (tempWall != null)
                 {
                     tempWall.ChangeWallpaper(tempWallPaperSo.Material);
+                    BuildingSystem.Instance.PlayFX(fx_Wall, tempWall.transform.position, tempWall.transform.rotation);
                     lastWall = null;
                 }
             }

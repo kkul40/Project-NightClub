@@ -8,8 +8,7 @@ namespace BuildingSystemFolder
         [SerializeField] private BuildingSystem _buildingSystem;
         [SerializeField] private Transform propHolder;
         [SerializeField] private LayerMask placableLayer;
-        
-        
+        [SerializeField] private Transform fx_Floor;
         
         private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
         private Quaternion lastRotation = Quaternion.identity;
@@ -89,6 +88,8 @@ namespace BuildingSystemFolder
             var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
             GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
+            
+            _buildingSystem.PlayFX(fx_Floor, tempPrefab.transform.position, tempPrefab.transform.rotation);
 
             if (newObject.TryGetComponent(out Prop prop))
             {

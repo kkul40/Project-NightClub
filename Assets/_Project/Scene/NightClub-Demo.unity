@@ -828,7 +828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247863921188770609, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 470
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -947,7 +947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247863921188770609, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 470
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2954,7 +2954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247863921188770609, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 470
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3232,6 +3232,7 @@ MonoBehaviour:
   placableLayer:
     serializedVersion: 2
     m_Bits: 128
+  fx_Floor: {fileID: 7879539841901057928, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
 --- !u!114 &1263105100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3274,6 +3275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0273369a91104051938f904662d4aa79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fx_Wall: {fileID: 7722424093072147749, guid: dc804b9b8a991f142afcac27a7d3b841, type: 3}
 --- !u!114 &1263105103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4174,7 +4176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4804,7 +4806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247863921188770609, guid: 43f6f1a5e26065148bc8ed3ba771e93f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 470
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

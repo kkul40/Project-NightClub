@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6541618308937833375}
   - component: {fileID: 1618385793649513594}
+  - component: {fileID: 7625792817025969056}
+  - component: {fileID: 5488267753338117066}
   m_Layer: 0
   m_Name: WallDoor
   m_TagString: Untagged
@@ -46,6 +48,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChieldWallTransform: {fileID: 1451962102083895278}
+  ChieldDoorTransform: {fileID: 4502187223153002274}
+--- !u!54 &7625792817025969056
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6541618308937833374}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &5488267753338117066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6541618308937833374}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1.8}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &6541618308995754632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,7 +179,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d389591a47e876f4c968891567d3cd54, type: 2}
     - target: {fileID: 6704704201921907136, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7256007482193243562, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
       propertyPath: m_LocalPosition.x
@@ -194,6 +245,11 @@ BoxCollider:
 --- !u!4 &1451962102083895278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3535861274306407066, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
+  m_PrefabInstance: {fileID: 6541618308995754632}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4502187223153002274 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7256007482193243562, guid: 8c69d2097d7c4744796c827eb1788f96, type: 3}
   m_PrefabInstance: {fileID: 6541618308995754632}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6258115581962704563 stripped

@@ -28,13 +28,17 @@ public class InputSystem : MonoBehaviour
     {
         MoveDelta.x = Input.GetAxis("Horizontal");
         MoveDelta.y = Input.GetAxis("Vertical");
-        ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+        
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            LeftClickOnWorld = Input.GetMouseButtonDown(0);
+            RightClickOnWorld = Input.GetMouseButtonDown(1);
+            ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+        }
             
         Esc = Input.GetKeyDown(KeyCode.Escape);
         E = Input.GetKeyDown(KeyCode.E);
         Q = Input.GetKeyDown(KeyCode.Q);
-        LeftClickOnWorld = Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject();
-        RightClickOnWorld = Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject();
     }
 
     public Vector3 GetMouseMapPosition()

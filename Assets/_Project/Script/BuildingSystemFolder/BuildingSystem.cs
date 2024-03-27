@@ -8,6 +8,7 @@ namespace BuildingSystemFolder
     {
         [SerializeField] private InputSystem inputSystem;
         [SerializeField] private Grid grid;
+        
         [SerializeField] private float objectMoveSpeedMultiplier = 10;
     
         [Header("Placing Materials")]
@@ -115,6 +116,12 @@ namespace BuildingSystemFolder
                 return placedObject.Prefab;
             }
             return null;
+        }
+
+        public void PlayFX(Transform fx_Prefab ,Vector3 pos, Quaternion rotation)
+        {
+            var fx = Instantiate(fx_Prefab, pos, rotation);
+            Destroy(fx.gameObject, 1.5f);
         }
     
         public PlacingType GetPlacingType() => placingType;

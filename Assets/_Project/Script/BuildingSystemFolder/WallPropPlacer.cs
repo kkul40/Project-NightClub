@@ -96,7 +96,7 @@ namespace BuildingSystemFolder
             var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
             GameData.Instance.AddPlacementData(CellPosition,new PlacementData(_placablePropSo, newObject));
-
+            
             if (newObject.TryGetComponent(out Prop prop))
             {
                 prop.Initialize(_placablePropSo, tempPrefab.transform.position, Direction.Up);
