@@ -4,34 +4,37 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISlot : MonoBehaviour
+namespace UI
 {
-    public TextStyleSo textStyleSo;
-    public ItemSo ItemSo;
-    public Image image;
-    public TextMeshProUGUI textMeshPro;
-
-    private void OnValidate()
+    public class UISlot : MonoBehaviour
     {
-        textMeshPro.font = textStyleSo.FontAsset;
-        textMeshPro.fontSize = textStyleSo.FontSize;
-    }
+        public TextStyleSo textStyleSo;
+        public ItemSo ItemSo;
+        public Image image;
+        public TextMeshProUGUI textMeshPro;
 
-    private void Update()
-    {
-        textMeshPro.font = textStyleSo.FontAsset;
-        textMeshPro.fontSize = textStyleSo.FontSize;
-    }
+        private void OnValidate()
+        {
+            textMeshPro.font = textStyleSo.FontAsset;
+            textMeshPro.fontSize = textStyleSo.FontSize;
+        }
 
-    public void SetUp(ItemSo itemSo)
-    {
-        this.ItemSo = itemSo;
-        image.sprite = ItemSo.icon;
-        textMeshPro.text = ItemSo.name;
-    }
+        private void Update()
+        {
+            textMeshPro.font = textStyleSo.FontAsset;
+            textMeshPro.fontSize = textStyleSo.FontSize;
+        }
 
-    public void OnClick()
-    {
-        BuildingSystem.Instance.StartPlacement(ItemSo);
+        public void SetUp(ItemSo itemSo)
+        {
+            this.ItemSo = itemSo;
+            image.sprite = ItemSo.icon;
+            textMeshPro.text = ItemSo.name;
+        }
+
+        public void OnClick()
+        {
+            BuildingSystem.Instance.StartPlacement(ItemSo);
+        }
     }
 }

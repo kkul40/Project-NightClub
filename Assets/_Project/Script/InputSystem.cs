@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics.CodeAnalysis;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 [DisallowMultipleComponent]
@@ -7,6 +8,7 @@ public class InputSystem : MonoBehaviour
     public static InputSystem Instance;
     [SerializeField] private Camera mainCam;
     [SerializeField] private RaycastHit lastHit;
+    [SerializeField] private Transform lastHitTransform;
 
     [SerializeField] private LayerMask placementLayer;
     [SerializeField] private LayerMask groundLayer;
@@ -52,17 +54,21 @@ public class InputSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, maxDistance, placementLayer))
         {
             lastHit = hit;
+            lastHitTransform = hit.transform;
             return hit.point;
         }
             
         if(Physics.Raycast(ray, out hit, maxDistance, groundLayer))
         {
             lastHit = hit;
+            lastHitTransform = hit.transform;
             return hit.point;
         }
-            
+
         return Vector3.zero;
     }
+
+    public Transform GetLastHitTransform() => lastHitTransform;
 
     public RaycastHit GetLastHit() => lastHit;
 }

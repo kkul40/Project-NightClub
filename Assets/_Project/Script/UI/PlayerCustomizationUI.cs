@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Data;
 using PlayerScripts;
-using ScriptableObjects;
 using UnityEngine;
 
-namespace CharacterCreation
+namespace UI
 {
     public class PlayerCustomizationUI : MonoBehaviour
     {

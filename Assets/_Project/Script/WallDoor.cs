@@ -9,20 +9,19 @@ public class WallDoor : Wall
         
     protected override void Start()
     {
-        GameData.Instance.WallMap.Add(this);
+        base.Start();
         _meshRenderer = ChieldWallTransform.GetComponent<MeshRenderer>();
-        
         ToggleDoor(false);
     }
 
-    public override void ChangeWallpaper(Material newWallPaper)
+    public override void ChangeMaterial(Material newWallPaper)
     {
         var materials = _meshRenderer.materials;
         materials[0] = newWallPaper;
         materials[1] = newWallPaper;
         _meshRenderer.materials = materials;
     }
-
+   
     private void ToggleDoor(bool toggle)
     {
         if (toggle)

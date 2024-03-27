@@ -62,10 +62,10 @@ namespace BuildingSystemFolder
                         break;
                 }
             }
-            else if (itemSo is WallPaperSo wallPaperSo)
+            else if (itemSo is MaterialSo materialSo)
             {
-                currentBuild = GetComponent<WallPaperPlacer>();
-                currentBuild.Setup(wallPaperSo);
+                currentBuild = GetComponent<TileMaterialPlacer>();
+                currentBuild.Setup(materialSo);
                 tileIndicator.SetTileIndicator(PlacingType.Place);
             }
         }

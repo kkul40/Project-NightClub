@@ -1,27 +1,29 @@
-using System;
 using BuildingSystemFolder;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Player : MonoBehaviour
+namespace PlayerScripts
 {
-    private NavMeshAgent _navMeshAgent;
-
-    private void Awake()
+    public class Player : MonoBehaviour
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-    }
+        private NavMeshAgent _navMeshAgent;
 
-    private void Update()
-    {
-        if (InputSystem.Instance.RightClickOnWorld)
+        private void Awake()
         {
-            SetDestination(BuildingSystem.Instance.GetGrid().GetCellCenterWorld(BuildingSystem.Instance.GetGrid().WorldToCell(InputSystem.Instance.GetMouseMapPosition())));
+            _navMeshAgent = GetComponent<NavMeshAgent>();
         }
-    }
 
-    private void SetDestination(Vector3 destination)
-    {
-        _navMeshAgent.SetDestination(destination);
+        private void Update()
+        {
+            if (InputSystem.Instance.RightClickOnWorld)
+            {
+                SetDestination(BuildingSystem.Instance.GetGrid().GetCellCenterWorld(BuildingSystem.Instance.GetGrid().WorldToCell(InputSystem.Instance.GetMouseMapPosition())));
+            }
+        }
+
+        private void SetDestination(Vector3 destination)
+        {
+            _navMeshAgent.SetDestination(destination);
+        }
     }
 }
