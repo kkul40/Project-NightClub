@@ -26,6 +26,8 @@ namespace Activities
             T closestProp = null;
             foreach (var prop in GameData.Instance.GetPropList())
             {
+                if(prop == null) continue;
+                
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                 {
                     if(occupieable.IsOccupied) continue;
