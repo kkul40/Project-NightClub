@@ -1,0 +1,77 @@
+﻿using System.Collections.Generic;
+using Data;
+using ScriptableObjects;
+using UnityEngine;
+
+namespace PlayerScripts
+{
+    public class PlayerCustomizationLoader : Singleton<PlayerCustomizationLoader>
+    {
+        public int playerGenderIndex = 0;
+        public int playerHairIndex = 0;
+        public int playerBeardIndex = 0;
+        public int playerAttachmentIndex = 0;
+        public int playerEaringIndex = 0;
+    
+        [Header("Customization Variables")] 
+        public PlayerCustomizationDataSo playerCDS;
+        public SkinnedMeshRenderer playerGenderHolder;
+        public Transform playerHairHolder;
+        public Transform playerBeardHolder;
+        public Transform playerAttachmentHolder;
+        public Transform playerEaringHolder;
+
+        private void Start()
+        {
+            LoadCustomizedPlayer();
+        }
+
+        private void LoadCustomizedPlayer()
+        {
+            PlayerCustomizationIndexData data = SaveSystem.LoadCustomizedPlayer();
+            if (data != null)
+            {
+                playerGenderIndex = data.playerGenderIndex;
+                playerHairIndex = data.playerHairIndex;
+                playerBeardIndex = data.playerBeardIndex;
+                playerAttachmentIndex = data.playerAttachmentIndex;
+                playerEaringIndex = data.playerEaringIndex;
+            }
+
+            playerGenderHolder.sharedMesh = playerCDS.playerGenders[playerGenderIndex];
+            ChangePlayerPart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
+            ChangePlayerPart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
+            ChangePlayerPart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);
+            ChangePlayerPart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);
+        }
+        
+        private void ChangePlayerPart(Transform partHolder,GameObject partPrefab)
+        {
+            for (int i = partHolder.childCount - 1; i >= 0; i--)
+            {
+                var child = partHolder.GetChild(i).gameObject;
+                Destroy(child);
+            }
+
+            if (partPrefab != null)
+            {
+                var newPart = Instantiate(partPrefab, partHolder);
+            }
+        }
+        
+        public void ChangeIndex(ref int index, ref Transform holder, ref List<CustomizationItem> prefabs, int change)
+        {
+            index += change;
+            if (index > prefabs.Count - 1)
+            {
+                index = 0;
+            }
+            else if (index < 0)
+            {
+                index = prefabs.Count -1;
+            }
+            
+            ChangePlayerPart(holder, prefabs[index].Prefab);
+        }
+    }
+}

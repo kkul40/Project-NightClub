@@ -1,5 +1,6 @@
 ﻿using System;
 using CharacterCreation;
+using PlayerScripts;
 
 namespace Data
 {
@@ -12,13 +13,13 @@ namespace Data
         public int playerAttachmentIndex = 0;
         public int playerEaringIndex = 0;
 
-        public PlayerCustomizationIndexData(PlayerCustomization playerCustomization)
+        public PlayerCustomizationIndexData(PlayerCustomizationLoader playerCustomizationUI)
         {
-            playerGenderIndex = playerCustomization.playerGenderIndex;
-            playerHairIndex = playerCustomization.playerHairIndex;
-            playerBeardIndex = playerCustomization.playerBeardIndex;
-            playerAttachmentIndex = playerCustomization.playerAttachmentIndex;
-            playerEaringIndex = playerCustomization.playerEaringIndex;
+            playerGenderIndex = playerCustomizationUI.playerGenderIndex;
+            playerHairIndex = playerCustomizationUI.playerHairIndex;
+            playerBeardIndex = playerCustomizationUI.playerBeardIndex;
+            playerAttachmentIndex = playerCustomizationUI.playerAttachmentIndex;
+            playerEaringIndex = playerCustomizationUI.playerEaringIndex;
         }
     }
 }

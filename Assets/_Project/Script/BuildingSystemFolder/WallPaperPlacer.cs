@@ -48,8 +48,8 @@ namespace BuildingSystemFolder
             {
                 if (tempWall != null)
                 {
-                    tempWall.ChangeWallpaper(tempWallPaperSo.Material);
                     BuildingSystem.Instance.PlayFX(fx_Wall, tempWall.transform.position, tempWall.transform.rotation);
+                    // tempWall.ChangeWallpaper(tempWallPaperSo.Material);
                     lastWall = null;
                 }
             }

@@ -1712,6 +1712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6747703780476756041}
+  - component: {fileID: 2504157194924796705}
   m_Layer: 0
   m_Name: PlayerCreationPreview
   m_TagString: Untagged
@@ -1735,6 +1736,29 @@ Transform:
   - {fileID: 4099289845919160280}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &2504157194924796705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7347895219125945877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5968f9799a48eb9e61ce0d4ca0c106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGenderIndex: 0
+  playerHairIndex: 0
+  playerBeardIndex: 0
+  playerAttachmentIndex: 0
+  playerEaringIndex: 0
+  playerCDS: {fileID: 11400000, guid: cd49873a60c4d0b42a0403031cf8f936, type: 2}
+  playerGenderHolder: {fileID: 7856672571955916575}
+  playerHairHolder: {fileID: 9206999676370309051}
+  playerBeardHolder: {fileID: 8528236222219832619}
+  playerAttachmentHolder: {fileID: 6049331779054794099}
+  playerEaringHolder: {fileID: 8585340648194140057}
 --- !u!1 &7394886979875554033
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,15 +33,12 @@ public class WallDoor : Wall
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Door OPen");
         if(other.transform.TryGetComponent(out NPC npc))
             ToggleDoor(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Door Close");
-
         if(other.transform.TryGetComponent(out NPC npc))
             ToggleDoor(false);
     }

@@ -1,20 +1,21 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using CharacterCreation;
+using PlayerScripts;
 using UnityEngine;
 
 namespace Data
 {
     public static class SaveSystem
     {
-        public static void SaveCustomizedPlayer(PlayerCustomization playerCustomization)
+        public static void SaveCustomizedPlayer(PlayerCustomizationLoader playerCustomizationLoader)
         {
             BinaryFormatter formatter = new BinaryFormatter();
 
             string path = Application.persistentDataPath + "/Player.kdata";
             FileStream stream = new FileStream(path, FileMode.Create);
 
-            PlayerCustomizationIndexData data = new PlayerCustomizationIndexData(playerCustomization);
+            PlayerCustomizationIndexData data = new PlayerCustomizationIndexData(playerCustomizationLoader);
             formatter.Serialize(stream, data);
             stream.Close();
             Debug.Log("SAVED");
