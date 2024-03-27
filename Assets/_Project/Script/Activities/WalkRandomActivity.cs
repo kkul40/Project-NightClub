@@ -14,7 +14,7 @@ namespace Activities
         {
             if (isCanceled) return;
 
-            npc.SetRandomTarget();
+            npc.SetRandomDestination();
             npc.ChangeState(NpcState.Walk);
         }
 
@@ -28,7 +28,7 @@ namespace Activities
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
-                    npc.SetRandomTarget();
+                    npc.SetRandomDestination();
                     npc.ChangeState(NpcState.Walk);
                     timer = 0;
                     isEnded = true;

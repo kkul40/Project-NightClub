@@ -38,7 +38,7 @@ namespace Activities
                 return;
             }
         
-            npc.SetNewTarget(chairProp.GetPropPosition());
+            npc.SetNewDestination(chairProp.GetPropPosition());
             chairProp.IsOccupied = true;
         }
 

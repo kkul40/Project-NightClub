@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using PlayerScripts;
@@ -8,8 +9,17 @@ namespace CharacterCreation
 {
     public class PlayerCustomizationUI : MonoBehaviour
     {
-        [SerializeField] private PlayerCustomizationLoader _playerCL;
-        
+        private PlayerCustomizationLoader _playerCL;
+
+        private void Awake()
+        {
+            _playerCL = PlayerCustomizationLoader.Instance;
+            if (_playerCL == null)
+            {
+                Debug.LogError("PlayerCustomizationLoader Is Missing");
+            }
+        }
+
         public void OnMaleButton()
         {
             _playerCL.playerGenderIndex = 0;

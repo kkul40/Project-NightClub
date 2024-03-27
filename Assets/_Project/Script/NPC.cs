@@ -54,7 +54,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void SetNewTarget(Vector3 targetPos)
+    public void SetNewDestination(Vector3 targetPos)
     {
         _navMeshAgent.SetDestination(targetPos);
         Quaternion rotation = Quaternion.LookRotation(targetPos - transform.position);
@@ -83,10 +83,10 @@ public class NPC : MonoBehaviour
     }
     
     [ContextMenu("Random Target")]
-    public void SetRandomTarget()
+    public void SetRandomDestination()
     {
         target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-        SetNewTarget(target);
+        SetNewDestination(target);
     }
 }
 
