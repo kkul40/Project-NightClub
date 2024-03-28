@@ -80,10 +80,6 @@ namespace BuildingSystemFolder
             
             if (InputSystem.Instance.LeftClickOnWorld)
             {
-                if (savedMaterials.SequenceEqual(_tempMaterialObject.GetCurrentMaterial()))
-                {
-                    Debug.Log("TEst");
-                }
                 if (_tempMaterialObject != null)
                 {
                     switch (_tempMaterialSo.MaterialType)
