@@ -19,6 +19,7 @@ public class InputSystem : MonoBehaviour
     [HideInInspector] public bool E;
     [HideInInspector] public bool Q;
     [HideInInspector] public bool LeftClickOnWorld;
+    [HideInInspector] public bool LeftHoldClickOnWorld;
     public bool RightClickOnWorld;
 
     private void Awake()
@@ -34,6 +35,7 @@ public class InputSystem : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             LeftClickOnWorld = Input.GetMouseButtonDown(0);
+            LeftHoldClickOnWorld = Input.GetMouseButton(0);
             RightClickOnWorld = Input.GetMouseButtonDown(1);
             ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
         }

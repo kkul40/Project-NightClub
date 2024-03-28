@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
 
-public class Wall : TileObject
+public class Wall : MonoBehaviour, IMaterial
 {
-    protected override void Start()
+    public MeshRenderer MeshRenderer { get; protected set; }
+    
+    protected void Start()
     {
-        base.Start();
+        MeshRenderer = GetComponentInChildren<MeshRenderer>();
         GameData.Instance.WallMap.Add(this);
     }
 
-    public override void ChangeMaterial(Material newWallPaper)
+    public virtual void ChangeMaterial(Material newWallPaper)
     {
-        var materials = _meshRenderer.materials;
+        var materials = MeshRenderer.materials;
         materials[1] = newWallPaper;
-        _meshRenderer.materials = materials;
+        MeshRenderer.materials = materials;
+    }
+
+    public virtual void ResetMaterial(Material[] materials)
+    {
+        var currentMaterial = MeshRenderer.materials;
+        currentMaterial = materials;
+        MeshRenderer.materials = currentMaterial;
     }
 }
 

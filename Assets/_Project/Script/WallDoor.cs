@@ -2,24 +2,24 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class WallDoor : Wall
+public class WallDoor : Wall, IMaterial
 {
     [SerializeField] private Transform ChieldWallTransform;
     [SerializeField] private Transform ChieldDoorTransform;
         
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-        _meshRenderer = ChieldWallTransform.GetComponent<MeshRenderer>();
+        MeshRenderer = ChieldWallTransform.GetComponent<MeshRenderer>();
+        GameData.Instance.WallMap.Add(this);
         ToggleDoor(false);
     }
 
     public override void ChangeMaterial(Material newWallPaper)
     {
-        var materials = _meshRenderer.materials;
+        var materials = MeshRenderer.materials;
         materials[0] = newWallPaper;
         materials[1] = newWallPaper;
-        _meshRenderer.materials = materials;
+        MeshRenderer.materials = materials;
     }
    
     private void ToggleDoor(bool toggle)

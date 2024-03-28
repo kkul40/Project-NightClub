@@ -1,9 +1,24 @@
 ﻿using UnityEngine;
 
-public class FloorTile : TileObject
+public class FloorTile : MonoBehaviour, IMaterial
 {
-    protected override void Start()
+    public MeshRenderer MeshRenderer { get; private set; }
+    
+    private void Start()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        MeshRenderer = GetComponentInChildren<MeshRenderer>();
+    }
+    public void ChangeMaterial(Material material)
+    {
+        var materials = MeshRenderer.materials;
+        materials[0] = material;
+        MeshRenderer.materials = materials;
+    }
+
+    public void ResetMaterial(Material[] materials)
+    {
+        var currentMaterials = MeshRenderer.materials;
+        currentMaterials = materials;
+        MeshRenderer.materials = currentMaterials;
     }
 }

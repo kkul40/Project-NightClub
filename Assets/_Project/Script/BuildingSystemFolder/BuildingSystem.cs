@@ -64,7 +64,7 @@ namespace BuildingSystemFolder
             }
             else if (itemSo is MaterialSo materialSo)
             {
-                currentBuild = GetComponent<TileMaterialPlacer>();
+                currentBuild = GetComponent<MaterialPlacer>();
                 currentBuild.Setup(materialSo);
                 tileIndicator.SetTileIndicator(PlacingType.Place);
             }
