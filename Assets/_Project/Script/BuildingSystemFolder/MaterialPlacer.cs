@@ -54,11 +54,6 @@ namespace BuildingSystemFolder
                     _tempMaterialObject = null;
                     break;
             }
-           
-            /*
-             * materyaller aynimi diye kontrol et
-             * 
-             */
             
             if (_tempMaterialObject != _lastMaterialObject) // Optimization
             {
