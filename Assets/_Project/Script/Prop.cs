@@ -4,10 +4,10 @@ using UnityEngine;
 public class Prop : MonoBehaviour
 {
     private PlacablePropSo _placablePropSo;
-    public Vector3 propPosition;
+    public Vector3Int propPosition;
     public Direction direction;
 
-    public virtual void Initialize(PlacablePropSo placablePropSo, Vector3 propPos, Direction direction)
+    public virtual void Initialize(PlacablePropSo placablePropSo, Vector3Int propPos, Direction direction)
     {
         this._placablePropSo = placablePropSo;
         this.propPosition = propPos;

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Activities
 {
@@ -14,6 +15,7 @@ namespace Activities
             Drinking,
         }
     
+        private Table tableProp;
         private Chair chairProp;
         private Vector3 positionBeforeSit = -Vector3.one;
         private DinnerState _dinnerState = DinnerState.None;
@@ -29,8 +31,15 @@ namespace Activities
         public override void StartActivity(NPC npc)
         {
             if (isCanceled) return;
+            tableProp = GetAvaliablePropByType<Table>(npc);
 
-            chairProp = GetAvaliablePropByType<Chair>(npc);
+            if (tableProp == null)
+            {
+                isCanceled = true;
+                return;
+            }
+            
+            chairProp = tableProp.Chairs[Random.Range(0, tableProp.Chairs.Count - 1)];
         
             if (chairProp == null || chairProp.IsOccupied)
             {
@@ -38,7 +47,7 @@ namespace Activities
                 return;
             }
         
-            npc.SetNewDestination(chairProp.GetPropPosition());
+            npc.SetNewDestination(tableProp.GetPropPosition());
             chairProp.IsOccupied = true;
         }
 
@@ -49,7 +58,7 @@ namespace Activities
             switch (_dinnerState)
             {
                 case DinnerState.None:
-                    var distance = Vector3.Distance(npc.transform.position, chairProp.GetPropPosition());
+                    var distance = Vector3.Distance(npc.transform.position, tableProp.GetPropPosition());
                     if (distance < 0.05f)
                     {
                         //Deactivate Navmesh

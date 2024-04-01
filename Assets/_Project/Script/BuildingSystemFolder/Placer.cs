@@ -12,6 +12,7 @@ namespace BuildingSystemFolder
         
         private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
         private Quaternion lastRotation = Quaternion.identity;
+        private Direction lastDirection = Direction.Down;
 
         private PlacablePropSo _placablePropSo;
         private GameObject tempPrefab;
@@ -70,14 +71,14 @@ namespace BuildingSystemFolder
             if (InputSystem.Instance.E)
             {
                 Quaternion tempQ = tempPrefab.transform.rotation;
-                tempPrefab.transform.rotation = DirectionHelper.RotateClockWise(tempQ);
+                tempPrefab.transform.rotation = DirectionHelper.RotateClockWise(tempQ, ref lastDirection);
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
             else if (InputSystem.Instance.Q)
             {
                 Quaternion tempQ = tempPrefab.transform.rotation;
-                tempPrefab.transform.rotation = DirectionHelper.RotateCounterClockWise(tempQ);
+                tempPrefab.transform.rotation = DirectionHelper.RotateCounterClockWise(tempQ,ref lastDirection);
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
@@ -93,7 +94,8 @@ namespace BuildingSystemFolder
 
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_placablePropSo, tempPrefab.transform.position, Direction.Up);
+                var cellPos = _buildingSystem.GetVectorIntFromVector(tempPrefab.transform.position);
+                prop.Initialize(_placablePropSo, cellPos, lastDirection);
             }
         }
         

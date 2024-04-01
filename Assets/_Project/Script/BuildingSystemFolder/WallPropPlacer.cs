@@ -99,7 +99,9 @@ namespace BuildingSystemFolder
             
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_placablePropSo, tempPrefab.transform.position, Direction.Up);
+                var cellPos = _buildingSystem.GetVectorIntFromVector(tempPrefab.transform.position);
+                print(cellPos);
+                prop.Initialize(_placablePropSo, cellPos, Direction.Up);
             }
         }
         

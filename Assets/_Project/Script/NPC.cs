@@ -1,5 +1,6 @@
 using System.Collections;
 using Activities;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -57,8 +58,9 @@ public class NPC : MonoBehaviour
     public void SetNewDestination(Vector3 targetPos)
     {
         _navMeshAgent.SetDestination(targetPos);
-        Quaternion rotation = Quaternion.LookRotation(targetPos - transform.position);
-        transform.rotation = rotation;
+        //TODO Rotation i buradan yap
+        // Quaternion rotation = Quaternion.LookRotation(targetPos - transform.position);
+        // transform.DORotate(rotation.eulerAngles, 0.5f);
     }
 
     public void ChangeState(NpcState newState)

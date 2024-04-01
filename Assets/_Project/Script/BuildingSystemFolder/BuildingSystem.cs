@@ -118,6 +118,12 @@ namespace BuildingSystemFolder
             return null;
         }
 
+        public Vector3Int GetVectorIntFromVector(Vector3 position)
+        {
+            Vector3Int cellPos = grid.WorldToCell(position);
+            return new Vector3Int(cellPos.x, cellPos.z, cellPos.y);
+        }
+
         public void PlayFX(Transform fx_Prefab ,Vector3 pos, Quaternion rotation)
         {
             var fx = Instantiate(fx_Prefab, pos, rotation);

@@ -6,6 +6,8 @@ public class Chair : Prop, IOccupieable
     [SerializeField] private Transform sitPosition;
 
     public NPC Owner { get; set; }
+    
+    [field : SerializeField]
     public bool IsOccupied { get; set; } = false;
     
     /// <summary>
