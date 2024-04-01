@@ -12,7 +12,6 @@ public class Prop : MonoBehaviour
         this._placablePropSo = placablePropSo;
         this.propPosition = propPos;
         this.direction = direction;
-        GameData.Instance.AddProp(this);
     }
 
     public Vector3 GetPropPosition() => propPosition;

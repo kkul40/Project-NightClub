@@ -33,13 +33,13 @@ namespace Activities
             if (isCanceled) return;
             tableProp = GetAvaliablePropByType<Table>(npc);
 
-            if (tableProp == null)
+            if (tableProp == null || tableProp.Chairs.Count < 1)
             {
                 isCanceled = true;
                 return;
             }
-            
-            chairProp = tableProp.Chairs[Random.Range(0, tableProp.Chairs.Count - 1)];
+           
+            chairProp = tableProp.Chairs[Random.Range(0, tableProp.Chairs.Count)];
         
             if (chairProp == null || chairProp.IsOccupied)
             {

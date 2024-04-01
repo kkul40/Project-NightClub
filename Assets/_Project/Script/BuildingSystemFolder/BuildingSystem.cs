@@ -74,8 +74,8 @@ namespace BuildingSystemFolder
         {
             var mousePos = inputSystem.GetMouseMapPosition();
             Vector3Int cellPos = grid.WorldToCell(mousePos);
-
             tileIndicator.SetPosition(grid.CellToWorld(cellPos));
+            
             return cellPos;
         }
 
@@ -101,27 +101,6 @@ namespace BuildingSystemFolder
             currentBuild.Setup(new PlacablePropSo());
         
             tileIndicator.SetTileIndicator(PlacingType.Remove);
-        }
-    
-        private void RemovePlacedObject(Vector3Int cellPos ,GameObject placedObject)
-        {
-            GameData.Instance.RemovePlacementData(cellPos);
-            Destroy(placedObject);
-        }
-    
-        private GameObject GetPlacedObjectFromTile(Vector3Int cellPos)
-        {
-            if (GameData.Instance.placementDatas.TryGetValue(cellPos, out var placedObject))
-            {
-                return placedObject.Prefab;
-            }
-            return null;
-        }
-
-        public Vector3Int GetVectorIntFromVector(Vector3 position)
-        {
-            Vector3Int cellPos = grid.WorldToCell(position);
-            return new Vector3Int(cellPos.x, cellPos.z, cellPos.y);
         }
 
         public void PlayFX(Transform fx_Prefab ,Vector3 pos, Quaternion rotation)

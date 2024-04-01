@@ -42,18 +42,18 @@ namespace BuildingSystemFolder
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
-            Vector3Int offset = Vector3Int.forward * cellPos.z;
+            Vector3Int offset = Vector3Int.up * cellPos.y; 
 
             var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(GetClosestWall(mousePos) + offset);
             Vector3Int snappedCellPos = _buildingSystem.GetGrid().WorldToCell(nextPlacableGridPos);
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
-            bool isValidated = GameData.Instance.ValidatePosition(snappedCellPos, _placablePropSo.ObjectSize);
-            SetMaterialsColor(isValidated);
+            bool isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _placablePropSo.ObjectSize);
+            SetMaterialsColor(isPlacable);
             if (InputSystem.Instance.LeftClickOnWorld)
             {
-                if (isValidated)
+                if (isPlacable)
                 {
                     tempPrefab.transform.position = nextPlacableGridPos;
                     Place(snappedCellPos);
@@ -95,14 +95,13 @@ namespace BuildingSystemFolder
         {
             var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
-            GameData.Instance.AddPlacementData(CellPosition,new PlacementData(_placablePropSo, newObject));
             
             if (newObject.TryGetComponent(out Prop prop))
             {
-                var cellPos = _buildingSystem.GetVectorIntFromVector(tempPrefab.transform.position);
-                print(cellPos);
-                prop.Initialize(_placablePropSo, cellPos, Direction.Up);
+                prop.Initialize(_placablePropSo, CellPosition, Direction.Up);
             }
+            
+            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
         }
         
         private void SetMaterialsColor(bool isCellPosValid)

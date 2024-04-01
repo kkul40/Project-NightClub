@@ -40,9 +40,6 @@ public class NPCAnimationControl : MonoBehaviour
 
         if (currentAnimation == selectedAnimationClip) return;
 
-        
-        Debug.Log("Local Transform Reset");
-
         currentAnimation = selectedAnimationClip;
         _animator.CrossFadeInFixedTime(selectedAnimationClip.name, transitionDuration, 0);
         

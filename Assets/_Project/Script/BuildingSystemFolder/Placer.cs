@@ -48,12 +48,12 @@ namespace BuildingSystemFolder
             var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(cellPos) + placingOffset;
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
 
-            bool isValidated = ValidatePosition(cellPos, _placablePropSo.ObjectSize, placableLayer);
-            SetMaterialsColor(isValidated);
+            bool isPlacable = ValidatePosition(cellPos, _placablePropSo.ObjectSize, placableLayer);
+            SetMaterialsColor(isPlacable);
             
             if (InputSystem.Instance.LeftClickOnWorld)
             {
-                if (isValidated)
+                if (isPlacable)
                 {
                     tempPrefab.transform.position = nextPlacableGridPos;
                     Place(cellPos);
@@ -88,15 +88,14 @@ namespace BuildingSystemFolder
         {
             var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
-            
             _buildingSystem.PlayFX(fx_Floor, tempPrefab.transform.position, tempPrefab.transform.rotation);
 
             if (newObject.TryGetComponent(out Prop prop))
             {
-                var cellPos = _buildingSystem.GetVectorIntFromVector(tempPrefab.transform.position);
-                prop.Initialize(_placablePropSo, cellPos, lastDirection);
+                prop.Initialize(_placablePropSo, CellPosition, lastDirection);
             }
+            
+            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
         }
         
         private void SetMaterialsColor(bool isCellPosValid)
@@ -108,7 +107,7 @@ namespace BuildingSystemFolder
         public bool ValidatePosition(Vector3Int cellPos, Vector2Int objectSize, LayerMask placableLayer)
         {
             LayerMask hitLayer = InputSystem.Instance.GetLastHit().transform.gameObject.layer;
-            if (!GameData.Instance.ValidatePosition(cellPos, objectSize) || (placableLayer.value & (1 << hitLayer)) == 0)
+            if (GameData.Instance.ValidateKey(cellPos, objectSize) || (placableLayer.value & (1 << hitLayer)) == 0)
             {
                 return false;
             }

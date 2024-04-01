@@ -32,7 +32,7 @@ namespace BuildingSystemFolder
         public void TryRemoving()
         {
             Vector3Int cellPos = BuildingSystem.Instance.GetMouseCellPosition();
-            var placedObject = GetPlacedObjectFromTile(cellPos);
+            var placedObject = GameData.Instance.GetPlacedObject(cellPos);
 
             SetMaterial(placedObject);
 
@@ -48,12 +48,12 @@ namespace BuildingSystemFolder
                         }
                         else
                         {
-                            RemovePlacedObject(cellPos, placedObject);
+                            RemovePlacedObject(cellPos);
                         }
                     }
                     else
                     {
-                        RemovePlacedObject(cellPos, placedObject);
+                        RemovePlacedObject(cellPos);
                     }
                 }
             }
@@ -81,19 +81,9 @@ namespace BuildingSystemFolder
             }            
         }
 
-        private GameObject GetPlacedObjectFromTile(Vector3Int cellPos)
+        protected virtual void RemovePlacedObject(Vector3Int cellPos)
         {
-            if (GameData.Instance.placementDatas.TryGetValue(cellPos, out var placedObject))
-            {
-                return placedObject.Prefab;
-            }
-            return null;
-        }
-
-        protected virtual void RemovePlacedObject(Vector3Int cellPos, GameObject placedObject)
-        {
-            GameData.Instance.placementDatas.Remove(cellPos);
-            Destroy(placedObject);
+            GameData.Instance.RemovePlacementData(cellPos);
         }
     }
 }
