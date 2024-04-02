@@ -36,8 +36,3 @@ public class Table : Prop, IPropUpdate
         }
     }
 }
-
-public interface IPropUpdate
-{
-    public void PropUpdate();
-}
