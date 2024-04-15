@@ -6,6 +6,7 @@ namespace ScriptableObjects
     public class MaterialSo : ItemSo
     {
         public MaterialType MaterialType;
+        public FloorType FloorType;
         public Material Material;
     }
 

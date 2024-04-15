@@ -46,6 +46,7 @@ public class GameData : Singleton<GameData>
     
     public void AddPlacementData(Vector3Int cellPos, PlacementData placementData)
     {
+        
         placementDatas.Add(cellPos, placementData);
         TryAddProp(placementData.SceneObject);
         UpdateProps();

@@ -1,6 +1,4 @@
-using System.Collections;
 using Activities;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 

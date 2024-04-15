@@ -15,5 +15,5 @@ MonoBehaviour:
   icon: {fileID: 0}
   price: 0
   <Prefab>k__BackingField: {fileID: 964109636939699114, guid: 6f5e72a39fd62614c89eebe5f9bb9dbd, type: 3}
-  ObjectSize: {x: 1, y: 1}
+  ObjectSize: {x: 2, y: 1}
   placementType: 1
