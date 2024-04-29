@@ -14,6 +14,11 @@ namespace BuildingSystemFolder
         private WallPropSo _wallPropSo;
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
+        
+        private Vector3Int lastCellPos = -Vector3Int.one;
+        private bool isPlacable = false;
+        private Vector3 nextPlacableGridPos = Vector3.zero;
+        private Vector3Int snappedCellPos = Vector3Int.zero;
 
         public void Setup(PlacablePropSo placablePropSo)
         {
@@ -41,15 +46,19 @@ namespace BuildingSystemFolder
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
-            Vector3Int offset = Vector3Int.up * cellPos.y; 
+            Vector3Int offset = Vector3Int.up * cellPos.y;
 
-            var nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
-            Vector3Int snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
+            if (cellPos != lastCellPos)
+            {
+                nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
+                snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
+                isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize);
+                SetMaterialsColor(isPlacable);
+                lastCellPos = cellPos;
+            }
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
-            bool isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize);
-            SetMaterialsColor(isPlacable);
             if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (isPlacable)

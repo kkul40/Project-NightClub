@@ -29,8 +29,7 @@ namespace BuildingSystemFolder
 
         private void Update()
         {
-            if(_currentBuilder != null) 
-                _currentBuilder.BuildUpdate();
+            _currentBuilder?.BuildUpdate();
         }
 
         public void ResetPlacerAndRemover()

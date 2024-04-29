@@ -9,7 +9,6 @@ namespace BuildingSystemFolder
         private WallMaterialSo _tempWallMaterialSo;
         private IMaterial _tempMaterialObject;
         private IMaterial _lastMaterialObject;
-        private Transform _lastTransform;
         
         private Material[] savedMaterials;
         
@@ -81,7 +80,6 @@ namespace BuildingSystemFolder
                 {
                     closestWallMaterial = wall as IMaterial;
                     lastDis = dis;
-                    _lastTransform = wall.transform;
                 }
             }
 

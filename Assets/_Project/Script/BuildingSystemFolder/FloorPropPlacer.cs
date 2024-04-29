@@ -14,7 +14,10 @@ namespace BuildingSystemFolder
         private FloorPropSo _floorPropSo;
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
-        
+
+        private Vector3Int lastCellPos = -Vector3Int.one;
+        private bool isPlacable = false;
+        private Vector3 nextPlacableGridPos = Vector3.zero;
 
         public void Setup(PlacablePropSo placablePropSo)
         {
@@ -42,12 +45,16 @@ namespace BuildingSystemFolder
         public void TryPlacing()
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
-            
-            var nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(cellPos) + placingOffset;
-            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
 
-            bool isPlacable = ValidatePosition(cellPos, _floorPropSo.ObjectSize);
-            SetMaterialsColor(isPlacable);
+            if (cellPos != lastCellPos)
+            {
+                nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(cellPos) + placingOffset;
+                isPlacable = ValidatePosition(cellPos, _floorPropSo.ObjectSize);
+                SetMaterialsColor(isPlacable);
+                lastCellPos = cellPos;
+            }
+            
+            tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
             if (InputSystem.Instance.LeftClickOnWorld)
             {

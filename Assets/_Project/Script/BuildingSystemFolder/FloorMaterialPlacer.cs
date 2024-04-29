@@ -8,7 +8,6 @@ namespace BuildingSystemFolder
         private FloorMaterialSo _floorMaterialSo;
         private IMaterial _tempMaterialObject;
         private IMaterial _lastMaterialObject;
-        private Transform _lastTransform;
         
         private Material[] savedMaterials;
         
@@ -23,12 +22,10 @@ namespace BuildingSystemFolder
         public void BuildUpdate()
         {
             BuildingSystem.Instance.GetMouseCellPosition();
-            var mousePos = InputSystem.Instance.GetMouseMapPosition();
 
             if (InputSystem.Instance.GetLastHitTransform().TryGetComponent(out IMaterial tileObject))
             {
                 _tempMaterialObject = tileObject;
-                _lastTransform = InputSystem.Instance.GetLastHitTransform();
             }
             
             if (_tempMaterialObject != _lastMaterialObject) // Optimization

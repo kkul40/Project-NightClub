@@ -8,6 +8,8 @@ namespace BuildingSystemFolder
         private BuildingSystem _buildingSystem => BuildingSystem.Instance;
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
+
+        private Vector3Int lastCellPos = -Vector3Int.one;
         
         public void Setup(PlacablePropSo placablePropSo)
         {
@@ -35,7 +37,11 @@ namespace BuildingSystemFolder
             Vector3Int cellPos = BuildingSystem.Instance.GetMouseCellPosition();
             var placedObject = GameData.Instance.GetPlacedObject(cellPos);
 
-            SetMaterial(placedObject);
+            if (cellPos != lastCellPos)
+            {
+                SetMaterial(placedObject);
+                lastCellPos = cellPos;
+            }
 
             if (InputSystem.Instance.LeftClickOnWorld)
             {
