@@ -27,6 +27,10 @@ namespace BuildingSystemFolder
             {
                 _tempMaterialObject = tileObject;
             }
+            else
+            {
+                _tempMaterialObject = null;
+            }
             
             if (_tempMaterialObject != _lastMaterialObject) // Optimization
             {

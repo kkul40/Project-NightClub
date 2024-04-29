@@ -100,6 +100,8 @@ namespace BuildingSystemFolder
             }
             
             GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_floorPropSo, newObject));
+            
+            lastCellPos = -Vector3Int.one;
         }
         
         private void SetMaterialsColor(bool isCellPosValid)
