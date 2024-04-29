@@ -1,42 +1,37 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Activities;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [DisallowMultipleComponent]
 public class ActivitySystem : Singleton<ActivitySystem>
 {
-    [SerializeField] private List<Activity> _activities;
+    public Dictionary<Type, Activity> dictionary = new ();
 
     private void Awake()
     {
-        // TODO Add All Activitie Here
-        _activities = new List<Activity>();
-        _activities.Add(new DinnerActivity());
-        _activities.Add(new WalkRandomActivity());
+        var assembly = Assembly.GetAssembly(typeof(Activity));
+        var allActivityTypes = assembly.GetTypes().Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
+
+        foreach (var ac in allActivityTypes)
+        {
+            var activity = Activator.CreateInstance(ac) as Activity;
+            dictionary.Add(ac, activity);
+        }
+    }
+
+    public Activity GetActivity(Type activity2)
+    {
+        return Activator.CreateInstance(activity2) as Activity;
     }
 
     public Activity GetRandomActivity()
     {
-        if (_activities.Count <= 0)
-        {
-            Debug.LogError("No Activities Added To The List");
-            return new NoneActivity();
-        }
-
-        var activityIndex = Random.Range(0, _activities.Count);
-        Activity temp = _activities[activityIndex];
-
-        if (temp is DinnerActivity)
-        {
-            return new DinnerActivity();
-        }
-        else if (temp is WalkRandomActivity)
-        {
-            return new WalkRandomActivity();
-        }
-        
-        
-        
-        return new NoneActivity();
+        var a = Random.Range(0, dictionary.Count);
+        var randomActivity = dictionary.ElementAt(a).Value;
+        return GetActivity(dictionary.ElementAt(a).Key);
     }
 }
