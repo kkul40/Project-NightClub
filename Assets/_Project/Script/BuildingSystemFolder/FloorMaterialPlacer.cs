@@ -50,7 +50,7 @@ namespace BuildingSystemFolder
                 }
             }
             
-            if (InputSystem.Instance.LeftClickOnWorld)
+            if (InputSystem.Instance.LeftHoldClickOnWorld)
             {
                 if (_tempMaterialObject != null)
                 {
