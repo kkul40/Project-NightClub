@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BuildingSystemFolder;
+using UnityEngine;
 
 namespace Activities
 {
@@ -14,7 +15,7 @@ namespace Activities
         {
             if (isCanceled) return;
 
-            npc.SetRandomDestination();
+            npc.SetNewDestination(GetRandomDestination());
             npc.ChangeState(eNpcAnimation.Walk);
         }
 
@@ -28,7 +29,7 @@ namespace Activities
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
-                    npc.SetRandomDestination();
+                    npc.SetNewDestination(GetRandomDestination());
                     npc.ChangeState(eNpcAnimation.Walk);
                     timer = 0;
                     isEnded = true;
@@ -39,6 +40,24 @@ namespace Activities
         public override void EndActivity(NPC npc)
         {
             if (isCanceled) return;
+        }
+        
+        private Vector3 GetRandomDestination()
+        {
+            int loopCount = 0;
+        
+            var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
+            while (GameData.Instance.ValidateKey(BuildingSystem.Instance.GetWorldToCell(target)))
+            {
+                target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
+                loopCount++;
+                if (loopCount >= 20)
+                {
+                    break;
+                }
+            }
+
+            return target;
         }
     }
 }

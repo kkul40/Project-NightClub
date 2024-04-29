@@ -82,14 +82,6 @@ public class NPC : MonoBehaviour
         currentActivity = newActivity;
         currentActivity.StartActivity(this);
     }
-    
-    [ContextMenu("Random Target")]
-    public void SetRandomDestination()
-    {
-        target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-        // if(GameData.Instance.ValidateKey(BuildingSystem.Instance.Cell)) continue; // TODO 
-        SetNewDestination(target);
-    }
 }
 
 
