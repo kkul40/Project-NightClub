@@ -7,7 +7,8 @@ namespace BuildingSystemFolder
     public class BuildingSystem : Singleton<BuildingSystem>
     {
         [SerializeField] private InputSystem inputSystem;
-        [SerializeField] private Grid grid;
+        [SerializeField] private GridHandler gridHandler;
+        [SerializeField] private SceneTransformContainer _sceneTransformContainer;
         
         [SerializeField] private float objectMoveSpeedMultiplier = 10;
     
@@ -45,15 +46,6 @@ namespace BuildingSystemFolder
             _currentBuilder.Setup(placablePropSo);
         }
 
-        public Vector3Int GetMouseCellPosition()
-        {
-            var mousePos = inputSystem.GetMouseMapPosition();
-            Vector3Int cellPos = grid.WorldToCell(mousePos);
-            tileIndicator.SetPosition(grid.CellToWorld(cellPos));
-            
-            return cellPos;
-        }
-
         public void RotateDirectionIndicator(Quaternion quaternion)
         {
             tileIndicator.RoateDirectionIndicator(quaternion);
@@ -74,16 +66,20 @@ namespace BuildingSystemFolder
             _currentBuilder = new Remover();
             tileIndicator.SetTileIndicator(PlacingType.Remove);
         }
-
-        public void PlayFX(Transform fx_Prefab ,Vector3 pos, Quaternion rotation)
-        {
-            var fx = Instantiate(fx_Prefab, pos, rotation);
-            Destroy(fx.gameObject, 1.5f);
-        }
     
         public PlacingType GetPlacingType() => placingType;
-        public Grid GetGrid() => grid;
         public float GetObjectPlacingSpeed() => objectMoveSpeedMultiplier;
+
+        public Vector3Int GetMouseCellPosition()
+        {
+            var cellPos = gridHandler.GetMouseCellPosition(inputSystem);
+            tileIndicator.SetPosition(gridHandler.CellToWorldPosition(cellPos));
+            return cellPos;
+        }
+        
+        public Vector3 GetCellCenterWorld(Vector3Int cellPos) => gridHandler.GetCellCenterWorld(cellPos);
+        public Vector3Int GetWorldToCell(Vector3 worldPos) => gridHandler.GetWorldToCell(worldPos);
+        public SceneTransformContainer GetSceneTransformContainer() => _sceneTransformContainer;
     }
 
     public enum PlacingType

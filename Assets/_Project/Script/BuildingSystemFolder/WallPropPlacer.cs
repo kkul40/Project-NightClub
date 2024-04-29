@@ -5,9 +5,8 @@ namespace BuildingSystemFolder
 {
     public class WallPropPlacer : IBuilder
     {
-        [SerializeField] private BuildingSystem _buildingSystem => BuildingSystem.Instance;
-        [SerializeField] private Transform propHolder;
-        [SerializeField] private LayerMask placableLayer;
+        private BuildingSystem _buildingSystem => BuildingSystem.Instance;
+        private LayerMask placableLayer;
         
         private Vector3 placingOffset = new Vector3(0f,0,0f);
         private Quaternion lastRotation = Quaternion.identity;
@@ -44,8 +43,8 @@ namespace BuildingSystemFolder
             Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
             Vector3Int offset = Vector3Int.up * cellPos.y; 
 
-            var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(GetClosestWall(mousePos) + offset);
-            Vector3Int snappedCellPos = _buildingSystem.GetGrid().WorldToCell(nextPlacableGridPos);
+            var nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
+            Vector3Int snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
@@ -88,13 +87,13 @@ namespace BuildingSystemFolder
                 }
             }
 
-            return _buildingSystem.GetGrid().WorldToCell(closestWall);
+            return _buildingSystem.GetWorldToCell(closestWall);
         }
         
         private void Place(Vector3Int CellPosition)
         {
             var newObject = Object.Instantiate(_wallPropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
-            newObject.transform.SetParent(propHolder);
+            newObject.transform.SetParent(_buildingSystem.GetSceneTransformContainer().PropHolderTransform);
             
             if (newObject.TryGetComponent(out Prop prop))
             {

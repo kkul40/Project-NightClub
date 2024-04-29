@@ -5,7 +5,7 @@ namespace BuildingSystemFolder
 {
     public class Remover : IBuilder
     {
-        [SerializeField] private BuildingSystem _buildingSystem => BuildingSystem.Instance;
+        private BuildingSystem _buildingSystem => BuildingSystem.Instance;
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
         

@@ -1745,8 +1745,9 @@ GameObject:
   m_Component:
   - component: {fileID: 884134050}
   - component: {fileID: 884134051}
+  - component: {fileID: 884134052}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: GridHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1780,6 +1781,19 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &884134052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884134049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4303d62e4cf64ef28bbfc062343a9493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 884134051}
 --- !u!1001 &890159682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3171,7 +3185,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.06666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 61f02812887319d4da0241575110b0c1, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 3ce4f277e7266bf4597d7bbe6d498c36, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1001 &1240748084
 PrefabInstance:
@@ -3277,7 +3291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputSystem: {fileID: 155991909}
-  grid: {fileID: 884134051}
+  gridHandler: {fileID: 884134052}
+  _sceneTransformContainer: {fileID: 1466197926}
   objectMoveSpeedMultiplier: 10
   redMaterial: {fileID: 2100000, guid: daf573990136e0c449efda2b471dcc0f, type: 2}
   blueMaterial: {fileID: 2100000, guid: a7422f727e59f5049be3760b450a4f52, type: 2}
@@ -3506,6 +3521,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1466197925}
+  - component: {fileID: 1466197926}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -3532,6 +3548,19 @@ Transform:
   - {fileID: 941333109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1466197926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466197924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbf5f268a23e0a43ae2b2e3cc16ddab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <PropHolderTransform>k__BackingField: {fileID: 2074349932}
 --- !u!1001 &1514944847
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 6546246243767450747, guid: bcb79d26fe9497345b133a10386bfa68, type: 3}
   ObjectSize: {x: 1, y: 1}

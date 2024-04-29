@@ -6,7 +6,6 @@ namespace BuildingSystemFolder
     public class FloorPropPlacer : IBuilder
     {
         private BuildingSystem _buildingSystem => BuildingSystem.Instance;
-        private Transform propHolder;
         
         private Vector3 placingOffset = new Vector3(0f,-0.5f,0f);
         private Quaternion lastRotation = Quaternion.identity;
@@ -44,7 +43,7 @@ namespace BuildingSystemFolder
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
             
-            var nextPlacableGridPos = _buildingSystem.GetGrid().GetCellCenterWorld(cellPos) + placingOffset;
+            var nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(cellPos) + placingOffset;
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
 
             bool isPlacable = ValidatePosition(cellPos, _floorPropSo.ObjectSize);
@@ -86,7 +85,7 @@ namespace BuildingSystemFolder
         protected void Place(Vector3Int CellPosition)
         {
             var newObject = Object.Instantiate(_floorPropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
-            newObject.transform.SetParent(propHolder);
+            newObject.transform.SetParent(_buildingSystem.GetSceneTransformContainer().PropHolderTransform);
 
             if (newObject.TryGetComponent(out Prop prop))
             {

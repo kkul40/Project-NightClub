@@ -6,9 +6,6 @@ namespace BuildingSystemFolder
 {
     public class WallMaterialPlacer : IBuilder
     {
-        [SerializeField] private Transform fx_Wall;
-        [SerializeField] private Transform fx_Floor;
-        
         private WallMaterialSo _tempWallMaterialSo;
         private IMaterial _tempMaterialObject;
         private IMaterial _lastMaterialObject;

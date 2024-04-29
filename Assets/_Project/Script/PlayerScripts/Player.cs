@@ -17,7 +17,7 @@ namespace PlayerScripts
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                SetDestination(BuildingSystem.Instance.GetGrid().GetCellCenterWorld(BuildingSystem.Instance.GetGrid().WorldToCell(InputSystem.Instance.GetMouseMapPosition())));
+                SetDestination(BuildingSystem.Instance.GetCellCenterWorld(BuildingSystem.Instance.GetWorldToCell(InputSystem.Instance.GetMouseMapPosition())));
             }
         }
 
