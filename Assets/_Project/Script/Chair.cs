@@ -4,6 +4,7 @@ using UnityEngine;
 public class Chair : Prop, IOccupieable
 {
     [SerializeField] private Transform sitPosition;
+    [SerializeField] private Transform frontPosition;
 
     public NPC Owner { get; set; }
     
@@ -17,6 +18,8 @@ public class Chair : Prop, IOccupieable
     public Vector3 GetItOccupied(NPC owner)
     {
         Owner = owner;
-        return sitPosition.position - new Vector3(0, 0.375f, 0);
+        return sitPosition.position - new Vector3(0, 0.375f, 0); // 0.375f is the height of every chair
     }
+    public Vector3 GetFrontPosition() => frontPosition.position;
+    public Vector3 GetSitPosition() => sitPosition.position;
 }

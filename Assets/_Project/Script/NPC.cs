@@ -1,13 +1,14 @@
 using Activities;
+using BuildingSystemFolder;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 [SelectionBase]
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private NpcState _state;
+    [SerializeField] private eNpcAnimation _animationState;
     private NPCAnimationControl _npcAnimationControl;
-    public float speed;
 
     public NavMeshAgent _navMeshAgent { get ; private set; }
     private Vector3 target;
@@ -22,14 +23,14 @@ public class NPC : MonoBehaviour
 
     private void Start()
     {
-        _state = NpcState.Idle;
+        _animationState = eNpcAnimation.Idle;
     }
 
     private void Update()
     {
         UpdateActivity();
         
-        _npcAnimationControl.PlayAnimation(_state);
+        _npcAnimationControl.PlayAnimation(_animationState);
     }
 
     private void UpdateActivity()
@@ -61,9 +62,9 @@ public class NPC : MonoBehaviour
         // transform.DORotate(rotation.eulerAngles, 0.5f);
     }
 
-    public void ChangeState(NpcState newState)
+    public void ChangeState(eNpcAnimation newAnimation)
     {
-        _state = newState;
+        _animationState = newAnimation;
     }
 
     public void ChangeActivitiy(Activity newActivity)
@@ -86,12 +87,13 @@ public class NPC : MonoBehaviour
     public void SetRandomDestination()
     {
         target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
+        // if(GameData.Instance.ValidateKey(BuildingSystem.Instance.Cell)) continue; // TODO 
         SetNewDestination(target);
     }
 }
 
 
-public enum NpcState
+public enum eNpcAnimation
 {
     Idle,
     Walk,

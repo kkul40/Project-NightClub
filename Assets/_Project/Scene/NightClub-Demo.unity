@@ -3240,10 +3240,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1263105097}
   - component: {fileID: 1263105098}
-  - component: {fileID: 1263105099}
-  - component: {fileID: 1263105101}
-  - component: {fileID: 1263105102}
-  - component: {fileID: 1263105100}
   m_Layer: 0
   m_Name: BuildingSystem
   m_TagString: Untagged
@@ -3288,68 +3284,6 @@ MonoBehaviour:
   yellowMaterial: {fileID: 2100000, guid: de106eedbb3589f4b90057fdae86fb14, type: 2}
   placingType: 0
   tileIndicator: {fileID: 732773705}
---- !u!114 &1263105099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263105096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85c976ce39974445966c449a7ada0982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buildingSystem: {fileID: 1263105098}
-  propHolder: {fileID: 2074349932}
-  placableLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  fx_Floor: {fileID: 7879539841901057928, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
---- !u!114 &1263105100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263105096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7838c4e9a7e493badddd445c5760601, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buildingSystem: {fileID: 1263105098}
---- !u!114 &1263105101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263105096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6297a15cb74268a4894863de5396945a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buildingSystem: {fileID: 1263105098}
-  propHolder: {fileID: 2074349932}
-  placableLayer:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &1263105102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263105096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0273369a91104051938f904662d4aa79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fx_Wall: {fileID: 7722424093072147749, guid: dc804b9b8a991f142afcac27a7d3b841, type: 3}
-  fx_Floor: {fileID: 7879539841901057928, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
 --- !u!1 &1287684644
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,14 +3,15 @@ using UnityEngine;
 
 namespace BuildingSystemFolder
 {
-    public class Remover : MonoBehaviour, IBuild
+    public class Remover : IBuilder
     {
-        [SerializeField] private BuildingSystem _buildingSystem;
+        [SerializeField] private BuildingSystem _buildingSystem => BuildingSystem.Instance;
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
         
-        public void Setup<T>(T itemSo) where T : ItemSo
+        public void Setup(PlacablePropSo placablePropSo)
         {
+            // Do Nothing...
         }
 
         public void BuildUpdate()

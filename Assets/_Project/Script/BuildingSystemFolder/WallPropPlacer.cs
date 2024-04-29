@@ -3,25 +3,25 @@ using UnityEngine;
 
 namespace BuildingSystemFolder
 {
-    public class WallPropPlacer : MonoBehaviour, IBuild
+    public class WallPropPlacer : IBuilder
     {
-        [SerializeField] private BuildingSystem _buildingSystem;
+        [SerializeField] private BuildingSystem _buildingSystem => BuildingSystem.Instance;
         [SerializeField] private Transform propHolder;
         [SerializeField] private LayerMask placableLayer;
         
         private Vector3 placingOffset = new Vector3(0f,0,0f);
         private Quaternion lastRotation = Quaternion.identity;
 
-        private PlacablePropSo _placablePropSo;
+        private WallPropSo _wallPropSo;
         private GameObject tempPrefab;
         private MeshRenderer tempMeshRenderer;
 
-        public void Setup<T>(T itemSo) where T : ItemSo
+        public void Setup(PlacablePropSo placablePropSo)
         {
-            if (itemSo is PlacablePropSo placablePropSo)
+            if (placablePropSo is WallPropSo placable)
             {
-                _placablePropSo = placablePropSo;
-                tempPrefab = Instantiate(placablePropSo.Prefab, Vector3.zero, lastRotation);
+                _wallPropSo = placable;
+                tempPrefab = Object.Instantiate(placable.Prefab, Vector3.zero, lastRotation);
                 tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
             }
         }
@@ -34,7 +34,7 @@ namespace BuildingSystemFolder
 
         public void Exit()
         {
-            Destroy(tempPrefab);
+            Object.Destroy(tempPrefab);
             BuildingSystem.Instance.ResetPlacerAndRemover();
         }
       
@@ -49,7 +49,7 @@ namespace BuildingSystemFolder
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
             
-            bool isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _placablePropSo.ObjectSize);
+            bool isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize);
             SetMaterialsColor(isPlacable);
             if (InputSystem.Instance.LeftClickOnWorld)
             {
@@ -93,15 +93,15 @@ namespace BuildingSystemFolder
         
         private void Place(Vector3Int CellPosition)
         {
-            var newObject = Instantiate(_placablePropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
+            var newObject = Object.Instantiate(_wallPropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(propHolder);
             
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_placablePropSo, CellPosition, Direction.Up);
+                prop.Initialize(_wallPropSo, CellPosition, Direction.Up);
             }
             
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_placablePropSo, newObject));
+            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_wallPropSo, newObject));
         }
         
         private void SetMaterialsColor(bool isCellPosValid)

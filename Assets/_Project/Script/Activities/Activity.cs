@@ -28,6 +28,7 @@ namespace Activities
             {
                 if(prop == null) continue;
                 
+                
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                 {
                     if(occupieable.IsOccupied) continue;
@@ -35,7 +36,7 @@ namespace Activities
             
                 if (prop is T propType)
                 {
-                    var distance = Vector3.Distance(npc.transform.position, prop.GetPropPosition());
+                    var distance = Vector3.Distance(npc.transform.position, prop.GetPropCellPosition());
                     if (distance < lastDistance)
                     {
                         closestProp = propType;

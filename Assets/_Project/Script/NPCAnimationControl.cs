@@ -17,20 +17,20 @@ public class NPCAnimationControl : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
     
-    public void PlayAnimation(NpcState npcState)
+    public void PlayAnimation(eNpcAnimation eNpcAnimation)
     {
-        switch (npcState)
+        switch (eNpcAnimation)
         {
-            case NpcState.Idle:
+            case eNpcAnimation.Idle:
                 selectedAnimationClip = _npcAnimationSo.Idle;
                 break;
-            case NpcState.Walk:
+            case eNpcAnimation.Walk:
                 selectedAnimationClip = _npcAnimationSo.Walk;
                 break;
-            case NpcState.Sit:
+            case eNpcAnimation.Sit:
                 selectedAnimationClip = _npcAnimationSo.Sit;
                 break;
-            case NpcState.Dance:
+            case eNpcAnimation.Dance:
                 selectedAnimationClip = _npcAnimationSo.Dance;
                 break;
             default:

@@ -46,13 +46,13 @@ public class GameData : Singleton<GameData>
     
     public void AddPlacementData(Vector3Int cellPos, PlacementData placementData)
     {
-        
         placementDatas.Add(cellPos, placementData);
+        Debug.Log("Added");
         TryAddProp(placementData.SceneObject);
         UpdateProps();
     }
     
-    private bool ValidateKey(Vector3Int cellPos)
+    public bool ValidateKey(Vector3Int cellPos)
     {
         return ValidateKey(cellPos, Vector2Int.one);
     }

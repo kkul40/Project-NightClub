@@ -1434,7 +1434,6 @@ GameObject:
   - component: {fileID: 6604356279042201939}
   - component: {fileID: 2089161871922913227}
   - component: {fileID: 695035995564401148}
-  - component: {fileID: 636980023421761004}
   - component: {fileID: 8766550021517850893}
   m_Layer: 0
   m_Name: Customer
@@ -1471,8 +1470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362a6d6174ca67d4b93b4fbb7ccdf96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _state: 0
-  speed: 0
+  _animationState: 0
 --- !u!195 &695035995564401148
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1482,7 +1480,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6604356279042201940}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.05
   m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1495,25 +1493,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &636980023421761004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6604356279042201940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 0
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 1
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
 --- !u!136 &8766550021517850893
 CapsuleCollider:
   m_ObjectHideFlags: 0

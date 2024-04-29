@@ -14,7 +14,7 @@ public class Prop : MonoBehaviour, IRemovable
         this.direction = direction;
     }
 
-    public Vector3 GetPropPosition() => propPosition;
+    public Vector3Int GetPropCellPosition() => propPosition;
     public Quaternion GetPropRotation() => transform.rotation;
     public PlacablePropSo GetPropSo() => _placablePropSo;
     
