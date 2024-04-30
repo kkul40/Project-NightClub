@@ -79,7 +79,7 @@ namespace BuildingSystemFolder
         {
             float lastDis = 9999;
             Vector3 closestWall = Vector3.zero;
-            foreach(var pos in GameData.Instance.GetWallMapPosList)
+            foreach(var pos in GameData.Instance.GetWallMapPosList())
             {
                 if (pos is WallDoor) continue;
                 

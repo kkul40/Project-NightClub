@@ -25,7 +25,7 @@ namespace BuildingSystemFolder
             BuildingSystem.Instance.GetMouseCellPosition();
             var mousePos = InputSystem.Instance.GetMouseMapPosition();
             _tempMaterialObject = GetClosestWallMaterial(mousePos);
-
+            
             if (_tempMaterialObject != _lastMaterialObject) // Optimization
             {
                 // Reset Previous Material
@@ -73,7 +73,7 @@ namespace BuildingSystemFolder
         {
             float lastDis = 9999;
             IMaterial closestWallMaterial = null;
-            foreach(var wall in GameData.Instance.GetWallMapPosList)
+            foreach(var wall in GameData.Instance.GetWallMapPosList())
             {
                 var dis = Vector3.Distance(cellPos, wall.transform.position);
                 if (dis < lastDis)

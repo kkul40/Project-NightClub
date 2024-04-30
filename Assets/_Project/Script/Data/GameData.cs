@@ -16,7 +16,7 @@ public class GameData : Singleton<GameData>
         _placamentDataHandler = new PlacamentDataHandler();
     }
     
-    public List<Wall> GetWallMapPosList => WallMap;
+    public List<Wall> GetWallMapPosList() => WallMap;
     public List<Prop> GetPropList => PlacementHandler.GetPropList;
     public PlacamentDataHandler PlacementHandler => _placamentDataHandler;
     public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;

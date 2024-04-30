@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class Wall : MonoBehaviour, IMaterial
 {
     public MeshRenderer MeshRenderer { get; protected set; }
     
@@ -12,6 +12,7 @@ public class Wall : MonoBehaviour
 
     public virtual void ChangeMaterial(Material newWallPaper)
     {
+        Debug.Log("Cchanged Material");
         var materials = MeshRenderer.materials;
         materials[1] = newWallPaper;
         MeshRenderer.materials = materials;
