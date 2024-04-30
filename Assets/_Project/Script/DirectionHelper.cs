@@ -73,20 +73,16 @@ public static class DirectionHelper
         int closestDirectionIndex = 0;
         float closestAngle = Vector3.Angle(directionVectors[0], forwardVector);
     
-        // Loop over each direction vector
         for (int i = 1; i < directionVectors.Length; i++)
         {
             float angle = Vector3.Angle(directionVectors[i], forwardVector);
         
-            // If this direction vector is closer to the forward vector of the quaternion, save it
             if (angle < closestAngle)
             {
                 closestAngle = angle;
                 closestDirectionIndex = i;
             }
         }
-        // Return the direction that was closest
-        Debug.Log(directions[closestDirectionIndex]);
         return directions[closestDirectionIndex];
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e1ff240bcb34429ad35acbd9cd96cf0, type: 3}
-  m_Name: TestCube
+  m_Name: TCube2.1
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  Prefab: {fileID: 5381388682549148583, guid: 81b64e364e4d324458a636b606ace0a8, type: 3}
+  Prefab: {fileID: 5381388682549148583, guid: 956486ca37dadb347a4024573751c4ae, type: 3}
   ObjectSize: {x: 2, y: 1}

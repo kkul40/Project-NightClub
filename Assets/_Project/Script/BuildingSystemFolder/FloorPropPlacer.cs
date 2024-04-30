@@ -45,11 +45,12 @@ namespace BuildingSystemFolder
         public void TryPlacing()
         {
             Vector3Int cellPos = _buildingSystem.GetMouseCellPosition();
-
+            
+            isPlacable = ValidatePosition(cellPos, _floorPropSo.ObjectSize);
+            
             if (cellPos != lastCellPos)
             {
                 nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(cellPos) + placingOffset;
-                isPlacable = ValidatePosition(cellPos, _floorPropSo.ObjectSize);
                 SetMaterialsColor(isPlacable);
                 lastCellPos = cellPos;
             }
@@ -79,6 +80,7 @@ namespace BuildingSystemFolder
                 tempPrefab.transform.rotation = DirectionHelper.RotateClockWise(tempQ, ref lastDirection);
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
+                lastCellPos =-Vector3Int.one;;
             }
             else if (InputSystem.Instance.Q)
             {
@@ -86,6 +88,7 @@ namespace BuildingSystemFolder
                 tempPrefab.transform.rotation = DirectionHelper.RotateCounterClockWise(tempQ,ref lastDirection);
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
+                lastCellPos =-Vector3Int.one;;
             }
 
             DirectionHelper.GetDirectionFromQuaternion(lastRotation);
@@ -101,7 +104,7 @@ namespace BuildingSystemFolder
                 prop.Initialize(_floorPropSo, CellPosition, lastDirection);
             }
             
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_floorPropSo, newObject, lastDirection));
+            GameData.Instance.PlacementHandler.AddPlacementData(CellPosition, new PlacementData(_floorPropSo, newObject, _floorPropSo.ObjectSize, lastDirection));
             
             lastCellPos = -Vector3Int.one;
         }
@@ -115,7 +118,7 @@ namespace BuildingSystemFolder
         public bool ValidatePosition(Vector3Int cellPos, Vector2Int objectSize)
         {
             LayerMask hitLayer = InputSystem.Instance.GetLastHit().transform.gameObject.layer;
-            if (GameData.Instance.ValidateKey(cellPos, objectSize, lastDirection) || hitLayer.value != 7)
+            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos, objectSize, lastDirection) || hitLayer.value != 7)
             {
                 return false;
             }

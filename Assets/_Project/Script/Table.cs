@@ -18,7 +18,7 @@ public class Table : Prop, IPropUpdate
     {
         print("update");
         Chairs.Clear();
-        foreach (var prop in GameData.Instance.GetPropList())
+        foreach (var prop in GameData.Instance.GetPropList)
         {
             if (Chairs.Count > 3) break;
             

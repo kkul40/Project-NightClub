@@ -8,7 +8,7 @@ public class MapGeneratorSystem : MonoBehaviour
     [SerializeField] private Transform wallHolder;
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private GameObject wallDoorPrefab;
-    
+
     private void Start()
     {
         SetUpMap();
@@ -61,4 +61,5 @@ public class MapGeneratorSystem : MonoBehaviour
     {
         //Load Map
     }
+    public Vector3Int MapSize => initialMapSize;
 }

@@ -73,7 +73,7 @@ namespace BuildingSystemFolder
         {
             float lastDis = 9999;
             IMaterial closestWallMaterial = null;
-            foreach(var wall in GameData.Instance.GetWallMapPosList())
+            foreach(var wall in GameData.Instance.GetWallMapPosList)
             {
                 var dis = Vector3.Distance(cellPos, wall.transform.position);
                 if (dis < lastDis)

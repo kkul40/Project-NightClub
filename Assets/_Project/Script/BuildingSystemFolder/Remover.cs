@@ -8,6 +8,7 @@ namespace BuildingSystemFolder
         private BuildingSystem _buildingSystem => BuildingSystem.Instance;
         private Material defaultMaterial;
         private MeshRenderer selectedMeshRenderer;
+        private GameObject placedObject = null;
 
         private Vector3Int lastCellPos = -Vector3Int.one;
         
@@ -35,10 +36,10 @@ namespace BuildingSystemFolder
         public void TryRemoving()
         {
             Vector3Int cellPos = BuildingSystem.Instance.GetMouseCellPosition();
-            var placedObject = GameData.Instance.GetPlacedObject(cellPos);
 
             if (cellPos != lastCellPos)
             {
+                placedObject = GameData.Instance.PlacementHandler.GetPlacedObjectByCellPosition(cellPos);
                 SetMaterial(placedObject);
                 lastCellPos = cellPos;
             }
@@ -82,7 +83,7 @@ namespace BuildingSystemFolder
 
             if (placedObject != null)
             {
-                selectedMeshRenderer = placedObject.GetComponent<MeshRenderer>();
+                selectedMeshRenderer = placedObject.GetComponent<MeshRenderer>() != null ? placedObject.GetComponent<MeshRenderer>() : placedObject.GetComponentInChildren<MeshRenderer>();
                 defaultMaterial = selectedMeshRenderer.material;
                 selectedMeshRenderer.material = _buildingSystem.yellowMaterial;
             }            
@@ -90,7 +91,7 @@ namespace BuildingSystemFolder
 
         protected virtual void RemovePlacedObject(Vector3Int cellPos)
         {
-            GameData.Instance.RemovePlacementData(cellPos);
+            GameData.Instance.PlacementHandler.RemovePlacementData(cellPos);
         }
     }
 }

@@ -47,11 +47,12 @@ namespace BuildingSystemFolder
             Vector3 mousePos = InputSystem.Instance.GetMouseMapPosition();
             Vector3Int offset = Vector3Int.up * cellPos.y;
 
+            isPlacable = !GameData.Instance.PlacementHandler.ContainsKey(snappedCellPos, _wallPropSo.ObjectSize, DirectionHelper.GetDirectionFromQuaternion(lastRotation));
+            
             if (cellPos != lastCellPos)
             {
                 nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
                 snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
-                isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize, DirectionHelper.GetDirectionFromQuaternion(lastRotation));
                 SetMaterialsColor(isPlacable);
                 lastCellPos = cellPos;
             }
@@ -78,7 +79,7 @@ namespace BuildingSystemFolder
         {
             float lastDis = 9999;
             Vector3 closestWall = Vector3.zero;
-            foreach(var pos in GameData.Instance.GetWallMapPosList())
+            foreach(var pos in GameData.Instance.GetWallMapPosList)
             {
                 if (pos is WallDoor) continue;
                 
@@ -106,7 +107,7 @@ namespace BuildingSystemFolder
                 prop.Initialize(_wallPropSo, CellPosition, currentDirection);
             }
             
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_wallPropSo, newObject, currentDirection));
+            GameData.Instance.PlacementHandler.AddPlacementData(CellPosition, new PlacementData(_wallPropSo, newObject, _wallPropSo.ObjectSize, currentDirection));
         }
         
         private void SetMaterialsColor(bool isCellPosValid)
