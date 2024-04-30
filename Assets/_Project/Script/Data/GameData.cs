@@ -23,7 +23,7 @@ public class GameData : Singleton<GameData>
     /// <param name="cellPos"></param>
     /// <param name="objectSize"></param>
     /// <returns></returns>
-    public bool ValidateKey(Vector3Int cellPos, Vector2Int objectSize)
+    public bool ValidateKey(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
     {
         //TODO Object size check
         if (placementDatas.ContainsKey(cellPos))
@@ -33,9 +33,14 @@ public class GameData : Singleton<GameData>
         return false;
     }
 
+    public bool ValidateKeyByCellPos(Vector3Int cellPos)
+    {
+        return ValidateKey(cellPos, Vector2Int.one, Direction.Down);
+    }
+
     public void RemovePlacementData(Vector3Int cellPos)
     {
-        if (ValidateKey(cellPos))
+        if (ValidateKeyByCellPos(cellPos))
         {
             TryRemoveProp(placementDatas[cellPos].SceneObject);
             Destroy(placementDatas[cellPos].SceneObject);
@@ -50,11 +55,6 @@ public class GameData : Singleton<GameData>
         Debug.Log("Added");
         TryAddProp(placementData.SceneObject);
         UpdateProps();
-    }
-    
-    public bool ValidateKey(Vector3Int cellPos)
-    {
-        return ValidateKey(cellPos, Vector2Int.one);
     }
 
     private void TryAddProp(GameObject gameObject)
@@ -86,7 +86,7 @@ public class GameData : Singleton<GameData>
 
     public GameObject GetPlacedObject(Vector3Int cellPos)
     {
-        if (ValidateKey(cellPos))
+        if (ValidateKeyByCellPos(cellPos))
         {
             return placementDatas[cellPos].SceneObject;
         }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Wall : MonoBehaviour, IMaterial, IRemovable
+public class Wall : MonoBehaviour
 {
     public MeshRenderer MeshRenderer { get; protected set; }
     
@@ -22,11 +22,6 @@ public class Wall : MonoBehaviour, IMaterial, IRemovable
         var currentMaterial = MeshRenderer.materials;
         currentMaterial = materials;
         MeshRenderer.materials = currentMaterial;
-    }
-
-    public void Remove()
-    {
-        throw new System.NotImplementedException();
     }
 }
 

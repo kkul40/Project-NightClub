@@ -13,6 +13,11 @@ public class ActivitySystem : Singleton<ActivitySystem>
 
     private void Awake()
     {
+        Initialize();
+    }
+
+    protected override void Initialize()
+    {
         var assembly = Assembly.GetAssembly(typeof(Activity));
         var allActivityTypes = assembly.GetTypes().Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FloorTile : MonoBehaviour, IMaterial, IRemovable
+public class FloorTile : MonoBehaviour, IMaterial
 {
     public MeshRenderer MeshRenderer { get; private set; }
     public FloorType floorType;
@@ -21,11 +21,6 @@ public class FloorTile : MonoBehaviour, IMaterial, IRemovable
         var currentMaterials = MeshRenderer.materials;
         currentMaterials = materials;
         MeshRenderer.materials = currentMaterials;
-    }
-
-    public void Remove()
-    {
-        throw new System.NotImplementedException();
     }
 }
 

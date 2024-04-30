@@ -25,7 +25,7 @@ namespace BuildingSystemFolder
             {
                 _floorPropSo = placable;
                 tempPrefab = Object.Instantiate(placable.Prefab, Vector3.zero, lastRotation);
-                tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
+                tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>() == null ? tempPrefab.GetComponentInChildren<MeshRenderer>() : tempPrefab.GetComponent<MeshRenderer>();
                 tempPrefab.transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
             }
         }
@@ -87,6 +87,8 @@ namespace BuildingSystemFolder
                 lastRotation = tempPrefab.transform.rotation;
                 _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
+
+            DirectionHelper.GetDirectionFromQuaternion(lastRotation);
         }
 
         protected void Place(Vector3Int CellPosition)
@@ -99,7 +101,7 @@ namespace BuildingSystemFolder
                 prop.Initialize(_floorPropSo, CellPosition, lastDirection);
             }
             
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_floorPropSo, newObject));
+            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_floorPropSo, newObject, lastDirection));
             
             lastCellPos = -Vector3Int.one;
         }
@@ -113,7 +115,7 @@ namespace BuildingSystemFolder
         public bool ValidatePosition(Vector3Int cellPos, Vector2Int objectSize)
         {
             LayerMask hitLayer = InputSystem.Instance.GetLastHit().transform.gameObject.layer;
-            if (GameData.Instance.ValidateKey(cellPos, objectSize) || hitLayer.value != 7)
+            if (GameData.Instance.ValidateKey(cellPos, objectSize, lastDirection) || hitLayer.value != 7)
             {
                 return false;
             }

@@ -33,7 +33,6 @@ namespace BuildingSystemFolder
         public void BuildUpdate()
         {
             TryPlacing();
-            TryRotating();
         }
 
         public void Exit()
@@ -52,13 +51,14 @@ namespace BuildingSystemFolder
             {
                 nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
                 snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
-                isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize);
+                isPlacable = !GameData.Instance.ValidateKey(snappedCellPos, _wallPropSo.ObjectSize, DirectionHelper.GetDirectionFromQuaternion(lastRotation));
                 SetMaterialsColor(isPlacable);
                 lastCellPos = cellPos;
             }
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
-            
+            tempPrefab.transform.rotation = lastRotation; // Smooth Rotation
+
             if (InputSystem.Instance.LeftClickOnWorld)
             {
                 if (isPlacable)
@@ -72,11 +72,6 @@ namespace BuildingSystemFolder
             {
                 Exit();
             }
-        }
-
-        public void TryRotating()
-        {
-            tempPrefab.transform.rotation = lastRotation;
         }
 
         private Vector3Int GetClosestWall(Vector3 cellPos)
@@ -103,13 +98,15 @@ namespace BuildingSystemFolder
         {
             var newObject = Object.Instantiate(_wallPropSo.Prefab, tempPrefab.transform.position, tempPrefab.transform.rotation);
             newObject.transform.SetParent(_buildingSystem.GetSceneTransformContainer().PropHolderTransform);
+
+            Direction currentDirection = DirectionHelper.GetDirectionFromQuaternion(lastRotation);
             
             if (newObject.TryGetComponent(out Prop prop))
             {
-                prop.Initialize(_wallPropSo, CellPosition, Direction.Up);
+                prop.Initialize(_wallPropSo, CellPosition, currentDirection);
             }
             
-            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_wallPropSo, newObject));
+            GameData.Instance.AddPlacementData(CellPosition, new PlacementData(_wallPropSo, newObject, currentDirection));
         }
         
         private void SetMaterialsColor(bool isCellPosValid)

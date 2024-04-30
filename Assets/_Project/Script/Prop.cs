@@ -1,7 +1,9 @@
+using System;
 using ScriptableObjects;
 using UnityEngine;
 
-public class Prop : MonoBehaviour, IRemovable
+[Serializable]
+public class Prop : MonoBehaviour
 {
     private PlacablePropSo _placablePropSo;
     public Vector3Int propPosition;
@@ -17,17 +19,5 @@ public class Prop : MonoBehaviour, IRemovable
     public Vector3Int GetPropCellPosition() => propPosition;
     public Quaternion GetPropRotation() => transform.rotation;
     public PlacablePropSo GetPropSo() => _placablePropSo;
-    
-    public void Remove()
-    {
-        throw new System.NotImplementedException();
-    }
 }
 
-public enum Direction
-{
-    Up,
-    Right,
-    Down,
-    Left,
-}

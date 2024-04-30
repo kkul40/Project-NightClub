@@ -47,7 +47,7 @@ namespace Activities
             int loopCount = 0;
         
             var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-            while (GameData.Instance.ValidateKey(BuildingSystem.Instance.GetWorldToCell(target)))
+            while (GameData.Instance.ValidateKeyByCellPos(BuildingSystem.Instance.GetWorldToCell(target)))
             {
                 target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
                 loopCount++;
