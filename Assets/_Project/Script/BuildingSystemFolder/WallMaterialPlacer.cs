@@ -17,6 +17,7 @@ namespace BuildingSystemFolder
             if (placablePropSo is WallMaterialSo wallPaperSo)
             {
                 _tempWallMaterialSo = wallPaperSo;
+                BuildingSystem.Instance.GetTileIndicator.SetTileIndicator(PlacingType.Place);
             }
         }
 

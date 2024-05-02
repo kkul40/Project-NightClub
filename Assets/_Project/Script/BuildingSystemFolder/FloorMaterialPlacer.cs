@@ -16,6 +16,7 @@ namespace BuildingSystemFolder
             if (placablePropSo is FloorMaterialSo floorMaterialSo)
             {
                 _floorMaterialSo = floorMaterialSo;
+                BuildingSystem.Instance.GetTileIndicator.SetTileIndicator(PlacingType.Place);
             }
         }
 

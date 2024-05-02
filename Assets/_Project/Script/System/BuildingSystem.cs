@@ -79,6 +79,7 @@ namespace BuildingSystemFolder
         public Vector3 GetCellCenterWorld(Vector3Int cellPos) => gridHandler.GetCellCenterWorld(cellPos);
         public Vector3Int GetWorldToCell(Vector3 worldPos) => gridHandler.GetWorldToCell(worldPos);
         public SceneTransformContainer GetSceneTransformContainer() => _sceneTransformContainer;
+        public TileIndicator GetTileIndicator => tileIndicator;
     }
 
     public enum PlacingType

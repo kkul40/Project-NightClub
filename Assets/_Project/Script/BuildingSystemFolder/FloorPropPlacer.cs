@@ -27,6 +27,8 @@ namespace BuildingSystemFolder
                 tempPrefab = Object.Instantiate(placable.Prefab, Vector3.zero, lastRotation);
                 tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>() == null ? tempPrefab.GetComponentInChildren<MeshRenderer>() : tempPrefab.GetComponent<MeshRenderer>();
                 tempPrefab.transform.localScale += new Vector3(0.05f, 0.05f, 0.05f);
+                BuildingSystem.Instance.GetTileIndicator.SetTileIndicator(PlacingType.Direction);
+                _buildingSystem.RotateDirectionIndicator(lastRotation);
             }
         }
 

@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dd310f167114279b73fab96d32f25ca, type: 3}
-  m_Name: Led Screen 2
+  m_Script: {fileID: 11500000, guid: 7ad03367a2f54d93b8ef6dc5288150f6, type: 3}
+  m_Name: LCD Screen 01
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   price: 0
-  <Prefab>k__BackingField: {fileID: 9047153638762108480, guid: 3c1761832ea295b45b95e52f7eb53f22, type: 3}
+  Prefab: {fileID: 2764624274144738332, guid: 148455735d5dd8346bb4060620ea1cc9, type: 3}
   ObjectSize: {x: 2, y: 1}
-  placementType: 1

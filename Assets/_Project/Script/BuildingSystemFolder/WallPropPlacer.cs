@@ -17,6 +17,7 @@ namespace BuildingSystemFolder
         
         private Vector3Int lastCellPos = -Vector3Int.one;
         private bool isPlacable = false;
+        private bool lastPlacable = false;
         private Vector3 nextPlacableGridPos = Vector3.zero;
         private Vector3Int snappedCellPos = Vector3Int.zero;
 
@@ -27,6 +28,7 @@ namespace BuildingSystemFolder
                 _wallPropSo = placable;
                 tempPrefab = Object.Instantiate(placable.Prefab, Vector3.zero, lastRotation);
                 tempMeshRenderer = tempPrefab.GetComponent<MeshRenderer>();
+                BuildingSystem.Instance.GetTileIndicator.SetTileIndicator(PlacingType.Place);
             }
         }
 
@@ -49,12 +51,13 @@ namespace BuildingSystemFolder
 
             isPlacable = !GameData.Instance.PlacementHandler.ContainsKey(snappedCellPos, _wallPropSo.ObjectSize, DirectionHelper.GetDirectionFromQuaternion(lastRotation));
             
-            if (cellPos != lastCellPos)
+            if (cellPos != lastCellPos || isPlacable != lastPlacable)
             {
                 nextPlacableGridPos = _buildingSystem.GetCellCenterWorld(GetClosestWall(mousePos) + offset);
                 snappedCellPos = _buildingSystem.GetWorldToCell(nextPlacableGridPos);
                 SetMaterialsColor(isPlacable);
                 lastCellPos = cellPos;
+                lastPlacable = isPlacable;
             }
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());

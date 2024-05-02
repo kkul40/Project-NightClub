@@ -22,7 +22,9 @@ public class PlacamentDataHandler
         
         if (cellPos.x < 0 || cellPos.z < 0) return true;
 
-        if (cellPos.x >= border.x || cellPos.z >= border.z) return true;
+        if (cellPos.x >= border.x || cellPos.z >= border.z) return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
+        
+        if (cellPos.x == 4 && cellPos.z == 0) return true;
         
         if (placementDatas.ContainsKey(cellPos))
         {

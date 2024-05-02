@@ -14,4 +14,15 @@ namespace ScriptableObjects
             return new FloorPropPlacer();
         }
     }
+
+    [CreateAssetMenu(menuName = "Placable/New Dancable Area")]
+    public class DancableTileSo : PlacablePropSo
+    {
+        public GameObject Prefab;
+        
+        public override IBuilder GetBuilder()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }
