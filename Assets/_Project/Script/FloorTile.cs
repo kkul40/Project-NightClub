@@ -3,7 +3,6 @@
 public class FloorTile : MonoBehaviour, IMaterial
 {
     public MeshRenderer MeshRenderer { get; private set; }
-    public FloorType floorType;
     
     private void Start()
     {
@@ -22,10 +21,4 @@ public class FloorTile : MonoBehaviour, IMaterial
         currentMaterials = materials;
         MeshRenderer.materials = currentMaterials;
     }
-}
-
-public enum FloorType
-{
-    Normal,
-    Dance,
 }

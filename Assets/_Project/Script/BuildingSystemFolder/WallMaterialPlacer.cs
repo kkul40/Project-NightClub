@@ -67,7 +67,7 @@ namespace BuildingSystemFolder
                 _lastMaterialObject = null;
             }
             
-            BuildingSystem.Instance.ResetPlacerAndRemover();
+            BuildingSystem.Instance.StopBuilding();
         }
         
         private IMaterial GetClosestWallMaterial(Vector3 cellPos)

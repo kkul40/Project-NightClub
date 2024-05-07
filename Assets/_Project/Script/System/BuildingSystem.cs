@@ -32,7 +32,7 @@ namespace BuildingSystemFolder
             _currentBuilder?.BuildUpdate();
         }
 
-        public void ResetPlacerAndRemover()
+        public void StopBuilding()
         {
             tileIndicator.CloseTileIndicator();
             _currentBuilder = null;

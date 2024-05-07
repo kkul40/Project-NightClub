@@ -30,7 +30,7 @@ namespace BuildingSystemFolder
                 selectedMeshRenderer = null;
             }
             
-            BuildingSystem.Instance.ResetPlacerAndRemover();
+            BuildingSystem.Instance.StopBuilding();
         }
         
         public void TryRemoving()

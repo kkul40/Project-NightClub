@@ -6,6 +6,6 @@ namespace ScriptableObjects
     {
         public NPC Owner { get; set; }
         bool IsOccupied { get; set; }
-        public Vector3 GetItOccupied(NPC owner);
+        public void GetItOccupied(NPC owner);
     }
 }

@@ -40,7 +40,7 @@ namespace BuildingSystemFolder
         public void Exit()
         {
             Object.Destroy(tempPrefab);
-            BuildingSystem.Instance.ResetPlacerAndRemover();
+            BuildingSystem.Instance.StopBuilding();
         }
       
         public void TryPlacing()

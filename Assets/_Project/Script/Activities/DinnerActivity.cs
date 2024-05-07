@@ -58,7 +58,8 @@ namespace Activities
                         //Deactivate Navmesh
                         //Sit
                         npc._navMeshAgent.enabled = false;
-                        npc.transform.DOMove(chairProp.GetItOccupied(npc), tweenDuration);
+                        chairProp.GetItOccupied(npc);
+                        npc.transform.DOMove(chairProp.GetSitPosition(), tweenDuration);
                         // npc.transform.rotation = chairProp.GetPropRotation();
                         npc.transform.DORotate(chairProp.GetPropRotation().eulerAngles, tweenDuration);
                         npc.ChangeState(eNpcAnimation.Sit);
@@ -103,10 +104,10 @@ namespace Activities
         {
             if (isCanceled) return;
 
-            npc.ChangeState(eNpcAnimation.Idle);
             npc._navMeshAgent.enabled = true;
             npc.transform.DOMove(chairProp.GetFrontPosition(), tweenDuration);
             chairProp.IsOccupied = false;
+            npc.ChangeState(eNpcAnimation.Idle);
             isEnded = true;
         }
 

@@ -190,10 +190,11 @@ public class PlacamentDataHandler
     
     public GameObject GetPlacedObjectByCellPosition(Vector3Int cellPos)
     {
-        if (ContainsKey(cellPos))
+        if (placementDatas.TryGetValue(cellPos, out PlacementData value))
         {
-            return placementDatas[cellPos].SceneObject;
+            return value.SceneObject;
         }
+        
         return null;
     }
     

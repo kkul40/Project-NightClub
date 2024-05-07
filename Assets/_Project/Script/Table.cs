@@ -7,9 +7,9 @@ public class Table : Prop, IPropUpdate
     public GameObject CubePrefab;
     public List<Chair> Chairs;
 
-    public override void Initialize(PlacablePropSo placablePropSo, Vector3Int propPos, Direction direction)
+    public override void Initialize(PlacablePropSo placablePropSo, Vector3Int cellPosition, Direction direction)
     {
-        base.Initialize(placablePropSo, propPos, direction);
+        base.Initialize(placablePropSo, cellPosition, direction);
         
         PropUpdate();
     }
@@ -25,7 +25,7 @@ public class Table : Prop, IPropUpdate
             if (prop is Chair chair)
             {
                 print("Chair found");
-                var distance = chair.propPosition - propPosition;
+                var distance = chair.CellPosition - CellPosition;
                 print(distance.magnitude);
                 if (distance.magnitude <= 1)
                 {

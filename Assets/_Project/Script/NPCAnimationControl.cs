@@ -46,4 +46,11 @@ public class NPCAnimationControl : MonoBehaviour
         this.transform.localPosition = Vector3.zero;
         this.transform.localRotation = Quaternion.identity;
     }
+
+    public void SetRootMotion(bool appyRootMotion)
+    {
+        _animator.applyRootMotion = appyRootMotion;
+    }
+
+    public float GetCurrentAnimationDuration() => currentAnimation.length;
 }

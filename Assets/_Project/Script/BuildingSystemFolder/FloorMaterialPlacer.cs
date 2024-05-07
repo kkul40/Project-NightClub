@@ -73,7 +73,7 @@ namespace BuildingSystemFolder
                 _lastMaterialObject = null;
             }
             
-            BuildingSystem.Instance.ResetPlacerAndRemover();
+            BuildingSystem.Instance.StopBuilding();
         }
     }
 }

@@ -82,6 +82,8 @@ public class NPC : MonoBehaviour
         currentActivity = newActivity;
         currentActivity.StartActivity(this);
     }
+
+    public NPCAnimationControl GetAnimationControl() => _npcAnimationControl;
 }
 
 
