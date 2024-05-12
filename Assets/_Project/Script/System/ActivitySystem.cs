@@ -1,42 +1,43 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Activities;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-[DisallowMultipleComponent]
-public class ActivitySystem : Singleton<ActivitySystem>
+namespace System
 {
-    public Dictionary<Type, Activity> dictionary = new ();
-
-    private void Awake()
+    [DisallowMultipleComponent]
+    public class ActivitySystem : Singleton<ActivitySystem>
     {
-        Initialize();
-    }
+        public Dictionary<Type, Activity> dictionary = new ();
 
-    protected override void Initialize()
-    {
-        var assembly = Assembly.GetAssembly(typeof(Activity));
-        var allActivityTypes = assembly.GetTypes().Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
-
-        foreach (var ac in allActivityTypes)
+        private void Awake()
         {
-            var activity = Activator.CreateInstance(ac) as Activity;
-            dictionary.Add(ac, activity);
+            Initialize();
         }
-    }
 
-    public Activity GetActivity(Type activity2)
-    {
-        return Activator.CreateInstance(activity2) as Activity;
-    }
+        protected override void Initialize()
+        {
+            var assembly = Assembly.GetAssembly(typeof(Activity));
+            var allActivityTypes = assembly.GetTypes().Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
 
-    public Activity GetRandomActivity()
-    {
-        var a = Random.Range(0, dictionary.Count);
-        var randomActivity = dictionary.ElementAt(a).Value;
-        return GetActivity(dictionary.ElementAt(a).Key);
+            foreach (var ac in allActivityTypes)
+            {
+                var activity = Activator.CreateInstance(ac) as Activity;
+                dictionary.Add(ac, activity);
+            }
+        }
+
+        public Activity GetActivity(Type activity2)
+        {
+            return Activator.CreateInstance(activity2) as Activity;
+        }
+
+        public Activity GetRandomActivity()
+        {
+            var a = UnityEngine.Random.Range(0, dictionary.Count);
+            var randomActivity = dictionary.ElementAt(a).Value;
+            return GetActivity(dictionary.ElementAt(a).Key);
+        }
     }
 }

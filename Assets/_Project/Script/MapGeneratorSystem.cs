@@ -1,3 +1,4 @@
+using Data;
 using UnityEngine;
 
 public class MapGeneratorSystem : MonoBehaviour

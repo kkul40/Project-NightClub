@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 
 public class Wall : MonoBehaviour, IMaterial
 {

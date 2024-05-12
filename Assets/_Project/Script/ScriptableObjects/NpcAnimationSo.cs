@@ -6,6 +6,8 @@ namespace ScriptableObjects
     public class NpcAnimationSo : ScriptableObject
     {
         [field : SerializeField]
+        public float animationDuration { get; private set; }
+        [field : SerializeField]
         public AnimationClip Idle { get; private set; }
         [field : SerializeField]
         public AnimationClip Walk { get; private set; }

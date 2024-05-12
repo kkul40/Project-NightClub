@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cf17a8986445a4ad5ebe0e57b4abab, type: 3}
+  m_Name: DrinkData-L1
+  m_EditorClassIdentifier: 
+  <Drinks>k__BackingField:
+  - <Name>k__BackingField: Yesil
+    <DrinkAmount>k__BackingField: 12
+    <PrepareTime>k__BackingField: 5
+    <Price>k__BackingField: 12
+    <Prefab>k__BackingField: {fileID: 1061117208965252620, guid: 44c1faf94e7f2244681b506aa2922854, type: 3}
+  - <Name>k__BackingField: Mavi
+    <DrinkAmount>k__BackingField: 12
+    <PrepareTime>k__BackingField: 5
+    <Price>k__BackingField: 10
+    <Prefab>k__BackingField: {fileID: 1323607316619988180, guid: 4ede03be7d205f243911af406eb3566c, type: 3}
+  - <Name>k__BackingField: Turuncu
+    <DrinkAmount>k__BackingField: 6
+    <PrepareTime>k__BackingField: 10
+    <Price>k__BackingField: 15
+    <Prefab>k__BackingField: {fileID: 7728130314446007940, guid: 6831137c0a312334688575a9b1254f30, type: 3}

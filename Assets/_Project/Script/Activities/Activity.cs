@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data;
 using ScriptableObjects;
 using UnityEngine;
 
 namespace Activities
 {
-    [Serializable]
     public abstract class Activity
     {
         public abstract bool isEnded { get; protected set; }
@@ -18,7 +19,6 @@ namespace Activities
         {
             if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0)
             {
-                Debug.LogWarning("Yerlestirilmis Prop Bulunamadi!");
                 return null;
             }
 
@@ -52,6 +52,40 @@ namespace Activities
             }
 
             return closestProp;
+        }
+        
+        protected List<T> GetMultiplePropsByType<T>() where T : Prop
+        {
+            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0)
+            {
+                return new List<T>();
+            }
+
+            List<T> propList = new List<T>();
+
+            float lastDistance = 9999;
+            foreach (var prop in GameData.Instance.GetPropList)
+            {
+                if(prop == null) continue;
+                
+                if (prop.transform.TryGetComponent(out IOccupieable occupieable))
+                {
+                    if(occupieable.IsOccupied) continue;
+                }
+            
+                if (prop is T propType)
+                {
+                   propList.Add(propType);
+                }
+            }
+
+            if (propList.Count < 1)
+            {
+                Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
+                return new List<T>();
+            }
+            
+            return propList;
         }
         
     }

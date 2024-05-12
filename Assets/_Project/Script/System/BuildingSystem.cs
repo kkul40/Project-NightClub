@@ -1,7 +1,8 @@
+using BuildingSystemFolder;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace BuildingSystemFolder
+namespace System
 {
     [DisallowMultipleComponent]
     public class BuildingSystem : Singleton<BuildingSystem>

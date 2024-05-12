@@ -1,23 +1,27 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-public class GameData : Singleton<GameData>
+namespace Data
 {
-    [SerializeField] private PlacamentDataHandler _placamentDataHandler;
-    [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
-
-    [Header("Data")] 
-    public List<Vector3> FloorMap = new ();
-    public List<Wall> WallMap = new();
-
-    private void Awake()
+    [DisallowMultipleComponent]
+    public class GameData : Singleton<GameData>
     {
-        _placamentDataHandler = new PlacamentDataHandler();
-    }
+        [SerializeField] private PlacamentDataHandler _placamentDataHandler;
+        [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
+
+        [Header("Data")] 
+        public List<Vector3> FloorMap = new ();
+        public List<Wall> WallMap = new();
+
+        private void Awake()
+        {
+            _placamentDataHandler = new PlacamentDataHandler();
+        }
     
-    public List<Wall> GetWallMapPosList() => WallMap;
-    public List<Prop> GetPropList => PlacementHandler.GetPropList;
-    public PlacamentDataHandler PlacementHandler => _placamentDataHandler;
-    public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;
+        public List<Wall> GetWallMapPosList() => WallMap;
+        public List<Prop> GetPropList => PlacementHandler.GetPropList;
+        public PlacamentDataHandler PlacementHandler => _placamentDataHandler;
+        public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;
+    }
 }

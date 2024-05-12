@@ -1,11 +1,13 @@
+using System;
 using Activities;
 using BuildingSystemFolder;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 [SelectionBase]
-public class NPC : MonoBehaviour
+public class NPC : MonoBehaviour, ICursorInteraction
 {
     [SerializeField] private eNpcAnimation _animationState;
     private NPCAnimationControl _npcAnimationControl;
@@ -29,7 +31,6 @@ public class NPC : MonoBehaviour
     private void Update()
     {
         UpdateActivity();
-        
         _npcAnimationControl.PlayAnimation(_animationState);
     }
 
@@ -57,9 +58,11 @@ public class NPC : MonoBehaviour
     public void SetNewDestination(Vector3 targetPos)
     {
         _navMeshAgent.SetDestination(targetPos);
-        //TODO Rotation i buradan yap
-        // Quaternion rotation = Quaternion.LookRotation(targetPos - transform.position);
-        // transform.DORotate(rotation.eulerAngles, 0.5f);
+    }
+
+    public void SetRotation(Quaternion targetRotation)
+    {
+        transform.DORotate(targetRotation.eulerAngles, 0.5f);
     }
 
     public void ChangeState(eNpcAnimation newAnimation)
@@ -84,6 +87,18 @@ public class NPC : MonoBehaviour
     }
 
     public NPCAnimationControl GetAnimationControl() => _npcAnimationControl;
+    
+    public void OnFocus()
+    {
+    }
+
+    public void OnOutFocus()
+    {
+    }
+
+    public void OnClick()
+    {
+    }
 }
 
 

@@ -1,5 +1,8 @@
-﻿using BuildingSystemFolder;
+﻿using System;
+using BuildingSystemFolder;
+using Data;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Activities
 {
@@ -42,7 +45,7 @@ namespace Activities
             if (isCanceled) return;
         }
         
-        private Vector3 GetRandomDestination()
+        public Vector3 GetRandomDestination()
         {
             int loopCount = 0;
         

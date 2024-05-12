@@ -5,7 +5,6 @@ public class NPCAnimationControl : MonoBehaviour
 {
     private Animator _animator;
     [SerializeField] private NpcAnimationSo _npcAnimationSo;
-    [SerializeField] private float transitionDuration;
     private AnimationClip currentAnimation;
     private AnimationClip selectedAnimationClip;
 
@@ -41,7 +40,7 @@ public class NPCAnimationControl : MonoBehaviour
         if (currentAnimation == selectedAnimationClip) return;
 
         currentAnimation = selectedAnimationClip;
-        _animator.CrossFadeInFixedTime(selectedAnimationClip.name, transitionDuration, 0);
+        _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
         
         this.transform.localPosition = Vector3.zero;
         this.transform.localRotation = Quaternion.identity;

@@ -69,6 +69,25 @@ public class InputSystem : MonoBehaviour
         return Vector3.zero;
     }
 
+    public Transform GetMouseHitTransfromOnWorld()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return null;
+        
+        Vector3 mousePOs = Input.mousePosition;
+        mousePOs.z = mainCam.nearClipPlane;
+        Ray ray = mainCam.ScreenPointToRay(mousePOs);
+        
+        RaycastHit hit;
+        float maxDistance = 100;
+        if (Physics.Raycast(ray, out hit, maxDistance))
+        {
+            return hit.transform;
+        }
+        
+        return null;
+    }
+
     public Transform GetLastHitTransform() => lastHitTransform;
 
     public RaycastHit GetLastHit() => lastHit;

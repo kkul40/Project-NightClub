@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BuildingSystemFolder
+namespace System
 {
     public class GridHandler : MonoBehaviour
     {

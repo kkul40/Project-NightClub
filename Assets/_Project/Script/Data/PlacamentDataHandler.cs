@@ -1,218 +1,219 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ScriptableObjects;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class PlacamentDataHandler
+namespace Data
 {
-    private Dictionary<Vector3Int, PlacementData> placementDatas;
-    private List<Prop> propList;
-
-    public PlacamentDataHandler()
+    public class PlacamentDataHandler
     {
-        placementDatas = new Dictionary<Vector3Int, PlacementData>();
-        propList = new List<Prop>();
-    }
+        private Dictionary<Vector3Int, PlacementData> placementDatas;
+        private List<Prop> propList;
+
+        public PlacamentDataHandler()
+        {
+            placementDatas = new Dictionary<Vector3Int, PlacementData>();
+            propList = new List<Prop>();
+        }
     
-    public bool ContainsKey(Vector3Int cellPos)
-    {
-        Vector3Int border = GameData.Instance.MapGenerator.MapSize;
-        
-        if (cellPos.x < 0 || cellPos.z < 0) return true;
-
-        if (cellPos.x >= border.x || cellPos.z >= border.z) return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
-        
-        if (cellPos.x == 4 && cellPos.z == 0) return true;
-        
-        if (placementDatas.ContainsKey(cellPos))
+        public bool ContainsKey(Vector3Int cellPos)
         {
-            return true;
-        }
-        return false;
-    }
-
-    public bool ContainsKey(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
-    {
-        List<Vector3Int> keys = new List<Vector3Int>();
+            Vector3Int border = GameData.Instance.MapGenerator.MapSize;
         
-        keys = GeneratePlacableKeys(cellPos, objectSize, direction);
+            if (cellPos.x < 0 || cellPos.z < 0) return true;
 
-        foreach (var key in keys)
-        {
-            if (ContainsKey(key)) return true;
-        }
-
-        return false;
-    }
-
-    public void RemovePlacementData(Vector3Int cellPos)
-    {
-        if (!ContainsKey(cellPos)) return;
-
-        GameObject go = placementDatas[cellPos].SceneObject;
+            if (cellPos.x >= border.x || cellPos.z >= border.z) return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
         
-        TryRemoveProp(go);
-        Object.Destroy(go);
-        UpdateProps();
-
-        var value = placementDatas[cellPos];
+            if (cellPos.x == 4 && cellPos.z == 0) return true;
         
-        List<Vector3Int> keys = new List<Vector3Int>();
-        foreach (var key in placementDatas.Keys)
-        {
-            if (placementDatas[key] == value)
+            if (placementDatas.ContainsKey(cellPos))
             {
-                keys.Add(key);
+                return true;
             }
-        }
-        foreach (var key in keys)
-        {
-            placementDatas.Remove(key);
-        }
-    }
-    
-    public void AddPlacementData(Vector3Int cellPos, PlacementData placementData)
-    {
-        if (ContainsKey(cellPos)) return;
-
-        var objectSize = placementData.ObjectSize;
-        var direction = placementData.Direction;
-        List<Vector3Int> keys = new List<Vector3Int>();
-
-        keys = GeneratePlacableKeys(cellPos, objectSize, direction);
-
-        bool keysAreValid = true;
-        foreach (var key in keys)
-        {
-            keysAreValid = !ContainsKey(key);
-
-            if (!keysAreValid)
-            {
-                return;
-            }
+            return false;
         }
 
-        if (keysAreValid)
+        public bool ContainsKey(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
         {
+            List<Vector3Int> keys = new List<Vector3Int>();
+        
+            keys = GeneratePlacableKeys(cellPos, objectSize, direction);
+
             foreach (var key in keys)
             {
-                placementDatas.Add(key, placementData);
+                if (ContainsKey(key)) return true;
             }
-            TryAddProp(placementData.SceneObject);
+
+            return false;
+        }
+
+        public void RemovePlacementData(Vector3Int cellPos)
+        {
+            if (!ContainsKey(cellPos)) return;
+
+            GameObject go = placementDatas[cellPos].SceneObject;
+        
+            TryRemoveProp(go);
+            Object.Destroy(go);
             UpdateProps();
-        }
-    }
 
-    private List<Vector3Int> GeneratePlacableKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
-    {
-        List<Vector3Int> keys = new List<Vector3Int>();
-        keys.Add(cellPos);
-        CheckHorizontalKeys(cellPos, objectSize, direction, ref keys);
-        return keys;
-    }
-
-    private void CheckHorizontalKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction, ref List<Vector3Int> keys)
-    {
-        CheckVerticalKeys(cellPos, objectSize, direction, ref keys);
+            var value = placementDatas[cellPos];
         
-        for (int i = 1; i < objectSize.x; i++)
-        {
-            var newCellPos = -Vector3Int.one;
-            switch (direction)
+            List<Vector3Int> keys = new List<Vector3Int>();
+            foreach (var key in placementDatas.Keys)
             {
-                case Direction.Down:
-                    newCellPos = cellPos + Vector3Int.left * i;
-                    break;
-                case Direction.Up:
-                    newCellPos = cellPos + Vector3Int.right * i;
-                    break;
-                case Direction.Left:
-                    newCellPos = cellPos + Vector3Int.forward * i;
-                    break;
-                case Direction.Right:
-                    newCellPos = cellPos + Vector3Int.back * i;
-                    break;
+                if (placementDatas[key] == value)
+                {
+                    keys.Add(key);
+                }
             }
-
-            if (newCellPos != -Vector3Int.one)
+            foreach (var key in keys)
             {
-                keys.Add(newCellPos);
-                CheckVerticalKeys(newCellPos, objectSize, direction, ref keys);
+                placementDatas.Remove(key);
             }
         }
-    }
-
-    private void CheckVerticalKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction, ref List<Vector3Int> keys)
-    {
-        for (int i = 1; i < objectSize.y; i++)
+    
+        public void AddPlacementData(Vector3Int cellPos, PlacementData placementData)
         {
-            var newCellPos = -Vector3Int.one;
-            switch (direction)
+            if (ContainsKey(cellPos)) return;
+
+            var objectSize = placementData.ObjectSize;
+            var direction = placementData.Direction;
+            List<Vector3Int> keys = new List<Vector3Int>();
+
+            keys = GeneratePlacableKeys(cellPos, objectSize, direction);
+
+            bool keysAreValid = true;
+            foreach (var key in keys)
             {
-                case Direction.Down:
-                    newCellPos = cellPos + Vector3Int.forward * i;
-                    break;
-                case Direction.Up:
-                    newCellPos = cellPos + Vector3Int.back * i;
-                    break;
-                case Direction.Left:
-                    newCellPos = cellPos + Vector3Int.right * i;
-                    break;
-                case Direction.Right:
-                    newCellPos = cellPos + Vector3Int.left * i;
-                    break;
+                keysAreValid = !ContainsKey(key);
+
+                if (!keysAreValid)
+                {
+                    return;
+                }
             }
+
+            if (keysAreValid)
+            {
+                foreach (var key in keys)
+                {
+                    placementDatas.Add(key, placementData);
+                }
+                TryAddProp(placementData.SceneObject);
+                UpdateProps();
+            }
+        }
+
+        private List<Vector3Int> GeneratePlacableKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
+        {
+            List<Vector3Int> keys = new List<Vector3Int>();
+            keys.Add(cellPos);
+            CheckHorizontalKeys(cellPos, objectSize, direction, ref keys);
+            return keys;
+        }
+
+        private void CheckHorizontalKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction, ref List<Vector3Int> keys)
+        {
+            CheckVerticalKeys(cellPos, objectSize, direction, ref keys);
+        
+            for (int i = 1; i < objectSize.x; i++)
+            {
+                var newCellPos = -Vector3Int.one;
+                switch (direction)
+                {
+                    case Direction.Down:
+                        newCellPos = cellPos + Vector3Int.left * i;
+                        break;
+                    case Direction.Up:
+                        newCellPos = cellPos + Vector3Int.right * i;
+                        break;
+                    case Direction.Left:
+                        newCellPos = cellPos + Vector3Int.forward * i;
+                        break;
+                    case Direction.Right:
+                        newCellPos = cellPos + Vector3Int.back * i;
+                        break;
+                }
+
+                if (newCellPos != -Vector3Int.one)
+                {
+                    keys.Add(newCellPos);
+                    CheckVerticalKeys(newCellPos, objectSize, direction, ref keys);
+                }
+            }
+        }
+
+        private void CheckVerticalKeys(Vector3Int cellPos, Vector2Int objectSize, Direction direction, ref List<Vector3Int> keys)
+        {
+            for (int i = 1; i < objectSize.y; i++)
+            {
+                var newCellPos = -Vector3Int.one;
+                switch (direction)
+                {
+                    case Direction.Down:
+                        newCellPos = cellPos + Vector3Int.forward * i;
+                        break;
+                    case Direction.Up:
+                        newCellPos = cellPos + Vector3Int.back * i;
+                        break;
+                    case Direction.Left:
+                        newCellPos = cellPos + Vector3Int.right * i;
+                        break;
+                    case Direction.Right:
+                        newCellPos = cellPos + Vector3Int.left * i;
+                        break;
+                }
             
-            if (newCellPos != -Vector3Int.one)
-            {
-                keys.Add(newCellPos);
+                if (newCellPos != -Vector3Int.one)
+                {
+                    keys.Add(newCellPos);
+                }
             }
         }
-    }
 
-    private void TryAddProp(GameObject gameObject)
-    {
-        if (gameObject.TryGetComponent(out Prop prop))
+        private void TryAddProp(GameObject gameObject)
         {
-            propList.Add(prop);
+            if (gameObject.TryGetComponent(out Prop prop))
+            {
+                propList.Add(prop);
+            }
         }
-    }
 
-    private void TryRemoveProp(GameObject gameObject)
-    {
-        if (gameObject.TryGetComponent(out Prop prop))
+        private void TryRemoveProp(GameObject gameObject)
         {
-            propList.Remove(prop);
+            if (gameObject.TryGetComponent(out Prop prop))
+            {
+                propList.Remove(prop);
+            }
         }
-    }
     
-    public GameObject GetPlacedObjectByCellPosition(Vector3Int cellPos)
-    {
-        if (placementDatas.TryGetValue(cellPos, out PlacementData value))
+        public GameObject GetPlacedObjectByCellPosition(Vector3Int cellPos)
         {
-            return value.SceneObject;
-        }
+            if (placementDatas.TryGetValue(cellPos, out PlacementData value))
+            {
+                return value.SceneObject;
+            }
         
-        return null;
-    }
+            return null;
+        }
     
-    public List<PlacementData> GetPlacementData()
-    {
-        return placementDatas.Values.ToList();
-    }
-    
-    private void UpdateProps()
-    {
-        foreach (var prop in propList)
+        public List<PlacementData> GetPlacementData()
         {
-            if (prop.transform.TryGetComponent(out IPropUpdate propUpdate))
+            return placementDatas.Values.ToList();
+        }
+    
+        private void UpdateProps()
+        {
+            foreach (var prop in propList)
             {
-                propUpdate.PropUpdate();
+                if (prop.transform.TryGetComponent(out IPropUpdate propUpdate))
+                {
+                    propUpdate.PropUpdate();
+                }
             }
         }
-    }
 
-    public List<Prop> GetPropList => propList;
+        public List<Prop> GetPropList => propList;
+    }
 }
