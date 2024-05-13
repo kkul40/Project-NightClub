@@ -2,7 +2,7 @@
 using ScriptableObjects;
 using UnityEngine;
 
-public class DrinkTable : MonoBehaviour, ICursorInteraction
+public class DrinkTable : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform EmptyTransfrom;
     [SerializeField] private Transform DrinkHolder;
@@ -13,7 +13,6 @@ public class DrinkTable : MonoBehaviour, ICursorInteraction
 
     public void SetUpTable(Drink drink)
     {
-        Debug.Log("Table set");
         this.drink = drink;
         drinkAmount = drink.DrinkAmount;
 
@@ -45,6 +44,8 @@ public class DrinkTable : MonoBehaviour, ICursorInteraction
         isClicked = true;
     }
 
+    public eInteraction Interaction { get; } = eInteraction.Interactable;
+
     public void OnFocus()
     {
     }
@@ -63,9 +64,17 @@ public class DrinkTable : MonoBehaviour, ICursorInteraction
     }
 }
 
-public interface ICursorInteraction
+public interface IInteractable
 {
+    public eInteraction Interaction { get; }
     public void OnFocus();
     public void OnOutFocus();
     public void OnClick();
+}
+
+public enum eInteraction
+{
+    Interactable,
+    Customer,
+    None,
 }

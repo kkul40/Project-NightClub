@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 [SelectionBase]
-public class NPC : MonoBehaviour, ICursorInteraction
+public class NPC : MonoBehaviour, IInteractable
 {
     [SerializeField] private eNpcAnimation _animationState;
     private NPCAnimationControl _npcAnimationControl;
@@ -87,7 +87,9 @@ public class NPC : MonoBehaviour, ICursorInteraction
     }
 
     public NPCAnimationControl GetAnimationControl() => _npcAnimationControl;
-    
+
+    public eInteraction Interaction { get; } = eInteraction.Customer;
+
     public void OnFocus()
     {
     }

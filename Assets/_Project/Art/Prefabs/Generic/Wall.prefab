@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8303777087641781845}
   - component: {fileID: 4042764526882176899}
+  - component: {fileID: 479281452885082941}
   m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
@@ -45,6 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe870145125452d86a09250433b5bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &479281452885082941
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303777087641781844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0000002, y: 3.0000002, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &8303777087675505055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,9 +145,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb54f40cbd1397648b5f45215c66ddd7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2813922513112276577}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb54f40cbd1397648b5f45215c66ddd7, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7150260924853916808}
   m_SourcePrefab: {fileID: 100100000, guid: fb54f40cbd1397648b5f45215c66ddd7, type: 3}
 --- !u!4 &8409988765594975860 stripped
@@ -138,27 +157,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fb54f40cbd1397648b5f45215c66ddd7, type: 3}
   m_PrefabInstance: {fileID: 8303777087675505055}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &2813922513112276577
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9222695381683414222}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0000002, y: 3.0000002, z: 0}
-  m_Center: {x: 0, y: 1.5, z: 0.55}
 --- !u!208 &7150260924853916808
 NavMeshObstacle:
   m_ObjectHideFlags: 0

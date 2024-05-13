@@ -1,7 +1,7 @@
 ﻿using ScriptableObjects;
 using UnityEngine;
 
-public class DancableTile : Prop, IPropUpdate, IOccupieable
+public class DancableTile : Prop, IPropUpdate, IOccupieable, IInteractable
 {
     public override void Initialize(PlacablePropSo placablePropSo, Vector3Int cellPosition, Direction direction)
     {
@@ -21,5 +21,19 @@ public class DancableTile : Prop, IPropUpdate, IOccupieable
     {
         Owner = owner;
         IsOccupied = true;
+    }
+
+    public eInteraction Interaction { get; } = eInteraction.Interactable;
+    public void OnFocus()
+    {
+        
+    }
+
+    public void OnOutFocus()
+    {
+    }
+
+    public void OnClick()
+    {
     }
 }

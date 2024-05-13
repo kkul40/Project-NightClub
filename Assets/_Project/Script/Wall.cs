@@ -1,7 +1,7 @@
 ﻿using Data;
 using UnityEngine;
 
-public class Wall : MonoBehaviour, IMaterial
+public class Wall : MonoBehaviour, IMaterial, IInteractable
 {
     public MeshRenderer MeshRenderer { get; protected set; }
     
@@ -13,7 +13,7 @@ public class Wall : MonoBehaviour, IMaterial
 
     public virtual void ChangeMaterial(Material newWallPaper)
     {
-        Debug.Log("Cchanged Material");
+        Debug.Log("Changed Material");
         var materials = MeshRenderer.materials;
         materials[1] = newWallPaper;
         MeshRenderer.materials = materials;
@@ -24,6 +24,20 @@ public class Wall : MonoBehaviour, IMaterial
         var currentMaterial = MeshRenderer.materials;
         currentMaterial = materials;
         MeshRenderer.materials = currentMaterial;
+    }
+
+    public eInteraction Interaction { get; } = eInteraction.None;
+
+    public void OnFocus()
+    {
+    }
+
+    public void OnOutFocus()
+    {
+    }
+
+    public void OnClick()
+    {
     }
 }
 

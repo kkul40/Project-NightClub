@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using ScriptableObjects;
 using UnityEngine;
 
-public class Bartender : MonoBehaviour, ICursorInteraction
+public class Bartender : MonoBehaviour, IInteractable
 {
     public Drink drink; // Test
     public Bar bar;
 
     private Coroutine _coroutine;
     private bool isClicked => _coroutine != null;
+
+    public eInteraction Interaction { get; } = eInteraction.Interactable;
 
     public void OnFocus()
     {

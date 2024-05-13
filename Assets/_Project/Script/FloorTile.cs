@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FloorTile : MonoBehaviour, IMaterial
+public class FloorTile : MonoBehaviour, IMaterial, IInteractable
 {
     public MeshRenderer MeshRenderer { get; private set; }
     
@@ -20,5 +20,20 @@ public class FloorTile : MonoBehaviour, IMaterial
         var currentMaterials = MeshRenderer.materials;
         currentMaterials = materials;
         MeshRenderer.materials = currentMaterials;
+    }
+
+    public eInteraction Interaction { get; } = eInteraction.None;
+
+    public void OnFocus()
+    {
+    }
+
+    public void OnOutFocus()
+    {
+    }
+
+    public void OnClick()
+    {
+        Debug.Log("Tile Floor");
     }
 }

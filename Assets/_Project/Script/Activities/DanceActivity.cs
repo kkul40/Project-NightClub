@@ -38,8 +38,6 @@ namespace Activities
             {
                 case DanceState.None:
                     var distance = Vector3.Distance(npc.transform.position, _dancableTile.GetMiddlePos);
-                    Debug.Log(distance);
-
                     if (distance < 0.05f)
                     {
                         npc._navMeshAgent.enabled = false;
