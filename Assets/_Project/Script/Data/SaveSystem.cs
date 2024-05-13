@@ -17,7 +17,6 @@ namespace Data
             PlayerCustomizationIndexData data = new PlayerCustomizationIndexData(playerCustomizationLoader);
             formatter.Serialize(stream, data);
             stream.Close();
-            Debug.Log("SAVED");
         }
 
         public static PlayerCustomizationIndexData LoadCustomizedPlayer()
@@ -31,8 +30,6 @@ namespace Data
 
                 PlayerCustomizationIndexData data = formatter.Deserialize(stream) as PlayerCustomizationIndexData;
                 stream.Close();
-
-                Debug.Log("LOADED");
                 return data;
             }
 

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class TileIndicator : MonoBehaviour
 {
+    public PlacingType placingType { get; private set; }
     [SerializeField] private GameObject placingTileIndicator;
     [SerializeField] private GameObject removingTileIndicator;
     [SerializeField] private GameObject directionIndicator;
-
-    private bool isDirty = true;
 
     private void Start()
     {
@@ -18,19 +17,22 @@ public class TileIndicator : MonoBehaviour
     public void SetTileIndicator(PlacingType placingType)
     {
         CloseTileIndicator();
+        
         switch (placingType)
         {
             case PlacingType.Place:
                 placingTileIndicator.SetActive(true);
+                this.placingType = PlacingType.Place;
                 break;
             case PlacingType.Direction:
                 directionIndicator.SetActive(true);
+                this.placingType = PlacingType.Direction;
                 break;
             case PlacingType.Remove:
                 removingTileIndicator.SetActive(true);
+                this.placingType = PlacingType.Remove;
                 break;
         }
-        isDirty = true;
     }
 
     public void SetPosition(Vector3 newPos)
@@ -45,11 +47,9 @@ public class TileIndicator : MonoBehaviour
 
     public void CloseTileIndicator()
     {
-        if (!isDirty) return;
-        
+        placingType = PlacingType.None;
         placingTileIndicator.SetActive(false);
         removingTileIndicator.SetActive(false);
         directionIndicator.SetActive(false);
-        isDirty = false;
     }
 }

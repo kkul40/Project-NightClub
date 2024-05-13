@@ -18,15 +18,9 @@ namespace System
         [SerializeField] public Material blueMaterial;
         [SerializeField] public Material yellowMaterial;
     
-        [SerializeField] private PlacingType placingType;
         [SerializeField] private TileIndicator tileIndicator;
 
         private IBuilder _currentBuilder = null;
-
-        private void Awake()
-        {
-            placingType = PlacingType.None;
-        }
 
         private void Update()
         {
@@ -67,7 +61,7 @@ namespace System
             tileIndicator.SetTileIndicator(PlacingType.Remove);
         }
     
-        public PlacingType GetPlacingType() => placingType;
+        public PlacingType GetPlacingType => tileIndicator.placingType;
         public float GetObjectPlacingSpeed() => objectMoveSpeedMultiplier;
 
         public Vector3Int GetMouseCellPosition()

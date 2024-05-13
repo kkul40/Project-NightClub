@@ -11,6 +11,8 @@ namespace Testing
 
         private void Update()
         {
+            if (BuildingSystem.Instance.GetPlacingType != PlacingType.None) return;
+            
             Transform hitTransform = _inputSystem.GetMouseHitTransfromOnWorld();
 
             if (hitTransform == null)

@@ -22,7 +22,7 @@ namespace Activities
             var barList = GetMultiplePropsByType<Bar>();
 
             if(barList.Count > 0)
-                iBar = barList[Random.Range(0, barList.Count-1)] as IBar;
+                iBar = barList[Random.Range(0, barList.Count)] as IBar;
 
             if (iBar != null)
             {

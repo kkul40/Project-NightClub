@@ -11,7 +11,15 @@ namespace ScriptableObjects
         
         public override IBuilder GetBuilder()
         {
-            return new FloorPropPlacer();
+            return new FloorPropPlacer(new InputRotationHandlerLeftAndDown());
+        }
+    }
+
+    public class BarPropSo : FloorPropSo
+    {
+        public override IBuilder GetBuilder()
+        {
+            return new FloorPropPlacer(new InputRotationHandlerLeftAndDown());
         }
     }
 }

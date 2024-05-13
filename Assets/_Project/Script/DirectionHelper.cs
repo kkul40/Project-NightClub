@@ -2,6 +2,58 @@
 
 public static class DirectionHelper
 {
+    public static RotationData RotateClockWise(Quaternion currentQuaternion, Direction direction)
+    {
+        Direction d = direction;
+        Quaternion quaternion = RotateClockWise(currentQuaternion, ref d);
+
+        RotationData rotationData = new RotationData();
+        rotationData.rotation = quaternion;
+        rotationData.direction = d;
+        
+        return rotationData;
+    }
+    
+    public static RotationData RotateCounterClockWise(Quaternion currentQuaternion, Direction direction)
+    {
+        Direction d = direction;
+        Quaternion quaternion = RotateCounterClockWise(currentQuaternion, ref d);
+
+        RotationData rotationData = new RotationData();
+        rotationData.rotation = quaternion;
+        rotationData.direction = d;
+        
+        return rotationData;
+    }
+    
+    public static RotationData RotateToDirection(Direction direction)
+    {
+        RotationData rotationData = new RotationData();
+
+        Quaternion quaternion = Quaternion.identity;
+
+        switch (direction)
+        {
+            case Direction.Up:
+                quaternion.eulerAngles = new Vector3(0, 180, 0);
+                break;
+            case Direction.Left:
+                quaternion.eulerAngles = new Vector3(0, 90, 0);
+                break;
+            case Direction.Right:
+                quaternion.eulerAngles = new Vector3(0, 270, 0);
+                break;
+            default:
+                break;
+        }
+
+        rotationData.rotation = quaternion;
+        rotationData.direction = direction;
+
+        return rotationData;
+    }
+
+    
     public static Quaternion RotateClockWise(Quaternion currentQuaternion, ref Direction direction)
     {
         var eulerAngle = currentQuaternion.eulerAngles;
@@ -85,6 +137,18 @@ public static class DirectionHelper
         }
         return directions[closestDirectionIndex];
     }
+}
+public class RotationData
+{
+    public Quaternion rotation;
+    public Direction direction;
+
+    public RotationData()
+    {
+        rotation = Quaternion.identity;
+        direction = Direction.Down;
+    }
+    
 }
 public enum Direction
 {
