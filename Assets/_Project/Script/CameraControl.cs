@@ -21,7 +21,11 @@ public class CameraControl : MonoBehaviour
             moveDelta = moveDelta.normalized;
         }
 
-        transform.position += (transform.forward * moveDelta.y + transform.right * moveDelta.x) * speed * Time.deltaTime;
+        
+        var nextPos = transform.position + (transform.forward * moveDelta.y + transform.right * moveDelta.x) * speed * Time.deltaTime;
+
+        transform.position = nextPos;
+        
         SetCameraSize();
     }
 

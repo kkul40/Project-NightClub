@@ -25,9 +25,11 @@ namespace BuildingSystemFolder
         {
             BuildingSystem.Instance.GetMouseCellPosition();
 
-            if (InputSystem.Instance.GetLastHitTransform().TryGetComponent(out IMaterial tileObject))
+            var hitTransform = InputSystem.Instance.GetLastHitTransform();
+
+            if (hitTransform.TryGetComponent(out FloorTile floorTile) && hitTransform.TryGetComponent(out IMaterial material))
             {
-                _tempMaterialObject = tileObject;
+                _tempMaterialObject = material;
             }
             else
             {

@@ -46,7 +46,7 @@ namespace BuildingSystemFolder
             
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position, nextPlacableGridPos, Time.deltaTime * _buildingSystem.GetObjectPlacingSpeed());
 
-            if (InputSystem.Instance.LeftClickOnWorld)
+            if (InputSystem.Instance.LeftHoldClickOnWorld)
             {
                 if (isPlacable)
                 {
@@ -90,7 +90,8 @@ namespace BuildingSystemFolder
         
         public bool ValidatePosition(Vector3Int cellPos)
         {
-            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos))
+            LayerMask hitLayer = InputSystem.Instance.GetLastHit().transform.gameObject.layer;
+            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos) || hitLayer.value != 7)
             {
                 return false;
             }

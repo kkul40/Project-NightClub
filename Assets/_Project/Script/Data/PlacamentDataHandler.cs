@@ -18,11 +18,11 @@ namespace Data
     
         public bool ContainsKey(Vector3Int cellPos)
         {
-            Vector3Int border = GameData.Instance.MapGenerator.MapSize;
+            Vector2Int border = GameData.Instance.MapGenerator.MapSize;
         
             if (cellPos.x < 0 || cellPos.z < 0) return true;
 
-            if (cellPos.x >= border.x || cellPos.z >= border.z) return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
+            if (cellPos.x >= border.x || cellPos.z >= border.y) return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
         
             if (cellPos.x == 4 && cellPos.z == 0) return true;
         
@@ -62,7 +62,7 @@ namespace Data
             List<Vector3Int> keys = new List<Vector3Int>();
             foreach (var key in placementDatas.Keys)
             {
-                if (placementDatas[key] == value)
+                if (Equals(placementDatas[key], value))
                 {
                     keys.Add(key);
                 }

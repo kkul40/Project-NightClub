@@ -114,8 +114,7 @@ namespace BuildingSystemFolder
 
         public void SaveData(RotationData rotationData)
         {
-            RotationData.rotation = rotationData.rotation;
-            RotationData.direction = rotationData.direction;
+            RotationData = rotationData;
         }
     }
     

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class MapGeneratorSystem : MonoBehaviour
 {
-    [SerializeField] private Vector3Int initialMapSize;
+    [SerializeField] private Vector2Int initialMapSize;
+    [SerializeField] private Vector2Int mapSize;
     [SerializeField] private Transform floorTileHolder;
     [SerializeField] private GameObject floorTilePrefab;
     [SerializeField] private Transform wallHolder;
@@ -18,49 +19,101 @@ public class MapGeneratorSystem : MonoBehaviour
     private void SetUpMap()
     {
         int xMax = initialMapSize.x;
-        int zMax = initialMapSize.z;
+        int yMax = initialMapSize.y;
         
-        Vector3 offset = new Vector3(0.5f, 0, 0.5f);
         for (int i = 0; i < xMax; i++)
         {
-            for (int j = 0; j < zMax; j++)
+            for (int j = 0; j < yMax; j++)
             {
-                // Instantiate Floor Tile
-                Vector3 pos = new Vector3Int(i, 0, j) + offset;
-                var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
-                newObject.transform.SetParent(floorTileHolder);
-                GameData.Instance.FloorMap.Add(pos);
-                
-                // Instantiate Wall
-                if (j == 0)
-                {
-                    Vector3 pos2 = new Vector3(i + 0.5f, 0, 0);
-                    var wallDoorIndex = 4;
-                    if (i == wallDoorIndex)
-                    {
-                        var newWallDoorObject = Instantiate(wallDoorPrefab, pos2, Quaternion.identity);
-                        newWallDoorObject.transform.SetParent(wallHolder);
-                    }
-                    else
-                    {
-                        var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
-                        newWallObject.transform.SetParent(wallHolder);
-                    }
-                }
-                if (i == 0)
-                {
-                    Vector3 pos2 = new Vector3(0, 0, j + 0.5f);
-                    var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0,90,0));
-                    newWallObject.transform.SetParent(wallHolder);
-                }
-                
+                InstantiateFloorTile(i, j);
             }
         }
+
+        for (int i = 0; i < xMax; i++)
+        {
+            InstantiateYWall(i);
+        }
+
+        for (int i = 0; i < yMax; i++)
+        {
+            var wallDoorIndex = 4;
+            if (i == wallDoorIndex)
+            {
+                var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i + 0.5f, 0, 0), Quaternion.identity);
+                newWallDoorObject.transform.SetParent(wallHolder);
+                
+                var wall = InstantiateXWall(i);
+                wall.SetActive(false);
+                continue;
+            }
+            
+            InstantiateXWall(i);
+        }
+
+        mapSize = new Vector2Int(xMax, yMax);
     }
+    
 
     private void LoadMap()
     {
         //Load Map
     }
-    public Vector3Int MapSize => initialMapSize;
+
+    [ContextMenu("Expend X")]
+    public void ExpendX()
+    {
+        InstantiateXWall(mapSize.x);
+        
+        for (int i = 0; i < mapSize.y; i++)
+        {
+            InstantiateFloorTile(mapSize.x, i);
+        }
+        mapSize.x += 1;
+    }
+
+    [ContextMenu("Expend Y")]
+    public void ExpendY()
+    {
+        InstantiateYWall(mapSize.y);
+        
+        for (int i = 0; i < mapSize.x; i++)
+        {
+            InstantiateFloorTile(i, mapSize.y);
+        }
+        mapSize.y += 1;
+    }
+
+    [ContextMenu("Expend Both")]
+    public void ExpendXY()
+    {
+        ExpendX();
+        ExpendY();
+    }
+    
+    private GameObject InstantiateYWall(int y)
+    {
+        Vector3 pos2 = new Vector3(0, 0, y + 0.5f);
+        var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0,90,0));
+        newWallObject.transform.SetParent(wallHolder);
+        return newWallObject;
+    }
+
+    private GameObject InstantiateXWall(int x)
+    {
+        Vector3 pos2 = new Vector3(x + 0.5f, 0, 0);
+        var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
+        newWallObject.transform.SetParent(wallHolder);
+        return newWallObject;
+    }
+
+    private void InstantiateFloorTile(int x, int y)
+    {
+        Vector3 offset = new Vector3(0.5f, 0, 0.5f);
+        Vector3 pos = new Vector3Int(x, 0, y) + offset;
+        var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
+        newObject.transform.SetParent(floorTileHolder);
+        GameData.Instance.FloorMap.Add(pos);
+    }
+    
+    public Vector2Int MapSize => mapSize;
 }

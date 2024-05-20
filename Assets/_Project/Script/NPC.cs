@@ -50,7 +50,6 @@ public class NPC : MonoBehaviour, IInteractable
         }
         else
         {
-            Debug.LogWarning(currentActivity);
             currentActivity.UpdateActivity(this);
         }
     }

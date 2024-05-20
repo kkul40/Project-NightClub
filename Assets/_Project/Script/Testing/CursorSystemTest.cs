@@ -14,6 +14,16 @@ namespace Testing
         private IInteractable _currentInteractable = null;
         private GameObject _currentGameObject;
 
+        private void Start()
+        {
+            RotationData rotationData = new RotationData();
+            RotationData rotationData2 = rotationData;
+
+            rotationData2.direction = Direction.Right;
+            
+            Debug.Log(rotationData.rotation);
+        }
+
         private void Update()
         {
             if (BuildingSystem.Instance.GetPlacingType != PlacingType.None) return;
@@ -53,6 +63,9 @@ namespace Testing
             
             _currentInteractable.OnOutFocus();
             _currentInteractable = null;
+
+
+            if (_currentGameObject == null) return;
             
             // Remove hightlilghted
             HighlightEffect highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();

@@ -24,6 +24,7 @@ public class DancableTile : Prop, IPropUpdate, IOccupieable, IInteractable
     }
 
     public eInteraction Interaction { get; } = eInteraction.Interactable;
+    
     public void OnFocus()
     {
         

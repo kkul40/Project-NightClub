@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Data
 {
     [Serializable]
-    public class PlacementData
+    public struct PlacementData
     {
         public int ID;
         public PlacablePropSo ItemSo;

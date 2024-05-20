@@ -138,17 +138,10 @@ public static class DirectionHelper
         return directions[closestDirectionIndex];
     }
 }
-public class RotationData
+public struct RotationData
 {
     public Quaternion rotation;
     public Direction direction;
-
-    public RotationData()
-    {
-        rotation = Quaternion.identity;
-        direction = Direction.Down;
-    }
-    
 }
 public enum Direction
 {
