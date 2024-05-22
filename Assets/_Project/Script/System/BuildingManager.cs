@@ -71,7 +71,7 @@ namespace System
             isPlacable =
                 _currentPlaceableItemData.PlacementMethod.CanPlace(cellPosInt, _currentPlaceableItemData, rotationData);
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position,
-                cellPos + new Vector3(0.02f, 0, 0.02f),
+                cellPos + new Vector3(0.02f, 0.02f, 0.02f),
                 Time.deltaTime * objectMoveSpeedMultiplier);
             tempPrefab.transform.rotation = rotationData.rotation;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 
 namespace Activities
 {
@@ -15,7 +16,7 @@ namespace Activities
 
         public override void StartActivity(NPC npc)
         {
-            var barList = GetMultiplePropsByType<Bar>();
+            var barList = GetMultiplePropsByType<Bar>(PlacementLayer.Surface);
 
             if (barList.Count > 0)
                 iBar = barList[Random.Range(0, barList.Count)];

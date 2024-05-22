@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Box
+  m_Name: GR
   m_Shader: {fileID: 4800000, guid: 1f67b66c29dfd4f45aa8cc07bf5e901a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -76,7 +76,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive:
-        m_Texture: {fileID: 2800000, guid: fea19aa0a9e9bf0449642ec643779fd7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 76e9e7de66846ab4a96b8e4a8a9d6617, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMask:

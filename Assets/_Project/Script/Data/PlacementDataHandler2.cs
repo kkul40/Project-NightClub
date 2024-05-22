@@ -1,26 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace Data
 {
-    public class PlacementDataHandler2
+    public class PlacementDataHandler
     {
         private List<Prop> propList;
         private Dictionary<Vector3Int, PlacementData> floorLayerPlacements;
         private Dictionary<Vector3Int, PlacementData> surfaceLayerPlacements;
 
-        public PlacementDataHandler2()
+        public PlacementDataHandler()
         {
             propList = new List<Prop>();
             floorLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
             surfaceLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
         }
-        
+
+        public List<Prop> GetPropList
+        {
+            get { return propList; }
+        }   
+
         public bool ContainsKey(Vector3Int cellPos, PlacementLayer layer)
         {
             switch (layer)
             {
-                case PlacementLayer.Floor:
+                case PlacementLayer.FloorLevel:
                     return floorLayerPlacements.ContainsKey(cellPos);
                 case PlacementLayer.Surface:
                     return surfaceLayerPlacements.ContainsKey(cellPos);
@@ -28,10 +35,10 @@ namespace Data
             return false;
         }
         
-        public bool ContainsKey(Vector3Int cellPos, PlacementData placementData, PlacementLayer layer)
+        public bool ContainsKey(Vector3Int cellPos, Vector2Int size, RotationData rotationData, PlacementLayer layer)
         {
-            List<Vector3Int> keys = GenerateKeysByObjectSize(cellPos, placementData.placableItemData.Size,
-                placementData.RotationData.direction);
+            List<Vector3Int> keys = GenerateKeysByObjectSize(cellPos, size,
+                rotationData.direction);
 
             bool contains = true;
             
@@ -46,11 +53,11 @@ namespace Data
             return contains;
         }
         
-        private void AddPlacementData(Vector3Int cellPos, PlacementData placementData, PlacementLayer layer)
+        public void AddPlacementData(Vector3Int cellPos, PlacementData placementData, PlacementLayer layer)
         {
             switch (layer)
             {
-                case PlacementLayer.Floor:
+                case PlacementLayer.FloorLevel:
                     floorLayerPlacements.Add(cellPos, placementData);
                     break;
                 case PlacementLayer.Surface:
@@ -62,6 +69,7 @@ namespace Data
             {
                 propList.Add(prop);
             }
+            UpdateProps();
         }
         
         public void RemovePlacementData(Vector3Int cellPos, PlacementLayer layer)
@@ -69,7 +77,7 @@ namespace Data
             PlacementData placementData = new PlacementData();
             switch (layer)
             {
-                case PlacementLayer.Floor:
+                case PlacementLayer.FloorLevel:
                     if (floorLayerPlacements.ContainsKey(cellPos))
                     {
                         placementData = floorLayerPlacements[cellPos];
@@ -84,11 +92,14 @@ namespace Data
                     }
                     break;
             }
-            
-            if (placementData.SceneObject.TryGetComponent(out Prop prop))
+
+            var go = placementData.SceneObject;
+            if (go.TryGetComponent(out Prop prop))
             {
                 propList.Remove(prop);
             }
+            Object.Destroy(go);
+            UpdateProps();
         }
         
         private List<Vector3Int> GenerateKeysByObjectSize(Vector3Int cellPos, Vector2Int objectSize, Direction direction)
@@ -154,11 +165,36 @@ namespace Data
                 if (newCellPos != -Vector3Int.one) keys.Add(newCellPos);
             }
         }
+        
+        private void UpdateProps()
+        {
+            foreach (var prop in propList)
+                if (prop.transform.TryGetComponent(out IPropUpdate propUpdate))
+                    propUpdate.PropUpdate();
+        }
+
+        public List<PlacementData> GetPlacementData(PlacementLayer layer)
+        {
+            switch (layer)
+            {
+                case PlacementLayer.FloorLevel:
+                    return floorLayerPlacements.Values.ToList();
+
+                    break;
+                case PlacementLayer.Surface:
+                    return surfaceLayerPlacements.Values.ToList();
+                    break;
+                default:
+                    Debug.LogError(layer.ToString() + " Is Missing");
+                    return new List<PlacementData>();
+                    break;
+            }
+        }
     }
     
     public enum PlacementLayer
     {
-        Floor,
+        FloorLevel,
         Surface,
     }
 }

@@ -50,7 +50,7 @@ namespace Activities
 
             var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
             while (GameData.Instance.PlacementHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
-                       PlacementMethodType.Placement))
+                       PlacementLayer.Surface))
             {
                 target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
                 loopCount++;

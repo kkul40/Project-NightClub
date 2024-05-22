@@ -17,9 +17,7 @@ namespace Activities
 
         public override void StartActivity(NPC npc)
         {
-            // if (isCanceled) return;
-
-            _dancableTile = GetAvaliablePropByType<DancableTile>(npc);
+            _dancableTile = GetAvaliablePropByType<DancableTile>(npc, PlacementLayer.FloorLevel);
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
             {
@@ -28,7 +26,7 @@ namespace Activities
             }
 
             if (GameData.Instance.PlacementHandler.ContainsKey(_dancableTile.CellPosition,
-                    PlacementMethodType.Placement))
+                    PlacementLayer.Surface))
             {
                 isCanceled = true;
                 return;

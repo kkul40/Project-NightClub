@@ -12,14 +12,14 @@ namespace Data
         [Header("Data")] public List<Vector3> FloorMap = new();
 
         public List<Wall> WallMap = new();
-        [SerializeField] private PlacamentDataHandler _placamentDataHandler;
+        [SerializeField] private PlacementDataHandler _placamentDataHandler;
         public List<Prop> GetPropList => PlacementHandler.GetPropList;
-        public PlacamentDataHandler PlacementHandler => _placamentDataHandler;
+        public PlacementDataHandler PlacementHandler => _placamentDataHandler;
         public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;
 
         private void Awake()
         {
-            _placamentDataHandler = new PlacamentDataHandler();
+            _placamentDataHandler = new PlacementDataHandler();
         }
 
         public List<Wall> GetWallMapPosList()

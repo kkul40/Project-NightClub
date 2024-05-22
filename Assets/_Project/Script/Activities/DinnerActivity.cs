@@ -1,4 +1,5 @@
 ﻿using System;
+using Data;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,7 +26,7 @@ namespace Activities
         public override void StartActivity(NPC npc)
         {
             if (isCanceled) return;
-            tableProp = GetAvaliablePropByType<Table>(npc);
+            tableProp = GetAvaliablePropByType<Table>(npc, PlacementLayer.Surface);
 
             if (tableProp == null || tableProp.Chairs.Count < 1)
             {

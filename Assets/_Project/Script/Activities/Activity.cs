@@ -13,9 +13,9 @@ namespace Activities
         public abstract void UpdateActivity(NPC npc);
         public abstract void EndActivity(NPC npc);
 
-        protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
+        protected T GetAvaliablePropByType<T>(NPC npc, PlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0) return null;
+            if (GameData.Instance.PlacementHandler.GetPlacementData(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
@@ -48,9 +48,9 @@ namespace Activities
             return closestProp;
         }
 
-        protected List<T> GetMultiplePropsByType<T>() where T : Prop
+        protected List<T> GetMultiplePropsByType<T>(PlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0) return new List<T>();
+            if (GameData.Instance.PlacementHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
 
             var propList = new List<T>();
 
