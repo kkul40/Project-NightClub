@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: DJ
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 5927485854552238344, guid: 7f97a1c036040194fb8ffd858cee5dfa, type: 3}
-  ObjectSize: {x: 3, y: 2}
+  prefab: {fileID: 5927485854552238344, guid: 7f97a1c036040194fb8ffd858cee5dfa, type: 3}
+  size: {x: 2, y: 3}
+  placementType: 1
+  rotationType: 2
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

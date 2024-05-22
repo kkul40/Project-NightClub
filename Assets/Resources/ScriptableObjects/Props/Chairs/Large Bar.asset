@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Large Bar
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 9212476526430514185, guid: 9a7ecc6b9c37af14eb1638e50d1c7509, type: 3}
-  ObjectSize: {x: 3, y: 3}
+  prefab: {fileID: 0}
+  size: {x: 0, y: 0}
+  placementType: 1
+  rotationType: 2
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

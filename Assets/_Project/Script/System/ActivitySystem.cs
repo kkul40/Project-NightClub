@@ -9,7 +9,7 @@ namespace System
     [DisallowMultipleComponent]
     public class ActivitySystem : Singleton<ActivitySystem>
     {
-        public Dictionary<Type, Activity> dictionary = new ();
+        public Dictionary<Type, Activity> dictionary = new();
 
         private void Awake()
         {
@@ -19,7 +19,8 @@ namespace System
         protected override void Initialize()
         {
             var assembly = Assembly.GetAssembly(typeof(Activity));
-            var allActivityTypes = assembly.GetTypes().Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
+            var allActivityTypes = assembly.GetTypes()
+                .Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
 
             foreach (var ac in allActivityTypes)
             {

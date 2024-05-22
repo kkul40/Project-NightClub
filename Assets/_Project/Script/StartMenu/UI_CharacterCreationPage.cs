@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace StartMenu
@@ -8,7 +7,7 @@ namespace StartMenu
     {
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Transform cameraTransform;
-        
+
         public override void Show(ePushAnimation ePushAnimation)
         {
             base.Show(ePushAnimation);

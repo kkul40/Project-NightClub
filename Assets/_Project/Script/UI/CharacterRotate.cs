@@ -6,7 +6,7 @@ namespace UI
     {
         [SerializeField] private Transform characterTransform;
         [SerializeField] private float ratateAmount;
-    
+
         public void OnLeftButton()
         {
             characterTransform.Rotate(Vector3.up * ratateAmount);
@@ -19,8 +19,8 @@ namespace UI
 
         public void DragRotate()
         {
-            float rotX = Input.GetAxis("Mouse X") * 10;
-        
+            var rotX = Input.GetAxis("Mouse X") * 10;
+
             characterTransform.Rotate(Vector3.up * -rotX);
         }
     }

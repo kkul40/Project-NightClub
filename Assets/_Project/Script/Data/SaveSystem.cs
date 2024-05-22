@@ -9,26 +9,26 @@ namespace Data
     {
         public static void SaveCustomizedPlayer(PlayerCustomizationLoader playerCustomizationLoader)
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            var formatter = new BinaryFormatter();
 
-            string path = Application.persistentDataPath + "/Player.kdata";
-            FileStream stream = new FileStream(path, FileMode.Create);
+            var path = Application.persistentDataPath + "/Player.kdata";
+            var stream = new FileStream(path, FileMode.Create);
 
-            PlayerCustomizationIndexData data = new PlayerCustomizationIndexData(playerCustomizationLoader);
+            var data = new PlayerCustomizationIndexData(playerCustomizationLoader);
             formatter.Serialize(stream, data);
             stream.Close();
         }
 
         public static PlayerCustomizationIndexData LoadCustomizedPlayer()
         {
-            string path = Application.persistentDataPath + "/Player.kdata";
+            var path = Application.persistentDataPath + "/Player.kdata";
 
             if (File.Exists(path))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                FileStream stream = new FileStream(path, FileMode.Open);
+                var formatter = new BinaryFormatter();
+                var stream = new FileStream(path, FileMode.Open);
 
-                PlayerCustomizationIndexData data = formatter.Deserialize(stream) as PlayerCustomizationIndexData;
+                var data = formatter.Deserialize(stream) as PlayerCustomizationIndexData;
                 stream.Close();
                 return data;
             }

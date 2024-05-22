@@ -23,5 +23,8 @@ public abstract class TileObject : MonoBehaviour
         _meshRenderer.materials = materials;
     }
 
-    public Material[] GetCurrentMaterial() => _meshRenderer.materials;
+    public Material[] GetCurrentMaterial()
+    {
+        return _meshRenderer.materials;
+    }
 }

@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: Color4
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 1437206942430853164, guid: 5700586f600165f4ca36f99f61536f51, type: 3}
+  prefab: {fileID: 1437206942430853164, guid: 5700586f600165f4ca36f99f61536f51, type: 3}
+  size: {x: 1, y: 1}
+  placementType: 3
+  rotationType: 0
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

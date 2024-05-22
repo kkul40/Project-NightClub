@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ad03367a2f54d93b8ef6dc5288150f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dd310f167114279b73fab96d32f25ca, type: 3}
   m_Name: LCD Screen 03
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 964109636939699114, guid: 6f5e72a39fd62614c89eebe5f9bb9dbd, type: 3}
-  ObjectSize: {x: 2, y: 1}
+  prefab: {fileID: 964109636939699114, guid: 6f5e72a39fd62614c89eebe5f9bb9dbd, type: 3}
+  size: {x: 0, y: 0}
+  placementType: 2
+  rotationType: 3
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

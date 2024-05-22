@@ -8,21 +8,21 @@ namespace StartMenu
         public enum ePushAnimation
         {
             PushRight,
-            PushLeft,
+            PushLeft
         }
 
-        private RectTransform _rectTransform;
+        public bool isOpen;
 
-        public bool isOpen = false;
-        private float treshHold = 0.5f;
-        private float screenWeight = 1920;
-        private float speed = 7;
-
-        private float animDuration = 1;
-    
         [SerializeField] protected CanvasGroup _canvasGroup;
 
- 
+        private readonly float animDuration = 1;
+        private readonly float screenWeight = 1920;
+
+        private RectTransform _rectTransform;
+        private float speed = 7;
+        private float treshHold = 0.5f;
+
+
         public void Initiliase()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -39,7 +39,7 @@ namespace StartMenu
                     _rectTransform.anchoredPosition = new Vector2(-screenWeight, 0);
                     break;
             }
-        
+
             _canvasGroup.alpha = 0;
             _rectTransform.DOAnchorPos(Vector2.zero, animDuration).OnComplete(SetShow);
             _canvasGroup.DOFade(1, animDuration);
@@ -50,10 +50,10 @@ namespace StartMenu
             _canvasGroup.alpha = 1;
             _canvasGroup.interactable = true;
             isOpen = true;
-        
+
             _rectTransform.anchoredPosition = Vector2.zero;
         }
-    
+
         public virtual void Hide(ePushAnimation ePushAnimation)
         {
             switch (ePushAnimation)
@@ -65,6 +65,7 @@ namespace StartMenu
                     _rectTransform.DOAnchorPos(new Vector2(-screenWeight, 0), animDuration);
                     break;
             }
+
             _canvasGroup.interactable = false;
             isOpen = false;
             _canvasGroup.DOFade(0, animDuration / 5);

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -36,6 +35,5 @@ public class Bartender : MonoBehaviour, IInteractable
         bar.SetDrinkTable(drink);
 
         _coroutine = null;
-        yield break;
     }
 }

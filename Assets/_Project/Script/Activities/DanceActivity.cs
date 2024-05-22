@@ -1,18 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using Data;
+using ScriptableObjects;
+using UnityEngine;
 
 namespace Activities
 {
     public class DanceActivity : Activity
     {
+        private DancableTile _dancableTile;
+        private DanceState _danceState = DanceState.None;
+
+        private float timer;
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
 
-        private DancableTile _dancableTile;
-        
-        private float timer;
-        private DanceState _danceState = DanceState.None;
 
-        
         public override void StartActivity(NPC npc)
         {
             // if (isCanceled) return;
@@ -20,6 +22,13 @@ namespace Activities
             _dancableTile = GetAvaliablePropByType<DancableTile>(npc);
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
+            {
+                isCanceled = true;
+                return;
+            }
+
+            if (GameData.Instance.PlacementHandler.ContainsKey(_dancableTile.CellPosition,
+                    PlacementMethodType.Placement))
             {
                 isCanceled = true;
                 return;
@@ -45,6 +54,7 @@ namespace Activities
                         _danceState = DanceState.Dancing;
                         npc.GetAnimationControl().SetRootMotion(true);
                     }
+
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
@@ -53,6 +63,7 @@ namespace Activities
                         timer = 0;
                         isEnded = true;
                     }
+
                     break;
             }
         }
@@ -60,7 +71,7 @@ namespace Activities
         public override void EndActivity(NPC npc)
         {
             if (isCanceled) return;
-            
+
             npc.ChangeState(eNpcAnimation.Idle);
             _dancableTile.IsOccupied = false;
             npc._navMeshAgent.enabled = true;
@@ -71,7 +82,7 @@ namespace Activities
         private enum DanceState
         {
             None,
-            Dancing,
+            Dancing
         }
     }
 }

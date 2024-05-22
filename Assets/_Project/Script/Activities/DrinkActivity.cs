@@ -1,28 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Data;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Activities
 {
     public class DrinkActivity : Activity
     {
-        public override bool isEnded { get; protected set; }
-        public override bool isCanceled { get; protected set; }
-
-        private IBar iBar = null;
-
+        private readonly float waitTime = 1;
         private DrinkState _drinkState;
 
+        private IBar iBar;
+
         private float timer;
-        private float waitTime = 1;
+        public override bool isEnded { get; protected set; }
+        public override bool isCanceled { get; protected set; }
 
         public override void StartActivity(NPC npc)
         {
             var barList = GetMultiplePropsByType<Bar>();
 
-            if(barList.Count > 0)
-                iBar = barList[Random.Range(0, barList.Count)] as IBar;
+            if (barList.Count > 0)
+                iBar = barList[Random.Range(0, barList.Count)];
 
             if (iBar != null)
             {
@@ -57,6 +53,7 @@ namespace Activities
                         npc.SetRotation(iBar.WaitPosition.rotation);
                         _drinkState = DrinkState.Wait;
                     }
+
                     break;
                 case DrinkState.Wait:
                     timer += Time.deltaTime;
@@ -66,6 +63,7 @@ namespace Activities
                         iBar.GetDrink();
                         isEnded = true;
                     }
+
                     break;
             }
         }
@@ -73,11 +71,11 @@ namespace Activities
         public override void EndActivity(NPC npc)
         {
             if (isCanceled) return;
-            
+
             npc.SetNewDestination(new WalkRandomActivity().GetRandomDestination());
         }
 
-        enum DrinkState
+        private enum DrinkState
         {
             Walk,
             Wait

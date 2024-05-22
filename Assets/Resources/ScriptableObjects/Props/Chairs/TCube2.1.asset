@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: TCube2.1
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 5381388682549148583, guid: 956486ca37dadb347a4024573751c4ae, type: 3}
-  ObjectSize: {x: 2, y: 1}
+  prefab: {fileID: 5381388682549148583, guid: 956486ca37dadb347a4024573751c4ae, type: 3}
+  size: {x: 2, y: 1}
+  placementType: 1
+  rotationType: 1
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

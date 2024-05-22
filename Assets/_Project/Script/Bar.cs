@@ -29,9 +29,9 @@ public class Bar : Prop, IBar
         AvaliableDrinkCount--;
     }
 
-    public override void Initialize(PlacablePropSo placablePropSo, Vector3Int cellPosition, Direction direction)
+    public override void Initialize(IPlaceableItemData placableItemDataSo, Vector3Int cellPosition, Direction direction)
     {
-        base.Initialize(placablePropSo, cellPosition, direction);
+        base.Initialize(placableItemDataSo, cellPosition, direction);
 
         var d = Instantiate(DrinkTablePrefab, GetTezgahTransform);
         d.transform.position = GetTezgahTransform.position;

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: MiniBar
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 4689808914774177809, guid: ea252604e8c5be348a425a79a367de8a, type: 3}
-  ObjectSize: {x: 1, y: 3}
+  prefab: {fileID: 4689808914774177809, guid: ea252604e8c5be348a425a79a367de8a, type: 3}
+  size: {x: 1, y: 3}
+  placementType: 1
+  rotationType: 2
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

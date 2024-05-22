@@ -1,13 +1,12 @@
 using System;
-using BuildingSystemFolder;
 using UnityEngine;
 
 public class TileIndicator : MonoBehaviour
 {
-    public PlacingType placingType { get; private set; }
     [SerializeField] private GameObject placingTileIndicator;
     [SerializeField] private GameObject removingTileIndicator;
     [SerializeField] private GameObject directionIndicator;
+    public PlacingType placingType { get; private set; }
 
     private void Start()
     {
@@ -17,7 +16,7 @@ public class TileIndicator : MonoBehaviour
     public void SetTileIndicator(PlacingType placingType)
     {
         CloseTileIndicator();
-        
+
         switch (placingType)
         {
             case PlacingType.Place:

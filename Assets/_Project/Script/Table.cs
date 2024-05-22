@@ -8,13 +8,6 @@ public class Table : Prop, IPropUpdate
     public GameObject CubePrefab;
     public List<Chair> Chairs;
 
-    public override void Initialize(PlacablePropSo placablePropSo, Vector3Int cellPosition, Direction direction)
-    {
-        base.Initialize(placablePropSo, cellPosition, direction);
-        
-        PropUpdate();
-    }
-
     public void PropUpdate()
     {
         print("update");
@@ -22,7 +15,7 @@ public class Table : Prop, IPropUpdate
         foreach (var prop in GameData.Instance.GetPropList)
         {
             if (Chairs.Count > 3) break;
-            
+
             if (prop is Chair chair)
             {
                 print("Chair found");
@@ -35,5 +28,12 @@ public class Table : Prop, IPropUpdate
                 }
             }
         }
+    }
+
+    public override void Initialize(IPlaceableItemData placableItemDataSo, Vector3Int cellPosition, Direction direction)
+    {
+        base.Initialize(placableItemDataSo, cellPosition, direction);
+
+        PropUpdate();
     }
 }

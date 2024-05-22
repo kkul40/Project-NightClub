@@ -1,17 +1,9 @@
-﻿using BuildingSystemFolder;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Placable/New WallMaterial")]
-    public class WallMaterialSo : PlacablePropSo
+    public class WallMaterialDataSo : PlacableItemDataSo
     {
-        public Material Material;
-        
-        public override IBuilder GetBuilder()
-        {
-            return new WallMaterialPlacer();
-        }
     }
 }
-

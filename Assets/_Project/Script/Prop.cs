@@ -1,24 +1,51 @@
 using System;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [Serializable]
-public class Prop : MonoBehaviour
+public class Prop : MonoBehaviour, IProp
 {
-    private PlacablePropSo _placablePropSo;
     public Vector3Int CellPosition;
     public Direction direction;
+    private IPlaceableItemData _placableItemDataSo;
 
-    public virtual void Initialize(PlacablePropSo placablePropSo, Vector3Int cellPosition, Direction direction)
+    public virtual void Initialize(IPlaceableItemData placableItemDataSo, Vector3Int cellPosition, Direction direction)
     {
-        this._placablePropSo = placablePropSo;
-        this.CellPosition = cellPosition;
+        _placableItemDataSo = placableItemDataSo;
+        CellPosition = cellPosition;
         this.direction = direction;
     }
 
-    public Vector3Int GetPropCellPosition() => CellPosition;
-    public Quaternion GetPropRotation() => transform.rotation;
-    public PlacablePropSo GetPropSo() => _placablePropSo;
+    public Vector3Int GetPropCellPosition()
+    {
+        return CellPosition;
+    }
+
+    public Quaternion GetPropRotation()
+    {
+        return transform.rotation;
+    }
+
+    public IPlaceableItemData GetPropSo()
+    {
+        return _placableItemDataSo;
+    }
 }
 
+public interface IProp
+{
+}
+
+public struct PropData
+{
+    public int ID { get; }
+    public Vector3Int cellPosition { get; }
+    public RotationData rotationData { get; }
+
+    public PropData(int ID, Vector3Int cellPosition, RotationData rotationData)
+    {
+        this.ID = ID;
+        this.cellPosition = cellPosition;
+        this.rotationData = rotationData;
+    }
+}

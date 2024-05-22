@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class NPCAnimationControl : MonoBehaviour
 {
-    private Animator _animator;
     [SerializeField] private NpcAnimationSo _npcAnimationSo;
+    private Animator _animator;
     private AnimationClip currentAnimation;
-    private AnimationClip selectedAnimationClip;
 
     private Transform mTransform;
+    private AnimationClip selectedAnimationClip;
 
     private void Awake()
     {
         // TODO Animation Ile dene
         _animator = GetComponent<Animator>();
     }
-    
+
     public void PlayAnimation(eNpcAnimation eNpcAnimation)
     {
         switch (eNpcAnimation)
@@ -41,9 +41,9 @@ public class NPCAnimationControl : MonoBehaviour
 
         currentAnimation = selectedAnimationClip;
         _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
-        
-        this.transform.localPosition = Vector3.zero;
-        this.transform.localRotation = Quaternion.identity;
+
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
 
     public void SetRootMotion(bool appyRootMotion)
@@ -51,5 +51,8 @@ public class NPCAnimationControl : MonoBehaviour
         _animator.applyRootMotion = appyRootMotion;
     }
 
-    public float GetCurrentAnimationDuration() => currentAnimation.length;
+    public float GetCurrentAnimationDuration()
+    {
+        return currentAnimation.length;
+    }
 }

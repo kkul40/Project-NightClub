@@ -9,8 +9,7 @@ public class InputSystem : MonoBehaviour
     [SerializeField] private RaycastHit lastHit;
     [SerializeField] private Transform lastHitTransform;
 
-    [SerializeField] private LayerMask placementLayer;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask mouseOverLayers;
 
     public Vector2 MoveDelta;
     public float ScrollWheelDelta;
@@ -30,7 +29,7 @@ public class InputSystem : MonoBehaviour
     {
         MoveDelta.x = Input.GetAxis("Horizontal");
         MoveDelta.y = Input.GetAxis("Vertical");
-        
+
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             LeftClickOnWorld = Input.GetMouseButtonDown(0);
@@ -38,7 +37,7 @@ public class InputSystem : MonoBehaviour
             RightClickOnWorld = Input.GetMouseButtonDown(1);
             ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
         }
-            
+
         Esc = Input.GetKeyDown(KeyCode.Escape);
         E = Input.GetKeyDown(KeyCode.E);
         Q = Input.GetKeyDown(KeyCode.Q);
@@ -46,20 +45,14 @@ public class InputSystem : MonoBehaviour
 
     public Vector3 GetMouseMapPosition()
     {
-        Vector3 mousePOs = Input.mousePosition;
+        var mousePOs = Input.mousePosition;
         mousePOs.z = mainCam.nearClipPlane;
-        Ray ray = mainCam.ScreenPointToRay(mousePOs);
+        var ray = mainCam.ScreenPointToRay(mousePOs);
 
         RaycastHit hit;
         float maxDistance = 100;
-        if (Physics.Raycast(ray, out hit, maxDistance, placementLayer))
-        {
-            lastHit = hit;
-            lastHitTransform = hit.transform;
-            return hit.point;
-        }
-            
-        if(Physics.Raycast(ray, out hit, maxDistance, groundLayer))
+
+        if (Physics.Raycast(ray, out hit, maxDistance, mouseOverLayers))
         {
             lastHit = hit;
             lastHitTransform = hit.transform;
@@ -69,26 +62,31 @@ public class InputSystem : MonoBehaviour
         return Vector3.zero;
     }
 
-    public Transform GetMouseHitTransfromOnWorld()
+    public Transform GetHitTransform()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return null;
-        
-        Vector3 mousePOs = Input.mousePosition;
+        var mousePOs = Input.mousePosition;
         mousePOs.z = mainCam.nearClipPlane;
-        Ray ray = mainCam.ScreenPointToRay(mousePOs);
-        
+        var ray = mainCam.ScreenPointToRay(mousePOs);
+
         RaycastHit hit;
         float maxDistance = 100;
-        if (Physics.Raycast(ray, out hit, maxDistance))
-        {
-            return hit.transform;
-        }
-        
+
+        if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
+
         return null;
     }
 
-    public Transform GetLastHitTransform() => lastHitTransform;
+    public Transform GetHitTransformWithLayer(int layerID)
+    {
+        LayerMask layer = 1 << layerID;
+        var mousePOs = Input.mousePosition;
+        mousePOs.z = mainCam.nearClipPlane;
+        var ray = mainCam.ScreenPointToRay(mousePOs);
 
-    public RaycastHit GetLastHit() => lastHit;
+        RaycastHit hit;
+        float maxDistance = 100;
+
+        if (Physics.Raycast(ray, out hit, maxDistance, layer)) return hit.transform;
+        return null;
+    }
 }

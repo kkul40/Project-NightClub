@@ -11,16 +11,16 @@ public class UISlotGenerator : MonoBehaviour
     [SerializeField] private Transform SlotHolder;
     [SerializeField] private string ItemSoPath;
 
-    [SerializeField] private List<PlacablePropSo> _placableSoList;
+    [SerializeField] private List<PlacableItemDataSo> _placableSoList;
 
     private void Start()
     {
-        _placableSoList = Resources.LoadAll<PlacablePropSo>(ItemSoPath).ToList();
+        _placableSoList = Resources.LoadAll<PlacableItemDataSo>(ItemSoPath).ToList();
 
         foreach (var placablePropSo in _placableSoList)
         {
             var temp = Instantiate(UISlotPrefab, SlotHolder);
-            temp.GetComponent<UISlot>().SetUp(placablePropSo);
+            temp.GetComponent<UISlot>().Init(placablePropSo);
         }
     }
 }

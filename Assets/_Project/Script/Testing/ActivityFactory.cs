@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-namespace Testing
+﻿namespace Testing
 {
     // [Serializable]
     // public abstract class Activity2

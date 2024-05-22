@@ -9,7 +9,7 @@ public class Logger
     public void Log(string message)
     {
         if (!showLog) return;
-        
+
         Debug.Log(message);
     }
 }

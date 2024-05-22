@@ -4,7 +4,7 @@
     {
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
-    
+
         public override void StartActivity(NPC npc)
         {
             if (isCanceled) return;

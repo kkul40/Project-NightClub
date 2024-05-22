@@ -7,8 +7,8 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "New Player Customization Data")]
     public class PlayerCustomizationDataSo : ScriptableObject
     {
-        [Tooltip("0 = Male, 1 = Female")]
-        public List<Mesh> playerGenders;
+        [Tooltip("0 = Male, 1 = Female")] public List<Mesh> playerGenders;
+
         public List<CustomizationItem> playerHairPrefabs;
         public List<CustomizationItem> playerBeardPrefabs;
         public List<CustomizationItem> playerAttachtmentPrefabs;

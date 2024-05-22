@@ -1,6 +1,7 @@
 ﻿using System;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Data
 {
@@ -8,18 +9,16 @@ namespace Data
     public struct PlacementData
     {
         public int ID;
-        public PlacablePropSo ItemSo;
         public GameObject SceneObject;
-        public Vector2Int ObjectSize;
-        public Direction Direction;
+        public IPlaceableItemData placableItemData;
+        public RotationData RotationData;
 
-        public PlacementData(PlacablePropSo itemSo, GameObject sceneObject,Vector2Int objectSize, Direction direction)
+        public PlacementData(IPlaceableItemData placableItemData, GameObject sceneObject, RotationData rotationData)
         {
             ID = Guid.NewGuid().GetHashCode();
-            ItemSo = itemSo;
+            this.placableItemData = placableItemData;
             SceneObject = sceneObject;
-            ObjectSize = objectSize;
-            Direction = direction;
+            RotationData = rotationData;
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
-using ScriptableObjects;
 using UnityEngine;
 
 namespace Activities
@@ -10,30 +8,26 @@ namespace Activities
     {
         public abstract bool isEnded { get; protected set; }
         public abstract bool isCanceled { get; protected set; }
-    
+
         public abstract void StartActivity(NPC npc);
         public abstract void UpdateActivity(NPC npc);
         public abstract void EndActivity(NPC npc);
 
         protected T GetAvaliablePropByType<T>(NPC npc) where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0)
-            {
-                return null;
-            }
+            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
             foreach (var prop in GameData.Instance.GetPropList)
             {
-                if(prop == null) continue;
-                
-                
+                if (prop == null) continue;
+
+
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
-                {
-                    if(occupieable.IsOccupied) continue;
-                }
-            
+                    if (occupieable.IsOccupied)
+                        continue;
+
                 if (prop is T propType)
                 {
                     var distance = Vector3.Distance(npc.transform.position, prop.GetPropCellPosition());
@@ -47,46 +41,38 @@ namespace Activities
 
             if (closestProp == null)
             {
-                Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
+                Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
                 return null;
             }
 
             return closestProp;
         }
-        
+
         protected List<T> GetMultiplePropsByType<T>() where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0)
-            {
-                return new List<T>();
-            }
+            if (GameData.Instance.PlacementHandler.GetPlacementData().Count <= 0) return new List<T>();
 
-            List<T> propList = new List<T>();
+            var propList = new List<T>();
 
             float lastDistance = 9999;
             foreach (var prop in GameData.Instance.GetPropList)
             {
-                if(prop == null) continue;
-                
+                if (prop == null) continue;
+
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
-                {
-                    if(occupieable.IsOccupied) continue;
-                }
-            
-                if (prop is T propType)
-                {
-                   propList.Add(propType);
-                }
+                    if (occupieable.IsOccupied)
+                        continue;
+
+                if (prop is T propType) propList.Add(propType);
             }
 
             if (propList.Count < 1)
             {
-                Debug.LogWarning( typeof(T)+ " Turunde Prop Ogesi Bulunamadi!");
+                Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
                 return new List<T>();
             }
-            
+
             return propList;
         }
-        
     }
 }

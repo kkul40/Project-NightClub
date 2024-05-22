@@ -1,5 +1,3 @@
-using System;
-using BuildingSystemFolder;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,7 +16,7 @@ namespace PlayerScripts
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                SetDestination(BuildingSystem.Instance.GetCellCenterWorld(BuildingSystem.Instance.GetWorldToCell(InputSystem.Instance.GetMouseMapPosition())));
+                // SetDestination(BuildingSystem.Instance.GetCellCenterWorld(BuildingSystem.Instance.GetWorldToCell(InputSystem.Instance.GetMouseMapPosition())));
             }
         }
 

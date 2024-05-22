@@ -1,7 +1,6 @@
 ﻿using System;
 using HighlightPlus;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Testing
 {
@@ -9,89 +8,80 @@ namespace Testing
     {
         public HighlightProfile _interactableHighlight;
         public HighlightProfile _noneHighlight;
+        private GameObject _currentGameObject;
+
+        private IInteractable _currentInteractable;
         private InputSystem _inputSystem => InputSystem.Instance;
 
-        private IInteractable _currentInteractable = null;
-        private GameObject _currentGameObject;
+        private void Reset()
+        {
+            if (_currentInteractable == null) return;
+
+            _currentInteractable.OnOutFocus();
+            _currentInteractable = null;
+
+
+            if (_currentGameObject == null) return;
+
+            // Remove hightlilghted
+            var highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
+            if (highlightEffect != null)
+            {
+                highlightEffect.SetHighlighted(false);
+                Destroy(highlightEffect);
+            }
+
+            _currentGameObject = null;
+        }
 
         private void Start()
         {
-            RotationData rotationData = new RotationData();
-            RotationData rotationData2 = rotationData;
+            var rotationData = new RotationData();
+            var rotationData2 = rotationData;
 
             rotationData2.direction = Direction.Right;
-            
+
             Debug.Log(rotationData.rotation);
         }
 
         private void Update()
         {
-            if (BuildingSystem.Instance.GetPlacingType != PlacingType.None) return;
-            
-            Transform hitTransform = _inputSystem.GetMouseHitTransfromOnWorld();
+            if (BuildingManager.Instance.isPlacing)
+            {
+                Reset();
+                return;
+            }
+
+            var hitTransform = _inputSystem.GetHitTransform();
 
             if (hitTransform == null)
             {
                 Reset();
                 return;
             }
-            else if (hitTransform.gameObject != _currentGameObject)
-            {
-                Reset();
-            }
-            
+
+            if (hitTransform.gameObject != _currentGameObject) Reset();
+
             if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
-            {
                 if (_currentInteractable != cursorInteraction)
-                {
                     Set(cursorInteraction, hitTransform.gameObject);
-                }
-            }
 
             if (_inputSystem.LeftClickOnWorld)
-            {
                 if (_currentInteractable != null)
-                {
                     _currentInteractable.OnClick();
-                }
-            }
-        }
-
-        private void Reset()
-        {
-            if (_currentInteractable == null) return;
-            
-            _currentInteractable.OnOutFocus();
-            _currentInteractable = null;
-
-
-            if (_currentGameObject == null) return;
-            
-            // Remove hightlilghted
-            HighlightEffect highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
-            if (highlightEffect != null)
-            {
-                highlightEffect.SetHighlighted(false);
-                Destroy(highlightEffect);
-            }
-            
-            _currentGameObject = null;
         }
 
         private void Set(IInteractable set, GameObject gameObject)
         {
             if (_currentInteractable == set) return;
-            
+
             _currentInteractable = set;
             _currentGameObject = gameObject;
             _currentInteractable.OnFocus();
-            
+
             // Add highligted
-            HighlightEffect highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
-            if (highlightEffect == null)
-            {
-                highlightEffect = _currentGameObject.AddComponent<HighlightEffect>();
-            }
+            var highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
+            if (highlightEffect == null) highlightEffect = _currentGameObject.AddComponent<HighlightEffect>();
 
             switch (_currentInteractable.Interaction)
             {
@@ -105,7 +95,7 @@ namespace Testing
                     highlightEffect.ProfileLoad(_interactableHighlight);
                     break;
             }
-            
+
             highlightEffect.SetHighlighted(true);
         }
     }

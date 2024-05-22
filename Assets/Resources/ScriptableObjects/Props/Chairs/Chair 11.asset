@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Chair 11
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  price: 0
-  Prefab: {fileID: 7552561420898347412, guid: 7043990453fca6e46a68ab3632ce4395, type: 3}
-  ObjectSize: {x: 1, y: 1}
+  prefab: {fileID: 7552561420898347412, guid: 7043990453fca6e46a68ab3632ce4395, type: 3}
+  size: {x: 1, y: 1}
+  placementType: 1
+  rotationType: 1
+  initialColor: {r: 1, g: 1, b: 1, a: 1}

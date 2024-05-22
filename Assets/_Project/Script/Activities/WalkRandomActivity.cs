@@ -1,6 +1,6 @@
 ﻿using System;
-using BuildingSystemFolder;
 using Data;
+using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,12 +8,11 @@ namespace Activities
 {
     public class WalkRandomActivity : Activity
     {
+        private readonly float delay = 2;
+        private float timer;
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
 
-        private float delay = 2;
-        private float timer;
-    
         public override void StartActivity(NPC npc)
         {
             if (isCanceled) return;
@@ -44,18 +43,20 @@ namespace Activities
         {
             if (isCanceled) return;
         }
-        
+
         public Vector3 GetRandomDestination()
         {
-            int loopCount = 0;
-        
+            var loopCount = 0;
+
             var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-            while (GameData.Instance.PlacementHandler.ContainsKey(BuildingSystem.Instance.GetWorldToCell(target)))
+            while (GameData.Instance.PlacementHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
+                       PlacementMethodType.Placement))
             {
                 target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
                 loopCount++;
                 if (loopCount >= 99)
                 {
+                    isCanceled = true;
                     break;
                 }
             }

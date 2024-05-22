@@ -1,5 +1,4 @@
 using System;
-using BuildingSystemFolder;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -11,15 +10,12 @@ namespace UI
     public class UISlot : MonoBehaviour
     {
         public TextStyleSo textStyleSo;
-        public PlacablePropSo PlacablePropSo;
+
+        [FormerlySerializedAs("placableItemSo")]
+        public PlacableItemDataSo placableItemDataSo;
+
         public Image image;
         public TextMeshProUGUI textMeshPro;
-
-        private void OnValidate()
-        {
-            textMeshPro.font = textStyleSo.FontAsset;
-            textMeshPro.fontSize = textStyleSo.FontSize;
-        }
 
         private void Update()
         {
@@ -27,16 +23,22 @@ namespace UI
             textMeshPro.fontSize = textStyleSo.FontSize;
         }
 
-        public void SetUp(PlacablePropSo placablePropSo)
+        private void OnValidate()
         {
-            this.PlacablePropSo = placablePropSo;
-            image.sprite = PlacablePropSo.icon;
-            textMeshPro.text = PlacablePropSo.name;
+            textMeshPro.font = textStyleSo.FontAsset;
+            textMeshPro.fontSize = textStyleSo.FontSize;
+        }
+
+        public void Init(PlacableItemDataSo placableItemDataSo)
+        {
+            this.placableItemDataSo = placableItemDataSo;
+            image.sprite = this.placableItemDataSo.icon;
+            textMeshPro.text = this.placableItemDataSo.name;
         }
 
         public void OnClick()
         {
-            BuildingSystem.Instance.StartPlacement(PlacablePropSo);
+            BuildingManager.Instance.StartPlacement(placableItemDataSo);
         }
     }
 }

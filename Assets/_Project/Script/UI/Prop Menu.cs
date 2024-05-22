@@ -10,18 +10,12 @@ namespace UI
 
         private void Start()
         {
-            for (int i = 0; i < uiInventories.Count; i++)
-            {
-                uiInventories[i].SetActive(false);
-            }
+            for (var i = 0; i < uiInventories.Count; i++) uiInventories[i].SetActive(false);
         }
 
         public void OpenUpInventory(GameObject inventory)
         {
-            for (int i = 0; i < uiInventories.Count; i++)
-            {
-                uiInventories[i].SetActive(false);
-            }
+            for (var i = 0; i < uiInventories.Count; i++) uiInventories[i].SetActive(false);
 
             inventory.SetActive(true);
         }

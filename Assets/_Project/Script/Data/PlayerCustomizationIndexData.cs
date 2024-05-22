@@ -6,11 +6,11 @@ namespace Data
     [Serializable]
     public class PlayerCustomizationIndexData
     {
-        public int playerGenderIndex = 0;   
-        public int playerHairIndex = 0;
-        public int playerBeardIndex = 0;
-        public int playerAttachmentIndex = 0;
-        public int playerEaringIndex = 0;
+        public int playerGenderIndex;
+        public int playerHairIndex;
+        public int playerBeardIndex;
+        public int playerAttachmentIndex;
+        public int playerEaringIndex;
 
         public PlayerCustomizationIndexData(PlayerCustomizationLoader playerCustomizationUI)
         {
