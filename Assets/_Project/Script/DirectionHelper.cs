@@ -2,28 +2,20 @@
 
 public static class DirectionHelper
 {
+    
+    
     public static RotationData RotateClockWise(Quaternion currentQuaternion, Direction direction)
     {
         var d = direction;
         var quaternion = RotateClockWise(currentQuaternion, ref d);
-
-        var rotationData = new RotationData();
-        rotationData.rotation = quaternion;
-        rotationData.direction = d;
-
-        return rotationData;
+        return new RotationData(quaternion, d);
     }
 
     public static RotationData RotateCounterClockWise(Quaternion currentQuaternion, Direction direction)
     {
         var d = direction;
         var quaternion = RotateCounterClockWise(currentQuaternion, ref d);
-
-        var rotationData = new RotationData();
-        rotationData.rotation = quaternion;
-        rotationData.direction = d;
-
-        return rotationData;
+        return new RotationData(quaternion, d);
     }
 
     public static RotationData RotateToDirection(Direction direction)
@@ -138,10 +130,21 @@ public static class DirectionHelper
     }
 }
 
-public struct RotationData
+public class RotationData
 {
     public Quaternion rotation;
     public Direction direction;
+
+    public RotationData()
+    {
+        rotation = Quaternion.identity;
+        direction = Direction.Down;
+    }
+    public RotationData(Quaternion quaternion, Direction direction)
+    {
+        this.rotation = quaternion;
+        this.direction = direction;
+    }
 }
 
 public enum Direction

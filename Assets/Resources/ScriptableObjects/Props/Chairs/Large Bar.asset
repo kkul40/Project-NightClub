@@ -16,5 +16,5 @@ MonoBehaviour:
   prefab: {fileID: 0}
   size: {x: 0, y: 0}
   placementType: 1
-  rotationType: 2
+  rotationType: 0
   initialColor: {r: 1, g: 1, b: 1, a: 1}

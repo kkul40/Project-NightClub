@@ -17,7 +17,7 @@ namespace BuildingSystemFolder
             var transform = InputSystem.Instance.GetHitTransformWithLayer(FloorLayerID);
             if (transform == null) return false;
 
-            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos,
+            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos, placeableItemData.Size, rotationData,
                     PlacementLayer.FloorLevel)) return false;
             return true;
         }

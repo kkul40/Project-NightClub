@@ -1,7 +1,8 @@
+using System;
 using Data;
 using UnityEngine;
 
-public class MapGeneratorSystem : MonoBehaviour
+public class MapGeneratorSystem : Singleton<MapGeneratorSystem>
 {
     [SerializeField] private Vector2Int initialMapSize;
     [SerializeField] private Vector2Int mapSize;
