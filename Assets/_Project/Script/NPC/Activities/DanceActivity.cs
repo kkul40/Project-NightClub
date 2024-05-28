@@ -1,9 +1,7 @@
-﻿using System;
-using Data;
-using ScriptableObjects;
+﻿using Data;
 using UnityEngine;
 
-namespace Activities
+namespace NPC.Activities
 {
     public class DanceActivity : Activity
     {
@@ -17,7 +15,7 @@ namespace Activities
 
         public override void StartActivity(NPC npc)
         {
-            _dancableTile = GetAvaliablePropByType<DancableTile>(npc, PlacementLayer.FloorLevel);
+            _dancableTile = GetAvaliablePropByType<DancableTile>(npc, ePlacementLayer.Surface);
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
             {
@@ -26,7 +24,7 @@ namespace Activities
             }
 
             if (GameData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
-                    PlacementLayer.Surface))
+                    ePlacementLayer.Floor))
             {
                 isCanceled = true;
                 return;

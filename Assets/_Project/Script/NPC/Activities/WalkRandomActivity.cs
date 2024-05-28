@@ -1,10 +1,9 @@
 ﻿using System;
 using Data;
-using ScriptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Activities
+namespace NPC.Activities
 {
     public class WalkRandomActivity : Activity
     {
@@ -50,7 +49,7 @@ namespace Activities
 
             var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
             while (GameData.Instance.placementDataHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
-                       PlacementLayer.Surface))
+                       ePlacementLayer.Floor))
             {
                 target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
                 loopCount++;

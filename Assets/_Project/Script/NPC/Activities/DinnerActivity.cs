@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Activities
+namespace NPC.Activities
 {
     [Serializable]
     public class DinnerActivity : Activity
@@ -26,7 +26,7 @@ namespace Activities
         public override void StartActivity(NPC npc)
         {
             if (isCanceled) return;
-            tableProp = GetAvaliablePropByType<Table>(npc, PlacementLayer.Surface);
+            tableProp = GetAvaliablePropByType<Table>(npc, ePlacementLayer.Floor);
 
             if (tableProp == null || tableProp.Chairs.Count < 1)
             {

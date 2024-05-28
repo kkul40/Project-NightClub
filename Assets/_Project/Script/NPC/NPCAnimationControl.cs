@@ -1,58 +1,61 @@
 using ScriptableObjects;
 using UnityEngine;
 
-public class NPCAnimationControl : MonoBehaviour
+namespace NPC
 {
-    [SerializeField] private NpcAnimationSo _npcAnimationSo;
-    private Animator _animator;
-    private AnimationClip currentAnimation;
-
-    private Transform mTransform;
-    private AnimationClip selectedAnimationClip;
-
-    private void Awake()
+    public class NPCAnimationControl : MonoBehaviour
     {
-        // TODO Animation Ile dene
-        _animator = GetComponent<Animator>();
-    }
+        [SerializeField] private NpcAnimationSo _npcAnimationSo;
+        private Animator _animator;
+        private AnimationClip currentAnimation;
 
-    public void PlayAnimation(eNpcAnimation eNpcAnimation)
-    {
-        switch (eNpcAnimation)
+        private Transform mTransform;
+        private AnimationClip selectedAnimationClip;
+
+        private void Awake()
         {
-            case eNpcAnimation.Idle:
-                selectedAnimationClip = _npcAnimationSo.Idle;
-                break;
-            case eNpcAnimation.Walk:
-                selectedAnimationClip = _npcAnimationSo.Walk;
-                break;
-            case eNpcAnimation.Sit:
-                selectedAnimationClip = _npcAnimationSo.Sit;
-                break;
-            case eNpcAnimation.Dance:
-                selectedAnimationClip = _npcAnimationSo.Dance;
-                break;
-            default:
-                selectedAnimationClip = _npcAnimationSo.Debug;
-                break;
+            // TODO Animation Ile dene
+            _animator = GetComponent<Animator>();
         }
 
-        if (currentAnimation == selectedAnimationClip) return;
+        public void PlayAnimation(eNpcAnimation eNpcAnimation)
+        {
+            switch (eNpcAnimation)
+            {
+                case eNpcAnimation.Idle:
+                    selectedAnimationClip = _npcAnimationSo.Idle;
+                    break;
+                case eNpcAnimation.Walk:
+                    selectedAnimationClip = _npcAnimationSo.Walk;
+                    break;
+                case eNpcAnimation.Sit:
+                    selectedAnimationClip = _npcAnimationSo.Sit;
+                    break;
+                case eNpcAnimation.Dance:
+                    selectedAnimationClip = _npcAnimationSo.Dance;
+                    break;
+                default:
+                    selectedAnimationClip = _npcAnimationSo.Debug;
+                    break;
+            }
 
-        currentAnimation = selectedAnimationClip;
-        _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
+            if (currentAnimation == selectedAnimationClip) return;
 
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-    }
+            currentAnimation = selectedAnimationClip;
+            _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
 
-    public void SetRootMotion(bool appyRootMotion)
-    {
-        _animator.applyRootMotion = appyRootMotion;
-    }
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
 
-    public float GetCurrentAnimationDuration()
-    {
-        return currentAnimation.length;
+        public void SetRootMotion(bool appyRootMotion)
+        {
+            _animator.applyRootMotion = appyRootMotion;
+        }
+
+        public float GetCurrentAnimationDuration()
+        {
+            return currentAnimation.length;
+        }
     }
 }

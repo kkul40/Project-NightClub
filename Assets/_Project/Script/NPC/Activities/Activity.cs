@@ -2,7 +2,7 @@
 using Data;
 using UnityEngine;
 
-namespace Activities
+namespace NPC.Activities
 {
     public abstract class Activity
     {
@@ -13,9 +13,9 @@ namespace Activities
         public abstract void UpdateActivity(NPC npc);
         public abstract void EndActivity(NPC npc);
 
-        protected T GetAvaliablePropByType<T>(NPC npc, PlacementLayer layer) where T : Prop
+        protected T GetAvaliablePropByType<T>(NPC npc, ePlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData(layer).Count <= 0) return null;
+            if (GameData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
@@ -48,9 +48,9 @@ namespace Activities
             return closestProp;
         }
 
-        protected List<T> GetMultiplePropsByType<T>(PlacementLayer layer) where T : Prop
+        protected List<T> GetMultiplePropsByType<T>(ePlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.PlacementHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
+            if (GameData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
 
             var propList = new List<T>();
 

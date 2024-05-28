@@ -1,92 +1,95 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-[DisallowMultipleComponent]
-public class InputSystem : MonoBehaviour
+namespace System
 {
-    public static InputSystem Instance;
-    [SerializeField] private Camera mainCam;
-    [SerializeField] private RaycastHit lastHit;
-    [SerializeField] private Transform lastHitTransform;
-
-    [SerializeField] private LayerMask mouseOverLayers;
-
-    public Vector2 MoveDelta;
-    public float ScrollWheelDelta;
-    [HideInInspector] public bool Esc;
-    [HideInInspector] public bool E;
-    [HideInInspector] public bool Q;
-    [HideInInspector] public bool LeftClickOnWorld;
-    [HideInInspector] public bool LeftHoldClickOnWorld;
-    public bool RightClickOnWorld;
-
-    private void Awake()
+    [DisallowMultipleComponent]
+    public class InputSystem : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static InputSystem Instance;
+        [SerializeField] private Camera mainCam;
+        [SerializeField] private RaycastHit lastHit;
+        [SerializeField] private Transform lastHitTransform;
 
-    private void Update()
-    {
-        MoveDelta.x = Input.GetAxis("Horizontal");
-        MoveDelta.y = Input.GetAxis("Vertical");
+        [SerializeField] private LayerMask mouseOverLayers;
 
-        if (!EventSystem.current.IsPointerOverGameObject())
+        public Vector2 MoveDelta;
+        public float ScrollWheelDelta;
+        [HideInInspector] public bool Esc;
+        [HideInInspector] public bool E;
+        [HideInInspector] public bool Q;
+        [HideInInspector] public bool LeftClickOnWorld;
+        [HideInInspector] public bool LeftHoldClickOnWorld;
+        public bool RightClickOnWorld;
+
+        private void Awake()
         {
-            LeftClickOnWorld = Input.GetMouseButtonDown(0);
-            LeftHoldClickOnWorld = Input.GetMouseButton(0);
-            RightClickOnWorld = Input.GetMouseButtonDown(1);
-            ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+            Instance = this;
         }
 
-        Esc = Input.GetKeyDown(KeyCode.Escape);
-        E = Input.GetKeyDown(KeyCode.E);
-        Q = Input.GetKeyDown(KeyCode.Q);
-    }
-
-    public Vector3 GetMouseMapPosition()
-    {
-        var mousePOs = Input.mousePosition;
-        mousePOs.z = mainCam.nearClipPlane;
-        var ray = mainCam.ScreenPointToRay(mousePOs);
-
-        RaycastHit hit;
-        float maxDistance = 100;
-
-        if (Physics.Raycast(ray, out hit, maxDistance, mouseOverLayers))
+        private void Update()
         {
-            lastHit = hit;
-            lastHitTransform = hit.transform;
-            return hit.point;
+            MoveDelta.x = Input.GetAxis("Horizontal");
+            MoveDelta.y = Input.GetAxis("Vertical");
+
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                LeftClickOnWorld = Input.GetMouseButtonDown(0);
+                LeftHoldClickOnWorld = Input.GetMouseButton(0);
+                RightClickOnWorld = Input.GetMouseButtonDown(1);
+                ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+            }
+
+            Esc = Input.GetKeyDown(KeyCode.Escape);
+            E = Input.GetKeyDown(KeyCode.E);
+            Q = Input.GetKeyDown(KeyCode.Q);
         }
 
-        return Vector3.zero;
-    }
+        public Vector3 GetMouseMapPosition()
+        {
+            var mousePOs = Input.mousePosition;
+            mousePOs.z = mainCam.nearClipPlane;
+            var ray = mainCam.ScreenPointToRay(mousePOs);
 
-    public Transform GetHitTransform()
-    {
-        var mousePOs = Input.mousePosition;
-        mousePOs.z = mainCam.nearClipPlane;
-        var ray = mainCam.ScreenPointToRay(mousePOs);
+            RaycastHit hit;
+            float maxDistance = 100;
 
-        RaycastHit hit;
-        float maxDistance = 100;
+            if (Physics.Raycast(ray, out hit, maxDistance, mouseOverLayers))
+            {
+                lastHit = hit;
+                lastHitTransform = hit.transform;
+                return hit.point;
+            }
 
-        if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
+            return Vector3.zero;
+        }
 
-        return null;
-    }
+        public Transform GetHitTransform()
+        {
+            var mousePOs = Input.mousePosition;
+            mousePOs.z = mainCam.nearClipPlane;
+            var ray = mainCam.ScreenPointToRay(mousePOs);
 
-    public Transform GetHitTransformWithLayer(int layerID)
-    {
-        LayerMask layer = 1 << layerID;
-        var mousePOs = Input.mousePosition;
-        mousePOs.z = mainCam.nearClipPlane;
-        var ray = mainCam.ScreenPointToRay(mousePOs);
+            RaycastHit hit;
+            float maxDistance = 100;
 
-        RaycastHit hit;
-        float maxDistance = 100;
+            if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
 
-        if (Physics.Raycast(ray, out hit, maxDistance, layer)) return hit.transform;
-        return null;
+            return null;
+        }
+
+        public Transform GetHitTransformWithLayer(int layerID)
+        {
+            LayerMask layer = 1 << layerID;
+            var mousePOs = Input.mousePosition;
+            mousePOs.z = mainCam.nearClipPlane;
+            var ray = mainCam.ScreenPointToRay(mousePOs);
+
+            RaycastHit hit;
+            float maxDistance = 100;
+
+            if (Physics.Raycast(ray, out hit, maxDistance, layer)) return hit.transform;
+            return null;
+        }
     }
 }

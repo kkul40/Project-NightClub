@@ -1,3 +1,5 @@
+using _1BuildingSystemNew;
+using BuildingSystemFolder;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -70,6 +72,7 @@ namespace System
 
             isPlacable =
                 _currentPlaceableItemData.PlacementMethod.CanPlace(cellPosInt, _currentPlaceableItemData, rotationData);
+            
             tempPrefab.transform.position = Vector3.Lerp(tempPrefab.transform.position,
                 cellPos + new Vector3(0.02f, 0.02f, 0.02f),
                 Time.deltaTime * objectMoveSpeedMultiplier);

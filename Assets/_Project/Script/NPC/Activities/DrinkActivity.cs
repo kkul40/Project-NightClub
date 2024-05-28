@@ -1,7 +1,7 @@
 ﻿using Data;
 using UnityEngine;
 
-namespace Activities
+namespace NPC.Activities
 {
     public class DrinkActivity : Activity
     {
@@ -16,7 +16,7 @@ namespace Activities
 
         public override void StartActivity(NPC npc)
         {
-            var barList = GetMultiplePropsByType<Bar>(PlacementLayer.Surface);
+            var barList = GetMultiplePropsByType<Bar>(ePlacementLayer.Floor);
 
             if (barList.Count > 0)
                 iBar = barList[Random.Range(0, barList.Count)];

@@ -10,8 +10,7 @@ namespace Data
         [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
         public PlacementDataHandler placementDataHandler { get; private set; }
 
-        [Header("Data")] 
-        public List<Vector3> FloorMap = new();
+        [Header("Data")] public List<Vector3> FloorMap = new();
         public List<Wall> WallMap = new();
         public List<Prop> GetPropList => placementDataHandler.GetPropList;
         public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;

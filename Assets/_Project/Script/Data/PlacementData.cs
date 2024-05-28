@@ -1,4 +1,6 @@
 ﻿using System;
+using _1BuildingSystemNew;
+using BuildingSystemFolder;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,15 +12,18 @@ namespace Data
     {
         public int ID;
         public GameObject SceneObject;
-        public IPlaceableItemData placableItemData;
+        public StoreItemSO storeItemSo;
+        public Vector2Int Size;
         public RotationData RotationData;
 
-        public PlacementData(IPlaceableItemData placableItemData, GameObject sceneObject, RotationData rotationData)
+        public PlacementData(StoreItemSO storeItemSo, GameObject createdObject, Vector2Int Size, RotationData rotationData)
         {
             ID = Guid.NewGuid().GetHashCode();
-            this.placableItemData = placableItemData;
-            SceneObject = sceneObject;
+            this.storeItemSo = storeItemSo as PlacementItemSO;
+            SceneObject = createdObject;
             RotationData = rotationData;
+            this.Size = Size;
         }
+      
     }
 }

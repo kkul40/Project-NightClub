@@ -1,4 +1,4 @@
-﻿namespace Activities
+﻿namespace NPC.Activities
 {
     public class NoneActivity : Activity
     {
