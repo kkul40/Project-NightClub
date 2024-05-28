@@ -17,7 +17,7 @@ namespace BuildingSystemFolder
             var transform = InputSystem.Instance.GetHitTransformWithLayer(FloorLayerID);
             if (transform == null) return false;
 
-            if (GameData.Instance.PlacementHandler.ContainsKey(cellPos, placeableItemData.Size, rotationData,
+            if (GameData.Instance.placementDataHandler.ContainsKey(cellPos, placeableItemData.Size, rotationData,
                     PlacementLayer.FloorLevel)) return false;
             return true;
         }
@@ -31,7 +31,7 @@ namespace BuildingSystemFolder
         {
             var newObject = Object.Instantiate(placeableItemData.Prefab, cellPos, rotationData.rotation);
             newObject.transform.SetParent(BuildingManager.Instance.GetSceneTransformContainer.PropHolderTransform);
-            GameData.Instance.PlacementHandler.AddPlacementData(cellPosInt,
+            GameData.Instance.placementDataHandler.AddPlacementData(cellPosInt,
                 new PlacementData(placeableItemData, newObject, rotationData), PlacementLayer.FloorLevel);
 
             return newObject;

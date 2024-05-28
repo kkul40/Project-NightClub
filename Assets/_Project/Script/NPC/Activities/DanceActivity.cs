@@ -25,7 +25,7 @@ namespace Activities
                 return;
             }
 
-            if (GameData.Instance.PlacementHandler.ContainsKey(_dancableTile.CellPosition,
+            if (GameData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
                     PlacementLayer.Surface))
             {
                 isCanceled = true;
