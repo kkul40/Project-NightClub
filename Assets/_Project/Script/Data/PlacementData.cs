@@ -1,6 +1,6 @@
 ﻿using System;
 using _1BuildingSystemNew;
-using BuildingSystemFolder;
+using _1BuildingSystemNew.SO;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;

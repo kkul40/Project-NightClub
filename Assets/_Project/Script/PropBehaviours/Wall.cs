@@ -1,12 +1,13 @@
-﻿using Data;
+﻿using _1BuildingSystemNew;
+using Data;
 using UnityEngine;
 
-public class Wall : MonoBehaviour, IMaterial, IInteractable
+public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
 {
     protected void Start()
     {
-        MeshRenderer = GetComponentInChildren<MeshRenderer>();
         GameData.Instance.WallMap.Add(this);
+        LoadMaterial();
     }
 
     public eInteraction Interaction { get; } = eInteraction.None;
@@ -23,20 +24,19 @@ public class Wall : MonoBehaviour, IMaterial, IInteractable
     {
     }
 
-    public MeshRenderer MeshRenderer { get; protected set; }
-
-    public virtual void ChangeMaterial(Material newWallPaper)
+    public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.Wall;
+    public Material CurrentMaterial { get; set; }
+    public void LoadMaterial()
     {
-        Debug.Log("Changed Material");
-        var materials = MeshRenderer.materials;
-        materials[1] = newWallPaper;
-        MeshRenderer.materials = materials;
+        CurrentMaterial = InitConfig.Instance.GetDefaultWallMaterial.Material;
+        UpdateMaterial();
     }
 
-    public virtual void ResetMaterial(Material[] materials)
+    public virtual void UpdateMaterial()
     {
-        var currentMaterial = MeshRenderer.materials;
-        currentMaterial = materials;
-        MeshRenderer.materials = currentMaterial;
+        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+        var materials = meshRenderer.materials;
+        materials[1] = CurrentMaterial;
+        meshRenderer.materials = materials;
     }
 }

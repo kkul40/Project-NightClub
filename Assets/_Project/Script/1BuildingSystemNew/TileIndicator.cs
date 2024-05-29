@@ -6,30 +6,30 @@ public class TileIndicator : MonoBehaviour
     [SerializeField] private GameObject placingTileIndicator;
     [SerializeField] private GameObject removingTileIndicator;
     [SerializeField] private GameObject directionIndicator;
-    public PlacingType placingType { get; private set; }
+    public ePlacingType placingType { get; private set; }
 
     private void Start()
     {
         CloseTileIndicator();
     }
 
-    public void SetTileIndicator(PlacingType placingType)
+    public void SetTileIndicator(ePlacingType placingType)
     {
         CloseTileIndicator();
 
         switch (placingType)
         {
-            case PlacingType.Place:
+            case ePlacingType.Place:
                 placingTileIndicator.SetActive(true);
-                this.placingType = PlacingType.Place;
+                this.placingType = ePlacingType.Place;
                 break;
-            case PlacingType.Direction:
+            case ePlacingType.Direction:
                 directionIndicator.SetActive(true);
-                this.placingType = PlacingType.Direction;
+                this.placingType = ePlacingType.Direction;
                 break;
-            case PlacingType.Remove:
+            case ePlacingType.Remove:
                 removingTileIndicator.SetActive(true);
-                this.placingType = PlacingType.Remove;
+                this.placingType = ePlacingType.Remove;
                 break;
         }
     }
@@ -46,9 +46,17 @@ public class TileIndicator : MonoBehaviour
 
     public void CloseTileIndicator()
     {
-        placingType = PlacingType.None;
+        placingType = ePlacingType.None;
         placingTileIndicator.SetActive(false);
         removingTileIndicator.SetActive(false);
         directionIndicator.SetActive(false);
     }
+}
+
+public enum ePlacingType
+{
+    None,
+    Place,
+    Direction,
+    Remove,
 }

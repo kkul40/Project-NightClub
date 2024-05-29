@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BuildingSystemFolder;
+using _1BuildingSystemNew;
 using Data;
 using ScriptableObjects;
 using UnityEngine;
@@ -31,9 +31,9 @@ public class Table : Prop, IPropUpdate
         }
     }
 
-    public override void Initialize(IPlaceableItemData placableItemDataSo, Vector3Int cellPosition, Direction direction)
+    public override void Initialize(Vector3Int cellPosition, Direction direction)
     {
-        base.Initialize(placableItemDataSo, cellPosition, direction);
+        base.Initialize(cellPosition, direction);
 
         PropUpdate();
     }

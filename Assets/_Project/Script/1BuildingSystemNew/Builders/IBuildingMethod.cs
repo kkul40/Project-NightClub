@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _1BuildingSystemNew
+namespace _1BuildingSystemNew.Builders
 {
     public interface IBuildingMethod
     {

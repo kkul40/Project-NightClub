@@ -1,31 +1,24 @@
 ﻿using System;
-using ScriptableObjects;
 
-namespace BuildingSystemFolder
+namespace _1BuildingSystemNew.Builders
 {
     public class RotationMethodLeftAndDown : IRotationMethod
     {
-        public RotationData GetRotation(RotationData rotationData)
+        public void Rotate(BuildingNeedsData buildingNeedsData)
         {
             if (InputSystem.Instance.E)
             {
                 var rData = DirectionHelper.RotateToDirection(Direction.Down);
 
-                rotationData = rData;
-
-                return rotationData;
+                buildingNeedsData.RotationData = rData;
             }
 
             if (InputSystem.Instance.Q)
             {
                 var rData = DirectionHelper.RotateToDirection(Direction.Left);
 
-                rotationData = rData;
-
-                return rotationData;
+                buildingNeedsData.RotationData = rData;
             }
-
-            return rotationData;
         }
     }
 }

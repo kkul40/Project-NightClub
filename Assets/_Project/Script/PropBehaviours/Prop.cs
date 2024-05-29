@@ -1,18 +1,16 @@
 using System;
-using BuildingSystemFolder;
+using _1BuildingSystemNew;
 using ScriptableObjects;
 using UnityEngine;
 
 [Serializable]
-public class Prop : MonoBehaviour, IProp
+public class Prop : MonoBehaviour
 {
     public Vector3Int CellPosition;
     public Direction direction;
-    private IPlaceableItemData _placableItemDataSo;
 
-    public virtual void Initialize(IPlaceableItemData placableItemDataSo, Vector3Int cellPosition, Direction direction)
+    public virtual void Initialize(Vector3Int cellPosition, Direction direction)
     {
-        _placableItemDataSo = placableItemDataSo;
         CellPosition = cellPosition;
         this.direction = direction;
     }
@@ -26,15 +24,6 @@ public class Prop : MonoBehaviour, IProp
     {
         return transform.rotation;
     }
-
-    public IPlaceableItemData GetPropSo()
-    {
-        return _placableItemDataSo;
-    }
-}
-
-public interface IProp
-{
 }
 
 public struct PropData

@@ -1,5 +1,6 @@
 ﻿using System;
-using BuildingSystemFolder;
+using _1BuildingSystemNew.Builders;
+using _1BuildingSystemNew.SO;
 using Data;
 using UnityEngine;
 
@@ -18,8 +19,11 @@ namespace _1BuildingSystemNew
 
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
+        private IRotationMethod _rotationMethod;
         private BuildingNeedsData _buildingNeedsData;
-
+        
+        public bool isPlacing => _buildingMethod != null;
+        
         [SerializeField] private SceneTransformContainer _sceneTransformContainer;
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
@@ -59,6 +63,7 @@ namespace _1BuildingSystemNew
             
             _storeItemSo = storeItemSo;
             _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
+            _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _buildingNeedsData.RotationData = new RotationData();
             _buildingMethod.OnStart(_buildingNeedsData);
@@ -66,8 +71,11 @@ namespace _1BuildingSystemNew
         
         public void StopBuild()
         {
-            if(_buildingMethod != null)
+            if (_buildingMethod != null)
+            {
                 _buildingMethod.OnFinish(_buildingNeedsData);
+                _buildingMethod = null;
+            }
         }
 
         private void UpdateBuildingNeeds()

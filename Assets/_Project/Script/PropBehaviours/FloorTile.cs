@@ -1,10 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using _1BuildingSystemNew;
+using UnityEngine;
 
-public class FloorTile : MonoBehaviour, IMaterial, IInteractable
+public class FloorTile : MonoBehaviour, IInteractable, IChangableMaterial
 {
     private void Start()
     {
-        MeshRenderer = GetComponentInChildren<MeshRenderer>();
+        LoadMaterial();
+    }
+    
+    public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
+    public Material CurrentMaterial { get; set; }
+
+    public void LoadMaterial()
+    {
+        CurrentMaterial = InitConfig.Instance.GetDefaultTileMaterial.Material;
+        UpdateMaterial();
+    }
+
+    public void UpdateMaterial()
+    {
+        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+        meshRenderer.material = CurrentMaterial;
     }
 
     public eInteraction Interaction { get; } = eInteraction.None;
@@ -20,21 +37,5 @@ public class FloorTile : MonoBehaviour, IMaterial, IInteractable
     public void OnClick()
     {
         Debug.Log("Tile Floor");
-    }
-
-    public MeshRenderer MeshRenderer { get; private set; }
-
-    public void ChangeMaterial(Material material)
-    {
-        var materials = MeshRenderer.materials;
-        materials[0] = material;
-        MeshRenderer.materials = materials;
-    }
-
-    public void ResetMaterial(Material[] materials)
-    {
-        var currentMaterials = MeshRenderer.materials;
-        currentMaterials = materials;
-        MeshRenderer.materials = currentMaterials;
     }
 }

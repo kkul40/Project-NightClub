@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using _1BuildingSystemNew.SO;
 using ScriptableObjects;
 using UI;
 using UnityEngine;
@@ -11,11 +12,11 @@ public class UISlotGenerator : MonoBehaviour
     [SerializeField] private Transform SlotHolder;
     [SerializeField] private string ItemSoPath;
 
-    [SerializeField] private List<PlacableItemDataSo> _placableSoList;
+    [SerializeField] private List<StoreItemSO> _placableSoList;
 
     private void Start()
     {
-        _placableSoList = Resources.LoadAll<PlacableItemDataSo>(ItemSoPath).ToList();
+        _placableSoList = Resources.LoadAll<StoreItemSO>(ItemSoPath).ToList();
 
         foreach (var placablePropSo in _placableSoList)
         {

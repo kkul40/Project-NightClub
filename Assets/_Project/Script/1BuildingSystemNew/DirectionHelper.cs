@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BuildingSystemFolder
+namespace _1BuildingSystemNew
 {
     public static class DirectionHelper
     {

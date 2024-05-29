@@ -1,9 +1,7 @@
-﻿using BuildingSystemFolder;
-
-namespace _1BuildingSystemNew
+﻿namespace _1BuildingSystemNew.Builders
 {
     public interface IRotationMethod
     {
-        RotationData Rotate(RotationData rotationData);
+        void Rotate(BuildingNeedsData buildingNeedsData);
     }
 }

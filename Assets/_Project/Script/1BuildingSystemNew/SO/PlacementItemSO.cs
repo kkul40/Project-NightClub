@@ -1,8 +1,7 @@
 ﻿using Data;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _1BuildingSystemNew
+namespace _1BuildingSystemNew.SO
 {
     [CreateAssetMenu(menuName = "New Item/New Placement Item")]
     public class PlacementItemSO : StoreItemSO
