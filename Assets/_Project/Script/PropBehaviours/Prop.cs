@@ -1,41 +1,43 @@
 using System;
-using _1BuildingSystemNew;
-using ScriptableObjects;
+using BuildingSystem;
 using UnityEngine;
 
-[Serializable]
-public class Prop : MonoBehaviour
+namespace PropBehaviours
 {
-    public Vector3Int CellPosition;
-    public Direction direction;
-
-    public virtual void Initialize(Vector3Int cellPosition, Direction direction)
+    [Serializable]
+    public class Prop : MonoBehaviour
     {
-        CellPosition = cellPosition;
-        this.direction = direction;
+        public Vector3Int CellPosition;
+        public Direction direction;
+
+        public virtual void Initialize(Vector3Int cellPosition, Direction direction)
+        {
+            CellPosition = cellPosition;
+            this.direction = direction;
+        }
+
+        public Vector3Int GetPropCellPosition()
+        {
+            return CellPosition;
+        }
+
+        public Quaternion GetPropRotation()
+        {
+            return transform.rotation;
+        }
     }
 
-    public Vector3Int GetPropCellPosition()
+    public struct PropData
     {
-        return CellPosition;
-    }
+        public int ID { get; }
+        public Vector3Int cellPosition { get; }
+        public RotationData rotationData { get; }
 
-    public Quaternion GetPropRotation()
-    {
-        return transform.rotation;
-    }
-}
-
-public struct PropData
-{
-    public int ID { get; }
-    public Vector3Int cellPosition { get; }
-    public RotationData rotationData { get; }
-
-    public PropData(int ID, Vector3Int cellPosition, RotationData rotationData)
-    {
-        this.ID = ID;
-        this.cellPosition = cellPosition;
-        this.rotationData = rotationData;
+        public PropData(int ID, Vector3Int cellPosition, RotationData rotationData)
+        {
+            this.ID = ID;
+            this.cellPosition = cellPosition;
+            this.rotationData = rotationData;
+        }
     }
 }

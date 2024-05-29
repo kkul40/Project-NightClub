@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _1BuildingSystemNew.Builders
+namespace BuildingSystem.Builders
 {
     public class RotationMethodler360 : IRotationMethod
     {

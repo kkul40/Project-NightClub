@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Data;
+using PropBehaviours;
 using UnityEngine;
 
 namespace NPC.Activities

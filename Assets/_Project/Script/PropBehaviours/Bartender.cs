@@ -2,38 +2,41 @@ using System.Collections;
 using ScriptableObjects;
 using UnityEngine;
 
-public class Bartender : MonoBehaviour, IInteractable
+namespace PropBehaviours
 {
-    public Drink drink; // Test
-    public Bar bar;
-
-    private Coroutine _coroutine;
-    private bool isClicked => _coroutine != null;
-
-    public eInteraction Interaction { get; } = eInteraction.Interactable;
-
-    public void OnFocus()
+    public class Bartender : MonoBehaviour, IInteractable
     {
-    }
+        public Drink drink; // Test
+        public Bar bar;
 
-    public void OnOutFocus()
-    {
-    }
+        private Coroutine _coroutine;
+        private bool isClicked => _coroutine != null;
 
-    public void OnClick()
-    {
-        if (!isClicked && !bar.HasTable)
+        public eInteraction Interaction { get; } = eInteraction.Interactable;
+
+        public void OnFocus()
         {
-            Debug.Log("Bartender Clicked");
-            _coroutine = StartCoroutine(PrepareDrinkCo());
         }
-    }
 
-    private IEnumerator PrepareDrinkCo()
-    {
-        yield return new WaitForSeconds(drink.PrepareTime);
-        bar.SetDrinkTable(drink);
+        public void OnOutFocus()
+        {
+        }
 
-        _coroutine = null;
+        public void OnClick()
+        {
+            if (!isClicked && !bar.HasTable)
+            {
+                Debug.Log("Bartender Clicked");
+                _coroutine = StartCoroutine(PrepareDrinkCo());
+            }
+        }
+
+        private IEnumerator PrepareDrinkCo()
+        {
+            yield return new WaitForSeconds(drink.PrepareTime);
+            bar.SetDrinkTable(drink);
+
+            _coroutine = null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Data;
 using DG.Tweening;
+using PropBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _1BuildingSystemNew
+namespace BuildingSystem
 {
     public class RotationData
     {

@@ -1,41 +1,44 @@
-﻿using System;
-using _1BuildingSystemNew;
+﻿using BuildingSystem;
+using Data;
 using UnityEngine;
 
-public class FloorTile : MonoBehaviour, IInteractable, IChangableMaterial
+namespace PropBehaviours
 {
-    private void Start()
+    public class FloorTile : MonoBehaviour, IInteractable, IChangableMaterial
     {
-        LoadMaterial();
-    }
+        private void Start()
+        {
+            LoadMaterial();
+        }
     
-    public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
-    public Material CurrentMaterial { get; set; }
+        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
+        public Material CurrentMaterial { get; set; }
 
-    public void LoadMaterial()
-    {
-        CurrentMaterial = InitConfig.Instance.GetDefaultTileMaterial.Material;
-        UpdateMaterial();
-    }
+        public void LoadMaterial()
+        {
+            CurrentMaterial = InitConfig.Instance.GetDefaultTileMaterial.Material;
+            UpdateMaterial();
+        }
 
-    public void UpdateMaterial()
-    {
-        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
-        meshRenderer.material = CurrentMaterial;
-    }
+        public void UpdateMaterial()
+        {
+            MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+            meshRenderer.material = CurrentMaterial;
+        }
 
-    public eInteraction Interaction { get; } = eInteraction.None;
+        public eInteraction Interaction { get; } = eInteraction.None;
 
-    public void OnFocus()
-    {
-    }
+        public void OnFocus()
+        {
+        }
 
-    public void OnOutFocus()
-    {
-    }
+        public void OnOutFocus()
+        {
+        }
 
-    public void OnClick()
-    {
-        Debug.Log("Tile Floor");
+        public void OnClick()
+        {
+            Debug.Log("Tile Floor");
+        }
     }
 }

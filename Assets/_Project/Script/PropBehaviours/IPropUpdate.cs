@@ -1,4 +1,7 @@
-﻿public interface IPropUpdate
+﻿namespace PropBehaviours
 {
-    public void PropUpdate();
+    public interface IPropUpdate
+    {
+        public void PropUpdate();
+    }
 }

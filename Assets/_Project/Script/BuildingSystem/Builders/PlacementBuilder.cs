@@ -1,9 +1,8 @@
-﻿using _1BuildingSystemNew.SO;
+﻿using BuildingSystem.SO;
 using Data;
-using ScriptableObjects;
 using UnityEngine;
 
-namespace _1BuildingSystemNew.Builders
+namespace BuildingSystem.Builders
 {
     public class PlacementBuilder : IBuildingMethod
     {

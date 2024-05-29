@@ -1,32 +1,35 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class AutoDoor : MonoBehaviour
+namespace PropBehaviours
 {
-    [SerializeField] private Transform ChieldDoorTransform;
-
-    private void Start()
+    public class AutoDoor : MonoBehaviour
     {
-        ToggleDoor(false);
-    }
+        [SerializeField] private Transform ChieldDoorTransform;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.TryGetComponent(out NPC.NPC npc))
-            ToggleDoor(true);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.TryGetComponent(out NPC.NPC npc))
+        private void Start()
+        {
             ToggleDoor(false);
-    }
+        }
 
-    private void ToggleDoor(bool toggle)
-    {
-        if (toggle)
-            ChieldDoorTransform.DORotate(new Vector3(0, 105, 0), 0.5f);
-        else
-            ChieldDoorTransform.DORotate(new Vector3(0, 180, 0), 0.5f);
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.transform.TryGetComponent(out NPC.NPC npc))
+                ToggleDoor(true);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.transform.TryGetComponent(out NPC.NPC npc))
+                ToggleDoor(false);
+        }
+
+        private void ToggleDoor(bool toggle)
+        {
+            if (toggle)
+                ChieldDoorTransform.DORotate(new Vector3(0, 105, 0), 0.5f);
+            else
+                ChieldDoorTransform.DORotate(new Vector3(0, 180, 0), 0.5f);
+        }
     }
 }

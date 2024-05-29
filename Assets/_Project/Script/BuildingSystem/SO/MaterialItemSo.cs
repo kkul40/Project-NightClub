@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _1BuildingSystemNew.SO
+namespace BuildingSystem.SO
 {
     [CreateAssetMenu(menuName = "New Item/New Material Item")]
     public class MaterialItemSo : StoreItemSO

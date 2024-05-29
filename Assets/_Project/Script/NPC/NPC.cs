@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using NPC.Activities;
+using PropBehaviours;
 using UnityEngine;
 using UnityEngine.AI;
 

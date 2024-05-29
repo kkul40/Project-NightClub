@@ -1,6 +1,5 @@
-﻿using _1BuildingSystemNew;
-using _1BuildingSystemNew.Builders;
-using _1BuildingSystemNew.SO;
+﻿using BuildingSystem;
+using BuildingSystem.SO;
 using UnityEngine;
 using UnityEngine.Serialization;
 

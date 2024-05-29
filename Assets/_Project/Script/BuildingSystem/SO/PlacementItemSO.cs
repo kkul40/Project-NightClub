@@ -1,7 +1,7 @@
 ﻿using Data;
 using UnityEngine;
 
-namespace _1BuildingSystemNew.SO
+namespace BuildingSystem.SO
 {
     [CreateAssetMenu(menuName = "New Item/New Placement Item")]
     public class PlacementItemSO : StoreItemSO

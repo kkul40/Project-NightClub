@@ -1,10 +1,10 @@
 ﻿using System;
-using _1BuildingSystemNew.Builders;
-using _1BuildingSystemNew.SO;
+using BuildingSystem.Builders;
+using BuildingSystem.SO;
 using Data;
 using UnityEngine;
 
-namespace _1BuildingSystemNew
+namespace BuildingSystem
 {
     public class BuildingManager : Singleton<BuildingManager>
     {

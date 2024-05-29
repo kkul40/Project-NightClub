@@ -1,8 +1,7 @@
-﻿using _1BuildingSystemNew.Builders;
-using _1BuildingSystemNew.SO;
-using UnityEngine;
+﻿using BuildingSystem.Builders;
+using BuildingSystem.SO;
 
-namespace _1BuildingSystemNew
+namespace BuildingSystem
 {
     public static class BuildingMethodFactory
     {

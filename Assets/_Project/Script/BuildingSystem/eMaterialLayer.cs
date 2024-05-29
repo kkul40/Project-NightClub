@@ -1,4 +1,4 @@
-﻿namespace _1BuildingSystemNew
+﻿namespace BuildingSystem
 {
     public enum eMaterialLayer
     {

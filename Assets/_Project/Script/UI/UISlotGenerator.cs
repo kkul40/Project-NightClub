@@ -1,27 +1,28 @@
 using System.Collections.Generic;
 using System.Linq;
-using _1BuildingSystemNew.SO;
-using ScriptableObjects;
-using UI;
+using BuildingSystem.SO;
 using UnityEngine;
 
-public class UISlotGenerator : MonoBehaviour
+namespace UI
 {
-    // TODO daha sonra ui slotu scriptableObject ten cek
-    [SerializeField] private GameObject UISlotPrefab;
-    [SerializeField] private Transform SlotHolder;
-    [SerializeField] private string ItemSoPath;
-
-    [SerializeField] private List<StoreItemSO> _placableSoList;
-
-    private void Start()
+    public class UISlotGenerator : MonoBehaviour
     {
-        _placableSoList = Resources.LoadAll<StoreItemSO>(ItemSoPath).ToList();
+        // TODO daha sonra ui slotu scriptableObject ten cek
+        [SerializeField] private GameObject UISlotPrefab;
+        [SerializeField] private Transform SlotHolder;
+        [SerializeField] private string ItemSoPath;
 
-        foreach (var placablePropSo in _placableSoList)
+        [SerializeField] private List<StoreItemSO> _placableSoList;
+
+        private void Start()
         {
-            var temp = Instantiate(UISlotPrefab, SlotHolder);
-            temp.GetComponent<UISlot>().Init(placablePropSo);
+            _placableSoList = Resources.LoadAll<StoreItemSO>(ItemSoPath).ToList();
+
+            foreach (var placablePropSo in _placableSoList)
+            {
+                var temp = Instantiate(UISlotPrefab, SlotHolder);
+                temp.GetComponent<UISlot>().Init(placablePropSo);
+            }
         }
     }
 }

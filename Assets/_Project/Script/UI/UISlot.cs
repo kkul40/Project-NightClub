@@ -1,6 +1,6 @@
 using System;
-using _1BuildingSystemNew;
-using _1BuildingSystemNew.SO;
+using BuildingSystem;
+using BuildingSystem.SO;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;

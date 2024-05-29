@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _1BuildingSystemNew.SO
+namespace BuildingSystem.SO
 {
     public class StoreItemSO : ScriptableObject
     {

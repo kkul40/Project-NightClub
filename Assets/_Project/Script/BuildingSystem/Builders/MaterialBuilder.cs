@@ -1,7 +1,7 @@
-﻿using _1BuildingSystemNew.SO;
+﻿using BuildingSystem.SO;
 using UnityEngine;
 
-namespace _1BuildingSystemNew.Builders
+namespace BuildingSystem.Builders
 {
     public class MaterialBuilder : IBuildingMethod
     {

@@ -1,42 +1,45 @@
-﻿using _1BuildingSystemNew;
+﻿using BuildingSystem;
 using Data;
 using UnityEngine;
 
-public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
+namespace PropBehaviours
 {
-    protected void Start()
+    public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
     {
-        GameData.Instance.WallMap.Add(this);
-        LoadMaterial();
-    }
+        protected void Start()
+        {
+            GameData.Instance.WallMap.Add(this);
+            LoadMaterial();
+        }
 
-    public eInteraction Interaction { get; } = eInteraction.None;
+        public eInteraction Interaction { get; } = eInteraction.None;
 
-    public void OnFocus()
-    {
-    }
+        public void OnFocus()
+        {
+        }
 
-    public void OnOutFocus()
-    {
-    }
+        public void OnOutFocus()
+        {
+        }
 
-    public void OnClick()
-    {
-    }
+        public void OnClick()
+        {
+        }
 
-    public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.Wall;
-    public Material CurrentMaterial { get; set; }
-    public void LoadMaterial()
-    {
-        CurrentMaterial = InitConfig.Instance.GetDefaultWallMaterial.Material;
-        UpdateMaterial();
-    }
+        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.Wall;
+        public Material CurrentMaterial { get; set; }
+        public void LoadMaterial()
+        {
+            CurrentMaterial = InitConfig.Instance.GetDefaultWallMaterial.Material;
+            UpdateMaterial();
+        }
 
-    public virtual void UpdateMaterial()
-    {
-        MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
-        var materials = meshRenderer.materials;
-        materials[1] = CurrentMaterial;
-        meshRenderer.materials = materials;
+        public virtual void UpdateMaterial()
+        {
+            MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
+            var materials = meshRenderer.materials;
+            materials[1] = CurrentMaterial;
+            meshRenderer.materials = materials;
+        }
     }
 }

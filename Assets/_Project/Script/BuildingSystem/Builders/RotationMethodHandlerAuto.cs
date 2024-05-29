@@ -1,4 +1,4 @@
-﻿namespace _1BuildingSystemNew.Builders
+﻿namespace BuildingSystem.Builders
 {
     public class RotationMethodHandlerAuto : IRotationMethod
     {

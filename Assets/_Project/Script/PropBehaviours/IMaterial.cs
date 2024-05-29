@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public interface IMaterial
+namespace PropBehaviours
 {
-    public MeshRenderer MeshRenderer { get; }
-    public void ChangeMaterial(Material material);
-    public void ResetMaterial(Material[] materials);
-
-    public Material[] GetCurrentMaterial()
+    public interface IMaterial
     {
-        return MeshRenderer.materials;
+        public MeshRenderer MeshRenderer { get; }
+        public void ChangeMaterial(Material material);
+        public void ResetMaterial(Material[] materials);
+
+        public Material[] GetCurrentMaterial()
+        {
+            return MeshRenderer.materials;
+        }
     }
 }
