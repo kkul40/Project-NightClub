@@ -17,7 +17,7 @@ namespace BuildingSystem
                 return new MaterialBuilder();
             }
             
-            return null;
+            return new NullBuilderMethod();
         }
 
         public static IRotationMethod GetRotationMethod(StoreItemSO storeItemSo)
@@ -27,7 +27,7 @@ namespace BuildingSystem
                 switch (placementItemSo.eRotation)
                 {
                     case PlacementItemSO.eRotationType.None:
-                        return null;
+                        return new NullRotationMethod();
                     case PlacementItemSO.eRotationType.LeftRight:
                         return new RotationMethodLeftAndDown();
                     case PlacementItemSO.eRotationType.ThreeSixty:
@@ -39,7 +39,8 @@ namespace BuildingSystem
             {
                 return new RotationMethodHandlerAuto();
             }
-            return null;
+            
+            return new NullRotationMethod();
         }
     }
 }

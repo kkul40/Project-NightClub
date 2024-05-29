@@ -1858,7 +1858,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcAnimationSo: {fileID: 11400000, guid: 0e2af1eab414f16459275b5c12d41b35, type: 2}
-  transitionDuration: 0.5
 --- !u!1 &8106909480321694754
 GameObject:
   m_ObjectHideFlags: 0

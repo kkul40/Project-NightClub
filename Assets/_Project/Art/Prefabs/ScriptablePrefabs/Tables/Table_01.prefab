@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0822fcd1994005bb75a50453faedea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  propPosition: {x: 0, y: 0, z: 0}
+  CellPosition: {x: 0, y: 0, z: 0}
+  direction: 0
   CubePrefab: {fileID: 8901886704299321990, guid: 78724280fc365af409c3083db27ec1a7, type: 3}
-  _markedAreas:
-  - Pos: {x: 1, y: 0, z: 0}
+  Chairs: []

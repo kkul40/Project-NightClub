@@ -15,25 +15,25 @@ namespace UI
         public StoreItemSO storeItemSo;
 
         public Image image;
-        public TextMeshProUGUI textMeshPro;
+        [FormerlySerializedAs("textMeshPro")] public TextMeshProUGUI priceText;
 
         private void Update()
         {
-            textMeshPro.font = textStyleSo.FontAsset;
-            textMeshPro.fontSize = textStyleSo.FontSize;
+            priceText.font = textStyleSo.FontAsset;
+            priceText.fontSize = textStyleSo.FontSize;
         }
 
         private void OnValidate()
         {
-            textMeshPro.font = textStyleSo.FontAsset;
-            textMeshPro.fontSize = textStyleSo.FontSize;
+            priceText.font = textStyleSo.FontAsset;
+            priceText.fontSize = textStyleSo.FontSize;
         }
 
-        public void Init(StoreItemSO placableItemDataSo)
+        public void Init(StoreItemSO storeItemSo)
         {
-            this.storeItemSo = placableItemDataSo;
-            image.sprite = this.storeItemSo.Icon;
-            textMeshPro.text = this.storeItemSo.name;
+            this.storeItemSo = storeItemSo;
+            image.sprite = storeItemSo.Icon;
+            priceText.text = this.storeItemSo.Price.ToString();
         }
 
         public void OnClick()

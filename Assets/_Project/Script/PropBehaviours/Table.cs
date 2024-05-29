@@ -12,7 +12,6 @@ namespace PropBehaviours
 
         public void PropUpdate()
         {
-            print("update");
             Chairs.Clear();
             foreach (var prop in GameData.Instance.GetPropList)
             {
@@ -20,13 +19,10 @@ namespace PropBehaviours
 
                 if (prop is Chair chair)
                 {
-                    print("Chair found");
                     var distance = chair.CellPosition - CellPosition;
-                    print(distance.magnitude);
                     if (distance.magnitude <= 1)
                     {
                         Chairs.Add(chair);
-                        print("Table Updated");
                     }
                 }
             }

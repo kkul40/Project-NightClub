@@ -5,6 +5,7 @@ namespace BuildingSystem.Builders
 {
     public class MaterialBuilder : IBuildingMethod
     {
+        public bool PressAndHold { get; } = true;
         public bool isFinished { get; }
         public Vector3 Offset { get; }
 

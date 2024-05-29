@@ -16,7 +16,6 @@ namespace BuildingSystem
          *
          *
          */
-
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
         private IRotationMethod _rotationMethod;
@@ -47,7 +46,7 @@ namespace BuildingSystem
                 
                 _buildingMethod.OnUpdate(_buildingNeedsData);
                 
-                if (InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
+                if (_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
                 }
@@ -82,7 +81,7 @@ namespace BuildingSystem
         {
             _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
             _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
-            // _buildingNeedsData.RotationData
+            _rotationMethod.Rotate(_buildingNeedsData);
         }
         #endregion
     }

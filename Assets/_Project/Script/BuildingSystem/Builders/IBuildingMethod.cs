@@ -4,6 +4,7 @@ namespace BuildingSystem.Builders
 {
     public interface IBuildingMethod
     {
+        bool PressAndHold { get; }
         bool isFinished { get; }
         Vector3 Offset { get; }
         void OnStart(BuildingNeedsData buildingNeedsData);

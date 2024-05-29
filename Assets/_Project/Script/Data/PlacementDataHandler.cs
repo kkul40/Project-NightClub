@@ -66,7 +66,6 @@ namespace Data
             for (var y = 0; y < size.y; y++)
             {
                 keys.Add(cellPos + GetKey(x, y, direction));
-                Debug.Log(cellPos + GetKey(x, y, direction));
             }
 
             return keys;
@@ -94,7 +93,6 @@ namespace Data
                     key.z = x;
                     break;
             }
-
             return key;
         }
 
@@ -102,8 +100,6 @@ namespace Data
         {
             var keys = CalculatePosition(cellPos, placementData.Size,
                 placementData.RotationData.direction);
-
-            Debug.Log(cellPos + " Cell Pos");
 
             foreach (var key in keys)
             {
@@ -117,8 +113,6 @@ namespace Data
                         surfaceLayerPlacements.Add(key, placementData);
                         break;
                 }
-
-                Debug.Log(key);
             }
 
             if (placementData.SceneObject.TryGetComponent(out Prop prop)) propList.Add(prop);
@@ -168,7 +162,6 @@ namespace Data
             {
                 case ePlacementLayer.Surface:
                     return floorLayerPlacements.Values.ToList();
-
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:

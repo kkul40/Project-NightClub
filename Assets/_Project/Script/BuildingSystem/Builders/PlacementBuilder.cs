@@ -8,6 +8,7 @@ namespace BuildingSystem.Builders
     {
         private int FloorLayerID = 7;
         private int WalllayerID = 8;
+        public bool PressAndHold { get; }
         public bool isFinished { get; private set; }
         public Vector3 Offset { get; } = new Vector3(0f, -0.5f, 0f);
 

@@ -33,7 +33,7 @@ namespace System
 
             for (var i = 0; i < yMax; i++)
             {
-                var wallDoorIndex = 4;
+                var wallDoorIndex = 6;
                 if (i == wallDoorIndex)
                 {
                     var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i + 0.5f, 0, 0), Quaternion.identity);

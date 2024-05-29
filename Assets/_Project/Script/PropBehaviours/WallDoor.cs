@@ -10,7 +10,7 @@ namespace PropBehaviours
         {
             MeshRenderer meshRenderer = ChieldWallTransform.GetComponent<MeshRenderer>();
             var materials = meshRenderer.materials;
-            materials[0] = CurrentMaterial; 
+            materials[2] = CurrentMaterial; 
             meshRenderer.materials = materials;
         }
     }
