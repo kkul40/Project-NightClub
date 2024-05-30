@@ -14,10 +14,11 @@ namespace System
         [SerializeField] private GameObject wallDoorPrefab;
 
         public Vector2Int MapSize => mapSize;
+        public Vector3Int DoorPosition { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
-            SetUpMap();
+            SetUpMap(); 
         }
 
         private void SetUpMap()
@@ -41,6 +42,7 @@ namespace System
 
                     var wall = InstantiateXWall(i);
                     wall.SetActive(false);
+                    DoorPosition = new Vector3Int(i, 0, -1);
                     continue;
                 }
 

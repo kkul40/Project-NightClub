@@ -2,20 +2,23 @@ using BuildingSystem.SO;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(StoreItemSO), true)]
-public class StoreItemSOEditor : Editor
+namespace _Project.Script
 {
-    public override Texture2D RenderStaticPreview(string assetPath, Object[] subAssets, int width, int height)
+    [CustomEditor(typeof(StoreItemSO), true)]
+    public class StoreItemSOEditor : Editor
     {
-        var storeItem = (StoreItemSO)target;
-
-        if (storeItem.Icon == null || storeItem == null)
+        public override Texture2D RenderStaticPreview(string assetPath, Object[] subAssets, int width, int height)
         {
-            return null;
-        }
+            var storeItem = (StoreItemSO)target;
 
-        var texture = new Texture2D(width, height);
-        EditorUtility.CopySerialized(storeItem.Icon.texture,texture);
-        return texture;
+            if (storeItem.Icon == null || storeItem == null)
+            {
+                return null;
+            }
+
+            var texture = new Texture2D(width, height);
+            EditorUtility.CopySerialized(storeItem.Icon.texture,texture);
+            return texture;
+        }
     }
 }

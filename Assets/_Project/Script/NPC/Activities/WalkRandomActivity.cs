@@ -17,7 +17,7 @@ namespace NPC.Activities
             if (isCanceled) return;
 
             npc.SetNewDestination(GetRandomDestination());
-            npc.ChangeState(eNpcAnimation.Walk);
+            npc.SetAnimation(eNpcAnimation.Walk);
         }
 
         public override void UpdateActivity(NPC npc)
@@ -26,12 +26,12 @@ namespace NPC.Activities
 
             if (!npc._navMeshAgent.hasPath)
             {
-                npc.ChangeState(eNpcAnimation.Idle);
+                npc.SetAnimation(eNpcAnimation.Idle);
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
                     npc.SetNewDestination(GetRandomDestination());
-                    npc.ChangeState(eNpcAnimation.Walk);
+                    npc.SetAnimation(eNpcAnimation.Walk);
                     timer = 0;
                     isEnded = true;
                 }

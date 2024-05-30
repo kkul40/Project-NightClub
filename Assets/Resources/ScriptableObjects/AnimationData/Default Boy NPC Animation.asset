@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
-  m_Name: Default Boy NPC
+  m_Name: Default Boy NPC Animation
   m_EditorClassIdentifier: 
   <animationDuration>k__BackingField: 0.5
   <Idle>k__BackingField: {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
   <Walk>k__BackingField: {fileID: 7400000, guid: 1bd2339ae7c89eb469baf58dd768846e, type: 2}
   <Sit>k__BackingField: {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
-  <Dance>k__BackingField: {fileID: 7400000, guid: 59058d497d0d31e4dbdfc854b7553e17, type: 2}
+  <Dance>k__BackingField: {fileID: 7400000, guid: 0e4a080b02c767d4689fb9b8f2893622, type: 2}
   <Debug>k__BackingField: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}

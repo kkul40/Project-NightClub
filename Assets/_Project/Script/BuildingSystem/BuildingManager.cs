@@ -16,6 +16,7 @@ namespace BuildingSystem
          *
          *
          */
+        
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
         private IRotationMethod _rotationMethod;
@@ -55,6 +56,13 @@ namespace BuildingSystem
             }
         }
         
+        private void UpdateBuildingNeeds()
+        {
+            _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
+            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
+            _rotationMethod.Rotate(_buildingNeedsData);
+        }
+        
         #region Building
         public void StartBuild(StoreItemSO storeItemSo)
         {
@@ -76,35 +84,10 @@ namespace BuildingSystem
                 _buildingMethod = null;
             }
         }
-
-        private void UpdateBuildingNeeds()
-        {
-            _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
-            _rotationMethod.Rotate(_buildingNeedsData);
-        }
         #endregion
-    }
-
-    public class BuildingNeedsData
-    {
-        public InputSystem InputSystem;
-        public GameData GameData;
-        public SceneTransformContainer SceneTransformContainer;
-        public MaterialColorChanger MaterialColorChanger;
         
-        public StoreItemSO StoreItemSo;
-        public Vector3Int CellPosition;
-        public Vector3 CellCenterPosition;
-        public RotationData RotationData;
-        public float MoveSpeed = 10;
-
-        public BuildingNeedsData(InputSystem inputSystem, GameData gameData, SceneTransformContainer sceneTransformContainer, MaterialColorChanger materialColorChanger)
-        {
-            InputSystem = inputSystem;
-            GameData = gameData;
-            SceneTransformContainer = sceneTransformContainer;
-            MaterialColorChanger = materialColorChanger;
-        }
+        #region Removing
+        // TODO Implement Revoving Logic
+        #endregion
     }
 }

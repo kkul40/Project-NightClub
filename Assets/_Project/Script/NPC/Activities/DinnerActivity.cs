@@ -64,7 +64,7 @@ namespace NPC.Activities
                         npc.transform.DOMove(chairProp.GetSitPosition(), tweenDuration);
                         // npc.transform.rotation = chairProp.GetPropRotation();
                         npc.transform.DORotate(chairProp.GetPropRotation().eulerAngles, tweenDuration);
-                        npc.ChangeState(eNpcAnimation.Sit);
+                        npc.SetAnimation(eNpcAnimation.Sit);
                         _dinnerState = DinnerState.Sitting;
                     }
 
@@ -109,7 +109,7 @@ namespace NPC.Activities
             npc._navMeshAgent.enabled = true;
             npc.transform.DOMove(chairProp.GetFrontPosition(), tweenDuration);
             chairProp.IsOccupied = false;
-            npc.ChangeState(eNpcAnimation.Idle);
+            npc.SetAnimation(eNpcAnimation.Idle);
             isEnded = true;
         }
 

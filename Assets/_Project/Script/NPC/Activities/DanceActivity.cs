@@ -32,7 +32,7 @@ namespace NPC.Activities
             }
 
             npc.SetNewDestination(_dancableTile.GetMiddlePos);
-            npc.ChangeState(eNpcAnimation.Walk);
+            npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(npc);
         }
 
@@ -47,15 +47,15 @@ namespace NPC.Activities
                     if (distance < 0.05f)
                     {
                         npc._navMeshAgent.enabled = false;
-                        npc.ChangeState(eNpcAnimation.Dance);
+                        npc.SetAnimation(eNpcAnimation.Dance);
                         _danceState = DanceState.Dancing;
-                        npc.GetAnimationControl().SetRootMotion(true);
+                        npc.GetAnimationControl.SetRootMotion(true);
                     }
 
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
-                    if (timer > npc.GetAnimationControl().GetCurrentAnimationDuration())
+                    if (timer > npc.GetAnimationControl.GetCurrentAnimationDuration())
                     {
                         timer = 0;
                         isEnded = true;
@@ -69,10 +69,10 @@ namespace NPC.Activities
         {
             if (isCanceled) return;
 
-            npc.ChangeState(eNpcAnimation.Idle);
+            npc.SetAnimation(eNpcAnimation.Idle);
             _dancableTile.IsOccupied = false;
             npc._navMeshAgent.enabled = true;
-            npc.GetAnimationControl().SetRootMotion(false);
+            npc.GetAnimationControl.SetRootMotion(false);
             isEnded = true;
         }
 

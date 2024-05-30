@@ -1,38 +1,38 @@
 using System;
 using DG.Tweening;
+using New_NPC;
+using New_NPC.Activities;
 using NPC.Activities;
 using PropBehaviours;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AI;
+using WalkRandomActivity = New_NPC.Activities.WalkRandomActivity;
 
 namespace NPC
 {
     [SelectionBase]
     public class NPC : MonoBehaviour, IInteractable
     {
-        [SerializeField] private eNpcAnimation _animationState;
+        /*
+         * Play Animation {Idle, walk, sit, dance, argue, puke, drink}
+         */
         private NPCAnimationControl _npcAnimationControl;
-
-        private Activity currentActivity;
-        private Vector3 target;
-
+        private ActivityHandler _activityHandler;
         public NavMeshAgent _navMeshAgent { get; private set; }
 
-        private void Awake()
+        public void Init(NpcAnimationSo npcAnimationSo)
         {
-            _npcAnimationControl = GetComponentInChildren<NPCAnimationControl>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-        }
+            _activityHandler = new ActivityHandler(this);
+            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
 
-        private void Start()
-        {
-            _animationState = eNpcAnimation.Idle;
+            _activityHandler.StartActivity(new WalkRandomActivity());
         }
 
         private void Update()
         {
-            UpdateActivity();
-            _npcAnimationControl.PlayAnimation(_animationState);
+            _activityHandler.UpdateActivity();
         }
 
         public eInteraction Interaction { get; } = eInteraction.Customer;
@@ -49,24 +49,6 @@ namespace NPC
         {
         }
 
-        private void UpdateActivity()
-        {
-            if (currentActivity == null)
-            {
-                //TODO SImdilik Random
-                ChangeActivitiy(ActivitySystem.Instance.GetRandomActivity());
-                return;
-            }
-
-            if (currentActivity.isCanceled || currentActivity.isEnded)
-            {
-                ChangeActivitiy(ActivitySystem.Instance.GetRandomActivity());
-                return;
-            }
-
-            currentActivity.UpdateActivity(this);
-        }
-
         public void SetNewDestination(Vector3 targetPos)
         {
             _navMeshAgent.SetDestination(targetPos);
@@ -77,31 +59,12 @@ namespace NPC
             transform.DORotate(targetRotation.eulerAngles, 0.5f);
         }
 
-        public void ChangeState(eNpcAnimation newAnimation)
+        public void SetAnimation(eNpcAnimation newAnimation)
         {
-            _animationState = newAnimation;
+            _npcAnimationControl.PlayAnimation(newAnimation);
         }
 
-        public void ChangeActivitiy(Activity newActivity)
-        {
-            if (newActivity == null) return;
-
-            if (currentActivity == null)
-            {
-                currentActivity = newActivity;
-                currentActivity.StartActivity(this);
-                return;
-            }
-
-            currentActivity.EndActivity(this);
-            currentActivity = newActivity;
-            currentActivity.StartActivity(this);
-        }
-
-        public NPCAnimationControl GetAnimationControl()
-        {
-            return _npcAnimationControl;
-        }
+        public NPCAnimationControl GetAnimationControl => _npcAnimationControl;
     }
 
 

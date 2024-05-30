@@ -1,6 +1,4 @@
-﻿using BuildingSystem.Builders;
-
-namespace BuildingSystem
+﻿namespace BuildingSystem.Builders
 {
     public class NullRotationMethod : IRotationMethod
     {

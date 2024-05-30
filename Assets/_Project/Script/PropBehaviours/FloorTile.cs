@@ -38,7 +38,6 @@ namespace PropBehaviours
 
         public void OnClick()
         {
-            Debug.Log("Tile Floor");
         }
     }
 }

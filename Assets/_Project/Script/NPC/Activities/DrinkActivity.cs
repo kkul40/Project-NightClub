@@ -26,7 +26,7 @@ namespace NPC.Activities
             {
                 if (iBar.HasDrinks)
                 {
-                    npc.ChangeState(eNpcAnimation.Walk);
+                    npc.SetAnimation(eNpcAnimation.Walk);
                     npc.SetNewDestination(iBar.WaitPosition.position);
                     iBar.DecreaseDrinkCount();
                     _drinkState = DrinkState.Walk;
@@ -51,7 +51,7 @@ namespace NPC.Activities
                 case DrinkState.Walk:
                     if (Vector3.Distance(npc.transform.position, iBar.WaitPosition.position) <= 0.1f)
                     {
-                        npc.ChangeState(eNpcAnimation.Idle);
+                        npc.SetAnimation(eNpcAnimation.Idle);
                         npc.SetRotation(iBar.WaitPosition.rotation);
                         _drinkState = DrinkState.Wait;
                     }

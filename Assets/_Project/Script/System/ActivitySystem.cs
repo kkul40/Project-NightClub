@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NPC.Activities;
+using New_NPC;
+using New_NPC.Activities;
 using UnityEngine;
 
 namespace System
@@ -9,7 +10,7 @@ namespace System
     [DisallowMultipleComponent]
     public class ActivitySystem : Singleton<ActivitySystem>
     {
-        public Dictionary<Type, Activity> dictionary = new();
+        public Dictionary<Type, IActivity> dictionary = new();
 
         private void Awake()
         {
@@ -18,23 +19,26 @@ namespace System
 
         protected override void Initialize()
         {
-            var assembly = Assembly.GetAssembly(typeof(Activity));
+            var assembly = Assembly.GetAssembly(typeof(IActivity));
             var allActivityTypes = assembly.GetTypes()
-                .Where(t => typeof(Activity).IsAssignableFrom(t) && t.IsAbstract == false);
+                .Where(t => typeof(IActivity).IsAssignableFrom(t) && t.IsAbstract == false);
 
             foreach (var ac in allActivityTypes)
             {
-                var activity = Activator.CreateInstance(ac) as Activity;
+                var activity = Activator.CreateInstance(ac) as IActivity;
+                
+                if(activity is NoneActivity) continue;
+                
                 dictionary.Add(ac, activity);
             }
         }
 
-        public Activity GetActivity(Type activity2)
+        public IActivity GetActivity(Type activity2)
         {
-            return Activator.CreateInstance(activity2) as Activity;
+            return Activator.CreateInstance(activity2) as IActivity;
         }
 
-        public Activity GetRandomActivity()
+        public IActivity GetRandomActivity()
         {
             var a = UnityEngine.Random.Range(0, dictionary.Count);
             var randomActivity = dictionary.ElementAt(a).Value;
