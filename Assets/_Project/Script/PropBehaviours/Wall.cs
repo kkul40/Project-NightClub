@@ -24,6 +24,7 @@ namespace PropBehaviours
 
         public void OnClick()
         {
+            Debug.Log("Wall");
         }
 
         public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.Wall;

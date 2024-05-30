@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   Name: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: bedb5442be514cb47a3604f14f300d23, type: 3}
   Price: 0
-  Material: {fileID: 2100000, guid: ddee62e2038e5fd4eb692bfcc1499f88, type: 2}
+  Material: {fileID: 2100000, guid: ea54e6fa4ca905143afbabd24a4bbc50, type: 2}
   MaterialLayer: 0

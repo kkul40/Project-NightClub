@@ -32,6 +32,8 @@ namespace BuildingSystem
                         return new RotationMethodLeftAndDown();
                     case PlacementItemSO.eRotationType.ThreeSixty:
                         return new RotationMethodler360();
+                    case PlacementItemSO.eRotationType.Auto:
+                        return new RotationMethodHandlerAuto();
                 }
             }
             

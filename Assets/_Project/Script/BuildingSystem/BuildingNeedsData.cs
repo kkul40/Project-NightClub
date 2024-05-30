@@ -24,6 +24,7 @@ namespace BuildingSystem
             GameData = gameData;
             SceneTransformContainer = sceneTransformContainer;
             MaterialColorChanger = materialColorChanger;
+            RotationData = new RotationData();
         }
     }
 }

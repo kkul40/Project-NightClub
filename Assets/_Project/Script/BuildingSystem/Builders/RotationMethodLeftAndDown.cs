@@ -6,6 +6,14 @@ namespace BuildingSystem.Builders
     {
         public void Rotate(BuildingNeedsData buildingNeedsData)
         {
+            if (buildingNeedsData.RotationData.direction == Direction.Up ||
+                buildingNeedsData.RotationData.direction == Direction.Right)
+            {
+                var rData = DirectionHelper.RotateToDirection(Direction.Down);
+
+                buildingNeedsData.RotationData = rData;
+            }
+            
             if (InputSystem.Instance.E)
             {
                 var rData = DirectionHelper.RotateToDirection(Direction.Down);

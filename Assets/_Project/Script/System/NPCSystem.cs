@@ -12,7 +12,7 @@ namespace System
         [SerializeField] private GameObject _npcPrefab;
         [SerializeField] private SceneTransformContainer _sceneTransformContainer;
 
-        private int maxNPC = 500;
+        private int maxNPC = 20;
         private int npcCount = 0;
 
         private void Start()
@@ -24,7 +24,7 @@ namespace System
         {
             while (npcCount < maxNPC)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
                 var newNPC = Instantiate(_npcPrefab, GameData.Instance.EnterencePosition, Quaternion.identity);
                 newNPC.transform.SetParent(_sceneTransformContainer.NPCHolderTransform);
                 eGenderType gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;

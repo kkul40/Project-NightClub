@@ -10,7 +10,7 @@ namespace BuildingSystem.Builders
         private int WalllayerID = 8;
         public bool PressAndHold { get; }
         public bool isFinished { get; private set; }
-        public Vector3 Offset { get; } = new Vector3(0f, -0.5f, 0f);
+        public Vector3 Offset { get; private set; } = new Vector3(0f, -0.5f, 0f);
 
         private GameObject _tempObject;
         private MeshRenderer _tempMeshRenderer;
@@ -21,6 +21,10 @@ namespace BuildingSystem.Builders
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
             _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = _tempObject.GetComponentInChildren<MeshRenderer>();
+            if (_storeItemSo.PlacementLayer == ePlacementLayer.Wall)
+            {
+                Offset = new Vector3(0f, 0f, 0f);
+            }
         }
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)

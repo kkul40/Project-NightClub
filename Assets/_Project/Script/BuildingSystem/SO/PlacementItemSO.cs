@@ -10,7 +10,7 @@ namespace BuildingSystem.SO
         public Vector2Int Size;
         
         public ePlacementLayer PlacementLayer;
-        public enum eRotationType {None, ThreeSixty, LeftRight}
+        public enum eRotationType {None, ThreeSixty, LeftRight, Auto}
         public eRotationType eRotation;
     }
 }

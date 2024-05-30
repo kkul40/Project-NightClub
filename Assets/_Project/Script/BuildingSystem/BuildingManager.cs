@@ -72,7 +72,7 @@ namespace BuildingSystem
             _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
-            _buildingNeedsData.RotationData = new RotationData();
+            // _buildingNeedsData.RotationData = new RotationData();
             _buildingMethod.OnStart(_buildingNeedsData);
         }
         
