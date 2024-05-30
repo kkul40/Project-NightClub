@@ -12,8 +12,7 @@ namespace System
         [SerializeField] private GameObject _npcPrefab;
         [SerializeField] private SceneTransformContainer _sceneTransformContainer;
 
-        private int maxNPC = 20;
-        private int npcCount = 0;
+        private int maxNPC = 25;
 
         private void Start()
         {
@@ -22,9 +21,11 @@ namespace System
 
         private IEnumerator CoSpawnNPCs()
         {
+            int npcCount = 0;
+
             while (npcCount < maxNPC)
             {
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(0.1f);
                 var newNPC = Instantiate(_npcPrefab, GameData.Instance.EnterencePosition, Quaternion.identity);
                 newNPC.transform.SetParent(_sceneTransformContainer.NPCHolderTransform);
                 eGenderType gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
