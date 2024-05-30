@@ -1124,10 +1124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
-  animDuration: 0
   _canvasGroup: {fileID: 297163523}
-  _logger:
-    showLog: 1
 --- !u!225 &297163523
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1334,7 +1331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
-  animDuration: 0
   _canvasGroup: {fileID: 366832264}
   playerTransform: {fileID: 6747703779353093721}
   cameraTransform: {fileID: 2146089751}

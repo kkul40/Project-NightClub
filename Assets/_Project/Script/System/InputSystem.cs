@@ -12,6 +12,7 @@ namespace System
         [SerializeField] private Transform lastHitTransform;
 
         [SerializeField] private LayerMask mouseOverLayers;
+        [SerializeField] private LayerMask ignore;
 
         public Vector2 MoveDelta;
         public float ScrollWheelDelta;
@@ -73,7 +74,7 @@ namespace System
             RaycastHit hit;
             float maxDistance = 100;
 
-            if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
+            if (Physics.Raycast(ray, out hit, maxDistance, ignore)) return hit.transform;
 
             return null;
         }
