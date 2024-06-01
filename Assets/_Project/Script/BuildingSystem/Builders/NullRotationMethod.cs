@@ -4,6 +4,7 @@
     {
         public void Rotate(BuildingNeedsData buildingNeedsData)
         {
+            buildingNeedsData.RotationData = new RotationData();
         }
     }
 }

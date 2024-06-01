@@ -24,7 +24,6 @@ MonoBehaviour:
   - {fileID: 8786988177040980282, guid: 33ac8a3aa7f93cc49b68735954e1798a, type: 3}
   NpcBeardPrefabs: []
   NpcAttachtmentPrefabs:
-  - {fileID: 0}
   - {fileID: 7751907969609208422, guid: c6a7bd60eb2e8ab4dbb92eaaa8aed6d0, type: 3}
   - {fileID: 1654985660514491711, guid: 245570c473c99e143a1c679e26ad908f, type: 3}
   - {fileID: 6202954935644718513, guid: 662699974bab42144a3eee25d0b4a07b, type: 3}

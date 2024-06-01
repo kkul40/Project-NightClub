@@ -34,7 +34,7 @@ namespace New_NPC
                 if (_currentActivity.IsEnded)
                 {
                     _currentActivity.EndActivity(_activityNeedsData);
-                    _currentActivity = ActivitySystem.Instance.GetRandomActivity();
+                    StartActivity(ActivitySystem.Instance.GetRandomActivity());
                 }
                 else
                 {

@@ -22,4 +22,12 @@ namespace UI
             UIStoreManager.Instance.GenerateInventory(_storeItemSos);
         }
     }
+
+    public class StoreOKButton : UIButton
+    {
+        public override void OnClick()
+        {
+            
+        }
+    }
 }

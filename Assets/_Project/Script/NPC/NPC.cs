@@ -24,9 +24,8 @@ namespace NPC
         public void Init(NpcAnimationSo npcAnimationSo)
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _activityHandler = new ActivityHandler(this);
             _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
-
+            _activityHandler = new ActivityHandler(this);
             _activityHandler.StartActivity(new WalkRandomActivity());
         }
 

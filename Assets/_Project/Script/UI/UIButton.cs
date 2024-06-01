@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIButton : MonoBehaviour
+    public class UIButton : MonoBehaviour, IButton
     {
         public virtual void OnHover()
         {
@@ -13,5 +13,11 @@ namespace UI
         {
             
         }
+    }
+
+    public interface IButton
+    {
+        void OnHover();
+        void OnClick();
     }
 }

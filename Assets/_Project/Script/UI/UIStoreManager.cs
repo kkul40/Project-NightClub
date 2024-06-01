@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UIStoreManager : Singleton<UIStoreInventory>
+    public class UIStoreManager : Singleton<UIStoreManager>
     {
         [SerializeField] private UIStoreInventory _uiStoreInventory;
 

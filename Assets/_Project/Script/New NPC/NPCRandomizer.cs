@@ -15,7 +15,8 @@ namespace New_NPC
 
             TryAplly(customizationDataSo.NpcHairPrefabs, Head);
             TryAplly(customizationDataSo.NpcBeardPrefabs, Head);
-            TryAplly(customizationDataSo.NpcAttachtmentPrefabs, Head);
+            if(Random.value > 0.8f)
+                TryAplly(customizationDataSo.NpcAttachtmentPrefabs, Head);
             TryAplly(customizationDataSo.NpcEaringPrefabs, Head);
         }
 

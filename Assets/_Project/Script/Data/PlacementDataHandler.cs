@@ -12,14 +12,14 @@ namespace Data
     public class PlacementDataHandler
     {
         private List<Prop> propList;
-        private Dictionary<Vector3Int, PlacementData> floorLayerPlacements;
         private Dictionary<Vector3Int, PlacementData> surfaceLayerPlacements;
+        private Dictionary<Vector3Int, PlacementData> propLayerPlacements;
 
         public PlacementDataHandler()
         {
             propList = new List<Prop>();
-            floorLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
             surfaceLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
+            propLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
         }
 
         public List<Prop> GetPropList => propList;
@@ -35,10 +35,10 @@ namespace Data
             switch (layer)
             {
                 case ePlacementLayer.Surface:
-                    return floorLayerPlacements.ContainsKey(cellPos);
+                    return surfaceLayerPlacements.ContainsKey(cellPos);
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
-                    return surfaceLayerPlacements.ContainsKey(cellPos);
+                    return propLayerPlacements.ContainsKey(cellPos);
                 default:
                     Debug.Log($"Placement Layer Not Added : {layer.ToString()}");
                     return true;
@@ -106,16 +106,20 @@ namespace Data
                 switch (layer)
                 {
                     case ePlacementLayer.Surface:
-                        floorLayerPlacements.Add(key, placementData);
+                        surfaceLayerPlacements.Add(key, placementData);
                         break;
                     case ePlacementLayer.Floor:
                     case ePlacementLayer.Wall:
-                        surfaceLayerPlacements.Add(key, placementData);
+                        propLayerPlacements.Add(key, placementData);
                         break;
                 }
             }
 
-            if (placementData.SceneObject.TryGetComponent(out Prop prop)) propList.Add(prop);
+            if (placementData.SceneObject.TryGetComponent(out Prop prop))
+            {
+                propList.Add(prop);
+                prop.Initialize(cellPos, placementData.RotationData.direction);
+            }
             UpdateProps();
         }
 
@@ -125,19 +129,19 @@ namespace Data
             switch (layer)
             {
                 case ePlacementLayer.Surface:
-                    if (floorLayerPlacements.ContainsKey(cellPos))
+                    if (surfaceLayerPlacements.ContainsKey(cellPos))
                     {
-                        placementData = floorLayerPlacements[cellPos];
-                        floorLayerPlacements.Remove(cellPos);
+                        placementData = surfaceLayerPlacements[cellPos];
+                        surfaceLayerPlacements.Remove(cellPos);
                     }
 
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
-                    if (surfaceLayerPlacements.ContainsKey(cellPos))
+                    if (propLayerPlacements.ContainsKey(cellPos))
                     {
-                        placementData = surfaceLayerPlacements[cellPos];
-                        surfaceLayerPlacements.Remove(cellPos);
+                        placementData = propLayerPlacements[cellPos];
+                        propLayerPlacements.Remove(cellPos);
                     }
 
                     break;
@@ -161,11 +165,11 @@ namespace Data
             switch (layer)
             {
                 case ePlacementLayer.Surface:
-                    return floorLayerPlacements.Values.ToList();
+                    return surfaceLayerPlacements.Values.ToList();
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
-                    return surfaceLayerPlacements.Values.ToList();
+                    return propLayerPlacements.Values.ToList();
                     break;
                 default:
                     Debug.LogError(layer.ToString() + " Is Missing");
@@ -180,5 +184,6 @@ namespace Data
         Surface,
         Floor,
         Wall,
+        Null,
     }
 }

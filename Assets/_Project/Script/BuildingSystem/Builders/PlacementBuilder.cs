@@ -1,4 +1,6 @@
-﻿using BuildingSystem.SO;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BuildingSystem.SO;
 using Data;
 using UnityEngine;
 
@@ -13,17 +15,29 @@ namespace BuildingSystem.Builders
         public Vector3 Offset { get; private set; } = new Vector3(0f, -0.5f, 0f);
 
         private GameObject _tempObject;
-        private MeshRenderer _tempMeshRenderer;
+        private List<MeshRenderer> _tempMeshRenderer;
         private PlacementItemSO _storeItemSo;
         
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
             _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
-            _tempMeshRenderer = _tempObject.GetComponentInChildren<MeshRenderer>();
-            if (_storeItemSo.PlacementLayer == ePlacementLayer.Wall)
+            _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+            
+            SetOffset();
+        }
+
+        private void SetOffset()
+        {
+            switch (_storeItemSo.PlacementLayer)
             {
-                Offset = new Vector3(0f, 0f, 0f);
+                case ePlacementLayer.Wall:
+                    Offset = new Vector3(0f, 0f, 0f);
+                    break;
+                case ePlacementLayer.Surface:
+                case ePlacementLayer.Floor:
+                    Offset = new Vector3(0f, -0.5f, 0f);
+                    break;
             }
         }
 
@@ -54,13 +68,22 @@ namespace BuildingSystem.Builders
             _tempObject.transform.position = Vector3.Lerp(_tempObject.transform.position, buildingNeedsData.CellCenterPosition + new Vector3(0.02f, 0.02f, 0.02f), Time.deltaTime * buildingNeedsData.MoveSpeed);
             _tempObject.transform.rotation = buildingNeedsData.RotationData.rotation;
             
-            buildingNeedsData.MaterialColorChanger.SetMaterialsColor(_tempMeshRenderer, OnValidate(buildingNeedsData));
+            buildingNeedsData.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(buildingNeedsData));
         }
 
         public void OnPlace(BuildingNeedsData buildingNeedsData)
         {
             var createdObject = Object.Instantiate(_storeItemSo.Prefab, buildingNeedsData.CellCenterPosition, buildingNeedsData.RotationData.rotation);
-            createdObject.transform.SetParent(buildingNeedsData.SceneTransformContainer.PropHolderTransform);
+            switch (_storeItemSo.PlacementLayer)
+            {
+                case ePlacementLayer.Surface:
+                    createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform);
+                    break;
+                case ePlacementLayer.Floor:
+                case ePlacementLayer.Wall:
+                    createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    break;
+            }
             buildingNeedsData.GameData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
         }
 

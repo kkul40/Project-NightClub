@@ -28,7 +28,7 @@ namespace System
                 var activity = Activator.CreateInstance(ac) as IActivity;
                 
                 if(activity is NoneActivity) continue;
-                
+                    
                 dictionary.Add(ac, activity);
             }
         }

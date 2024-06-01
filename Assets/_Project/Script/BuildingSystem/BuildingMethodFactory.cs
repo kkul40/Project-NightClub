@@ -1,5 +1,6 @@
 ﻿using BuildingSystem.Builders;
 using BuildingSystem.SO;
+using Data;
 
 namespace BuildingSystem
 {
@@ -43,6 +44,26 @@ namespace BuildingSystem
             }
             
             return new NullRotationMethod();
+        }
+
+        public static ePlacementLayer GetPlacementLayer(StoreItemSO storeItemSo)
+        {
+            if (storeItemSo is PlacementItemSO placementItemSo)
+            {
+                return placementItemSo.PlacementLayer;
+            }
+
+            return ePlacementLayer.Null;
+        }
+
+        public static eMaterialLayer GetMaterialLayer(StoreItemSO storeItemSo)
+        {
+            if (storeItemSo is MaterialItemSo materialItemSo)
+            {
+                return materialItemSo.MaterialLayer;
+            }
+
+            return eMaterialLayer.Null;
         }
     }
 }

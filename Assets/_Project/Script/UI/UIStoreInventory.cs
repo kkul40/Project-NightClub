@@ -18,8 +18,7 @@ namespace UI
         private UISlot[] _uiSlots = new UISlot[5];
 
         public int pointer;
-
-
+        
         public int SetPointer
         {
             get => pointer;
