@@ -12,7 +12,7 @@ namespace BuildingSystem.Builders
         private int WalllayerID = 8;
         public bool PressAndHold { get; }
         public bool isFinished { get; private set; }
-        public Vector3 Offset { get; private set; } = new Vector3(0f, -0.5f, 0f);
+        public Vector3 Offset { get; private set; }
 
         private GameObject _tempObject;
         private List<MeshRenderer> _tempMeshRenderer;
@@ -23,8 +23,17 @@ namespace BuildingSystem.Builders
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
             _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-            
             SetOffset();
+            switch (_storeItemSo.PlacementLayer)
+            {
+                case ePlacementLayer.Surface:
+                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    return;
+                case ePlacementLayer.Floor:
+                case ePlacementLayer.Wall:
+                    // _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
+                    return;
+            }
         }
 
         private void SetOffset()
@@ -91,6 +100,7 @@ namespace BuildingSystem.Builders
         {
             Object.Destroy(_tempObject);
             isFinished = true;
+            buildingNeedsData.MaterialColorChanger.SetTransparencyToDefault();
         }
     }
 }

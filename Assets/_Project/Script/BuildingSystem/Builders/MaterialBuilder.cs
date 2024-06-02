@@ -17,6 +17,17 @@ namespace BuildingSystem.Builders
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _materialItemSo = buildingNeedsData.StoreItemSo as MaterialItemSo;
+            
+            switch (_materialItemSo.MaterialLayer)
+            {
+                case eMaterialLayer.Wall:
+                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    return;
+                case eMaterialLayer.FloorTile:
+                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform);
+                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    return;
+            }
         }
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
@@ -61,6 +72,7 @@ namespace BuildingSystem.Builders
         public void OnFinish(BuildingNeedsData buildingNeedsData)
         {
            ResetPreviousMaterial();
+           buildingNeedsData.MaterialColorChanger.SetTransparencyToDefault();
         }
 
         private IChangableMaterial FindMaterial(BuildingNeedsData buildingNeedsData)

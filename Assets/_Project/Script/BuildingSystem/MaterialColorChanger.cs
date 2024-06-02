@@ -22,17 +22,28 @@ namespace BuildingSystem
 
         public void SetMaterialTransparency(Transform transform)
         {
-            // GetChilds Of Transform
             for (int i = 0; i < transform.childCount; i++)
             {
                 materialData.Add(transform.GetChild(i), new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
-                
                 var listMesh = ReturnMeshRendererList(transform.GetChild(i).gameObject);
-
                 SetMaterial(listMesh, whiteMaterial);
             }
         }
 
+        public void SetTransparencyToDefault()
+        {
+            if (materialData.Count <= 0) return;
+            foreach (var key in materialData.Keys)
+            {
+                var listMesh = ReturnMeshRendererList(key.gameObject);
+                for (int i = 0; i < listMesh.Count; i++)
+                {
+                    listMesh[i].materials = materialData[key].Materials[i].ToArray();
+                }
+            }
+            materialData = new Dictionary<Transform, MaterialData>();
+        }
+        
         private static void SetMaterial(List<MeshRenderer> meshRenderers, Material tempMaterial)
         {
             foreach (var mesh in meshRenderers)
@@ -44,23 +55,6 @@ namespace BuildingSystem
                 }
                 mesh.materials = material;
             }
-        }
-
-        public void SetTransparencyToDefault()
-        {
-            if (materialData.Count <= 0) return;
-
-            foreach (var key in materialData.Keys)
-            {
-                var listMesh = ReturnMeshRendererList(key.gameObject);
-
-                for (int i = 0; i < listMesh.Count; i++)
-                {
-                    listMesh[i].materials = materialData[key].Materials[i].ToArray();
-                }
-            }
-
-            materialData = new Dictionary<Transform, MaterialData>();
         }
         
         public List<MeshRenderer> ReturnMeshRendererList(GameObject gameObject) => gameObject.GetComponentsInChildren<MeshRenderer>().ToList();

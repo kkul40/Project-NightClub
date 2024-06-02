@@ -74,40 +74,11 @@ namespace BuildingSystem
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             // _buildingNeedsData.RotationData = new RotationData();
-
-            HandleTransparency();
-            
             _buildingMethod.OnStart(_buildingNeedsData);
-        }
-
-        private void HandleTransparency()
-        {
-            switch (BuildingMethodFactory.GetPlacementLayer(_storeItemSo))
-            {
-                case ePlacementLayer.Surface:
-                    _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.PropHolderTransform);
-                    return;
-                case ePlacementLayer.Floor:
-                case ePlacementLayer.Wall:
-                    // _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
-                    return;
-            }
-
-            switch (BuildingMethodFactory.GetMaterialLayer(_storeItemSo))
-            {
-                case eMaterialLayer.Wall:
-                    _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.PropHolderTransform);
-                    return;
-                case eMaterialLayer.FloorTile:
-                    _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
-                    _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.PropHolderTransform);
-                    return;
-            }
         }
 
         public void StopBuild()
         {
-            _materialColorChanger.SetTransparencyToDefault();
             if (_buildingMethod != null)
             {
                 _buildingMethod.OnFinish(_buildingNeedsData);
