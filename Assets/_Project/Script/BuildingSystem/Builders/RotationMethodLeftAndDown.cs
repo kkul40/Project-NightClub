@@ -4,28 +4,25 @@ namespace BuildingSystem.Builders
 {
     public class RotationMethodLeftAndDown : IRotationMethod
     {
-        public void Rotate(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData buildingNeedsData)
         {
-            if (buildingNeedsData.RotationData.direction == Direction.Up ||
-                buildingNeedsData.RotationData.direction == Direction.Right)
+            var d = buildingNeedsData.RotationData.direction;
+            if (d == Direction.Right || d == Direction.Up)
             {
-                var rData = DirectionHelper.RotateToDirection(Direction.Down);
-
-                buildingNeedsData.RotationData = rData;
+                buildingNeedsData.RotationData = RotationData.Down;
             }
-            
+        }
+
+        public void OnRotate(BuildingNeedsData buildingNeedsData)
+        {
             if (InputSystem.Instance.E)
             {
-                var rData = DirectionHelper.RotateToDirection(Direction.Down);
-
-                buildingNeedsData.RotationData = rData;
+                buildingNeedsData.RotationData = RotationData.Down;
             }
 
             if (InputSystem.Instance.Q)
             {
-                var rData = DirectionHelper.RotateToDirection(Direction.Left);
-
-                buildingNeedsData.RotationData = rData;
+                buildingNeedsData.RotationData = RotationData.Left;
             }
         }
     }

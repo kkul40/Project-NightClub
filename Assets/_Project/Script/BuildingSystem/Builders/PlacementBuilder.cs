@@ -21,6 +21,7 @@ namespace BuildingSystem.Builders
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
+            Debug.Log(buildingNeedsData.RotationData);
             _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
             SetOffset();

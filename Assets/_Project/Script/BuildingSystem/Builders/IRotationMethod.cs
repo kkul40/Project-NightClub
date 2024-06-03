@@ -2,6 +2,7 @@
 {
     public interface IRotationMethod
     {
-        void Rotate(BuildingNeedsData buildingNeedsData);
+        void OnStart(BuildingNeedsData buildingNeedsData);
+        void OnRotate(BuildingNeedsData buildingNeedsData);
     }
 }

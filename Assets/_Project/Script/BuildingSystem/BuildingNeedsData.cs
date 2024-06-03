@@ -24,7 +24,7 @@ namespace BuildingSystem
             GameData = gameData;
             SceneGameObjectHandler = sceneGameObjectHandler;
             MaterialColorChanger = materialColorChanger;
-            RotationData = new RotationData();
+            RotationData = RotationData.Default;
         }
     }
 }

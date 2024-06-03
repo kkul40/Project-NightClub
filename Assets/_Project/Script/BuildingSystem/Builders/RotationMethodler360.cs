@@ -4,7 +4,11 @@ namespace BuildingSystem.Builders
 {
     public class RotationMethodler360 : IRotationMethod
     {
-        public void Rotate(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData buildingNeedsData)
+        {
+        }
+
+        public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
             if (InputSystem.Instance.E)
             {

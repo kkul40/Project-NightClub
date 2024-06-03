@@ -4,7 +4,11 @@ namespace BuildingSystem.Builders
 {
     public class RotationMethodHandlerAuto : IRotationMethod
     {
-        public void Rotate(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData buildingNeedsData)
+        {
+        }
+
+        public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
             Quaternion quaternion = GetClosestWallRotation(buildingNeedsData);
             Direction direction = DirectionHelper.GetDirectionFromQuaternion(quaternion);

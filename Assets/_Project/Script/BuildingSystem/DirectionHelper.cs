@@ -4,8 +4,6 @@ namespace BuildingSystem
 {
     public static class DirectionHelper
     {
-    
-    
         public static RotationData RotateClockWise(Quaternion currentQuaternion, Direction direction)
         {
             var d = direction;
@@ -19,32 +17,6 @@ namespace BuildingSystem
             var quaternion = RotateCounterClockWise(currentQuaternion, ref d);
             return new RotationData(quaternion, d);
         }
-
-        public static RotationData RotateToDirection(Direction direction)
-        {
-            var rotationData = new RotationData();
-
-            var quaternion = Quaternion.identity;
-
-            switch (direction)
-            {
-                case Direction.Up:
-                    quaternion.eulerAngles = new Vector3(0, 180, 0);
-                    break;
-                case Direction.Left:
-                    quaternion.eulerAngles = new Vector3(0, 90, 0);
-                    break;
-                case Direction.Right:
-                    quaternion.eulerAngles = new Vector3(0, 270, 0);
-                    break;
-            }
-
-            rotationData.rotation = quaternion;
-            rotationData.direction = direction;
-
-            return rotationData;
-        }
-
 
         public static Quaternion RotateClockWise(Quaternion currentQuaternion, ref Direction direction)
         {

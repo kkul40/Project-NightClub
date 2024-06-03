@@ -46,6 +46,7 @@ namespace BuildingSystem
                 
                 UpdateBuildingNeeds();
                 
+                _rotationMethod.OnRotate(_buildingNeedsData);
                 _buildingMethod.OnUpdate(_buildingNeedsData);
                 
                 if (_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
@@ -61,7 +62,6 @@ namespace BuildingSystem
         {
             _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
             _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
-            _rotationMethod.Rotate(_buildingNeedsData);
         }
         
         #region Building
@@ -70,10 +70,10 @@ namespace BuildingSystem
             StopBuild();
             
             _storeItemSo = storeItemSo;
-            _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
+            _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
-            // _buildingNeedsData.RotationData = new RotationData();
+            _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
         }
 
@@ -83,6 +83,7 @@ namespace BuildingSystem
             {
                 _buildingMethod.OnFinish(_buildingNeedsData);
                 _buildingMethod = null;
+                _rotationMethod = null;
             }
         }
         #endregion

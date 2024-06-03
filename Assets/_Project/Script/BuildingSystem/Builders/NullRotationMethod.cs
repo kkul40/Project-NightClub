@@ -1,10 +1,17 @@
-﻿namespace BuildingSystem.Builders
+﻿using UnityEngine;
+
+namespace BuildingSystem.Builders
 {
     public class NullRotationMethod : IRotationMethod
     {
-        public void Rotate(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData buildingNeedsData)
         {
-            buildingNeedsData.RotationData = new RotationData();
+            buildingNeedsData.RotationData = RotationData.Default;
+        }
+
+        public void OnRotate(BuildingNeedsData buildingNeedsData)
+        {
+            Debug.LogError("Null Rotation");
         }
     }
 }
