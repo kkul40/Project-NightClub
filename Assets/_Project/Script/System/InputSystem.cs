@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace System
 {
@@ -16,9 +17,9 @@ namespace System
 
         public Vector2 MoveDelta;
         public float ScrollWheelDelta;
-        [HideInInspector] public bool Esc;
-        [HideInInspector] public bool E;
-        [HideInInspector] public bool Q;
+        [HideInInspector] public bool Esc; 
+        [HideInInspector] public bool TurnLeft;
+        [HideInInspector] public bool TurnRight;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
         public bool RightClickOnWorld;
@@ -42,8 +43,8 @@ namespace System
             }
 
             Esc = Input.GetKeyDown(KeyCode.Escape);
-            E = Input.GetKeyDown(KeyCode.E);
-            Q = Input.GetKeyDown(KeyCode.Q);
+            TurnLeft = Input.GetKeyDown(KeyCode.Z);
+            TurnRight = Input.GetKeyDown(KeyCode.X);
         }
 
         public Vector3 GetMouseMapPosition()

@@ -15,12 +15,12 @@ namespace BuildingSystem.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            if (InputSystem.Instance.E)
+            if (InputSystem.Instance.TurnLeft)
             {
                 buildingNeedsData.RotationData = RotationData.Down;
             }
 
-            if (InputSystem.Instance.Q)
+            if (InputSystem.Instance.TurnRight)
             {
                 buildingNeedsData.RotationData = RotationData.Left;
             }

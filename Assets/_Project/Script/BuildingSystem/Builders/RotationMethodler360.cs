@@ -10,7 +10,7 @@ namespace BuildingSystem.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            if (InputSystem.Instance.E)
+            if (InputSystem.Instance.TurnLeft)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
                 var rData = DirectionHelper.RotateClockWise(tempQ, buildingNeedsData.RotationData.direction);
@@ -18,7 +18,7 @@ namespace BuildingSystem.Builders
                 buildingNeedsData.RotationData = rData;
             }
 
-            if (InputSystem.Instance.Q)
+            if (InputSystem.Instance.TurnRight)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
                 var rData = DirectionHelper.RotateCounterClockWise(tempQ, buildingNeedsData.RotationData.direction);

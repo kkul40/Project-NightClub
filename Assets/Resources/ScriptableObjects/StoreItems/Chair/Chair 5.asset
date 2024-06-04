@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 5
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Industrial Bar Stool
   Icon: {fileID: 21300000, guid: aeef8735bb4f05b46bbab2db3de1809c, type: 3}
   Price: 0
   Prefab: {fileID: 7199139198368273009, guid: ab05570e0ed2d0749b7e30ff80c4eb14, type: 3}

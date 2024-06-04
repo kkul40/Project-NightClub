@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 1
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Classic Wooden Chair
   Icon: {fileID: 21300000, guid: d224b253888047c4a82e3b895db653b0, type: 3}
   Price: 0
   Prefab: {fileID: 4740368155578238536, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}

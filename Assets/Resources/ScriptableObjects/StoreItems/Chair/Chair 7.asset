@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 7
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Cozy Basket Chair
   Icon: {fileID: 21300000, guid: 6a2132af43919184f8228fc5f0168dcf, type: 3}
   Price: 0
   Prefab: {fileID: 7199139198368273009, guid: 9d7b743dad21c394db3df4b08e2d0d28, type: 3}

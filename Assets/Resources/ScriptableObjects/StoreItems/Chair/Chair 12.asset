@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 12
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Blue Bean Bag
   Icon: {fileID: 21300000, guid: 06f0b6f77aaefd2489bfebae742f0b47, type: 3}
   Price: 0
   Prefab: {fileID: 9005198061009470855, guid: da6ff1d9eb7e55147adb182a2dea1420, type: 3}

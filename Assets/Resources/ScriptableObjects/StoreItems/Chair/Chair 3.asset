@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 3
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Executive Armchair
   Icon: {fileID: 21300000, guid: 1dc66f7773b58194699e72d9a7037c65, type: 3}
   Price: 0
   Prefab: {fileID: 7199139198368273009, guid: b66b57f2d63661447a71ab3bd12c9904, type: 3}

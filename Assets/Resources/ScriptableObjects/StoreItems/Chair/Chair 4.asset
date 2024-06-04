@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 4
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Patchwork Lounge Chair
   Icon: {fileID: 21300000, guid: 122ebc95c9cf1ef45ba8ed68ef3f96aa, type: 3}
   Price: 0
   Prefab: {fileID: 7199139198368273009, guid: daf1fbd6082051848b491d65168967e3, type: 3}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chair 10
   m_EditorClassIdentifier: 
   ID: 0
-  Name: 
+  Name: Contemporary High Chair
   Icon: {fileID: 21300000, guid: f98b31036be32f7418f804dc1f1ac1f4, type: 3}
   Price: 0
   Prefab: {fileID: 7199139198368273009, guid: 26c0407d2bdbb9a40ab361229a3198a6, type: 3}
