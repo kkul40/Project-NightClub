@@ -1,11 +1,12 @@
 ﻿using System;
 using Data;
 using DG.Tweening;
+using New_NPC;
 using PropBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace NPC.Activities
+namespace Activities
 {
     [Serializable]
     public class DinnerActivity : Activity
@@ -24,7 +25,7 @@ namespace NPC.Activities
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
 
-        public override void StartActivity(NPC npc)
+        public override void StartActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
             tableProp = GetAvaliablePropByType<Table>(npc, ePlacementLayer.Floor);
@@ -47,7 +48,7 @@ namespace NPC.Activities
             chairProp.IsOccupied = true;
         }
 
-        public override void UpdateActivity(NPC npc)
+        public override void UpdateActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 
@@ -102,7 +103,7 @@ namespace NPC.Activities
             }
         }
 
-        public override void EndActivity(NPC npc)
+        public override void EndActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 

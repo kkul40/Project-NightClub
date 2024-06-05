@@ -67,7 +67,7 @@ namespace BuildingSystem.Builders
             
             if (transform == null) return false;
             
-            if (buildingNeedsData.GameData.placementDataHandler.ContainsKey(buildingNeedsData.CellPosition, _storeItemSo.Size, buildingNeedsData.RotationData,
+            if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(buildingNeedsData.CellPosition, _storeItemSo.Size, buildingNeedsData.RotationData,
                     _storeItemSo.PlacementLayer)) return false;
             
             return true;
@@ -94,7 +94,7 @@ namespace BuildingSystem.Builders
                     createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
                     break;
             }
-            buildingNeedsData.GameData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
         }
 
         public void OnFinish(BuildingNeedsData buildingNeedsData)

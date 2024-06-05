@@ -10,11 +10,11 @@ namespace New_NPC
 
         public bool hasActivity => _currentActivity != null;
         
-        public ActivityHandler(NPC.NPC npc)
+        public ActivityHandler(NPC npc)
         {
             _activityNeedsData = new ActivityNeedsData();
             _activityNeedsData.Npc = npc;
-            _activityNeedsData.GameData = GameData.Instance;
+            _activityNeedsData.DiscoData = DiscoData.Instance;
             _activityNeedsData.GridHandler = GridHandler.Instance;
         }
 

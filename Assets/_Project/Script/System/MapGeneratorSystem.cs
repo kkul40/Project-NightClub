@@ -105,7 +105,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(floorTileHolder);
-            GameData.Instance.FloorMap.Add(pos);
+            DiscoData.Instance.FloorMap.Add(pos);
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Data;
+using New_NPC;
 using PropBehaviours;
 using UnityEngine;
 
-namespace NPC.Activities
+namespace Activities
 {
     public class DanceActivity : Activity
     {
@@ -13,7 +14,7 @@ namespace NPC.Activities
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
 
-        public override void StartActivity(NPC npc)
+        public override void StartActivity(New_NPC.NPC npc)
         {
             _dancableTile = GetAvaliablePropByType<DancableTile>(npc, ePlacementLayer.Surface);
 
@@ -23,7 +24,7 @@ namespace NPC.Activities
                 return;
             }
 
-            if (GameData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
+            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
                     ePlacementLayer.Floor))
             {
                 isCanceled = true;
@@ -35,7 +36,7 @@ namespace NPC.Activities
             _dancableTile.GetItOccupied(npc);
         }
 
-        public override void UpdateActivity(NPC npc)
+        public override void UpdateActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 
@@ -64,7 +65,7 @@ namespace NPC.Activities
             }
         }
 
-        public override void EndActivity(NPC npc)
+        public override void EndActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 

@@ -13,7 +13,7 @@ namespace PropBehaviours
         public void PropUpdate()
         {
             Chairs.Clear();
-            foreach (var prop in GameData.Instance.GetPropList)
+            foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 if (Chairs.Count > 3) break;
 

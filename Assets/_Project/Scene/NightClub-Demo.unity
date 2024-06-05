@@ -1412,8 +1412,8 @@ MonoBehaviour:
   MoveDelta: {x: 0, y: 0}
   ScrollWheelDelta: 0
   Esc: 0
-  E: 0
-  Q: 0
+  TurnLeft: 0
+  TurnRight: 0
   LeftClickOnWorld: 0
   LeftHoldClickOnWorld: 0
   RightClickOnWorld: 0
@@ -2002,67 +2002,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
---- !u!1001 &280028000
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4740368155578238536, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_Name
-      value: Chair_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4740368155578238550, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: b2cd39a3a2f68524e84668dde374c19d, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
 --- !u!1001 &282965917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4579,13 +4518,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1842980420}
-        m_TargetAssemblyTypeName: Developer, Assembly-CSharp
-        m_MethodName: PreviousScene
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Testing.Developer, Assembly-CSharp
+        m_MethodName: NextScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5319,7 +5258,7 @@ Transform:
   m_GameObject: {fileID: 570657283}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.92387867, z: -0, w: 0.38268548}
-  m_LocalPosition: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10243,7 +10182,7 @@ Transform:
   m_GameObject: {fileID: 1076041691}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.00006341934, y: 0, z: -14.142136}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20866,6 +20805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
   sceneGameObjectHandler: {fileID: 1466197926}
+  maxNPC: 15
 --- !u!1001 &2039099550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22600,4 +22540,3 @@ SceneRoots:
   - {fileID: 1206130776}
   - {fileID: 2072907701781959379}
   - {fileID: 1531913533}
-  - {fileID: 280028000}

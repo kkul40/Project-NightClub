@@ -8,7 +8,7 @@ namespace BuildingSystem
     public class BuildingNeedsData
     {
         public InputSystem InputSystem;
-        public GameData GameData;
+        public DiscoData DiscoData;
         public SceneGameObjectHandler SceneGameObjectHandler;
         public MaterialColorChanger MaterialColorChanger;
         
@@ -18,10 +18,10 @@ namespace BuildingSystem
         public RotationData RotationData;
         public float MoveSpeed = 10;
 
-        public BuildingNeedsData(InputSystem inputSystem, GameData gameData, SceneGameObjectHandler sceneGameObjectHandler, MaterialColorChanger materialColorChanger)
+        public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData, SceneGameObjectHandler sceneGameObjectHandler, MaterialColorChanger materialColorChanger)
         {
             InputSystem = inputSystem;
-            GameData = gameData;
+            DiscoData = discoData;
             SceneGameObjectHandler = sceneGameObjectHandler;
             MaterialColorChanger = materialColorChanger;
             RotationData = RotationData.Default;

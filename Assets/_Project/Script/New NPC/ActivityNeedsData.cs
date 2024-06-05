@@ -1,24 +1,23 @@
 ﻿using System;
 using Data;
 using PropBehaviours;
-using NPC;
 using UnityEngine;
 
 namespace New_NPC
 {
     public class ActivityNeedsData
     {
-        public NPC.NPC Npc;
-        public GameData GameData;
+        public NPC Npc;
+        public DiscoData DiscoData;
         public GridHandler GridHandler;
         
         public T GetAvaliablePropByType<T>(ePlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
-            foreach (var prop in GameData.Instance.GetPropList)
+            foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 if (prop == null) continue;
 

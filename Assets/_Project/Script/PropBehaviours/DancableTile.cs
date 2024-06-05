@@ -21,10 +21,10 @@ namespace PropBehaviours
         {
         }
 
-        public NPC.NPC Owner { get; set; }
+        public New_NPC.NPC Owner { get; set; }
         public bool IsOccupied { get; set; }
 
-        public void GetItOccupied(NPC.NPC owner)
+        public void GetItOccupied(New_NPC.NPC owner)
         {
             Owner = owner;
             IsOccupied = true;

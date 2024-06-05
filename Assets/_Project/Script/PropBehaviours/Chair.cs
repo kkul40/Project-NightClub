@@ -7,7 +7,7 @@ namespace PropBehaviours
         [SerializeField] private Transform sitPosition;
         [SerializeField] private Transform frontPosition;
 
-        public NPC.NPC Owner { get; set; }
+        public New_NPC.NPC Owner { get; set; }
 
         [field: SerializeField] public bool IsOccupied { get; set; }
 
@@ -15,7 +15,7 @@ namespace PropBehaviours
         ///     Returns Sit Position
         /// </summary>
         /// <returns></returns>
-        public void GetItOccupied(NPC.NPC owner)
+        public void GetItOccupied(New_NPC.NPC owner)
         {
             Owner = owner;
             IsOccupied = true;

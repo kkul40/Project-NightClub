@@ -20,7 +20,7 @@ namespace BuildingSystem.Builders
         {
             float lastDis = 9999;
             Quaternion closestChangableMaterial = Quaternion.identity;
-            foreach(var wall in buildingNeedsData.GameData.GetWallMapPosList())
+            foreach(var wall in buildingNeedsData.DiscoData.GetWallMapPosList())
             {
                 var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.transform.position);
                 if (dis < lastDis)

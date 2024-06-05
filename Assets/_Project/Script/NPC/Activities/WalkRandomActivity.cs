@@ -1,9 +1,10 @@
 ﻿using System;
 using Data;
+using New_NPC;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace NPC.Activities
+namespace Activities
 {
     public class WalkRandomActivity : Activity
     {
@@ -12,7 +13,7 @@ namespace NPC.Activities
         public override bool isEnded { get; protected set; }
         public override bool isCanceled { get; protected set; }
 
-        public override void StartActivity(NPC npc)
+        public override void StartActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 
@@ -20,7 +21,7 @@ namespace NPC.Activities
             npc.SetAnimation(eNpcAnimation.Walk);
         }
 
-        public override void UpdateActivity(NPC npc)
+        public override void UpdateActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
 
@@ -38,7 +39,7 @@ namespace NPC.Activities
             }
         }
 
-        public override void EndActivity(NPC npc)
+        public override void EndActivity(New_NPC.NPC npc)
         {
             if (isCanceled) return;
         }
@@ -47,11 +48,11 @@ namespace NPC.Activities
         {
             var loopCount = 0;
 
-            var target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
-            while (GameData.Instance.placementDataHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
+            var target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
+            while (DiscoData.Instance.placementDataHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
                        ePlacementLayer.Floor))
             {
-                target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
+                target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
                 loopCount++;
                 if (loopCount >= 99)
                 {

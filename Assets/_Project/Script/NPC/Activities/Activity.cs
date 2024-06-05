@@ -3,24 +3,24 @@ using Data;
 using PropBehaviours;
 using UnityEngine;
 
-namespace NPC.Activities
+namespace Activities
 {
     public abstract class Activity
     {
         public abstract bool isEnded { get; protected set; }
         public abstract bool isCanceled { get; protected set; }
 
-        public abstract void StartActivity(NPC npc);
-        public abstract void UpdateActivity(NPC npc);
-        public abstract void EndActivity(NPC npc);
+        public abstract void StartActivity(New_NPC.NPC npc);
+        public abstract void UpdateActivity(New_NPC.NPC npc);
+        public abstract void EndActivity(New_NPC.NPC npc);
 
-        protected T GetAvaliablePropByType<T>(NPC npc, ePlacementLayer layer) where T : Prop
+        protected T GetAvaliablePropByType<T>(New_NPC.NPC npc, ePlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
-            foreach (var prop in GameData.Instance.GetPropList)
+            foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 if (prop == null) continue;
 
@@ -51,12 +51,12 @@ namespace NPC.Activities
 
         protected List<T> GetMultiplePropsByType<T>(ePlacementLayer layer) where T : Prop
         {
-            if (GameData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
+            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
 
             var propList = new List<T>();
 
             float lastDistance = 9999;
-            foreach (var prop in GameData.Instance.GetPropList)
+            foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 if (prop == null) continue;
 

@@ -1,6 +1,4 @@
 ﻿using Data;
-using NPC;
-using NPC.Activities;
 using PropBehaviours;
 using UnityEngine;
 
@@ -24,7 +22,7 @@ namespace New_NPC.Activities
                 return;
             }
 
-            if (GameData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
+            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
                     ePlacementLayer.Floor))
             {
                 IsEnded = true;

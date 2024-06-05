@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace StartMenu
 {
@@ -6,6 +7,10 @@ namespace StartMenu
     {
         public Logger _logger;
 
+        public void OnContinueButton()
+        {
+            SceneManager.LoadScene(1);
+        }
 
         public void OnNewGameButton(UI_Page page)
         {

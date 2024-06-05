@@ -1,5 +1,4 @@
 ﻿using Data;
-using NPC;
 using UnityEngine;
 
 namespace New_NPC.Activities
@@ -41,11 +40,11 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.GameData.FloorMap[Random.Range(0, and.GameData.FloorMap.Count)];
-            while (and.GameData.placementDataHandler.ContainsKey(and.GridHandler.GetWorldToCell(target),
+            var target = and.DiscoData.FloorMap[Random.Range(0, and.DiscoData.FloorMap.Count)];
+            while (and.DiscoData.placementDataHandler.ContainsKey(and.GridHandler.GetWorldToCell(target),
                        ePlacementLayer.Floor))
             {
-                target = GameData.Instance.FloorMap[Random.Range(0, GameData.Instance.FloorMap.Count)];
+                target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
                 loopCount++;
                 if (loopCount >= 99)
                 {

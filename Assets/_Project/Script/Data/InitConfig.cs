@@ -1,7 +1,6 @@
 ﻿using System;
 using BuildingSystem.SO;
 using New_NPC;
-using NPC;
 using ScriptableObjects;
 using UnityEngine;
 

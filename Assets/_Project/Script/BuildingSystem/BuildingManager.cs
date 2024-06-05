@@ -31,7 +31,7 @@ namespace BuildingSystem
 
         private void Start()
         {
-            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, GameData.Instance, sceneGameObjectHandler, _materialColorChanger);
+            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, sceneGameObjectHandler, _materialColorChanger);
         }
 
         private void Update()

@@ -38,7 +38,7 @@ namespace PropBehaviours
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.transform.TryGetComponent(out NPC.NPC npc))
+            if (other.transform.TryGetComponent(out New_NPC.NPC npc))
             {
                 ToggleDoor(true);
                 timer = 0;

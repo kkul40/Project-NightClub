@@ -2,7 +2,6 @@
 using BuildingSystem;
 using Data;
 using New_NPC;
-using NPC;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,7 +12,7 @@ namespace System
         [SerializeField] private GameObject _npcPrefab;
         [FormerlySerializedAs("_sceneTransformContainer")] [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
 
-        private int maxNPC = 25;
+        public int maxNPC = 25;
 
         private void Start()
         {
@@ -27,7 +26,7 @@ namespace System
             while (npcCount < maxNPC)
             {
                 yield return new WaitForSeconds(0.1f);
-                var newNPC = Instantiate(_npcPrefab, GameData.Instance.EnterencePosition, Quaternion.identity);
+                var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.EnterencePosition, Quaternion.identity);
                 newNPC.transform.SetParent(sceneGameObjectHandler.NPCHolderTransform);
                 eGenderType gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
@@ -35,11 +34,11 @@ namespace System
                 {
                     case eGenderType.Male:
                         newNPC.GetComponent<NPCRandomizer>().Customize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
-                        newNPC.GetComponent<NPC.NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
                         break;
                     case eGenderType.Female:
                         newNPC.GetComponent<NPCRandomizer>().Customize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
-                        newNPC.GetComponent<NPC.NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }
                 npcCount++;
