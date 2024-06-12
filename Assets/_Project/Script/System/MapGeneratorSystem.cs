@@ -5,16 +5,17 @@ namespace System
 {
     public class MapGeneratorSystem : Singleton<MapGeneratorSystem>
     {
-        [SerializeField] private Vector2Int initialMapSize;
-        [SerializeField] private Vector2Int mapSize;
         [SerializeField] private Transform floorTileHolder;
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private Transform wallHolder;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
 
-        public Vector2Int MapSize => mapSize;
-        public Vector3Int DoorPosition { get; private set; }
+        private Vector2Int MapSize
+        {
+            get { return DiscoData.Instance.mapData.CurrentMapSize; }
+            set { DiscoData.Instance.mapData.CurrentMapSize = value; }
+        }
 
         public static event Action<Vector2Int> OnMapSizeChanged;
 
@@ -25,8 +26,8 @@ namespace System
 
         private void SetUpMap()
         {
-            var xMax = initialMapSize.x;
-            var yMax = initialMapSize.y;
+            var xMax = DiscoData.MapData.InitialMapSize.x;
+            var yMax = DiscoData.MapData.InitialMapSize.y;
 
             for (var i = 0; i < xMax; i++)
             for (var j = 0; j < yMax; j++)
@@ -44,15 +45,15 @@ namespace System
 
                     var wall = InstantiateXWall(i);
                     wall.SetActive(false);
-                    DoorPosition = new Vector3Int(i, 0, -1);
+                    DiscoData.Instance.mapData.DoorPosition = new Vector3Int(i, 0, -1);
                     continue;
                 }
 
                 InstantiateXWall(i);
             }
 
-            mapSize = new Vector2Int(xMax, yMax);
-            OnMapSizeChanged?.Invoke(mapSize);
+            MapSize = new Vector2Int(xMax, yMax);
+            OnMapSizeChanged?.Invoke(MapSize);
         }
 
         private void LoadMap()
@@ -63,23 +64,23 @@ namespace System
         [ContextMenu("Expend X")]
         public void ExpendX()
         {
-            InstantiateXWall(mapSize.x);
+            InstantiateXWall(MapSize.x);
 
-            for (var i = 0; i < mapSize.y; i++) InstantiateFloorTile(mapSize.x, i);
-            mapSize.x += 1;
+            for (var i = 0; i < MapSize.y; i++) InstantiateFloorTile(MapSize.x, i);
+            MapSize += Vector2Int.right;
             
-            OnMapSizeChanged?.Invoke(mapSize);
+            OnMapSizeChanged?.Invoke(MapSize);
         }
 
         [ContextMenu("Expend Y")]
         public void ExpendY()
         {
-            InstantiateYWall(mapSize.y);
+            InstantiateYWall(MapSize.y);
 
-            for (var i = 0; i < mapSize.x; i++) InstantiateFloorTile(i, mapSize.y);
-            mapSize.y += 1;
+            for (var i = 0; i < MapSize.x; i++) InstantiateFloorTile(i, MapSize.y);
+            MapSize += Vector2Int.up;
 
-            OnMapSizeChanged?.Invoke(mapSize);
+            OnMapSizeChanged?.Invoke(MapSize);
         }
 
         [ContextMenu("Expend Both")]
@@ -111,7 +112,8 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(floorTileHolder);
-            DiscoData.Instance.FloorMap.Add(pos);
+            DiscoData.Instance.mapData.FloorMap.Add(pos);
+            DiscoData.Instance.mapData.TileNodes[x, y] = new TileNode(true, pos, x, y);
         }
     }
 }

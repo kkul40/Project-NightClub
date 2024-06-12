@@ -18,7 +18,7 @@ namespace New_NPC.Activities
 
         public void UpdateActivity(ActivityNeedsData and)
         {
-            if (!and.Npc._navMeshAgent.hasPath)
+            if (and.Npc.hasReachedDestination)
             {
                 and.Npc.SetAnimation(eNpcAnimation.Idle);
                 timer += Time.deltaTime;
@@ -40,11 +40,11 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.FloorMap[Random.Range(0, and.DiscoData.FloorMap.Count)];
+            var target = and.DiscoData.mapData.FloorMap[Random.Range(0, and.DiscoData.mapData.FloorMap.Count)];
             while (and.DiscoData.placementDataHandler.ContainsKey(and.GridHandler.GetWorldToCell(target),
                        ePlacementLayer.Floor))
             {
-                target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
+                target = DiscoData.Instance.mapData.FloorMap[Random.Range(0, DiscoData.Instance.mapData.FloorMap.Count)];
                 loopCount++;
                 if (loopCount >= 99)
                 {

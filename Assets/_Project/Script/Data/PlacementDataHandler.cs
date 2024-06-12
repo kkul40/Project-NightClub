@@ -28,8 +28,8 @@ namespace Data
         {
             if (cellPos.x < 0 ||
                 cellPos.z < 0 ||
-                cellPos.x >= MapGeneratorSystem.Instance.MapSize.x ||
-                cellPos.z >= MapGeneratorSystem.Instance.MapSize.y)
+                cellPos.x >= DiscoData.Instance.mapData.CurrentMapSize.x ||
+                cellPos.z >= DiscoData.Instance.mapData.CurrentMapSize.y)
                 return true;
 
             switch (layer)
@@ -98,6 +98,9 @@ namespace Data
 
         public void AddPlacementData(Vector3Int cellPos, PlacementData placementData, ePlacementLayer layer)
         {
+            Debug.Log("CellPos" + cellPos);
+            Debug.Log("World Pos Of celll" + DiscoData.Instance.mapData.TileNodes[cellPos.x, cellPos.z].WorldPos);
+            
             var keys = CalculatePosition(cellPos, placementData.Size,
                 placementData.RotationData.direction);
 
@@ -107,13 +110,16 @@ namespace Data
                 {
                     case ePlacementLayer.Surface:
                         surfaceLayerPlacements.Add(key, placementData);
+                        DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
                         break;
                     case ePlacementLayer.Floor:
                     case ePlacementLayer.Wall:
                         propLayerPlacements.Add(key, placementData);
+                        DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = false;
                         break;
                 }
             }
+
 
             if (placementData.SceneObject.TryGetComponent(out IPropUnit prop))
             {
@@ -160,6 +166,7 @@ namespace Data
                         propLayerPlacements.Remove(key);
                         break;
                 }
+                DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
             }
 
             var go = placementData.SceneObject;
@@ -181,11 +188,9 @@ namespace Data
             {
                 case ePlacementLayer.Surface:
                     return surfaceLayerPlacements.Values.ToList();
-                    break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
                     return propLayerPlacements.Values.ToList();
-                    break;
                 default:
                     Debug.LogError(layer.ToString() + " Is Missing");
                     return new List<PlacementData>();

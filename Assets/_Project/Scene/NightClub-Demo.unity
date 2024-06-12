@@ -12288,9 +12288,8 @@ GameObject:
   - component: {fileID: 1206130775}
   - component: {fileID: 1206130774}
   - component: {fileID: 1206130773}
-  - component: {fileID: 1206130777}
   m_Layer: 9
-  m_Name: NavMesh Ground
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12383,37 +12382,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1206130777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206130772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 3ce4f277e7266bf4597d7bbe6d498c36, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!4 &1206168172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ec2c9ddb7eb5d9448bb12d58c9bc7fd, type: 3}
@@ -13902,8 +13870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa3249bf17169445a22dbeb2dceb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialMapSize: {x: 11, y: 11}
-  mapSize: {x: 0, y: 0}
   floorTileHolder: {fileID: 192681125}
   floorTilePrefab: {fileID: 3779827449504969766, guid: 9bd05772a7539064596ab72d9fce5114, type: 3}
   wallHolder: {fileID: 775569617}
@@ -14830,7 +14796,7 @@ GameObject:
   - component: {fileID: 1451075139}
   - component: {fileID: 1451075140}
   m_Layer: 0
-  m_Name: GameData
+  m_Name: DISCO DATA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14863,9 +14829,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15aaa01c4fd9e81438a583713b61f6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapGeneratorSystem: {fileID: 1360520550}
-  TileDatas: []
-  WallMap: []
+  mapData:
+    CurrentMapSize: {x: 0, y: 0}
+    DoorPosition: {x: 0, y: 0, z: 0}
+    WallMap: []
+    FloorMap: []
 --- !u!114 &1451075140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21080,7 +21048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
   sceneGameObjectHandler: {fileID: 1466197926}
-  maxNPC: 1
+  maxNPC: 25
 --- !u!1001 &2039099550
 PrefabInstance:
   m_ObjectHideFlags: 0

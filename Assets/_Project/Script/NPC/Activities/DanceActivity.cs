@@ -1,85 +1,85 @@
-﻿using Data;
-using New_NPC;
-using PropBehaviours;
-using UnityEngine;
-
-namespace Activities
-{
-    public class DanceActivity : Activity
-    {
-        private DancableTile _dancableTile;
-        private DanceState _danceState = DanceState.None;
-
-        private float timer;
-        public override bool isEnded { get; protected set; }
-        public override bool isCanceled { get; protected set; }
-
-        public override void StartActivity(New_NPC.NPC npc)
-        {
-            _dancableTile = GetAvaliablePropByType<DancableTile>(npc, ePlacementLayer.Surface);
-
-            if (_dancableTile == null || _dancableTile.IsOccupied)
-            {
-                isCanceled = true;
-                return;
-            }
-
-            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
-                    ePlacementLayer.Floor))
-            {
-                isCanceled = true;
-                return;
-            }
-
-            npc.SetNewDestination(_dancableTile.GetMiddlePos);
-            npc.SetAnimation(eNpcAnimation.Walk);
-            _dancableTile.GetItOccupied(npc);
-        }
-
-        public override void UpdateActivity(New_NPC.NPC npc)
-        {
-            if (isCanceled) return;
-
-            switch (_danceState)
-            {
-                case DanceState.None:
-                    var distance = Vector3.Distance(npc.transform.position, _dancableTile.GetMiddlePos);
-                    if (distance < 0.05f)
-                    {
-                        npc._navMeshAgent.enabled = false;
-                        npc.SetAnimation(eNpcAnimation.Dance);
-                        _danceState = DanceState.Dancing;
-                        npc.GetAnimationControl.SetRootMotion(true);
-                    }
-
-                    break;
-                case DanceState.Dancing:
-                    timer += Time.deltaTime;
-                    if (timer > npc.GetAnimationControl.GetCurrentAnimationDuration())
-                    {
-                        timer = 0;
-                        isEnded = true;
-                    }
-
-                    break;
-            }
-        }
-
-        public override void EndActivity(New_NPC.NPC npc)
-        {
-            if (isCanceled) return;
-
-            npc.SetAnimation(eNpcAnimation.Idle);
-            _dancableTile.IsOccupied = false;
-            npc._navMeshAgent.enabled = true;
-            npc.GetAnimationControl.SetRootMotion(false);
-            isEnded = true;
-        }
-
-        private enum DanceState
-        {
-            None,
-            Dancing
-        }
-    }
-}
+﻿// using Data;
+// using New_NPC;
+// using PropBehaviours;
+// using UnityEngine;
+//
+// namespace Activities
+// {
+//     public class DanceActivity : Activity
+//     {
+//         private DancableTile _dancableTile;
+//         private DanceState _danceState = DanceState.None;
+//
+//         private float timer;
+//         public override bool isEnded { get; protected set; }
+//         public override bool isCanceled { get; protected set; }
+//
+//         public override void StartActivity(New_NPC.NPC npc)
+//         {
+//             _dancableTile = GetAvaliablePropByType<DancableTile>(npc, ePlacementLayer.Surface);
+//
+//             if (_dancableTile == null || _dancableTile.IsOccupied)
+//             {
+//                 isCanceled = true;
+//                 return;
+//             }
+//
+//             if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
+//                     ePlacementLayer.Floor))
+//             {
+//                 isCanceled = true;
+//                 return;
+//             }
+//
+//             npc.SetNewDestination(_dancableTile.GetMiddlePos);
+//             npc.SetAnimation(eNpcAnimation.Walk);
+//             _dancableTile.GetItOccupied(npc);
+//         }
+//
+//         public override void UpdateActivity(New_NPC.NPC npc)
+//         {
+//             if (isCanceled) return;
+//
+//             switch (_danceState)
+//             {
+//                 case DanceState.None:
+//                     var distance = Vector3.Distance(npc.transform.position, _dancableTile.GetMiddlePos);
+//                     if (distance < 0.05f)
+//                     {
+//                         npc._navMeshAgent.enabled = false;
+//                         npc.SetAnimation(eNpcAnimation.Dance);
+//                         _danceState = DanceState.Dancing;
+//                         npc.GetAnimationControl.SetRootMotion(true);
+//                     }
+//
+//                     break;
+//                 case DanceState.Dancing:
+//                     timer += Time.deltaTime;
+//                     if (timer > npc.GetAnimationControl.GetCurrentAnimationDuration())
+//                     {
+//                         timer = 0;
+//                         isEnded = true;
+//                     }
+//
+//                     break;
+//             }
+//         }
+//
+//         public override void EndActivity(New_NPC.NPC npc)
+//         {
+//             if (isCanceled) return;
+//
+//             npc.SetAnimation(eNpcAnimation.Idle);
+//             _dancableTile.IsOccupied = false;
+//             npc._navMeshAgent.enabled = true;
+//             npc.GetAnimationControl.SetRootMotion(false);
+//             isEnded = true;
+//         }
+//
+//         private enum DanceState
+//         {
+//             None,
+//             Dancing
+//         }
+//     }
+// }

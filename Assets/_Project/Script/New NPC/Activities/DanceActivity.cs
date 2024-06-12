@@ -7,7 +7,7 @@ namespace New_NPC.Activities
     public class DanceActivity : IActivity
     {
         private DancableTile _dancableTile;
-        private DanceState _danceState;
+        private DanceState _danceState = DanceState.None;
         private float timer;
 
         public bool IsEnded { get; private set; }
@@ -29,9 +29,10 @@ namespace New_NPC.Activities
                 return;
             }
             
-            and.Npc.SetNewDestination(_dancableTile.GetMiddlePos);
+            Debug.Log("dance Tile cell pos" + _dancableTile.CellPosition);
             and.Npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(and.Npc);
+            and.Npc.SetNewDestination(_dancableTile.CellPosition);
         }
 
         public void UpdateActivity(ActivityNeedsData and)
@@ -39,13 +40,13 @@ namespace New_NPC.Activities
             switch (_danceState)
             {
                 case DanceState.None:
-                    var distance = Vector3.Distance(and.Npc.transform.position, _dancableTile.GetMiddlePos);
-                    if (distance < 0.05f)
+                    if (and.Npc.hasReachedDestination)
                     {
-                        and.Npc._navMeshAgent.enabled = false;
+                        Debug.Log("Reach the target dance");
+                        // and.Npc._navMeshAgent.enabled = false;
                         and.Npc.SetAnimation(eNpcAnimation.Dance);
-                        _danceState = DanceState.Dancing;
                         and.Npc.GetAnimationControl.SetRootMotion(true);
+                        _danceState = DanceState.Dancing;
                     }
                     break;
                 case DanceState.Dancing:
@@ -63,7 +64,7 @@ namespace New_NPC.Activities
         {
             and.Npc.SetAnimation(eNpcAnimation.Idle);
             if(_dancableTile != null) _dancableTile.IsOccupied = false;
-            and.Npc._navMeshAgent.enabled = true;
+            // and.Npc._navMeshAgent.enabled = true;
             and.Npc.GetAnimationControl.SetRootMotion(false);
         }
         

@@ -8,7 +8,7 @@ namespace PropBehaviours
     {
         protected void Start()
         {
-            DiscoData.Instance.WallMap.Add(this);
+            DiscoData.Instance.mapData.WallMap.Add(this);
             LoadMaterial();
         }
 

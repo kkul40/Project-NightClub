@@ -112,7 +112,7 @@ namespace BuildingSystem.Builders
          {
              float lastDis = 9999;
              IChangableMaterial closestChangableMaterial = null;
-             foreach(var wall in buildingNeedsData.DiscoData.GetWallMapPosList())
+             foreach(var wall in buildingNeedsData.DiscoData.mapData.GetWallMapPosList())
              {
                  var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.transform.position);
                  if (dis < lastDis)

@@ -1,4 +1,5 @@
-﻿using BuildingSystem;
+﻿using System;
+using BuildingSystem;
 using Data;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace PropBehaviours
     {
         public int ID { get; private set; }
         public Vector3Int CellPosition { get; private set; }
+        public Vector3 WorldPos { get; private set; }
         public RotationData RotationData { get; private set; }
         public ePlacementLayer PlacementLayer { get; private set; }
 
@@ -16,6 +18,7 @@ namespace PropBehaviours
         {
             this.ID = ID;
             CellPosition = cellPosition;
+            WorldPos = GridHandler.Instance.CellToWorldPosition(cellPosition);
             RotationData = rotationData;
             PlacementLayer = placementLayer;
         }
