@@ -64,7 +64,7 @@ namespace Activities
                         chairProp.GetItOccupied(npc);
                         npc.transform.DOMove(chairProp.GetSitPosition(), tweenDuration);
                         // npc.transform.rotation = chairProp.GetPropRotation();
-                        npc.transform.DORotate(chairProp.GetPropRotation().eulerAngles, tweenDuration);
+                        npc.transform.DORotate(chairProp.RotationData.rotation.eulerAngles, tweenDuration);
                         npc.SetAnimation(eNpcAnimation.Sit);
                         _dinnerState = DinnerState.Sitting;
                     }

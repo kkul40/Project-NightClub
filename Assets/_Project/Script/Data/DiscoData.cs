@@ -14,7 +14,7 @@ namespace Data
         [Header("Data")] 
         public List<Vector3> FloorMap = new();
         public List<Wall> WallMap = new();
-        public List<Prop> GetPropList => placementDataHandler.GetPropList;
+        public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
         public MapGeneratorSystem MapGenerator => _mapGeneratorSystem;
         public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(MapGenerator.DoorPosition);
 

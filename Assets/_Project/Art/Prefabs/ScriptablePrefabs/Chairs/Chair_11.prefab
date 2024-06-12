@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4740368155578238536, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
       propertyPath: m_Name
-      value: Chair_11 Variant
+      value: Chair_11
       objectReference: {fileID: 0}
     - target: {fileID: 4740368155578238548, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,6 +61,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4740368155578238551, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -6069439929057253245, guid: 3f980dc174101144aab72a1e2d69c4c7, type: 3}
+    - target: {fileID: 8870594949564344678, guid: 712ae3c6d1bc7844298eb6bc83a8afaa, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -6069439929057253245, guid: 3f980dc174101144aab72a1e2d69c4c7, type: 3}

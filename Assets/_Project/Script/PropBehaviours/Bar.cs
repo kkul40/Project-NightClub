@@ -1,10 +1,11 @@
 using BuildingSystem;
+using Data;
 using ScriptableObjects;
 using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class Bar : Prop, IBar
+    public class Bar : IPropUnit, IBar
     {
         [SerializeField] private GameObject DrinkTablePrefab;
         [SerializeField] private Transform TezgahTransform;
@@ -32,10 +33,10 @@ namespace PropBehaviours
             AvaliableDrinkCount--;
         }
 
-        public override void Initialize(Vector3Int cellPosition, Direction direction)
+        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
+            ePlacementLayer placementLayer)
         {
-            base.Initialize(cellPosition, direction);
-
+            base.Initialize(ID, cellPosition, rotationData, placementLayer);
             var d = Instantiate(DrinkTablePrefab, GetTezgahTransform);
             d.transform.position = GetTezgahTransform.position;
             _drinkTable = d.GetComponent<DrinkTable>();

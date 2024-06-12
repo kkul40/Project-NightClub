@@ -24,14 +24,16 @@ namespace BuildingSystem
         private BuildingNeedsData _buildingNeedsData;
         
         public bool isPlacing => _buildingMethod != null;
+        public bool isRemoving;
         
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
-
+        
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, sceneGameObjectHandler, _materialColorChanger);
+            _gridHandler.ToggleGrid(false);
         }
 
         private void Update()
@@ -65,10 +67,22 @@ namespace BuildingSystem
         }
         
         #region Building
+
+        public void StartRemoving()
+        {
+            StopBuild();
+            _gridHandler.ToggleGrid(true);
+            _storeItemSo = null;
+            _rotationMethod = new NullRotationMethod();
+            _buildingMethod = new RemoveHandler();
+            _buildingNeedsData.StoreItemSo = _storeItemSo;
+            _rotationMethod.OnStart(_buildingNeedsData);
+            _buildingMethod.OnStart(_buildingNeedsData);
+        }
         public void StartBuild(StoreItemSO storeItemSo)
         {
             StopBuild();
-            
+            _gridHandler.ToggleGrid(true);
             _storeItemSo = storeItemSo;
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
             _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
@@ -85,11 +99,8 @@ namespace BuildingSystem
                 _buildingMethod = null;
                 _rotationMethod = null;
             }
+            _gridHandler.ToggleGrid(false);
         }
-        #endregion
-        
-        #region Removing
-        // TODO Implement Revoving Logic
         #endregion
     }
 }

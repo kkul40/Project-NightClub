@@ -11,18 +11,18 @@ namespace Data
 {
     public class PlacementDataHandler
     {
-        private List<Prop> propList;
+        private List<IPropUnit> propList;
         private Dictionary<Vector3Int, PlacementData> surfaceLayerPlacements;
         private Dictionary<Vector3Int, PlacementData> propLayerPlacements;
 
         public PlacementDataHandler()
         {
-            propList = new List<Prop>();
+            propList = new List<IPropUnit>();
             surfaceLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
             propLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
         }
 
-        public List<Prop> GetPropList => propList;
+        public List<IPropUnit> GetPropList => propList;
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
         {
@@ -41,7 +41,7 @@ namespace Data
                     return propLayerPlacements.ContainsKey(cellPos);
                 default:
                     Debug.Log($"Placement Layer Not Added : {layer.ToString()}");
-                    return true;
+                    return false;
             }
         }
 
@@ -115,17 +115,17 @@ namespace Data
                 }
             }
 
-            if (placementData.SceneObject.TryGetComponent(out Prop prop))
+            if (placementData.SceneObject.TryGetComponent(out IPropUnit prop))
             {
                 propList.Add(prop);
-                prop.Initialize(cellPos, placementData.RotationData.direction);
+                prop.Initialize(placementData.ID ,cellPos, placementData.RotationData, layer);
             }
             UpdateProps();
         }
 
         public void RemovePlacementData(Vector3Int cellPos, ePlacementLayer layer)
         {
-            var placementData = new PlacementData();
+            PlacementData placementData = new PlacementData();
             switch (layer)
             {
                 case ePlacementLayer.Surface:
@@ -134,7 +134,6 @@ namespace Data
                         placementData = surfaceLayerPlacements[cellPos];
                         surfaceLayerPlacements.Remove(cellPos);
                     }
-
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
@@ -143,12 +142,28 @@ namespace Data
                         placementData = propLayerPlacements[cellPos];
                         propLayerPlacements.Remove(cellPos);
                     }
-
                     break;
+            }
+            
+            var keys = CalculatePosition(placementData.PlacedCellPos, placementData.Size,
+                placementData.RotationData.direction);
+            
+            foreach (var key in keys)
+            {
+                switch (layer)
+                {
+                    case ePlacementLayer.Surface:
+                        surfaceLayerPlacements.Remove(key);
+                        break;
+                    case ePlacementLayer.Floor:
+                    case ePlacementLayer.Wall:
+                        propLayerPlacements.Remove(key);
+                        break;
+                }
             }
 
             var go = placementData.SceneObject;
-            if (go.TryGetComponent(out Prop prop)) propList.Remove(prop);
+            if (go.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
             Object.Destroy(go);
             UpdateProps();
         }
@@ -160,7 +175,7 @@ namespace Data
                     propUpdate.PropUpdate();
         }
 
-        public List<PlacementData> GetPlacementData(ePlacementLayer layer)
+        public List<PlacementData> GetPlacementDatas(ePlacementLayer layer)
         {
             switch (layer)
             {
@@ -174,8 +189,27 @@ namespace Data
                 default:
                     Debug.LogError(layer.ToString() + " Is Missing");
                     return new List<PlacementData>();
-                    break;
             }
+        }
+
+        public GameObject GetSceneObject(Vector3Int cellPos ,ePlacementLayer layer)
+        {
+            switch (layer)
+            {
+                case ePlacementLayer.Surface:
+                    if(surfaceLayerPlacements.ContainsKey(cellPos))
+                        return surfaceLayerPlacements[cellPos].SceneObject;
+                    break;
+                case ePlacementLayer.Floor:
+                case ePlacementLayer.Wall:
+                    if(propLayerPlacements.ContainsKey(cellPos))
+                        return propLayerPlacements[cellPos].SceneObject;
+                    break;
+                default:
+                    Debug.LogError(layer.ToString() + " Is Missing");
+                    return null;
+            }
+            return null;
         }
     }
 

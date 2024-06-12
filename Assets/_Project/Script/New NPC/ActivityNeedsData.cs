@@ -11,9 +11,9 @@ namespace New_NPC
         public DiscoData DiscoData;
         public GridHandler GridHandler;
         
-        public T GetAvaliablePropByType<T>(ePlacementLayer layer) where T : Prop
+        public T GetAvaliablePropByType<T>(ePlacementLayer layer) where T : IPropUnit
         {
-            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
@@ -28,7 +28,7 @@ namespace New_NPC
 
                 if (prop is T propType)
                 {
-                    var distance = Vector3.Distance(Npc.transform.position, prop.GetPropCellPosition());
+                    var distance = Vector3.Distance(Npc.transform.position, prop.CellPosition);
                     if (distance < lastDistance)
                     {
                         closestProp = propType;

@@ -6,13 +6,16 @@ namespace BuildingSystem
 {
     public class MaterialColorChanger : MonoBehaviour
     {
+        public enum eMaterialColor
+        {
+            TranparentMaterial,
+            RemovingMaterial,
+        }
+        
         [SerializeField] private Material blueMaterial;
         [SerializeField] private Material redMaterial;
         [SerializeField] private Material yellowMaterial;
         [SerializeField] private Material whiteMaterial;
-
-        private Dictionary<Transform, MaterialData>
-            materialData = new Dictionary<Transform, MaterialData>();
 
         public void SetMaterialsColorByValidity(List<MeshRenderer> meshRenderers, bool canPlace)
         {
@@ -20,59 +23,78 @@ namespace BuildingSystem
             SetMaterial(meshRenderers, tempMaterial);
         }
 
-        public void SetMaterialTransparency(Transform transform)
+        public void SetCustomMaterial(Transform transform, eMaterialColor eMaterialColor, ref Dictionary<Transform, MaterialData> materialDatas)
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                materialData.Add(transform.GetChild(i), new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
+                materialDatas.Add(transform.GetChild(i), new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
                 var listMesh = ReturnMeshRendererList(transform.GetChild(i).gameObject);
-                SetMaterial(listMesh, whiteMaterial);
+                switch (eMaterialColor)
+                {
+                    case eMaterialColor.TranparentMaterial:
+                        SetMaterial(listMesh, whiteMaterial);
+                        break;
+                    case eMaterialColor.RemovingMaterial:
+                        SetMaterial(listMesh, yellowMaterial);
+                        break;
+                }
             }
         }
 
-        public void SetTransparencyToDefault()
+        /// <summary>
+        /// To use this function you need to Call SetCustomMaterial to Initiliaze first
+        /// </summary>
+        /// <param name="materialDatas"></param>
+        public void SetMaterialToDefault(ref Dictionary<Transform, MaterialData> materialDatas)
         {
-            if (materialData.Count <= 0) return;
-            foreach (var key in materialData.Keys)
+            if (materialDatas.Count <= 0) return;
+            foreach (var key in materialDatas.Keys)
             {
                 var listMesh = ReturnMeshRendererList(key.gameObject);
                 for (int i = 0; i < listMesh.Count; i++)
                 {
-                    listMesh[i].materials = materialData[key].Materials[i].ToArray();
+                    listMesh[i].materials = materialDatas[key].Materials[i].ToArray();
                 }
             }
-            materialData = new Dictionary<Transform, MaterialData>();
+            materialDatas = new Dictionary<Transform, MaterialData>();
         }
         
-        private static void SetMaterial(List<MeshRenderer> meshRenderers, Material tempMaterial)
+        private void SetMaterial(List<MeshRenderer> meshRenderers, Material tempMaterial)
         {
             foreach (var mesh in meshRenderers)
             {
-                Material[] material = new Material[mesh.materials.Length];
-                for (int i = 0; i < mesh.materials.Length; i++)
-                {
-                    material[i] = tempMaterial;
-                }
-                mesh.materials = material;
+                SetMaterial(mesh, tempMaterial);
             }
+        }
+
+        private void SetMaterial(MeshRenderer meshRenderer, Material material)
+        {
+            Material[] tempMaterial = new Material[meshRenderer.materials.Length];
+            for (int i = 0; i < meshRenderer.materials.Length; i++)
+            {
+                tempMaterial[i] = material;
+            }
+            meshRenderer.materials = tempMaterial;
         }
         
         public List<MeshRenderer> ReturnMeshRendererList(GameObject gameObject) => gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
-    }
 
-    public struct MaterialData
-    {
-        public List<MeshRenderer> MeshRenderer;
-        public List<List<Material>> Materials;
-
-        public MaterialData(List<MeshRenderer> meshRenderer)
+        public struct MaterialData
         {
-            MeshRenderer = meshRenderer;
-            Materials = new List<List<Material>>();
-            for (int i = 0; i < meshRenderer.Count; i++)
+            public List<MeshRenderer> MeshRenderer;
+            public List<List<Material>> Materials;
+
+            public MaterialData(List<MeshRenderer> meshRenderer)
             {
-                Materials.Add(meshRenderer[i].materials.ToList());
+                MeshRenderer = meshRenderer;
+                Materials = new List<List<Material>>();
+                for (int i = 0; i < meshRenderer.Count; i++)
+                {
+                    Materials.Add(meshRenderer[i].materials.ToList());
+                }
             }
         }
     }
+
+    
 }

@@ -16,6 +16,8 @@ namespace System
         public Vector2Int MapSize => mapSize;
         public Vector3Int DoorPosition { get; private set; }
 
+        public static event Action<Vector2Int> OnMapSizeChanged;
+
         private void Awake()
         {
             SetUpMap(); 
@@ -50,8 +52,8 @@ namespace System
             }
 
             mapSize = new Vector2Int(xMax, yMax);
+            OnMapSizeChanged?.Invoke(mapSize);
         }
-
 
         private void LoadMap()
         {
@@ -65,6 +67,8 @@ namespace System
 
             for (var i = 0; i < mapSize.y; i++) InstantiateFloorTile(mapSize.x, i);
             mapSize.x += 1;
+            
+            OnMapSizeChanged?.Invoke(mapSize);
         }
 
         [ContextMenu("Expend Y")]
@@ -74,6 +78,8 @@ namespace System
 
             for (var i = 0; i < mapSize.x; i++) InstantiateFloorTile(i, mapSize.y);
             mapSize.y += 1;
+
+            OnMapSizeChanged?.Invoke(mapSize);
         }
 
         [ContextMenu("Expend Both")]

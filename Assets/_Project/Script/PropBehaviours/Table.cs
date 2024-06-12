@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class Table : Prop, IPropUpdate
+    public class Table : IPropUnit, IPropUpdate
     {
-        public GameObject CubePrefab;
         public List<Chair> Chairs;
 
         public void PropUpdate()
@@ -28,10 +27,10 @@ namespace PropBehaviours
             }
         }
 
-        public override void Initialize(Vector3Int cellPosition, Direction direction)
+        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
+            ePlacementLayer placementLayer)
         {
-            base.Initialize(cellPosition, direction);
-
+            base.Initialize(ID, cellPosition, rotationData, placementLayer);
             PropUpdate();
         }
     }

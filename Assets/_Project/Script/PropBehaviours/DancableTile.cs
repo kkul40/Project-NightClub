@@ -1,24 +1,18 @@
-﻿using BuildingSystem;
+﻿using System;
+using BuildingSystem;
+using Data;
 using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class DancableTile : Prop, IPropUpdate, IOccupieable, IInteractable
+    public class DancableTile : IPropUnit, IPropUpdate, IOccupieable
     {
         public Vector3 GetMiddlePos => CellPosition + new Vector3(0.5f, 0, 0.5f);
 
-        public eInteraction Interaction { get; } = eInteraction.Interactable;
-
-        public void OnFocus()
+        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
+            ePlacementLayer placementLayer)
         {
-        }
-
-        public void OnOutFocus()
-        {
-        }
-
-        public void OnClick()
-        {
+            base.Initialize(ID, cellPosition, rotationData, placementLayer);
         }
 
         public New_NPC.NPC Owner { get; set; }
@@ -33,11 +27,6 @@ namespace PropBehaviours
         public void PropUpdate()
         {
             Debug.Log("Dancable Area Updated");
-        }
-
-        public override void Initialize(Vector3Int cellPosition, Direction direction)
-        {
-            base.Initialize(cellPosition, direction);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace BuildingSystem
         public static readonly RotationData Up = new RotationData(new Vector3(0, 180, 0), Direction.Up);
         public static readonly RotationData Right = new RotationData(new Vector3(0, 270, 0), Direction.Right);
         public static RotationData Default => Down;
+        
 
         public RotationData()
         {

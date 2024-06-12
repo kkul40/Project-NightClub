@@ -17,18 +17,20 @@ namespace BuildingSystem.Builders
         private GameObject _tempObject;
         private List<MeshRenderer> _tempMeshRenderer;
         private PlacementItemSO _storeItemSo;
+
+        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas =
+            new Dictionary<Transform, MaterialColorChanger.MaterialData>();
         
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
-            Debug.Log(buildingNeedsData.RotationData);
             _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
             SetOffset();
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.Surface:
-                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
                     return;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
@@ -94,14 +96,14 @@ namespace BuildingSystem.Builders
                     createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
                     break;
             }
-            buildingNeedsData.DiscoData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
         }
 
         public void OnFinish(BuildingNeedsData buildingNeedsData)
         {
             Object.Destroy(_tempObject);
             isFinished = true;
-            buildingNeedsData.MaterialColorChanger.SetTransparencyToDefault();
+            buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
     }
 }

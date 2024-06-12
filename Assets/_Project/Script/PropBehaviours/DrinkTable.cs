@@ -67,6 +67,7 @@ namespace PropBehaviours
     {
         Interactable,
         Customer,
+        PropUnit,
         None
     }
 }

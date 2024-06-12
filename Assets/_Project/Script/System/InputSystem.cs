@@ -75,7 +75,7 @@ namespace System
             RaycastHit hit;
             float maxDistance = 100;
 
-            if (Physics.Raycast(ray, out hit, maxDistance, ignore)) return hit.transform;
+            if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
 
             return null;
         }

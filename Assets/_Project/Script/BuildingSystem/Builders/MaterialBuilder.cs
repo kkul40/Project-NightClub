@@ -1,4 +1,5 @@
-﻿using BuildingSystem.SO;
+﻿using System.Collections.Generic;
+using BuildingSystem.SO;
 using UnityEngine;
 
 namespace BuildingSystem.Builders
@@ -13,6 +14,9 @@ namespace BuildingSystem.Builders
         private IChangableMaterial _changableMaterial;
         private IChangableMaterial _lastChangableMaterial;
         private Material _previousMaterial;
+
+        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas =
+            new Dictionary<Transform, MaterialColorChanger.MaterialData>();
         
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
@@ -21,11 +25,11 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.Wall:
-                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
                     return;
                 case eMaterialLayer.FloorTile:
-                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform);
-                    buildingNeedsData.MaterialColorChanger.SetMaterialTransparency(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
                     return;
             }
         }
@@ -72,7 +76,7 @@ namespace BuildingSystem.Builders
         public void OnFinish(BuildingNeedsData buildingNeedsData)
         {
            ResetPreviousMaterial();
-           buildingNeedsData.MaterialColorChanger.SetTransparencyToDefault();
+           buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
 
         private IChangableMaterial FindMaterial(BuildingNeedsData buildingNeedsData)

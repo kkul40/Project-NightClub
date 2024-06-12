@@ -1,0 +1,37 @@
+﻿using BuildingSystem;
+using Data;
+using UnityEngine;
+
+namespace PropBehaviours
+{
+    public class IPropUnit : MonoBehaviour, IInteractable
+    {
+        public int ID { get; private set; }
+        public Vector3Int CellPosition { get; private set; }
+        public RotationData RotationData { get; private set; }
+        public ePlacementLayer PlacementLayer { get; private set; }
+
+        public virtual void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
+            ePlacementLayer placementLayer)
+        {
+            this.ID = ID;
+            CellPosition = cellPosition;
+            RotationData = rotationData;
+            PlacementLayer = placementLayer;
+        }
+
+        public eInteraction Interaction { get; } = eInteraction.PropUnit;
+        
+        public void OnFocus()
+        {
+        }
+
+        public void OnOutFocus()
+        {
+        }
+
+        public void OnClick()
+        {
+        }
+    }
+}

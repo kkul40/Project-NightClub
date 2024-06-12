@@ -14,9 +14,9 @@ namespace Activities
         public abstract void UpdateActivity(New_NPC.NPC npc);
         public abstract void EndActivity(New_NPC.NPC npc);
 
-        protected T GetAvaliablePropByType<T>(New_NPC.NPC npc, ePlacementLayer layer) where T : Prop
+        protected T GetAvaliablePropByType<T>(New_NPC.NPC npc, ePlacementLayer layer) where T : IPropUnit
         {
-            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
@@ -31,7 +31,7 @@ namespace Activities
 
                 if (prop is T propType)
                 {
-                    var distance = Vector3.Distance(npc.transform.position, prop.GetPropCellPosition());
+                    var distance = Vector3.Distance(npc.transform.position, prop.CellPosition);
                     if (distance < lastDistance)
                     {
                         closestProp = propType;
@@ -49,9 +49,9 @@ namespace Activities
             return closestProp;
         }
 
-        protected List<T> GetMultiplePropsByType<T>(ePlacementLayer layer) where T : Prop
+        protected List<T> GetMultiplePropsByType<T>(ePlacementLayer layer) where T : IPropUnit
         {
-            if (DiscoData.Instance.placementDataHandler.GetPlacementData(layer).Count <= 0) return new List<T>();
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return new List<T>();
 
             var propList = new List<T>();
 

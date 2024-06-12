@@ -11,7 +11,6 @@ namespace BuildingSystem.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            Debug.LogError("Null Rotation");
         }
     }
 }
