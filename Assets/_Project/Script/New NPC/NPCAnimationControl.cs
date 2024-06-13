@@ -24,19 +24,19 @@ namespace New_NPC
             switch (eNpcAnimation)
             {
                 case eNpcAnimation.Idle:
-                    selectedAnimationClip = _npcAnimationSo.Idle;
+                    selectedAnimationClip = _npcAnimationSo.Idle[Random.Range(0, _npcAnimationSo.Idle.Count)];
                     break;
                 case eNpcAnimation.Walk:
-                    selectedAnimationClip = _npcAnimationSo.Walk;
+                    selectedAnimationClip = _npcAnimationSo.Walk[Random.Range(0, _npcAnimationSo.Walk.Count)];
                     break;
                 case eNpcAnimation.Sit:
-                    selectedAnimationClip = _npcAnimationSo.Sit;
+                    selectedAnimationClip = _npcAnimationSo.Sit[Random.Range(0, _npcAnimationSo.Sit.Count)];
                     break;
                 case eNpcAnimation.Dance:
-                    selectedAnimationClip = _npcAnimationSo.Dance;
+                    selectedAnimationClip = _npcAnimationSo.Dance[Random.Range(0, _npcAnimationSo.Dance.Count)];
                     break;
                 default:
-                    selectedAnimationClip = _npcAnimationSo.Debug;
+                    selectedAnimationClip = _npcAnimationSo.Debug[Random.Range(0, _npcAnimationSo.Debug.Count)];
                     break;
             }
 

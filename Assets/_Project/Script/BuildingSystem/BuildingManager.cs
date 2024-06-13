@@ -17,6 +17,7 @@ namespace BuildingSystem
          *
          *
          */
+
         
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
@@ -24,7 +25,7 @@ namespace BuildingSystem
         private BuildingNeedsData _buildingNeedsData;
         
         public bool isPlacing => _buildingMethod != null;
-        public bool isRemoving;
+        private Func<Action> callBackOnPlace = null;
         
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
         [SerializeField] private GridHandler _gridHandler;
@@ -54,6 +55,7 @@ namespace BuildingSystem
                 if (_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
+                    callBackOnPlace?.Invoke().Invoke();
                 }
                 
                 if (InputSystem.Instance.Esc) StopBuild();
@@ -79,9 +81,10 @@ namespace BuildingSystem
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
         }
-        public void StartBuild(StoreItemSO storeItemSo)
+        public void StartBuild(StoreItemSO storeItemSo, Func<Action> CallBackOnPlace = null)
         {
             StopBuild();
+            callBackOnPlace = CallBackOnPlace;
             _gridHandler.ToggleGrid(true);
             _storeItemSo = storeItemSo;
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
@@ -100,6 +103,7 @@ namespace BuildingSystem
                 _rotationMethod = null;
             }
             _gridHandler.ToggleGrid(false);
+            callBackOnPlace = null;
         }
         #endregion
     }

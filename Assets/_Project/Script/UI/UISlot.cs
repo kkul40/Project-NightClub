@@ -1,6 +1,7 @@
 using System;
 using BuildingSystem;
 using BuildingSystem.SO;
+using Data;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -9,36 +10,41 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UISlot : MonoBehaviour
+    public class UISlot : MonoBehaviour, IUISlot
     {
-        public TextStyleSo textStyleSo;
-        public StoreItemSO storeItemSo;
+        public GameObject mGameobject { get; private set; }
+        public StoreItemSO StoreItemSo { get; private set; }
 
         public Image image;
-        [FormerlySerializedAs("textMeshPro")] public TextMeshProUGUI priceText;
-
-        private void Update()
+        public TextMeshProUGUI priceText;
+        
+        private void Awake()
         {
-            priceText.font = textStyleSo.FontAsset;
-            priceText.fontSize = textStyleSo.FontSize;
+            mGameobject = transform.gameObject;
         }
 
-        private void OnValidate()
-        {
-            priceText.font = textStyleSo.FontAsset;
-            priceText.fontSize = textStyleSo.FontSize;
-        }
+        // private void Update()
+        // {
+        //     priceText.font = textStyleSo.FontAsset;
+        //     priceText.fontSize = textStyleSo.FontSize;
+        // }
+        //
+        // private void OnValidate()
+        // {
+        //     priceText.font = textStyleSo.FontAsset;
+        //     priceText.fontSize = textStyleSo.FontSize;
+        // }
 
-        public void Init(StoreItemSO storeItemSo)
+        public void Init(StoreDataCarrier storeDataCarrier)
         {
-            this.storeItemSo = storeItemSo;
-            image.sprite = storeItemSo.Icon;
-            priceText.text = this.storeItemSo.Price.ToString();
+            this.StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
+            image.sprite = StoreItemSo.Icon;
+            priceText.text = StoreItemSo.Price.ToString();
         }
 
         public void OnClick()
         {
-            BuildingManager.Instance.StartBuild(storeItemSo);
+            BuildingManager.Instance.StartBuild(StoreItemSo);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace BuildingSystem.SO
@@ -9,5 +10,10 @@ namespace BuildingSystem.SO
         public string Name;
         public Sprite Icon;
         public int Price;
+
+        private void Awake()
+        {
+            ID = Guid.NewGuid().GetHashCode();
+        }
     }
 }

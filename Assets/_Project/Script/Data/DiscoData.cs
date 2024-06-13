@@ -10,6 +10,7 @@ namespace Data
     {
         public PlacementDataHandler placementDataHandler { get; private set; }
         public MapData mapData;
+        public Inventory inventory;
         
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
@@ -17,6 +18,7 @@ namespace Data
         private void Awake()
         {
             mapData = new MapData();
+            inventory = new Inventory();
             placementDataHandler = new PlacementDataHandler();
         }
 
@@ -75,6 +77,12 @@ namespace Data
         {
             Default,
             Hiphop,
+        }
+
+        public enum eUISlot
+        {
+            Slot,
+            Cargo,
         }
     }
 }

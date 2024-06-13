@@ -95,7 +95,6 @@ namespace New_NPC
                 waypoints.Add(node.WorldPos);
             }
 
-            Debug.Log("Pathf Found " + path.Count);
             return waypoints; // Return the path as a list of Vector3 positions
         }
         

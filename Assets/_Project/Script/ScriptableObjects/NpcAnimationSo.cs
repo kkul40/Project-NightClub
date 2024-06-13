@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ScriptableObjects
 {
@@ -7,14 +8,14 @@ namespace ScriptableObjects
     {
         [field: SerializeField] public float animationDuration { get; private set; }
 
-        [field: SerializeField] public AnimationClip Idle { get; private set; }
+        [field: SerializeField] public List<AnimationClip> Idle { get; private set; }
 
-        [field: SerializeField] public AnimationClip Walk { get; private set; }
+        [field: SerializeField] public List<AnimationClip> Walk { get; private set; }
 
-        [field: SerializeField] public AnimationClip Sit { get; private set; }
+        [field: SerializeField] public List<AnimationClip> Sit { get; private set; }
 
-        [field: SerializeField] public AnimationClip Dance { get; private set; }
+        [field: SerializeField] public List<AnimationClip> Dance { get; private set; }
 
-        [field: SerializeField] public AnimationClip Debug { get; private set; }
+        [field: SerializeField] public List<AnimationClip> Debug { get; private set; }
     }
 }

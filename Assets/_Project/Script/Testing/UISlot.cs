@@ -11,7 +11,7 @@ namespace Testing
         
         public void OnClick()
         {
-            BuildingManager.Instance.StartBuild(storeItemSo);
+            // BuildingManager.Instance.StartBuild(storeItemSo);
         }
     }
 }

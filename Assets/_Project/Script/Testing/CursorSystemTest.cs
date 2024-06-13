@@ -17,8 +17,8 @@ namespace Testing
 
         private void Reset()
         {
-            if (_currentInteractable == null) return;
-
+            if (_currentInteractable == null || BuildingManager.Instance.isPlacing) return;
+            
             _currentInteractable.OnOutFocus();
             _currentInteractable = null;
 
@@ -90,6 +90,7 @@ namespace Testing
                 case eInteraction.None:
                     highlightEffect.ProfileLoad(_noneHighlight);
                     break;
+                case eInteraction.PropUnit:
                 case eInteraction.Interactable:
                     highlightEffect.ProfileLoad(_interactableHighlight);
                     break;

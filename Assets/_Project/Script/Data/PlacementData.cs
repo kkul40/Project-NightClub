@@ -26,7 +26,7 @@ namespace Data
 
         public PlacementData(PlacementItemSO storeItemSo, Vector3Int placedCellPos, GameObject createdObject, Vector2Int Size, RotationData rotationData)
         {
-            ID = Guid.NewGuid().GetHashCode();
+            ID = storeItemSo.ID;
             PlacedCellPos = placedCellPos;
             this.storeItemSo = storeItemSo as PlacementItemSO;
             SceneObject = createdObject;

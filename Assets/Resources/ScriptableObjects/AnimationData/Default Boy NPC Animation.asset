@@ -13,8 +13,20 @@ MonoBehaviour:
   m_Name: Default Boy NPC Animation
   m_EditorClassIdentifier: 
   <animationDuration>k__BackingField: 0.5
-  <Idle>k__BackingField: {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
-  <Walk>k__BackingField: {fileID: 7400000, guid: 1bd2339ae7c89eb469baf58dd768846e, type: 2}
-  <Sit>k__BackingField: {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
-  <Dance>k__BackingField: {fileID: 7400000, guid: 0e4a080b02c767d4689fb9b8f2893622, type: 2}
-  <Debug>k__BackingField: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}
+  <Idle>k__BackingField:
+  - {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
+  <Walk>k__BackingField:
+  - {fileID: 7400000, guid: 8ac3461507ac28e4fb7b558cb366ed0d, type: 2}
+  <Sit>k__BackingField:
+  - {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
+  <Dance>k__BackingField:
+  - {fileID: 7400000, guid: 436a9d51670868749b4447fb899b51aa, type: 2}
+  - {fileID: 7400000, guid: 4fc336603a5b90447b3c9dee32f8edb4, type: 2}
+  - {fileID: 7400000, guid: 25f9b6aacf872774ab5cb44b42ead3b4, type: 2}
+  - {fileID: 7400000, guid: 9a9fe65f83ce3514093474a3174aa8b6, type: 2}
+  - {fileID: 7400000, guid: 8d6aab3c9d285fb4ea6ff62f62e37e49, type: 2}
+  - {fileID: 7400000, guid: 7c2e6b010ae1ddf4095d8ddbfd6b0228, type: 2}
+  - {fileID: 7400000, guid: 56b6c797d90e9c047b52136832c40d1e, type: 2}
+  - {fileID: 7400000, guid: e05d38e4794732f40a55df9573b4f025, type: 2}
+  <Debug>k__BackingField:
+  - {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}

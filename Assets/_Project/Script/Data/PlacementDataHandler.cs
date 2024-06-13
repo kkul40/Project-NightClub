@@ -98,9 +98,6 @@ namespace Data
 
         public void AddPlacementData(Vector3Int cellPos, PlacementData placementData, ePlacementLayer layer)
         {
-            Debug.Log("CellPos" + cellPos);
-            Debug.Log("World Pos Of celll" + DiscoData.Instance.mapData.TileNodes[cellPos.x, cellPos.z].WorldPos);
-            
             var keys = CalculatePosition(cellPos, placementData.Size,
                 placementData.RotationData.direction);
 
@@ -168,7 +165,8 @@ namespace Data
                 }
                 DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
             }
-
+            
+            DiscoData.Instance.inventory.AddItem(placementData.storeItemSo);
             var go = placementData.SceneObject;
             if (go.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
             Object.Destroy(go);
