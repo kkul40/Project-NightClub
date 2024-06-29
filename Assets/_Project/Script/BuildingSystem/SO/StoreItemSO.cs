@@ -13,7 +13,7 @@ namespace BuildingSystem.SO
 
         private void Awake()
         {
-            ID = Guid.NewGuid().GetHashCode();
+            ID = name.GetHashCode() + Name.GetHashCode();
         }
     }
 }

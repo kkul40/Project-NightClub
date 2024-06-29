@@ -40,9 +40,14 @@ namespace BuildingSystem
             transform.position = newPos;
         }
 
+        public void SetSize(Vector2 size)
+        {
+            placingTileIndicator.transform.GetChild(0).transform.localScale = new Vector3(size.x, 1, size.y);
+        }
+
         public void RoateDirectionIndicator(Quaternion quaternion)
         {
-            directionIndicator.transform.rotation = quaternion;
+            placingTileIndicator.transform.rotation = quaternion;
         }
 
         public void CloseTileIndicator()

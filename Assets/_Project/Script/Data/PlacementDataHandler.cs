@@ -214,6 +214,26 @@ namespace Data
             }
             return null;
         }
+
+        /// <summary>
+        /// Only For Debug Purposes
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <returns></returns>
+        public List<Vector3Int> GetUsedKeys(ePlacementLayer layer)
+        {
+            switch (layer)
+            {
+                case ePlacementLayer.Surface:
+                    return surfaceLayerPlacements.Keys.ToList();
+                case ePlacementLayer.Floor:
+                case ePlacementLayer.Wall:
+                    return propLayerPlacements.Keys.ToList();
+                default:
+                    Debug.LogError(layer.ToString() + " Is Missing");
+                    return new List<Vector3Int>();
+            }
+        }
     }
 
     public enum ePlacementLayer

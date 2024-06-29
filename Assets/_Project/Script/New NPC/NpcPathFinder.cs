@@ -92,6 +92,7 @@ namespace New_NPC
             List<Vector3> waypoints = new List<Vector3>();
             foreach (TileNode node in path)
             {
+                // Vector3 gridPath = new Vector3(node.GridX, 0 , node.GridY);
                 waypoints.Add(node.WorldPos);
             }
 

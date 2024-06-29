@@ -2,8 +2,8 @@
 {
     public interface IOccupieable
     {
-        public New_NPC.NPC Owner { get; set; }
-        bool IsOccupied { get; set; }
+        public New_NPC.NPC Owner { get;}
+        bool IsOccupied { get;}
         public void GetItOccupied(New_NPC.NPC owner);
     }
 }

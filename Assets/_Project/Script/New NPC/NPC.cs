@@ -85,7 +85,7 @@ namespace New_NPC
                     yield return null;
                 }
             }
-            Debug.Log("Last Path " + path[path.Count -1]);
+            // Debug.Log("Last Path " + path[path.Count -1]);
             routine = null;
         }
 

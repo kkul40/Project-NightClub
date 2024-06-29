@@ -9,10 +9,10 @@ namespace PropBehaviours
         [SerializeField] private Transform sitPosition;
         [SerializeField] private Transform frontPosition;
 
-        public New_NPC.NPC Owner { get; set; }
+        public New_NPC.NPC Owner { get; private set; }
 
-        [field: SerializeField] public bool IsOccupied { get; set; }
-
+        [field: SerializeField] public bool IsOccupied { get; private set; }
+        
         /// <summary>
         ///     Returns Sit Position
         /// </summary>
