@@ -25,11 +25,11 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.Wall:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
                 case eMaterialLayer.FloorTile:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
             }
         }

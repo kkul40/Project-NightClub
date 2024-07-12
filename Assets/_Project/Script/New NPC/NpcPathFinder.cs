@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Data;
+using DG.Tweening;
 using UnityEngine;
 
 namespace New_NPC
@@ -7,16 +9,73 @@ namespace New_NPC
     public class NpcPathFinder
     {
         // TODO Use DirthFlag Here
-        private TileNode[,] tileNode;
+        private TileNode[,] _tileNode;
+        private Transform _assignedNPC;
+        private List<Vector3> _currentPath;
         
-        public NpcPathFinder()
+        private IEnumerator _routine = null;
+        public bool hasReachedDestination => _routine == null;
+        
+        public NpcPathFinder(Transform assign)
         {
-            tileNode = DiscoData.Instance.mapData.TileNodes;
+            _assignedNPC = assign;
+            _tileNode = DiscoData.Instance.mapData.TileNodes;
+        }
+
+        public void GoToDestination(Vector3 targetPos)
+        {
+            CancelDestination();
+            _currentPath = FindPath(_assignedNPC.position, targetPos);
+            
+            if (_currentPath.Count <= 0)
+                return;
+            
+            _routine = CoFollowPath(_currentPath);
+            DOTween.instance.StartCoroutine(_routine);
+        }
+
+        public void CancelDestination()
+        {
+            if (_routine == null) return;
+            
+            DOTween.instance.StopCoroutine(_routine);
+            _currentPath = new List<Vector3>();
+            _routine = null;
         }
         
-        public List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
+        private IEnumerator CoFollowPath(List<Vector3> path)
         {
-            tileNode = DiscoData.Instance.mapData.TileNodes;
+            for (int i = 0; i < path.Count; i++)
+            {
+                Vector3 newPath = path[i];
+                SetRotationToTarget(newPath);
+                while (Vector3.Distance(_assignedNPC.position, newPath) > 0.1f)
+                {
+                    _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
+                    yield return null;
+                }
+                Debug.Log("Moving To next Tile");
+
+            }
+            _routine = null;
+        }
+        
+        private void SetRotationToTarget(Vector3 lookatTarget)
+        {
+            Vector3 direction = lookatTarget - _assignedNPC.position;
+            direction.Normalize();
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            _assignedNPC.DORotate(lookRotation.eulerAngles, 0.5f);
+        }
+
+        public void SetRotation(Quaternion rotationToSet)
+        {
+            _assignedNPC.DORotate(rotationToSet.eulerAngles, 0.5f);
+        }
+        
+        private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
+        {
+            _tileNode = DiscoData.Instance.mapData.TileNodes;
 
             TileNode startNode = NodeFromWorldPoint(startPos);
             TileNode targetNode = NodeFromWorldPoint(targetPos);
@@ -69,15 +128,13 @@ namespace New_NPC
             Debug.Log("No Path Found");
             return null; // Return null if no path is found
         }
-        
-        public TileNode NodeFromWorldPoint(Vector3 worldPosition)
+        private TileNode NodeFromWorldPoint(Vector3 worldPosition)
         {
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.z;
-            return tileNode[x, y];
+            return _tileNode[x, y];
         }
-        
-        List<Vector3> RetracePath(TileNode startNode, TileNode endNode)
+        private List<Vector3> RetracePath(TileNode startNode, TileNode endNode)
         {
             List<TileNode> path = new List<TileNode>();
             TileNode currentNode = endNode;
@@ -98,8 +155,7 @@ namespace New_NPC
 
             return waypoints; // Return the path as a list of Vector3 positions
         }
-        
-        public List<TileNode> GetNeighbors(TileNode node)
+        private List<TileNode> GetNeighbors(TileNode node)
         {
             List<TileNode> neighbors = new List<TileNode>();
 
@@ -115,14 +171,13 @@ namespace New_NPC
 
                     if (checkX >= 0 && checkX < DiscoData.MapData.MaxMapSizeX && checkY >= 0 && checkY < DiscoData.MapData.MaxMapSizeY)
                     {
-                        neighbors.Add(tileNode[checkX, checkY]);
+                        neighbors.Add(_tileNode[checkX, checkY]);
                     }
                 }
             }
             return neighbors;
         }
-
-        int GetDistance(TileNode nodeA, TileNode nodeB)
+        private int GetDistance(TileNode nodeA, TileNode nodeB)
         {
             int dstX = Mathf.Abs(nodeA.GridX - nodeB.GridX);
             int dstY = Mathf.Abs(nodeA.GridY - nodeB.GridY);

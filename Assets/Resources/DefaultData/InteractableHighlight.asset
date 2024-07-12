@@ -21,7 +21,7 @@ MonoBehaviour:
   combineMeshes: 1
   alphaCutOff: 0
   cullBackFaces: 1
-  depthClip: 0
+  padding: 0
   normalsOption: 0
   fadeInDuration: 0
   fadeOutDuration: 0
@@ -29,6 +29,7 @@ MonoBehaviour:
   cameraDistanceFadeNear: 0
   cameraDistanceFadeFar: 1000
   constantWidth: 0
+  minimumWidth: 0
   overlay: 0
   overlayMode: 0
   overlayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -41,7 +42,7 @@ MonoBehaviour:
   overlayTextureScrolling: {x: 0, y: 0}
   overlayVisibility: 0
   outline: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0, g: 0.8413141, b: 1, a: 1}
   outlineColorStyle: 0
   outlineGradient:
     serializedVersion: 2
@@ -81,10 +82,10 @@ MonoBehaviour:
   outlineEdgeThreshold: 0.995
   outlineSharpness: 1
   outlineDownsampling: 1
-  outlineOptimalBlit: 1
   outlineContourStyle: 0
   outlineVisibility: 0
   outlineIndependent: 0
+  outlineMaskMode: 0
   glow: 0
   glowWidth: 0.4
   glowQuality: 3
@@ -93,7 +94,6 @@ MonoBehaviour:
   glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
   glowDithering: 1
   glowDitheringStyle: 0
-  glowOptimalBlit: 1
   glowMagicNumber1: 0.75
   glowMagicNumber2: 0.5
   glowAnimationSpeed: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
   - offset: 1
     alpha: 0.4
     color: {r: 0.64, g: 1, b: 0, a: 1}
-  glowIgnoreMask: 0
+  glowMaskMode: 0
   innerGlow: 0
   innerGlowWidth: 2
   innerGlowBlendMode: 1

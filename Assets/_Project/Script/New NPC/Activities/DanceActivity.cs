@@ -32,7 +32,7 @@ namespace New_NPC.Activities
             Debug.Log("dance Tile cell pos" + _dancableTile.CellPosition);
             and.Npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(and.Npc);
-            and.Npc.SetNewDestination(_dancableTile.CellPosition);
+            and.Npc.pathFinder.GoToDestination(_dancableTile.CellPosition);
         }
 
         public void UpdateActivity(ActivityNeedsData and)
@@ -40,7 +40,7 @@ namespace New_NPC.Activities
             switch (_danceState)
             {
                 case DanceState.None:
-                    if (and.Npc.hasReachedDestination)
+                    if (and.Npc.pathFinder.hasReachedDestination)
                     {
                         Debug.Log("Reach the target dance");
                         // and.Npc._navMeshAgent.enabled = false;

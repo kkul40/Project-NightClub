@@ -17,20 +17,15 @@ namespace PropBehaviours
 
         public bool HasTable => _drinkTable.gameObject.activeInHierarchy;
 
-        public int AvaliableDrinkCount { get; private set; }
+        public int AvaliableDrinkCount => _drinkTable.drinkAmount;
 
-        public bool HasDrinks => AvaliableDrinkCount > 0 ? true : false;
+        public bool HasDrinks => _drinkTable.drinkAmount > 0 ? true : false;
 
         public Transform WaitPosition => CustomerWaitTransform;
 
         public void GetDrink()
         {
             _drinkTable.GetDrink();
-        }
-
-        public void DecreaseDrinkCount()
-        {
-            AvaliableDrinkCount--;
         }
 
         public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
@@ -48,7 +43,6 @@ namespace PropBehaviours
             Debug.Log("DrinkTable Sett");
             _drinkTable.gameObject.SetActive(true);
             _drinkTable.SetUpTable(drink);
-            AvaliableDrinkCount = drink.DrinkAmount;
         }
     }
 
@@ -58,6 +52,5 @@ namespace PropBehaviours
         public bool HasDrinks { get; }
         public Transform WaitPosition { get; }
         public void GetDrink();
-        public void DecreaseDrinkCount();
     }
 }

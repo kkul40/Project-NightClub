@@ -9,7 +9,7 @@ namespace PropBehaviours
         [SerializeField] private Transform DrinkHolder;
 
         private Drink drink;
-        private int drinkAmount;
+        public int drinkAmount;
         private bool isClicked;
 
         public eInteraction Interaction { get; } = eInteraction.Interactable;

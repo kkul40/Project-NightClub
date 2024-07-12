@@ -8,8 +8,6 @@ namespace BuildingSystem.Builders
 {
     public class PlacementBuilder : IBuildingMethod
     {
-        private int FloorLayerID = 7;
-        private int WalllayerID = 8;
         public bool PressAndHold { get; }
         public bool isFinished { get; private set; }
         public Vector3 Offset { get; private set; }
@@ -30,7 +28,7 @@ namespace BuildingSystem.Builders
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.Surface:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TranparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
@@ -60,10 +58,10 @@ namespace BuildingSystem.Builders
             {
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Surface:
-                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(FloorLayerID);
+                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(DiscoData.ConstantVariables.FloorLayerID);
                     break;
                 case ePlacementLayer.Wall:
-                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(WalllayerID);
+                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(DiscoData.ConstantVariables.WalllayerID);
                     break;
             }
             

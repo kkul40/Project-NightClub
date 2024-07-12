@@ -1,4 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Data;
+using DG.Tweening;
+using New_NPC;
+using PropBehaviours;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,24 +12,21 @@ namespace PlayerScripts
 {
     public class Player : MonoBehaviour
     {
-        private NavMeshAgent _navMeshAgent;
-
+        private NpcPathFinder _pathFinder;
+      
         private void Awake()
         {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
+            _pathFinder = new NpcPathFinder(transform);
         }
 
         private void Update()
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                // SetDestination(BuildingSystem.Instance.GetCellCenterWorld(BuildingSystem.Instance.GetWorldToCell(InputSystem.Instance.GetMouseMapPosition())));
+                var lastHitFloor = InputSystem.Instance.GetHitTransformWithLayer(DiscoData.ConstantVariables.FloorLayerID);
+                if(lastHitFloor != null)
+                    _pathFinder.GoToDestination(GridHandler.Instance.GetWorldToCell(lastHitFloor.position));
             }
-        }
-
-        private void SetDestination(Vector3 destination)
-        {
-            _navMeshAgent.SetDestination(destination);
         }
     }
 }

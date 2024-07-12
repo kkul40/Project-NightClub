@@ -27,7 +27,7 @@ namespace PropBehaviours
         {
             return frontPosition.position;
         }
-
+        
         public Vector3 GetSitPosition()
         {
             return sitPosition.position - new Vector3(0, 0.375f, 0);

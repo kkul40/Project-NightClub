@@ -4,6 +4,17 @@ using BuildingSystem.SO;
 using Data;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.SubsystemsImplementation;
+
+public struct DataType
+{
+    public int a;
+}
+
+public class Refereance
+{
+    public int a;
+}
 
 namespace BuildingSystem
 {
@@ -17,8 +28,20 @@ namespace BuildingSystem
          *
          *
          */
-
         
+        /*
+         * DataTypes - ReferanceType
+         * 
+         * Event
+         * 
+         * OOP {Abstraction, Polymorphizm, } Object Orriented Proggramming
+         *
+         * Project Structure
+         *
+         * Design Pattern {Singleton, Observer, Dirty Flag, Flyweight, Object Polling, Command Pattern ,Strategic Pattern, Prototype Pattern}
+         * 
+         */
+
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
         private IRotationMethod _rotationMethod;
@@ -27,6 +50,7 @@ namespace BuildingSystem
         public bool isPlacing => _buildingMethod != null;
         private Func<Action> callBackOnPlace = null;
         
+        [SerializeField] private TileIndicator _tileIndicator;
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
@@ -36,6 +60,7 @@ namespace BuildingSystem
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, sceneGameObjectHandler, _materialColorChanger);
             _gridHandler.ToggleGrid(false);
         }
+
 
         private void Update()
         {
@@ -66,6 +91,8 @@ namespace BuildingSystem
         {
             _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
             _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
+            _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
+            _tileIndicator.RoateDirectionIndicator(_buildingNeedsData.RotationData.rotation);
         }
         
         #region Building
@@ -80,6 +107,7 @@ namespace BuildingSystem
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
+            _tileIndicator.SetTileIndicator(ePlacingType.Remove);
         }
         public void StartBuild(StoreItemSO storeItemSo, Func<Action> CallBackOnPlace = null)
         {
@@ -92,6 +120,12 @@ namespace BuildingSystem
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
+            
+            _tileIndicator.SetTileIndicator(ePlacingType.Place);
+            if (storeItemSo is PlacementItemSO placementItemSo)
+            {
+                _tileIndicator.SetSize(placementItemSo.Size);
+            }
         }
 
         public void StopBuild()
@@ -104,6 +138,8 @@ namespace BuildingSystem
             }
             _gridHandler.ToggleGrid(false);
             callBackOnPlace = null;
+            _tileIndicator.SetSize(Vector2.one);
+            _tileIndicator.CloseTileIndicator();
         }
         #endregion
     }

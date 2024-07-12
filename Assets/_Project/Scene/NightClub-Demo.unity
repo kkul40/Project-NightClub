@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 86038901}
-  m_IndirectSpecularColor: {r: 0.1762805, g: 0.22062714, b: 0.3029516, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4678,8 +4677,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1842980420}
         m_TargetAssemblyTypeName: Testing.Developer, Assembly-CSharp
-        m_MethodName: NextScene
-        m_Mode: 3
+        m_MethodName: PreviousScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10575,12 +10574,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &1076041698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17832,6 +17831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableHighlight: {fileID: 11400000, guid: 03c60ef2ba0c4814cbe7eb9db5f7ddf6, type: 2}
+  _propUnitHighlight: {fileID: 11400000, guid: 4c278b0dc02f9674e83dfceb8554bcfb, type: 2}
   _noneHighlight: {fileID: 11400000, guid: bba82d4e4c04954418a3da1d6c8c0180, type: 2}
 --- !u!1001 &1735531152
 PrefabInstance:
@@ -18523,214 +18523,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
---- !u!1 &1853670651 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3720443181012456702, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
-  m_PrefabInstance: {fileID: 2072907701781959379}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1853670656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853670651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 0
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 1
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
---- !u!114 &1853670657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853670651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 888380afc233049ce9e618f9f36c8ba8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 03c60ef2ba0c4814cbe7eb9db5f7ddf6, type: 2}
-  profileSync: 0
-  camerasLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  effectGroup: 0
-  effectGroupLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  effectNameFilter: 
-  effectNameUseRegEx: 0
-  combineMeshes: 1
-  alphaCutOff: 0
-  cullBackFaces: 1
-  padding: 0
-  ignoreObjectVisibility: 0
-  reflectionProbes: 0
-  GPUInstancing: 1
-  sortingPriority: 0
-  optimizeSkinnedMesh: 1
-  depthClip: 0
-  cameraDistanceFade: 0
-  cameraDistanceFadeNear: 0
-  cameraDistanceFadeFar: 1000
-  normalsOption: 0
-  ignore: 0
-  _highlighted: 1
-  fadeInDuration: 0
-  fadeOutDuration: 0
-  flipY: 0
-  constantWidth: 0
-  minimumWidth: 0
-  subMeshMask: -1
-  overlay: 0
-  overlayMode: 0
-  overlayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  overlayAnimationSpeed: 1
-  overlayMinIntensity: 0.5
-  overlayBlending: 1
-  overlayTexture: {fileID: 0}
-  overlayTextureUVSpace: 0
-  overlayTextureScale: 1
-  overlayTextureScrolling: {x: 0, y: 0}
-  overlayVisibility: 0
-  outline: 1
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineColorStyle: 0
-  outlineGradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  outlineGradientInLocalSpace: 0
-  outlineWidth: 0.45
-  outlineBlurPasses: 1
-  outlineQuality: 2
-  outlineEdgeMode: 0
-  outlineEdgeThreshold: 0.995
-  outlineSharpness: 1
-  outlineDownsampling: 1
-  outlineVisibility: 0
-  glowBlendMode: 0
-  outlineBlitDebug: 0
-  outlineIndependent: 0
-  outlineContourStyle: 0
-  outlineMaskMode: 0
-  glow: 0
-  glowWidth: 0.4
-  glowQuality: 3
-  glowBlurMethod: 0
-  glowDownsampling: 2
-  glowHQColor: {r: 0.64, g: 1, b: 0, a: 1}
-  glowDithering: 1
-  glowDitheringStyle: 0
-  glowMagicNumber1: 0.75
-  glowMagicNumber2: 0.5
-  glowAnimationSpeed: 1
-  glowVisibility: 0
-  glowBlitDebug: 0
-  glowBlendPasses: 1
-  glowPasses:
-  - offset: 4
-    alpha: 0.1
-    color: {r: 0.64, g: 1, b: 0, a: 1}
-  - offset: 3
-    alpha: 0.2
-    color: {r: 0.64, g: 1, b: 0, a: 1}
-  - offset: 2
-    alpha: 0.3
-    color: {r: 0.64, g: 1, b: 0, a: 1}
-  - offset: 1
-    alpha: 0.4
-    color: {r: 0.64, g: 1, b: 0, a: 1}
-  glowMaskMode: 0
-  innerGlow: 0
-  innerGlowWidth: 2
-  innerGlowColor: {r: 0.3333333, g: 0.3333333, b: 0.3333333, a: 1}
-  innerGlowBlendMode: 1
-  innerGlowVisibility: 0
-  targetFX: 0
-  targetFXTexture: {fileID: 0}
-  targetFXColor: {r: 1, g: 1, b: 1, a: 1}
-  targetFXCenter: {fileID: 0}
-  targetFXRotationSpeed: 50
-  targetFXInitialScale: 4
-  targetFXEndScale: 1.5
-  targetFXScaleToRenderBounds: 1
-  targetFXUseEnclosingBounds: 0
-  targetFXAlignToGround: 0
-  targetFXOffset: {x: 0, y: 0, z: 0}
-  targetFXFadePower: 32
-  targetFXGroundMaxDistance: 10
-  targetFXGroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  targetFXTransitionDuration: 0.5
-  targetFXStayDuration: 1.5
-  targetFXVisibility: 1
-  seeThrough: 2
-  seeThroughOccluderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  seeThroughOccluderThreshold: 0.3
-  seeThroughOccluderMaskAccurate: 0
-  seeThroughOccluderCheckInterval: 1
-  seeThroughOccluderCheckIndividualObjects: 0
-  seeThroughDepthOffset: 0
-  seeThroughMaxDepth: 0
-  seeThroughIntensity: 0.8
-  seeThroughTintAlpha: 0.5
-  seeThroughTintColor: {r: 1, g: 0, b: 0, a: 1}
-  seeThroughNoise: 1
-  seeThroughBorder: 0
-  seeThroughBorderColor: {r: 0, g: 0, b: 0, a: 1}
-  seeThroughBorderOnly: 0
-  seeThroughBorderWidth: 0.45
-  seeThroughOrdered: 0
-  seeThroughTexture: {fileID: 0}
-  seeThroughTextureUVSpace: 0
-  seeThroughTextureScale: 1
-  seeThroughChildrenSortingMode: 0
-  rmsCount: 2
-  hitFxInitialIntensity: 0
-  hitFxMode: 0
-  hitFxFadeOutDuration: 0.25
-  hitFxColor: {r: 1, g: 1, b: 1, a: 1}
-  hitFxRadius: 0.5
 --- !u!4 &1855322333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -21233,7 +21025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
   sceneGameObjectHandler: {fileID: 1466197926}
-  maxNPC: 15
+  maxNPC: 25
 --- !u!1001 &2039099550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22285,7 +22077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.4
+      value: 5.12
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22293,7 +22085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.88
+      value: 4.08
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22330,13 +22122,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3720443181012456702, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1853670656}
-    - targetCorrespondingSourceObject: {fileID: 3720443181012456702, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1853670657}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
 --- !u!114 &2702156257156859394
 MonoBehaviour:

@@ -9,6 +9,7 @@ namespace Testing
     public class CursorSystemTest : MonoBehaviour
     {
         public HighlightProfile _interactableHighlight;
+        public HighlightProfile _propUnitHighlight;
         public HighlightProfile _noneHighlight;
         private GameObject _currentGameObject;
 
@@ -34,16 +35,6 @@ namespace Testing
             }
 
             _currentGameObject = null;
-        }
-
-        private void Start()
-        {
-            var rotationData = new RotationData();
-            var rotationData2 = rotationData;
-
-            rotationData2.direction = Direction.Right;
-
-            Debug.Log(rotationData.rotation);
         }
 
         private void Update()
@@ -91,6 +82,8 @@ namespace Testing
                     highlightEffect.ProfileLoad(_noneHighlight);
                     break;
                 case eInteraction.PropUnit:
+                    highlightEffect.ProfileLoad(_propUnitHighlight);
+                    break;
                 case eInteraction.Interactable:
                     highlightEffect.ProfileLoad(_interactableHighlight);
                     break;

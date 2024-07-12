@@ -36,5 +36,14 @@ namespace PropBehaviours
         public void OnClick()
         {
         }
+
+        public IPropUnit Copy()
+        {
+            IPropUnit output = new IPropUnit();
+            output.ID = ID;
+            output.CellPosition = CellPosition;
+
+            return output;
+        }
     }
 }

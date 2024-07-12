@@ -21,7 +21,6 @@ namespace New_NPC
             {
                 if (prop == null) continue;
 
-
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                     if (occupieable.IsOccupied)
                         continue;

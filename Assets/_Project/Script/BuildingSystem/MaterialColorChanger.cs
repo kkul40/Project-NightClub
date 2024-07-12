@@ -8,7 +8,7 @@ namespace BuildingSystem
     {
         public enum eMaterialColor
         {
-            TranparentMaterial,
+            TransparentMaterial,
             RemovingMaterial,
         }
         
@@ -31,7 +31,7 @@ namespace BuildingSystem
                 var listMesh = ReturnMeshRendererList(transform.GetChild(i).gameObject);
                 switch (eMaterialColor)
                 {
-                    case eMaterialColor.TranparentMaterial:
+                    case eMaterialColor.TransparentMaterial:
                         SetMaterial(listMesh, whiteMaterial);
                         break;
                     case eMaterialColor.RemovingMaterial:

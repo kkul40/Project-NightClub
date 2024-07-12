@@ -72,6 +72,13 @@ namespace Data
             
             public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition);
         }
+
+        [Serializable]
+        public class ConstantVariables
+        {
+            public const int FloorLayerID = 7;
+            public const int WalllayerID = 8;
+        }
        
         public enum eDanceStyle
         {

@@ -15,13 +15,13 @@ namespace System
 
         private void LateUpdate()
         {
+            //TODO Fare ekranin disina cikarsa kaydir ayni loldeki gibi
             var moveDelta = InputSystem.Instance.MoveDelta;
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
-
             var nextPos = transform.position +
-                          (transform.forward * moveDelta.y + transform.right * moveDelta.x) * speed * Time.deltaTime;
+                          (transform.forward * moveDelta.y + transform.right * moveDelta.x) * (speed * Time.deltaTime);
 
             transform.position = nextPos;
 

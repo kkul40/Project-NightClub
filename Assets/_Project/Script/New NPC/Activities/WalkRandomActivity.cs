@@ -12,20 +12,21 @@ namespace New_NPC.Activities
         
         public void StartActivity(ActivityNeedsData and)
         {
-            and.Npc.SetNewDestination(GetRandomDestination(and));
+            and.Npc.pathFinder.GoToDestination(GetRandomDestination(and));
             and.Npc.SetAnimation(eNpcAnimation.Walk);
         }
 
         public void UpdateActivity(ActivityNeedsData and)
         {
-            if (and.Npc.hasReachedDestination)
+            if (and.Npc.pathFinder.hasReachedDestination)
             {
+                Debug.Log("Walk Updating");
                 and.Npc.SetAnimation(eNpcAnimation.Idle);
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
-                    and.Npc.SetNewDestination(GetRandomDestination(and));
-                    and.Npc.SetAnimation(eNpcAnimation.Walk);
+                    // and.Npc.pathFinder.GoToDestination(GetRandomDestination(and));
+                    // and.Npc.SetAnimation(eNpcAnimation.Walk);
                     timer = 0;
                     IsEnded = true;
                 }
