@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
+  m_Name: Table 3
+  m_EditorClassIdentifier: 
+  ID: -92345749
+  Name: Square Table
+  Icon: {fileID: 21300000, guid: 36350119cb4d3d1439f88990aed2b482, type: 3}
+  Price: 0
+  Prefab: {fileID: 1137823832347792557, guid: 5e6bb18d6bb91574fa8154f2b2fb56bf, type: 3}
+  Size: {x: 1, y: 1}
+  PlacementLayer: 1
+  eRotation: 1

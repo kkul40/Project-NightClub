@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -92345750
   Name: 
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 09c3d64c1becab345bfe56c704d1c583, type: 3}
   Price: 0
   Prefab: {fileID: 8410802093800554064, guid: 28d13af642b928a49963101702dc196a, type: 3}
   Size: {x: 1, y: 1}
