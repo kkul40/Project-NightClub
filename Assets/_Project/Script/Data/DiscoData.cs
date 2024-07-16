@@ -74,7 +74,6 @@ namespace Data
                 WallDatas = new List<WallAssignmentData>();
                 foreach (var saveD in saveData.SavedWallDatas)
                 {
-                    Debug.Log(saveD.AssignedMaterialID);
                     WallDatas.Add(new WallAssignmentData(saveD.CellPosition, saveD.AssignedMaterialID));
                 }
             }
@@ -94,8 +93,8 @@ namespace Data
                 }
                 return PathFinderNodes[cellpos.x, cellpos.z];
             }
-            
-            public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition);
+
+            public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition - Vector3Int.right);
         }
         
         public class ConstantVariables

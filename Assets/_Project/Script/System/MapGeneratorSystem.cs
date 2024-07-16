@@ -37,11 +37,11 @@ namespace System
                 for (var j = 0; j < yMax; j++)
                     InstantiateFloorTile(i, j);
             
-            Debug.Log(DiscoData.Instance.mapData.WallDoorIndex);
             for (var i = 1; i <= xMax; i++)
             {
                 if (i == DiscoData.Instance.mapData.WallDoorIndex)
                 {
+                    Debug.Log(i);
                     var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
                     
                     Debug.Log("dooor Created");
