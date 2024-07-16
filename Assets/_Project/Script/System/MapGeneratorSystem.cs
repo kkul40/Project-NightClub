@@ -72,7 +72,7 @@ namespace System
         [ContextMenu("Expend X")]
         public void ExpendX()
         {
-            InstantiateXWall(MapSize.x);
+            InstantiateXWall(MapSize.x + 1);
 
             for (var i = 0; i < MapSize.y; i++) InstantiateFloorTile(MapSize.x, i);
             MapSize += Vector2Int.right;
@@ -83,7 +83,7 @@ namespace System
         [ContextMenu("Expend Y")]
         public void ExpendY()
         {
-            InstantiateYWall(MapSize.y);
+            InstantiateYWall(MapSize.y + 1);
 
             for (var i = 0; i < MapSize.x; i++) InstantiateFloorTile(i, MapSize.y);
             MapSize += Vector2Int.up;
@@ -149,7 +149,8 @@ namespace System
             if (data == null)
             {
                 Debug.Log("Data Was NULL");
-                return;
+                DiscoData.Instance.mapData.WallDatas.Add(new WallAssignmentData(cellPosition, -1));
+                data = DiscoData.Instance.mapData.WallDatas[DiscoData.Instance.mapData.WallDatas.Count -1];
             }
             
             data.AssignReferance(newWallObject.GetComponent<Wall>());
