@@ -10,7 +10,6 @@ namespace System
     public class NPCSystem : Singleton<NPCSystem>
     {
         [SerializeField] private GameObject _npcPrefab;
-        [FormerlySerializedAs("_sceneTransformContainer")] [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
 
         public int maxNPC = 25;
 
@@ -27,7 +26,7 @@ namespace System
             {
                 yield return new WaitForSeconds(0.1f);
                 var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.mapData.EnterencePosition - new Vector3(0,0.5f,0), Quaternion.identity);
-                newNPC.transform.SetParent(sceneGameObjectHandler.NPCHolderTransform);
+                newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
                 eGenderType gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
                 switch (gender)

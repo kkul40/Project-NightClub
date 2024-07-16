@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Data
 {
     [Serializable]
-    public class TileNode
+    public class PathFinderNode
     {
         public Vector3 WorldPos;
-        public TileNode Parent;
+        public PathFinderNode Parent;
         public bool IsWalkable;
 
         public int GridX;
@@ -21,7 +21,7 @@ namespace Data
             get { return GCost + HCost; }
         }
         
-        public TileNode(bool isWalkable, Vector3 position, int gridX, int gridY)
+        public PathFinderNode(bool isWalkable, Vector3 position, int gridX, int gridY)
         {
             IsWalkable = isWalkable;
             WorldPos = position;

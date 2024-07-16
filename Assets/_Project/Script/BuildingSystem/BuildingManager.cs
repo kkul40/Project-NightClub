@@ -48,7 +48,7 @@ namespace BuildingSystem
         private BuildingNeedsData _buildingNeedsData;
         
         public bool isPlacing => _buildingMethod != null;
-        private Func<Action> callBackOnPlace = null;
+        private Func<Action> callBackOnPlaced = null;
         
         [SerializeField] private TileIndicator _tileIndicator;
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
@@ -57,7 +57,7 @@ namespace BuildingSystem
         
         private void Start()
         {
-            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, sceneGameObjectHandler, _materialColorChanger);
+            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
             _gridHandler.ToggleGrid(false);
         }
 
@@ -80,7 +80,7 @@ namespace BuildingSystem
                 if (_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
-                    callBackOnPlace?.Invoke().Invoke();
+                    callBackOnPlaced?.Invoke().Invoke();
                 }
                 
                 if (InputSystem.Instance.Esc) StopBuild();
@@ -112,7 +112,7 @@ namespace BuildingSystem
         public void StartBuild(StoreItemSO storeItemSo, Func<Action> CallBackOnPlace = null)
         {
             StopBuild();
-            callBackOnPlace = CallBackOnPlace;
+            callBackOnPlaced = CallBackOnPlace;
             _gridHandler.ToggleGrid(true);
             _storeItemSo = storeItemSo;
             _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
@@ -132,12 +132,12 @@ namespace BuildingSystem
         {
             if (_buildingMethod != null)
             {
-                _buildingMethod.OnFinish(_buildingNeedsData);
+                _buildingMethod.OnStop(_buildingNeedsData);
                 _buildingMethod = null;
                 _rotationMethod = null;
             }
             _gridHandler.ToggleGrid(false);
-            callBackOnPlace = null;
+            callBackOnPlaced = null;
             _tileIndicator.SetSize(Vector2.one);
             _tileIndicator.CloseTileIndicator();
         }

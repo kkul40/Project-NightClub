@@ -11,6 +11,6 @@ namespace BuildingSystem.Builders
         bool OnValidate(BuildingNeedsData buildingNeedsData);
         void OnUpdate(BuildingNeedsData buildingNeedsData);
         void OnPlace(BuildingNeedsData buildingNeedsData);
-        void OnFinish(BuildingNeedsData buildingNeedsData);
+        void OnStop(BuildingNeedsData buildingNeedsData);
     }
 }

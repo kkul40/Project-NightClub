@@ -28,7 +28,7 @@ namespace BuildingSystem.Builders
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.Surface:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(SceneGameObjectHandler.Instance.GetPropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
@@ -87,17 +87,17 @@ namespace BuildingSystem.Builders
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.Surface:
-                    createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.SurfaceHolderTransform);
+                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
-                    createdObject.transform.SetParent(buildingNeedsData.SceneGameObjectHandler.PropHolderTransform);
+                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetPropHolderTransform);
                     break;
             }
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition, new PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, _storeItemSo.Size, buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
         }
 
-        public void OnFinish(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData buildingNeedsData)
         {
             Object.Destroy(_tempObject);
             isFinished = true;

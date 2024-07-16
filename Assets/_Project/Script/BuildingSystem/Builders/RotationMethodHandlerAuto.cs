@@ -20,12 +20,14 @@ namespace BuildingSystem.Builders
         {
             float lastDis = 9999;
             Quaternion closestChangableMaterial = Quaternion.identity;
-            foreach(var wall in buildingNeedsData.DiscoData.mapData.GetWallMapPosList())
+            foreach(var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
             {
-                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.transform.position);
+                if(wall.assignedWall == null) continue;
+                
+                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.assignedWall.transform.position);
                 if (dis < lastDis)
                 {
-                    closestChangableMaterial = wall.transform.rotation;
+                    closestChangableMaterial = wall.assignedWall.transform.rotation;
                     lastDis = dis;
                 }
             }

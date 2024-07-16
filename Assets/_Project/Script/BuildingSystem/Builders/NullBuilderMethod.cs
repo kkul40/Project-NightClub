@@ -24,7 +24,7 @@ namespace BuildingSystem.Builders
         {
         }
 
-        public void OnFinish(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData buildingNeedsData)
         {
         }
     }

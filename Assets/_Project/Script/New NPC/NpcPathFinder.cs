@@ -9,7 +9,7 @@ namespace New_NPC
     public class NpcPathFinder
     {
         // TODO Use DirthFlag Here
-        private TileNode[,] _tileNode;
+        private PathFinderNode[,] _tileNode;
         private Transform _assignedNPC;
         private List<Vector3> _currentPath;
         
@@ -19,7 +19,7 @@ namespace New_NPC
         public NpcPathFinder(Transform assign)
         {
             _assignedNPC = assign;
-            _tileNode = DiscoData.Instance.mapData.TileNodes;
+            _tileNode = DiscoData.Instance.mapData.PathFinderNodes;
         }
 
         public void GoToDestination(Vector3 targetPos)
@@ -27,7 +27,7 @@ namespace New_NPC
             CancelDestination();
             _currentPath = FindPath(_assignedNPC.position, targetPos);
             
-            if (_currentPath.Count <= 0)
+            if (_currentPath == null)
                 return;
             
             _routine = CoFollowPath(_currentPath);
@@ -75,18 +75,18 @@ namespace New_NPC
         
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            _tileNode = DiscoData.Instance.mapData.TileNodes;
+            _tileNode = DiscoData.Instance.mapData.PathFinderNodes;
 
-            TileNode startNode = NodeFromWorldPoint(startPos);
-            TileNode targetNode = NodeFromWorldPoint(targetPos);
+            PathFinderNode startNode = NodeFromWorldPoint(startPos);
+            PathFinderNode targetNode = NodeFromWorldPoint(targetPos);
 
-            List<TileNode> openSet = new List<TileNode>();
-            HashSet<TileNode> closedSet = new HashSet<TileNode>();
+            List<PathFinderNode> openSet = new List<PathFinderNode>();
+            HashSet<PathFinderNode> closedSet = new HashSet<PathFinderNode>();
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
-                TileNode currentNode = openSet[0];
+                PathFinderNode currentNode = openSet[0];
                 for (int i = 1; i < openSet.Count; i++)
                 {
                     if (openSet[i].FCost < currentNode.FCost || openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost)
@@ -103,7 +103,7 @@ namespace New_NPC
                     return RetracePath(startNode, targetNode);
                 }
 
-                foreach (TileNode neighbor in GetNeighbors(currentNode))
+                foreach (PathFinderNode neighbor in GetNeighbors(currentNode))
                 {
                     if (!neighbor.IsWalkable || closedSet.Contains(neighbor))
                     {
@@ -128,16 +128,18 @@ namespace New_NPC
             Debug.Log("No Path Found");
             return null; // Return null if no path is found
         }
-        private TileNode NodeFromWorldPoint(Vector3 worldPosition)
+        private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
         {
+            if (worldPosition == -Vector3.one) return new PathFinderNode(false, Vector3.zero, 0, 0);
+            
             int x = (int)worldPosition.x;
             int y = (int)worldPosition.z;
             return _tileNode[x, y];
         }
-        private List<Vector3> RetracePath(TileNode startNode, TileNode endNode)
+        private List<Vector3> RetracePath(PathFinderNode startNode, PathFinderNode endNode)
         {
-            List<TileNode> path = new List<TileNode>();
-            TileNode currentNode = endNode;
+            List<PathFinderNode> path = new List<PathFinderNode>();
+            PathFinderNode currentNode = endNode;
 
             while (currentNode != startNode)
             {
@@ -147,7 +149,7 @@ namespace New_NPC
             path.Reverse();
 
             List<Vector3> waypoints = new List<Vector3>();
-            foreach (TileNode node in path)
+            foreach (PathFinderNode node in path)
             {
                 // Vector3 gridPath = new Vector3(node.GridX, 0 , node.GridY);
                 waypoints.Add(node.WorldPos);
@@ -155,9 +157,9 @@ namespace New_NPC
 
             return waypoints; // Return the path as a list of Vector3 positions
         }
-        private List<TileNode> GetNeighbors(TileNode node)
+        private List<PathFinderNode> GetNeighbors(PathFinderNode node)
         {
-            List<TileNode> neighbors = new List<TileNode>();
+            List<PathFinderNode> neighbors = new List<PathFinderNode>();
 
             for (int x = -1; x <= 1; x++)
             {
@@ -169,7 +171,7 @@ namespace New_NPC
                     int checkX = node.GridX + x;
                     int checkY = node.GridY + y;
 
-                    if (checkX >= 0 && checkX < DiscoData.MapData.MaxMapSizeX && checkY >= 0 && checkY < DiscoData.MapData.MaxMapSizeY)
+                    if (checkX >= 0 && checkX < DiscoData.ConstantVariables.MaxMapSizeX && checkY >= 0 && checkY < DiscoData.ConstantVariables.MaxMapSizeY)
                     {
                         neighbors.Add(_tileNode[checkX, checkY]);
                     }
@@ -177,7 +179,7 @@ namespace New_NPC
             }
             return neighbors;
         }
-        private int GetDistance(TileNode nodeA, TileNode nodeB)
+        private int GetDistance(PathFinderNode nodeA, PathFinderNode nodeB)
         {
             int dstX = Mathf.Abs(nodeA.GridX - nodeB.GridX);
             int dstY = Mathf.Abs(nodeA.GridY - nodeB.GridY);

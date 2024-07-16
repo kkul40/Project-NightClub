@@ -10,6 +10,7 @@ namespace Data
     [Serializable]
     public class PlacementData
     {
+        //TODO Optime It
         public int ID;
         public Vector3Int PlacedCellPos;
         public GameObject SceneObject;

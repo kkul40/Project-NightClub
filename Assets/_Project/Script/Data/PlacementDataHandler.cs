@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BuildingSystem;
+using BuildingSystem.SO;
 using PropBehaviours;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -243,4 +244,40 @@ namespace Data
         Wall,
         Null,
     }
+
+    public class NewPlacementDataHandler
+    {
+        public class PlacementData2
+        {
+            public StoreItemSO StoreItemSo;
+        }
+        
+        private List<IPropUnit> propList;
+        
+        // Data - PlacedPosition
+        private Dictionary<PlacementData2, Vector3Int> allPlacements;
+        
+        public NewPlacementDataHandler()
+        {
+            propList = new List<IPropUnit>();
+            allPlacements = new Dictionary<PlacementData2, Vector3Int>();
+        }
+        
+        public bool ContainsKey(Vector3Int cellPos, eFloorGridAssignmentType layer)
+        {
+            if (cellPos.x < 0 ||
+                cellPos.z < 0 ||
+                cellPos.x >= DiscoData.Instance.mapData.CurrentMapSize.x ||
+                cellPos.z >= DiscoData.Instance.mapData.CurrentMapSize.y)
+                return true;
+            
+            
+            
+
+            return false;
+        }
+        
+    }
+
+   
 }

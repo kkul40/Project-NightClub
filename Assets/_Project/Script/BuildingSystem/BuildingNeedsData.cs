@@ -9,7 +9,6 @@ namespace BuildingSystem
     {
         public InputSystem InputSystem;
         public DiscoData DiscoData;
-        public SceneGameObjectHandler SceneGameObjectHandler;
         public MaterialColorChanger MaterialColorChanger;
         
         public StoreItemSO StoreItemSo;
@@ -18,11 +17,10 @@ namespace BuildingSystem
         public RotationData RotationData;
         public float MoveSpeed = 10;
 
-        public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData, SceneGameObjectHandler sceneGameObjectHandler, MaterialColorChanger materialColorChanger)
+        public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData, MaterialColorChanger materialColorChanger)
         {
             InputSystem = inputSystem;
             DiscoData = discoData;
-            SceneGameObjectHandler = sceneGameObjectHandler;
             MaterialColorChanger = materialColorChanger;
             RotationData = RotationData.Default;
         }

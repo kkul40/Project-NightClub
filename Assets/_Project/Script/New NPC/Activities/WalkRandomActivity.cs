@@ -41,11 +41,12 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.mapData.FloorMap[Random.Range(0, and.DiscoData.mapData.FloorMap.Count)];
-            while (and.DiscoData.placementDataHandler.ContainsKey(and.GridHandler.GetWorldToCell(target),
-                       ePlacementLayer.Floor))
+            var target = and.DiscoData.mapData.FloorGridDatas[Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x), Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+
+            while (target.assignedObjectID != -1)
             {
-                target = DiscoData.Instance.mapData.FloorMap[Random.Range(0, DiscoData.Instance.mapData.FloorMap.Count)];
+                target = and.DiscoData.mapData.FloorGridDatas[Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x), Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+
                 loopCount++;
                 if (loopCount >= 99)
                 {
@@ -54,7 +55,7 @@ namespace New_NPC.Activities
                 }
             }
 
-            return target;
+            return target.CellPosition;
         }
     }
 }

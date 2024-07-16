@@ -13,7 +13,7 @@ namespace Data
         {
             var formatter = new BinaryFormatter();
 
-            var path = Application.persistentDataPath + "/Player.kdata";
+            var path = Application.persistentDataPath + "/PlayerCustomization.kdata";
             var stream = new FileStream(path, FileMode.Create);
 
             var data = new PlayerCustomizationIndexData(playerCustomizationLoader);
@@ -23,7 +23,7 @@ namespace Data
 
         public static PlayerCustomizationIndexData LoadCustomizedPlayer()
         {
-            var path = Application.persistentDataPath + "/Player.kdata";
+            var path = Application.persistentDataPath + "/PlayerCustomization.kdata";
 
             if (File.Exists(path))
             {

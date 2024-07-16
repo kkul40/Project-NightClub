@@ -75,7 +75,14 @@ namespace System
             RaycastHit hit;
             float maxDistance = 100;
 
-            if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
+            // TODO Ignore Layer Ekle ki kapi bugg da kalmasin
+            // int ignoreLayer = ignore;
+            // int ignoreMask = ~(1 << ignoreLayer);
+
+            if (Physics.Raycast(ray, out hit, maxDistance))
+            {
+                return hit.transform;
+            }
 
             return null;
         }

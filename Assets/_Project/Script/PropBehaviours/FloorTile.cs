@@ -1,4 +1,5 @@
-﻿using BuildingSystem;
+﻿using System;
+using BuildingSystem;
 using Data;
 using UnityEngine;
 
@@ -6,39 +7,54 @@ namespace PropBehaviours
 {
     public class FloorTile : MonoBehaviour, IInteractable, IChangableMaterial
     {
-        private void Start()
+        #region IChangableMaterial
+
+        public MeshRenderer _meshRenderer
         {
-            LoadMaterial();
+            get
+            {
+                return GetComponentInChildren<MeshRenderer>();
+            }
         }
-    
+
         public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
-        public Material CurrentMaterial { get; set; }
 
-        public void LoadMaterial()
+        public Material CurrentMaterial
         {
-            CurrentMaterial = InitConfig.Instance.GetDefaultTileMaterial.Material;
-            UpdateMaterial();
+            get
+            {
+                return _meshRenderer.material;
+            }
         }
 
-        public void UpdateMaterial()
+        public void UpdateMaterial(Material material)
         {
-            MeshRenderer meshRenderer = GetComponentInChildren<MeshRenderer>();
-            meshRenderer.material = CurrentMaterial;
+            _meshRenderer.material = material;
         }
+        
+        #endregion
 
+        #region IInteractable
         public eInteraction Interaction { get; } = eInteraction.None;
-
+        
         public void OnFocus()
         {
         }
-
+        
         public void OnOutFocus()
         {
         }
 
         public void OnClick()
         {
-            Debug.Log("Floor Tile");
+            var a = GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
+            FloorGridAssignmentData test = DiscoData.Instance.mapData.FloorGridDatas[a.x,a.z];
+            // Debug.Log(test.CellPosition);
+            // Debug.Log(test.assignedMaterialID);
+
+            // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
+            Debug.Log(DiscoData.Instance.mapData.FloorGridDatas[a.x, a.z].assignedMaterialID);
         }
+        #endregion
     }
 }

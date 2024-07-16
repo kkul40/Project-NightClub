@@ -79,7 +79,7 @@ namespace BuildingSystem
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
         }
 
-        public void OnFinish(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData buildingNeedsData)
         {
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
             isFinished = true;
