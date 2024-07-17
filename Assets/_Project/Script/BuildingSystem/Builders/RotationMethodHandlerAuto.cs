@@ -20,7 +20,7 @@ namespace BuildingSystem.Builders
         {
             float lastDis = 9999;
             var closestChangableMaterial = Quaternion.identity;
-            foreach (var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
+            foreach (var wall in buildingNeedsData.DiscoData.MapData.WallDatas)
             {
                 if (wall.assignedWall == null) continue;
 

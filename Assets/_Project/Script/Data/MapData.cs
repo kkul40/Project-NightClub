@@ -11,37 +11,66 @@ namespace Data
         // TODO Make door ps vector2Int
         public Vector3Int DoorPosition { get; private set; }
 
-        public PathFinderNode[,] PathFinderNodes { get; }
-        public FloorGridAssignmentData[,] FloorGridDatas { get; }
+        public PathFinderNode[,] PathFinderNodes { get; set; }
+        public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
         public List<WallAssignmentData> WallDatas { get; set; }
         public int WallDoorIndex { get; private set; }
 
-        // TODO Bu Verileri SaveData dan cek
         public MapData(GameData gameData)
         {
-            // Load Data
-            LoadMapData(gameData);
-
-            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-            FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-
-            for (var i = 0; i < ConstantVariables.MaxMapSizeX; i++)
-            for (var j = 0; j < ConstantVariables.MaxMapSizeY; j++)
-            {
-                PathFinderNodes[i, j] = new PathFinderNode(false, -Vector3.one, -1, -1);
-                FloorGridDatas[i, j] = new FloorGridAssignmentData(-Vector3Int.one);
-            }
+            LoadData(gameData);
         }
 
-        private void LoadMapData(GameData gameData)
+        public void LoadData(GameData gameData)
         {
+            #region Loading...
+            
             CurrentMapSize = gameData.SavedMapSize;
             WallDoorIndex = gameData.WallDoorIndexOnX;
             DoorPosition = new Vector3Int(WallDoorIndex, 0, -1);
 
             WallDatas = new List<WallAssignmentData>();
-            foreach (var saveD in gameData.SavedWallDatas)
-                WallDatas.Add(new WallAssignmentData(saveD.CellPosition, saveD.AssignedMaterialID));
+            foreach (var wall in gameData.SavedWallDatas)
+            {
+                WallDatas.Add(new WallAssignmentData(wall.CellPosition, wall.AssignedMaterialID));
+            }
+            
+            FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
+            for (int x = 0; x < ConstantVariables.MaxMapSizeX; x++)
+            for (int y = 0; y < ConstantVariables.MaxMapSizeY; y++)
+            {
+                FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
+            }
+            
+            #endregion
+            
+            
+            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
+
+            for (var i = 0; i < ConstantVariables.MaxMapSizeX; i++)
+            for (var j = 0; j < ConstantVariables.MaxMapSizeY; j++)
+            {
+                PathFinderNodes[i, j] = new PathFinderNode(false, -Vector3.one, -1, -1);
+            }
+            
+            Debug.Log("Map Data Loaded...");
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.SavedMapSize = CurrentMapSize;
+
+            gameData.SavedWallDatas = new List<GameData.WallSaveData>();
+            foreach (var wall in WallDatas)
+            {
+                gameData.SavedWallDatas.Add(new GameData.WallSaveData(wall));
+            }
+            
+            for (int x = 0; x < CurrentMapSize.x; x++)
+            for (int y = 0; y < CurrentMapSize.y; y++)
+            {
+                gameData.SavedFloorDatas[new Vector3Int(x, 0, y)] = new GameData.FloorSaveData(FloorGridDatas[x,y]);
+            }
         }
 
         public bool SetCurrentMapSize(MapGeneratorSystem mapGeneratorSystem, Vector2Int mapSize)

@@ -29,8 +29,8 @@ namespace Data
         {
             if (cellPos.x < 0 ||
                 cellPos.z < 0 ||
-                cellPos.x >= DiscoData.Instance.mapData.CurrentMapSize.x ||
-                cellPos.z >= DiscoData.Instance.mapData.CurrentMapSize.y)
+                cellPos.x >= DiscoData.Instance.MapData.CurrentMapSize.x ||
+                cellPos.z >= DiscoData.Instance.MapData.CurrentMapSize.y)
                 return true;
 
             switch (layer)
@@ -106,12 +106,12 @@ namespace Data
                 {
                     case ePlacementLayer.Surface:
                         surfaceLayerPlacements.Add(key, placementData);
-                        DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
+                        DiscoData.Instance.MapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
                         break;
                     case ePlacementLayer.Floor:
                     case ePlacementLayer.Wall:
                         propLayerPlacements.Add(key, placementData);
-                        DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = false;
+                        DiscoData.Instance.MapData.SetTileNodeByCellPos(cellPos).IsWalkable = false;
                         break;
                 }
 
@@ -165,7 +165,7 @@ namespace Data
                         break;
                 }
 
-                DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
+                DiscoData.Instance.MapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
             }
 
             DiscoData.Instance.inventory.AddItem(placementData.storeItemSo);
@@ -269,8 +269,8 @@ namespace Data
         {
             if (cellPos.x < 0 ||
                 cellPos.z < 0 ||
-                cellPos.x >= DiscoData.Instance.mapData.CurrentMapSize.x ||
-                cellPos.z >= DiscoData.Instance.mapData.CurrentMapSize.y)
+                cellPos.x >= DiscoData.Instance.MapData.CurrentMapSize.x ||
+                cellPos.z >= DiscoData.Instance.MapData.CurrentMapSize.y)
                 return true;
 
 

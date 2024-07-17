@@ -19,7 +19,6 @@ namespace New_NPC
         public NpcPathFinder(Transform assign)
         {
             _assignedNPC = assign;
-            _tileNode = DiscoData.Instance.mapData.PathFinderNodes;
         }
 
         public void GoToDestination(Vector3 targetPos)
@@ -76,7 +75,7 @@ namespace New_NPC
 
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            _tileNode = DiscoData.Instance.mapData.PathFinderNodes;
+            _tileNode = DiscoData.Instance.MapData.PathFinderNodes;
 
             var startNode = NodeFromWorldPoint(startPos);
             var targetNode = NodeFromWorldPoint(targetPos);

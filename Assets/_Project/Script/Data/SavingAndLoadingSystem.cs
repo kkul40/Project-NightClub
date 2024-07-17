@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -8,66 +7,76 @@ namespace Data
 {
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
-        private List<ISaveLoad> _saveLoads = new();
-        private string path = Application.persistentDataPath + "/PlayerGameData.kdata";
+        private string fileName = "GameData";
+        
+        private FileDataHandler _fileDataHandler;
+        private GameData _gameData = new GameData();
+        private HashSet<ISaveLoad> _saveLoads = new HashSet<ISaveLoad>();
 
-        private GameData _currentGameData = GameData.GetDefaultSaveData();
-
-        public GameData GetGameData => _currentGameData;
-
-        public SavingAndLoadingSystem(bool CreateDefaultSave)
+        private void Awake()
         {
-            Debug.Log(path);
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+            _saveLoads = MonoBehaviour.FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToHashSet();
+        }
+
+        private void Start()
+        {
             LoadGame();
         }
 
-        public GameData SaveGame()
+        public void NewGame()
         {
-            var data = new GameData();
+            _gameData = new GameData();
 
-            data.SavedMapSize = DiscoData.Instance.mapData.CurrentMapSize;
-            data.WallDoorIndexOnX = DiscoData.Instance.mapData.WallDoorIndex;
-
-            var temp = DiscoData.Instance.mapData.WallDatas.ToList();
-            for (var i = 0; i < temp.Count; i++)
-                data.SavedWallDatas.Add(new GameData.WallSaveData(temp[i].CellPosition, temp[i].assignedMaterialID));
-
-
-            var json = JsonUtility.ToJson(data);
-            File.WriteAllText(path, json);
-
-            PrintOut(data);
-
-            _currentGameData = data;
-            Debug.Log("...Game is Saved...");
-
-            return data;
+            Debug.Log("** New Game Created **");
         }
 
-        public GameData LoadGame()
+        public void SaveGame()
         {
-            if (File.Exists(path))
+            foreach (var save in _saveLoads)
             {
-                var json = File.ReadAllText(path);
-                var data = JsonUtility.FromJson<GameData>(json);
+                save.SaveData(ref _gameData);
+            }
+            
+            _fileDataHandler.Save(_gameData);
+            
+            Debug.Log("** Game Is Saved **");
+        }
 
-                PrintOut(data);
+        public void LoadGame()
+        {
+            _gameData = _fileDataHandler.Load();
 
-                _currentGameData = data;
-                Debug.Log("...Game is Loaded...");
-                return data;
+            if (_gameData == null)
+            {
+                Debug.Log("No data was found. Default data is loading...");
+                NewGame();
             }
 
-            _currentGameData = GameData.GetDefaultSaveData();
-            PrintOut(_currentGameData);
-
-            return _currentGameData;
+            foreach (var load in _saveLoads)
+            {
+                load.LoadData(_gameData);
+            }
+            
+            Debug.Log("** Game Is Loaded **");
+            
+            Debug.Log("Total Savables : " + _saveLoads.Count);
         }
 
-        private void PrintOut(GameData gameData)
+        public void RegisterForSaveLoad(ISaveLoad saveLoad)
         {
-            // Debug.Log("Loaded Map Size : " + CurrentSaveData.SavedMapSize);
-            // Debug.Log("Loaded Wall count : " + CurrentSaveData.SavedWallDatas.Count);
+            _saveLoads.Add(saveLoad);
+            Debug.Log("Registereed");
         }
+
+        // public static GameData.WallSaveData ConvertToSaveData(WallAssignmentData wallAssignmentData)
+        // {
+        //     return new GameData.WallSaveData(wallAssignmentData.CellPosition, wallAssignmentData.assignedMaterialID);
+        // }
+        //
+        // public static WallAssignmentData ConvertToAssignmentData(GameData.WallSaveData wallSaveData)
+        // {
+        //     return new WallAssignmentData(wallSaveData.CellPosition, wallSaveData.AssignedMaterialID);
+        // }
     }
 }

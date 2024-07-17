@@ -26,7 +26,7 @@ namespace System
             {
                 yield return new WaitForSeconds(0.1f);
                 var newNPC = Instantiate(_npcPrefab,
-                    DiscoData.Instance.mapData.EnterencePosition - new Vector3(0, 0.5f, 0), Quaternion.identity);
+                    DiscoData.Instance.MapData.EnterencePosition - new Vector3(0, 0.5f, 0), Quaternion.identity);
                 newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
                 var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 

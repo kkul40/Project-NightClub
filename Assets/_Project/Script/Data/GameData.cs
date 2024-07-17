@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SerializableTypes;
 using UnityEngine;
 
 namespace Data
@@ -7,36 +8,36 @@ namespace Data
     [Serializable]
     public class GameData
     {
-        public Vector2Int SavedMapSize = -Vector2Int.one;
-        public int WallDoorIndexOnX = -1;
-        public List<WallSaveData> SavedWallDatas = new();
+        public Vector2Int SavedMapSize;
+        public int WallDoorIndexOnX;
+        public List<WallSaveData> SavedWallDatas;
+        public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
 
         //CTOR
 
-        public static GameData GetDefaultSaveData()
+        public GameData()
         {
-            var dataOut = new GameData();
-
             // Map Size
-            dataOut.SavedMapSize = ConstantVariables.InitialMapSize;
+            SavedMapSize = ConstantVariables.InitialMapSize;
 
             // Wall Door Index
-            dataOut.WallDoorIndexOnX = dataOut.SavedMapSize.x <= 6 ? dataOut.SavedMapSize.x - 1 : 6;
+            WallDoorIndexOnX = SavedMapSize.x <= 6 ? SavedMapSize.x - 1 : 6;
 
             // Wall Data
             var defaltMaterialID = -1;
-            dataOut.SavedWallDatas = new List<WallSaveData>();
+            SavedWallDatas = new List<WallSaveData>();
 
-            for (var x = 1; x <= dataOut.SavedMapSize.x; x++)
-                dataOut.SavedWallDatas.Add(new WallSaveData(new Vector3Int(x, 0, 0), defaltMaterialID));
+            for (var x = 1; x <= SavedMapSize.x; x++)
+                SavedWallDatas.Add(new WallSaveData(new Vector3Int(x, 0, 0), defaltMaterialID));
 
-            for (var y = 1; y <= dataOut.SavedMapSize.y; y++)
-                dataOut.SavedWallDatas.Add(new WallSaveData(new Vector3Int(0, 0, y), defaltMaterialID));
+            for (var y = 1; y <= SavedMapSize.y; y++)
+                SavedWallDatas.Add(new WallSaveData(new Vector3Int(0, 0, y), defaltMaterialID));
 
             // Floor Tile Data
-
-            Debug.Log("Default Save Data Loaded");
-            return dataOut;
+            SavedFloorDatas = new SerializableDictionary<Vector3Int, FloorSaveData>();
+            for (int x = 0; x < ConstantVariables.MaxMapSizeX; x++)
+                for (int y = 0; y < ConstantVariables.MaxMapSizeY; y++)
+                    SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
         }
 
         [Serializable]
@@ -50,15 +51,33 @@ namespace Data
                 CellPosition = cellPosition;
                 AssignedMaterialID = assignedMaterialID;
             }
+            
+            public WallSaveData(WallAssignmentData wallAssignmentData)
+            {
+                CellPosition = wallAssignmentData.CellPosition;
+                AssignedMaterialID = wallAssignmentData.assignedMaterialID;
+            }
         }
 
         [Serializable]
         public class FloorSaveData
         {
             public Vector3Int CellPosition = -Vector3Int.one;
-            public int assignedMaterialID = -1;
+            public int assignedMaterialID = -890423504;
             public int assignedSurfaceID = -1;
             public int assignedObjectID = -1;
+
+            public FloorSaveData()
+            {
+            }
+
+            public FloorSaveData(FloorGridAssignmentData floorGridAssignmentData)
+            {
+                CellPosition = floorGridAssignmentData.CellPosition;
+                assignedMaterialID = floorGridAssignmentData.assignedMaterialID;
+                assignedSurfaceID = floorGridAssignmentData.assignedSurfaceID;
+                assignedObjectID = floorGridAssignmentData.assignedObjectID;
+            }
         }
     }
 }

@@ -41,15 +41,15 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.mapData.FloorGridDatas[
-                Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x),
-                Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+            var target = and.DiscoData.MapData.FloorGridDatas[
+                Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
+                Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
 
             while (target.assignedObjectID != -1)
             {
-                target = and.DiscoData.mapData.FloorGridDatas[
-                    Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x),
-                    Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+                target = and.DiscoData.MapData.FloorGridDatas[
+                    Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
+                    Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
 
                 loopCount++;
                 if (loopCount >= 99)

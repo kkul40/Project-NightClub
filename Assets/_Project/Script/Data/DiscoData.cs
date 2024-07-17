@@ -13,9 +13,8 @@ namespace Data
     public class DiscoData : Singleton<DiscoData>
     {
         [SerializeField] private bool CreateDefaultSaveDataOnStart;
-        private SavingAndLoadingSystem SavingSystem;
         public PlacementDataHandler placementDataHandler { get; private set; }
-        public MapData mapData;
+        public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory;
         public HashSet<StoreItemSO> AllInGameItems { get; private set; }
 
@@ -24,8 +23,6 @@ namespace Data
         // !!! FIRST INIT IN THE GAME !!!
         private void Awake()
         {
-            SavingSystem = new SavingAndLoadingSystem(CreateDefaultSaveDataOnStart);
-            mapData = new MapData(SavingSystem.GetGameData);
             inventory = new Inventory();
             placementDataHandler = new PlacementDataHandler();
             AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToHashSet();
@@ -33,7 +30,7 @@ namespace Data
 
         public void SaveData()
         {
-            SavingSystem.SaveGame();
+            SavingAndLoadingSystem.Instance.SaveGame();
         }
 
 

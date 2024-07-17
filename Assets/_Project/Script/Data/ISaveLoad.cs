@@ -2,7 +2,11 @@
 {
     public interface ISaveLoad
     {
-        void Load(GameData gameData);
-        void Save(ref GameData gameData);
+        void Register()
+        {
+            SavingAndLoadingSystem.Instance.RegisterForSaveLoad(this);
+        }
+        void LoadData(GameData gameData);
+        void SaveData(ref GameData gameData);
     }
 }

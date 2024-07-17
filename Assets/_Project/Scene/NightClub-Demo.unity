@@ -21473,7 +21473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
-  maxNPC: 10
+  maxNPC: 0
 --- !u!1001 &2039099550
 PrefabInstance:
   m_ObjectHideFlags: 0

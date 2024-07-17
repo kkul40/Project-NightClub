@@ -15,8 +15,6 @@ namespace PropBehaviours
             var materials = _meshRenderer.materials;
             materials[2] = material;
             _meshRenderer.materials = materials;
-
-            Debug.Log("Wall Door Updpateddddd");
         }
     }
 }

@@ -80,12 +80,12 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.FloorTile:
-                    DiscoData.Instance.mapData
+                    DiscoData.Instance.MapData
                         .FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z]
                         .AssignNewID(eFloorGridAssignmentType.Material, _materialItemSo.ID);
                     break;
                 case eMaterialLayer.Wall:
-                    DiscoData.Instance.mapData.WallDatas
+                    DiscoData.Instance.MapData.WallDatas
                         .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _lastChangableMaterial)
                         .AssignNewID(_materialItemSo.ID);
                     break;
@@ -130,7 +130,7 @@ namespace BuildingSystem.Builders
         {
             float lastDis = 9999;
             IChangableMaterial closestChangableMaterial = null;
-            foreach (var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
+            foreach (var wall in buildingNeedsData.DiscoData.MapData.WallDatas)
             {
                 if (wall.assignedWall == null) continue;
 
