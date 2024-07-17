@@ -1,4 +1,6 @@
-﻿namespace Data
+﻿using UnityEngine;
+
+namespace Data
 {
     public interface ISaveLoad
     {
@@ -6,6 +8,7 @@
         {
             SavingAndLoadingSystem.Instance.RegisterForSaveLoad(this);
         }
+
         void LoadData(GameData gameData);
         void SaveData(ref GameData gameData);
     }

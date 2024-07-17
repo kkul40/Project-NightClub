@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using BuildingSystem;
 using BuildingSystem.SO;
 using PropBehaviours;
@@ -14,7 +16,10 @@ namespace Data
     {
         private List<IPropUnit> propList;
         private Dictionary<Vector3Int, PlacementData> surfaceLayerPlacements;
+
         private Dictionary<Vector3Int, PlacementData> propLayerPlacements;
+
+        public List<IPropUnit> GetPropList => propList;
 
         public PlacementDataHandler()
         {
@@ -22,8 +27,6 @@ namespace Data
             surfaceLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
             propLayerPlacements = new Dictionary<Vector3Int, PlacementData>();
         }
-
-        public List<IPropUnit> GetPropList => propList;
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
         {
@@ -102,6 +105,7 @@ namespace Data
                 placementData.RotationData.direction);
 
             foreach (var key in keys)
+            {
                 switch (layer)
                 {
                     case ePlacementLayer.Surface:
@@ -114,7 +118,8 @@ namespace Data
                         DiscoData.Instance.MapData.SetTileNodeByCellPos(cellPos).IsWalkable = false;
                         break;
                 }
-
+                Debug.Log("Key : " + key);
+            }
 
             if (placementData.SceneObject.TryGetComponent(out IPropUnit prop))
             {
@@ -216,6 +221,58 @@ namespace Data
             }
 
             return null;
+        }
+        
+        public void LoadGameProps(GameData gameData)
+        {
+            surfaceLayerPlacements.Clear();
+            
+            Vector3Int test = -Vector3Int.one;
+            foreach (var pair in gameData.savedPropLayerPlacements)
+            {
+                if (test != pair.Value.PlacedCellPosition)
+                {
+                    test = pair.Value.PlacedCellPosition;
+                    var value = pair.Value;
+                    var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == value.PropID) as PlacementItemSO;
+                    Debug.Log("Size : " + placementItemSo.Size);
+                
+                    InstantiateProp(placementItemSo, value.PlacedCellPosition, new RotationData(value.EularAngles, value.Direction));
+                }
+            }
+        }
+
+        public void SaveGameProps(ref GameData gameData)
+        {
+            Debug.Log(propLayerPlacements.Count);
+            gameData.savedPropLayerPlacements.Clear();
+            
+            Vector3Int test = -Vector3Int.one;
+            foreach (var pair in propLayerPlacements)
+            {
+                if (test != pair.Value.PlacedCellPos)
+                {
+                    test = pair.Value.PlacedCellPos;
+                    gameData.savedPropLayerPlacements.Add(pair.Key, new GameData.PlacementSaveData(pair.Value));
+                }
+            }
+            
+            Debug.Log(gameData.savedPropLayerPlacements.Count);
+        }
+
+        private void InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition, RotationData rotationData) 
+        {
+            var createdObject = Object.Instantiate(placementItemso.Prefab,
+                GridHandler.Instance.GetCellCenterWorld(cellPosition) +
+                (placementItemso.PlacementLayer == ePlacementLayer.Floor
+                    ? ConstantVariables.PropObjectOffset
+                    : ConstantVariables.WallObjectOffset),
+                rotationData.rotation);
+
+            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
+
+            PlacementData placementData = new PlacementData(placementItemso, cellPosition, createdObject, placementItemso.Size, rotationData);
+            AddPlacementData(cellPosition, placementData, placementItemso.PlacementLayer);
         }
 
         /// <summary>

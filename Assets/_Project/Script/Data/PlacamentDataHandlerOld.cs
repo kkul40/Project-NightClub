@@ -8,7 +8,6 @@ namespace Data
 {
     // public class PlacamentDataHandler
     // {
-    //     // TODO Yerde 3 farkli layer olacak Floor, Dance, PlacamentLayer Ve Birbirlerinin uzerine yerlestirilebilecekler
     //     private Dictionary<Vector3Int, PlacementData> placementDatas;
     //
     //     public PlacamentDataHandler()
@@ -26,7 +25,6 @@ namespace Data
     //         if (cellPos.x < 0 || cellPos.z < 0) return true;
     //
     //         if (cellPos.x >= border.x || cellPos.z >= border.y)
-    //             return true; // TODO Kapinin kordinatlari bunlar ve baska bir yere tasi
     //
     //         if (cellPos.x == 4 && cellPos.z == 0) return true;
     //

@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using BuildingSystem;
+using PlayerScripts;
 using SerializableTypes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Data
 {
     [Serializable]
     public class GameData
     {
+        public PlayerCustomizationIndexData SavedPlayerCustomizationIndexData;
         public Vector2Int SavedMapSize;
         public int WallDoorIndexOnX;
         public List<WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
+        
+        // TEST Sonra Sil
+        public SerializableDictionary<Vector3Int, PlacementSaveData> savedPropLayerPlacements;
 
         //CTOR
 
         public GameData()
         {
+            // Player Customization Data
+            SavedPlayerCustomizationIndexData = new PlayerCustomizationIndexData();
+
             // Map Size
-            SavedMapSize = ConstantVariables.InitialMapSize;
+            SavedMapSize = new Vector2Int(11, 11);
 
             // Wall Door Index
             WallDoorIndexOnX = SavedMapSize.x <= 6 ? SavedMapSize.x - 1 : 6;
@@ -35,14 +45,19 @@ namespace Data
 
             // Floor Tile Data
             SavedFloorDatas = new SerializableDictionary<Vector3Int, FloorSaveData>();
-            for (int x = 0; x < ConstantVariables.MaxMapSizeX; x++)
-                for (int y = 0; y < ConstantVariables.MaxMapSizeY; y++)
-                    SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
+            for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
+            for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
+                SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
+            
+            // TESTDIR
+
+            savedPropLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
         }
 
         [Serializable]
         public class WallSaveData
         {
+            // Default = -1
             public Vector3Int CellPosition = -Vector3Int.one;
             public int AssignedMaterialID = -1;
 
@@ -51,7 +66,7 @@ namespace Data
                 CellPosition = cellPosition;
                 AssignedMaterialID = assignedMaterialID;
             }
-            
+
             public WallSaveData(WallAssignmentData wallAssignmentData)
             {
                 CellPosition = wallAssignmentData.CellPosition;
@@ -62,6 +77,7 @@ namespace Data
         [Serializable]
         public class FloorSaveData
         {
+            // Default = -1
             public Vector3Int CellPosition = -Vector3Int.one;
             public int assignedMaterialID = -1;
             public int assignedSurfaceID = -1;
@@ -77,6 +93,52 @@ namespace Data
                 assignedMaterialID = floorGridAssignmentData.assignedMaterialID;
                 assignedSurfaceID = floorGridAssignmentData.assignedSurfaceID;
                 assignedObjectID = floorGridAssignmentData.assignedObjectID;
+            }
+        }
+
+        [Serializable]
+        public class PlayerCustomizationIndexData
+        {
+            // Default = 0
+            public int playerGenderIndex = 0;
+            public int playerHairIndex = 0;
+            public int playerBeardIndex = 0;
+            public int playerAttachmentIndex = 0;
+            public int playerEaringIndex = 0;
+
+            public PlayerCustomizationIndexData()
+            {
+            }
+
+            public PlayerCustomizationIndexData(PlayerCustomizationLoader playerCustomizationUI)
+            {
+                playerGenderIndex = playerCustomizationUI.playerGenderIndex;
+                playerHairIndex = playerCustomizationUI.playerHairIndex;
+                playerBeardIndex = playerCustomizationUI.playerBeardIndex;
+                playerAttachmentIndex = playerCustomizationUI.playerAttachmentIndex;
+                playerEaringIndex = playerCustomizationUI.playerEaringIndex;
+            }
+        }
+
+        [Serializable]
+        public class PlacementSaveData
+        {
+            // Default = -1
+            public int PropID = -1;
+            public Vector3Int PlacedCellPosition = -Vector3Int.one;
+            public Vector3 EularAngles = -Vector3.one;
+            public Direction Direction = Direction.Down;
+
+            public PlacementSaveData()
+            {
+            }
+
+            public PlacementSaveData(PlacementData placementData)
+            {
+                PropID = placementData.ID;
+                PlacedCellPosition = placementData.PlacedCellPos;
+                EularAngles = placementData.RotationData.rotation.eulerAngles;
+                Direction = placementData.RotationData.direction;
             }
         }
     }

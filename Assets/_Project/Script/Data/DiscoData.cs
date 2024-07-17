@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 namespace Data
 {
     [DisallowMultipleComponent]
-    public class DiscoData : Singleton<DiscoData>
+    public class DiscoData : Singleton<DiscoData>, ISaveLoad
     {
         public PlacementDataHandler placementDataHandler { get; private set; }
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
@@ -43,14 +43,27 @@ namespace Data
             Slot,
             Cargo
         }
+
+        public void LoadData(GameData gameData)
+        {
+            placementDataHandler.LoadGameProps(gameData);
+            // placementDataHandler.LoadGameProps(gameData);
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            placementDataHandler.SaveGameProps(ref gameData);
+        }
     }
 
     public class ConstantVariables
     {
         public const int MaxMapSizeX = 50;
         public const int MaxMapSizeY = 50;
-        public static readonly Vector2Int InitialMapSize = new(11, 11);
         public const int FloorLayerID = 7;
         public const int WalllayerID = 8;
+
+        public static Vector3 WallObjectOffset = new Vector3(0f, 0f, 0f);
+        public static Vector3 PropObjectOffset = new Vector3(0f, -0.5f, 0f);
     }
 }

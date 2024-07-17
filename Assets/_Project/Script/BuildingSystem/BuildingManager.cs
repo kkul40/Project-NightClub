@@ -83,8 +83,7 @@ namespace BuildingSystem
         {
             _buildingNeedsData.CellPosition =
                 _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) +
-                                                    _buildingMethod.Offset;
+            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
             _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
             _tileIndicator.RoateDirectionIndicator(_buildingNeedsData.RotationData.rotation);
         }

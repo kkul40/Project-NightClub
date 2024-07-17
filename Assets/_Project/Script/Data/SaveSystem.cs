@@ -16,12 +16,12 @@ namespace Data
             var path = Application.persistentDataPath + "/PlayerCustomization.kdata";
             var stream = new FileStream(path, FileMode.Create);
 
-            var data = new PlayerCustomizationIndexData(playerCustomizationLoader);
+            var data = new GameData.PlayerCustomizationIndexData(playerCustomizationLoader);
             formatter.Serialize(stream, data);
             stream.Close();
         }
 
-        public static PlayerCustomizationIndexData LoadCustomizedPlayer()
+        public static GameData.PlayerCustomizationIndexData LoadCustomizedPlayer()
         {
             var path = Application.persistentDataPath + "/PlayerCustomization.kdata";
 
@@ -30,7 +30,7 @@ namespace Data
                 var formatter = new BinaryFormatter();
                 var stream = new FileStream(path, FileMode.Open);
 
-                var data = formatter.Deserialize(stream) as PlayerCustomizationIndexData;
+                var data = formatter.Deserialize(stream) as GameData.PlayerCustomizationIndexData;
                 stream.Close();
                 return data;
             }

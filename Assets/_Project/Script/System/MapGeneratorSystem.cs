@@ -10,13 +10,13 @@ namespace System
     public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
     {
         //TODO Transform holder kullanmak yerine SceneContainerden ulas bunlara
-        public MapData MapData { get; private set; } = new MapData();
-        
+        public MapData MapData { get; private set; } = new();
+
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
 
-        
+
         // TODO Gereksizse kaldir
         private Vector2Int MapSize
         {
@@ -28,13 +28,13 @@ namespace System
 
         private void Start()
         {
-            SetUpMade();
+            SetUpMap();
         }
 
-        private void SetUpMade()
+        private void SetUpMap()
         {
             MapSize = MapData.CurrentMapSize;
-            
+
             for (var i = 0; i < MapSize.x; i++)
             for (var j = 0; j < MapSize.y; j++)
                 InstantiateFloorTile(i, j);
@@ -50,7 +50,7 @@ namespace System
                         newWallDoorObject);
 
                     newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-                    
+
                     continue;
                 }
 
@@ -151,12 +151,12 @@ namespace System
             data.AssignReferance(newWallObject.GetComponent<Wall>());
             data.AssignNewID(data.assignedMaterialID);
         }
-        
+
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
         }
-        
+
         public void SaveData(ref GameData gameData)
         {
             MapData.SaveData(ref gameData);

@@ -20,17 +20,16 @@ namespace Data
 
         public GameData Load()
         {
-            string fullPath = Path.Combine(dataDirPath, dataFileName);
+            var fullPath = Path.Combine(dataDirPath, dataFileName);
             GameData loadedGameData = null;
 
             if (File.Exists(fullPath))
-            {
                 try
                 {
-                    string dataToLoad = "";
-                    using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+                    var dataToLoad = "";
+                    using (var stream = new FileStream(fullPath, FileMode.Open))
                     {
-                        using (StreamReader reader = new StreamReader(stream))
+                        using (var reader = new StreamReader(stream))
                         {
                             dataToLoad = reader.ReadToEnd();
                         }
@@ -42,23 +41,22 @@ namespace Data
                 {
                     Debug.LogError("Error occured when trying to laod data from file : " + fullPath + "\n" + e);
                 }
-            }
 
             return loadedGameData;
         }
 
         public void Save(GameData gameData)
         {
-            string fullPath = Path.Combine(dataDirPath, dataFileName);
+            var fullPath = Path.Combine(dataDirPath, dataFileName);
 
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                string dataToStore = JsonUtility.ToJson(gameData, true);
-                
-                using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+                var dataToStore = JsonUtility.ToJson(gameData, true);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
                 {
-                    using (StreamWriter write = new StreamWriter(stream))
+                    using (var write = new StreamWriter(stream))
                     {
                         write.Write(dataToStore);
                     }
@@ -72,10 +70,9 @@ namespace Data
 
         public void DeleteData()
         {
-            string fullPath = Path.Combine(dataDirPath, dataFileName);
+            var fullPath = Path.Combine(dataDirPath, dataFileName);
 
             if (File.Exists(fullPath))
-            {
                 try
                 {
                     File.Delete(fullPath);
@@ -85,7 +82,6 @@ namespace Data
                     Debug.LogError("Error occured when trying to remove data from path : " + fullPath + "\n" + e);
                     throw;
                 }
-            }
         }
     }
 }

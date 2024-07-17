@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Data
 {
@@ -9,41 +10,60 @@ namespace Data
     {
         [SerializeField] private bool CreateNewData;
         private string fileName = "GameData";
-        
+
         private FileDataHandler _fileDataHandler;
-        private GameData _gameData = new GameData();
-        private HashSet<ISaveLoad> _saveLoads = new HashSet<ISaveLoad>();
+        private GameData _gameData = new();
+        private HashSet<ISaveLoad> _saveLoads = new();
 
         private void Awake()
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-            _saveLoads = MonoBehaviour.FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToHashSet();
+            
         }
 
         private void Start()
         {
-            if (CreateNewData)
-            {
-                _fileDataHandler.DeleteData();
-            }
+            OnSceneLoaded();
+        }
+
+        // private void OnEnable()
+        // {
+        //     SceneManager.sceneLoaded += OnSceneLoaded;
+        //     SceneManager.sceneUnloaded += OnSceneUnloaded;
+        // }
+        //
+        // private void OnDisable()
+        // {
+        //     SceneManager.sceneLoaded -= OnSceneLoaded;
+        //     SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        // }
+
+        public void OnSceneLoaded()
+        {
+            Debug.Log(("Scene loaded"));
+            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToHashSet();
+
+            if (CreateNewData) _fileDataHandler.DeleteData();
             LoadGame();
         }
 
+        public void OnSceneUnloaded(Scene scene)
+        {
+            
+        }
+        
         public void NewGame()
         {
             _gameData = new GameData();
-            Debug.Log("** New Game Created **");
+            Debug.Log("** New Game is Created **");
         }
 
         public void SaveGame()
         {
-            foreach (var save in _saveLoads)
-            {
-                save.SaveData(ref _gameData);
-            }
-            
+            foreach (var save in _saveLoads) save.SaveData(ref _gameData);
+
             _fileDataHandler.Save(_gameData);
-            
+
             Debug.Log("** Game Is Saved **");
         }
 
@@ -57,30 +77,19 @@ namespace Data
                 NewGame();
             }
 
-            foreach (var load in _saveLoads)
-            {
-                load.LoadData(_gameData);
-            }
-            
+            foreach (var load in _saveLoads) load.LoadData(_gameData);
+
             Debug.Log("** Game Is Loaded **");
-            
-            Debug.Log("Total Savables : " + _saveLoads.Count);
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveGame();
         }
 
         public void RegisterForSaveLoad(ISaveLoad saveLoad)
         {
             _saveLoads.Add(saveLoad);
-            Debug.Log("Registereed");
         }
-
-        // public static GameData.WallSaveData ConvertToSaveData(WallAssignmentData wallAssignmentData)
-        // {
-        //     return new GameData.WallSaveData(wallAssignmentData.CellPosition, wallAssignmentData.assignedMaterialID);
-        // }
-        //
-        // public static WallAssignmentData ConvertToAssignmentData(GameData.WallSaveData wallSaveData)
-        // {
-        //     return new WallAssignmentData(wallSaveData.CellPosition, wallSaveData.AssignedMaterialID);
-        // }
     }
 }

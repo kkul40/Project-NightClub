@@ -44,11 +44,11 @@ namespace BuildingSystem.Builders
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.Wall:
-                    Offset = new Vector3(0f, 0f, 0f);
+                    Offset = ConstantVariables.WallObjectOffset;
                     break;
                 case ePlacementLayer.Surface:
                 case ePlacementLayer.Floor:
-                    Offset = new Vector3(0f, -0.5f, 0f);
+                    Offset = ConstantVariables.PropObjectOffset;
                     break;
             }
         }

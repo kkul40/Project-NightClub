@@ -57,7 +57,8 @@ namespace Data
                     Debug.LogError("Null Placement Data on : " + CellPosition);
                     break;
                 case eFloorGridAssignmentType.Material:
-                    var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
+                    var foundMaterial =
+                        DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
                     if (foundMaterial == null)
                     {
                         Debug.LogError(newID + " Could Not Found in Item List");
@@ -66,7 +67,7 @@ namespace Data
 
                     assignedFloorTile.UpdateMaterial(foundMaterial.Material);
                     assignedMaterialID = newID;
-                    
+
                     Debug.Log("Flooor Material Assigned");
                     break;
                 case eFloorGridAssignmentType.Surface:

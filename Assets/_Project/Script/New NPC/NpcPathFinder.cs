@@ -53,8 +53,6 @@ namespace New_NPC
                     _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
                     yield return null;
                 }
-
-                Debug.Log("Moving To next Tile");
             }
 
             _routine = null;
