@@ -12,10 +12,10 @@ namespace New_NPC
         private PathFinderNode[,] _tileNode;
         private Transform _assignedNPC;
         private List<Vector3> _currentPath;
-        
+
         private IEnumerator _routine = null;
         public bool hasReachedDestination => _routine == null;
-        
+
         public NpcPathFinder(Transform assign)
         {
             _assignedNPC = assign;
@@ -26,10 +26,10 @@ namespace New_NPC
         {
             CancelDestination();
             _currentPath = FindPath(_assignedNPC.position, targetPos);
-            
+
             if (_currentPath == null)
                 return;
-            
+
             _routine = CoFollowPath(_currentPath);
             DOTween.instance.StartCoroutine(_routine);
         }
@@ -37,34 +37,35 @@ namespace New_NPC
         public void CancelDestination()
         {
             if (_routine == null) return;
-            
+
             DOTween.instance.StopCoroutine(_routine);
             _currentPath = new List<Vector3>();
             _routine = null;
         }
-        
+
         private IEnumerator CoFollowPath(List<Vector3> path)
         {
-            for (int i = 0; i < path.Count; i++)
+            for (var i = 0; i < path.Count; i++)
             {
-                Vector3 newPath = path[i];
+                var newPath = path[i];
                 SetRotationToTarget(newPath);
                 while (Vector3.Distance(_assignedNPC.position, newPath) > 0.1f)
                 {
                     _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
                     yield return null;
                 }
-                Debug.Log("Moving To next Tile");
 
+                Debug.Log("Moving To next Tile");
             }
+
             _routine = null;
         }
-        
+
         private void SetRotationToTarget(Vector3 lookatTarget)
         {
-            Vector3 direction = lookatTarget - _assignedNPC.position;
+            var direction = lookatTarget - _assignedNPC.position;
             direction.Normalize();
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            var lookRotation = Quaternion.LookRotation(direction);
             _assignedNPC.DORotate(lookRotation.eulerAngles, 0.5f);
         }
 
@@ -72,55 +73,43 @@ namespace New_NPC
         {
             _assignedNPC.DORotate(rotationToSet.eulerAngles, 0.5f);
         }
-        
+
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
             _tileNode = DiscoData.Instance.mapData.PathFinderNodes;
 
-            PathFinderNode startNode = NodeFromWorldPoint(startPos);
-            PathFinderNode targetNode = NodeFromWorldPoint(targetPos);
+            var startNode = NodeFromWorldPoint(startPos);
+            var targetNode = NodeFromWorldPoint(targetPos);
 
-            List<PathFinderNode> openSet = new List<PathFinderNode>();
-            HashSet<PathFinderNode> closedSet = new HashSet<PathFinderNode>();
+            var openSet = new List<PathFinderNode>();
+            var closedSet = new HashSet<PathFinderNode>();
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
-                PathFinderNode currentNode = openSet[0];
-                for (int i = 1; i < openSet.Count; i++)
-                {
-                    if (openSet[i].FCost < currentNode.FCost || openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost)
-                    {
+                var currentNode = openSet[0];
+                for (var i = 1; i < openSet.Count; i++)
+                    if (openSet[i].FCost < currentNode.FCost ||
+                        (openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost))
                         currentNode = openSet[i];
-                    }
-                }
 
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
 
-                if (currentNode == targetNode)
-                {
-                    return RetracePath(startNode, targetNode);
-                }
+                if (currentNode == targetNode) return RetracePath(startNode, targetNode);
 
-                foreach (PathFinderNode neighbor in GetNeighbors(currentNode))
+                foreach (var neighbor in GetNeighbors(currentNode))
                 {
-                    if (!neighbor.IsWalkable || closedSet.Contains(neighbor))
-                    {
-                        continue;
-                    }
+                    if (!neighbor.IsWalkable || closedSet.Contains(neighbor)) continue;
 
-                    int newMovementCostToNeighbor = currentNode.GCost + GetDistance(currentNode, neighbor);
+                    var newMovementCostToNeighbor = currentNode.GCost + GetDistance(currentNode, neighbor);
                     if (newMovementCostToNeighbor < neighbor.GCost || !openSet.Contains(neighbor))
                     {
                         neighbor.GCost = newMovementCostToNeighbor;
                         neighbor.HCost = GetDistance(neighbor, targetNode);
                         neighbor.Parent = currentNode;
 
-                        if (!openSet.Contains(neighbor))
-                        {
-                            openSet.Add(neighbor);
-                        }
+                        if (!openSet.Contains(neighbor)) openSet.Add(neighbor);
                     }
                 }
             }
@@ -128,61 +117,62 @@ namespace New_NPC
             Debug.Log("No Path Found");
             return null; // Return null if no path is found
         }
+
         private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
         {
             if (worldPosition == -Vector3.one) return new PathFinderNode(false, Vector3.zero, 0, 0);
-            
-            int x = (int)worldPosition.x;
-            int y = (int)worldPosition.z;
+
+            var x = (int)worldPosition.x;
+            var y = (int)worldPosition.z;
             return _tileNode[x, y];
         }
+
         private List<Vector3> RetracePath(PathFinderNode startNode, PathFinderNode endNode)
         {
-            List<PathFinderNode> path = new List<PathFinderNode>();
-            PathFinderNode currentNode = endNode;
+            var path = new List<PathFinderNode>();
+            var currentNode = endNode;
 
             while (currentNode != startNode)
             {
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;
             }
+
             path.Reverse();
 
-            List<Vector3> waypoints = new List<Vector3>();
-            foreach (PathFinderNode node in path)
-            {
+            var waypoints = new List<Vector3>();
+            foreach (var node in path)
                 // Vector3 gridPath = new Vector3(node.GridX, 0 , node.GridY);
                 waypoints.Add(node.WorldPos);
-            }
 
             return waypoints; // Return the path as a list of Vector3 positions
         }
+
         private List<PathFinderNode> GetNeighbors(PathFinderNode node)
         {
-            List<PathFinderNode> neighbors = new List<PathFinderNode>();
+            var neighbors = new List<PathFinderNode>();
 
-            for (int x = -1; x <= 1; x++)
+            for (var x = -1; x <= 1; x++)
+            for (var y = -1; y <= 1; y++)
             {
-                for (int y = -1; y <= 1; y++)
-                {
-                    if (x == 0 && y == 0)
-                        continue;
+                if (x == 0 && y == 0)
+                    continue;
 
-                    int checkX = node.GridX + x;
-                    int checkY = node.GridY + y;
+                var checkX = node.GridX + x;
+                var checkY = node.GridY + y;
 
-                    if (checkX >= 0 && checkX < DiscoData.ConstantVariables.MaxMapSizeX && checkY >= 0 && checkY < DiscoData.ConstantVariables.MaxMapSizeY)
-                    {
-                        neighbors.Add(_tileNode[checkX, checkY]);
-                    }
-                }
+                if (checkX >= 0 && checkX < ConstantVariables.MaxMapSizeX && checkY >= 0 &&
+                    checkY < ConstantVariables.MaxMapSizeY)
+                    neighbors.Add(_tileNode[checkX, checkY]);
             }
+
             return neighbors;
         }
+
         private int GetDistance(PathFinderNode nodeA, PathFinderNode nodeB)
         {
-            int dstX = Mathf.Abs(nodeA.GridX - nodeB.GridX);
-            int dstY = Mathf.Abs(nodeA.GridY - nodeB.GridY);
+            var dstX = Mathf.Abs(nodeA.GridX - nodeB.GridX);
+            var dstY = Mathf.Abs(nodeA.GridY - nodeB.GridY);
 
             if (dstX > dstY)
                 return 14 * dstY + 10 * (dstX - dstY);
@@ -190,7 +180,6 @@ namespace New_NPC
         }
     }
 
-    
 
     public enum eTileNode
     {

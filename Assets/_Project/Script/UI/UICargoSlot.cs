@@ -50,13 +50,13 @@ namespace UI
             }
 
             amountText.text = "0";
-            GameObject.FindObjectOfType<OpenCargoButton>().OnClick();
+            FindObjectOfType<OpenCargoButton>().OnClick();
             BuildingManager.Instance.StopBuild();
         }
 
         public void OnClick()
         {
-            if(DiscoData.Instance.inventory.Items.ContainsKey(StoreItemSo))
+            if (DiscoData.Instance.inventory.Items.ContainsKey(StoreItemSo))
                 BuildingManager.Instance.StartBuild(StoreItemSo, () => Action);
         }
 

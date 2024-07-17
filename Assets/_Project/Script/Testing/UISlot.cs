@@ -8,7 +8,7 @@ namespace Testing
     public class UISlot : MonoBehaviour
     {
         public StoreItemSO storeItemSo;
-        
+
         public void OnClick()
         {
             // BuildingManager.Instance.StartBuild(storeItemSo);

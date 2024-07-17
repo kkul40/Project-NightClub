@@ -8,9 +8,17 @@ namespace BuildingSystem.SO
     {
         public GameObject Prefab;
         public Vector2Int Size;
-        
+
         public ePlacementLayer PlacementLayer;
-        public enum eRotationType {None, ThreeSixty, LeftRight, Auto}
+
+        public enum eRotationType
+        {
+            None,
+            ThreeSixty,
+            LeftRight,
+            Auto
+        }
+
         public eRotationType eRotation;
     }
 }

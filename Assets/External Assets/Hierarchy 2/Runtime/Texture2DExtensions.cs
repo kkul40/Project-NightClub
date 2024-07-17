@@ -19,7 +19,7 @@ namespace Hierarchy2
 
         public static Texture2D PNGImageDecode(this byte[] bytes)
         {
-            Texture2D texture2D = new Texture2D(0, 0, TextureFormat.RGBA32, false);
+            var texture2D = new Texture2D(0, 0, TextureFormat.RGBA32, false);
             texture2D.hideFlags = HideFlags.HideAndDontSave;
 #if UNITY_EDITOR
             texture2D.alphaIsTransparency = true;

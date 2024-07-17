@@ -6,16 +6,6 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SubsystemsImplementation;
 
-public struct DataType
-{
-    public int a;
-}
-
-public class Refereance
-{
-    public int a;
-}
-
 namespace BuildingSystem
 {
     public class BuildingManager : Singleton<BuildingManager>
@@ -28,33 +18,33 @@ namespace BuildingSystem
          *
          *
          */
-        
+
         /*
          * DataTypes - ReferanceType
-         * 
+         *
          * Event
-         * 
+         *
          * OOP {Abstraction, Polymorphizm, } Object Orriented Proggramming
          *
          * Project Structure
          *
          * Design Pattern {Singleton, Observer, Dirty Flag, Flyweight, Object Polling, Command Pattern ,Strategic Pattern, Prototype Pattern}
-         * 
+         *
          */
 
         private StoreItemSO _storeItemSo;
         private IBuildingMethod _buildingMethod;
         private IRotationMethod _rotationMethod;
         private BuildingNeedsData _buildingNeedsData;
-        
+
         public bool isPlacing => _buildingMethod != null;
         private Func<Action> callBackOnPlaced = null;
-        
+
         [SerializeField] private TileIndicator _tileIndicator;
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
-        
+
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
@@ -71,30 +61,34 @@ namespace BuildingSystem
                     StopBuild();
                     return;
                 }
-                
+
                 UpdateBuildingNeeds();
-                
+
                 _rotationMethod.OnRotate(_buildingNeedsData);
                 _buildingMethod.OnUpdate(_buildingNeedsData);
-                
-                if (_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
+
+                if (_buildingMethod.PressAndHold
+                        ? InputSystem.Instance.LeftHoldClickOnWorld
+                        : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
                     callBackOnPlaced?.Invoke().Invoke();
                 }
-                
+
                 if (InputSystem.Instance.Esc) StopBuild();
             }
         }
-        
+
         private void UpdateBuildingNeeds()
         {
-            _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
+            _buildingNeedsData.CellPosition =
+                _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
+            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) +
+                                                    _buildingMethod.Offset;
             _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
             _tileIndicator.RoateDirectionIndicator(_buildingNeedsData.RotationData.rotation);
         }
-        
+
         #region Building
 
         public void StartRemoving()
@@ -109,6 +103,7 @@ namespace BuildingSystem
             _buildingMethod.OnStart(_buildingNeedsData);
             _tileIndicator.SetTileIndicator(ePlacingType.Remove);
         }
+
         public void StartBuild(StoreItemSO storeItemSo, Func<Action> CallBackOnPlace = null)
         {
             StopBuild();
@@ -120,12 +115,9 @@ namespace BuildingSystem
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
-            
+
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
-            if (storeItemSo is PlacementItemSO placementItemSo)
-            {
-                _tileIndicator.SetSize(placementItemSo.Size);
-            }
+            if (storeItemSo is PlacementItemSO placementItemSo) _tileIndicator.SetSize(placementItemSo.Size);
         }
 
         public void StopBuild()
@@ -136,11 +128,13 @@ namespace BuildingSystem
                 _buildingMethod = null;
                 _rotationMethod = null;
             }
+
             _gridHandler.ToggleGrid(false);
             callBackOnPlaced = null;
             _tileIndicator.SetSize(Vector2.one);
             _tileIndicator.CloseTileIndicator();
         }
+
         #endregion
     }
 }

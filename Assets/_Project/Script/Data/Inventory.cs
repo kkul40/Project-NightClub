@@ -26,7 +26,7 @@ namespace Data
                 OnInventoryChanged?.Invoke();
                 return;
             }
-            
+
             Items.Add(storeItemSo, 1);
             OnInventoryChanged?.Invoke();
         }
@@ -49,10 +49,7 @@ namespace Data
 
         private void WriteAllItems()
         {
-            foreach (var item in Items)
-            {
-                Debug.Log(item.Key + " - " + item.Value);
-            }
+            foreach (var item in Items) Debug.Log(item.Key + " - " + item.Value);
         }
     }
 }

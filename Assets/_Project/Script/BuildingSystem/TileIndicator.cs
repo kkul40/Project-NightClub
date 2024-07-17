@@ -64,6 +64,6 @@ namespace BuildingSystem
         None,
         Place,
         Direction,
-        Remove,
+        Remove
     }
 }

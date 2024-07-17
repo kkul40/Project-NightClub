@@ -7,9 +7,9 @@ namespace New_NPC.Activities
     {
         private readonly float delay = 2;
         private float timer;
-        
+
         public bool IsEnded { get; private set; }
-        
+
         public void StartActivity(ActivityNeedsData and)
         {
             and.Npc.pathFinder.GoToDestination(GetRandomDestination(and));
@@ -36,16 +36,20 @@ namespace New_NPC.Activities
         public void EndActivity(ActivityNeedsData and)
         {
         }
-        
+
         public Vector3 GetRandomDestination(ActivityNeedsData and)
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.mapData.FloorGridDatas[Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x), Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+            var target = and.DiscoData.mapData.FloorGridDatas[
+                Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x),
+                Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
 
             while (target.assignedObjectID != -1)
             {
-                target = and.DiscoData.mapData.FloorGridDatas[Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x), Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
+                target = and.DiscoData.mapData.FloorGridDatas[
+                    Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.x),
+                    Random.Range(0, DiscoData.Instance.mapData.CurrentMapSize.y)];
 
                 loopCount++;
                 if (loopCount >= 99)

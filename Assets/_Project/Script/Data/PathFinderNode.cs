@@ -12,15 +12,12 @@ namespace Data
 
         public int GridX;
         public int GridY;
-        
+
         public int GCost;
         public int HCost;
-        
-        public int FCost
-        {
-            get { return GCost + HCost; }
-        }
-        
+
+        public int FCost => GCost + HCost;
+
         public PathFinderNode(bool isWalkable, Vector3 position, int gridX, int gridY)
         {
             IsWalkable = isWalkable;
@@ -28,6 +25,5 @@ namespace Data
             GridX = gridX;
             GridY = gridY;
         }
-
     }
 }

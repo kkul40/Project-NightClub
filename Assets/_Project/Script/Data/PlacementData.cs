@@ -25,7 +25,8 @@ namespace Data
             ID = -1;
         }
 
-        public PlacementData(PlacementItemSO storeItemSo, Vector3Int placedCellPos, GameObject createdObject, Vector2Int Size, RotationData rotationData)
+        public PlacementData(PlacementItemSO storeItemSo, Vector3Int placedCellPos, GameObject createdObject,
+            Vector2Int Size, RotationData rotationData)
         {
             ID = storeItemSo.ID;
             PlacedCellPos = placedCellPos;
@@ -36,17 +37,16 @@ namespace Data
             PlacementLayer = storeItemSo.PlacementLayer;
             MaterialLayer = eMaterialLayer.Null;
         }
-        
+
         public PlacementData(MaterialItemSo storeItemSo)
         {
             ID = Guid.NewGuid().GetHashCode();
             this.storeItemSo = storeItemSo as MaterialItemSo;
             SceneObject = null;
-            RotationData = BuildingSystem.RotationData.Default;
-            this.Size = Vector2Int.zero;
+            RotationData = RotationData.Default;
+            Size = Vector2Int.zero;
             MaterialLayer = storeItemSo.MaterialLayer;
             PlacementLayer = ePlacementLayer.Null;
         }
-      
     }
 }

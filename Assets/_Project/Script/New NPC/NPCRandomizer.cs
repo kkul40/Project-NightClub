@@ -10,12 +10,12 @@ namespace New_NPC
 
         public void Customize(NPCCustomizationDataSO customizationDataSo, eGenderType genderType)
         {
-            Mesh mesh = customizationDataSo.NpcBodyMesh[Random.Range(0, customizationDataSo.NpcBodyMesh.Count)];
+            var mesh = customizationDataSo.NpcBodyMesh[Random.Range(0, customizationDataSo.NpcBodyMesh.Count)];
             skinMesh.sharedMesh = mesh;
 
             TryAplly(customizationDataSo.NpcHairPrefabs, Head);
             TryAplly(customizationDataSo.NpcBeardPrefabs, Head);
-            if(Random.value > 0.8f)
+            if (Random.value > 0.8f)
                 TryAplly(customizationDataSo.NpcAttachtmentPrefabs, Head);
             TryAplly(customizationDataSo.NpcEaringPrefabs, Head);
         }
@@ -36,6 +36,6 @@ namespace New_NPC
     public enum eGenderType
     {
         Male,
-        Female,
+        Female
     }
 }

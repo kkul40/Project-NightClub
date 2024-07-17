@@ -5,29 +5,30 @@ using UnityEngine.SceneManagement;
 
 namespace Hierarchy2
 {
-    [ExecuteInEditMode, AddComponentMenu("Hierarchy 2/Hierarchy Local Data", 100)]
+    [ExecuteInEditMode]
+    [AddComponentMenu("Hierarchy 2/Hierarchy Local Data", 100)]
     public class HierarchyLocalData : MonoBehaviour
     {
-        public static Dictionary<Scene, HierarchyLocalData> instances = new Dictionary<Scene, HierarchyLocalData>();
-        public Dictionary<GameObject, CustomRowItem> dCustomRowItems = new Dictionary<GameObject, CustomRowItem>();
-        public List<CustomRowItem> lCustomRowItems = new List<CustomRowItem>();
+        public static Dictionary<Scene, HierarchyLocalData> instances = new();
+        public Dictionary<GameObject, CustomRowItem> dCustomRowItems = new();
+        public List<CustomRowItem> lCustomRowItems = new();
 
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (!instances.ContainsKey(gameObject.scene))
                 instances.Add(gameObject.scene, this);
 
             if (!gameObject.CompareTag("EditorOnly"))
                 gameObject.tag = "EditorOnly";
-            
+
             gameObject.hideFlags = HideFlags.DontSaveInBuild;
 
             ClearNullRef();
             ConvertToDic();
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (instances.ContainsKey(gameObject.scene))
                 instances.Remove(gameObject.scene);
@@ -40,7 +41,7 @@ namespace Hierarchy2
 
         public CustomRowItem CreateCustomRowItemFor(GameObject go)
         {
-            CustomRowItem customRowItem = new CustomRowItem(go);
+            var customRowItem = new CustomRowItem(go);
             lCustomRowItems.Add(customRowItem);
 
             ClearNullRef();
@@ -63,8 +64,14 @@ namespace Hierarchy2
             return dCustomRowItems.TryGetValue(go, out customRowItem);
         }
 
-        void ConvertToDic() => dCustomRowItems = lCustomRowItems.ToDictionary(item => item.gameObject);
+        private void ConvertToDic()
+        {
+            dCustomRowItems = lCustomRowItems.ToDictionary(item => item.gameObject);
+        }
 
-        public void ClearNullRef() => lCustomRowItems.RemoveAll(item => item.gameObject == null);
+        public void ClearNullRef()
+        {
+            lCustomRowItems.RemoveAll(item => item.gameObject == null);
+        }
     }
 }

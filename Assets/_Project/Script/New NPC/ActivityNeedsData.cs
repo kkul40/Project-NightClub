@@ -10,7 +10,7 @@ namespace New_NPC
         public NPC Npc;
         public DiscoData DiscoData;
         public GridHandler GridHandler;
-        
+
         public T GetAvaliablePropByType<T>(ePlacementLayer layer) where T : IPropUnit
         {
             if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;

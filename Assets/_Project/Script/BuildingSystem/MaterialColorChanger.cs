@@ -9,9 +9,9 @@ namespace BuildingSystem
         public enum eMaterialColor
         {
             TransparentMaterial,
-            RemovingMaterial,
+            RemovingMaterial
         }
-        
+
         [SerializeField] private Material blueMaterial;
         [SerializeField] private Material redMaterial;
         [SerializeField] private Material yellowMaterial;
@@ -19,15 +19,17 @@ namespace BuildingSystem
 
         public void SetMaterialsColorByValidity(List<MeshRenderer> meshRenderers, bool canPlace)
         {
-            Material tempMaterial = canPlace ? blueMaterial : redMaterial;
+            var tempMaterial = canPlace ? blueMaterial : redMaterial;
             SetMaterial(meshRenderers, tempMaterial);
         }
 
-        public void SetCustomMaterial(Transform transform, eMaterialColor eMaterialColor, ref Dictionary<Transform, MaterialData> materialDatas)
+        public void SetCustomMaterial(Transform transform, eMaterialColor eMaterialColor,
+            ref Dictionary<Transform, MaterialData> materialDatas)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (var i = 0; i < transform.childCount; i++)
             {
-                materialDatas.Add(transform.GetChild(i), new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
+                materialDatas.Add(transform.GetChild(i),
+                    new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
                 var listMesh = ReturnMeshRendererList(transform.GetChild(i).gameObject);
                 switch (eMaterialColor)
                 {
@@ -51,33 +53,30 @@ namespace BuildingSystem
             foreach (var key in materialDatas.Keys)
             {
                 var listMesh = ReturnMeshRendererList(key.gameObject);
-                for (int i = 0; i < listMesh.Count; i++)
-                {
+                for (var i = 0; i < listMesh.Count; i++)
                     listMesh[i].materials = materialDatas[key].Materials[i].ToArray();
-                }
             }
+
             materialDatas = new Dictionary<Transform, MaterialData>();
         }
-        
+
         private void SetMaterial(List<MeshRenderer> meshRenderers, Material tempMaterial)
         {
-            foreach (var mesh in meshRenderers)
-            {
-                SetMaterial(mesh, tempMaterial);
-            }
+            foreach (var mesh in meshRenderers) SetMaterial(mesh, tempMaterial);
         }
 
         private void SetMaterial(MeshRenderer meshRenderer, Material material)
         {
-            Material[] tempMaterial = new Material[meshRenderer.materials.Length];
-            for (int i = 0; i < meshRenderer.materials.Length; i++)
-            {
-                tempMaterial[i] = material;
-            }
+            var tempMaterial = new Material[meshRenderer.materials.Length];
+            for (var i = 0; i < meshRenderer.materials.Length; i++) tempMaterial[i] = material;
+
             meshRenderer.materials = tempMaterial;
         }
-        
-        public List<MeshRenderer> ReturnMeshRendererList(GameObject gameObject) => gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
+
+        public List<MeshRenderer> ReturnMeshRendererList(GameObject gameObject)
+        {
+            return gameObject.GetComponentsInChildren<MeshRenderer>().ToList();
+        }
 
         public struct MaterialData
         {
@@ -88,13 +87,8 @@ namespace BuildingSystem
             {
                 MeshRenderer = meshRenderer;
                 Materials = new List<List<Material>>();
-                for (int i = 0; i < meshRenderer.Count; i++)
-                {
-                    Materials.Add(meshRenderer[i].materials.ToList());
-                }
+                for (var i = 0; i < meshRenderer.Count; i++) Materials.Add(meshRenderer[i].materials.ToList());
             }
         }
     }
-
-    
 }

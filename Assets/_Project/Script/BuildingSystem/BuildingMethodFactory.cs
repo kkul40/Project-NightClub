@@ -8,23 +8,16 @@ namespace BuildingSystem
     {
         public static IBuildingMethod GetBuildingMethod(StoreItemSO storeItemSo)
         {
-            if (storeItemSo is PlacementItemSO placementItemSo)
-            {
-                return new PlacementBuilder();
-            }
+            if (storeItemSo is PlacementItemSO placementItemSo) return new PlacementBuilder();
 
-            if (storeItemSo is MaterialItemSo materialItemSo)
-            {
-                return new MaterialBuilder();
-            }
-            
+            if (storeItemSo is MaterialItemSo materialItemSo) return new MaterialBuilder();
+
             return new NullBuilderMethod();
         }
 
         public static IRotationMethod GetRotationMethod(StoreItemSO storeItemSo)
         {
             if (storeItemSo is PlacementItemSO placementItemSo)
-            {
                 switch (placementItemSo.eRotation)
                 {
                     case PlacementItemSO.eRotationType.None:
@@ -36,13 +29,9 @@ namespace BuildingSystem
                     case PlacementItemSO.eRotationType.Auto:
                         return new RotationMethodHandlerAuto();
                 }
-            }
-            
-            if (storeItemSo is MaterialItemSo materialItemSo)
-            {
-                return new RotationMethodHandlerAuto();
-            }
-            
+
+            if (storeItemSo is MaterialItemSo materialItemSo) return new RotationMethodHandlerAuto();
+
             return new NullRotationMethod();
         }
     }

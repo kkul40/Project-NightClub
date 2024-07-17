@@ -5,6 +5,7 @@ namespace New_NPC.Activities
     public class NoneActivity : IActivity
     {
         public bool IsEnded { get; }
+
         public void StartActivity(ActivityNeedsData and)
         {
         }

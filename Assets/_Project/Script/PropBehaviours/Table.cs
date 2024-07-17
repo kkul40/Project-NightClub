@@ -19,10 +19,7 @@ namespace PropBehaviours
                 if (prop is Chair chair)
                 {
                     var distance = chair.CellPosition - CellPosition;
-                    if (distance.magnitude <= 1)
-                    {
-                        Chairs.Add(chair);
-                    }
+                    if (distance.magnitude <= 1) Chairs.Add(chair);
                 }
             }
         }

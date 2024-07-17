@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace HighlightPlus {
-
-    public static class ShaderParams {
-
+namespace HighlightPlus
+{
+    public static class ShaderParams
+    {
         // general uniforms
         public static int Cull = Shader.PropertyToID("_Cull");
         public static int BlurScale = Shader.PropertyToID("_BlurScale");
@@ -99,4 +99,3 @@ namespace HighlightPlus {
         public const string SKW_DITHER_BLUENOISE = "HP_DITHER_BLUENOISE";
     }
 }
-

@@ -12,7 +12,7 @@ namespace PropBehaviours
         public New_NPC.NPC Owner { get; private set; }
 
         [field: SerializeField] public bool IsOccupied { get; private set; }
-        
+
         /// <summary>
         ///     Returns Sit Position
         /// </summary>
@@ -27,7 +27,7 @@ namespace PropBehaviours
         {
             return frontPosition.position;
         }
-        
+
         public Vector3 GetSitPosition()
         {
             return sitPosition.position - new Vector3(0, 0.375f, 0);

@@ -26,9 +26,9 @@ namespace System
             foreach (var ac in allActivityTypes)
             {
                 var activity = Activator.CreateInstance(ac) as IActivity;
-                
-                if(activity is NoneActivity) continue;
-                    
+
+                if (activity is NoneActivity) continue;
+
                 dictionary.Add(ac, activity);
             }
         }

@@ -11,7 +11,7 @@ namespace New_NPC.Activities
         private float timer;
 
         public bool IsEnded { get; private set; }
-        
+
         public void StartActivity(ActivityNeedsData and)
         {
             _dancableTile = and.GetAvaliablePropByType<DancableTile>(ePlacementLayer.Surface);
@@ -28,7 +28,7 @@ namespace New_NPC.Activities
                 IsEnded = true;
                 return;
             }
-            
+
             Debug.Log("dance Tile cell pos" + _dancableTile.CellPosition);
             and.Npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(and.Npc);
@@ -48,6 +48,7 @@ namespace New_NPC.Activities
                         and.Npc.GetAnimationControl.SetRootMotion(true);
                         _danceState = DanceState.Dancing;
                     }
+
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
@@ -56,6 +57,7 @@ namespace New_NPC.Activities
                         timer = 0;
                         IsEnded = true;
                     }
+
                     break;
             }
         }
@@ -63,11 +65,11 @@ namespace New_NPC.Activities
         public void EndActivity(ActivityNeedsData and)
         {
             and.Npc.SetAnimation(eNpcAnimation.Idle);
-            if(_dancableTile != null) _dancableTile.IsOccupied = false;
+            if (_dancableTile != null) _dancableTile.IsOccupied = false;
             // and.Npc._navMeshAgent.enabled = true;
             and.Npc.GetAnimationControl.SetRootMotion(false);
         }
-        
+
         private enum DanceState
         {
             None,

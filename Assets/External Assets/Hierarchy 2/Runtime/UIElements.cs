@@ -15,16 +15,16 @@ namespace Hierarchy2
         public Label labelElement;
         public VerticalLayout contentElement;
 
-        Image foloutImage;
+        private Image foloutImage;
 
-        Texture onIcon = EditorGUIUtility.IconContent("IN foldout on@2x").image;
-        Texture offIcon = EditorGUIUtility.IconContent("IN foldout@2x").image;
+        private Texture onIcon = EditorGUIUtility.IconContent("IN foldout on@2x").image;
+        private Texture offIcon = EditorGUIUtility.IconContent("IN foldout@2x").image;
 
-        bool value;
+        private bool value;
 
         public bool Value
         {
-            get { return value; }
+            get => value;
 
             set
             {
@@ -36,13 +36,19 @@ namespace Hierarchy2
 
         public string Title
         {
-            get { return labelElement.text; }
-            set { labelElement.text = value; }
+            get => labelElement.text;
+            set => labelElement.text = value;
         }
 
-        public Foldout() => Init("");
+        public Foldout()
+        {
+            Init("");
+        }
 
-        public Foldout(string title) => Init(title);
+        public Foldout(string title)
+        {
+            Init(title);
+        }
 
         private void Init(string title)
         {
@@ -117,7 +123,7 @@ namespace Hierarchy2
             });
         }
 
-        new public void Add(VisualElement visualElement)
+        public new void Add(VisualElement visualElement)
         {
             contentElement.Add(visualElement);
         }
@@ -127,8 +133,8 @@ namespace Hierarchy2
     {
         public string Label
         {
-            get { return label; }
-            set { label = value; }
+            get => label;
+            set => label = value;
         }
 
         private string label = "";
@@ -138,16 +144,13 @@ namespace Hierarchy2
             style.marginLeft = style.marginRight = style.marginTop = style.marginBottom = 4;
             Label = text;
 
-            IMGUIContainer iMGUIContainer = new IMGUIContainer(() =>
-            {
-                EditorGUILayout.HelpBox(label, messageType, wide);
-            });
+            var iMGUIContainer = new IMGUIContainer(() => { EditorGUILayout.HelpBox(label, messageType, wide); });
 
             iMGUIContainer.name = nameof(IMGUIContainer);
             Add(iMGUIContainer);
         }
     }
-    
+
 #endif
 
     public class HorizontalLayout : VisualElement

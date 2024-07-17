@@ -9,38 +9,27 @@ namespace PropBehaviours
     {
         #region IChangableMaterial
 
-        public MeshRenderer _meshRenderer
-        {
-            get
-            {
-                return GetComponentInChildren<MeshRenderer>();
-            }
-        }
+        public MeshRenderer _meshRenderer => GetComponentInChildren<MeshRenderer>();
 
         public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
 
-        public Material CurrentMaterial
-        {
-            get
-            {
-                return _meshRenderer.material;
-            }
-        }
+        public Material CurrentMaterial => _meshRenderer.material;
 
         public void UpdateMaterial(Material material)
         {
             _meshRenderer.material = material;
         }
-        
+
         #endregion
 
         #region IInteractable
+
         public eInteraction Interaction { get; } = eInteraction.None;
-        
+
         public void OnFocus()
         {
         }
-        
+
         public void OnOutFocus()
         {
         }
@@ -48,13 +37,14 @@ namespace PropBehaviours
         public void OnClick()
         {
             var a = GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            FloorGridAssignmentData test = DiscoData.Instance.mapData.FloorGridDatas[a.x,a.z];
+            var test = DiscoData.Instance.mapData.FloorGridDatas[a.x, a.z];
             // Debug.Log(test.CellPosition);
             // Debug.Log(test.assignedMaterialID);
 
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
             Debug.Log(DiscoData.Instance.mapData.FloorGridDatas[a.x, a.z].assignedMaterialID);
         }
+
         #endregion
     }
 }

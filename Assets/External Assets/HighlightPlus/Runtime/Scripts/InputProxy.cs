@@ -6,12 +6,11 @@ using UnityEngine.InputSystem.Controls;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 #endif
 
-namespace HighlightPlus {
-
-    public static class InputProxy {
-
+namespace HighlightPlus
+{
+    public static class InputProxy
+    {
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
-
         static Vector3 lastPointerPosition;
 
         public static void Init() {
@@ -60,31 +59,29 @@ namespace HighlightPlus {
         }
 
 #else
-        public static void Init() {}
-
-        public static Vector3 mousePosition {
-            get {
-                return Input.mousePosition;
-            }
+        public static void Init()
+        {
         }
 
-        public static bool GetMouseButtonDown(int buttonIndex) {
+        public static Vector3 mousePosition => Input.mousePosition;
+
+        public static bool GetMouseButtonDown(int buttonIndex)
+        {
             return Input.GetMouseButtonDown(buttonIndex);
         }
 
-        public static int touchCount {
-            get { return Input.touchCount; }
-        }
+        public static int touchCount => Input.touchCount;
 
-        public static int GetFingerIdFromTouch(int touchIndex) {
+        public static int GetFingerIdFromTouch(int touchIndex)
+        {
             return Input.GetTouch(touchIndex).fingerId;
         }
 
-        public static bool GetKeyDown(string name) {
+        public static bool GetKeyDown(string name)
+        {
             return Input.GetKeyDown(name);
         }
 
 #endif
-
     }
 }

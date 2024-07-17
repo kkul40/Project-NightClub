@@ -13,12 +13,12 @@ namespace BuildingSystem
         [field: SerializeField] public Transform GetNPCHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetFloorTileHolder { get; private set; }
         [field: SerializeField] public Transform GetWallHolder { get; private set; }
-       
+
         /*
          * GameObject
          *  MeshRendererss
          *  Materials
-         * 
+         *
          */
     }
 }

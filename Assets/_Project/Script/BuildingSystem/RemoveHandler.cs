@@ -10,7 +10,7 @@ namespace BuildingSystem
     {
         private int FloorLayerID = 7;
         private int WalllayerID = 8;
-        
+
         public bool PressAndHold { get; } = false;
         public bool isFinished { get; private set; }
         public Vector3 Offset { get; } = Vector3.zero;
@@ -18,9 +18,8 @@ namespace BuildingSystem
         private IPropUnit _propUnit;
         private IPropUnit _lastPropUnit;
 
-        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas =
-            new Dictionary<Transform, MaterialColorChanger.MaterialData>();
-        
+        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
+
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _propUnit = null;
@@ -33,16 +32,15 @@ namespace BuildingSystem
 
             if (transform == null) return false;
             else Debug.Log(transform.name);
-            
-            if(transform.TryGetComponent(out IPropUnit prop))
-            {
+
+            if (transform.TryGetComponent(out IPropUnit prop))
                 if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition,
                         prop.PlacementLayer))
                 {
                     _propUnit = prop;
                     return true;
-                }    
-            }
+                }
+
             _propUnit = null;
             return false;
         }
@@ -56,26 +54,28 @@ namespace BuildingSystem
                 ResetMaterials(buildingNeedsData.MaterialColorChanger);
                 return;
             }
-            
+
             if (_propUnit != _lastPropUnit)
             {
                 ResetMaterials(buildingNeedsData.MaterialColorChanger);
                 _lastPropUnit = _propUnit;
-                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(_propUnit.transform, MaterialColorChanger.eMaterialColor.RemovingMaterial, ref _materialDatas);
+                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(_propUnit.transform,
+                    MaterialColorChanger.eMaterialColor.RemovingMaterial, ref _materialDatas);
             }
         }
 
         private void ResetMaterials(MaterialColorChanger materialColorChanger)
         {
             if (_lastPropUnit == null) return;
-            
+
             materialColorChanger.SetMaterialToDefault(ref _materialDatas);
             _lastPropUnit = null;
         }
 
         public void OnPlace(BuildingNeedsData buildingNeedsData)
         {
-            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacementData(_propUnit.CellPosition, _propUnit.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacementData(_propUnit.CellPosition,
+                _propUnit.PlacementLayer);
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
         }
 

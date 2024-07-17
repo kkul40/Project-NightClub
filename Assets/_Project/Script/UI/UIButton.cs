@@ -8,6 +8,7 @@ namespace UI
         public virtual void OnHover()
         {
         }
+
         public virtual void OnClick()
         {
         }

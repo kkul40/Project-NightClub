@@ -12,13 +12,14 @@ namespace UI
         [SerializeField] private string path;
         private List<StoreItemSO> _storeItemSos;
 
-        private StoreDataCarrier _storeDataCarrier = new StoreDataCarrier();
+        private StoreDataCarrier _storeDataCarrier = new();
 
         private void Awake()
         {
-            _storeDataCarrier.StoreItemSos = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
+            _storeDataCarrier.StoreItemSos =
+                Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
             _storeDataCarrier.EUISlot = DiscoData.eUISlot.Slot;
-            
+
             GetComponent<Button>().onClick.AddListener(OnClick);
         }
 

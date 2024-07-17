@@ -65,9 +65,7 @@ namespace Data
             var keys = new List<Vector3Int>();
             for (var x = 0; x < size.x; x++)
             for (var y = 0; y < size.y; y++)
-            {
                 keys.Add(cellPos + GetKey(x, y, direction));
-            }
 
             return keys;
         }
@@ -94,6 +92,7 @@ namespace Data
                     key.z = x;
                     break;
             }
+
             return key;
         }
 
@@ -103,7 +102,6 @@ namespace Data
                 placementData.RotationData.direction);
 
             foreach (var key in keys)
-            {
                 switch (layer)
                 {
                     case ePlacementLayer.Surface:
@@ -116,20 +114,20 @@ namespace Data
                         DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = false;
                         break;
                 }
-            }
 
 
             if (placementData.SceneObject.TryGetComponent(out IPropUnit prop))
             {
                 propList.Add(prop);
-                prop.Initialize(placementData.ID ,cellPos, placementData.RotationData, layer);
+                prop.Initialize(placementData.ID, cellPos, placementData.RotationData, layer);
             }
+
             UpdateProps();
         }
 
         public void RemovePlacementData(Vector3Int cellPos, ePlacementLayer layer)
         {
-            PlacementData placementData = new PlacementData();
+            var placementData = new PlacementData();
             switch (layer)
             {
                 case ePlacementLayer.Surface:
@@ -138,6 +136,7 @@ namespace Data
                         placementData = surfaceLayerPlacements[cellPos];
                         surfaceLayerPlacements.Remove(cellPos);
                     }
+
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
@@ -146,12 +145,13 @@ namespace Data
                         placementData = propLayerPlacements[cellPos];
                         propLayerPlacements.Remove(cellPos);
                     }
+
                     break;
             }
-            
+
             var keys = CalculatePosition(placementData.PlacedCellPos, placementData.Size,
                 placementData.RotationData.direction);
-            
+
             foreach (var key in keys)
             {
                 switch (layer)
@@ -164,9 +164,10 @@ namespace Data
                         propLayerPlacements.Remove(key);
                         break;
                 }
+
                 DiscoData.Instance.mapData.SetTileNodeByCellPos(cellPos).IsWalkable = true;
             }
-            
+
             DiscoData.Instance.inventory.AddItem(placementData.storeItemSo);
             var go = placementData.SceneObject;
             if (go.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
@@ -196,23 +197,24 @@ namespace Data
             }
         }
 
-        public GameObject GetSceneObject(Vector3Int cellPos ,ePlacementLayer layer)
+        public GameObject GetSceneObject(Vector3Int cellPos, ePlacementLayer layer)
         {
             switch (layer)
             {
                 case ePlacementLayer.Surface:
-                    if(surfaceLayerPlacements.ContainsKey(cellPos))
+                    if (surfaceLayerPlacements.ContainsKey(cellPos))
                         return surfaceLayerPlacements[cellPos].SceneObject;
                     break;
                 case ePlacementLayer.Floor:
                 case ePlacementLayer.Wall:
-                    if(propLayerPlacements.ContainsKey(cellPos))
+                    if (propLayerPlacements.ContainsKey(cellPos))
                         return propLayerPlacements[cellPos].SceneObject;
                     break;
                 default:
                     Debug.LogError(layer.ToString() + " Is Missing");
                     return null;
             }
+
             return null;
         }
 
@@ -242,7 +244,7 @@ namespace Data
         Surface,
         Floor,
         Wall,
-        Null,
+        Null
     }
 
     public class NewPlacementDataHandler
@@ -251,18 +253,18 @@ namespace Data
         {
             public StoreItemSO StoreItemSo;
         }
-        
+
         private List<IPropUnit> propList;
-        
+
         // Data - PlacedPosition
         private Dictionary<PlacementData2, Vector3Int> allPlacements;
-        
+
         public NewPlacementDataHandler()
         {
             propList = new List<IPropUnit>();
             allPlacements = new Dictionary<PlacementData2, Vector3Int>();
         }
-        
+
         public bool ContainsKey(Vector3Int cellPos, eFloorGridAssignmentType layer)
         {
             if (cellPos.x < 0 ||
@@ -270,14 +272,9 @@ namespace Data
                 cellPos.x >= DiscoData.Instance.mapData.CurrentMapSize.x ||
                 cellPos.z >= DiscoData.Instance.mapData.CurrentMapSize.y)
                 return true;
-            
-            
-            
+
 
             return false;
         }
-        
     }
-
-   
 }

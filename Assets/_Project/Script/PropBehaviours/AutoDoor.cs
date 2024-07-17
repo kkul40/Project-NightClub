@@ -23,7 +23,7 @@ namespace PropBehaviours
                 timer = 3;
             }
 
-            if(timer < 3)
+            if (timer < 3)
                 timer += Time.deltaTime;
         }
 

@@ -44,7 +44,7 @@ namespace New_NPC
 
             currentAnimation = selectedAnimationClip;
             _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
-            
+
             animatorTransform.localPosition = Vector3.zero;
             animatorTransform.localRotation = Quaternion.identity;
         }

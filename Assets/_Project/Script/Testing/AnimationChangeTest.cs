@@ -13,6 +13,5 @@ namespace Testing
             _animator = GetComponent<Animator>();
             _animator.runtimeAnimatorController = _overrideController;
         }
-        
     }
 }

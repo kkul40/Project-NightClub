@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace System
 {
-    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>
+    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
     {
         //TODO Transform holder kullanmak yerine SceneContainerden ulas bunlara
         [SerializeField] private GameObject floorTilePrefab;
@@ -17,15 +17,15 @@ namespace System
         // TODO Gereksizse kaldir
         private Vector2Int MapSize
         {
-            get { return DiscoData.Instance.mapData.CurrentMapSize; }
-            set { DiscoData.Instance.mapData.CurrentMapSize = value; }
+            get => DiscoData.Instance.mapData.CurrentMapSize;
+            set => DiscoData.Instance.mapData.CurrentMapSize = value;
         }
 
         public static event Action<Vector2Int> OnMapSizeChanged;
 
         private void Awake()
         {
-            SetUpMap(); 
+            SetUpMap();
         }
 
         private void SetUpMap()
@@ -34,40 +34,36 @@ namespace System
             var yMax = MapSize.y;
 
             for (var i = 0; i < xMax; i++)
-                for (var j = 0; j < yMax; j++)
-                    InstantiateFloorTile(i, j);
-            
+            for (var j = 0; j < yMax; j++)
+                InstantiateFloorTile(i, j);
+
             for (var i = 1; i <= xMax; i++)
             {
                 if (i == DiscoData.Instance.mapData.WallDoorIndex)
                 {
-                    Debug.Log(i);
-                    var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
-                    
-                    Debug.Log("dooor Created");
+                    var newWallDoorObject =
+                        Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
 
-                    LoadAndAssignWallMaterial(new Vector3Int(DiscoData.Instance.mapData.WallDoorIndex, 0, 0), newWallDoorObject);
+                    LoadAndAssignWallMaterial(new Vector3Int(DiscoData.Instance.mapData.WallDoorIndex, 0, 0),
+                        newWallDoorObject);
 
                     newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
                     // var wall = InstantiateXWall(i);
                     // wall.SetActive(false);
-                    
+
                     continue;
                 }
+
                 InstantiateXWall(i);
             }
-            
+
             for (var i = 1; i <= yMax; i++) InstantiateYWall(i);
 
             MapSize = new Vector2Int(xMax, yMax);
             OnMapSizeChanged?.Invoke(MapSize);
         }
 
-        private void LoadMap()
-        {
-            //Load Map
-        }
 
         [ContextMenu("Expend X")]
         public void ExpendX()
@@ -76,7 +72,7 @@ namespace System
 
             for (var i = 0; i < MapSize.y; i++) InstantiateFloorTile(MapSize.x, i);
             MapSize += Vector2Int.right;
-            
+
             OnMapSizeChanged?.Invoke(MapSize);
         }
 
@@ -103,8 +99,8 @@ namespace System
             var pos2 = new Vector3(0, 0, y - 0.5f);
             var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0, 90, 0));
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-            
-            LoadAndAssignWallMaterial(new Vector3Int(0,0,y), newWallObject);
+
+            LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
             return newWallObject;
         }
@@ -115,8 +111,8 @@ namespace System
             var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
-            LoadAndAssignWallMaterial(new Vector3Int(x,0,0), newWallObject);
-            
+            LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
+
             return newWallObject;
         }
 
@@ -126,8 +122,8 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            DiscoData.Instance.mapData.PathFinderNodes[x, y] = new PathFinderNode(true, pos, x, y); 
-            
+            DiscoData.Instance.mapData.PathFinderNodes[x, y] = new PathFinderNode(true, pos, x, y);
+
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
 
@@ -139,6 +135,7 @@ namespace System
                 Debug.Log("Data Was NULL");
                 return;
             }
+
             data.AssignReferance(newObject.GetComponent<FloorTile>(), cellPosition);
             data.AssignNewID(eFloorGridAssignmentType.Material, data.assignedMaterialID);
         }
@@ -150,11 +147,23 @@ namespace System
             {
                 Debug.Log("Data Was NULL");
                 DiscoData.Instance.mapData.WallDatas.Add(new WallAssignmentData(cellPosition, -1));
-                data = DiscoData.Instance.mapData.WallDatas[DiscoData.Instance.mapData.WallDatas.Count -1];
+                data = DiscoData.Instance.mapData.WallDatas[DiscoData.Instance.mapData.WallDatas.Count - 1];
             }
-            
+
             data.AssignReferance(newWallObject.GetComponent<Wall>());
             data.AssignNewID(data.assignedMaterialID);
+        }
+
+        public void Load(GameData gameData)
+        {
+            throw new NotImplementedException();
+
+            //Load Map
+        }
+
+        public void Save(ref GameData gameData)
+        {
+            throw new NotImplementedException();
         }
     }
 }

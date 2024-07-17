@@ -13,7 +13,7 @@ namespace UI
         [SerializeField] private GameObject UISlotPrefab;
         [SerializeField] private GameObject UICargoSlotPrefab;
         [SerializeField] private Transform SlotHolder;
-        
+
         [SerializeField] private Transform ButtonHolder;
 
         [SerializeField] private Button NextBtn;
@@ -21,11 +21,11 @@ namespace UI
 
         private IUISlot[] _uiSlots;
 
-        private StoreDataCarrier _storeDataCarrier = new StoreDataCarrier();
+        private StoreDataCarrier _storeDataCarrier = new();
 
         private const int listSize = 5;
         public int pointer;
-        
+
         public int SetPointer
         {
             get => pointer;
@@ -34,33 +34,21 @@ namespace UI
                 NextBtn.gameObject.SetActive(true);
                 PreviousBtn.gameObject.SetActive(true);
 
-                if (value == 0)
-                {
-                    pointer = 0;
-                }
-                if (value >= 0 && value < _storeDataCarrier.StoreItemSos.Count)
-                {
-                    pointer = value;
-                }
+                if (value == 0) pointer = 0;
 
-                if (pointer <= 0)
-                {
-                    PreviousBtn.gameObject.SetActive(false);
-                }
-                
-                if (pointer + listSize >= _storeDataCarrier.StoreItemSos.Count)
-                {
-                    NextBtn.gameObject.SetActive(false);
-                }
-                
+                if (value >= 0 && value < _storeDataCarrier.StoreItemSos.Count) pointer = value;
+
+                if (pointer <= 0) PreviousBtn.gameObject.SetActive(false);
+
+                if (pointer + listSize >= _storeDataCarrier.StoreItemSos.Count) NextBtn.gameObject.SetActive(false);
             }
         }
-        
+
         private void Awake()
         {
             NextBtn.onClick.AddListener(Next);
             PreviousBtn.onClick.AddListener(Previous);
-            
+
             _uiSlots = new IUISlot[listSize];
         }
 
@@ -78,21 +66,18 @@ namespace UI
                     ButtonHolder.gameObject.SetActive(false);
                     break;
             }
-            
+
             InstantiateSlots();
             Load();
         }
-        
+
         private void InstantiateSlots()
         {
             _uiSlots = new IUISlot[listSize];
 
-            for (int i = SlotHolder.childCount - 1; i >= 0; i--)
-            {
-                Destroy(SlotHolder.GetChild(i).gameObject);
-            }
-            
-            for (int i = 0; i < _uiSlots.Length; i++)
+            for (var i = SlotHolder.childCount - 1; i >= 0; i--) Destroy(SlotHolder.GetChild(i).gameObject);
+
+            for (var i = 0; i < _uiSlots.Length; i++)
             {
                 GameObject temp = null;
                 switch (_storeDataCarrier.EUISlot)
@@ -103,16 +88,16 @@ namespace UI
                     case DiscoData.eUISlot.Cargo:
                         temp = Instantiate(UICargoSlotPrefab, SlotHolder);
                         break;
-                        
                 }
+
                 _uiSlots[i] = temp.GetComponent<IUISlot>();
                 _uiSlots[i].mGameobject.SetActive(false);
             }
         }
-       
+
         public void Load()
         {
-            for (int i = 0; i < listSize; i++)
+            for (var i = 0; i < listSize; i++)
             {
                 if (i + pointer < _storeDataCarrier.StoreItemSos.Count)
                 {
@@ -121,17 +106,17 @@ namespace UI
                     _uiSlots[i].Init(_storeDataCarrier);
                     continue;
                 }
-                    
+
                 _uiSlots[i].mGameobject.SetActive(false);
             }
         }
-        
+
         public void Next()
         {
             SetPointer += listSize;
             Load();
         }
-        
+
         public void Previous()
         {
             SetPointer -= listSize;

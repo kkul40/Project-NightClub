@@ -14,10 +14,10 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
         StartCoroutine(CoSceneLoader(1));
     }
-    
+
     public void LoadScene(int sceneID)
     {
         StartCoroutine(CoSceneLoader(sceneID));
@@ -25,7 +25,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
     private IEnumerator CoSceneLoader(int sceneID)
     {
-        
         loadingScreen.gameObject.SetActive(false);
         yield break;
     }

@@ -8,7 +8,7 @@ namespace Root
     public class KDebug : MonoBehaviour
     {
         public bool showPlacements = false;
-        
+
         private void OnDrawGizmosSelected()
         {
             if (showPlacements)
@@ -17,10 +17,7 @@ namespace Root
                 var rest = DiscoData.Instance.placementDataHandler.GetUsedKeys(ePlacementLayer.Surface);
 
 
-                foreach (var r in rest)
-                {
-                    keys.Add(r);
-                }
+                foreach (var r in rest) keys.Add(r);
 
                 foreach (var key in keys)
                 {

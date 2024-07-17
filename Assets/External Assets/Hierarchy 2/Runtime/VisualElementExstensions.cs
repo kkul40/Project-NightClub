@@ -6,19 +6,30 @@ namespace Hierarchy2
 {
     public static class UIElementsExstensions
     {
-        public static void StyleDisplay(this VisualElement ui, DisplayStyle displayStyle) =>
+        public static void StyleDisplay(this VisualElement ui, DisplayStyle displayStyle)
+        {
             ui.style.display = displayStyle;
+        }
 
-        public static void StyleDisplay(this VisualElement ui, bool value) =>
+        public static void StyleDisplay(this VisualElement ui, bool value)
+        {
             ui.StyleDisplay(value ? DisplayStyle.Flex : DisplayStyle.None);
+        }
 
-        public static bool IsDisplaying(this VisualElement ui) => ui.style.display == DisplayStyle.Flex;
+        public static bool IsDisplaying(this VisualElement ui)
+        {
+            return ui.style.display == DisplayStyle.Flex;
+        }
 
-        public static void StyleVisibility(this VisualElement ui, Visibility visibility) =>
+        public static void StyleVisibility(this VisualElement ui, Visibility visibility)
+        {
             ui.style.visibility = visibility;
+        }
 
-        public static void StyleVisibility(this VisualElement ui, bool value) =>
+        public static void StyleVisibility(this VisualElement ui, bool value)
+        {
             ui.StyleVisibility(value ? Visibility.Visible : Visibility.Hidden);
+        }
 
         public static Vector2 StylePosition(this VisualElement ui)
         {
@@ -52,23 +63,50 @@ namespace Hierarchy2
             ui.StyleTop(y);
         }
 
-        public static void StyleTop(this VisualElement ui, StyleLength value) => ui.style.top = value;
+        public static void StyleTop(this VisualElement ui, StyleLength value)
+        {
+            ui.style.top = value;
+        }
 
-        public static void StyleBottom(this VisualElement ui, StyleLength value) => ui.style.bottom = value;
+        public static void StyleBottom(this VisualElement ui, StyleLength value)
+        {
+            ui.style.bottom = value;
+        }
 
-        public static void StyleLeft(this VisualElement ui, StyleLength value) => ui.style.left = value;
+        public static void StyleLeft(this VisualElement ui, StyleLength value)
+        {
+            ui.style.left = value;
+        }
 
-        public static void StyleRight(this VisualElement ui, StyleLength value) => ui.style.right = value;
+        public static void StyleRight(this VisualElement ui, StyleLength value)
+        {
+            ui.style.right = value;
+        }
 
-        public static float StyleTop(this VisualElement ui) => ui.style.top.value.value;
+        public static float StyleTop(this VisualElement ui)
+        {
+            return ui.style.top.value.value;
+        }
 
-        public static float StyleBottom(this VisualElement ui) => ui.style.bottom.value.value;
+        public static float StyleBottom(this VisualElement ui)
+        {
+            return ui.style.bottom.value.value;
+        }
 
-        public static float StyleLeft(this VisualElement ui) => ui.style.left.value.value;
+        public static float StyleLeft(this VisualElement ui)
+        {
+            return ui.style.left.value.value;
+        }
 
-        public static float StyleRight(this VisualElement ui) => ui.style.right.value.value;
+        public static float StyleRight(this VisualElement ui)
+        {
+            return ui.style.right.value.value;
+        }
 
-        public static void StylePosition(this VisualElement ui, Position type) => ui.style.position = type;
+        public static void StylePosition(this VisualElement ui, Position type)
+        {
+            ui.style.position = type;
+        }
 
         public static void StyleSize(this VisualElement ui, StyleLength width, StyleLength height)
         {
@@ -76,7 +114,10 @@ namespace Hierarchy2
             ui.StyleHeight(height);
         }
 
-        public static void StyleSize(this VisualElement ui, Vector2 size) => StyleSize(ui, size.x, size.y);
+        public static void StyleSize(this VisualElement ui, Vector2 size)
+        {
+            StyleSize(ui, size.x, size.y);
+        }
 
         public static void StyleMinSize(this VisualElement ui, StyleLength width, StyleLength height)
         {
@@ -91,38 +132,75 @@ namespace Hierarchy2
         }
 
 
-        public static void StyleWidth(this VisualElement ui, StyleLength width) => ui.style.width = width;
+        public static void StyleWidth(this VisualElement ui, StyleLength width)
+        {
+            ui.style.width = width;
+        }
 
-        public static void StyleMinWidth(this VisualElement ui, StyleLength width) => ui.style.minWidth = width;
+        public static void StyleMinWidth(this VisualElement ui, StyleLength width)
+        {
+            ui.style.minWidth = width;
+        }
 
-        public static void StyleMaxWidth(this VisualElement ui, StyleLength width) => ui.style.maxWidth = width;
+        public static void StyleMaxWidth(this VisualElement ui, StyleLength width)
+        {
+            ui.style.maxWidth = width;
+        }
 
-        public static void StyleHeight(this VisualElement ui, StyleLength height) => ui.style.height = height;
+        public static void StyleHeight(this VisualElement ui, StyleLength height)
+        {
+            ui.style.height = height;
+        }
 
-        public static void StyleMinHeight(this VisualElement ui, StyleLength height) => ui.style.minHeight = height;
+        public static void StyleMinHeight(this VisualElement ui, StyleLength height)
+        {
+            ui.style.minHeight = height;
+        }
 
-        public static void StyleMaxHeight(this VisualElement ui, StyleLength height) => ui.style.maxHeight = height;
+        public static void StyleMaxHeight(this VisualElement ui, StyleLength height)
+        {
+            ui.style.maxHeight = height;
+        }
 
-        public static void StyleFont(this VisualElement ui, FontStyle fontStyle) =>
+        public static void StyleFont(this VisualElement ui, FontStyle fontStyle)
+        {
             ui.style.unityFontStyleAndWeight = fontStyle;
+        }
 
-        public static void StyleFontSize(this VisualElement ui, StyleLength size) => ui.style.fontSize = size;
+        public static void StyleFontSize(this VisualElement ui, StyleLength size)
+        {
+            ui.style.fontSize = size;
+        }
 
-        public static void StyleTextAlign(this VisualElement ui, TextAnchor textAnchor) =>
+        public static void StyleTextAlign(this VisualElement ui, TextAnchor textAnchor)
+        {
             ui.style.unityTextAlign = textAnchor;
+        }
 
-        public static void StyleAlignSelf(this VisualElement ui, Align align) => ui.style.alignSelf = align;
+        public static void StyleAlignSelf(this VisualElement ui, Align align)
+        {
+            ui.style.alignSelf = align;
+        }
 
-        public static void StyleAlignItem(this VisualElement ui, Align align) => ui.style.alignItems = align;
+        public static void StyleAlignItem(this VisualElement ui, Align align)
+        {
+            ui.style.alignItems = align;
+        }
 
-        public static void StyleJustifyContent(this VisualElement ui, Justify justify) =>
+        public static void StyleJustifyContent(this VisualElement ui, Justify justify)
+        {
             ui.style.justifyContent = justify;
+        }
 
-        public static void StyleFlexDirection(this VisualElement ui, FlexDirection flexDirection) =>
+        public static void StyleFlexDirection(this VisualElement ui, FlexDirection flexDirection)
+        {
             ui.style.flexDirection = flexDirection;
+        }
 
-        public static void StyleMargin(this VisualElement ui, StyleLength value) =>
+        public static void StyleMargin(this VisualElement ui, StyleLength value)
+        {
             ui.StyleMargin(value, value, value, value);
+        }
 
         public static void StyleMargin(this VisualElement ui, StyleLength left, StyleLength right, StyleLength top,
             StyleLength bottom)
@@ -133,16 +211,30 @@ namespace Hierarchy2
             ui.style.marginBottom = bottom;
         }
 
-        public static void StyleMarginLeft(this VisualElement ui, StyleLength value) => ui.style.marginLeft = value;
+        public static void StyleMarginLeft(this VisualElement ui, StyleLength value)
+        {
+            ui.style.marginLeft = value;
+        }
 
-        public static void StyleMarginRight(this VisualElement ui, StyleLength value) => ui.style.marginRight = value;
+        public static void StyleMarginRight(this VisualElement ui, StyleLength value)
+        {
+            ui.style.marginRight = value;
+        }
 
-        public static void StyleMarginTop(this VisualElement ui, StyleLength value) => ui.style.marginTop = value;
+        public static void StyleMarginTop(this VisualElement ui, StyleLength value)
+        {
+            ui.style.marginTop = value;
+        }
 
-        public static void StyleMarginBottom(this VisualElement ui, StyleLength value) => ui.style.marginBottom = value;
+        public static void StyleMarginBottom(this VisualElement ui, StyleLength value)
+        {
+            ui.style.marginBottom = value;
+        }
 
-        public static void StylePadding(this VisualElement ui, StyleLength value) =>
+        public static void StylePadding(this VisualElement ui, StyleLength value)
+        {
             ui.StylePadding(value, value, value, value);
+        }
 
         public static void StylePadding(this VisualElement ui, StyleLength left, StyleLength right, StyleLength top,
             StyleLength bottom)
@@ -153,17 +245,30 @@ namespace Hierarchy2
             ui.style.paddingBottom = bottom;
         }
 
-        public static void StylePaddingLeft(this VisualElement ui, StyleLength value) => ui.style.paddingLeft = value;
+        public static void StylePaddingLeft(this VisualElement ui, StyleLength value)
+        {
+            ui.style.paddingLeft = value;
+        }
 
-        public static void StylePaddingRight(this VisualElement ui, StyleLength value) => ui.style.paddingRight = value;
+        public static void StylePaddingRight(this VisualElement ui, StyleLength value)
+        {
+            ui.style.paddingRight = value;
+        }
 
-        public static void StylePaddingTop(this VisualElement ui, StyleLength value) => ui.style.paddingTop = value;
+        public static void StylePaddingTop(this VisualElement ui, StyleLength value)
+        {
+            ui.style.paddingTop = value;
+        }
 
-        public static void StylePaddingBottom(this VisualElement ui, StyleLength value) =>
+        public static void StylePaddingBottom(this VisualElement ui, StyleLength value)
+        {
             ui.style.paddingBottom = value;
+        }
 
-        public static void StyleBorderRadius(this VisualElement ui, StyleLength radius) =>
+        public static void StyleBorderRadius(this VisualElement ui, StyleLength radius)
+        {
             ui.StyleBorderRadius(radius, radius, radius, radius);
+        }
 
         public static void StyleBorderRadius(this VisualElement ui, StyleLength topLeft, StyleLength topRight,
             StyleLength bottomLeft, StyleLength bottomRight)
@@ -174,8 +279,10 @@ namespace Hierarchy2
             ui.style.borderBottomRightRadius = bottomRight;
         }
 
-        public static void StyleBorderWidth(this VisualElement ui, StyleFloat width) =>
+        public static void StyleBorderWidth(this VisualElement ui, StyleFloat width)
+        {
             ui.StyleBorderWidth(width, width, width, width);
+        }
 
         public static void StyleBorderWidth(this VisualElement ui, StyleFloat left, StyleFloat right, StyleFloat top,
             StyleFloat bottom)
@@ -186,8 +293,10 @@ namespace Hierarchy2
             ui.style.borderBottomWidth = bottom;
         }
 
-        public static void StyleBorderColor(this VisualElement ui, StyleColor color) =>
+        public static void StyleBorderColor(this VisualElement ui, StyleColor color)
+        {
             ui.StyleBorderColor(color, color, color, color);
+        }
 
         public static void StyleBorderColor(this VisualElement ui, StyleColor left, StyleColor right, StyleColor top,
             StyleColor bottom)
@@ -198,15 +307,25 @@ namespace Hierarchy2
             ui.style.borderBottomColor = bottom;
         }
 
-        public static void StyleFlexBasisAsPercent(this VisualElement ui, StyleLength basis) =>
+        public static void StyleFlexBasisAsPercent(this VisualElement ui, StyleLength basis)
+        {
             ui.style.flexBasis = basis;
+        }
 
-        public static void StyleFlexGrow(this VisualElement ui, StyleFloat grow) => ui.style.flexGrow = grow;
+        public static void StyleFlexGrow(this VisualElement ui, StyleFloat grow)
+        {
+            ui.style.flexGrow = grow;
+        }
 
-        public static void StyleBackgroundColor(this VisualElement ui, StyleColor color) =>
+        public static void StyleBackgroundColor(this VisualElement ui, StyleColor color)
+        {
             ui.style.backgroundColor = color;
+        }
 
-        public static void StyleTextColor(this VisualElement ui, StyleColor color) => ui.style.color = color;
+        public static void StyleTextColor(this VisualElement ui, StyleColor color)
+        {
+            ui.style.color = color;
+        }
 
         public static VisualElement FindChildren(this VisualElement ui, string name)
         {

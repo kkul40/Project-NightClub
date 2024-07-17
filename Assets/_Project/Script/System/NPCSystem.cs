@@ -20,26 +20,30 @@ namespace System
 
         private IEnumerator CoSpawnNPCs()
         {
-            int npcCount = 0;
+            var npcCount = 0;
 
             while (npcCount < maxNPC)
             {
                 yield return new WaitForSeconds(0.1f);
-                var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.mapData.EnterencePosition - new Vector3(0,0.5f,0), Quaternion.identity);
+                var newNPC = Instantiate(_npcPrefab,
+                    DiscoData.Instance.mapData.EnterencePosition - new Vector3(0, 0.5f, 0), Quaternion.identity);
                 newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
-                eGenderType gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
+                var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
                 switch (gender)
                 {
                     case eGenderType.Male:
-                        newNPC.GetComponent<NPCRandomizer>().Customize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
+                        newNPC.GetComponent<NPCRandomizer>()
+                            .Customize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
                         break;
                     case eGenderType.Female:
-                        newNPC.GetComponent<NPCRandomizer>().Customize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
+                        newNPC.GetComponent<NPCRandomizer>()
+                            .Customize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }
+
                 npcCount++;
             }
         }

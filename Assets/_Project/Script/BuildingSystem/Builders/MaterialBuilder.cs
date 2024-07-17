@@ -18,21 +18,26 @@ namespace BuildingSystem.Builders
         private IChangableMaterial _lastChangableMaterial;
         private Material _previousMaterial;
 
-        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas =
-            new Dictionary<Transform, MaterialColorChanger.MaterialData>();
-        
+        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
+
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _materialItemSo = buildingNeedsData.StoreItemSo as MaterialItemSo;
-            
+
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.Wall:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(SceneGameObjectHandler.Instance.GetPropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
+                        SceneGameObjectHandler.Instance.GetPropHolderTransform,
+                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
                 case eMaterialLayer.FloorTile:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(SceneGameObjectHandler.Instance.GetPropHolderTransform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
+                        SceneGameObjectHandler.Instance.GetSurfaceHolderTransform,
+                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
+                        SceneGameObjectHandler.Instance.GetPropHolderTransform,
+                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
             }
         }
@@ -64,7 +69,7 @@ namespace BuildingSystem.Builders
             {
                 ResetPreviousMaterial();
                 _lastChangableMaterial = _changableMaterial;
-                
+
                 _previousMaterial = _changableMaterial.CurrentMaterial;
                 _changableMaterial.UpdateMaterial(_materialItemSo.Material);
             }
@@ -75,20 +80,24 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.FloorTile:
-                    DiscoData.Instance.mapData.FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z].AssignNewID(eFloorGridAssignmentType.Material, _materialItemSo.ID);
+                    DiscoData.Instance.mapData
+                        .FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z]
+                        .AssignNewID(eFloorGridAssignmentType.Material, _materialItemSo.ID);
                     break;
                 case eMaterialLayer.Wall:
-                    DiscoData.Instance.mapData.WallDatas.FirstOrDefault(x => x.assignedWall as IChangableMaterial == _lastChangableMaterial).AssignNewID(_materialItemSo.ID);
+                    DiscoData.Instance.mapData.WallDatas
+                        .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _lastChangableMaterial)
+                        .AssignNewID(_materialItemSo.ID);
                     break;
             }
-            
+
             _lastChangableMaterial = null;
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)
         {
-           ResetPreviousMaterial();
-           buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
+            ResetPreviousMaterial();
+            buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
 
         private IChangableMaterial FindMaterial(BuildingNeedsData buildingNeedsData)
@@ -103,11 +112,9 @@ namespace BuildingSystem.Builders
                     hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(8);
                     break;
             }
-            
+
             if (hitTransform != null && hitTransform.TryGetComponent(out IChangableMaterial changableMaterial))
-            {
                 return changableMaterial;
-            }
 
             return null;
         }
@@ -118,24 +125,25 @@ namespace BuildingSystem.Builders
             _lastChangableMaterial.UpdateMaterial(_previousMaterial);
             _lastChangableMaterial = null;
         }
-        
-        private IChangableMaterial GetClosestWallMaterial(BuildingNeedsData buildingNeedsData)
-         {
-             float lastDis = 9999;
-             IChangableMaterial closestChangableMaterial = null;
-             foreach(var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
-             {
-                 if(wall.assignedWall == null) continue;
-                 
-                 var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.assignedWall.transform.position);
-                 if (dis < lastDis)
-                 {
-                     closestChangableMaterial = wall.assignedWall as IChangableMaterial;
-                     lastDis = dis;
-                 }
-             }
 
-             return closestChangableMaterial;
-         }
+        private IChangableMaterial GetClosestWallMaterial(BuildingNeedsData buildingNeedsData)
+        {
+            float lastDis = 9999;
+            IChangableMaterial closestChangableMaterial = null;
+            foreach (var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
+            {
+                if (wall.assignedWall == null) continue;
+
+                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(),
+                    wall.assignedWall.transform.position);
+                if (dis < lastDis)
+                {
+                    closestChangableMaterial = wall.assignedWall as IChangableMaterial;
+                    lastDis = dis;
+                }
+            }
+
+            return closestChangableMaterial;
+        }
     }
 }

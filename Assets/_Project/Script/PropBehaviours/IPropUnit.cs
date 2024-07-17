@@ -24,7 +24,7 @@ namespace PropBehaviours
         }
 
         public eInteraction Interaction { get; } = eInteraction.PropUnit;
-        
+
         public void OnFocus()
         {
         }
@@ -39,7 +39,7 @@ namespace PropBehaviours
 
         public IPropUnit Copy()
         {
-            IPropUnit output = new IPropUnit();
+            var output = new IPropUnit();
             output.ID = ID;
             output.CellPosition = CellPosition;
 

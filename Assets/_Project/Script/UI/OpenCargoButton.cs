@@ -8,15 +8,12 @@ namespace UI
     {
         public override void OnClick()
         {
-            StoreDataCarrier storeDataCarrier = new StoreDataCarrier();
+            var storeDataCarrier = new StoreDataCarrier();
             storeDataCarrier.inventory = DiscoData.Instance.inventory.Items;
             storeDataCarrier.EUISlot = DiscoData.eUISlot.Cargo;
 
-            foreach (var key in storeDataCarrier.inventory.Keys)
-            {
-                storeDataCarrier.StoreItemSos.Add(key);
-            }
-            
+            foreach (var key in storeDataCarrier.inventory.Keys) storeDataCarrier.StoreItemSos.Add(key);
+
             UIStoreManager.Instance.GetUiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }
     }

@@ -21,16 +21,17 @@ namespace New_NPC
         private ActivityHandler _activityHandler;
         public NpcPathFinder pathFinder;
         public GameObject Prefab;
-        
+
         public void Init(NpcAnimationSo npcAnimationSo)
         {
             // _navMeshAgent = GetComponent<NavMeshAgent>();
             pathFinder = new NpcPathFinder(transform);
-            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
+            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo,
+                transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
             _activityHandler.StartActivity(new WalkRandomActivity());
         }
-        
+
         private void Update()
         {
             _activityHandler.UpdateActivity();
@@ -56,8 +57,9 @@ namespace New_NPC
         {
             _npcAnimationControl.PlayAnimation(newAnimation);
         }
+
         public NPCAnimationControl GetAnimationControl => _npcAnimationControl;
-        
+
         // void OnDrawGizmosSelected()
         // {
         //     if (path.Count > 1)

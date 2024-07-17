@@ -13,7 +13,7 @@ namespace PlayerScripts
     public class Player : MonoBehaviour
     {
         private NpcPathFinder _pathFinder;
-      
+
         private void Awake()
         {
             _pathFinder = new NpcPathFinder(transform);
@@ -23,8 +23,8 @@ namespace PlayerScripts
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                var lastHitFloor = InputSystem.Instance.GetHitTransformWithLayer(DiscoData.ConstantVariables.FloorLayerID);
-                if(lastHitFloor != null)
+                var lastHitFloor = InputSystem.Instance.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
+                if (lastHitFloor != null)
                     _pathFinder.GoToDestination(GridHandler.Instance.GetWorldToCell(lastHitFloor.position));
             }
         }

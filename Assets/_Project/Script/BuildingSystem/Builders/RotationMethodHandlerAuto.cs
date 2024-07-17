@@ -10,8 +10,8 @@ namespace BuildingSystem.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            Quaternion quaternion = GetClosestWallRotation(buildingNeedsData);
-            Direction direction = DirectionHelper.GetDirectionFromQuaternion(quaternion);
+            var quaternion = GetClosestWallRotation(buildingNeedsData);
+            var direction = DirectionHelper.GetDirectionFromQuaternion(quaternion);
 
             buildingNeedsData.RotationData = new RotationData(quaternion, direction);
         }
@@ -19,18 +19,20 @@ namespace BuildingSystem.Builders
         private Quaternion GetClosestWallRotation(BuildingNeedsData buildingNeedsData)
         {
             float lastDis = 9999;
-            Quaternion closestChangableMaterial = Quaternion.identity;
-            foreach(var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
+            var closestChangableMaterial = Quaternion.identity;
+            foreach (var wall in buildingNeedsData.DiscoData.mapData.WallDatas)
             {
-                if(wall.assignedWall == null) continue;
-                
-                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(), wall.assignedWall.transform.position);
+                if (wall.assignedWall == null) continue;
+
+                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(),
+                    wall.assignedWall.transform.position);
                 if (dis < lastDis)
                 {
                     closestChangableMaterial = wall.assignedWall.transform.rotation;
                     lastDis = dis;
                 }
             }
+
             return closestChangableMaterial;
         }
     }

@@ -10,10 +10,10 @@ namespace Data
     public class FloorGridAssignmentData
     {
         public Vector3Int CellPosition { get; private set; }
-        public FloorTile assignedFloorTile{ get; private set; }
-        public int assignedMaterialID{ get; private set; }
-        public int assignedSurfaceID{ get; private set; }
-        public int assignedObjectID{ get; private set; }
+        public FloorTile assignedFloorTile { get; private set; }
+        public int assignedMaterialID { get; private set; }
+        public int assignedSurfaceID { get; private set; }
+        public int assignedObjectID { get; private set; }
 
         public FloorGridAssignmentData(Vector3Int cellPosition)
         {
@@ -22,7 +22,7 @@ namespace Data
             assignedSurfaceID = -1;
             assignedObjectID = -1;
         }
-        
+
         public void AssignReferance(FloorTile assignment, Vector3Int cellPosition)
         {
             assignedFloorTile = assignment;
@@ -36,13 +36,13 @@ namespace Data
                 Debug.LogError("Floor Object Not Assigned");
                 return;
             }
-            
+
             if (newID == -1)
             {
                 assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
                 return;
             }
-            
+
             switch (layerToAssign)
             {
                 case eFloorGridAssignmentType.NULL:
@@ -50,13 +50,15 @@ namespace Data
                     break;
                 case eFloorGridAssignmentType.Material:
                     if (assignedMaterialID == newID) return; // Already Assigned
-                    
-                    var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
+
+                    var foundMaterial =
+                        DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
                     if (foundMaterial == null)
                     {
                         Debug.LogError(newID + " Could Not Found in Item List");
                         break;
                     }
+
                     assignedFloorTile.UpdateMaterial(foundMaterial.Material);
                     assignedMaterialID = newID;
                     break;
@@ -71,7 +73,7 @@ namespace Data
                     assignedObjectID = newID;
                     break;
             }
-            
+
             Debug.Log("New ID Assigned To FloorGridData");
         }
     }
@@ -81,13 +83,13 @@ namespace Data
         NULL,
         Material,
         Surface,
-        Object,
+        Object
     }
-   
-    
+
+
     // Object idleri hashmap te tut gerektiginde sil
-    
-    
+
+
     /*
      * Cell Positionu bul
      * Ona atali olan Griddatayi bul
@@ -95,5 +97,4 @@ namespace Data
      * Objeyi spawnla
      * objeyi hashmape kaydet
      */
-    
 }

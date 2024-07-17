@@ -17,7 +17,7 @@ namespace UI
 
         public Image image;
         public TextMeshProUGUI priceText;
-        
+
         private void Awake()
         {
             mGameobject = transform.gameObject;
@@ -37,7 +37,7 @@ namespace UI
 
         public void Init(StoreDataCarrier storeDataCarrier)
         {
-            this.StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
+            StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
             image.sprite = StoreItemSo.Icon;
             priceText.text = StoreItemSo.Price.ToString();
         }

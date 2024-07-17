@@ -22,7 +22,7 @@ namespace Testing
         private void Reset()
         {
             if (_currentInteractable == null || BuildingManager.Instance.isPlacing) return;
-            
+
             _currentInteractable.OnOutFocus();
             _currentInteractable = null;
 
@@ -93,6 +93,7 @@ namespace Testing
                     highlightEffect.ProfileLoad(_interactableHighlight);
                     break;
             }
+
             highlightEffect.SetHighlighted(true);
         }
     }

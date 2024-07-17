@@ -9,7 +9,7 @@ namespace New_NPC
         private IActivity _currentActivity;
 
         public bool hasActivity => _currentActivity != null;
-        
+
         public ActivityHandler(NPC npc)
         {
             _activityNeedsData = new ActivityNeedsData();
@@ -22,7 +22,7 @@ namespace New_NPC
         {
             if (hasActivity)
                 _currentActivity.EndActivity(_activityNeedsData);
-            
+
             _currentActivity = activity;
             _currentActivity.StartActivity(_activityNeedsData);
         }

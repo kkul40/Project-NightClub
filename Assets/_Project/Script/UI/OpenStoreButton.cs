@@ -6,8 +6,8 @@ namespace UI
 {
     public class OpenStoreButton : UIButton
     {
-       [SerializeField] private UIButton firtButton;
-        
+        [SerializeField] private UIButton firtButton;
+
         public override void OnClick()
         {
             firtButton.OnClick();

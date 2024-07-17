@@ -4,6 +4,6 @@
     {
         FloorTile,
         Wall,
-        Null,
+        Null
     }
 }

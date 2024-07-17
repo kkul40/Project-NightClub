@@ -17,7 +17,7 @@ namespace System
 
         public Vector2 MoveDelta;
         public float ScrollWheelDelta;
-        [HideInInspector] public bool Esc; 
+        [HideInInspector] public bool Esc;
         [HideInInspector] public bool TurnLeft;
         [HideInInspector] public bool TurnRight;
         [HideInInspector] public bool LeftClickOnWorld;
@@ -65,7 +65,7 @@ namespace System
 
             return Vector3.zero;
         }
-        
+
         public Transform GetHitTransform()
         {
             var mousePOs = Input.mousePosition;
@@ -79,10 +79,7 @@ namespace System
             // int ignoreLayer = ignore;
             // int ignoreMask = ~(1 << ignoreLayer);
 
-            if (Physics.Raycast(ray, out hit, maxDistance))
-            {
-                return hit.transform;
-            }
+            if (Physics.Raycast(ray, out hit, maxDistance)) return hit.transform;
 
             return null;
         }

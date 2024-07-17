@@ -31,7 +31,7 @@ namespace Data
                 Debug.LogError("Wall Object Not Assigned");
                 return;
             }
-            
+
             if (newID == -1)
             {
                 assignedWall.UpdateMaterial(InitConfig.Instance.GetDefaultWallMaterial.Material);
@@ -44,10 +44,10 @@ namespace Data
                 Debug.LogError(newID + " Could Not Found in Item List");
                 return;
             }
-            
+
             assignedWall.UpdateMaterial(foundMaterial.Material);
             assignedMaterialID = newID;
-            
+
             Debug.Log("New ID Assigned to Wall : " + newID);
         }
     }
