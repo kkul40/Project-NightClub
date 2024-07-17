@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 
 namespace Data
 {
-    public class SavingAndLoadingSystem : MonoBehaviour
+    public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
         private List<ISaveLoad> _saveLoads = new();
         private string path = Application.persistentDataPath + "/PlayerGameData.kdata";

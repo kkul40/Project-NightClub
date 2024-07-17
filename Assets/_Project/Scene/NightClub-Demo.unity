@@ -15208,6 +15208,7 @@ GameObject:
   - component: {fileID: 1451075138}
   - component: {fileID: 1451075139}
   - component: {fileID: 1451075140}
+  - component: {fileID: 1451075141}
   m_Layer: 0
   m_Name: DISCO DATA
   m_TagString: Untagged
@@ -15261,6 +15262,18 @@ MonoBehaviour:
   DefaultGirlNpcCustomization: {fileID: 11400000, guid: f986cd7540a8f044fa9cc3c8a3d42062, type: 2}
   DefaultBoyNpcAnimation: {fileID: 11400000, guid: 844e70090af7a0c49a4eedb729407f0a, type: 2}
   DefaultGirlNpcAnimation: {fileID: 11400000, guid: 0e2af1eab414f16459275b5c12d41b35, type: 2}
+--- !u!114 &1451075141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451075137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77ea61d1d5dd467bb5ec79141070329c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1451294518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18302,8 +18315,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1360520549}
   - {fileID: 1451075138}
+  - {fileID: 1360520549}
   - {fileID: 155991908}
   - {fileID: 1750264085}
   - {fileID: 1263105097}
