@@ -20,13 +20,10 @@ namespace New_NPC.Activities
         {
             if (and.Npc.pathFinder.hasReachedDestination)
             {
-                Debug.Log("Walk Updating");
                 and.Npc.SetAnimation(eNpcAnimation.Idle);
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
-                    // and.Npc.pathFinder.GoToDestination(GetRandomDestination(and));
-                    // and.Npc.SetAnimation(eNpcAnimation.Walk);
                     timer = 0;
                     IsEnded = true;
                 }
@@ -44,6 +41,11 @@ namespace New_NPC.Activities
             var target = and.DiscoData.MapData.FloorGridDatas[
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
+
+            // if (target == null)
+            // {
+            //     return and.Npc.transform.position;
+            // }
 
             while (target.assignedObjectID != -1)
             {

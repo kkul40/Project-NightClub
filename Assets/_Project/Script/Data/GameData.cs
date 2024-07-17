@@ -63,7 +63,7 @@ namespace Data
         public class FloorSaveData
         {
             public Vector3Int CellPosition = -Vector3Int.one;
-            public int assignedMaterialID = -890423504;
+            public int assignedMaterialID = -1;
             public int assignedSurfaceID = -1;
             public int assignedObjectID = -1;
 

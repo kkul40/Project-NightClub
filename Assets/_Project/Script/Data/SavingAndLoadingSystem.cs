@@ -7,6 +7,7 @@ namespace Data
 {
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
+        [SerializeField] private bool CreateNewData;
         private string fileName = "GameData";
         
         private FileDataHandler _fileDataHandler;
@@ -21,13 +22,16 @@ namespace Data
 
         private void Start()
         {
+            if (CreateNewData)
+            {
+                _fileDataHandler.DeleteData();
+            }
             LoadGame();
         }
 
         public void NewGame()
         {
             _gameData = new GameData();
-
             Debug.Log("** New Game Created **");
         }
 

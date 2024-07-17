@@ -6,15 +6,30 @@ namespace Data
 {
     public class MapData
     {
-        public Vector2Int CurrentMapSize = Vector2Int.zero;
-
+        public Vector2Int CurrentMapSize { get; private set; }
         // TODO Make door ps vector2Int
         public Vector3Int DoorPosition { get; private set; }
-
-        public PathFinderNode[,] PathFinderNodes { get; set; }
-        public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
-        public List<WallAssignmentData> WallDatas { get; set; }
         public int WallDoorIndex { get; private set; }
+        
+        public List<WallAssignmentData> WallDatas { get; set; }
+        public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
+        public PathFinderNode[,] PathFinderNodes { get; set; }
+
+        public MapData()
+        {
+            WallDoorIndex = 1;
+            CurrentMapSize = Vector2Int.one;
+            DoorPosition = new Vector3Int(WallDoorIndex, 0 ,-1);
+            WallDatas = new List<WallAssignmentData>();
+            FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
+            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
+            for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
+            for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
+            {
+                PathFinderNodes[x, y] = new PathFinderNode(false, -Vector3.one, -1, -1);
+                FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
+            }
+        }
 
         public MapData(GameData gameData)
         {
@@ -32,26 +47,21 @@ namespace Data
             WallDatas = new List<WallAssignmentData>();
             foreach (var wall in gameData.SavedWallDatas)
             {
-                WallDatas.Add(new WallAssignmentData(wall.CellPosition, wall.AssignedMaterialID));
+                WallDatas.Add(new WallAssignmentData(wall));
             }
             
             FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
+            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
             for (int x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (int y = 0; y < ConstantVariables.MaxMapSizeY; y++)
             {
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
+                PathFinderNodes[x, y] = new PathFinderNode(false, -Vector3.one, -1, -1);
             }
             
             #endregion
             
             
-            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-
-            for (var i = 0; i < ConstantVariables.MaxMapSizeX; i++)
-            for (var j = 0; j < ConstantVariables.MaxMapSizeY; j++)
-            {
-                PathFinderNodes[i, j] = new PathFinderNode(false, -Vector3.one, -1, -1);
-            }
             
             Debug.Log("Map Data Loaded...");
         }

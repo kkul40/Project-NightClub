@@ -69,5 +69,23 @@ namespace Data
                 Debug.LogError("Error occured when trying to save data to file : " + fullPath + "\n" + e);
             }
         }
+
+        public void DeleteData()
+        {
+            string fullPath = Path.Combine(dataDirPath, dataFileName);
+
+            if (File.Exists(fullPath))
+            {
+                try
+                {
+                    File.Delete(fullPath);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Error occured when trying to remove data from path : " + fullPath + "\n" + e);
+                    throw;
+                }
+            }
+        }
     }
 }

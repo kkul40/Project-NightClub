@@ -12,7 +12,6 @@ namespace Data
     [DisallowMultipleComponent]
     public class DiscoData : Singleton<DiscoData>
     {
-        [SerializeField] private bool CreateDefaultSaveDataOnStart;
         public PlacementDataHandler placementDataHandler { get; private set; }
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory;
@@ -32,7 +31,6 @@ namespace Data
         {
             SavingAndLoadingSystem.Instance.SaveGame();
         }
-
 
         public enum eDanceStyle
         {

@@ -13,10 +13,16 @@ namespace Data
         public Wall assignedWall { get; private set; }
         public int assignedMaterialID { get; private set; }
 
-        public WallAssignmentData(Vector3Int cellPosition, int assignedMaterialID)
+        public WallAssignmentData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
-            this.assignedMaterialID = assignedMaterialID;
+            assignedMaterialID = -1;
+        }
+
+        public WallAssignmentData(GameData.WallSaveData wallSaveData)
+        {
+            CellPosition = wallSaveData.CellPosition;
+            assignedMaterialID = wallSaveData.AssignedMaterialID;
         }
 
         public void AssignReferance(Wall assignment)

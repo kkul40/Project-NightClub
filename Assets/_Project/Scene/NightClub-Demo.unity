@@ -15243,7 +15243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15aaa01c4fd9e81438a583713b61f6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreateDefaultSaveDataOnStart: 0
 --- !u!114 &1451075140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15274,6 +15273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ea61d1d5dd467bb5ec79141070329c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CreateNewData: 0
 --- !u!1001 &1451294518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21473,7 +21473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
-  maxNPC: 0
+  maxNPC: 10
 --- !u!1001 &2039099550
 PrefabInstance:
   m_ObjectHideFlags: 0

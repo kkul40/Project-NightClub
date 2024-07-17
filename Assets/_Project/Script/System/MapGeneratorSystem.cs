@@ -10,7 +10,7 @@ namespace System
     public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
     {
         //TODO Transform holder kullanmak yerine SceneContainerden ulas bunlara
-        public MapData MapData { get; private set; }
+        public MapData MapData { get; private set; } = new MapData();
         
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
@@ -21,7 +21,7 @@ namespace System
         private Vector2Int MapSize
         {
             get => MapData.CurrentMapSize;
-            set => MapData.CurrentMapSize = value;
+            set => MapData.SetCurrentMapSize(this, value);
         }
 
         public static event Action<Vector2Int> OnMapSizeChanged;
@@ -30,7 +30,6 @@ namespace System
         {
             SetUpMade();
         }
-
 
         private void SetUpMade()
         {
@@ -145,7 +144,7 @@ namespace System
             if (data == null)
             {
                 Debug.Log("Data Was NULL");
-                MapData.WallDatas.Add(new WallAssignmentData(cellPosition, -1));
+                MapData.WallDatas.Add(new WallAssignmentData(cellPosition));
                 data = MapData.WallDatas[MapData.WallDatas.Count - 1];
             }
 
