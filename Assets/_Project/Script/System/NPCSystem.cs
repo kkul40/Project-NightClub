@@ -20,6 +20,7 @@ namespace System
 
         private IEnumerator CoSpawnNPCs()
         {
+            yield return new WaitForSeconds(0.5f);
             var npcCount = 0;
 
             while (npcCount < maxNPC)

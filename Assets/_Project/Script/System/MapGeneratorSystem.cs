@@ -146,7 +146,7 @@ namespace System
             }
 
             data.AssignReferance(newObject.GetComponent<FloorTile>(), cellPosition);
-            data.AssignNewID(eFloorGridAssignmentType.Material, data.assignedMaterialID);
+            data.AssignNewID(data.assignedMaterialID);
         }
 
         private void LoadAndAssignWallMaterial(Vector3Int cellPosition, GameObject newWallObject)

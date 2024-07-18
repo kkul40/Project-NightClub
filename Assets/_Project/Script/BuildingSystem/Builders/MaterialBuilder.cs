@@ -82,7 +82,7 @@ namespace BuildingSystem.Builders
                 case eMaterialLayer.FloorMaterial:
                     DiscoData.Instance.MapData
                         .FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z]
-                        .AssignNewID(eFloorGridAssignmentType.Material, _materialItemSo.ID);
+                        .AssignNewID(_materialItemSo.ID);
                     break;
                 case eMaterialLayer.WallMaterial:
                     DiscoData.Instance.MapData.WallDatas

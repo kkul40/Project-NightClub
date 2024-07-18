@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BuildingSystem;
+using BuildingSystem.SO;
 using PlayerScripts;
 using SerializableTypes;
 using UnityEngine;
@@ -17,8 +18,8 @@ namespace Data
         public List<WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
         
-        public SerializableDictionary<Vector3Int, PlacementSaveData> savedAllPropLayerPlacements;
-        public SerializableDictionary<Vector3Int, PlacementSaveData> savedAllSurfaceLayerPlacements;
+        public SerializableDictionary<SerializableTuple<Vector3Int, PlacementSaveData, ePlacementLayer>, Vector3Int> SavedPlacements;
+        
 
         //CTOR
 
@@ -50,8 +51,7 @@ namespace Data
                 SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
             
             // Placement Data
-            savedAllPropLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
-            savedAllSurfaceLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
+            SavedPlacements = new SerializableDictionary<SerializableTuple<Vector3Int, PlacementSaveData, ePlacementLayer>, Vector3Int>();
         }
 
         [Serializable]
@@ -80,8 +80,6 @@ namespace Data
             // Default = -1
             public Vector3Int CellPosition = -Vector3Int.one;
             public int assignedMaterialID = -1;
-            public int assignedSurfaceID = -1;
-            public int assignedObjectID = -1;
 
             public FloorSaveData()
             {
@@ -91,8 +89,6 @@ namespace Data
             {
                 CellPosition = floorGridAssignmentData.CellPosition;
                 assignedMaterialID = floorGridAssignmentData.assignedMaterialID;
-                assignedSurfaceID = floorGridAssignmentData.assignedSurfaceID;
-                assignedObjectID = floorGridAssignmentData.assignedObjectID;
             }
         }
 

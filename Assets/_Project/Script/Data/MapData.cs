@@ -12,6 +12,7 @@ namespace Data
         public Vector3Int DoorPosition { get; private set; }
         public int WallDoorIndex { get; private set; }
 
+        //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
         public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
         public PathFinderNode[,] PathFinderNodes { get; set; }

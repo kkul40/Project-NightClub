@@ -12,23 +12,17 @@ namespace Data
         public Vector3Int CellPosition { get; private set; }
         public FloorTile assignedFloorTile { get; private set; }
         public int assignedMaterialID { get; private set; }
-        public int assignedSurfaceID { get; private set; }
-        public int assignedObjectID { get; private set; }
 
         public FloorGridAssignmentData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
             assignedMaterialID = -1;
-            assignedSurfaceID = -1;
-            assignedObjectID = -1;
         }
 
         public FloorGridAssignmentData(GameData.FloorSaveData floorSaveData)
         {
             CellPosition = floorSaveData.CellPosition;
             assignedMaterialID = floorSaveData.assignedMaterialID;
-            assignedSurfaceID = floorSaveData.assignedSurfaceID;
-            assignedObjectID = floorSaveData.assignedObjectID;
         }
 
         public void AssignReferance(FloorTile assignment, Vector3Int cellPosition)
@@ -37,52 +31,29 @@ namespace Data
             CellPosition = cellPosition;
         }
 
-        public void AssignNewID(eFloorGridAssignmentType layerToAssign, int newID)
+        public void AssignNewID(int newID)
         {
             if (assignedFloorTile == null)
             {
                 Debug.LogError("Floor Object Not Assigned");
                 return;
             }
-
-            switch (layerToAssign)
+            
+            if (newID == -1) assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
+            else
             {
-                case eFloorGridAssignmentType.NULL:
-                    Debug.LogError("Null Placement Data on : " + CellPosition);
-                    break;
-                case eFloorGridAssignmentType.Material:
-                    if (newID == -1) assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
-                    else
-                    {
-                        var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
-                        if (foundMaterial == null)
-                        {
-                            Debug.LogError(newID + " Could Not Found in Item List");
-                            break;
-                        }
-                        assignedFloorTile.UpdateMaterial(foundMaterial.Material);
-                    }
-
-                    assignedMaterialID = newID;
-                    break;
-                case eFloorGridAssignmentType.Surface:
-                    assignedSurfaceID = newID;
-                    break;
-                case eFloorGridAssignmentType.Object:
-                    assignedObjectID = newID;
-                    break;
+                var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
+                if (foundMaterial == null)
+                {
+                    Debug.LogError(newID + " Could Not Found in Item List");
+                }
+                assignedFloorTile.UpdateMaterial(foundMaterial.Material);
             }
 
+            assignedMaterialID = newID;
+            
             Debug.Log("New ID Assigned To FloorGridData : " + newID);
         }
-    }
-
-    public enum eFloorGridAssignmentType
-    {
-        NULL,
-        Material,
-        Surface,
-        Object
     }
 
 

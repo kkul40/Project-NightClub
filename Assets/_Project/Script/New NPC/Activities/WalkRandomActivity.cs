@@ -47,7 +47,7 @@ namespace New_NPC.Activities
             //     return and.Npc.transform.position;
             // }
 
-            while (target.assignedObjectID != -1)
+            while (target.assignedMaterialID != -1)
             {
                 target = and.DiscoData.MapData.FloorGridDatas[
                     Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),

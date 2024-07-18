@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Data;
 using DG.Tweening;
@@ -27,7 +28,10 @@ namespace New_NPC
             _currentPath = FindPath(_assignedNPC.position, targetPos);
 
             if (_currentPath == null)
+            {
+                _routine = null;
                 return;
+            }
 
             _routine = CoFollowPath(_currentPath);
             DOTween.instance.StartCoroutine(_routine);

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BuildingSystem.SO;
 using Data;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace BuildingSystem.Builders
 {
@@ -24,7 +26,7 @@ namespace BuildingSystem.Builders
             _tempObject =
                 Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-            SetOffset();
+            SetOffset(_storeItemSo);
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.BaseSurface:
@@ -39,9 +41,9 @@ namespace BuildingSystem.Builders
             }
         }
 
-        private void SetOffset()
+        private void SetOffset(PlacementItemSO placementItemSo)
         {
-            switch (_storeItemSo.PlacementLayer)
+            switch (placementItemSo.PlacementLayer)
             {
                 case ePlacementLayer.WallProp:
                     Offset = ConstantVariables.WallObjectOffset;
@@ -111,6 +113,26 @@ namespace BuildingSystem.Builders
             Object.Destroy(_tempObject);
             isFinished = true;
             buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
+        }
+        
+        public GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition, RotationData rotationData)
+        {
+            SetOffset(placementItemso);
+            
+            var createdObject = Object.Instantiate(placementItemso.Prefab, GridHandler.Instance.GetCellCenterWorld(cellPosition) + Offset,
+                rotationData.rotation);
+            switch (placementItemso.PlacementLayer)
+            {
+                case ePlacementLayer.BaseSurface:
+                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
+                    break;
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.WallProp:
+                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetPropHolderTransform);
+                    break;
+            }
+
+            return createdObject;
         }
     }
 }

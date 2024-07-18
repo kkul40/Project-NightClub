@@ -28,7 +28,6 @@ namespace New_NPC.Activities
                 return;
             }
 
-            Debug.Log("dance Tile cell pos" + _dancableTile.CellPosition);
             and.Npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(and.Npc);
             and.Npc.pathFinder.GoToDestination(_dancableTile.CellPosition);

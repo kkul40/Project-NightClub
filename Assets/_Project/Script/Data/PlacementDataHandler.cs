@@ -5,8 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Transactions;
 using BuildingSystem;
+using BuildingSystem.Builders;
 using BuildingSystem.SO;
 using PropBehaviours;
+using SerializableTypes;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using Object = UnityEngine.Object;
@@ -341,31 +343,13 @@ namespace Data
             }
         }
 
-        public class TupleTest
-        {
-            private Tuple<Vector3Int, NewPlacementData, ePlacementLayer> Tuple;
-
-            public TupleTest()
-            {
-                Tuple = new Tuple<Vector3Int, NewPlacementData, ePlacementLayer>(Vector3Int.zero, new NewPlacementData(), ePlacementLayer.Null);
-            }
-        }
-
         private List<IPropUnit> propList;
-
-        // Data - PlacedPosition
-        private Dictionary<Vector3Int, NewPlacementData> allPropPlacementDatas;
-        private Dictionary<Vector3Int, NewPlacementData> allBaseSurfacePlacementDatas;
-        
-        private Dictionary<TupleTest, Vector3Int> tupleTest;
-
+        private Dictionary<Tuple<Vector3Int, NewPlacementData, ePlacementLayer>, Vector3Int> AllPlacedObjects;
+       
         public PlacementDataHandler()
         {
             propList = new List<IPropUnit>();
-            allPropPlacementDatas = new Dictionary<Vector3Int, NewPlacementData>();
-            allBaseSurfacePlacementDatas = new Dictionary<Vector3Int, NewPlacementData>();
-
-            tupleTest = new Dictionary<TupleTest, Vector3Int>();
+            AllPlacedObjects = new Dictionary<Tuple<Vector3Int, NewPlacementData, ePlacementLayer>, Vector3Int>();
         }
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
@@ -376,7 +360,11 @@ namespace Data
                 cellPos.z >= MapData.CurrentMapSize.y)
                 return true;
 
-            return MapData.GetFloorGridAssignmentByCellPos(cellPos).assignedObjectID == -1 ? false : true;
+            var contains = AllPlacedObjects.FirstOrDefault(x => x.Key.Item1 == cellPos && x.Key.Item3 == layer);
+
+            if (contains.Key == null) return false;
+
+            return contains.Key.Item1 == cellPos ? true : false;
         }
         
         public bool ContainsKey(Vector3Int cellPos, Vector2Int size, RotationData rotationData, ePlacementLayer layer)
@@ -400,19 +388,10 @@ namespace Data
 
             foreach (var key in keys)
             {
-                AssignIDToFloorGridData(placementData.PlacementItemToPlace.PlacementLayer, key, placementData.ID);
+                AssignIDToFloorGridData(key, placementData.ID);
             }
-
-            switch (placementData.PlacementItemToPlace.PlacementLayer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    allBaseSurfacePlacementDatas.Add(cellPos,placementData);
-                    break;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    allPropPlacementDatas.Add(cellPos, placementData);
-                    break;
-            }
+            
+            AllPlacedObjects.Add(new Tuple<Vector3Int, NewPlacementData, ePlacementLayer>(cellPos, placementData, placementData.PlacementItemToPlace.PlacementLayer), cellPos);
             
             if (placementData.SceneObjectToPlaced.TryGetComponent(out IPropUnit prop))
             {
@@ -425,34 +404,23 @@ namespace Data
 
         public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
-            NewPlacementData data = null;
-            
-            switch (moveFromLayer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    data = allBaseSurfacePlacementDatas[cellPos];
-                    allBaseSurfacePlacementDatas.Remove(cellPos);
-                    break;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    data = allPropPlacementDatas[cellPos];
-                    allPropPlacementDatas.Remove(cellPos);
-                    break;
-            }
+            var data = AllPlacedObjects.FirstOrDefault(x => x.Key.Item1 == cellPos && x.Key.Item3 == moveFromLayer).Key;
             
             if(data == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
             
-            var keys = CalculatePosition(data.CellPositionToPlace, data.Size,
-                data.RotationToSet.direction);
+            var keys = CalculatePosition(data.Item1, data.Item2.Size,
+                data.Item2.RotationToSet.direction);
 
             foreach (var key in keys)
             {
-                AssignIDToFloorGridData(data.PlacementItemToPlace.PlacementLayer, key, -1);
+                AssignIDToFloorGridData(key, -1);
             }
             
-            DiscoData.Instance.inventory.AddItem(data.PlacementItemToPlace);
+            DiscoData.Instance.inventory.AddItem(data.Item2.PlacementItemToPlace);
             
-            var objectToRemove = data.SceneObjectToPlaced;
+            AllPlacedObjects.Remove(data);
+
+            var objectToRemove = data.Item2.SceneObjectToPlaced;
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
             Object.Destroy(objectToRemove);
             UpdateProps();
@@ -501,85 +469,59 @@ namespace Data
             return key;
         }
         
-        private void AssignIDToFloorGridData(ePlacementLayer layer, Vector3Int key, int newID)
+        private void AssignIDToFloorGridData(Vector3Int key, int newID)
         {
             bool walkable = newID == -1 ? true : false;
-            switch (layer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    MapData.GetFloorGridAssignmentByCellPos(key).AssignNewID(eFloorGridAssignmentType.Surface, newID);
-                    break;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    MapData.GetFloorGridAssignmentByCellPos(key).AssignNewID(eFloorGridAssignmentType.Object, newID);
-                    MapData.GetTileNodeByCellPos(key).IsWalkable = walkable;
-                    break;
-            }
+            MapData.GetTileNodeByCellPos(key).IsWalkable = walkable;
         }
         
         #region Saving And Loading..
         
         public void LoadGameProps(GameData gameData)
         {
-            allPropPlacementDatas.Clear();
-            allBaseSurfacePlacementDatas.Clear();
+            AllPlacedObjects.Clear();
+
+            PlacementBuilder builder = new PlacementBuilder();
             
-            Vector3Int test = -Vector3Int.one;
-            foreach (var pair in gameData.savedAllPropLayerPlacements)
+            foreach (var pair in gameData.SavedPlacements)
             {
-                if (test != pair.Value.PlacedCellPosition)
-                {
-                    test = pair.Value.PlacedCellPosition;
-                    var value = pair.Value;
-                    var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == value.PropID) as PlacementItemSO;
-                    InstantiateProp(placementItemSo, value.PlacedCellPosition, new RotationData(value.EularAngles, value.Direction));
-                }
-            }
-            
-            foreach (var pair in gameData.savedAllSurfaceLayerPlacements)
-            {
-                if (test != pair.Value.PlacedCellPosition)
-                {
-                    test = pair.Value.PlacedCellPosition;
-                    var value = pair.Value;
-                    var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == value.PropID) as PlacementItemSO;
-                    InstantiateProp(placementItemSo, value.PlacedCellPosition, new RotationData(value.EularAngles, value.Direction));
-                }
+                var value = pair.Key.Item2;
+                var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == value.PropID) as PlacementItemSO;
+                
+                Debug.Log(placementItemSo);
+                RotationData rotationData = new RotationData(value.EularAngles, value.Direction);
+
+                var createdObject = builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, rotationData);
+                NewPlacementData placementData = new NewPlacementData(placementItemSo, pair.Key.Item1, createdObject, rotationData);
+                
+                AddPlacement(value.PlacedCellPosition, placementData);
+                // builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, new RotationData(value.EularAngles, value.Direction));
+                //
+                // var createdObject = builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, rotationData);
+                // AddPlacement(value.PlacedCellPosition, new NewPlacementData(placementItemSo, value.PlacedCellPosition, createdObject, rotationData));
             }
         }
         
         public void SaveGameProps(ref GameData gameData)
         {
-            gameData.savedAllPropLayerPlacements.Clear();
-            gameData.savedAllSurfaceLayerPlacements.Clear();
+            gameData.SavedPlacements.Clear();
+            Debug.Log("Count : " + gameData.SavedPlacements.Count);
             
-            foreach (var pair in allPropPlacementDatas)
-                gameData.savedAllPropLayerPlacements.Add(pair.Key, new GameData.PlacementSaveData(pair.Value));
+            foreach (var pair in AllPlacedObjects.Keys)
+                gameData.SavedPlacements.Add(new SerializableTuple<Vector3Int, GameData.PlacementSaveData, ePlacementLayer>(pair.Item1, new GameData.PlacementSaveData(pair.Item2), pair.Item3), pair.Item1);
             
-            foreach (var pair in allBaseSurfacePlacementDatas)
-                gameData.savedAllSurfaceLayerPlacements.Add(pair.Key, new GameData.PlacementSaveData(pair.Value));
-            
-            Debug.Log(gameData.savedAllPropLayerPlacements.Count);
+            Debug.Log(gameData.SavedPlacements.Count);
         }
         
-        private void InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition, RotationData rotationData)
-        {
-            Vector3 offset = (placementItemso.PlacementLayer == ePlacementLayer.FloorProp || placementItemso.PlacementLayer == ePlacementLayer.BaseSurface
-                ? ConstantVariables.PropObjectOffset
-                : ConstantVariables.WallObjectOffset);
-            
-            var createdObject = Object.Instantiate(placementItemso.Prefab, GridHandler.Instance.GetCellCenterWorld(cellPosition) + offset, rotationData.rotation);
-        
-            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
-        
-            NewPlacementData placementData = new NewPlacementData(placementItemso, cellPosition, createdObject, rotationData);
-            AddPlacement(cellPosition, placementData);
-        }
         #endregion
             
         public List<NewPlacementData> GetPlacementDatas(ePlacementLayer layer)
         {
-            return allPropPlacementDatas.Values.ToList();
+            List<NewPlacementData> output = new List<NewPlacementData>();
+            foreach (var key in AllPlacedObjects.Keys)
+                output.Add(key.Item2);
+            
+            return output;
         }
         
         /// <summary>
@@ -589,7 +531,11 @@ namespace Data
         /// <returns></returns>
         public List<Vector3Int> GetUsedKeys(ePlacementLayer layer)
         {
-            return allPropPlacementDatas.Keys.ToList();
+            List<Vector3Int> output = new List<Vector3Int>();
+            foreach (var key in AllPlacedObjects.Keys)
+                output.Add(key.Item1);
+            
+            return output;
         }
 
         public List<IPropUnit> GetPropList => propList;
