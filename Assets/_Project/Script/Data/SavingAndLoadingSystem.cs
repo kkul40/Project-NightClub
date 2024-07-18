@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening.Plugins.Core.PathCore;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,6 @@ namespace Data
 {
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
-        [SerializeField] private bool CreateNewData;
         private string fileName = "GameData";
 
         private FileDataHandler _fileDataHandler;
@@ -42,8 +42,7 @@ namespace Data
         {
             Debug.Log(("Scene loaded"));
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToHashSet();
-
-            if (CreateNewData) _fileDataHandler.DeleteData();
+            
             LoadGame();
         }
 
@@ -80,6 +79,13 @@ namespace Data
             foreach (var load in _saveLoads) load.LoadData(_gameData);
 
             Debug.Log("** Game Is Loaded **");
+        }
+
+        [ContextMenu("New Save File")]
+        private void NewSaveFile()
+        {
+            FileDataHandler temp = new FileDataHandler(Application.persistentDataPath, fileName);
+            temp.DeleteData();
         }
 
         private void OnApplicationQuit()
