@@ -132,9 +132,9 @@ namespace Data
             public PlacementSaveData(PlacementDataHandler.NewPlacementData placementData)
             {
                 PropID = placementData.ID;
-                PlacedCellPosition = placementData.CellPositionToPlace;
-                EularAngles = placementData.RotationToSet.rotation.eulerAngles;
-                Direction = placementData.RotationToSet.direction;
+                PlacedCellPosition = placementData.PlacedCellPosition;
+                EularAngles = placementData.SettedRotationData.rotation.eulerAngles;
+                Direction = placementData.SettedRotationData.direction;
             }
         }
     }

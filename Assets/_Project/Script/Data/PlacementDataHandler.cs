@@ -316,40 +316,39 @@ namespace Data
         public class NewPlacementData
         {
             public int ID;
-            public Vector3Int CellPositionToPlace;
-            public PlacementItemSO PlacementItemToPlace;
-            public GameObject SceneObjectToPlaced;
-            public Vector2Int Size;
-            public RotationData RotationToSet;
+            public Vector3Int PlacedCellPosition;
+            public PlacementItemSO PlacedPlacementItemSo;
+            public GameObject PlacedSceneObject;
+            public RotationData SettedRotationData;
             
-            public NewPlacementData(PlacementItemSO storeItemSo, Vector3Int placedCellPos, GameObject createdObject, RotationData rotationData)
+            public NewPlacementData(PlacementItemSO storeItemSo, Vector3Int placedPlacedCellPos, GameObject createdObject, RotationData settedRotationData)
             {
                 ID = storeItemSo.ID;
-                CellPositionToPlace = placedCellPos;
-                PlacementItemToPlace = storeItemSo;
-                SceneObjectToPlaced = createdObject;
-                RotationToSet = rotationData;
-                Size = storeItemSo.Size;
+                PlacedCellPosition = placedPlacedCellPos;
+                PlacedPlacementItemSo = storeItemSo;
+                PlacedSceneObject = createdObject;
+                SettedRotationData = settedRotationData;
             }
 
-            public NewPlacementData()
-            {
-                ID = -1;
-                CellPositionToPlace = -Vector3Int.one;
-                PlacementItemToPlace = null;
-                SceneObjectToPlaced = null;
-                RotationToSet = RotationData.Default;
-                Size = Vector2Int.one;
-            }
+            // public NewPlacementData()
+            // {
+            //     ID = -1;
+            //     PlacedCellPosition = -Vector3Int.one;
+            //     PlacedPlacementItemSo = null;
+            //     PlacedSceneObject = null;
+            //     SettedRotationData = RotationData.Default;
+            //     Size = Vector2Int.one;
+            // }
         }
 
         private List<IPropUnit> propList;
-        private Dictionary<Tuple<Vector3Int, NewPlacementData, ePlacementLayer>, Vector3Int> AllPlacedObjects;
+        //                         keys occupaid   placement data       layer           worldPos
+        private Dictionary<Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>, Vector3Int> AllPlacedObjects;
        
         public PlacementDataHandler()
         {
             propList = new List<IPropUnit>();
-            AllPlacedObjects = new Dictionary<Tuple<Vector3Int, NewPlacementData, ePlacementLayer>, Vector3Int>();
+            AllPlacedObjects = new Dictionary<Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>, Vector3Int>();
         }
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
@@ -360,18 +359,24 @@ namespace Data
                 cellPos.z >= MapData.CurrentMapSize.y)
                 return true;
 
-            var contains = AllPlacedObjects.FirstOrDefault(x => x.Key.Item1 == cellPos && x.Key.Item3 == layer);
-
-            if (contains.Key == null) return false;
-
-            return contains.Key.Item1 == cellPos ? true : false;
+            foreach (var usedKeys in AllPlacedObjects.Keys)
+            {
+                if (usedKeys.Item3 == layer)
+                {
+                    foreach (var pos in usedKeys.Item1)
+                    {
+                        return pos == cellPos ? true : false;
+                    }
+                }
+            }
+            return false;
         }
         
         public bool ContainsKey(Vector3Int cellPos, Vector2Int size, RotationData rotationData, ePlacementLayer layer)
         {
             var keys = CalculatePosition(cellPos, size,
                 rotationData.direction);
-        
+            
             foreach (var key in keys)
             {
                 if (!ContainsKey(key, layer)) continue;
@@ -383,20 +388,22 @@ namespace Data
 
         public void AddPlacement(Vector3Int cellPos, NewPlacementData placementData)
         {
-            var keys = CalculatePosition(cellPos, placementData.Size,
-                placementData.RotationToSet.direction);
+            var keys = CalculatePosition(cellPos, placementData.PlacedPlacementItemSo.Size,
+                placementData.SettedRotationData.direction);
+            
+            AllPlacedObjects.Add(new Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>(new List<Vector3Int>(), placementData, placementData.PlacedPlacementItemSo.PlacementLayer), cellPos);
+            
+            var found = AllPlacedObjects.FirstOrDefault(x => x.Key.Item2.PlacedCellPosition == cellPos && x.Key.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
 
             foreach (var key in keys)
             {
-                AssignIDToFloorGridData(key, placementData.ID);
+                found.Key.Item1.Add(key);
             }
             
-            AllPlacedObjects.Add(new Tuple<Vector3Int, NewPlacementData, ePlacementLayer>(cellPos, placementData, placementData.PlacementItemToPlace.PlacementLayer), cellPos);
-            
-            if (placementData.SceneObjectToPlaced.TryGetComponent(out IPropUnit prop))
+            if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
             {
                 propList.Add(prop);
-                prop.Initialize(placementData.ID, cellPos, placementData.RotationToSet, placementData.PlacementItemToPlace.PlacementLayer);
+                prop.Initialize(placementData.ID, cellPos, placementData.SettedRotationData, placementData.PlacedPlacementItemSo.PlacementLayer);
             }
             
             UpdateProps();
@@ -404,23 +411,19 @@ namespace Data
 
         public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
-            var data = AllPlacedObjects.FirstOrDefault(x => x.Key.Item1 == cellPos && x.Key.Item3 == moveFromLayer).Key;
+            var data = AllPlacedObjects.FirstOrDefault(x => x.Value == cellPos && x.Key.Item3 == moveFromLayer).Key;
             
             if(data == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
             
-            var keys = CalculatePosition(data.Item1, data.Item2.Size,
-                data.Item2.RotationToSet.direction);
+            var keys = CalculatePosition(data.Item2.PlacedCellPosition, data.Item2.PlacedPlacementItemSo.Size,
+                data.Item2.SettedRotationData.direction);
 
-            foreach (var key in keys)
-            {
-                AssignIDToFloorGridData(key, -1);
-            }
             
-            DiscoData.Instance.inventory.AddItem(data.Item2.PlacementItemToPlace);
+            DiscoData.Instance.inventory.AddItem(data.Item2.PlacedPlacementItemSo);
             
             AllPlacedObjects.Remove(data);
 
-            var objectToRemove = data.Item2.SceneObjectToPlaced;
+            var objectToRemove = data.Item2.PlacedSceneObject;
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
             Object.Destroy(objectToRemove);
             UpdateProps();
@@ -469,12 +472,6 @@ namespace Data
             return key;
         }
         
-        private void AssignIDToFloorGridData(Vector3Int key, int newID)
-        {
-            bool walkable = newID == -1 ? true : false;
-            MapData.GetTileNodeByCellPos(key).IsWalkable = walkable;
-        }
-        
         #region Saving And Loading..
         
         public void LoadGameProps(GameData gameData)
@@ -495,10 +492,6 @@ namespace Data
                 NewPlacementData placementData = new NewPlacementData(placementItemSo, pair.Key.Item1, createdObject, rotationData);
                 
                 AddPlacement(value.PlacedCellPosition, placementData);
-                // builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, new RotationData(value.EularAngles, value.Direction));
-                //
-                // var createdObject = builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, rotationData);
-                // AddPlacement(value.PlacedCellPosition, new NewPlacementData(placementItemSo, value.PlacedCellPosition, createdObject, rotationData));
             }
         }
         
@@ -508,7 +501,7 @@ namespace Data
             Debug.Log("Count : " + gameData.SavedPlacements.Count);
             
             foreach (var pair in AllPlacedObjects.Keys)
-                gameData.SavedPlacements.Add(new SerializableTuple<Vector3Int, GameData.PlacementSaveData, ePlacementLayer>(pair.Item1, new GameData.PlacementSaveData(pair.Item2), pair.Item3), pair.Item1);
+                gameData.SavedPlacements.Add(new SerializableTuple<Vector3Int, GameData.PlacementSaveData, ePlacementLayer>(pair.Item2.PlacedCellPosition, new GameData.PlacementSaveData(pair.Item2), pair.Item3), pair.Item2.PlacedCellPosition);
             
             Debug.Log(gameData.SavedPlacements.Count);
         }
@@ -533,7 +526,7 @@ namespace Data
         {
             List<Vector3Int> output = new List<Vector3Int>();
             foreach (var key in AllPlacedObjects.Keys)
-                output.Add(key.Item1);
+                output.Add(key.Item2.PlacedCellPosition);
             
             return output;
         }

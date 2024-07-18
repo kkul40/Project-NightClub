@@ -35,13 +35,13 @@ namespace System
         {
             MapData = new MapData(gameData);
             SetUpMap();
-            placementDataHandler.LoadGameProps(gameData);
+            // placementDataHandler.LoadGameProps(gameData);
         }
 
         public void SaveData(ref GameData gameData)
         {
             MapData.SaveData(ref gameData);
-            placementDataHandler.SaveGameProps(ref gameData);
+            // placementDataHandler.SaveGameProps(ref gameData);
         }
 
         private void SetUpMap()
