@@ -17,8 +17,8 @@ namespace Data
         public int WallDoorIndexOnX;
         public List<WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
-        
-        public SerializableDictionary<SerializableTuple<Vector3Int, PlacementSaveData, ePlacementLayer>, Vector3Int> SavedPlacements;
+
+        [FormerlySerializedAs("SavedPlacementData")] public List<PlacementSaveData> SavedPlacementDatas;
         
 
         //CTOR
@@ -51,7 +51,7 @@ namespace Data
                 SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
             
             // Placement Data
-            SavedPlacements = new SerializableDictionary<SerializableTuple<Vector3Int, PlacementSaveData, ePlacementLayer>, Vector3Int>();
+            SavedPlacementDatas = new List<PlacementSaveData>();
         }
 
         [Serializable]

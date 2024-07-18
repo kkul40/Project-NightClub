@@ -329,26 +329,16 @@ namespace Data
                 PlacedSceneObject = createdObject;
                 SettedRotationData = settedRotationData;
             }
-
-            // public NewPlacementData()
-            // {
-            //     ID = -1;
-            //     PlacedCellPosition = -Vector3Int.one;
-            //     PlacedPlacementItemSo = null;
-            //     PlacedSceneObject = null;
-            //     SettedRotationData = RotationData.Default;
-            //     Size = Vector2Int.one;
-            // }
         }
 
         private List<IPropUnit> propList;
-        //                         keys occupaid   placement data       layer           worldPos
-        private Dictionary<Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>, Vector3Int> AllPlacedObjects;
+        //                      placement    data worldPositions      layer
+        private HashSet<Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>> AllPlacedObjects;
        
         public PlacementDataHandler()
         {
             propList = new List<IPropUnit>();
-            AllPlacedObjects = new Dictionary<Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>, Vector3Int>();
+            AllPlacedObjects = new HashSet<Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>>();
         }
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
@@ -359,16 +349,15 @@ namespace Data
                 cellPos.z >= MapData.CurrentMapSize.y)
                 return true;
 
-            foreach (var usedKeys in AllPlacedObjects.Keys)
+            foreach (var usedKeys in AllPlacedObjects)
             {
-                if (usedKeys.Item3 == layer)
-                {
-                    foreach (var pos in usedKeys.Item1)
-                    {
-                        return pos == cellPos ? true : false;
-                    }
-                }
+                if(usedKeys.Item3 != layer) continue;
+
+                foreach (var pos in usedKeys.Item2)
+                    if (pos == cellPos) return pos == cellPos ? true : false;
+                
             }
+            
             return false;
         }
         
@@ -391,13 +380,13 @@ namespace Data
             var keys = CalculatePosition(cellPos, placementData.PlacedPlacementItemSo.Size,
                 placementData.SettedRotationData.direction);
             
-            AllPlacedObjects.Add(new Tuple<List<Vector3Int>, NewPlacementData, ePlacementLayer>(new List<Vector3Int>(), placementData, placementData.PlacedPlacementItemSo.PlacementLayer), cellPos);
+            AllPlacedObjects.Add(new Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>(placementData, new List<Vector3Int>(), placementData.PlacedPlacementItemSo.PlacementLayer));
             
-            var found = AllPlacedObjects.FirstOrDefault(x => x.Key.Item2.PlacedCellPosition == cellPos && x.Key.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
+            var found = AllPlacedObjects.FirstOrDefault(x => x.Item1.PlacedCellPosition == cellPos && x.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
 
             foreach (var key in keys)
             {
-                found.Key.Item1.Add(key);
+                found.Item2.Add(key);
             }
             
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
@@ -411,19 +400,19 @@ namespace Data
 
         public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
-            var data = AllPlacedObjects.FirstOrDefault(x => x.Value == cellPos && x.Key.Item3 == moveFromLayer).Key;
+            var data = AllPlacedObjects.FirstOrDefault(x => x.Item1.PlacedCellPosition == cellPos && x.Item3 == moveFromLayer);
             
             if(data == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
             
-            var keys = CalculatePosition(data.Item2.PlacedCellPosition, data.Item2.PlacedPlacementItemSo.Size,
-                data.Item2.SettedRotationData.direction);
+            var keys = CalculatePosition(data.Item1.PlacedCellPosition, data.Item1.PlacedPlacementItemSo.Size,
+                data.Item1.SettedRotationData.direction);
 
             
-            DiscoData.Instance.inventory.AddItem(data.Item2.PlacedPlacementItemSo);
+            DiscoData.Instance.inventory.AddItem(data.Item1.PlacedPlacementItemSo);
             
             AllPlacedObjects.Remove(data);
 
-            var objectToRemove = data.Item2.PlacedSceneObject;
+            var objectToRemove = data.Item1.PlacedSceneObject;
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
             Object.Destroy(objectToRemove);
             UpdateProps();
@@ -479,31 +468,26 @@ namespace Data
             AllPlacedObjects.Clear();
 
             PlacementBuilder builder = new PlacementBuilder();
-            
-            foreach (var pair in gameData.SavedPlacements)
-            {
-                var value = pair.Key.Item2;
-                var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == value.PropID) as PlacementItemSO;
-                
-                Debug.Log(placementItemSo);
-                RotationData rotationData = new RotationData(value.EularAngles, value.Direction);
 
-                var createdObject = builder.InstantiateProp(placementItemSo, value.PlacedCellPosition, rotationData);
-                NewPlacementData placementData = new NewPlacementData(placementItemSo, pair.Key.Item1, createdObject, rotationData);
+            foreach (var savedData in gameData.SavedPlacementDatas)
+            {
+                var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == savedData.PropID) as PlacementItemSO;
                 
-                AddPlacement(value.PlacedCellPosition, placementData);
+                RotationData rotationData = new RotationData(savedData.EularAngles, savedData.Direction);
+
+                var createdObject = builder.InstantiateProp(placementItemSo, savedData.PlacedCellPosition, rotationData);
+                NewPlacementData placementData = new NewPlacementData(placementItemSo, savedData.PlacedCellPosition, createdObject, rotationData);
+                
+                AddPlacement(savedData.PlacedCellPosition, placementData);
             }
         }
         
         public void SaveGameProps(ref GameData gameData)
         {
-            gameData.SavedPlacements.Clear();
-            Debug.Log("Count : " + gameData.SavedPlacements.Count);
-            
-            foreach (var pair in AllPlacedObjects.Keys)
-                gameData.SavedPlacements.Add(new SerializableTuple<Vector3Int, GameData.PlacementSaveData, ePlacementLayer>(pair.Item2.PlacedCellPosition, new GameData.PlacementSaveData(pair.Item2), pair.Item3), pair.Item2.PlacedCellPosition);
-            
-            Debug.Log(gameData.SavedPlacements.Count);
+            gameData.SavedPlacementDatas.Clear();
+
+            foreach (var placedObject in AllPlacedObjects)
+                gameData.SavedPlacementDatas.Add(new GameData.PlacementSaveData(placedObject.Item1));
         }
         
         #endregion
@@ -511,8 +495,8 @@ namespace Data
         public List<NewPlacementData> GetPlacementDatas(ePlacementLayer layer)
         {
             List<NewPlacementData> output = new List<NewPlacementData>();
-            foreach (var key in AllPlacedObjects.Keys)
-                output.Add(key.Item2);
+            foreach (var item in AllPlacedObjects)
+                output.Add(item.Item1);
             
             return output;
         }
@@ -525,8 +509,9 @@ namespace Data
         public List<Vector3Int> GetUsedKeys(ePlacementLayer layer)
         {
             List<Vector3Int> output = new List<Vector3Int>();
-            foreach (var key in AllPlacedObjects.Keys)
-                output.Add(key.Item2.PlacedCellPosition);
+            foreach (var key in AllPlacedObjects)
+                foreach (var pos in key.Item2)
+                    output.Add(pos);
             
             return output;
         }
