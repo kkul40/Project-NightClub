@@ -7,6 +7,9 @@ namespace PropBehaviours
 {
     public class IPropUnit : MonoBehaviour, IInteractable
     {
+        // public NewPropPlacementDataHandler.NewPlacementData PropData { get; private set; }
+        
+        
         public int ID { get; private set; }
         public Vector3Int CellPosition { get; private set; }
         public Vector3 WorldPos { get; private set; }

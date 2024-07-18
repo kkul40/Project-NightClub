@@ -28,7 +28,7 @@ namespace PropBehaviours
 
         public virtual MeshRenderer _meshRenderer => transform.GetComponentInChildren<MeshRenderer>();
 
-        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.Wall;
+        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.WallMaterial;
 
         public virtual Material CurrentMaterial => _meshRenderer.materials[1];
 

@@ -11,7 +11,7 @@ namespace PropBehaviours
 
         public MeshRenderer _meshRenderer => GetComponentInChildren<MeshRenderer>();
 
-        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorTile;
+        public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorMaterial;
 
         public Material CurrentMaterial => _meshRenderer.material;
 
@@ -42,7 +42,7 @@ namespace PropBehaviours
             // Debug.Log(test.assignedMaterialID);
 
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
-            Debug.Log(DiscoData.Instance.MapData.FloorGridDatas[a.x, a.z].assignedMaterialID);
+            Debug.Log(DiscoData.Instance.MapData.PathFinderNodes[a.x, a.z].IsWalkable);
         }
 
         #endregion

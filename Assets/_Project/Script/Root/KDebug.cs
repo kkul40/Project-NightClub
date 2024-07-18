@@ -13,8 +13,8 @@ namespace Root
         {
             if (showPlacements)
             {
-                var keys = DiscoData.Instance.placementDataHandler.GetUsedKeys(ePlacementLayer.Floor);
-                var rest = DiscoData.Instance.placementDataHandler.GetUsedKeys(ePlacementLayer.Surface);
+                var keys = DiscoData.Instance.placementDataHandler.GetUsedKeys(ePlacementLayer.FloorProp);
+                var rest = DiscoData.Instance.placementDataHandler.GetUsedKeys(ePlacementLayer.BaseSurface);
 
 
                 foreach (var r in rest) keys.Add(r);

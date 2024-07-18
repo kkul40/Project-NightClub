@@ -27,13 +27,13 @@ namespace BuildingSystem.Builders
             SetOffset();
             switch (_storeItemSo.PlacementLayer)
             {
-                case ePlacementLayer.Surface:
+                case ePlacementLayer.BaseSurface:
                     buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
                         SceneGameObjectHandler.Instance.GetPropHolderTransform,
                         MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
-                case ePlacementLayer.Floor:
-                case ePlacementLayer.Wall:
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.WallProp:
                     // _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
                     return;
             }
@@ -43,11 +43,11 @@ namespace BuildingSystem.Builders
         {
             switch (_storeItemSo.PlacementLayer)
             {
-                case ePlacementLayer.Wall:
+                case ePlacementLayer.WallProp:
                     Offset = ConstantVariables.WallObjectOffset;
                     break;
-                case ePlacementLayer.Surface:
-                case ePlacementLayer.Floor:
+                case ePlacementLayer.BaseSurface:
+                case ePlacementLayer.FloorProp:
                     Offset = ConstantVariables.PropObjectOffset;
                     break;
             }
@@ -58,11 +58,11 @@ namespace BuildingSystem.Builders
             Transform transform = null;
             switch (_storeItemSo.PlacementLayer)
             {
-                case ePlacementLayer.Floor:
-                case ePlacementLayer.Surface:
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.BaseSurface:
                     transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
                     break;
-                case ePlacementLayer.Wall:
+                case ePlacementLayer.WallProp:
                     transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(ConstantVariables.WalllayerID);
                     break;
             }
@@ -93,18 +93,17 @@ namespace BuildingSystem.Builders
                 buildingNeedsData.RotationData.rotation);
             switch (_storeItemSo.PlacementLayer)
             {
-                case ePlacementLayer.Surface:
+                case ePlacementLayer.BaseSurface:
                     createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
                     break;
-                case ePlacementLayer.Floor:
-                case ePlacementLayer.Wall:
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.WallProp:
                     createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetPropHolderTransform);
                     break;
             }
 
-            buildingNeedsData.DiscoData.placementDataHandler.AddPlacementData(buildingNeedsData.CellPosition,
-                new PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, _storeItemSo.Size,
-                    buildingNeedsData.RotationData), _storeItemSo.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
+                new PlacementDataHandler.NewPlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, buildingNeedsData.RotationData));
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)

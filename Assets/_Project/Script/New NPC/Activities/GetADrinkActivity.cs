@@ -14,7 +14,7 @@ namespace New_NPC.Activities
 
         public void StartActivity(ActivityNeedsData and)
         {
-            _bar = and.GetAvaliablePropByType<Bar>(ePlacementLayer.Floor);
+            _bar = and.GetAvaliablePropByType<Bar>(ePlacementLayer.FloorProp);
 
             if (_bar == null || !_bar.HasDrinks)
             {

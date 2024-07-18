@@ -2,8 +2,8 @@
 {
     public enum eMaterialLayer
     {
-        FloorTile,
-        Wall,
+        FloorMaterial,
+        WallMaterial,
         Null
     }
 }

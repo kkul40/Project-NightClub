@@ -9,13 +9,18 @@ namespace System
 {
     public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
     {
-        //TODO Transform holder kullanmak yerine SceneContainerden ulas bunlara
-        public MapData MapData { get; private set; } = new();
+        public MapData MapData { get; private set; }
+        public PlacementDataHandler placementDataHandler { get; private set; }
 
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
 
+        private void Awake()
+        {
+            MapData = new MapData();
+            placementDataHandler = new PlacementDataHandler();
+        }
 
         // TODO Gereksizse kaldir
         private Vector2Int MapSize
@@ -26,9 +31,17 @@ namespace System
 
         public static event Action<Vector2Int> OnMapSizeChanged;
 
-        private void Start()
+        public void LoadData(GameData gameData)
         {
+            MapData = new MapData(gameData);
             SetUpMap();
+            placementDataHandler.LoadGameProps(gameData);
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            MapData.SaveData(ref gameData);
+            placementDataHandler.SaveGameProps(ref gameData);
         }
 
         private void SetUpMap()
@@ -43,11 +56,9 @@ namespace System
             {
                 if (i == MapData.WallDoorIndex)
                 {
-                    var newWallDoorObject =
-                        Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
+                    var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
 
-                    LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0),
-                        newWallDoorObject);
+                    LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
 
                     newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
@@ -150,16 +161,6 @@ namespace System
 
             data.AssignReferance(newWallObject.GetComponent<Wall>());
             data.AssignNewID(data.assignedMaterialID);
-        }
-
-        public void LoadData(GameData gameData)
-        {
-            MapData = new MapData(gameData);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-            MapData.SaveData(ref gameData);
         }
     }
 }

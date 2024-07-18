@@ -90,7 +90,7 @@ namespace Data
 
         private void OnApplicationQuit()
         {
-            SaveGame();
+            // SaveGame();
         }
 
         public void RegisterForSaveLoad(ISaveLoad saveLoad)

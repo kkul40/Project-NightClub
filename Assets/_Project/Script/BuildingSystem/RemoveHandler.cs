@@ -31,11 +31,9 @@ namespace BuildingSystem
             transform = buildingNeedsData.InputSystem.GetHitTransform();
 
             if (transform == null) return false;
-            else Debug.Log(transform.name);
 
             if (transform.TryGetComponent(out IPropUnit prop))
-                if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition,
-                        prop.PlacementLayer))
+                if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition, prop.PlacementLayer))
                 {
                     _propUnit = prop;
                     return true;
@@ -74,8 +72,7 @@ namespace BuildingSystem
 
         public void OnPlace(BuildingNeedsData buildingNeedsData)
         {
-            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacementData(_propUnit.CellPosition,
-                _propUnit.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
         }
 

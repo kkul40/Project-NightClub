@@ -17,8 +17,8 @@ namespace Data
         public List<WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
         
-        // TEST Sonra Sil
-        public SerializableDictionary<Vector3Int, PlacementSaveData> savedPropLayerPlacements;
+        public SerializableDictionary<Vector3Int, PlacementSaveData> savedAllPropLayerPlacements;
+        public SerializableDictionary<Vector3Int, PlacementSaveData> savedAllSurfaceLayerPlacements;
 
         //CTOR
 
@@ -49,9 +49,9 @@ namespace Data
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
             
-            // TESTDIR
-
-            savedPropLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
+            // Placement Data
+            savedAllPropLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
+            savedAllSurfaceLayerPlacements = new SerializableDictionary<Vector3Int, PlacementSaveData>();
         }
 
         [Serializable]
@@ -133,12 +133,12 @@ namespace Data
             {
             }
 
-            public PlacementSaveData(PlacementData placementData)
+            public PlacementSaveData(PlacementDataHandler.NewPlacementData placementData)
             {
                 PropID = placementData.ID;
-                PlacedCellPosition = placementData.PlacedCellPos;
-                EularAngles = placementData.RotationData.rotation.eulerAngles;
-                Direction = placementData.RotationData.direction;
+                PlacedCellPosition = placementData.CellPositionToPlace;
+                EularAngles = placementData.RotationToSet.rotation.eulerAngles;
+                Direction = placementData.RotationToSet.direction;
             }
         }
     }

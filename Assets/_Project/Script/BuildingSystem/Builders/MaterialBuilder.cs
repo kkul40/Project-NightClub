@@ -26,12 +26,12 @@ namespace BuildingSystem.Builders
 
             switch (_materialItemSo.MaterialLayer)
             {
-                case eMaterialLayer.Wall:
+                case eMaterialLayer.WallMaterial:
                     buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
                         SceneGameObjectHandler.Instance.GetPropHolderTransform,
                         MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
                     return;
-                case eMaterialLayer.FloorTile:
+                case eMaterialLayer.FloorMaterial:
                     buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
                         SceneGameObjectHandler.Instance.GetSurfaceHolderTransform,
                         MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
@@ -51,10 +51,10 @@ namespace BuildingSystem.Builders
         {
             switch (_materialItemSo.MaterialLayer)
             {
-                case eMaterialLayer.FloorTile:
+                case eMaterialLayer.FloorMaterial:
                     _changableMaterial = FindMaterial(buildingNeedsData);
                     break;
-                case eMaterialLayer.Wall:
+                case eMaterialLayer.WallMaterial:
                     _changableMaterial = GetClosestWallMaterial(buildingNeedsData);
                     break;
             }
@@ -79,12 +79,12 @@ namespace BuildingSystem.Builders
         {
             switch (_materialItemSo.MaterialLayer)
             {
-                case eMaterialLayer.FloorTile:
+                case eMaterialLayer.FloorMaterial:
                     DiscoData.Instance.MapData
                         .FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z]
                         .AssignNewID(eFloorGridAssignmentType.Material, _materialItemSo.ID);
                     break;
-                case eMaterialLayer.Wall:
+                case eMaterialLayer.WallMaterial:
                     DiscoData.Instance.MapData.WallDatas
                         .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _lastChangableMaterial)
                         .AssignNewID(_materialItemSo.ID);
@@ -105,10 +105,10 @@ namespace BuildingSystem.Builders
             Transform hitTransform = null;
             switch (_materialItemSo.MaterialLayer)
             {
-                case eMaterialLayer.FloorTile:
+                case eMaterialLayer.FloorMaterial:
                     hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(7);
                     break;
-                case eMaterialLayer.Wall:
+                case eMaterialLayer.WallMaterial:
                     hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(8);
                     break;
             }

@@ -14,7 +14,7 @@ namespace New_NPC.Activities
 
         public void StartActivity(ActivityNeedsData and)
         {
-            _dancableTile = and.GetAvaliablePropByType<DancableTile>(ePlacementLayer.Surface);
+            _dancableTile = and.GetAvaliablePropByType<DancableTile>(ePlacementLayer.BaseSurface);
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
             {
@@ -22,8 +22,7 @@ namespace New_NPC.Activities
                 return;
             }
 
-            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
-                    ePlacementLayer.Floor))
+            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition, ePlacementLayer.FloorProp))
             {
                 IsEnded = true;
                 return;

@@ -10,11 +10,11 @@ using UnityEngine.Serialization;
 namespace Data
 {
     [DisallowMultipleComponent]
-    public class DiscoData : Singleton<DiscoData>, ISaveLoad
+    public class DiscoData : Singleton<DiscoData>
     {
-        public PlacementDataHandler placementDataHandler { get; private set; }
+        public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
-        public Inventory inventory;
+        public Inventory inventory = new Inventory();
         public HashSet<StoreItemSO> AllInGameItems { get; private set; }
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
@@ -22,8 +22,6 @@ namespace Data
         // !!! FIRST INIT IN THE GAME !!!
         private void Awake()
         {
-            inventory = new Inventory();
-            placementDataHandler = new PlacementDataHandler();
             AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToHashSet();
         }
 
@@ -42,17 +40,6 @@ namespace Data
         {
             Slot,
             Cargo
-        }
-
-        public void LoadData(GameData gameData)
-        {
-            placementDataHandler.LoadGameProps(gameData);
-            // placementDataHandler.LoadGameProps(gameData);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-            placementDataHandler.SaveGameProps(ref gameData);
         }
     }
 

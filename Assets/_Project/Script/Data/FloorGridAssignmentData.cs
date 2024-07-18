@@ -45,44 +45,35 @@ namespace Data
                 return;
             }
 
-            if (newID == -1)
-            {
-                assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
-                return;
-            }
-
             switch (layerToAssign)
             {
                 case eFloorGridAssignmentType.NULL:
                     Debug.LogError("Null Placement Data on : " + CellPosition);
                     break;
                 case eFloorGridAssignmentType.Material:
-                    var foundMaterial =
-                        DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
-                    if (foundMaterial == null)
+                    if (newID == -1) assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
+                    else
                     {
-                        Debug.LogError(newID + " Could Not Found in Item List");
-                        break;
+                        var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
+                        if (foundMaterial == null)
+                        {
+                            Debug.LogError(newID + " Could Not Found in Item List");
+                            break;
+                        }
+                        assignedFloorTile.UpdateMaterial(foundMaterial.Material);
                     }
 
-                    assignedFloorTile.UpdateMaterial(foundMaterial.Material);
                     assignedMaterialID = newID;
-
-                    Debug.Log("Flooor Material Assigned");
                     break;
                 case eFloorGridAssignmentType.Surface:
-                    if (assignedSurfaceID == newID) return;
-
                     assignedSurfaceID = newID;
                     break;
                 case eFloorGridAssignmentType.Object:
-                    if (assignedObjectID == newID) return;
-
                     assignedObjectID = newID;
                     break;
             }
 
-            Debug.Log("New ID Assigned To FloorGridData");
+            Debug.Log("New ID Assigned To FloorGridData : " + newID);
         }
     }
 

@@ -78,7 +78,7 @@ namespace Data
             return true;
         }
 
-        public PathFinderNode SetTileNodeByCellPos(Vector3Int cellpos)
+        public PathFinderNode GetTileNodeByCellPos(Vector3Int cellpos)
         {
             if (cellpos.x > CurrentMapSize.x || cellpos.z > CurrentMapSize.y)
             {
@@ -87,6 +87,17 @@ namespace Data
             }
 
             return PathFinderNodes[cellpos.x, cellpos.z];
+        }
+
+        public FloorGridAssignmentData GetFloorGridAssignmentByCellPos(Vector3Int cellpos)
+        {
+            if (cellpos.x > CurrentMapSize.x || cellpos.z > CurrentMapSize.y)
+            {
+                Debug.LogError("FloorGridData Index Is Not Valid");
+                return null;
+            }
+
+            return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
         public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition - Vector3Int.right);
