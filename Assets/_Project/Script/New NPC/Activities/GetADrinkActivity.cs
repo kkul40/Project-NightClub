@@ -20,10 +20,16 @@ namespace New_NPC.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             var _bars = and.GetAvaliablePropsByType<Bar>(ePlacementLayer.FloorProp);
+            
+            if (_bars == null)
+            {
+                IsEnded = true;
+                return;
+            }
 
             _bar = _bars[Random.Range(0, _bars.Count)];
 
-            if (_bar == null || !_bar.HasDrinks)
+            if (!_bar.HasDrinks)
             {
                 IsEnded = true;
                 return;
@@ -53,7 +59,7 @@ namespace New_NPC.Activities
         {
             while (!and.Npc.pathFinder.hasReachedDestination)
             {
-                if (!_bar.HasDrinks)
+                if (_bar == null || !_bar.HasDrinks)
                 {
                     IsEnded = true;
                     yield break;

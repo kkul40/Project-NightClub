@@ -53,7 +53,7 @@ namespace BuildingSystem
         public void OnUpdate(BuildingNeedsData buildingNeedsData)
         {
             if (_lastCellPos == buildingNeedsData.CellPosition) return;
-            if (buildingNeedsData.IsCellPosInBounds())
+            if (!buildingNeedsData.IsCellPosInBounds())
             {
                 _lastCellPos = buildingNeedsData.CellPosition;
                 ResetMaterials(buildingNeedsData.MaterialColorChanger);

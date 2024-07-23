@@ -29,9 +29,11 @@ namespace BuildingSystem
         public bool IsCellPosInBounds()
         {
             if (CellPosition.x >= DiscoData.MapData.CurrentMapSize.x ||
-                CellPosition.z >= DiscoData.MapData.CurrentMapSize.y) return true;
+                CellPosition.z >= DiscoData.MapData.CurrentMapSize.y) return false;
 
-            return false;
+            if (CellPosition.x < 0 || CellPosition.y < 0) return false;
+
+            return true;
         }
     }
 }

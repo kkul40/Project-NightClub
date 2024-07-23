@@ -475,7 +475,7 @@ namespace Data
 
             foreach (var savedData in gameData.SavedPlacementDatas)
             {
-                var placementItemSo = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == savedData.PropID) as PlacementItemSO;
+                var placementItemSo = DiscoData.Instance.FindItemByID(savedData.PropID) as PlacementItemSO;
                 
                 RotationData rotationData = new RotationData(savedData.EularAngles, savedData.Direction);
 

@@ -11,6 +11,7 @@ namespace UI
         {
             var storeDataCarrier = new StoreDataCarrier();
             storeDataCarrier.EUISlot = DiscoData.eUISlot.InventorySlot;
+            storeDataCarrier.inventory = DiscoData.Instance.inventory.Items;
             storeDataCarrier.StoreItemSos = DiscoData.Instance.inventory.Items.Keys.ToList();
 
             UIStoreManager.Instance.GetUiStoreInventoryView.GenerateInventory(storeDataCarrier);

@@ -77,6 +77,7 @@ namespace System
         [ContextMenu("Expend X")]
         public void ExpendX()
         {
+            if (MapSize.x + 1 > ConstantVariables.MaxMapSizeX) return;
             InstantiateXWall(MapSize.x + 1);
 
             for (var i = 0; i < MapSize.y; i++) InstantiateFloorTile(MapSize.x, i);
@@ -88,6 +89,7 @@ namespace System
         [ContextMenu("Expend Y")]
         public void ExpendY()
         {
+            if (MapSize.y + 1 > ConstantVariables.MaxMapSizeY) return;
             InstantiateYWall(MapSize.y + 1);
 
             for (var i = 0; i < MapSize.x; i++) InstantiateFloorTile(i, MapSize.y);

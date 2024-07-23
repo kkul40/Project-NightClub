@@ -67,9 +67,8 @@ namespace BuildingSystem
                 _rotationMethod.OnRotate(_buildingNeedsData);
                 _buildingMethod.OnUpdate(_buildingNeedsData);
 
-                if (_buildingMethod.PressAndHold
-                        ? InputSystem.Instance.LeftHoldClickOnWorld
-                        : InputSystem.Instance.LeftClickOnWorld && _buildingMethod.OnValidate(_buildingNeedsData))
+                if ((_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld) 
+                    && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
                     callBackOnPlaced?.Invoke().Invoke();

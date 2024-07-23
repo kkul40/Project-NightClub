@@ -4,6 +4,7 @@ using BuildingSystem;
 using BuildingSystem.SO;
 using PlayerScripts;
 using SerializableTypes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,8 +18,8 @@ namespace Data
         public int WallDoorIndexOnX;
         public List<WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
-
-        [FormerlySerializedAs("SavedPlacementData")] public List<PlacementSaveData> SavedPlacementDatas;
+        public List<PlacementSaveData> SavedPlacementDatas;
+        public List<InventorySaveData> SavedInventoryDatas;
         
 
         //CTOR
@@ -52,6 +53,9 @@ namespace Data
             
             // Placement Data
             SavedPlacementDatas = new List<PlacementSaveData>();
+            
+            // Inventory Data
+            SavedInventoryDatas = new List<InventorySaveData>();
         }
 
         [Serializable]
@@ -137,5 +141,19 @@ namespace Data
                 Direction = placementData.SettedRotationData.direction;
             }
         }
+
+        [Serializable]
+        public class InventorySaveData
+        {
+            public int InventoryItemID;
+            public int Amount;
+
+            public InventorySaveData(StoreItemSO storeItemSo, int amount)
+            {
+                InventoryItemID = storeItemSo.ID;
+                Amount = amount;
+            }
+        }
+        
     }
 }

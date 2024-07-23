@@ -44,7 +44,7 @@ namespace BuildingSystem.Builders
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
         {
-            return true;
+            return buildingNeedsData.IsCellPosInBounds();
         }
 
         public void OnUpdate(BuildingNeedsData buildingNeedsData)

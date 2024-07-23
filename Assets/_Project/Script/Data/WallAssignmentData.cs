@@ -45,7 +45,7 @@ namespace Data
                 return;
             }
 
-            var foundMaterial = DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == newID) as MaterialItemSo;
+            var foundMaterial = DiscoData.Instance.FindItemByID(newID) as MaterialItemSo;
             if (foundMaterial == null)
             {
                 Debug.LogError(newID + " Could Not Found in Item List");
