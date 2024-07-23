@@ -6,11 +6,11 @@ namespace UI
 {
     public class PlayerCustomizationUI : MonoBehaviour
     {
-        private PlayerCustomizationLoader _playerCL;
+        private PlayerCustomization _playerCL;
 
         private void Awake()
         {
-            _playerCL = PlayerCustomizationLoader.Instance;
+            _playerCL = PlayerCustomization.Instance;
             if (_playerCL == null) Debug.LogError("PlayerCustomizationLoader Is Missing");
         }
 
@@ -76,7 +76,7 @@ namespace UI
 
         public void FinishUpCustomization()
         {
-            SaveSystem.SaveCustomizedPlayer(_playerCL);
+            // SaveSystem.SaveCustomizedPlayer(_playerCL);
         }
     }
 }

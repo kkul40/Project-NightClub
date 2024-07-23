@@ -13,42 +13,45 @@ namespace Data
 
         private FileDataHandler _fileDataHandler;
         private GameData _gameData = new();
-        private HashSet<ISaveLoad> _saveLoads = new();
+        private List<ISaveLoad> _saveLoads = new();
 
         private void Awake()
         {
-            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+            if (Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
             
+            DontDestroyOnLoad(this);
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            OnSceneLoaded();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+        }
+        
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
         }
 
-        // private void OnEnable()
-        // {
-        //     SceneManager.sceneLoaded += OnSceneLoaded;
-        //     SceneManager.sceneUnloaded += OnSceneUnloaded;
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     SceneManager.sceneLoaded -= OnSceneLoaded;
-        //     SceneManager.sceneUnloaded -= OnSceneUnloaded;
-        // }
-
-        public void OnSceneLoaded()
+        public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             Debug.Log(("Scene loaded"));
-            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToHashSet();
+            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
             
             LoadGame();
         }
 
         public void OnSceneUnloaded(Scene scene)
         {
-            
+            Debug.Log(("Scene unloaded"));
+            SaveGame();
         }
         
         public void NewGame()

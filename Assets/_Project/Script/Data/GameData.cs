@@ -100,17 +100,17 @@ namespace Data
         public class PlayerCustomizationIndexData
         {
             // Default = 0
-            public int playerGenderIndex = 0;
-            public int playerHairIndex = 0;
+            public int playerGenderIndex = 1;
+            public int playerHairIndex = 1;
             public int playerBeardIndex = 0;
-            public int playerAttachmentIndex = 0;
-            public int playerEaringIndex = 0;
+            public int playerAttachmentIndex = 1;
+            public int playerEaringIndex = 1;
 
             public PlayerCustomizationIndexData()
             {
             }
 
-            public PlayerCustomizationIndexData(PlayerCustomizationLoader playerCustomizationUI)
+            public PlayerCustomizationIndexData(PlayerCustomization playerCustomizationUI)
             {
                 playerGenderIndex = playerCustomizationUI.playerGenderIndex;
                 playerHairIndex = playerCustomizationUI.playerHairIndex;

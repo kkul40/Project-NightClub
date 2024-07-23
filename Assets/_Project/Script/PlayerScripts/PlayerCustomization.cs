@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PlayerScripts
 {
-    public class PlayerCustomizationLoader : Singleton<PlayerCustomizationLoader>
+    public class PlayerCustomization : Singleton<PlayerCustomization>, ISaveLoad
     {
         public int playerGenderIndex;
         public int playerHairIndex;
@@ -21,30 +21,6 @@ namespace PlayerScripts
         public Transform playerBeardHolder;
         public Transform playerAttachmentHolder;
         public Transform playerEaringHolder;
-
-        private void Start()
-        {
-            LoadCustomizedPlayer();
-        }
-
-        private void LoadCustomizedPlayer()
-        {
-            var data = SaveSystem.LoadCustomizedPlayer();
-            if (data != null)
-            {
-                playerGenderIndex = data.playerGenderIndex;
-                playerHairIndex = data.playerHairIndex;
-                playerBeardIndex = data.playerBeardIndex;
-                playerAttachmentIndex = data.playerAttachmentIndex;
-                playerEaringIndex = data.playerEaringIndex;
-            }
-
-            playerGenderHolder.sharedMesh = playerCDS.playerGenders[playerGenderIndex];
-            ChangePlayerPart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
-            ChangePlayerPart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
-            ChangePlayerPart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);
-            ChangePlayerPart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);
-        }
 
         private void ChangePlayerPart(Transform partHolder, GameObject partPrefab)
         {
@@ -68,6 +44,30 @@ namespace PlayerScripts
             else if (index < 0) index = prefabs.Count - 1;
 
             ChangePlayerPart(holder, prefabs[index].Prefab);
+        }
+
+        public void LoadData(GameData gameData)
+        {
+            var data = gameData.SavedPlayerCustomizationIndexData;
+            
+            playerGenderIndex = data.playerGenderIndex;
+            playerHairIndex = data.playerHairIndex;
+            playerBeardIndex = data.playerBeardIndex;
+            playerAttachmentIndex = data.playerAttachmentIndex;
+            playerEaringIndex = data.playerEaringIndex;
+
+            playerGenderHolder.sharedMesh = playerCDS.playerGenders[playerGenderIndex];
+            ChangePlayerPart(playerHairHolder, playerCDS.playerHairPrefabs[playerHairIndex].Prefab);
+            ChangePlayerPart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
+            ChangePlayerPart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);
+            ChangePlayerPart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);
+            
+            Debug.Log("Character Loaded");
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.SavedPlayerCustomizationIndexData = new GameData.PlayerCustomizationIndexData(this);
         }
     }
 }

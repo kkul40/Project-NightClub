@@ -1,26 +1,33 @@
+using Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace StartMenu
 {
-    public class UI_StartMenu : UI_Page
+    public class UI_MenuButtons : UI_Page
     {
         public Logger _logger;
 
         public void OnContinueButton()
         {
-            SceneManager.LoadScene(1);
+            StartGame();
         }
 
         public void OnNewGameButton(UI_Page page)
         {
+            SavingAndLoadingSystem.Instance.NewGame();
+            SavingAndLoadingSystem.Instance.LoadGame();
             UI_MainMenuManager.Instance.OpenNewPage(page);
-            _logger.Log("New Game Button Pressed");
+        }
+
+        public void StartGame()
+        {
+            SceneManager.LoadScene(1);
         }
 
         public void OnExitButton()
         {
-            _logger.Log("Application Just Quit");
+            // _logger.Log("Application Just Quit");
             Application.Quit();
         }
     }
