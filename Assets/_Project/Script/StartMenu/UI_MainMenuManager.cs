@@ -16,7 +16,11 @@ namespace StartMenu
         {
             Instance = this;
 
-            foreach (var page in pages) page.Initiliase();
+            foreach (var page in pages)
+            {
+                page.Initiliase();
+                page.HideImmidiatly();
+            }
             currentPage = pages[0];
             _stack.Push(currentPage);
 
@@ -57,7 +61,7 @@ namespace StartMenu
             var peek = _stack.Peek();
             peek.Show(UI_Page.ePushAnimation.PushLeft);
             currentPage = peek;
-            Debug.Log("Get Back");
+            Debug.Log("Go Back");
         }
     }
 }

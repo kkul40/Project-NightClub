@@ -22,6 +22,8 @@ namespace UI
             var rotX = Input.GetAxis("Mouse X") * 10;
 
             characterTransform.Rotate(Vector3.up * -rotX);
+            
+            Debug.Log("Drag Rotation Working");
         }
     }
 }

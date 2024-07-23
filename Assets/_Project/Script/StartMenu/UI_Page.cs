@@ -41,6 +41,7 @@ namespace StartMenu
             }
 
             _canvasGroup.alpha = 0;
+            _canvasGroup.interactable = true;
             _rectTransform.DOAnchorPos(Vector2.zero, animDuration).OnComplete(SetShow);
             _canvasGroup.DOFade(1, animDuration);
         }
@@ -66,12 +67,18 @@ namespace StartMenu
                     break;
             }
 
-            _canvasGroup.interactable = false;
             isOpen = false;
+            _canvasGroup.interactable = false;
             _canvasGroup.DOFade(0, animDuration / 5);
         }
 
-
+        public virtual void HideImmidiatly()
+        {
+            isOpen = false;
+            _canvasGroup.interactable = false;
+            _canvasGroup.alpha = 0;
+        }
+        
         private void SetShow()
         {
             _canvasGroup.alpha = 1;
