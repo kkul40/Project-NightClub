@@ -38,8 +38,9 @@ namespace Data
 
         public enum eUISlot
         {
-            Slot,
-            Cargo
+            ItemSlot,
+            InventorySlot,
+            ExtentionSlot,
         }
     }
 

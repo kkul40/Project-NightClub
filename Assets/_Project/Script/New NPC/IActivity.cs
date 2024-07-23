@@ -3,8 +3,9 @@
     public interface IActivity
     {
         bool IsEnded { get; }
-        void StartActivity(ActivityNeedsData and);
-        void UpdateActivity(ActivityNeedsData and);
-        void EndActivity(ActivityNeedsData and);
+        bool CanStartActivity(ActivityNeedsData and);
+        void OnActivityStart(ActivityNeedsData and);
+        void OnActivityUpdate(ActivityNeedsData and);
+        void OnActivityEnd(ActivityNeedsData and);
     }
 }

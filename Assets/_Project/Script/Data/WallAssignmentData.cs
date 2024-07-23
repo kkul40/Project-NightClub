@@ -2,6 +2,7 @@
 using System.Linq;
 using BuildingSystem.SO;
 using PropBehaviours;
+using Root;
 using UnityEngine;
 
 namespace Data
@@ -54,7 +55,7 @@ namespace Data
             assignedWall.UpdateMaterial(foundMaterial.Material);
             assignedMaterialID = newID;
 
-            Debug.Log("New ID Assigned to Wall : " + newID);
+            KDebug.Print("New ID Assigned to Wall : " + newID);
         }
     }
 }

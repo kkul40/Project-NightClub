@@ -10,13 +10,18 @@ namespace New_NPC.Activities
 
         public bool IsEnded { get; private set; }
 
-        public void StartActivity(ActivityNeedsData and)
+        public bool CanStartActivity(ActivityNeedsData and)
         {
-            and.Npc.pathFinder.GoToDestination(GetRandomDestination(and));
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+            and.Npc.pathFinder.TryGoTargetDestination(GetRandomDestination(and));
             and.Npc.SetAnimation(eNpcAnimation.Walk);
         }
 
-        public void UpdateActivity(ActivityNeedsData and)
+        public void OnActivityUpdate(ActivityNeedsData and)
         {
             if (and.Npc.pathFinder.hasReachedDestination)
             {
@@ -30,7 +35,7 @@ namespace New_NPC.Activities
             }
         }
 
-        public void EndActivity(ActivityNeedsData and)
+        public void OnActivityEnd(ActivityNeedsData and)
         {
         }
 
@@ -38,30 +43,30 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.MapData.FloorGridDatas[
+            var target = and.DiscoData.MapData.PathFinderNodes[
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
-
-            // if (target == null)
-            // {
-            //     return and.Npc.transform.position;
-            // }
-
-            while (target.assignedMaterialID != -1)
+            
+            if (target == null)
             {
-                target = and.DiscoData.MapData.FloorGridDatas[
+                return and.Npc.transform.position;
+            }
+
+            while (!target.IsWalkable)
+            {
+                target = and.DiscoData.MapData.PathFinderNodes[
                     Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
                     Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
 
                 loopCount++;
-                if (loopCount >= 99)
+                if (loopCount > 100)
                 {
                     IsEnded = true;
                     break;
                 }
             }
 
-            return target.CellPosition;
+            return target.WorldPos;
         }
     }
 }

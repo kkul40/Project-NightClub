@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using PropBehaviours;
 using UnityEngine;
@@ -43,6 +44,34 @@ namespace New_NPC
             }
 
             return closestProp;
+        }
+
+        public List<T> GetAvaliablePropsByType<T>(ePlacementLayer layer) where T : IPropUnit
+        {
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
+
+            List<T> closestProps = new List<T>();
+            foreach (var prop in DiscoData.Instance.GetPropList)
+            {
+                if (prop == null) continue;
+
+                if (prop.transform.TryGetComponent(out IOccupieable occupieable))
+                    if (occupieable.IsOccupied)
+                        continue;
+
+                if (prop is T propType)
+                {
+                    closestProps.Add(propType);
+                }
+            }
+            
+            if (closestProps.Count < 1)
+            {
+                Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
+                return null;
+            }
+
+            return closestProps;
         }
     }
 }

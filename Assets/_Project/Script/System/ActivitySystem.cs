@@ -28,6 +28,7 @@ namespace System
                 var activity = Activator.CreateInstance(ac) as IActivity;
 
                 if (activity is NoneActivity) continue;
+                if (activity is ExitDiscoActivity) continue;
 
                 dictionary.Add(ac, activity);
             }

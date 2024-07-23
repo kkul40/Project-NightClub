@@ -1,5 +1,4 @@
-﻿using System;
-using BuildingSystem;
+﻿using BuildingSystem;
 using BuildingSystem.SO;
 using Data;
 using ScriptableObjects;
@@ -34,11 +33,11 @@ namespace UI
             // DiscoData.Instance.inventory.OnInventoryChanged -= Update;
         }
 
-        public void Init(StoreDataCarrier storeItemSo)
+        public void Init(StoreDataCarrier storeDataCarrier)
         {
-            StoreItemSo = storeItemSo.ChosedStoreItemSo;
+            StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
             image.sprite = StoreItemSo.Icon;
-            amountText.text = storeItemSo.inventory[StoreItemSo].ToString();
+            amountText.text = storeDataCarrier.inventory[StoreItemSo].ToString();
         }
 
         private void Refresh()

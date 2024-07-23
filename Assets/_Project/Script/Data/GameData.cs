@@ -129,7 +129,7 @@ namespace Data
             {
             }
 
-            public PlacementSaveData(PlacementDataHandler.NewPlacementData placementData)
+            public PlacementSaveData(PlacementDataHandler.PlacementData placementData)
             {
                 PropID = placementData.ID;
                 PlacedCellPosition = placementData.PlacedCellPosition;

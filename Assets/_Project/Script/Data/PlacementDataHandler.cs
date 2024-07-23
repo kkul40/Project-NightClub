@@ -313,7 +313,7 @@ namespace Data
 
     public class PlacementDataHandler
     {
-        public class NewPlacementData
+        public class PlacementData
         {
             public int ID;
             public Vector3Int PlacedCellPosition;
@@ -321,7 +321,7 @@ namespace Data
             public GameObject PlacedSceneObject;
             public RotationData SettedRotationData;
             
-            public NewPlacementData(PlacementItemSO storeItemSo, Vector3Int placedPlacedCellPos, GameObject createdObject, RotationData settedRotationData)
+            public PlacementData(PlacementItemSO storeItemSo, Vector3Int placedPlacedCellPos, GameObject createdObject, RotationData settedRotationData)
             {
                 ID = storeItemSo.ID;
                 PlacedCellPosition = placedPlacedCellPos;
@@ -332,13 +332,13 @@ namespace Data
         }
 
         private List<IPropUnit> propList;
-        //                      placement    data worldPositions      layer
-        private HashSet<Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>> AllPlacedObjects;
+        //                  placement data     worldPositions      layer
+        private HashSet<Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>> AllPlacedObjects;
        
         public PlacementDataHandler()
         {
             propList = new List<IPropUnit>();
-            AllPlacedObjects = new HashSet<Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>>();
+            AllPlacedObjects = new HashSet<Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>>();
         }
 
         public bool ContainsKey(Vector3Int cellPos, ePlacementLayer layer)
@@ -375,18 +375,20 @@ namespace Data
             return false;
         }
 
-        public void AddPlacement(Vector3Int cellPos, NewPlacementData placementData)
+        public void AddPlacement(Vector3Int cellPos, PlacementData placementData)
         {
             var keys = CalculatePosition(cellPos, placementData.PlacedPlacementItemSo.Size,
                 placementData.SettedRotationData.direction);
             
-            AllPlacedObjects.Add(new Tuple<NewPlacementData, List<Vector3Int>, ePlacementLayer>(placementData, new List<Vector3Int>(), placementData.PlacedPlacementItemSo.PlacementLayer));
+            AllPlacedObjects.Add(new Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>(placementData, new List<Vector3Int>(), placementData.PlacedPlacementItemSo.PlacementLayer));
             
             var found = AllPlacedObjects.FirstOrDefault(x => x.Item1.PlacedCellPosition == cellPos && x.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
 
             foreach (var key in keys)
             {
                 found.Item2.Add(key);
+                MapData.PathFinderNodes[key.x, key.z].IsWalkable =
+                    placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.BaseSurface ? true : false;
             }
             
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
@@ -407,7 +409,9 @@ namespace Data
             var keys = CalculatePosition(data.Item1.PlacedCellPosition, data.Item1.PlacedPlacementItemSo.Size,
                 data.Item1.SettedRotationData.direction);
 
-            
+            foreach (var key in keys)
+                MapData.GetTileNodeByCellPos(key).IsWalkable = true;
+
             DiscoData.Instance.inventory.AddItem(data.Item1.PlacedPlacementItemSo);
             
             AllPlacedObjects.Remove(data);
@@ -476,7 +480,7 @@ namespace Data
                 RotationData rotationData = new RotationData(savedData.EularAngles, savedData.Direction);
 
                 var createdObject = builder.InstantiateProp(placementItemSo, savedData.PlacedCellPosition, rotationData);
-                NewPlacementData placementData = new NewPlacementData(placementItemSo, savedData.PlacedCellPosition, createdObject, rotationData);
+                PlacementData placementData = new PlacementData(placementItemSo, savedData.PlacedCellPosition, createdObject, rotationData);
                 
                 AddPlacement(savedData.PlacedCellPosition, placementData);
             }
@@ -492,13 +496,23 @@ namespace Data
         
         #endregion
             
-        public List<NewPlacementData> GetPlacementDatas(ePlacementLayer layer)
+        public List<PlacementData> GetPlacementDatas(ePlacementLayer layer)
         {
-            List<NewPlacementData> output = new List<NewPlacementData>();
+            List<PlacementData> output = new List<PlacementData>();
             foreach (var item in AllPlacedObjects)
                 output.Add(item.Item1);
             
             return output;
+        }
+
+        public Transform GetPlacementObjectByCellPos(Vector3Int cellPosition)
+        {
+            foreach (var tuple in AllPlacedObjects)
+                foreach (var keys in tuple.Item2)
+                    if (keys == cellPosition)
+                        return tuple.Item1.PlacedSceneObject.transform;
+            
+            return null;
         }
         
         /// <summary>

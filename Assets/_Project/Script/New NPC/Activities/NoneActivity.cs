@@ -6,16 +6,21 @@ namespace New_NPC.Activities
     {
         public bool IsEnded { get; }
 
-        public void StartActivity(ActivityNeedsData and)
+        public bool CanStartActivity(ActivityNeedsData and)
+        {
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
         {
         }
 
-        public void UpdateActivity(ActivityNeedsData and)
+        public void OnActivityUpdate(ActivityNeedsData and)
         {
             Debug.Log("None Activity");
         }
 
-        public void EndActivity(ActivityNeedsData and)
+        public void OnActivityEnd(ActivityNeedsData and)
         {
         }
     }

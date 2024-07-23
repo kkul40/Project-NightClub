@@ -9,6 +9,9 @@ namespace Data
         public Vector3 WorldPos;
         public PathFinderNode Parent;
         public bool IsWalkable;
+        
+        // Testing
+        public ePathNodeType PathNodeType;
 
         public int GridX;
         public int GridY;
@@ -25,5 +28,12 @@ namespace Data
             GridX = gridX;
             GridY = gridY;
         }
+    }
+
+    public enum ePathNodeType
+    {
+        Null,
+        Walkable,
+        Waitable,
     }
 }

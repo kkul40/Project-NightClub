@@ -1,11 +1,14 @@
 ﻿using System;
 using Data;
+using New_NPC.Activities;
+using UnityEngine;
 
 namespace New_NPC
 {
     public class ActivityHandler
     {
         private ActivityNeedsData _activityNeedsData;
+        private IActivity _lastActivity;
         private IActivity _currentActivity;
 
         public bool hasActivity => _currentActivity != null;
@@ -16,31 +19,55 @@ namespace New_NPC
             _activityNeedsData.Npc = npc;
             _activityNeedsData.DiscoData = DiscoData.Instance;
             _activityNeedsData.GridHandler = GridHandler.Instance;
+
+            _currentActivity = new WalkRandomActivity();
+            _lastActivity = _currentActivity;
+            _currentActivity.OnActivityStart(_activityNeedsData);
         }
 
-        public void StartActivity(IActivity activity)
+        public void StartNewActivity(IActivity activity)
         {
-            if (hasActivity)
-                _currentActivity.EndActivity(_activityNeedsData);
+            if (!activity.CanStartActivity(_activityNeedsData)) return;
+            
+            if (hasActivity) _currentActivity.OnActivityEnd(_activityNeedsData);
 
             _currentActivity = activity;
-            _currentActivity.StartActivity(_activityNeedsData);
+            _lastActivity = _currentActivity;
+            _currentActivity.OnActivityStart(_activityNeedsData);
         }
 
         public void UpdateActivity()
         {
-            if (hasActivity)
+            if (!hasActivity) return;
+
+            if (_currentActivity.IsEnded)
             {
-                if (_currentActivity.IsEnded)
+                GetRandomActivity();
+                return;
+            }
+            
+            _currentActivity.OnActivityUpdate(_activityNeedsData);
+        }
+
+        private void GetRandomActivity()
+        {
+            IActivity randomActivity = ActivitySystem.Instance.GetRandomActivity();
+
+            int iterate = 0;
+            while (_lastActivity.GetType() == randomActivity.GetType())
+            {
+                randomActivity = ActivitySystem.Instance.GetRandomActivity();
+
+                iterate++;
+                if (iterate > 100)
                 {
-                    _currentActivity.EndActivity(_activityNeedsData);
-                    StartActivity(ActivitySystem.Instance.GetRandomActivity());
-                }
-                else
-                {
-                    _currentActivity.UpdateActivity(_activityNeedsData);
+                    randomActivity = new ExitDiscoActivity();
+                    Debug.LogError("Could Not Found New Activity");
+                    break;
                 }
             }
+            
+            StartNewActivity(randomActivity);
         }
     }
 }

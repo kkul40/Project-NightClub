@@ -12,9 +12,16 @@ namespace New_NPC.Activities
 
         private Bar _bar;
 
-        public void StartActivity(ActivityNeedsData and)
+        public bool CanStartActivity(ActivityNeedsData and)
         {
-            _bar = and.GetAvaliablePropByType<Bar>(ePlacementLayer.FloorProp);
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+            var _bars = and.GetAvaliablePropsByType<Bar>(ePlacementLayer.FloorProp);
+
+            _bar = _bars[Random.Range(0, _bars.Count)];
 
             if (_bar == null || !_bar.HasDrinks)
             {
@@ -22,17 +29,21 @@ namespace New_NPC.Activities
                 return;
             }
 
-            and.Npc.pathFinder.GoToDestination(_bar.WaitPosition.position);
+            if(!and.Npc.pathFinder.TryGoTargetDestination(_bar.WaitPosition.position))
+            {
+                IsEnded = true;
+                return;
+            }
+            
             and.Npc.SetAnimation(eNpcAnimation.Walk);
-
             DOTween.instance.StartCoroutine(CoGetDrink(and));
         }
 
-        public void UpdateActivity(ActivityNeedsData and)
+        public void OnActivityUpdate(ActivityNeedsData and)
         {
         }
 
-        public void EndActivity(ActivityNeedsData and)
+        public void OnActivityEnd(ActivityNeedsData and)
         {
             and.Npc.pathFinder.CancelDestination();
             and.Npc.SetAnimation(eNpcAnimation.Idle);
@@ -57,14 +68,9 @@ namespace New_NPC.Activities
             and.Npc.pathFinder.SetRotation(_bar.WaitPosition.rotation);
             yield return new WaitForSeconds(1);
             _bar.GetDrink();
+
             yield return new WaitForSeconds(0.5f);
 
-            var temp = new WalkRandomActivity();
-
-            and.Npc.pathFinder.GoToDestination(temp.GetRandomDestination(and));
-            and.Npc.SetAnimation(eNpcAnimation.Walk);
-
-            yield return new WaitUntil(() => and.Npc.pathFinder.hasReachedDestination);
             IsEnded = true;
 
             yield return null;

@@ -105,7 +105,7 @@ namespace BuildingSystem.Builders
             }
 
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
-                new PlacementDataHandler.NewPlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, buildingNeedsData.RotationData));
+                new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, buildingNeedsData.RotationData));
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)

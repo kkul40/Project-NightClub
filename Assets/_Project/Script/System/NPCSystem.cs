@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using BuildingSystem;
 using Data;
 using New_NPC;
+using New_NPC.Activities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,11 +13,28 @@ namespace System
     {
         [SerializeField] private GameObject _npcPrefab;
 
+        [SerializeField] private List<NPC> _npcActivities = new List<NPC>();
+
         public int maxNPC = 25;
 
         private void Start()
         {
+            // StartCoroutine(CoSpawnNPCs());
+        }
+
+        public void SendNPCs()
+        {
             StartCoroutine(CoSpawnNPCs());
+        }
+
+        public void RemoveNPCs()
+        {
+            foreach (var activity in _npcActivities)
+            {
+                activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
+            }
+            
+            _npcActivities.Clear();
         }
 
         private IEnumerator CoSpawnNPCs()
@@ -44,7 +63,8 @@ namespace System
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }
-
+                
+                _npcActivities.Add(newNPC.GetComponent<NPC>());
                 npcCount++;
             }
         }

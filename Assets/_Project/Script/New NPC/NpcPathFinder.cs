@@ -22,7 +22,7 @@ namespace New_NPC
             _assignedNPC = assign;
         }
 
-        public void GoToDestination(Vector3 targetPos)
+        public bool TryGoTargetDestination(Vector3 targetPos)
         {
             CancelDestination();
             _currentPath = FindPath(_assignedNPC.position, targetPos);
@@ -30,11 +30,12 @@ namespace New_NPC
             if (_currentPath == null)
             {
                 _routine = null;
-                return;
+                return false;
             }
 
             _routine = CoFollowPath(_currentPath);
             DOTween.instance.StartCoroutine(_routine);
+            return true;
         }
 
         public void CancelDestination()
@@ -57,6 +58,8 @@ namespace New_NPC
                     _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
                     yield return null;
                 }
+
+                yield return null;
             }
 
             _routine = null;
@@ -115,7 +118,6 @@ namespace New_NPC
                 }
             }
 
-            Debug.Log("No Path Found");
             return null; // Return null if no path is found
         }
 
@@ -143,7 +145,6 @@ namespace New_NPC
 
             var waypoints = new List<Vector3>();
             foreach (var node in path)
-                // Vector3 gridPath = new Vector3(node.GridX, 0 , node.GridY);
                 waypoints.Add(node.WorldPos);
 
             return waypoints; // Return the path as a list of Vector3 positions
@@ -162,8 +163,8 @@ namespace New_NPC
                 var checkX = node.GridX + x;
                 var checkY = node.GridY + y;
 
-                if (checkX >= 0 && checkX < ConstantVariables.MaxMapSizeX && checkY >= 0 &&
-                    checkY < ConstantVariables.MaxMapSizeY)
+                if (checkX >= 0 && checkX < MapGeneratorSystem.Instance.MapData.CurrentMapSize.x && checkY >= 0 &&
+                    checkY < MapGeneratorSystem.Instance.MapData.CurrentMapSize.y)
                     neighbors.Add(_tileNode[checkX, checkY]);
             }
 

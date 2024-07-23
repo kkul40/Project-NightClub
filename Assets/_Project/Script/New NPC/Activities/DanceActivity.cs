@@ -6,15 +6,28 @@ namespace New_NPC.Activities
 {
     public class DanceActivity : IActivity
     {
+        public bool IsEnded { get; private set; }
+        
         private DancableTile _dancableTile;
         private DanceState _danceState = DanceState.None;
         private float timer;
 
-        public bool IsEnded { get; private set; }
-
-        public void StartActivity(ActivityNeedsData and)
+        public bool CanStartActivity(ActivityNeedsData and)
         {
-            _dancableTile = and.GetAvaliablePropByType<DancableTile>(ePlacementLayer.BaseSurface);
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+            var dancableTiles = and.GetAvaliablePropsByType<DancableTile>(ePlacementLayer.BaseSurface);
+            
+            if (dancableTiles == null)
+            {
+                IsEnded = true;
+                return;
+            }
+
+            _dancableTile = dancableTiles[Random.Range(0, dancableTiles.Count)];
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
             {
@@ -28,25 +41,28 @@ namespace New_NPC.Activities
                 return;
             }
 
+            bool foundPath = and.Npc.pathFinder.TryGoTargetDestination(_dancableTile.CellPosition);
+            if (!foundPath)
+            {
+                IsEnded = true;
+                return;
+            }
+            
             and.Npc.SetAnimation(eNpcAnimation.Walk);
             _dancableTile.GetItOccupied(and.Npc);
-            and.Npc.pathFinder.GoToDestination(_dancableTile.CellPosition);
         }
 
-        public void UpdateActivity(ActivityNeedsData and)
+        public void OnActivityUpdate(ActivityNeedsData and)
         {
             switch (_danceState)
             {
                 case DanceState.None:
                     if (and.Npc.pathFinder.hasReachedDestination)
                     {
-                        Debug.Log("Reach the target dance");
-                        // and.Npc._navMeshAgent.enabled = false;
                         and.Npc.SetAnimation(eNpcAnimation.Dance);
                         and.Npc.GetAnimationControl.SetRootMotion(true);
                         _danceState = DanceState.Dancing;
                     }
-
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
@@ -55,16 +71,14 @@ namespace New_NPC.Activities
                         timer = 0;
                         IsEnded = true;
                     }
-
                     break;
             }
         }
 
-        public void EndActivity(ActivityNeedsData and)
+        public void OnActivityEnd(ActivityNeedsData and)
         {
             and.Npc.SetAnimation(eNpcAnimation.Idle);
             if (_dancableTile != null) _dancableTile.IsOccupied = false;
-            // and.Npc._navMeshAgent.enabled = true;
             and.Npc.GetAnimationControl.SetRootMotion(false);
         }
 

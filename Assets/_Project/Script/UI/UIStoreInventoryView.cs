@@ -12,6 +12,7 @@ namespace UI
     {
         [SerializeField] private GameObject UISlotPrefab;
         [SerializeField] private GameObject UICargoSlotPrefab;
+        [SerializeField] private GameObject UIExtenderSlotPrefab;
         [SerializeField] private Transform SlotHolder;
 
         [SerializeField] private Transform ButtonHolder;
@@ -59,10 +60,11 @@ namespace UI
 
             switch (storeDataCarrier.EUISlot)
             {
-                case DiscoData.eUISlot.Slot:
+                case DiscoData.eUISlot.ItemSlot:
                     ButtonHolder.gameObject.SetActive(true);
                     break;
-                case DiscoData.eUISlot.Cargo:
+                case DiscoData.eUISlot.InventorySlot:
+                case DiscoData.eUISlot.ExtentionSlot:
                     ButtonHolder.gameObject.SetActive(false);
                     break;
             }
@@ -82,11 +84,14 @@ namespace UI
                 GameObject temp = null;
                 switch (_storeDataCarrier.EUISlot)
                 {
-                    case DiscoData.eUISlot.Slot:
+                    case DiscoData.eUISlot.ItemSlot:
                         temp = Instantiate(UISlotPrefab, SlotHolder);
                         break;
-                    case DiscoData.eUISlot.Cargo:
+                    case DiscoData.eUISlot.InventorySlot:
                         temp = Instantiate(UICargoSlotPrefab, SlotHolder);
+                        break;
+                    case DiscoData.eUISlot.ExtentionSlot:
+                        temp = Instantiate(UIExtenderSlotPrefab, SlotHolder);
                         break;
                 }
 

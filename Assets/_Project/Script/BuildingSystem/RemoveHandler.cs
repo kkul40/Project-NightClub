@@ -18,6 +18,8 @@ namespace BuildingSystem
         private IPropUnit _propUnit;
         private IPropUnit _lastPropUnit;
 
+        private Vector3Int _lastCellPos = -Vector3Int.one;
+
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
         public void OnStart(BuildingNeedsData buildingNeedsData)
@@ -28,9 +30,14 @@ namespace BuildingSystem
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
         {
             Transform transform = null;
-            transform = buildingNeedsData.InputSystem.GetHitTransform();
+            // transform = buildingNeedsData.InputSystem.GetHitTransform();
+            transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition);
 
-            if (transform == null) return false;
+            if (transform == null)
+            {
+                _propUnit = null;
+                return false;
+            }
 
             if (transform.TryGetComponent(out IPropUnit prop))
                 if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition, prop.PlacementLayer))
@@ -45,6 +52,17 @@ namespace BuildingSystem
 
         public void OnUpdate(BuildingNeedsData buildingNeedsData)
         {
+            if (_lastCellPos == buildingNeedsData.CellPosition) return;
+            if (buildingNeedsData.IsCellPosInBounds())
+            {
+                _lastCellPos = buildingNeedsData.CellPosition;
+                ResetMaterials(buildingNeedsData.MaterialColorChanger);
+                return;
+            }
+            _lastCellPos = buildingNeedsData.CellPosition;
+            
+            Debug.Log("Optimizasyon lu");
+            
             OnValidate(buildingNeedsData);
 
             if (_propUnit == null)

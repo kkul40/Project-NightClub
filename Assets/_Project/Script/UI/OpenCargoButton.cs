@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BuildingSystem.SO;
 using Data;
 
@@ -9,10 +10,8 @@ namespace UI
         public override void OnClick()
         {
             var storeDataCarrier = new StoreDataCarrier();
-            storeDataCarrier.inventory = DiscoData.Instance.inventory.Items;
-            storeDataCarrier.EUISlot = DiscoData.eUISlot.Cargo;
-
-            foreach (var key in storeDataCarrier.inventory.Keys) storeDataCarrier.StoreItemSos.Add(key);
+            storeDataCarrier.EUISlot = DiscoData.eUISlot.InventorySlot;
+            storeDataCarrier.StoreItemSos = DiscoData.Instance.inventory.Items.Keys.ToList();
 
             UIStoreManager.Instance.GetUiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }

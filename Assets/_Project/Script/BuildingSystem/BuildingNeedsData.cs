@@ -25,5 +25,13 @@ namespace BuildingSystem
             MaterialColorChanger = materialColorChanger;
             RotationData = RotationData.Default;
         }
+
+        public bool IsCellPosInBounds()
+        {
+            if (CellPosition.x >= DiscoData.MapData.CurrentMapSize.x ||
+                CellPosition.z >= DiscoData.MapData.CurrentMapSize.y) return true;
+
+            return false;
+        }
     }
 }

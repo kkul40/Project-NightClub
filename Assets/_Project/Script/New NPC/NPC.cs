@@ -18,18 +18,15 @@ namespace New_NPC
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}
          */
         private NPCAnimationControl _npcAnimationControl;
-        private ActivityHandler _activityHandler;
+        public ActivityHandler _activityHandler { get; private set; }
         public NpcPathFinder pathFinder;
         public GameObject Prefab;
 
         public void Init(NpcAnimationSo npcAnimationSo)
         {
-            // _navMeshAgent = GetComponent<NavMeshAgent>();
             pathFinder = new NpcPathFinder(transform);
-            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo,
-                transform.GetChild(0));
+            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
-            _activityHandler.StartActivity(new WalkRandomActivity());
         }
 
         private void Update()
