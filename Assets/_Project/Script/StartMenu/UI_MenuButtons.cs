@@ -10,18 +10,17 @@ namespace StartMenu
 
         public void OnContinueButton()
         {
-            StartGame();
+            SceneManager.LoadScene(1);
         }
 
         public void OnNewGameButton(UI_Page page)
         {
-            SavingAndLoadingSystem.Instance.NewGame();
-            SavingAndLoadingSystem.Instance.LoadGame();
             UI_MainMenuManager.Instance.OpenNewPage(page);
         }
 
-        public void StartGame()
+        public void OnFinishUpCustomizationButton()
         {
+            SavingAndLoadingSystem.Instance.NewGame();
             SceneManager.LoadScene(1);
         }
 

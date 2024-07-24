@@ -32,6 +32,9 @@ namespace Data
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
+            
+            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
+            LoadGame();
         }
         
         private void OnDisable()
@@ -44,7 +47,6 @@ namespace Data
         {
             Debug.Log(("Scene loaded"));
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
-            
             LoadGame();
         }
 
