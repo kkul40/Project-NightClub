@@ -92,6 +92,7 @@ namespace BuildingSystem
         {
             buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
+            _lastCellPos = -Vector3Int.one;
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)

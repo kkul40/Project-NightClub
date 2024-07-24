@@ -20,10 +20,7 @@ namespace UI
         public void DragRotate()
         {
             var rotX = Input.GetAxis("Mouse X") * 10;
-
             characterTransform.Rotate(Vector3.up * -rotX);
-            
-            Debug.Log("Drag Rotation Working");
         }
     }
 }

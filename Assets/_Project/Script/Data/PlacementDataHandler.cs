@@ -476,6 +476,12 @@ namespace Data
             foreach (var savedData in gameData.SavedPlacementDatas)
             {
                 var placementItemSo = DiscoData.Instance.FindItemByID(savedData.PropID) as PlacementItemSO;
+
+                if (placementItemSo == null)
+                {
+                    Debug.LogError("Could Not Find Object : "+ savedData.PropID);
+                    continue;
+                }
                 
                 RotationData rotationData = new RotationData(savedData.EularAngles, savedData.Direction);
 
