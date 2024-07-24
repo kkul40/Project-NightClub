@@ -61,7 +61,6 @@ namespace StartMenu
             var peek = _stack.Peek();
             peek.Show(UI_Page.ePushAnimation.PushLeft);
             currentPage = peek;
-            Debug.Log("Go Back");
         }
     }
 }

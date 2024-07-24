@@ -28,13 +28,16 @@ namespace Data
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
         }
 
+        private void Start()
+        {
+            LoadGame();
+        }
+
         private void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
             
-            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
-            LoadGame();
         }
         
         private void OnDisable()

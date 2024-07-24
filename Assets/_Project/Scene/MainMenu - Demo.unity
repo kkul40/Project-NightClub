@@ -1060,28 +1060,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207997961}
   m_CullTransparentMesh: 0
---- !u!195 &239979409
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7347895218002018309}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 1.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 0
 --- !u!1001 &259691729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5963,7 +5941,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6747703779353093721}
-  - component: {fileID: 239979409}
   - component: {fileID: 2504157196049018161}
   m_Layer: 0
   m_Name: Player
