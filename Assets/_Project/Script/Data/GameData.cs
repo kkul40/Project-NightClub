@@ -65,16 +65,21 @@ namespace Data
             public Vector3Int CellPosition = -Vector3Int.one;
             public int AssignedMaterialID = -1;
 
+            public WallSaveData(WallAssignmentData wallAssignmentData)
+            {
+                CellPosition = wallAssignmentData.CellPosition;
+                AssignedMaterialID = wallAssignmentData.assignedMaterialID;
+            }
+
             public WallSaveData(Vector3Int cellPosition, int assignedMaterialID)
             {
                 CellPosition = cellPosition;
                 AssignedMaterialID = assignedMaterialID;
             }
-
-            public WallSaveData(WallAssignmentData wallAssignmentData)
+            
+            public static implicit operator WallSaveData(WallAssignmentData wallAssignmentData)
             {
-                CellPosition = wallAssignmentData.CellPosition;
-                AssignedMaterialID = wallAssignmentData.assignedMaterialID;
+                return new(wallAssignmentData);
             }
         }
 
@@ -93,6 +98,11 @@ namespace Data
             {
                 CellPosition = floorGridAssignmentData.CellPosition;
                 assignedMaterialID = floorGridAssignmentData.assignedMaterialID;
+            }
+
+            public static implicit operator FloorSaveData(FloorGridAssignmentData floorGridAssignmentData)
+            {
+                return new(floorGridAssignmentData);
             }
         }
 
@@ -117,6 +127,11 @@ namespace Data
                 playerBeardIndex = playerCustomizationUI.playerBeardIndex;
                 playerAttachmentIndex = playerCustomizationUI.playerAttachmentIndex;
                 playerEaringIndex = playerCustomizationUI.playerEaringIndex;
+            }
+
+            public static implicit operator PlayerCustomizationIndexData(PlayerCustomization playerCustomization)
+            {
+                return new(playerCustomization);
             }
         }
 

@@ -21,7 +21,7 @@ namespace New_NPC.Activities
         {
             var dancableTiles = and.GetAvaliablePropsByType<DancableTile>(ePlacementLayer.BaseSurface);
             
-            if (dancableTiles == null)
+            if (dancableTiles.Count == 0)
             {
                 IsEnded = true;
                 return;

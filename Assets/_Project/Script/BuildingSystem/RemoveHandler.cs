@@ -61,8 +61,6 @@ namespace BuildingSystem
             }
             _lastCellPos = buildingNeedsData.CellPosition;
             
-            Debug.Log("Optimizasyon lu");
-            
             OnValidate(buildingNeedsData);
 
             if (_propUnit == null)

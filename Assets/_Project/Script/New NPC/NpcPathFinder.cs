@@ -21,7 +21,7 @@ namespace New_NPC
         {
             _assignedNPC = assign;
         }
-
+        
         public bool TryGoTargetDestination(Vector3 targetPos)
         {
             CancelDestination();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -17,6 +18,8 @@ namespace New_NPC
         /*
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}
          */
+
+        [SerializeField] private AudioClip _sinirClip;
         private NPCAnimationControl _npcAnimationControl;
         public ActivityHandler _activityHandler { get; private set; }
         public NpcPathFinder pathFinder;
@@ -27,6 +30,11 @@ namespace New_NPC
             pathFinder = new NpcPathFinder(transform);
             _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
+        }
+
+        private void OnDisable()
+        {
+            pathFinder.CancelDestination();
         }
 
         private void Update()
@@ -46,6 +54,7 @@ namespace New_NPC
 
         public void OnClick()
         {
+            MusicSystem.Instance.PlaySoundEffect(_sinirClip);
         }
 
         private List<Vector3> path = new List<Vector3>();

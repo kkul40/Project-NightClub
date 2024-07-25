@@ -16,6 +16,8 @@ namespace System
         [SerializeField] private List<NPC> _npcActivities = new List<NPC>();
 
         public int maxNPC = 25;
+        
+        public Coroutine _routine = null;
 
         private void Start()
         {
@@ -24,11 +26,12 @@ namespace System
 
         public void SendNPCs()
         {
-            StartCoroutine(CoSpawnNPCs());
+            _routine = StartCoroutine(CoSpawnNPCs());
         }
 
         public void RemoveNPCs()
         {
+            StopCoroutine(_routine);
             foreach (var activity in _npcActivities)
             {
                 activity._activityHandler.StartNewActivity(new ExitDiscoActivity());

@@ -66,7 +66,10 @@ namespace Data
             gameData.SavedMapSize = CurrentMapSize;
 
             gameData.SavedWallDatas = new List<GameData.WallSaveData>();
-            foreach (var wall in WallDatas) gameData.SavedWallDatas.Add(new GameData.WallSaveData(wall));
+            foreach (var wall in WallDatas)
+            {
+                gameData.SavedWallDatas.Add(wall);
+            }
 
             for (var x = 0; x < CurrentMapSize.x; x++)
             for (var y = 0; y < CurrentMapSize.y; y++)

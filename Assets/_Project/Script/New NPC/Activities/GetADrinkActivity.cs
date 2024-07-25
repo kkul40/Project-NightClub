@@ -21,7 +21,7 @@ namespace New_NPC.Activities
         {
             var _bars = and.GetAvaliablePropsByType<Bar>(ePlacementLayer.FloorProp);
             
-            if (_bars == null)
+            if (_bars.Count == 0)
             {
                 IsEnded = true;
                 return;

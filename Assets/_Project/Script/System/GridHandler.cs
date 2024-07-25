@@ -60,7 +60,7 @@ namespace System
             floorGridPlane.transform.position = new Vector3((float)mapSize.x / 2, minimumOffset, (float)mapSize.y / 2);
             floorGridPlane.transform.localScale = new Vector3((float)mapSize.x / 10, 1, (float)mapSize.y / 10);
 
-            // Wall Left Shader
+            // Left Wall Shader
             var shaderLeftWallMaterial = new Material(gridSahder);
             shaderLeftWallMaterial.SetColor("_Color", gridColor);
             shaderLeftWallMaterial.SetVector("_CellSize", new Vector4(mapSize.x, 3, 0, 0));
@@ -68,7 +68,7 @@ namespace System
             leftWallGridPlane.transform.position = new Vector3((float)mapSize.x / 2, 1.5f, minimumOffset);
             leftWallGridPlane.transform.localScale = new Vector3((float)mapSize.x / 10, 1, (float)3 / 10);
 
-            // Wall Right Shader
+            // Right Wall Shader
             var shaderRightWallMaterial = new Material(gridSahder);
             shaderRightWallMaterial.SetColor("_Color", gridColor);
             shaderRightWallMaterial.SetVector("_CellSize", new Vector4(mapSize.y, 3, 0, 0));

@@ -387,8 +387,8 @@ namespace Data
             foreach (var key in keys)
             {
                 found.Item2.Add(key);
-                MapData.PathFinderNodes[key.x, key.z].IsWalkable =
-                    placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.BaseSurface ? true : false;
+                bool isWalkable = placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.FloorProp ? false : true;
+                MapData.PathFinderNodes[key.x, key.z].IsWalkable = isWalkable;
             }
             
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))

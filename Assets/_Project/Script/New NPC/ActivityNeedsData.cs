@@ -53,7 +53,7 @@ namespace New_NPC
             List<T> closestProps = new List<T>();
             foreach (var prop in DiscoData.Instance.GetPropList)
             {
-                if (prop == null) continue;
+                // if (prop == null) continue;
 
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                     if (occupieable.IsOccupied)
@@ -68,7 +68,6 @@ namespace New_NPC
             if (closestProps.Count < 1)
             {
                 Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
-                return null;
             }
 
             return closestProps;

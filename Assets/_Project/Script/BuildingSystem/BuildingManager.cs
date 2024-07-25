@@ -51,7 +51,6 @@ namespace BuildingSystem
             _gridHandler.ToggleGrid(false);
         }
 
-
         private void Update()
         {
             if (_buildingMethod != null)
@@ -107,8 +106,8 @@ namespace BuildingSystem
             callBackOnPlaced = CallBackOnPlace;
             _gridHandler.ToggleGrid(true);
             _storeItemSo = storeItemSo;
-            _rotationMethod = BuildingMethodFactory.GetRotationMethod(storeItemSo);
-            _buildingMethod = BuildingMethodFactory.GetBuildingMethod(storeItemSo);
+            _rotationMethod = Builder.BuildToIRotation(storeItemSo);
+            _buildingMethod = Builder.BuildToIBuilding(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
