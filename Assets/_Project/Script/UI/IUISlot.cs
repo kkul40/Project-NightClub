@@ -15,6 +15,7 @@ namespace UI
 
     public class StoreDataCarrier
     {
+        // TODO Bu Store Data Mantigi Degistir!!!
         public List<StoreItemSO> StoreItemSos = new();
         public StoreItemSO ChosedStoreItemSo = null;
         public Dictionary<StoreItemSO, int> inventory = new();

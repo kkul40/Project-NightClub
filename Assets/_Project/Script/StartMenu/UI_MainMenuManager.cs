@@ -6,10 +6,10 @@ namespace StartMenu
     public class UI_MainMenuManager : MonoBehaviour
     {
         public static UI_MainMenuManager Instance;
-        public List<UI_Page> pages;
+        public List<Menu_UI_Page> pages;
 
-        private readonly Stack<UI_Page> _stack = new();
-        private UI_Page currentPage;
+        private readonly Stack<Menu_UI_Page> _stack = new();
+        private Menu_UI_Page currentPage;
 
 
         private void Awake()
@@ -27,16 +27,16 @@ namespace StartMenu
             currentPage.ShowImmidiatly();
         }
 
-        public void OpenNewPage(UI_Page page)
+        public void OpenNewPage(Menu_UI_Page page)
         {
             var foundPage = FindPage(page);
 
             if (foundPage != null)
             {
-                currentPage.Hide(UI_Page.ePushAnimation.PushLeft);
+                currentPage.Hide(Menu_UI_Page.ePushAnimation.PushLeft);
                 currentPage = foundPage;
                 _stack.Push(currentPage);
-                currentPage.Show(UI_Page.ePushAnimation.PushRight);
+                currentPage.Show(Menu_UI_Page.ePushAnimation.PushRight);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace StartMenu
             }
         }
 
-        private UI_Page FindPage(UI_Page page)
+        private Menu_UI_Page FindPage(Menu_UI_Page page)
         {
             foreach (var p in pages)
                 if (p == page)
@@ -57,9 +57,9 @@ namespace StartMenu
             if (_stack.Count == 1) return;
 
             var pop = _stack.Pop();
-            pop.Hide(UI_Page.ePushAnimation.PushRight);
+            pop.Hide(Menu_UI_Page.ePushAnimation.PushRight);
             var peek = _stack.Peek();
-            peek.Show(UI_Page.ePushAnimation.PushLeft);
+            peek.Show(Menu_UI_Page.ePushAnimation.PushLeft);
             currentPage = peek;
         }
     }

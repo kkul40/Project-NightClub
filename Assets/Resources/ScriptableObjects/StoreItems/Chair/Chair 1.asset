@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: Chair 1
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: -1175575711
   Name: Classic Wooden Chair
   Icon: {fileID: 21300000, guid: d224b253888047c4a82e3b895db653b0, type: 3}
   Price: 0

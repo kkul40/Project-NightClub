@@ -7,16 +7,11 @@ namespace UI
 {
     public class OpenStoreButton : UIButton
     {
-        [SerializeField] private UIButton firtButton;
-
-        private void Awake()
-        {
-            OnClick();
-        }
+        [SerializeField] private UIButton firstStorePageToShow;
 
         public override void OnClick()
         {
-            firtButton.OnClick();
+            firstStorePageToShow.OnClick();
         }
     }
 }

@@ -100,7 +100,7 @@ namespace UI
             }
         }
 
-        public void Load()
+        private void Load()
         {
             for (var i = 0; i < listSize; i++)
             {

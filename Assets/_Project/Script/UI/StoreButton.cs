@@ -3,12 +3,14 @@ using System.Linq;
 using BuildingSystem.SO;
 using Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class StoreButton : UIButton
     {
+        [SerializeField] private UIStorePage storePage;
         [SerializeField] private string path;
         private List<StoreItemSO> _storeItemSos;
 
@@ -16,8 +18,8 @@ namespace UI
 
         private void Awake()
         {
-            _storeDataCarrier.StoreItemSos =
-                Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
+            // TODO Addressable Kullan!!
+            _storeDataCarrier.StoreItemSos = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
             _storeDataCarrier.EUISlot = DiscoData.eUISlot.ItemSlot;
 
             GetComponent<Button>().onClick.AddListener(OnClick);
@@ -25,7 +27,7 @@ namespace UI
 
         public override void OnClick()
         {
-            UIStoreManager.Instance.GetUiStoreInventoryView.GenerateInventory(_storeDataCarrier);
+            storePage.GenerateInventory(this, _storeDataCarrier);
         }
     }
 }
