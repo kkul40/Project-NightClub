@@ -26,7 +26,9 @@ namespace BuildingSystem.Builders
             _tempObject =
                 Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-            SetOffset(_storeItemSo);
+
+            Offset = Offset.BuildingOffset(_storeItemSo.PlacementLayer);
+
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.BaseSurface:
@@ -38,20 +40,6 @@ namespace BuildingSystem.Builders
                 case ePlacementLayer.WallProp:
                     // _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
                     return;
-            }
-        }
-
-        private void SetOffset(PlacementItemSO placementItemSo)
-        {
-            switch (placementItemSo.PlacementLayer)
-            {
-                case ePlacementLayer.WallProp:
-                    Offset = ConstantVariables.WallObjectOffset;
-                    break;
-                case ePlacementLayer.BaseSurface:
-                case ePlacementLayer.FloorProp:
-                    Offset = ConstantVariables.PropObjectOffset;
-                    break;
             }
         }
 
@@ -105,7 +93,8 @@ namespace BuildingSystem.Builders
             }
 
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
-                new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject, buildingNeedsData.RotationData));
+                new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject,
+                    buildingNeedsData.RotationData));
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)
@@ -114,12 +103,14 @@ namespace BuildingSystem.Builders
             isFinished = true;
             buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
-        
-        public GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition, RotationData rotationData)
+
+        public GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition,
+            RotationData rotationData)
         {
-            SetOffset(placementItemso);
-            
-            var createdObject = Object.Instantiate(placementItemso.Prefab, GridHandler.Instance.GetCellCenterWorld(cellPosition) + Offset,
+            Offset = Offset.BuildingOffset(placementItemso.PlacementLayer);
+
+            var createdObject = Object.Instantiate(placementItemso.Prefab,
+                GridHandler.Instance.GetCellCenterWorld(cellPosition) + Offset,
                 rotationData.rotation);
             switch (placementItemso.PlacementLayer)
             {

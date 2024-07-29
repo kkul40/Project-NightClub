@@ -66,7 +66,9 @@ namespace BuildingSystem
                 _rotationMethod.OnRotate(_buildingNeedsData);
                 _buildingMethod.OnUpdate(_buildingNeedsData);
 
-                if ((_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld) 
+                if ((_buildingMethod.PressAndHold
+                        ? InputSystem.Instance.LeftHoldClickOnWorld
+                        : InputSystem.Instance.LeftClickOnWorld)
                     && _buildingMethod.OnValidate(_buildingNeedsData))
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
@@ -79,8 +81,10 @@ namespace BuildingSystem
 
         private void UpdateBuildingNeeds()
         {
-            _buildingNeedsData.CellPosition = _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) + _buildingMethod.Offset;
+            _buildingNeedsData.CellPosition =
+                _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
+            _buildingNeedsData.CellCenterPosition = _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition) +
+                                                    _buildingMethod.Offset;
             _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
             _tileIndicator.RoateDirectionIndicator(_buildingNeedsData.RotationData.rotation);
         }

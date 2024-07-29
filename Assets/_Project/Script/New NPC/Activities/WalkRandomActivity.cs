@@ -17,15 +17,15 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.pathFinder.TryGoTargetDestination(GetRandomDestination(and));
-            and.Npc.SetAnimation(eNpcAnimation.Walk);
+            and.Npc.PathFinder.GoTargetDestination(GetRandomDestination(and));
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (and.Npc.pathFinder.hasReachedDestination)
+            if (and.Npc.PathFinder.HasReachedDestination)
             {
-                and.Npc.SetAnimation(eNpcAnimation.Idle);
+                and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {
@@ -46,11 +46,8 @@ namespace New_NPC.Activities
             var target = and.DiscoData.MapData.PathFinderNodes[
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
                 Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
-            
-            if (target == null)
-            {
-                return and.Npc.transform.position;
-            }
+
+            if (target == null) return and.Npc.transform.position;
 
             while (!target.IsWalkable)
             {

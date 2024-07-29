@@ -22,17 +22,16 @@ namespace Data
         private NpcAnimationSo DefaultBoyNpcAnimation;
 
         [SerializeField] private NpcAnimationSo DefaultGirlNpcAnimation;
-
-        public NpcAnimationSo GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
-
-        public NpcAnimationSo GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
+        [SerializeField] private BartenderAnimationSo DefaultBartenderAnimation;
 
         public MaterialItemSo GetDefaultTileMaterial => DefaultTileMaterial;
-
         public MaterialItemSo GetDefaultWallMaterial => DefaultWallMaterial;
 
         public NPCCustomizationDataSO GetDefaultBoyNpcCustomization => DefaultBoyNpcCustomization;
-
         public NPCCustomizationDataSO GetDefaultGirlNpcCustomization => DefaultGirlNpcCustomization;
+
+        public NpcAnimationSo GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
+        public NpcAnimationSo GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
+        public BartenderAnimationSo GetDefaultBartenderAnimation => DefaultBartenderAnimation;
     }
 }

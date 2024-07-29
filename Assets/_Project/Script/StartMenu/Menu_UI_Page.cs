@@ -78,7 +78,7 @@ namespace StartMenu
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0;
         }
-        
+
         private void SetShow()
         {
             _canvasGroup.alpha = 1;

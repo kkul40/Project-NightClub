@@ -1,6 +1,7 @@
 ﻿using System;
 using Data;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace New_NPC.Activities
 {
@@ -10,7 +11,7 @@ namespace New_NPC.Activities
 
         private float timer = 0;
         private float delay = 1;
-        
+
         public bool CanStartActivity(ActivityNeedsData and)
         {
             return true;
@@ -18,27 +19,25 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.SetAnimation(eNpcAnimation.Walk);
-            and.Npc.pathFinder.TryGoTargetDestination(DiscoData.Instance.MapData.EnterencePosition - new Vector3(0, 0.5f, 0));
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition -
+                                                   new Vector3(0, 0.5f, 0));
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (and.Npc.pathFinder.hasReachedDestination)
+            if (and.Npc.PathFinder.HasReachedDestination)
             {
-                and.Npc.pathFinder.CancelDestination();
-                and.Npc.SetAnimation(eNpcAnimation.Idle);
+                and.Npc.PathFinder.CancelDestination();
+                and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
                 timer += Time.deltaTime;
-                if (timer > delay)
-                {
-                    IsEnded = true;
-                }
+                if (timer > delay) IsEnded = true;
             }
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            MonoBehaviour.Destroy(and.Npc.gameObject);
+            Object.Destroy(and.Npc.gameObject);
         }
     }
 }

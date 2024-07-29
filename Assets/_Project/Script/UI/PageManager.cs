@@ -7,7 +7,7 @@ namespace UI
 {
     public class PageManager : Singleton<PageManager>
     {
-        private List<UIPageBase> _uiPageBases = new List<UIPageBase>();
+        private List<UIPageBase> _uiPageBases = new();
 
         private void Awake()
         {
@@ -18,10 +18,7 @@ namespace UI
         public void HandleNewUIPageToggle(UIPageBase source)
         {
             // source if you wanna do something with it
-            foreach (var page in _uiPageBases)
-            {
-                page.Toggle(false);
-            }
+            foreach (var page in _uiPageBases) page.Toggle(false);
         }
     }
 }

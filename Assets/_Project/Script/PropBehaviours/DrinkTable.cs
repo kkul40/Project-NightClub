@@ -54,20 +54,4 @@ namespace PropBehaviours
             isClicked = true;
         }
     }
-
-    public interface IInteractable
-    {
-        public eInteraction Interaction { get; }
-        public void OnFocus();
-        public void OnOutFocus();
-        public void OnClick();
-    }
-
-    public enum eInteraction
-    {
-        Interactable,
-        Customer,
-        PropUnit,
-        None
-    }
 }

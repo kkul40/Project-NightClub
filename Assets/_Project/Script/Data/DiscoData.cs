@@ -14,7 +14,7 @@ namespace Data
     {
         public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
-        public Inventory inventory;
+        public Inventory inventory = new();
         public HashSet<StoreItemSO> AllInGameItems { get; private set; }
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
@@ -40,40 +40,35 @@ namespace Data
         {
             ItemSlot,
             InventorySlot,
-            ExtentionSlot,
+            ExtentionSlot
         }
 
         public void LoadData(GameData gameData)
         {
             inventory = new Inventory(gameData);
-            
+
             Debug.Log("Disco Data Loaded");
         }
 
         public void SaveData(ref GameData gameData)
         {
             gameData.SavedInventoryDatas.Clear();
-            
+
             foreach (var pair in inventory.Items)
-            {
                 gameData.SavedInventoryDatas.Add(new GameData.InventorySaveData(pair.Key, pair.Value));
-            }
         }
 
         public StoreItemSO FindItemByID(int ID)
         {
-            return DiscoData.Instance.AllInGameItems.FirstOrDefault(x => x.ID == ID);
+            return Instance.AllInGameItems.FirstOrDefault(x => x.ID == ID);
         }
     }
 
     public class ConstantVariables
     {
-        public const int MaxMapSizeX = 30;
-        public const int MaxMapSizeY = 30;
+        public const int MaxMapSizeX = 50;
+        public const int MaxMapSizeY = 50;
         public const int FloorLayerID = 7;
         public const int WalllayerID = 8;
-
-        public static Vector3 WallObjectOffset = new Vector3(0f, 0f, 0f);
-        public static Vector3 PropObjectOffset = new Vector3(0f, -0.5f, 0f);
     }
 }

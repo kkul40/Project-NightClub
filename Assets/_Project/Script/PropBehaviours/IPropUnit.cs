@@ -8,8 +8,6 @@ namespace PropBehaviours
     public class IPropUnit : MonoBehaviour, IInteractable
     {
         // public NewPropPlacementDataHandler.NewPlacementData PropData { get; private set; }
-        
-        
         public int ID { get; private set; }
         public Vector3Int CellPosition { get; private set; }
         public Vector3 WorldPos { get; private set; }
@@ -28,15 +26,15 @@ namespace PropBehaviours
 
         public eInteraction Interaction { get; } = eInteraction.PropUnit;
 
-        public void OnFocus()
+        public virtual void OnFocus()
         {
         }
 
-        public void OnOutFocus()
+        public virtual void OnOutFocus()
         {
         }
 
-        public void OnClick()
+        public virtual void OnClick()
         {
         }
 

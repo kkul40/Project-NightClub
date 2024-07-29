@@ -56,7 +56,8 @@ namespace System
             {
                 if (i == MapData.WallDoorIndex)
                 {
-                    var newWallDoorObject = Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
+                    var newWallDoorObject =
+                        Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
 
                     LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
 

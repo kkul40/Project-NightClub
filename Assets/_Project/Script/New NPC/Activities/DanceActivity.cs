@@ -7,7 +7,7 @@ namespace New_NPC.Activities
     public class DanceActivity : IActivity
     {
         public bool IsEnded { get; private set; }
-        
+
         private DancableTile _dancableTile;
         private DanceState _danceState = DanceState.None;
         private float timer;
@@ -20,8 +20,8 @@ namespace New_NPC.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             var dancableTiles = and.GetAvaliablePropsByType<DancableTile>(ePlacementLayer.BaseSurface);
-            
-            if (dancableTiles.Count == 0)
+
+            if (dancableTiles == null)
             {
                 IsEnded = true;
                 return;
@@ -35,20 +35,21 @@ namespace New_NPC.Activities
                 return;
             }
 
-            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition, ePlacementLayer.FloorProp))
+            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
+                    ePlacementLayer.FloorProp))
             {
                 IsEnded = true;
                 return;
             }
 
-            bool foundPath = and.Npc.pathFinder.TryGoTargetDestination(_dancableTile.CellPosition);
+            var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.CellPosition);
             if (!foundPath)
             {
                 IsEnded = true;
                 return;
             }
-            
-            and.Npc.SetAnimation(eNpcAnimation.Walk);
+
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.GetItOccupied(and.Npc);
         }
 
@@ -57,29 +58,31 @@ namespace New_NPC.Activities
             switch (_danceState)
             {
                 case DanceState.None:
-                    if (and.Npc.pathFinder.hasReachedDestination)
+                    if (and.Npc.PathFinder.HasReachedDestination)
                     {
-                        and.Npc.SetAnimation(eNpcAnimation.Dance);
-                        and.Npc.GetAnimationControl.SetRootMotion(true);
+                        and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Dance);
+                        and.Npc.animationController.SetRootMotion(true);
                         _danceState = DanceState.Dancing;
                     }
+
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
-                    if (timer > and.Npc.GetAnimationControl.GetCurrentAnimationDuration())
+                    if (timer > and.Npc.animationController.GetCurrentAnimationDuration())
                     {
                         timer = 0;
                         IsEnded = true;
                     }
+
                     break;
             }
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            and.Npc.SetAnimation(eNpcAnimation.Idle);
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
             if (_dancableTile != null) _dancableTile.IsOccupied = false;
-            and.Npc.GetAnimationControl.SetRootMotion(false);
+            and.Npc.animationController.SetRootMotion(false);
         }
 
         private enum DanceState

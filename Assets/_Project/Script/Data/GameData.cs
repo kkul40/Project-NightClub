@@ -20,7 +20,7 @@ namespace Data
         public SerializableDictionary<Vector3Int, FloorSaveData> SavedFloorDatas;
         public List<PlacementSaveData> SavedPlacementDatas;
         public List<InventorySaveData> SavedInventoryDatas;
-        
+
 
         //CTOR
 
@@ -50,10 +50,10 @@ namespace Data
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 SavedFloorDatas.Add(new Vector3Int(x, 0, y), new FloorSaveData());
-            
+
             // Placement Data
             SavedPlacementDatas = new List<PlacementSaveData>();
-            
+
             // Inventory Data
             SavedInventoryDatas = new List<InventorySaveData>();
         }
@@ -76,10 +76,10 @@ namespace Data
                 CellPosition = cellPosition;
                 AssignedMaterialID = assignedMaterialID;
             }
-            
+
             public static implicit operator WallSaveData(WallAssignmentData wallAssignmentData)
             {
-                return new(wallAssignmentData);
+                return new WallSaveData(wallAssignmentData);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Data
 
             public static implicit operator FloorSaveData(FloorGridAssignmentData floorGridAssignmentData)
             {
-                return new(floorGridAssignmentData);
+                return new FloorSaveData(floorGridAssignmentData);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Data
 
             public static implicit operator PlayerCustomizationIndexData(PlayerCustomization playerCustomization)
             {
-                return new(playerCustomization);
+                return new PlayerCustomizationIndexData(playerCustomization);
             }
         }
 
@@ -169,6 +169,5 @@ namespace Data
                 Amount = amount;
             }
         }
-        
     }
 }

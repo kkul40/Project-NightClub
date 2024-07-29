@@ -9,7 +9,7 @@ namespace Data
         public Vector3 WorldPos;
         public PathFinderNode Parent;
         public bool IsWalkable;
-        
+
         // Testing
         public ePathNodeType PathNodeType;
 
@@ -34,6 +34,6 @@ namespace Data
     {
         Null,
         Walkable,
-        Waitable,
+        Waitable
     }
 }

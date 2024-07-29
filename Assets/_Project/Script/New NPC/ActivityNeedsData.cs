@@ -50,7 +50,7 @@ namespace New_NPC
         {
             if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
 
-            List<T> closestProps = new List<T>();
+            var closestProps = new List<T>();
             foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 // if (prop == null) continue;
@@ -59,15 +59,13 @@ namespace New_NPC
                     if (occupieable.IsOccupied)
                         continue;
 
-                if (prop is T propType)
-                {
-                    closestProps.Add(propType);
-                }
+                if (prop is T propType) closestProps.Add(propType);
             }
-            
+
             if (closestProps.Count < 1)
             {
                 Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
+                return null;
             }
 
             return closestProps;

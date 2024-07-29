@@ -235,7 +235,6 @@ namespace HighlightPlus
                 if (raycastSource == RayCastSource.MousePosition)
                 {
 #if !ENABLE_INPUT_SYSTEM
-
                     if (!CanInteract())
                     {
                         yield return null;

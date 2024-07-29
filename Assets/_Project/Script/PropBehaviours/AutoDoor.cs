@@ -27,15 +27,6 @@ namespace PropBehaviours
                 timer += Time.deltaTime;
         }
 
-        // private void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.transform.TryGetComponent(out NPC.NPC npc))
-        //     {
-        //         ToggleDoor(true);
-        //         timer = 0;
-        //     }
-        // }
-
         private void OnTriggerStay(Collider other)
         {
             if (other.transform.TryGetComponent(out New_NPC.NPC npc))
@@ -44,12 +35,6 @@ namespace PropBehaviours
                 timer = 0;
             }
         }
-
-        // private void OnTriggerExit(Collider other)
-        // {
-        //     if (other.transform.TryGetComponent(out NPC.NPC npc))
-        //         ToggleDoor(false);
-        // }
 
         private void ToggleDoor(bool toggle)
         {

@@ -22,7 +22,7 @@ namespace Data
                 Destroy(this);
                 return;
             }
-            
+
             DontDestroyOnLoad(this);
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
@@ -37,9 +37,8 @@ namespace Data
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
-            
         }
-        
+
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -48,17 +47,17 @@ namespace Data
 
         public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log(("Scene loaded"));
+            Debug.Log("Scene loaded");
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
             LoadGame();
         }
 
         public void OnSceneUnloaded(Scene scene)
         {
-            Debug.Log(("Scene unloaded"));
+            Debug.Log("Scene unloaded");
             SaveGame();
         }
-        
+
         public void NewGame()
         {
             _gameData = new GameData();
@@ -92,7 +91,7 @@ namespace Data
         [ContextMenu("New Save File")]
         private void NewSaveFile()
         {
-            FileDataHandler temp = new FileDataHandler(Application.persistentDataPath, fileName);
+            var temp = new FileDataHandler(Application.persistentDataPath, fileName);
             temp.DeleteData();
         }
 

@@ -20,21 +20,17 @@ namespace New_NPC
          */
 
         [SerializeField] private AudioClip _sinirClip;
-        private NPCAnimationControl _npcAnimationControl;
+        public IAnimationController animationController;
         public ActivityHandler _activityHandler { get; private set; }
-        public NpcPathFinder pathFinder;
+        public IPathFinder PathFinder;
         public GameObject Prefab;
 
         public void Init(NpcAnimationSo npcAnimationSo)
         {
-            pathFinder = new NpcPathFinder(transform);
-            _npcAnimationControl = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
+            PathFinder = new NpcPathFinder(transform);
+            animationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo,
+                transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
-        }
-
-        private void OnDisable()
-        {
-            pathFinder.CancelDestination();
         }
 
         private void Update()
@@ -54,24 +50,16 @@ namespace New_NPC
 
         public void OnClick()
         {
+            // TEST
             MusicSystem.Instance.PlaySoundEffect(_sinirClip);
         }
 
-        private List<Vector3> path = new List<Vector3>();
+        private List<Vector3> path = new();
 
-        public void SetAnimation(eNpcAnimation newAnimation)
-        {
-            _npcAnimationControl.PlayAnimation(newAnimation);
-        }
-
-        public NPCAnimationControl GetAnimationControl => _npcAnimationControl;
-
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             if (path.Count > 1)
-            {
-                for (int i = 1; i < path.Count; i++)
-                {
+                for (var i = 1; i < path.Count; i++)
                     if (i == path.Count - 1)
                     {
                         Gizmos.color = Color.green;
@@ -80,19 +68,20 @@ namespace New_NPC
                     else
                     {
                         Gizmos.color = Color.blue;
-                        Gizmos.DrawLine(path[i - 1] + new Vector3(0,0.5f,0), path[i] + new Vector3(0,0.5f,0));
+                        Gizmos.DrawLine(path[i - 1] + new Vector3(0, 0.5f, 0), path[i] + new Vector3(0, 0.5f, 0));
                     }
-                }
-            }
         }
     }
 
 
-    public enum eNpcAnimation
+    public enum eAnimationType
     {
-        Idle,
-        Walk,
-        Sit,
-        Dance
+        NPC_Idle,
+        NPC_Walk,
+        NPC_Sit,
+        NPC_Dance,
+        Bartender_Idle,
+        Bartender_Walk,
+        Bartender_PrepareDrink
     }
 }

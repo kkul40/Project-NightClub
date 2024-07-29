@@ -20,7 +20,8 @@ namespace System
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
-            var nextPos = transform.position + (transform.forward * moveDelta.y + transform.right * moveDelta.x) * (speed * Time.deltaTime);
+            var nextPos = transform.position + (transform.forward * moveDelta.y + transform.right * moveDelta.x) *
+                (speed * Time.deltaTime);
 
             transform.position = nextPos;
 

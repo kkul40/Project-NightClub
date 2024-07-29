@@ -11,7 +11,7 @@ namespace UI
     public class OpenCargoButton : UIButton
     {
         [SerializeField] private UIStorePage storePage;
-        private StoreDataCarrier _storeDataCarrier= new StoreDataCarrier();
+        private StoreDataCarrier _storeDataCarrier = new();
 
         private void OnEnable()
         {

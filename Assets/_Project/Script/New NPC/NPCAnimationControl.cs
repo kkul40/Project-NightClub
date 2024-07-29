@@ -1,38 +1,39 @@
+using System.Data.Common;
 using ScriptableObjects;
 using UnityEngine;
 
 namespace New_NPC
 {
-    public class NPCAnimationControl
+    public class NPCAnimationControl : IAnimationController
     {
         private NpcAnimationSo _npcAnimationSo;
-        private Animator _animator;
-        private AnimationClip currentAnimation;
+        public Animator animator { get; }
+        public AnimationClip CurrentAnimation { get; private set; }
 
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
         public NPCAnimationControl(Animator animator, NpcAnimationSo npcAnimationSo, Transform animatorTransform)
         {
-            _animator = animator;
+            this.animator = animator;
             _npcAnimationSo = npcAnimationSo;
             this.animatorTransform = animatorTransform;
         }
 
-        public void PlayAnimation(eNpcAnimation eNpcAnimation)
+        public void PlayAnimation(eAnimationType eAnimationType)
         {
-            switch (eNpcAnimation)
+            switch (eAnimationType)
             {
-                case eNpcAnimation.Idle:
+                case eAnimationType.NPC_Idle:
                     selectedAnimationClip = _npcAnimationSo.Idle[Random.Range(0, _npcAnimationSo.Idle.Count)];
                     break;
-                case eNpcAnimation.Walk:
+                case eAnimationType.NPC_Walk:
                     selectedAnimationClip = _npcAnimationSo.Walk[Random.Range(0, _npcAnimationSo.Walk.Count)];
                     break;
-                case eNpcAnimation.Sit:
+                case eAnimationType.NPC_Sit:
                     selectedAnimationClip = _npcAnimationSo.Sit[Random.Range(0, _npcAnimationSo.Sit.Count)];
                     break;
-                case eNpcAnimation.Dance:
+                case eAnimationType.NPC_Dance:
                     selectedAnimationClip = _npcAnimationSo.Dance[Random.Range(0, _npcAnimationSo.Dance.Count)];
                     break;
                 default:
@@ -40,23 +41,77 @@ namespace New_NPC
                     break;
             }
 
-            if (currentAnimation == selectedAnimationClip) return;
+            if (CurrentAnimation == selectedAnimationClip) return;
 
-            currentAnimation = selectedAnimationClip;
-            _animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
+            CurrentAnimation = selectedAnimationClip;
+            animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
 
             animatorTransform.localPosition = Vector3.zero;
             animatorTransform.localRotation = Quaternion.identity;
         }
+    }
 
-        public void SetRootMotion(bool appyRootMotion)
+    public class BartenderAnimationControl : IAnimationController
+    {
+        private BartenderAnimationSo _animationSo;
+        public Animator animator { get; private set; }
+        public AnimationClip CurrentAnimation { get; private set; }
+
+        private Transform animatorTransform;
+        private AnimationClip selectedAnimationClip;
+
+        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo,
+            Transform animatorTransform)
         {
-            _animator.applyRootMotion = appyRootMotion;
+            this.animator = animator;
+            _animationSo = animationSo;
+            this.animatorTransform = animatorTransform;
+
+            PlayAnimation(eAnimationType.Bartender_Idle);
         }
 
-        public float GetCurrentAnimationDuration()
+        public void PlayAnimation(eAnimationType eAnimationType)
         {
-            return currentAnimation.length;
+            switch (eAnimationType)
+            {
+                case eAnimationType.Bartender_Idle:
+                    selectedAnimationClip = _animationSo.Idle;
+                    break;
+                case eAnimationType.Bartender_Walk:
+                    selectedAnimationClip = _animationSo.Walk;
+                    break;
+                case eAnimationType.Bartender_PrepareDrink:
+                    selectedAnimationClip = _animationSo.PrepareDrink;
+                    break;
+                default:
+                    selectedAnimationClip = _animationSo.Debug;
+                    break;
+            }
+
+            if (CurrentAnimation == selectedAnimationClip) return;
+
+            CurrentAnimation = selectedAnimationClip;
+            animator.CrossFadeInFixedTime(selectedAnimationClip.name, _animationSo.animationDuration, 0);
+
+            animatorTransform.localPosition = Vector3.zero;
+            animatorTransform.localRotation = Quaternion.identity;
+        }
+    }
+
+    public interface IAnimationController
+    {
+        Animator animator { get; }
+        AnimationClip CurrentAnimation { get; }
+        void PlayAnimation(eAnimationType eAnimationType);
+
+        void SetRootMotion(bool applyRootMotion)
+        {
+            animator.applyRootMotion = applyRootMotion;
+        }
+
+        float GetCurrentAnimationDuration()
+        {
+            return CurrentAnimation.length;
         }
     }
 }

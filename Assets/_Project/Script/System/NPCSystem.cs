@@ -4,6 +4,7 @@ using BuildingSystem;
 using Data;
 using New_NPC;
 using New_NPC.Activities;
+using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,32 +13,54 @@ namespace System
     public class NPCSystem : Singleton<NPCSystem>
     {
         [SerializeField] private GameObject _npcPrefab;
+        [SerializeField] private GameObject _bartenderPrefab;
+        [SerializeField] private GameObject _djPrefab;
 
-        [SerializeField] private List<NPC> _npcActivities = new List<NPC>();
+        [SerializeField] private List<NPC> _npcActivities = new();
 
         public int maxNPC = 25;
-        
-        public Coroutine _routine = null;
 
-        private void Start()
+        public Coroutine _npcSpawnRoutine = null;
+
+        public static event Action OnBartenderCreated;
+
+        public void CreateCharacter(int ePersonTypeInt)
         {
-            // StartCoroutine(CoSpawnNPCs());
+            CreateCharacter((ePersonType)ePersonTypeInt);
         }
 
-        public void SendNPCs()
+        public void CreateCharacter(ePersonType personType)
         {
-            _routine = StartCoroutine(CoSpawnNPCs());
-        }
-
-        public void RemoveNPCs()
-        {
-            StopCoroutine(_routine);
-            foreach (var activity in _npcActivities)
+            switch (personType)
             {
-                activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
+                case ePersonType.NPC:
+                    SendNPCs();
+                    break;
+                case ePersonType.Bartender:
+                    SendBartender();
+                    break;
+                case ePersonType.DJ:
+                    break;
+                default:
+                    Debug.LogError("Could Not Found The Person Type");
+                    break;
             }
-            
-            _npcActivities.Clear();
+        }
+
+        private void SendBartender()
+        {
+            var newBartender = Instantiate(_bartenderPrefab,
+                DiscoData.Instance.MapData.EnterencePosition -
+                new Vector3(0, 0.5f, 0),
+                Quaternion.identity);
+
+            newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
+            OnBartenderCreated?.Invoke();
+        }
+
+        private void SendNPCs()
+        {
+            _npcSpawnRoutine = StartCoroutine(CoSpawnNPCs());
         }
 
         private IEnumerator CoSpawnNPCs()
@@ -56,20 +79,30 @@ namespace System
                 switch (gender)
                 {
                     case eGenderType.Male:
-                        newNPC.GetComponent<NPCRandomizer>()
-                            .Customize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
+                        newNPC.GetComponent<Custimization>()
+                            .Randomize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
                         break;
                     case eGenderType.Female:
-                        newNPC.GetComponent<NPCRandomizer>()
-                            .Customize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
+                        newNPC.GetComponent<Custimization>()
+                            .Randomize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }
-                
+
                 _npcActivities.Add(newNPC.GetComponent<NPC>());
                 npcCount++;
             }
+        }
+
+        public void RemoveNPCs()
+        {
+            // TODO There is bugg here 'causing null referance on Transforms
+            StopCoroutine(_npcSpawnRoutine);
+            foreach (var activity in _npcActivities)
+                activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
+
+            _npcActivities.Clear();
         }
     }
 }

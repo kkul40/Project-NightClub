@@ -31,7 +31,8 @@ namespace BuildingSystem
         {
             Transform transform = null;
             // transform = buildingNeedsData.InputSystem.GetHitTransform();
-            transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition);
+            transform =
+                DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition);
 
             if (transform == null)
             {
@@ -40,7 +41,8 @@ namespace BuildingSystem
             }
 
             if (transform.TryGetComponent(out IPropUnit prop))
-                if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition, prop.PlacementLayer))
+                if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition,
+                        prop.PlacementLayer))
                 {
                     _propUnit = prop;
                     return true;
@@ -59,8 +61,9 @@ namespace BuildingSystem
                 ResetMaterials(buildingNeedsData.MaterialColorChanger);
                 return;
             }
+
             _lastCellPos = buildingNeedsData.CellPosition;
-            
+
             OnValidate(buildingNeedsData);
 
             if (_propUnit == null)
@@ -88,7 +91,8 @@ namespace BuildingSystem
 
         public void OnPlace(BuildingNeedsData buildingNeedsData)
         {
-            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
+            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition,
+                _propUnit.PlacementLayer);
             ResetMaterials(buildingNeedsData.MaterialColorChanger);
             _lastCellPos = -Vector3Int.one;
         }

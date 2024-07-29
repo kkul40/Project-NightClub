@@ -13,14 +13,17 @@ namespace Data
 
         public event Action OnInventoryChanged;
 
+        public Inventory()
+        {
+            // Just To Create It in the Property
+        }
+
         public Inventory(GameData gameData)
         {
             Items = new Dictionary<StoreItemSO, int>();
-            
+
             foreach (var data in gameData.SavedInventoryDatas)
-            {
                 Items.Add(DiscoData.Instance.FindItemByID(data.InventoryItemID), data.Amount);
-            }
         }
 
         public void AddItem(StoreItemSO storeItemSo)

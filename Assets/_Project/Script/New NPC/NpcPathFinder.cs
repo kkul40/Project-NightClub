@@ -7,7 +7,33 @@ using UnityEngine;
 
 namespace New_NPC
 {
-    public class NpcPathFinder
+    public interface IPathFinder
+    {
+        bool HasReachedDestination { get; }
+        bool GoTargetDestination(Vector3 targetDestination);
+        void CancelDestination();
+        void SetRotation(Quaternion newRotation);
+    }
+
+    public class BartenderPathFinder : IPathFinder
+    {
+        public bool HasReachedDestination { get; }
+
+        public bool GoTargetDestination(Vector3 targetDestination)
+        {
+            return true;
+        }
+
+        public void CancelDestination()
+        {
+        }
+
+        public void SetRotation(Quaternion newRotation)
+        {
+        }
+    }
+
+    public class NpcPathFinder : IPathFinder
     {
         // TODO Use DirthFlag Here
         private PathFinderNode[,] _tileNode;
@@ -15,14 +41,14 @@ namespace New_NPC
         private List<Vector3> _currentPath;
 
         private IEnumerator _routine = null;
-        public bool hasReachedDestination => _routine == null;
+        public bool HasReachedDestination => _routine == null;
 
         public NpcPathFinder(Transform assign)
         {
             _assignedNPC = assign;
         }
-        
-        public bool TryGoTargetDestination(Vector3 targetPos)
+
+        public bool GoTargetDestination(Vector3 targetPos)
         {
             CancelDestination();
             _currentPath = FindPath(_assignedNPC.position, targetPos);
