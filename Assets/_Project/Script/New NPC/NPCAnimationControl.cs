@@ -60,8 +60,7 @@ namespace New_NPC
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
-        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo,
-            Transform animatorTransform)
+        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo, Transform animatorTransform)
         {
             this.animator = animator;
             _animationSo = animationSo;
@@ -93,8 +92,8 @@ namespace New_NPC
             CurrentAnimation = selectedAnimationClip;
             animator.CrossFadeInFixedTime(selectedAnimationClip.name, _animationSo.animationDuration, 0);
 
-            animatorTransform.localPosition = Vector3.zero;
             animatorTransform.localRotation = Quaternion.identity;
+            animatorTransform.localPosition = Vector3.zero;
         }
     }
 

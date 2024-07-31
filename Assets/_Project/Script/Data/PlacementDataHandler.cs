@@ -392,13 +392,12 @@ namespace Data
             var found = AllPlacedObjects.FirstOrDefault(x =>
                 x.Item1.PlacedCellPosition == cellPos && x.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
 
+            
+            var isWalkable = placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.FloorProp ? false : true;
             foreach (var key in keys)
             {
                 found.Item2.Add(key);
-                var isWalkable = placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.FloorProp
-                    ? false
-                    : true;
-                MapData.PathFinderNodes[key.x, key.z].IsWalkable = isWalkable;
+                MapData.SetPathfinderNode(key.x, key.z, isWalkable:isWalkable);
             }
 
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
@@ -423,7 +422,7 @@ namespace Data
                 data.Item1.SettedRotationData.direction);
 
             foreach (var key in keys)
-                MapData.GetTileNodeByCellPos(key).IsWalkable = true;
+                MapData.SetPathfinderNode(key.x, key.z, isWalkable:true);
 
             DiscoData.Instance.inventory.AddItem(data.Item1.PlacedPlacementItemSo);
 
@@ -489,8 +488,6 @@ namespace Data
         {
             AllPlacedObjects.Clear();
 
-            var builder = new PlacementBuilder();
-
             foreach (var savedData in gameData.SavedPlacementDatas)
             {
                 var placementItemSo = DiscoData.Instance.FindItemByID(savedData.PropID) as PlacementItemSO;
@@ -503,13 +500,21 @@ namespace Data
 
                 var rotationData = new RotationData(savedData.EularAngles, savedData.Direction);
 
-                var createdObject =
-                    builder.InstantiateProp(placementItemSo, savedData.PlacedCellPosition, rotationData);
-                var placementData = new PlacementData(placementItemSo, savedData.PlacedCellPosition, createdObject,
-                    rotationData);
-
+                var createdObject = InstantiateProp(placementItemSo, savedData.PlacedCellPosition, rotationData);
+                var placementData = new PlacementData(placementItemSo, savedData.PlacedCellPosition, createdObject, rotationData);
+                
                 AddPlacement(savedData.PlacedCellPosition, placementData);
             }
+        }
+        
+        private GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition,
+            RotationData rotationData)
+        {
+            Vector3 offset = new Vector3().BuildingOffset(placementItemso.PlacementLayer);
+            var createdObject = Object.Instantiate(placementItemso.Prefab, GridHandler.Instance.GetCellCenterWorld(cellPosition) + offset, rotationData.rotation);
+            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
+
+            return createdObject;
         }
 
         public void SaveGameProps(ref GameData gameData)

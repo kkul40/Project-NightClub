@@ -23,7 +23,6 @@ namespace New_NPC
         public IAnimationController animationController;
         public ActivityHandler _activityHandler { get; private set; }
         public IPathFinder PathFinder;
-        public GameObject Prefab;
 
         public void Init(NpcAnimationSo npcAnimationSo)
         {

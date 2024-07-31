@@ -15,7 +15,7 @@ namespace Data
 
         public Inventory()
         {
-            // Just To Create It in the Property
+            Items = new Dictionary<StoreItemSO, int>();
         }
 
         public Inventory(GameData gameData)

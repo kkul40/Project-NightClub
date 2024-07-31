@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NPCBoyCustomizationData
   m_EditorClassIdentifier: 
   NpcBodyMesh:
-  - {fileID: 2816671940652361810, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
-  - {fileID: -5805230377025906889, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
+  - {fileID: 2816671940652361810, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
+  - {fileID: -5805230377025906889, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
   NpcHairPrefabs:
   - {fileID: 0}
   - {fileID: 857952140530516710, guid: 76784169a1b117640a215ba8c5cf8163, type: 3}

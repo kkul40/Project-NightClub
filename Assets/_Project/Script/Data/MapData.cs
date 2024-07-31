@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Data
 {
@@ -15,7 +17,8 @@ namespace Data
         //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
         public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
-        public PathFinderNode[,] PathFinderNodes { get; set; }
+        
+        private PathFinderNode[,] PathFinderNodes;
 
         public MapData()
         {
@@ -28,7 +31,7 @@ namespace Data
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
             {
-                PathFinderNodes[x, y] = new PathFinderNode(false, -Vector3.one, -1, -1);
+                PathFinderNodes[x, y] = new PathFinderNode();
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
             }
         }
@@ -55,7 +58,7 @@ namespace Data
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
             {
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
-                PathFinderNodes[x, y] = new PathFinderNode(false, -Vector3.one, -1, -1);
+                PathFinderNodes[x, y] = new PathFinderNode();
             }
 
             #endregion
@@ -90,6 +93,39 @@ namespace Data
             return PathFinderNodes[cellpos.x, cellpos.z];
         }
 
+        public void SetPathfinderNode(int x, int y, bool? isAvaliable = null, bool? isWalkable = null, Vector3? position = null, int? gridX = null, int? gridY = null)
+        {
+            if (x > CurrentMapSize.x || y > CurrentMapSize.y)
+            {
+                Debug.LogError("TileNode Index Is Not Valid");
+                return;
+            }
+            
+            var node = PathFinderNodes[x, y];
+            node.IsAvaliable = isAvaliable ?? node.IsAvaliable;
+            node.IsWalkable = isWalkable ?? node.IsWalkable;
+            node.WorldPos = position ?? node.WorldPos;
+            node.GridX = gridX ?? node.GridX;
+            node.GridY = gridY ?? node.GridY;
+        }
+
+        public PathFinderNode GetRandomPathFinderNode()
+        {
+            return PathFinderNodes[Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x), Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
+        }
+
+        public PathFinderNode[,] GetPathFinderNode()
+        {
+            // TODO Herseferinde bunu yeniden olusturmak yerine arada bir guncellemeyi dene
+            PathFinderNode[,] outputNode = new PathFinderNode[CurrentMapSize.x, CurrentMapSize.y];
+
+            for (int x = 0; x < CurrentMapSize.x; x++)
+                for (int y = 0; y < CurrentMapSize.y; y++)
+                    outputNode[x, y] = PathFinderNodes[x, y].Copy();
+
+            return outputNode;
+        }
+
         public FloorGridAssignmentData GetFloorGridAssignmentByCellPos(Vector3Int cellpos)
         {
             if (cellpos.x > CurrentMapSize.x || cellpos.z > CurrentMapSize.y)
@@ -102,5 +138,7 @@ namespace Data
         }
 
         public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition - Vector3Int.right);
+        
+        
     }
 }

@@ -134,7 +134,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.PathFinderNodes[x, y] = new PathFinderNode(true, pos, x, y);
+            MapData.SetPathfinderNode(x,y, isAvaliable:true, isWalkable:true, position:pos, gridX:x, gridY:y);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }

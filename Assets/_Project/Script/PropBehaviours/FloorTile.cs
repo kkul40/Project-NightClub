@@ -42,7 +42,7 @@ namespace PropBehaviours
             // Debug.Log(test.assignedMaterialID);
 
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
-            Debug.Log(DiscoData.Instance.MapData.PathFinderNodes[a.x, a.z].IsWalkable);
+            Debug.Log(DiscoData.Instance.MapData.GetTileNodeByCellPos(a).IsWalkable);
         }
 
         #endregion

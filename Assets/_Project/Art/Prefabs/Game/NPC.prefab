@@ -77,7 +77,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 5164026561881638054, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
+  m_Mesh: {fileID: 5616443402053550415, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
   m_Bones:
   - {fileID: 237027457256882366}
   - {fileID: 970518471370673954}
@@ -1265,8 +1265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6604356279042201939}
   - component: {fileID: 2089161871922913227}
-  - component: {fileID: 8766550021517850893}
   - component: {fileID: 6649258213626597978}
+  - component: {fileID: 8766550021517850893}
   - component: {fileID: 2114400870407065987}
   m_Layer: 0
   m_Name: NPC
@@ -1304,7 +1304,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sinirClip: {fileID: 8300000, guid: 27909e45ef21922429680ec5aa368dbd, type: 3}
-  Prefab: {fileID: 6175308207735467527, guid: cb49ec05530b707489e7ab4312fca249, type: 3}
+--- !u!114 &6649258213626597978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6604356279042201940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5a38358ae24efdacdbca4f0361eda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinMesh: {fileID: 7598094248065325927}
+  Head: {fileID: 3075920885040381505}
 --- !u!136 &8766550021517850893
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1328,20 +1341,6 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!114 &6649258213626597978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6604356279042201940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5a38358ae24efdacdbca4f0361eda0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skinMesh: {fileID: 7598094248065325927}
-  Head: {fileID: 3075920885040381505}
 --- !u!54 &2114400870407065987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1367,7 +1366,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &6831176944823288609
 GameObject:
@@ -1665,7 +1664,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7994035148693383998}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 4a5a8c8ff5d6d2e48ab8d2b27100cf57, type: 3}
   m_Controller: {fileID: 9100000, guid: cd8307df32bc4f6418fbc5d80528d030, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

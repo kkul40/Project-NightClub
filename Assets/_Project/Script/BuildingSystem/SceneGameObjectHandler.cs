@@ -14,6 +14,23 @@ namespace BuildingSystem
         [field: SerializeField] public Transform GetEmployeeHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetFloorTileHolder { get; private set; }
         [field: SerializeField] public Transform GetWallHolder { get; private set; }
+        [field: SerializeField] public Transform NullHolder { get; private set; }
+
+        public Transform GetHolderByLayer(ePlacementLayer layer)
+        {
+            switch (layer)
+            {
+                case ePlacementLayer.BaseSurface:
+                    return GetSurfaceHolderTransform;
+                    break;
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.WallProp:
+                    return GetPropHolderTransform;
+                    break;
+            }
+
+            return NullHolder;
+        }
 
         /*
          * GameObject

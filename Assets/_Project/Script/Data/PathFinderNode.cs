@@ -6,27 +6,38 @@ namespace Data
     [Serializable]
     public class PathFinderNode
     {
-        public Vector3 WorldPos;
+        public Vector3 WorldPos = -Vector3.one;
         public PathFinderNode Parent;
-        public bool IsWalkable;
+        public bool IsWalkable = false;
+        public bool IsAvaliable = false;
 
         // Testing
         public ePathNodeType PathNodeType;
 
-        public int GridX;
-        public int GridY;
+        public int GridX = -1;
+        public int GridY = -1;
 
-        public int GCost;
-        public int HCost;
+        public int GCost = 0;
+        public int HCost = 0;
 
         public int FCost => GCost + HCost;
 
-        public PathFinderNode(bool isWalkable, Vector3 position, int gridX, int gridY)
+        public PathFinderNode()
         {
-            IsWalkable = isWalkable;
-            WorldPos = position;
-            GridX = gridX;
-            GridY = gridY;
+        }
+
+        public PathFinderNode Copy()
+        {
+            PathFinderNode output = new PathFinderNode();
+            
+            output.WorldPos = WorldPos;
+            output.Parent = Parent;
+            output.IsWalkable = IsWalkable;
+            output.IsAvaliable = IsAvaliable;
+            output.GridX = GridX;
+            output.GridY = GridY;
+
+            return output;
         }
     }
 

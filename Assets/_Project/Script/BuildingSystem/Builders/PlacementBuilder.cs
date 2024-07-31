@@ -103,27 +103,5 @@ namespace BuildingSystem.Builders
             isFinished = true;
             buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
-
-        public GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition,
-            RotationData rotationData)
-        {
-            Offset = Offset.BuildingOffset(placementItemso.PlacementLayer);
-
-            var createdObject = Object.Instantiate(placementItemso.Prefab,
-                GridHandler.Instance.GetCellCenterWorld(cellPosition) + Offset,
-                rotationData.rotation);
-            switch (placementItemso.PlacementLayer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
-                    break;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetPropHolderTransform);
-                    break;
-            }
-
-            return createdObject;
-        }
     }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: NPCGirlCustomizationData
   m_EditorClassIdentifier: 
   NpcBodyMesh:
-  - {fileID: -3902838497474042544, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
-  - {fileID: 5164026561881638054, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
-  - {fileID: 5616443402053550415, guid: 8327566c71d95324a8736ae100bfc4b2, type: 3}
+  - {fileID: -3902838497474042544, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
+  - {fileID: 5164026561881638054, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
+  - {fileID: 5616443402053550415, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
   NpcHairPrefabs:
   - {fileID: 5980733433742310762, guid: 2384c1a2520f8c445b57347b1eed5e03, type: 3}
   - {fileID: 1741968832456283258, guid: 094c1d79548130a4c973cf081d852b18, type: 3}

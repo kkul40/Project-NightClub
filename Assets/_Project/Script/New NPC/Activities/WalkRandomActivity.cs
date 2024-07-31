@@ -43,17 +43,12 @@ namespace New_NPC.Activities
         {
             var loopCount = 0;
 
-            var target = and.DiscoData.MapData.PathFinderNodes[
-                Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
-                Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
-
+            var target = and.DiscoData.MapData.GetRandomPathFinderNode();
             if (target == null) return and.Npc.transform.position;
 
             while (!target.IsWalkable)
             {
-                target = and.DiscoData.MapData.PathFinderNodes[
-                    Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.x),
-                    Random.Range(0, DiscoData.Instance.MapData.CurrentMapSize.y)];
+                target = and.DiscoData.MapData.GetRandomPathFinderNode();
 
                 loopCount++;
                 if (loopCount > 100)

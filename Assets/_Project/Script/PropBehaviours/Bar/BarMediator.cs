@@ -25,12 +25,14 @@ namespace PropBehaviours
         private void OnEnable()
         {
             PlacementDataHandler.OnPropAdded += GetBarAndBartender;
+            PlacementDataHandler.OnPropRemoved += GetBarAndBartender;
             NPCSystem.OnBartenderCreated += GetBarAndBartender;
         }
 
         private void OnDisable()
         {
             PlacementDataHandler.OnPropAdded -= GetBarAndBartender;
+            PlacementDataHandler.OnPropRemoved -= GetBarAndBartender;
             NPCSystem.OnBartenderCreated -= GetBarAndBartender;
         }
 

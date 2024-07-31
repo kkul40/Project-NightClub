@@ -12,6 +12,8 @@ namespace Data
     [DisallowMultipleComponent]
     public class DiscoData : Singleton<DiscoData>, ISaveLoad
     {
+        [SerializeField] private KDebugger KDebugger;
+        
         public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory = new();

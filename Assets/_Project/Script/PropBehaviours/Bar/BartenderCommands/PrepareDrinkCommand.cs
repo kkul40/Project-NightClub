@@ -7,6 +7,7 @@ namespace PropBehaviours
     {
         public IBar bar { get; private set; }
         public NewBartender bartender { get; private set; }
+        public bool HasFinish { get; }
         private Transform target;
 
         private float timer = 0;
@@ -40,7 +41,6 @@ namespace PropBehaviours
         private void SetThingsBeforeExit()
         {
             bartender.IsBusy = false;
-            bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
         }
 
         public bool UpdateCommand(BarMediator barMediator)
@@ -66,6 +66,7 @@ namespace PropBehaviours
                         timer += Time.deltaTime;
                         return false;
                     }
+                    bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
                     barMediator.CreateDrinkTable(bar, bar.DrinkData);
                     bar.HasDrinks = true;
                     executionOrder++;
@@ -74,6 +75,27 @@ namespace PropBehaviours
 
             SetThingsBeforeExit();
             return true;
+        }
+    }
+    
+    public class WallToEntranceCommand : IBartenderCommand
+    {
+        public IBar bar { get; }
+        public NewBartender bartender { get; }
+        public bool HasFinish { get; }
+
+        public void InitCommand(IBar bar, NewBartender bartender)
+        {
+        }
+
+        public bool IsDoable()
+        {
+            return true;
+        }
+
+        public bool UpdateCommand(BarMediator barMediator)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -17,7 +17,6 @@ namespace UI
 
         public void HandleNewUIPageToggle(UIPageBase source)
         {
-            // source if you wanna do something with it
             foreach (var page in _uiPageBases) page.Toggle(false);
         }
     }

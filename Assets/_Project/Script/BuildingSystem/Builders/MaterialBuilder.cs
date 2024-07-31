@@ -22,6 +22,7 @@ namespace BuildingSystem.Builders
 
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
+            _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
             _materialItemSo = buildingNeedsData.StoreItemSo as MaterialItemSo;
 
             switch (_materialItemSo.MaterialLayer)

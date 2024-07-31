@@ -53,14 +53,8 @@ namespace New_NPC
             CancelDestination();
             _currentPath = FindPath(_assignedNPC.position, targetPos);
 
-            if (_currentPath == null)
-            {
-                _routine = null;
-                return false;
-            }
-
             _routine = CoFollowPath(_currentPath);
-            DOTween.instance.StartCoroutine(_routine);
+            DiscoData.Instance.StartCoroutine(_routine);
             return true;
         }
 
@@ -68,7 +62,7 @@ namespace New_NPC
         {
             if (_routine == null) return;
 
-            DOTween.instance.StopCoroutine(_routine);
+            DiscoData.Instance.StopCoroutine(_routine);
             _currentPath = new List<Vector3>();
             _routine = null;
         }
@@ -77,6 +71,8 @@ namespace New_NPC
         {
             for (var i = 0; i < path.Count; i++)
             {
+                yield return null;
+                
                 var newPath = path[i];
                 SetRotationToTarget(newPath);
                 while (Vector3.Distance(_assignedNPC.position, newPath) > 0.1f)
@@ -84,8 +80,6 @@ namespace New_NPC
                     _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
                     yield return null;
                 }
-
-                yield return null;
             }
 
             _routine = null;
@@ -106,7 +100,7 @@ namespace New_NPC
 
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            _tileNode = DiscoData.Instance.MapData.PathFinderNodes;
+            _tileNode = DiscoData.Instance.MapData.GetPathFinderNode();
 
             var startNode = NodeFromWorldPoint(startPos);
             var targetNode = NodeFromWorldPoint(targetPos);
@@ -149,7 +143,7 @@ namespace New_NPC
 
         private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
         {
-            if (worldPosition == -Vector3.one) return new PathFinderNode(false, Vector3.zero, 0, 0);
+            if (worldPosition == -Vector3.one) return new PathFinderNode();
 
             var x = (int)worldPosition.x;
             var y = (int)worldPosition.z;

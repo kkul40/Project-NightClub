@@ -20,7 +20,6 @@ namespace UI
 
         public void GenerateInventory(UIButton uiButton, StoreDataCarrier storeDataCarrier)
         {
-            
             _lastButtonClicked = uiButton;
             uiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }

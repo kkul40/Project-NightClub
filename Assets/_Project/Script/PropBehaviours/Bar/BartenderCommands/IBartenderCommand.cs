@@ -4,6 +4,8 @@
     {
         IBar bar { get; }
         NewBartender bartender { get; }
+        
+        bool HasFinish { get; }
 
         void InitCommand(IBar bar, NewBartender bartender);
         bool IsDoable();
