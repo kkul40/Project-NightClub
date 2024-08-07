@@ -33,8 +33,9 @@ namespace System
 
         public void LoadData(GameData gameData)
         {
-            MapData = new MapData(gameData);
             SceneGameObjectHandler.Instance.ClearMap();
+            
+            MapData = new MapData(gameData);
             SetUpMap();
             placementDataHandler.LoadGameProps(gameData);
         }

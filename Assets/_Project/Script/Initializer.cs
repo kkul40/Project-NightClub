@@ -8,10 +8,13 @@ namespace DefaultNamespace
     {
         private void Awake()
         {
-            SavingAndLoadingSystem.Instance.Initialize();
             DiscoData.Instance.Initialize();
-            ActivitySystem.Instance.Initialize();
             MapGeneratorSystem.Instance.Initialize();
+            ActivitySystem.Instance.Initialize();
+            
+            
+            // Saving
+            SavingAndLoadingSystem.Instance.Initialize();
         }
     }
 }

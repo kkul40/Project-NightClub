@@ -58,8 +58,6 @@ namespace Debugging_Tools
         #endregion
         
         
-        
-        
         [MenuItem("Tools/Debug")]
         private static void OpenWindow()
         {
@@ -68,11 +66,14 @@ namespace Debugging_Tools
 
         private void LoadScene(string path)
         {
-            if (!Application.isPlaying)
-                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                    EditorSceneManager.OpenScene(path);
+            if (Application.isPlaying)
+            {
+                SceneManager.LoadScene(path);
+                return;
+            }
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                EditorSceneManager.OpenScene(path);
             
-            SceneManager.LoadScene(path);
         }
     }
 }

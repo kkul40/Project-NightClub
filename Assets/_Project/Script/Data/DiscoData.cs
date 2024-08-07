@@ -45,7 +45,6 @@ namespace Data
         public void LoadData(GameData gameData)
         {
             inventory = new Inventory(gameData);
-
             Debug.Log("Disco Data Loaded");
         }
 
