@@ -15,8 +15,8 @@ namespace System
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
-
-        private void Awake()
+        
+        public void Initialize()
         {
             MapData = new MapData();
             placementDataHandler = new PlacementDataHandler();
@@ -34,6 +34,7 @@ namespace System
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
+            SceneGameObjectHandler.Instance.ClearMap();
             SetUpMap();
             placementDataHandler.LoadGameProps(gameData);
         }

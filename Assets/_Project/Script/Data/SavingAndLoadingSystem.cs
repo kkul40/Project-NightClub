@@ -61,6 +61,7 @@ namespace Data
         public void NewGame()
         {
             _gameData = new GameData();
+            _fileDataHandler.Save(_gameData);
             Debug.Log("** New Game is Created **");
         }
 

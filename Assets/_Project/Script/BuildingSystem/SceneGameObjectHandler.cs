@@ -8,7 +8,7 @@ namespace BuildingSystem
 {
     public class SceneGameObjectHandler : Singleton<SceneGameObjectHandler>
     {
-        [field: SerializeField] public Transform GetPropHolderTransform { get; private set; }
+        [field: SerializeField] public Transform GetPropHolderTransform { get; private set; } // Don't Clean
         [field: SerializeField] public Transform GetSurfaceHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetNPCHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetEmployeeHolderTransform { get; private set; }
@@ -32,16 +32,22 @@ namespace BuildingSystem
             return NullHolder;
         }
         
-        // public void ClearMap()
-        // {
-        //     foreach (var children in GetPropHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in GetSurfaceHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in GetNPCHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in GetEmployeeHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in GetFloorTileHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in GetWallHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        //     foreach (var children in NullHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
-        // }
+        public void ClearMap()
+        {
+            RemoveChildren(GetSurfaceHolderTransform);
+            RemoveChildren(GetNPCHolderTransform);
+            RemoveChildren(GetEmployeeHolderTransform);
+            RemoveChildren(GetFloorTileHolder);
+            RemoveChildren(GetWallHolder);
+        }
+
+        private void RemoveChildren(Transform holder)
+        {
+            for (int i = holder.childCount;  i > 0 ; i--)
+            {
+                Destroy(holder.gameObject);
+            }
+        }
 
         /*
          * GameObject

@@ -2037,6 +2037,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
   m_PrefabInstance: {fileID: 752675529}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &239320811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 239320812}
+  m_Layer: 0
+  m_Name: Employers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &239320812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239320811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1466197925}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &250981628
 GameObject:
   m_ObjectHideFlags: 0
@@ -15872,7 +15903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15aaa01c4fd9e81438a583713b61f6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KDebugger: {fileID: 1451075142}
 --- !u!114 &1451075140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16091,6 +16121,7 @@ Transform:
   - {fileID: 941333109}
   - {fileID: 1604597823}
   - {fileID: 1206130776}
+  - {fileID: 239320812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1466197926
@@ -16108,7 +16139,7 @@ MonoBehaviour:
   <GetPropHolderTransform>k__BackingField: {fileID: 1388627161}
   <GetSurfaceHolderTransform>k__BackingField: {fileID: 648155750}
   <GetNPCHolderTransform>k__BackingField: {fileID: 941333109}
-  <GetEmployeeHolderTransform>k__BackingField: {fileID: 0}
+  <GetEmployeeHolderTransform>k__BackingField: {fileID: 239320812}
   <GetFloorTileHolder>k__BackingField: {fileID: 192681125}
   <GetWallHolder>k__BackingField: {fileID: 775569617}
   <NullHolder>k__BackingField: {fileID: 0}
@@ -18892,6 +18923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760755402}
+  - component: {fileID: 1760755403}
   m_Layer: 0
   m_Name: '*System*'
   m_TagString: Untagged
@@ -18924,6 +18956,18 @@ Transform:
   - {fileID: 1761461688}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1760755403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760755401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5422a7256247a0987f637de5f1f19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1761461687
 GameObject:
   m_ObjectHideFlags: 0

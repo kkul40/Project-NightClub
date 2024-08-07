@@ -28,9 +28,8 @@ namespace EditorNS.OdinEditor
             // var AllItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToList();
             // tree.AddAllAssetsAtPathCombined("Title", "ScriptableObjects/StoreItems", typeof(StoreItemSO), true);
 
-            
-            string defaultPath = "Assets/Resources/StoreItems/";
-            tree.AddAllAssetsAtPath("Drinks", defaultPath + "DrinkData", typeof(DrinkSo));
+            string defaultPath = "Assets/Resources/ScriptableObjects/StoreItems/";
+            tree.AddAllAssetsAtPath("Drinks", "Assets/Resources/ScriptableObjects/DrinkData", typeof(Drink)); // TODO Baska bir view kullan
             tree.AddAllAssetsAtPath("Bars", defaultPath + "Bar", typeof(StoreItemSO));
             tree.AddAllAssetsAtPath("Chairs", defaultPath + "Chair", typeof(StoreItemSO));
             tree.AddAllAssetsAtPath("Dance Tiles", defaultPath + "Dance", typeof(StoreItemSO));
@@ -39,7 +38,7 @@ namespace EditorNS.OdinEditor
             tree.AddAllAssetsAtPath("Floor Tiles", defaultPath + "FloorTile", typeof(StoreItemSO));
             tree.AddAllAssetsAtPath("Lights", defaultPath + "Light", typeof(StoreItemSO));
             tree.AddAllAssetsAtPath("WallPapers", defaultPath + "WallPaper", typeof(StoreItemSO));
-            tree.AddAllAssetsAtPath("Extenders", defaultPath + "Extender", typeof(StoreItemSO));
+            tree.AddAllAssetsAtPath("Extenders", "Assets/Resources/ScriptableObjects/Extender", typeof(StoreItemSO));
             tree.AddAllAssetsAtPath("--Test--", defaultPath + "Test", typeof(StoreItemSO));
 
 
@@ -86,7 +85,7 @@ namespace EditorNS.OdinEditor
                 
                 if (SirenixEditorGUI.ToolbarButton(new GUIContent("Create New Drink Item")))
                 {
-                    ScriptableObjectCreator.ShowDialog<DrinkSo>("Assets/Resources/ScriptableObjects/StoreItems/", obj =>
+                    ScriptableObjectCreator.ShowDialog<Drink>("Assets/Resources/ScriptableObjects/StoreItems/", obj =>
                     {
                         obj.Name = obj.name;
                         base.TrySelectMenuItemWithObject(obj); // Selects the newly created item in the editor

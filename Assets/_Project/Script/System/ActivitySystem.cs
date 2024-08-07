@@ -12,12 +12,7 @@ namespace System
     {
         public Dictionary<Type, IActivity> dictionary = new();
 
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        protected override void Initialize()
+        public void Initialize()
         {
             var assembly = Assembly.GetAssembly(typeof(IActivity));
             var allActivityTypes = assembly.GetTypes()
