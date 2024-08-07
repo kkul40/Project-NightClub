@@ -1,4 +1,5 @@
 ﻿using Data;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace BuildingSystem.SO
@@ -9,6 +10,7 @@ namespace BuildingSystem.SO
         public GameObject Prefab;
         public Vector2Int Size;
 
+        [HorizontalGroup("Split", 290), EnumToggleButtons, HideLabel]
         public ePlacementLayer PlacementLayer;
 
         public enum eRotationType
@@ -19,6 +21,7 @@ namespace BuildingSystem.SO
             Auto
         }
 
+        [HorizontalGroup("Split", 290), EnumToggleButtons, HideLabel]
         public eRotationType eRotation;
     }
 }
