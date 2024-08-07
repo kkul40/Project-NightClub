@@ -15,7 +15,7 @@ namespace Data
         private GameData _gameData = new();
         private List<ISaveLoad> _saveLoads = new();
 
-        private void Awake()
+        public void Initialize()
         {
             if (Instance != this)
             {

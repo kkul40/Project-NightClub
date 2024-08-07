@@ -31,6 +31,17 @@ namespace BuildingSystem
 
             return NullHolder;
         }
+        
+        // public void ClearMap()
+        // {
+        //     foreach (var children in GetPropHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in GetSurfaceHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in GetNPCHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in GetEmployeeHolderTransform.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in GetFloorTileHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in GetWallHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        //     foreach (var children in NullHolder.GetComponentsInChildren<Transform>()) Destroy(children.gameObject);
+        // }
 
         /*
          * GameObject

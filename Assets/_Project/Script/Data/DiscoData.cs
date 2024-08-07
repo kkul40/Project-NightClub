@@ -12,8 +12,6 @@ namespace Data
     [DisallowMultipleComponent]
     public class DiscoData : Singleton<DiscoData>, ISaveLoad
     {
-        [SerializeField] private KDebugger KDebugger;
-        
         public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory = new();
@@ -21,12 +19,11 @@ namespace Data
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
-        // !!! FIRST INIT IN THE GAME !!!
-        private void Awake()
+        public void Initialize()
         {
             AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToHashSet();
         }
-
+       
         public void SaveData()
         {
             SavingAndLoadingSystem.Instance.SaveGame();
