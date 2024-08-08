@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public interface IBartender
+    public interface IBartender : IID
     {
         BarMediator BarMediator { get; }
         IPathFinder PathFinder { get; }
@@ -29,7 +29,7 @@ namespace PropBehaviours
     
         private void Start()
         {
-            CurrentCommand = new WallToEntranceCommand();
+            // CurrentCommand = new WallToEntranceCommand();
         }
     
         public void UpdateCommand()

@@ -11,11 +11,8 @@ namespace PropBehaviours
     {
         [SerializeField] private GameObject DrinkTablePrefab;
 
-        private List<IBar> _bars;
-        private List<NewBartender> _bartenders;
-
-        // Commendlari Bartendera Tasi ve bu sekilde tum bartender gorev bitince yeni goreve gecebilirler
-        private List<IBartenderCommand> _barCommands = new();
+        private Dictionary<int, IBartender> _bartenders;
+        private Dictionary<int, IBar> _bars;
 
         private void Start()
         {
@@ -36,48 +33,25 @@ namespace PropBehaviours
             NPCSystem.OnBartenderCreated -= GetBarAndBartender;
         }
 
-        private void Update()
+        private IBartender GetAvaliableBartender()
         {
-            for (var i = _barCommands.Count - 1; i >= 0; i--)
-                if (_barCommands[i].UpdateCommand(this))
-                    _barCommands.RemoveAt(i);
-        }
-
-        public void CreateDrinkTable(IBar source, Drink drink)
-        {
-            var d = Instantiate(DrinkTablePrefab, source.CounterPlacePosition);
-            d.transform.position = source.CounterPlacePosition.position;
-            var drinkTable = d.GetComponent<DrinkTable>();
-            drinkTable.SetUpTable(drink);
-        }
-
-        public void AddCommandToExecute(IBar source, IBartenderCommand command)
-        {
-            var avaliableBartender = GetAvaliableBartender();
-            if (avaliableBartender == null) return;
-
-            command.InitCommand(source, avaliableBartender);
-            if (command.IsDoable()) _barCommands.Add(command);
-        }
-
-        public void AddCommandToExecute(NewBartender source, IBartenderCommand command)
-        {
-            command.InitCommand(_bars[0], source);
-            if (command.IsDoable()) _barCommands.Add(command);
-        }
-
-        private NewBartender GetAvaliableBartender()
-        {
-            foreach (var bartender in _bartenders)
+            foreach (var bartender in _bartenders.Values)
                 if (!bartender.IsBusy)
                     return bartender;
+            
             return null;
         }
 
         private void GetBarAndBartender()
         {
-            _bars = FindObjectsOfType<MonoBehaviour>().OfType<IBar>().ToList();
-            _bartenders = FindObjectsOfType<MonoBehaviour>().OfType<NewBartender>().ToList();
+            var bars = FindObjectsOfType<MonoBehaviour>().OfType<IBar>().ToList();
+            var bartenders = FindObjectsOfType<MonoBehaviour>().OfType<IBartender>().ToList();
+
+            foreach (var bar in bars)
+                _bars.Add(bar.ID, bar);
+
+            foreach (var bartender in bartenders)
+                _bartenders.Add(bartender.ID, bartender);
         }
     }
 }

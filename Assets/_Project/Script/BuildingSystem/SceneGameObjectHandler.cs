@@ -22,38 +22,33 @@ namespace BuildingSystem
             {
                 case ePlacementLayer.BaseSurface:
                     return GetSurfaceHolderTransform;
-                    break;
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.WallProp:
                     return GetPropHolderTransform;
-                    break;
             }
 
             return NullHolder;
         }
         
-        public void ClearMap()
-        {
-            RemoveChildren(GetSurfaceHolderTransform);
-            RemoveChildren(GetNPCHolderTransform);
-            RemoveChildren(GetEmployeeHolderTransform);
-            RemoveChildren(GetFloorTileHolder);
-            RemoveChildren(GetWallHolder);
-        }
+        // public void ClearMap()
+        // {
+        //     RemoveChildren(GetPropHolderTransform);
+        //     RemoveChildren(GetSurfaceHolderTransform);
+        //     RemoveChildren(GetNPCHolderTransform);
+        //     RemoveChildren(GetEmployeeHolderTransform);
+        //     RemoveChildren(GetFloorTileHolder);
+        //     RemoveChildren(GetWallHolder);
+        // }
 
         private void RemoveChildren(Transform holder)
         {
-            for (int i = holder.childCount;  i > 0 ; i--)
-            {
-                Destroy(holder.gameObject);
-            }
+            foreach (Transform child in holder)
+                Destroy(child.gameObject);
         }
 
-        /*
-         * GameObject
-         *  MeshRendererss
-         *  Materials
-         *
-         */
+        public override void Initialize()
+        {
+            Initialize();
+        }
     }
 }

@@ -30,8 +30,9 @@ namespace System
             }
         }
 
-        protected virtual void Initialize()
+        public virtual void Initialize()
         {
+            Debug.Log(typeof(T) + "Not Initialized");
         }
     }
 }

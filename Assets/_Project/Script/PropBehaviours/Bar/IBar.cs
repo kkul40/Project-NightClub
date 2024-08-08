@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public interface IBar
+    public interface IBar : IID
     {
         Transform BartenderWaitPosition { get; }
         Transform CustomerWaitPosition { get; }

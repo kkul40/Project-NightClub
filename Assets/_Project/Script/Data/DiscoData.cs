@@ -19,14 +19,9 @@ namespace Data
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
-        public void Initialize()
+        public override void Initialize()
         {
             AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToHashSet();
-        }
-       
-        public void SaveData()
-        {
-            SavingAndLoadingSystem.Instance.SaveGame();
         }
 
         public enum eDanceStyle

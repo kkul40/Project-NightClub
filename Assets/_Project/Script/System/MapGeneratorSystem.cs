@@ -16,8 +16,9 @@ namespace System
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
         
-        public void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
             MapData = new MapData();
             placementDataHandler = new PlacementDataHandler();
         }
@@ -33,8 +34,6 @@ namespace System
 
         public void LoadData(GameData gameData)
         {
-            SceneGameObjectHandler.Instance.ClearMap();
-            
             MapData = new MapData(gameData);
             SetUpMap();
             placementDataHandler.LoadGameProps(gameData);

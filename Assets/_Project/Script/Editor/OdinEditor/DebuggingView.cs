@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Debugging_Tools
 {
-    public class Debugging : OdinEditorWindow
+    public class DebuggingView : OdinEditorWindow
     {
         #region Scenes
         [Button]
@@ -34,6 +34,7 @@ namespace Debugging_Tools
         public void NewGame()
         {
             SavingAndLoadingSystem.Instance.NewGame();
+            LoadScene(EditorSceneManager.GetActiveScene().path);
         }
 
         [Button]
@@ -47,7 +48,7 @@ namespace Debugging_Tools
         [FoldoutGroup("Save And Load")]
         public void Load()
         {
-            SavingAndLoadingSystem.Instance.LoadGame();
+            LoadScene(EditorSceneManager.GetActiveScene().path);
         }
 
         #endregion
@@ -61,7 +62,7 @@ namespace Debugging_Tools
         [MenuItem("Tools/Debug")]
         private static void OpenWindow()
         {
-            GetWindow<Debugging>().Show();
+            GetWindow<DebuggingView>().Show();
         }
 
         private void LoadScene(string path)

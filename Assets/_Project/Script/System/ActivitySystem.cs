@@ -12,7 +12,7 @@ namespace System
     {
         public Dictionary<Type, IActivity> dictionary = new();
 
-        public void Initialize()
+        public override void Initialize()
         {
             var assembly = Assembly.GetAssembly(typeof(IActivity));
             var allActivityTypes = assembly.GetTypes()

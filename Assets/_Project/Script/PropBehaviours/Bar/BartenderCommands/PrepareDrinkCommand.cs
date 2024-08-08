@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
+    /*
     public class PrepareDrinkCommand : IBartenderCommand
     {
         public IBar bar { get; private set; }
@@ -98,4 +99,5 @@ namespace PropBehaviours
             throw new System.NotImplementedException();
         }
     }
+    */
 }

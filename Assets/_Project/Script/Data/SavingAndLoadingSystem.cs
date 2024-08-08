@@ -15,7 +15,7 @@ namespace Data
         private GameData _gameData = new();
         private List<ISaveLoad> _saveLoads = new();
 
-        public void Initialize()
+        public override void Initialize()
         {
             if (Instance != this)
             {
@@ -23,41 +23,11 @@ namespace Data
                 return;
             }
 
-            DontDestroyOnLoad(this.gameObject);
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
+            LoadGame();            
         }
-
-        private void Start()
-        {
-            LoadGame();
-        }
-
-        private void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-        }
-
-        private void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-        }
-
-        public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            Debug.Log("Scene loaded");
-            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
-            LoadGame();
-        }
-
-        public void OnSceneUnloaded(Scene scene)
-        {
-            Debug.Log("Scene unloaded");
-            SaveGame();
-        }
-
+        
         public void NewGame()
         {
             _gameData = new GameData();
@@ -82,10 +52,10 @@ namespace Data
             {
                 Debug.Log("No data was found. Default data is loading...");
                 NewGame();
+                _gameData = _fileDataHandler.Load();
             }
 
             foreach (var load in _saveLoads) load.LoadData(_gameData);
-
             Debug.Log("** Game Is Loaded **");
         }
 
@@ -95,11 +65,8 @@ namespace Data
             var temp = new FileDataHandler(Application.persistentDataPath, fileName);
             temp.DeleteData();
         }
-
-        private void OnApplicationQuit()
-        {
-            // SaveGame();
-        }
+        
+        // TODO Application Quite savelemek ister misin diye sor
 
         public void RegisterForSaveLoad(ISaveLoad saveLoad)
         {

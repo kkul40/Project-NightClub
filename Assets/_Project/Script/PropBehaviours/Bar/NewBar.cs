@@ -28,7 +28,8 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            barMediator.AddCommandToExecute(this, new PrepareDrinkCommand());
+            // TODO Open 
+            // barMediator.AddCommandToExecute(this, new PrepareDrinkCommand());
         }
     }
 }

@@ -136,5 +136,10 @@ namespace BuildingSystem
         }
 
         #endregion
+
+        public override void Initialize()
+        {
+            Initialize();
+        }
     }
 }
