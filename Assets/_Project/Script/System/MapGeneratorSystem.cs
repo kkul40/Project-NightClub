@@ -18,7 +18,6 @@ namespace System
         
         public override void Initialize()
         {
-            base.Initialize();
             MapData = new MapData();
             placementDataHandler = new PlacementDataHandler();
         }

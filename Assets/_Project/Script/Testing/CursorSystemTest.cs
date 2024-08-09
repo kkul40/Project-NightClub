@@ -16,9 +16,6 @@ namespace Testing
         private IInteractable _currentInteractable;
         private InputSystem _inputSystem => InputSystem.Instance;
 
-        public int[] array1 = new[] { 2, 2, 2 };
-        public int[] array2;
-
         private void Reset()
         {
             if (_currentInteractable == null || BuildingManager.Instance.isPlacing) return;

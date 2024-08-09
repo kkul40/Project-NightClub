@@ -21,7 +21,7 @@ namespace Data
 
         public override void Initialize()
         {
-            AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems").ToHashSet();
+            AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
         }
 
         public enum eDanceStyle
@@ -53,7 +53,7 @@ namespace Data
 
         public StoreItemSO FindItemByID(int ID)
         {
-            return Instance.AllInGameItems.FirstOrDefault(x => x.ID == ID);
+            return AllInGameItems.FirstOrDefault(x => x.ID == ID);
         }
     }
 

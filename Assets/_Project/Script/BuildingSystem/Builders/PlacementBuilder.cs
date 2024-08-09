@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BuildingSystem.SO;
 using Data;
+using PropBehaviours;
+using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -23,8 +25,11 @@ namespace BuildingSystem.Builders
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
-            _tempObject =
-                Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
+            _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
+            
+            if (_tempObject.TryGetComponent(out IPropUnit propUnit))
+                MonoBehaviour.Destroy(propUnit);
+            
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
 
             Offset = Offset.BuildingOffset(_storeItemSo.PlacementLayer);

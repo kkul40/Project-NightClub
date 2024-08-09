@@ -2,6 +2,6 @@
 {
     public interface IID
     {
-        int ID => this.GetHashCode();
+        int InstanceID { get; }
     }
 }

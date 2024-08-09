@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Data;
 using ScriptableObjects;
+using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace PropBehaviours
 {
@@ -11,26 +13,51 @@ namespace PropBehaviours
     {
         [SerializeField] private GameObject DrinkTablePrefab;
 
-        private Dictionary<int, IBartender> _bartenders;
-        private Dictionary<int, IBar> _bars;
+        [OdinSerialize]
+        public SerializedDictionary<int, IBartender> _bartenders;
+        [OdinSerialize]
+        public SerializedDictionary<int, IBar> _bars;
 
         private void Start()
         {
+            _bars = new SerializedDictionary<int, IBar>();
+            _bartenders = new SerializedDictionary<int, IBartender>();
             GetBarAndBartender();
         }
 
         private void OnEnable()
         {
-            PlacementDataHandler.OnPropAdded += GetBarAndBartender;
-            PlacementDataHandler.OnPropRemoved += GetBarAndBartender;
+            PlacementDataHandler.OnPropUpdate += GetBarAndBartender;
             NPCSystem.OnBartenderCreated += GetBarAndBartender;
         }
 
         private void OnDisable()
         {
-            PlacementDataHandler.OnPropAdded -= GetBarAndBartender;
-            PlacementDataHandler.OnPropRemoved -= GetBarAndBartender;
+            PlacementDataHandler.OnPropUpdate -= GetBarAndBartender;
             NPCSystem.OnBartenderCreated -= GetBarAndBartender;
+        }
+
+        public void AddCommand(IBar source, IBartenderCommand command)
+        {
+            IBartender avaliable = GetAvaliableBartender();
+            if (avaliable == null)
+            {
+                Debug.Log("Could not found avaliable bartender");
+                return;
+            }
+            command.InitCommand(source, avaliable);
+            if (command.IsDoable())
+            {
+                avaliable.AddCommand(command);
+            }
+        }
+
+        public void CreateDrinkTable(IBar bar)
+        {
+            var obj = Instantiate(DrinkTablePrefab, bar.CounterPlacePosition);
+            obj.transform.position = bar.CounterPlacePosition.position;
+            var drinkTable = obj.GetComponent<DrinkTable>();
+            drinkTable.SetUpTable(bar.DrinkData);
         }
 
         private IBartender GetAvaliableBartender()
@@ -38,20 +65,35 @@ namespace PropBehaviours
             foreach (var bartender in _bartenders.Values)
                 if (!bartender.IsBusy)
                     return bartender;
-            
-            return null;
+
+            int workCount = 999;
+            IBartender output = null;
+            foreach (var bartender in _bartenders.Values)
+            {
+                if (bartender.BartenderCommands.Count < workCount)
+                {
+                    workCount = bartender.BartenderCommands.Count;
+                    output = bartender;
+                }
+            }
+
+            return output;
         }
 
         private void GetBarAndBartender()
         {
+            Debug.Log("Bar Mediatoooor");
+            _bars.Clear();
+            _bartenders.Clear();
+            
             var bars = FindObjectsOfType<MonoBehaviour>().OfType<IBar>().ToList();
             var bartenders = FindObjectsOfType<MonoBehaviour>().OfType<IBartender>().ToList();
 
             foreach (var bar in bars)
-                _bars.Add(bar.ID, bar);
+                _bars.Add(bar.InstanceID, bar);
 
             foreach (var bartender in bartenders)
-                _bartenders.Add(bartender.ID, bartender);
+                _bartenders.Add(bartender.InstanceID, bartender);
         }
     }
 }

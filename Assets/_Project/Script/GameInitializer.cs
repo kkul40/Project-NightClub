@@ -22,11 +22,11 @@ namespace DefaultNamespace
             InitializeCommon();
         }
 
-        private void InitializeMainMenu() // 1
+        private void InitializeMainMenu() // 0
         {
         }
 
-        private void InitializeGame() // 2
+        private void InitializeGame() // 1
         {
             DiscoData.Instance.Initialize();
             ActivitySystem.Instance.Initialize();

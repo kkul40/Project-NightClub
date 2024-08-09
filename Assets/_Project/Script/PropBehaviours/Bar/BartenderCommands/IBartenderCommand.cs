@@ -3,12 +3,13 @@
     public interface IBartenderCommand
     {
         IBar bar { get; }
-        NewBartender bartender { get; }
+        IBartender bartender { get; }
         
         bool HasFinish { get; }
 
-        void InitCommand(IBar bar, NewBartender bartender);
+        void InitCommand(IBar bar, IBartender bartender);
         bool IsDoable();
+        void SetThingsBeforeStart();
         bool UpdateCommand(BarMediator barMediator);
     }
 }

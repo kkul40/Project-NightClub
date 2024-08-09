@@ -13,13 +13,17 @@ namespace PropBehaviours
         [SerializeField] private Transform counterPlacePosition;
         [SerializeField] private Drink drinkData;
 
-
+        public int InstanceID => GetInstanceID();
         public Transform BartenderWaitPosition => bartenderWaitPosition;
         public Transform CustomerWaitPosition => customerWaitPosition;
         public Transform CounterPlacePosition => counterPlacePosition;
         public Drink DrinkData => drinkData;
         public bool HasDrinks { get; set; } = false;
-
+        
+        public void CreateDrinks()
+        {
+            barMediator.CreateDrinkTable(this);
+        }
 
         private void Start()
         {
@@ -28,8 +32,8 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            // TODO Open 
-            // barMediator.AddCommandToExecute(this, new PrepareDrinkCommand());
+            barMediator.AddCommand(this, new PrepareDrinkCommand());
         }
+
     }
 }

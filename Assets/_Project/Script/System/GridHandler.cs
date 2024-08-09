@@ -5,7 +5,8 @@ namespace System
 {
     public class GridHandler : Singleton<GridHandler>
     {
-        [SerializeField] private Grid grid;
+        [SerializeField] private Grid grid1x1;
+        [SerializeField] private Grid grid4x4;
         [SerializeField] private Shader gridSahder;
         [SerializeField] private Color gridColor;
         [SerializeField] private GameObject gridPlane;
@@ -25,23 +26,23 @@ namespace System
 
         public Vector3Int GetMouseCellPosition(Vector3 mousePosition)
         {
-            var cellPos = grid.WorldToCell(mousePosition);
+            var cellPos = grid1x1.WorldToCell(mousePosition);
             return cellPos;
         }
 
         public Vector3 CellToWorldPosition(Vector3Int cellPos)
         {
-            return grid.CellToWorld(cellPos);
+            return grid1x1.CellToWorld(cellPos);
         }
 
         public Vector3 GetCellCenterWorld(Vector3Int cellPos)
         {
-            return grid.GetCellCenterWorld(cellPos);
+            return grid1x1.GetCellCenterWorld(cellPos);
         }
 
         public Vector3Int GetWorldToCell(Vector3 worldPos)
         {
-            return grid.WorldToCell(worldPos);
+            return grid1x1.WorldToCell(worldPos);
         }
 
         public void ToggleGrid(bool toggle)

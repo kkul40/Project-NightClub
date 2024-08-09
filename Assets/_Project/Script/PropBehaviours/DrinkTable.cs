@@ -43,7 +43,6 @@ namespace PropBehaviours
         public void GetDrink()
         {
             drinkAmount--;
-
             if (drinkAmount <= 0) EmptyTable();
         }
 

@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    /*
     public class PrepareDrinkCommand : IBartenderCommand
     {
         public IBar bar { get; private set; }
-        public NewBartender bartender { get; private set; }
-        public bool HasFinish { get; }
+        public IBartender bartender { get; set; }
+        public bool HasFinish { get; private set; } = false;
         private Transform target;
 
         private float timer = 0;
@@ -16,7 +15,7 @@ namespace PropBehaviours
 
         private int executionOrder = 0;
 
-        public void InitCommand(IBar bar, NewBartender bartender)
+        public void InitCommand(IBar bar, IBartender bartender)
         {
             this.bar = bar;
             this.bartender = bartender;
@@ -25,23 +24,28 @@ namespace PropBehaviours
 
         public bool IsDoable()
         {
-            if (bar.HasDrinks) return false;
-            if (bartender.IsBusy) return false;
-
-            SetThingsBeforeStart();
+            if (bar.HasDrinks)
+            {
+                Debug.Log("Can't Start Action");
+                return false;
+            }
             return true;
         }
 
-        private void SetThingsBeforeStart()
+        public void SetThingsBeforeStart()
         {
             bartender.IsBusy = true;
             prepareTime = bar.DrinkData.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
+            bartender.PathFinder.GoTargetDestination(target.position);
+            Debug.Log("Set Thingss");
         }
 
         private void SetThingsBeforeExit()
         {
+            bar.CreateDrinks();
             bartender.IsBusy = false;
+            HasFinish = true;
         }
 
         public bool UpdateCommand(BarMediator barMediator)
@@ -49,26 +53,23 @@ namespace PropBehaviours
             switch (executionOrder)
             {
                 case 0:
-                    while (Vector3.Distance(bartender.transform.position, target.position) > 0.1f)
-                    {
-                        bartender.transform.position = Vector3.MoveTowards(bartender.transform.position, target.position, Time.deltaTime * 1.5f);
+                    if (!bartender.PathFinder.HasReachedDestination)
                         return false;
-                    }
                     executionOrder++;
                     return false;
                 case 1:
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_PrepareDrink);
-                    bartender.transform.rotation = target.rotation;
+                    bartender.PathFinder.SetRotation(bar.BartenderWaitPosition.rotation);
                     executionOrder++;
                     return false;
                 case 2:
                     if (timer < prepareTime)
                     {
+                        Debug.Log("Timer");
                         timer += Time.deltaTime;
                         return false;
                     }
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
-                    barMediator.CreateDrinkTable(bar, bar.DrinkData);
                     bar.HasDrinks = true;
                     executionOrder++;
                     return false;
@@ -79,25 +80,24 @@ namespace PropBehaviours
         }
     }
     
-    public class WallToEntranceCommand : IBartenderCommand
-    {
-        public IBar bar { get; }
-        public NewBartender bartender { get; }
-        public bool HasFinish { get; }
-
-        public void InitCommand(IBar bar, NewBartender bartender)
-        {
-        }
-
-        public bool IsDoable()
-        {
-            return true;
-        }
-
-        public bool UpdateCommand(BarMediator barMediator)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
-    */
+    // public class WallToEntranceCommand : IBartenderCommand
+    // {
+    //     public IBar bar { get; }
+    //     public NewBartender bartender { get; }
+    //     public bool HasFinish { get; }
+    //
+    //     public void InitCommand(IBar bar, NewBartender bartender)
+    //     {
+    //     }
+    //
+    //     public bool IsDoable()
+    //     {
+    //         return true;
+    //     }
+    //
+    //     public bool UpdateCommand(BarMediator barMediator)
+    //     {
+    //         throw new System.NotImplementedException();
+    //     }
+    // }
 }

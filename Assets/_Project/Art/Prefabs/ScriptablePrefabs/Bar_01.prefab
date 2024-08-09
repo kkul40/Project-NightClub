@@ -234,12 +234,7 @@ MonoBehaviour:
   bartenderWaitPosition: {fileID: 1808988334322979529}
   customerWaitPosition: {fileID: 7658479437796650390}
   counterPlacePosition: {fileID: 5064578938836621044}
-  drinkData:
-    <Name>k__BackingField: Green Island
-    <DrinkAmount>k__BackingField: 10
-    <PrepareTime>k__BackingField: 3
-    <Price>k__BackingField: 10
-    <Prefab>k__BackingField: {fileID: 8682193206365875414, guid: c6eb8256471f3f648b75ae605e17d994, type: 3}
+  drinkData: {fileID: 11400000, guid: 4868e55362324654990b32b76bf2a729, type: 2}
 --- !u!65 &5318688143141393565
 BoxCollider:
   m_ObjectHideFlags: 0

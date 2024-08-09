@@ -9,6 +9,7 @@ namespace BuildingSystem.SO
     {
         public GameObject Prefab;
         public Vector2Int Size;
+        public bool Big = false;
 
         [HorizontalGroup("Split", 290), EnumToggleButtons, HideLabel]
         public ePlacementLayer PlacementLayer;

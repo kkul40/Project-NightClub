@@ -42,8 +42,7 @@ namespace Data
         private HashSet<Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>> AllPlacedObjects;
 
 
-        public static event Action OnPropAdded;
-        public static event Action OnPropRemoved;
+        public static event Action OnPropUpdate;
 
         public PlacementDataHandler()
         {
@@ -111,7 +110,6 @@ namespace Data
                 propList.Add(prop);
                 prop.Initialize(placementData.ID, cellPos, placementData.SettedRotationData,
                     placementData.PlacedPlacementItemSo.PlacementLayer);
-                OnPropAdded?.Invoke();
             }
 
             UpdateProps();
@@ -138,7 +136,6 @@ namespace Data
             if (objectToRemove.TryGetComponent(out IPropUnit prop))
             {
                 propList.Remove(prop);
-                OnPropRemoved?.Invoke();
             }
 
             Object.Destroy(objectToRemove);
@@ -150,6 +147,8 @@ namespace Data
             foreach (var prop in propList)
                 if (prop.transform.TryGetComponent(out IPropUpdate propUpdate))
                     propUpdate.PropUpdate();
+            
+            OnPropUpdate?.Invoke();
         }
 
         private List<Vector3Int> CalculatePosition(Vector3Int cellPos, Vector2Int size, Direction direction)

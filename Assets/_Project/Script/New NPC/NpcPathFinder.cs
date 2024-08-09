@@ -17,10 +17,21 @@ namespace New_NPC
 
     public class BartenderPathFinder : IPathFinder
     {
-        public bool HasReachedDestination { get; }
+        public bool HasReachedDestination { get; private set; }
+        private Vector3 target;
+        private Transform mTransform;
+
+        public BartenderPathFinder(Transform mTransform)
+        {
+            this.mTransform = mTransform;
+        }
 
         public bool GoTargetDestination(Vector3 targetDestination)
         {
+            target = targetDestination;
+            HasReachedDestination = false;
+            SetRotationToTarget(target);
+            DOTween.instance.StartCoroutine(CoWalkPosition());
             return true;
         }
 
@@ -30,6 +41,25 @@ namespace New_NPC
 
         public void SetRotation(Quaternion newRotation)
         {
+            mTransform.DORotate(newRotation.eulerAngles, 0.5f);
+        }
+        
+        private void SetRotationToTarget(Vector3 lookatTarget)
+        {
+            var direction = lookatTarget - mTransform.position;
+            direction.Normalize();
+            var lookRotation = Quaternion.LookRotation(direction);
+            mTransform.DORotate(lookRotation.eulerAngles, 0.5f);
+        }
+
+        IEnumerator CoWalkPosition()
+        {
+            while (Vector3.Distance(mTransform.position, target) > 0.01f)
+            {
+                mTransform.position = Vector3.MoveTowards(mTransform.position, target, Time.deltaTime * 1.5f);
+                yield return null;
+            }
+            HasReachedDestination = true;
         }
     }
 
