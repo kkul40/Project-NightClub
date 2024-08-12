@@ -10,6 +10,6 @@ namespace ScriptableObjects
         public int DrinkAmount;
         public float PrepareTime;
         public int Price;
-       public GameObject Prefab;
+        public GameObject Prefab;
     }
 }

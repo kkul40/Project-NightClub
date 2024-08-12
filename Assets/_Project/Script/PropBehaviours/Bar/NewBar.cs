@@ -18,11 +18,33 @@ namespace PropBehaviours
         public Transform CustomerWaitPosition => customerWaitPosition;
         public Transform CounterPlacePosition => counterPlacePosition;
         public Drink DrinkData => drinkData;
-        public bool HasDrinks { get; set; } = false;
-        
+
+        public bool HasDrinks
+        {
+            get
+            {
+                if (_drinkTable == null || _drinkTable.drinkAmount <= 0) return false;
+                
+                return true;
+            }
+
+            set { }
+        }
+
+        private DrinkTable _drinkTable;
+
+        public void GetDrink()
+        {
+            if (HasDrinks)
+            {
+                _drinkTable.GetDrink();
+            }
+            Debug.Log("Nice Drink Broother!!");
+        }
+
         public void CreateDrinks()
         {
-            barMediator.CreateDrinkTable(this);
+            _drinkTable = barMediator.CreateDrinkTable(this);
         }
 
         private void Start()
@@ -34,6 +56,5 @@ namespace PropBehaviours
         {
             barMediator.AddCommand(this, new PrepareDrinkCommand());
         }
-
     }
 }

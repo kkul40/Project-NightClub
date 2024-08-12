@@ -10,6 +10,7 @@ namespace PropBehaviours
         Transform CounterPlacePosition { get; }
         Drink DrinkData { get; }
         bool HasDrinks { get; set; }
+        void GetDrink();
         void CreateDrinks();
     }
 }

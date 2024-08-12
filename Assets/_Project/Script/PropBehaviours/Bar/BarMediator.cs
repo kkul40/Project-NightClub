@@ -52,12 +52,14 @@ namespace PropBehaviours
             }
         }
 
-        public void CreateDrinkTable(IBar bar)
+        public DrinkTable CreateDrinkTable(IBar bar)
         {
             var obj = Instantiate(DrinkTablePrefab, bar.CounterPlacePosition);
             obj.transform.position = bar.CounterPlacePosition.position;
             var drinkTable = obj.GetComponent<DrinkTable>();
             drinkTable.SetUpTable(bar.DrinkData);
+
+            return drinkTable;
         }
 
         private IBartender GetAvaliableBartender()
