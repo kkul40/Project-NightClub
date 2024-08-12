@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class TestBartender : MonoBehaviour, IBartender, IInteractable
+    public class TestBartender : MonoBehaviour, IBartender, IInteractable, IDoorOpener
     {
         public int InstanceID => GetInstanceID();
         public BarMediator BarMediator { get; private set; }

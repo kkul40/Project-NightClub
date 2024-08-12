@@ -41,5 +41,12 @@ namespace System
             var randomActivity = dictionary.ElementAt(a).Value;
             return GetActivity(dictionary.ElementAt(a).Key);
         }
+        
+        public bool CanStartNewActivity(IActivity currentActivity)
+        {
+            if (currentActivity is ExitDiscoActivity) return false;
+
+            return true;
+        }
     }
 }

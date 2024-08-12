@@ -21,6 +21,7 @@ namespace StartMenu
         public void OnFinishUpCustomizationButton()
         {
             SavingAndLoadingSystem.Instance.NewGame();
+            SavingAndLoadingSystem.Instance.SaveGame();
             SceneManager.LoadScene(1);
         }
 

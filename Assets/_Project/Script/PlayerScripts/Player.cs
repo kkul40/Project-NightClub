@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace PlayerScripts
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IDoorOpener
     {
         private NpcPathFinder _pathFinder;
 

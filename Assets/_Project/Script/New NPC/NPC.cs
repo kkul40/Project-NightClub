@@ -13,7 +13,7 @@ using WalkRandomActivity = New_NPC.Activities.WalkRandomActivity;
 namespace New_NPC
 {
     [SelectionBase]
-    public class NPC : MonoBehaviour, IInteractable
+    public class NPC : MonoBehaviour, IInteractable, IDoorOpener
     {
         /*
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}

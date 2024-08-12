@@ -22301,7 +22301,7 @@ MonoBehaviour:
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
   _npcActivities: []
-  maxNPC: 30
+  maxNPC: 40
 --- !u!4 &2042784773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8908254307360373429, guid: cc6254185f2e6c7469fe6c148238db32, type: 3}
@@ -23462,8 +23462,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3720443181012456702, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2072907701781959381}
   m_SourcePrefab: {fileID: 100100000, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
+--- !u!1 &2072907701781959380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3720443181012456702, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
+  m_PrefabInstance: {fileID: 2072907701781959379}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &2072907701781959381
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072907701781959380}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2702156257156859394
 MonoBehaviour:
   m_ObjectHideFlags: 0

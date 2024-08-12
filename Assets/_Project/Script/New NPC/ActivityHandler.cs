@@ -29,7 +29,7 @@ namespace New_NPC
         {
             if (!activity.CanStartActivity(_activityNeedsData)) return;
 
-            if (hasActivity) _currentActivity.OnActivityEnd(_activityNeedsData);
+            if (!ActivitySystem.Instance.CanStartNewActivity(_currentActivity)) return;
 
             _currentActivity = activity;
             _lastActivity = _currentActivity;
@@ -42,14 +42,16 @@ namespace New_NPC
 
             if (_currentActivity.IsEnded)
             {
-                GetRandomActivity();
+                _currentActivity.OnActivityEnd(_activityNeedsData);
+                
+                StartNewActivity(GetRandomActivity());
                 return;
             }
 
             _currentActivity.OnActivityUpdate(_activityNeedsData);
         }
 
-        private void GetRandomActivity()
+        private IActivity GetRandomActivity()
         {
             var randomActivity = ActivitySystem.Instance.GetRandomActivity();
 
@@ -67,7 +69,9 @@ namespace New_NPC
                 }
             }
 
-            StartNewActivity(randomActivity);
+            return randomActivity;
         }
+
+       
     }
 }

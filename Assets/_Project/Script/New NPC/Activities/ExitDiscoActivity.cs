@@ -27,13 +27,18 @@ namespace New_NPC.Activities
         {
             if (and.Npc.PathFinder.HasReachedDestination)
             {
-                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false);
-                Object.Destroy(and.Npc.gameObject, 1);
+                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false, OnCompleteCallBack:OnComplete);
             }
+        }
+        
+        private void OnComplete()
+        {
+            IsEnded = true;
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
+            MonoBehaviour.DestroyImmediate(and.Npc.gameObject);
         }
     }
 }

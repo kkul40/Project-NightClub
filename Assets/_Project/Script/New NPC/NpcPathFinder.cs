@@ -11,7 +11,7 @@ namespace New_NPC
     public interface IPathFinder
     {
         bool HasReachedDestination { get; }
-        bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true);
+        bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null);
         void CancelDestination();
         void SetRotation(Quaternion newRotation);
     }
@@ -27,7 +27,7 @@ namespace New_NPC
             this.mTransform = mTransform;
         }
 
-        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true)
+        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null)
         {
             target = targetDestination;
             HasReachedDestination = false;
@@ -79,7 +79,7 @@ namespace New_NPC
             _assignedNPC = assign;
         }
 
-        public bool GoTargetDestination(Vector3 targetPos, bool checkNodes = true)
+        public bool GoTargetDestination(Vector3 targetPos, bool checkNodes = true, Action OnCompleteCallBack = null)
         {
             CancelDestination();
 
@@ -88,7 +88,7 @@ namespace New_NPC
             else
                 _currentPath = NullPathReturn(targetPos);
 
-            _routine = CoFollowPath(_currentPath);
+            _routine = CoFollowPath(_currentPath, OnCompleteCallBack);
             DiscoData.Instance.StartCoroutine(_routine);
             return true;
         }
@@ -102,7 +102,7 @@ namespace New_NPC
             _routine = null;
         }
 
-        private IEnumerator CoFollowPath(List<Vector3> path)
+        private IEnumerator CoFollowPath(List<Vector3> path, Action OnCompleteCallBack = null)
         {
             for (var i = 0; i < path.Count; i++)
             {
@@ -118,6 +118,7 @@ namespace New_NPC
             }
 
             _routine = null;
+            OnCompleteCallBack?.Invoke();
         }
 
         private void SetRotationToTarget(Vector3 lookatTarget)

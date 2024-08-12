@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using New_NPC;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -29,7 +30,7 @@ namespace PropBehaviours
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.transform.TryGetComponent(out New_NPC.NPC npc))
+            if (other.transform.TryGetComponent(out IDoorOpener opener))
             {
                 ToggleDoor(true);
                 timer = 0;

@@ -101,7 +101,9 @@ namespace System
         public void RemoveNPCs()
         {
             // TODO There is bugg here 'causing null referance on Transforms
-            StopCoroutine(_npcSpawnRoutine);
+            if(_npcSpawnRoutine != null)
+                StopCoroutine(_npcSpawnRoutine);
+            
             foreach (var activity in _npcActivities)
                 activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
 
