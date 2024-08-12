@@ -22301,7 +22301,7 @@ MonoBehaviour:
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
   _npcActivities: []
-  maxNPC: 40
+  maxNPC: 20
 --- !u!4 &2042784773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8908254307360373429, guid: cc6254185f2e6c7469fe6c148238db32, type: 3}
