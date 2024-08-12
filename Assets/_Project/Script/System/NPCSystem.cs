@@ -49,12 +49,16 @@ namespace System
 
         private void SendBartender()
         {
-            var newBartender = Instantiate(_bartenderPrefab,
-                DiscoData.Instance.MapData.EnterencePosition -
-                new Vector3(0, 0.5f, 0),
-                Quaternion.identity);
+            var newBartender = Instantiate(_bartenderPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
 
             newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
+            
+            IBartender bartender = newBartender.GetComponent<IBartender>();
+            
+            WalkToEntranceCommand command = new WalkToEntranceCommand();
+            command.InitCommand(null, bartender);
+            
+            bartender.AddCommand(command);
             OnBartenderCreated?.Invoke();
         }
 
@@ -71,8 +75,7 @@ namespace System
             while (npcCount < maxNPC)
             {
                 yield return new WaitForSeconds(0.1f);
-                var newNPC = Instantiate(_npcPrefab,
-                    DiscoData.Instance.MapData.EnterencePosition - new Vector3(0, 0.5f, 0), Quaternion.identity);
+                var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
                 newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
                 var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 

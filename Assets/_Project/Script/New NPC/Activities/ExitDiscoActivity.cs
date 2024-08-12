@@ -20,24 +20,20 @@ namespace New_NPC.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition -
-                                                   new Vector3(0, 0.5f, 0));
+            and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
             if (and.Npc.PathFinder.HasReachedDestination)
             {
-                and.Npc.PathFinder.CancelDestination();
-                and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
-                timer += Time.deltaTime;
-                if (timer > delay) IsEnded = true;
+                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false);
+                Object.Destroy(and.Npc.gameObject, 1);
             }
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            Object.Destroy(and.Npc.gameObject);
         }
     }
 }

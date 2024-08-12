@@ -10,6 +10,6 @@
         void InitCommand(IBar bar, IBartender bartender);
         bool IsDoable();
         void SetThingsBeforeStart();
-        bool UpdateCommand(BarMediator barMediator);
+        void UpdateCommand(BarMediator barMediator);
     }
 }

@@ -102,7 +102,6 @@ namespace Data
             }
             
             var node = PathFinderNodes[x, y];
-            node.IsAvaliable = isAvaliable ?? node.IsAvaliable;
             node.IsWalkable = isWalkable ?? node.IsWalkable;
             node.WorldPos = position ?? node.WorldPos;
             node.GridX = gridX ?? node.GridX;
@@ -137,8 +136,7 @@ namespace Data
             return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
-        public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition - Vector3Int.right);
-        
-        
+        public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1,0 ,1)) - new Vector3(0,0.5f, 0);
+        public Vector3 SpawnPositon => EnterencePosition - new Vector3(0, 0, 3);
     }
 }

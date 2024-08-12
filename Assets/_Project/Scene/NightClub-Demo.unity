@@ -464,7 +464,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ef7c568e3a27c6a42b9ff86601254a39, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a8362de2852b6af4ca36b80ad65afed6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.451
   m_Pitch: 1
@@ -1637,6 +1637,7 @@ MonoBehaviour:
   Esc: 0
   TurnLeft: 0
   TurnRight: 0
+  IsMouseCursorOnWorld: 0
   LeftClickOnWorld: 0
   LeftHoldClickOnWorld: 0
   RightClickOnWorld: 0

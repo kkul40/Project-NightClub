@@ -20,6 +20,7 @@ namespace System
         [HideInInspector] public bool Esc;
         [HideInInspector] public bool TurnLeft;
         [HideInInspector] public bool TurnRight;
+        [HideInInspector] public bool IsMouseCursorOnWorld;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
         public bool RightClickOnWorld;
@@ -40,6 +41,11 @@ namespace System
                 LeftHoldClickOnWorld = Input.GetMouseButton(0);
                 RightClickOnWorld = Input.GetMouseButtonDown(1);
                 ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
+                IsMouseCursorOnWorld = true;
+            }
+            else
+            {
+                IsMouseCursorOnWorld = false;
             }
 
             Esc = Input.GetKeyDown(KeyCode.Escape);

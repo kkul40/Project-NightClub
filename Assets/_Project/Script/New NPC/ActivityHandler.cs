@@ -20,7 +20,7 @@ namespace New_NPC
             _activityNeedsData.DiscoData = DiscoData.Instance;
             _activityNeedsData.GridHandler = GridHandler.Instance;
 
-            _currentActivity = new WalkRandomActivity();
+            _currentActivity = new WalkToEnteranceActivity();
             _lastActivity = _currentActivity;
             _currentActivity.OnActivityStart(_activityNeedsData);
         }

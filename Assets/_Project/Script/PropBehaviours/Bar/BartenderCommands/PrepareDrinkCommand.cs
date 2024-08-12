@@ -1,4 +1,5 @@
-﻿using New_NPC;
+﻿using Data;
+using New_NPC;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -14,6 +15,8 @@ namespace PropBehaviours
         private float prepareTime = 0;
 
         private int executionOrder = 0;
+
+        private eState _state = eState.ReachTarget;
 
         public void InitCommand(IBar bar, IBartender bartender)
         {
@@ -35,69 +38,75 @@ namespace PropBehaviours
         public void SetThingsBeforeStart()
         {
             bartender.IsBusy = true;
+            bar.HasDrinks = true;
             prepareTime = bar.DrinkData.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
             bartender.PathFinder.GoTargetDestination(target.position);
-            Debug.Log("Set Thingss");
         }
 
-        private void SetThingsBeforeExit()
+        public void UpdateCommand(BarMediator barMediator)
         {
-            bar.CreateDrinks();
-            bartender.IsBusy = false;
-            HasFinish = true;
-        }
-
-        public bool UpdateCommand(BarMediator barMediator)
-        {
-            switch (executionOrder)
+            switch (_state)
             {
-                case 0:
+                case eState.ReachTarget:
                     if (!bartender.PathFinder.HasReachedDestination)
-                        return false;
-                    executionOrder++;
-                    return false;
-                case 1:
+                        break;
+                    
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_PrepareDrink);
                     bartender.PathFinder.SetRotation(bar.BartenderWaitPosition.rotation);
-                    executionOrder++;
-                    return false;
-                case 2:
+                    _state = eState.PrepareDrink;
+                    break;
+                case eState.PrepareDrink:
                     if (timer < prepareTime)
                     {
-                        Debug.Log("Timer");
                         timer += Time.deltaTime;
-                        return false;
+                        break;
                     }
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
+                    bar.CreateDrinks();
                     bar.HasDrinks = true;
-                    executionOrder++;
-                    return false;
+                    bartender.IsBusy = false;
+                    HasFinish = true;
+                    break;
             }
+        }
 
-            SetThingsBeforeExit();
-            return true;
+        private enum eState
+        {
+            ReachTarget,
+            PrepareDrink,
         }
     }
     
-    // public class WallToEntranceCommand : IBartenderCommand
-    // {
-    //     public IBar bar { get; }
-    //     public NewBartender bartender { get; }
-    //     public bool HasFinish { get; }
-    //
-    //     public void InitCommand(IBar bar, NewBartender bartender)
-    //     {
-    //     }
-    //
-    //     public bool IsDoable()
-    //     {
-    //         return true;
-    //     }
-    //
-    //     public bool UpdateCommand(BarMediator barMediator)
-    //     {
-    //         throw new System.NotImplementedException();
-    //     }
-    // }
+    public class WalkToEntranceCommand : IBartenderCommand
+    {
+        public IBar bar { get; }
+        public IBartender bartender { get; private set; }
+        public bool HasFinish { get; private set; }
+    
+        public void InitCommand(IBar bar, IBartender bartender)
+        {
+            this.bartender = bartender;
+        }
+    
+        public bool IsDoable()
+        {
+            return true;
+        }
+
+        public void SetThingsBeforeStart()
+        {
+            bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
+            bartender.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
+        }
+
+        public void UpdateCommand(BarMediator barMediator)
+        {
+            if (bartender.PathFinder.HasReachedDestination)
+            {
+                bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
+                HasFinish = true;
+            }
+        }
+    }
 }

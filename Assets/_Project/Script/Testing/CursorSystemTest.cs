@@ -18,7 +18,7 @@ namespace Testing
 
         private void Reset()
         {
-            if (_currentInteractable == null || BuildingManager.Instance.isPlacing) return;
+            if (_currentInteractable == null) return;
 
             _currentInteractable.OnOutFocus();
             _currentInteractable = null;
@@ -38,7 +38,7 @@ namespace Testing
 
         private void Update()
         {
-            if (BuildingManager.Instance.isPlacing)
+            if (BuildingManager.Instance.isPlacing || !InputSystem.Instance.IsMouseCursorOnWorld)
             {
                 Reset();
                 return;

@@ -23,9 +23,8 @@ namespace PropBehaviours
             throw new NotImplementedException();
         }
 
-        public bool UpdateCommand(BarMediator barMediator)
+        public void UpdateCommand(BarMediator barMediator)
         {
-            throw new NotImplementedException();
         }
     }
 }

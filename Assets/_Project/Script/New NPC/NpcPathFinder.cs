@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace New_NPC
 {
     public interface IPathFinder
     {
         bool HasReachedDestination { get; }
-        bool GoTargetDestination(Vector3 targetDestination);
+        bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true);
         void CancelDestination();
         void SetRotation(Quaternion newRotation);
     }
@@ -26,7 +27,7 @@ namespace New_NPC
             this.mTransform = mTransform;
         }
 
-        public bool GoTargetDestination(Vector3 targetDestination)
+        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true)
         {
             target = targetDestination;
             HasReachedDestination = false;
@@ -78,10 +79,14 @@ namespace New_NPC
             _assignedNPC = assign;
         }
 
-        public bool GoTargetDestination(Vector3 targetPos)
+        public bool GoTargetDestination(Vector3 targetPos, bool checkNodes = true)
         {
             CancelDestination();
-            _currentPath = FindPath(_assignedNPC.position, targetPos);
+
+            if (checkNodes)
+                _currentPath = FindPath(_assignedNPC.position, targetPos);
+            else
+                _currentPath = NullPathReturn(targetPos);
 
             _routine = CoFollowPath(_currentPath);
             DiscoData.Instance.StartCoroutine(_routine);
@@ -167,8 +172,8 @@ namespace New_NPC
                     }
                 }
             }
-
-            return null; // Return null if no path is found
+            
+            return NullPathReturn(targetPos);
         }
 
         private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
@@ -198,6 +203,17 @@ namespace New_NPC
                 waypoints.Add(node.WorldPos);
 
             return waypoints; // Return the path as a list of Vector3 positions
+        }
+
+        private List<Vector3> NullPathReturn(Vector3 target)
+        {
+            var path = new List<Vector3>();
+            path.Add(target);
+            foreach (var a in path)
+            {
+                Debug.Log(a);
+            }
+            return path;
         }
 
         private List<PathFinderNode> GetNeighbors(PathFinderNode node)
