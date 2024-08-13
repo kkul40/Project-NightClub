@@ -122,8 +122,7 @@ namespace New_NPC.Activities
         {
             _chair = and.GetAvaliablePropByType<Chair>();
 
-            if (_chair == null || !_chair.IsOccupied) return true;
-
+            if (_chair == null || !_chair.IsOccupied) return false;
             
             return true;
         }

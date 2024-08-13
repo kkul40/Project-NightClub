@@ -80,10 +80,7 @@ namespace New_NPC
             }
 
             if (bars.Count < 1)
-            {
                 Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
-                return null;
-            }
 
             return bars;
         }
