@@ -16,7 +16,7 @@ MonoBehaviour:
   <Idle>k__BackingField:
   - {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
   <Walk>k__BackingField:
-  - {fileID: 7400000, guid: 8ac3461507ac28e4fb7b558cb366ed0d, type: 2}
+  - {fileID: 7400000, guid: 62881bcadb4b79446a533542b822a93a, type: 2}
   <Sit>k__BackingField:
   - {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
   <Dance>k__BackingField:

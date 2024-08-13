@@ -26,7 +26,7 @@ namespace New_NPC.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             this.and = and;
-            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position, OnCompleteCallBack: ReachTheChair);
+            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position, OnCompleteCallBack: OnReachedToChair);
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }
@@ -44,7 +44,7 @@ namespace New_NPC.Activities
             }
         }
 
-        private void ReachTheChair()
+        private void OnReachedToChair()
         {
             and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Sit);
@@ -55,8 +55,7 @@ namespace New_NPC.Activities
         {
             // TODO Kalkarken Bi yamukluk yasaniyor, bir ara duzelt
             _chair.SetOccupied(and.Npc, false);
-            and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+            // and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
         }
     }
 }
