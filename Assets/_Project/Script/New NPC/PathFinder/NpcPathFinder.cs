@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 namespace New_NPC
 {
@@ -154,10 +153,6 @@ namespace New_NPC
         {
             var path = new List<Vector3>();
             path.Add(target);
-            foreach (var a in path)
-            {
-                Debug.Log(a);
-            }
             return path;
         }
 
