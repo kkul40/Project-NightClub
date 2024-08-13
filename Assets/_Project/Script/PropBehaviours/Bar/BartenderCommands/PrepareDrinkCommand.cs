@@ -53,7 +53,7 @@ namespace PropBehaviours
                         break;
                     
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_PrepareDrink);
-                    bartender.PathFinder.SetRotation(bar.BartenderWaitPosition.rotation);
+                    bartender.PathFinder.SetPositioning(bar.BartenderWaitPosition.rotation);
                     _state = eState.PrepareDrink;
                     break;
                 case eState.PrepareDrink:

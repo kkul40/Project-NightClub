@@ -19,7 +19,7 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            var dancableTiles = and.GetAvaliablePropsByType<DancableTile>(ePlacementLayer.BaseSurface);
+            var dancableTiles = and.GetAvaliablePropsByType<DancableTile>();
 
             if (dancableTiles == null)
             {
@@ -50,7 +50,7 @@ namespace New_NPC.Activities
             }
 
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
-            _dancableTile.GetItOccupied(and.Npc);
+            _dancableTile.SetOccupied(and.Npc, true);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)

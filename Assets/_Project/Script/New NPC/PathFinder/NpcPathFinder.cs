@@ -8,62 +8,6 @@ using UnityEngine.Analytics;
 
 namespace New_NPC
 {
-    public interface IPathFinder
-    {
-        bool HasReachedDestination { get; }
-        bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null);
-        void CancelDestination();
-        void SetRotation(Quaternion newRotation);
-    }
-
-    public class BartenderPathFinder : IPathFinder
-    {
-        public bool HasReachedDestination { get; private set; }
-        private Vector3 target;
-        private Transform mTransform;
-
-        public BartenderPathFinder(Transform mTransform)
-        {
-            this.mTransform = mTransform;
-        }
-
-        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null)
-        {
-            target = targetDestination;
-            HasReachedDestination = false;
-            SetRotationToTarget(target);
-            DOTween.instance.StartCoroutine(CoWalkPosition());
-            return true;
-        }
-
-        public void CancelDestination()
-        {
-        }
-
-        public void SetRotation(Quaternion newRotation)
-        {
-            mTransform.DORotate(newRotation.eulerAngles, 0.5f);
-        }
-        
-        private void SetRotationToTarget(Vector3 lookatTarget)
-        {
-            var direction = lookatTarget - mTransform.position;
-            direction.Normalize();
-            var lookRotation = Quaternion.LookRotation(direction);
-            mTransform.DORotate(lookRotation.eulerAngles, 0.5f);
-        }
-
-        IEnumerator CoWalkPosition()
-        {
-            while (Vector3.Distance(mTransform.position, target) > 0.01f)
-            {
-                mTransform.position = Vector3.MoveTowards(mTransform.position, target, Time.deltaTime * 1.5f);
-                yield return null;
-            }
-            HasReachedDestination = true;
-        }
-    }
-
     public class NpcPathFinder : IPathFinder
     {
         // TODO Use DirthFlag Here
@@ -72,7 +16,12 @@ namespace New_NPC
         private List<Vector3> _currentPath;
 
         private IEnumerator _routine = null;
+
+        public Transform mTransform => _assignedNPC.transform;
+
         public bool HasReachedDestination => _routine == null;
+
+        private float animationTweak = 0.5f;
 
         public NpcPathFinder(Transform assign)
         {
@@ -126,12 +75,7 @@ namespace New_NPC
             var direction = lookatTarget - _assignedNPC.position;
             direction.Normalize();
             var lookRotation = Quaternion.LookRotation(direction);
-            _assignedNPC.DORotate(lookRotation.eulerAngles, 0.5f);
-        }
-
-        public void SetRotation(Quaternion rotationToSet)
-        {
-            _assignedNPC.DORotate(rotationToSet.eulerAngles, 0.5f);
+            _assignedNPC.DORotate(lookRotation.eulerAngles, animationTweak);
         }
 
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
@@ -248,7 +192,6 @@ namespace New_NPC
             return 14 * dstX + 10 * (dstY - dstX);
         }
     }
-
 
     public enum eTileNode
     {

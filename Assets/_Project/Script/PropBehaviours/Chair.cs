@@ -1,5 +1,6 @@
 ﻿using BuildingSystem;
 using Data;
+using New_NPC;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -17,16 +18,13 @@ namespace PropBehaviours
         ///     Returns Sit Position
         /// </summary>
         /// <returns></returns>
-        public void GetItOccupied(New_NPC.NPC owner)
+        public void SetOccupied(NPC owner, bool isOccupied)
         {
             Owner = owner;
-            IsOccupied = true;
+            IsOccupied = isOccupied;
         }
 
-        public Vector3 GetFrontPosition()
-        {
-            return frontPosition.position;
-        }
+        public Transform GetFrontPosition() => frontPosition;
 
         public Vector3 GetSitPosition()
         {

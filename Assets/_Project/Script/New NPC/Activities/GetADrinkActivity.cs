@@ -72,7 +72,7 @@ namespace New_NPC.Activities
             yield return new WaitUntil(() => and.Npc.PathFinder.HasReachedDestination);
         
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
-            and.Npc.PathFinder.SetRotation(_bar.CustomerWaitPosition.rotation);
+            and.Npc.PathFinder.SetPositioning(_bar.CustomerWaitPosition.rotation);
             yield return new WaitForSeconds(1);
             _bar.GetDrink();
         

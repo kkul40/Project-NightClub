@@ -8,7 +8,8 @@ namespace BuildingSystem
 {
     public class SceneGameObjectHandler : Singleton<SceneGameObjectHandler>
     {
-        [field: SerializeField] public Transform GetPropHolderTransform { get; private set; } // Don't Clean
+        [field: SerializeField] public Transform GetFloorPropHolderTransform { get; private set; }
+        [field: SerializeField] public Transform GetWallPropHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetSurfaceHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetNPCHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetEmployeeHolderTransform { get; private set; }
@@ -23,22 +24,50 @@ namespace BuildingSystem
                 case ePlacementLayer.BaseSurface:
                     return GetSurfaceHolderTransform;
                 case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    return GetPropHolderTransform;
+                    return GetFloorPropHolderTransform;
             }
 
             return NullHolder;
         }
+
+        public List<Transform> GetExcludeTransformsByLayer(ePlacementLayer layer)
+        {
+            List<Transform> transforms = new List<Transform>();
+            
+            switch (layer)
+            {
+                case ePlacementLayer.BaseSurface:
+                    transforms.Add(GetFloorPropHolderTransform);
+                    break;
+                case ePlacementLayer.FloorProp:
+                    break;
+                case ePlacementLayer.WallProp:
+                    transforms.Add(GetFloorPropHolderTransform);
+                    transforms.Add(GetWallPropHolderTransform);
+                    break;
+            }
+
+            return transforms;
+        }
         
-        // public void ClearMap()
-        // {
-        //     RemoveChildren(GetPropHolderTransform);
-        //     RemoveChildren(GetSurfaceHolderTransform);
-        //     RemoveChildren(GetNPCHolderTransform);
-        //     RemoveChildren(GetEmployeeHolderTransform);
-        //     RemoveChildren(GetFloorTileHolder);
-        //     RemoveChildren(GetWallHolder);
-        // }
+        public List<Transform> GetExcludeTransformsByLayer(eMaterialLayer layer)
+        {
+            List<Transform> transforms = new List<Transform>();
+            
+            switch (layer)
+            {
+               case eMaterialLayer.FloorMaterial:
+                   transforms.Add(GetFloorPropHolderTransform);
+                   transforms.Add(GetSurfaceHolderTransform);
+                   break;
+               case eMaterialLayer.WallMaterial:
+                   transforms.Add(GetWallPropHolderTransform);
+                   transforms.Add(GetFloorPropHolderTransform);
+                   break;
+            }
+
+            return transforms;
+        }
 
         private void RemoveChildren(Transform holder)
         {

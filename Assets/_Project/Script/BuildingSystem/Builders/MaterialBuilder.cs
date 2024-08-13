@@ -25,22 +25,7 @@ namespace BuildingSystem.Builders
             _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
             _materialItemSo = buildingNeedsData.StoreItemSo as MaterialItemSo;
 
-            switch (_materialItemSo.MaterialLayer)
-            {
-                case eMaterialLayer.WallMaterial:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
-                        SceneGameObjectHandler.Instance.GetPropHolderTransform,
-                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
-                    return;
-                case eMaterialLayer.FloorMaterial:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
-                        SceneGameObjectHandler.Instance.GetSurfaceHolderTransform,
-                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
-                        SceneGameObjectHandler.Instance.GetPropHolderTransform,
-                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
-                    return;
-            }
+            TranspartizeOtherLayers(buildingNeedsData);
         }
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
@@ -125,6 +110,18 @@ namespace BuildingSystem.Builders
             if (_lastChangableMaterial == null) return;
             _lastChangableMaterial.UpdateMaterial(_previousMaterial);
             _lastChangableMaterial = null;
+        }
+        
+        /// <summary>
+        /// Turn Layers To Transparent but Selected one
+        /// </summary>
+        /// <param name="buildingNeedsData"></param>
+        private void TranspartizeOtherLayers(BuildingNeedsData buildingNeedsData)
+        {
+            List<Transform> transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_materialItemSo.MaterialLayer);
+            
+            foreach (var transform in transforms)
+                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
         }
 
         private IChangableMaterial GetClosestWallMaterial(BuildingNeedsData buildingNeedsData)

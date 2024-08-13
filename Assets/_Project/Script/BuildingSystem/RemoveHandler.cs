@@ -29,10 +29,11 @@ namespace BuildingSystem
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
         {
-            Transform transform = null;
-            // transform = buildingNeedsData.InputSystem.GetHitTransform();
-            transform =
-                DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition);
+            Transform transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition, ePlacementLayer.WallProp);
+            if (transform == null)
+                transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition, ePlacementLayer.FloorProp);
+            if (transform == null)
+                transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition, ePlacementLayer.BaseSurface);
 
             if (transform == null)
             {

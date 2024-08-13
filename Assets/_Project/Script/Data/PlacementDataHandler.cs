@@ -236,7 +236,7 @@ namespace Data
 
         #endregion
 
-        public List<PlacementData> GetPlacementDatas(ePlacementLayer layer)
+        public List<PlacementData> GetPlacementDatas()
         {
             var output = new List<PlacementData>();
             foreach (var item in AllPlacedObjects)
@@ -245,12 +245,16 @@ namespace Data
             return output;
         }
 
-        public Transform GetPlacementObjectByCellPos(Vector3Int cellPosition)
+        public Transform GetPlacementObjectByCellPos(Vector3Int cellPosition, ePlacementLayer layer)
         {
             foreach (var tuple in AllPlacedObjects)
             foreach (var keys in tuple.Item2)
+            {
+                if(tuple.Item3 != layer) continue;
+                
                 if (keys == cellPosition)
                     return tuple.Item1.PlacedSceneObject.transform;
+            }
 
             return null;
         }

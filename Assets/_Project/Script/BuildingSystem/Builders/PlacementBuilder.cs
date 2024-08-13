@@ -34,18 +34,9 @@ namespace BuildingSystem.Builders
 
             Offset = Offset.BuildingOffset(_storeItemSo.PlacementLayer);
 
-            switch (_storeItemSo.PlacementLayer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    buildingNeedsData.MaterialColorChanger.SetCustomMaterial(
-                        SceneGameObjectHandler.Instance.GetPropHolderTransform,
-                        MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
-                    return;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    // _materialColorChanger.SetMaterialTransparency(sceneGameObjectHandler.SurfaceHolderTransform);
-                    return;
-            }
+            var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_storeItemSo.PlacementLayer);
+            foreach (var transform in transforms)
+                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
         }
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
@@ -86,16 +77,8 @@ namespace BuildingSystem.Builders
         {
             var createdObject = Object.Instantiate(_storeItemSo.Prefab, buildingNeedsData.CellCenterPosition,
                 buildingNeedsData.RotationData.rotation);
-            switch (_storeItemSo.PlacementLayer)
-            {
-                case ePlacementLayer.BaseSurface:
-                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetSurfaceHolderTransform);
-                    break;
-                case ePlacementLayer.FloorProp:
-                case ePlacementLayer.WallProp:
-                    createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetPropHolderTransform);
-                    break;
-            }
+            
+            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));
 
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
                 new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject,

@@ -464,7 +464,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a8362de2852b6af4ca36b80ad65afed6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dea4bbf3b69afa04daa7a41fba5c7722, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.451
   m_Pitch: 1
@@ -1226,6 +1226,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
   m_PrefabInstance: {fileID: 1238708419}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &108786442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 108786443}
+  m_Layer: 0
+  m_Name: Wall Props
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &108786443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108786442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2074349932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &113728874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -6504,7 +6535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 648155750}
   m_Layer: 0
-  m_Name: Surface
+  m_Name: Surface Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15267,7 +15298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388627161}
   m_Layer: 0
-  m_Name: Prop
+  m_Name: Floor Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16362,7 +16393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cbf5f268a23e0a43ae2b2e3cc16ddab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GetPropHolderTransform>k__BackingField: {fileID: 1388627161}
+  <GetFloorPropHolderTransform>k__BackingField: {fileID: 1388627161}
+  <GetWallPropHolderTransform>k__BackingField: {fileID: 108786443}
   <GetSurfaceHolderTransform>k__BackingField: {fileID: 648155750}
   <GetNPCHolderTransform>k__BackingField: {fileID: 941333109}
   <GetEmployeeHolderTransform>k__BackingField: {fileID: 239320812}
@@ -22914,6 +22946,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1388627161}
+  - {fileID: 108786443}
   - {fileID: 648155750}
   m_Father: {fileID: 1466197925}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

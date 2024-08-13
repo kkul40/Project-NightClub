@@ -12,9 +12,9 @@ namespace New_NPC
         public DiscoData DiscoData;
         public GridHandler GridHandler;
 
-        public T GetAvaliablePropByType<T>(ePlacementLayer layer) where T : IPropUnit
+        public T GetAvaliablePropByType<T>() where T : IPropUnit
         {
-            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas().Count <= 0) return null;
 
             float lastDistance = 9999;
             T closestProp = null;
@@ -46,9 +46,9 @@ namespace New_NPC
             return closestProp;
         }
 
-        public List<T> GetAvaliablePropsByType<T>(ePlacementLayer layer) where T : IPropUnit
+        public List<T> GetAvaliablePropsByType<T>() where T : IPropUnit
         {
-            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas(layer).Count <= 0) return null;
+            if (DiscoData.Instance.placementDataHandler.GetPlacementDatas().Count <= 0) return null;
 
             var closestProps = new List<T>();
             foreach (var prop in DiscoData.Instance.GetPropList)

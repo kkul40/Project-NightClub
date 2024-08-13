@@ -1,6 +1,7 @@
 ﻿using System;
 using BuildingSystem;
 using Data;
+using New_NPC;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -10,7 +11,7 @@ namespace PropBehaviours
         public New_NPC.NPC Owner { get; set; }
         public bool IsOccupied { get; set; }
 
-        public void GetItOccupied(New_NPC.NPC owner)
+        public void SetOccupied(NPC owner, bool isOccupied)
         {
             Owner = owner;
             IsOccupied = true;

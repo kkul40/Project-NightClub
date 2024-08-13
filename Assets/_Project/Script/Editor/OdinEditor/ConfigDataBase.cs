@@ -18,6 +18,11 @@ namespace EditorNS.OdinEditor
             tree.AddAllAssetsAtPath("Store Items", "Assets/Resources/DefaultData", typeof(StoreItemSO),
                 true);
 
+            tree.AddAssetAtPath("Boy Animations",
+                "Assets/Resources/ScriptableObjects/AnimationData/Default Boy NPC Animation.asset");
+            tree.AddAssetAtPath("Girl Animations",
+                "Assets/Resources/ScriptableObjects/AnimationData/Default Girl NPC Animation.asset");
+
             return tree;
         }
         
