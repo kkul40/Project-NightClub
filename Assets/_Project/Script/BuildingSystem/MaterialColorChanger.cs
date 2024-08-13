@@ -28,8 +28,8 @@ namespace BuildingSystem
         {
             for (var i = 0; i < transform.childCount; i++)
             {
-                materialDatas.Add(transform.GetChild(i),
-                    new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
+                materialDatas.Add(transform.GetChild(i), new MaterialData(ReturnMeshRendererList(transform.GetChild(i).gameObject)));
+            
                 var listMesh = ReturnMeshRendererList(transform.GetChild(i).gameObject);
                 switch (eMaterialColor)
                 {
@@ -49,10 +49,10 @@ namespace BuildingSystem
         /// <param name="materialDatas"></param>
         public void SetMaterialToDefault(ref Dictionary<Transform, MaterialData> materialDatas)
         {
-            if (materialDatas.Count <= 0) return;
+            if (materialDatas.Count == 0) return;
             foreach (var key in materialDatas.Keys)
             {
-                var listMesh = ReturnMeshRendererList(key.gameObject);
+                var listMesh = materialDatas[key].MeshRenderer;
                 for (var i = 0; i < listMesh.Count; i++)
                     listMesh[i].materials = materialDatas[key].Materials[i].ToArray();
             }
