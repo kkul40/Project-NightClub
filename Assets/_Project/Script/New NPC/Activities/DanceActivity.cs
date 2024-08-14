@@ -14,40 +14,26 @@ namespace New_NPC.Activities
 
         public bool CanStartActivity(ActivityNeedsData and)
         {
+            var dancableTiles = and.GetAvaliablePropsByType<DancableTile>();
+
+            if (dancableTiles == null)
+                return false;
+
+            _dancableTile = dancableTiles[Random.Range(0, dancableTiles.Count)];
+
+            if (_dancableTile == null || _dancableTile.IsOccupied)
+                return false;
+
+            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
+                    ePlacementLayer.FloorProp))
+                return false;
+
             return true;
         }
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            var dancableTiles = and.GetAvaliablePropsByType<DancableTile>();
-
-            if (dancableTiles == null)
-            {
-                IsEnded = true;
-                return;
-            }
-
-            _dancableTile = dancableTiles[Random.Range(0, dancableTiles.Count)];
-
-            if (_dancableTile == null || _dancableTile.IsOccupied)
-            {
-                IsEnded = true;
-                return;
-            }
-
-            if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
-                    ePlacementLayer.FloorProp))
-            {
-                IsEnded = true;
-                return;
-            }
-
-            var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.CellPosition);
-            if (!foundPath)
-            {
-                IsEnded = true;
-                return;
-            }
+            var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.WorldPos);
 
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.SetOccupied(and.Npc, true);

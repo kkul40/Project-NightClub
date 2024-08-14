@@ -50,14 +50,14 @@ namespace New_NPC
             _routine = null;
         }
 
-        public List<Vector3> FoundPath =>_currentPath;
+        public List<Vector3> FoundPath => _currentPath;
 
         private IEnumerator CoFollowPath(List<Vector3> path, Action OnCompleteCallBack = null)
         {
             for (var i = 0; i < path.Count; i++)
             {
                 yield return null;
-                
+
                 var newPath = path[i];
                 SetRotationToTarget(newPath);
                 while (Vector3.Distance(_assignedNPC.position, newPath) > 0.1f)
@@ -118,17 +118,16 @@ namespace New_NPC
                     }
                 }
             }
-            
-            // return NullPathReturn(targetPos);
+
             return new List<Vector3>();
         }
 
         private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
         {
             if (worldPosition == -Vector3.one) return new PathFinderNode();
-            var x = (int)worldPosition.x;
-            var y = (int)worldPosition.z;
-            return _tileNode[x, y];
+
+            var cell = GridHandler.Instance.GetWorldToCell(worldPosition, eGridType.PathFinderGrid);
+            return _tileNode[cell.x, cell.z];
         }
 
         private List<Vector3> RetracePath(PathFinderNode startNode, PathFinderNode endNode)

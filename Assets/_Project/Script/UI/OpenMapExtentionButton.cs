@@ -11,8 +11,8 @@ namespace UI
     public class OpenMapExtentionButton : UIButton
     {
         [SerializeField] private UIStorePage storePage;
-        private StoreDataCarrier _storeDataCarrier = new StoreDataCarrier();
-        
+        private StoreDataCarrier _storeDataCarrier = new();
+
         private void Awake()
         {
             _storeDataCarrier.EUISlot = DiscoData.eUISlot.ExtentionSlot;

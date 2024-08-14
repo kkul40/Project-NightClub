@@ -25,9 +25,9 @@ namespace Data
 
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
-            LoadGame();            
+            LoadGame();
         }
-        
+
         public void NewGame()
         {
             _gameData = new GameData();
@@ -65,7 +65,7 @@ namespace Data
             var temp = new FileDataHandler(Application.persistentDataPath, fileName);
             temp.DeleteData();
         }
-        
+
         // TODO Application Quite savelemek ister misin diye sor
 
         public void RegisterForSaveLoad(ISaveLoad saveLoad)

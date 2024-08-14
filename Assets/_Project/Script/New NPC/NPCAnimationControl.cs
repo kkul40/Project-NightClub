@@ -60,7 +60,8 @@ namespace New_NPC
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
-        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo, Transform animatorTransform)
+        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo,
+            Transform animatorTransform)
         {
             this.animator = animator;
             _animationSo = animationSo;

@@ -23,9 +23,8 @@ namespace PlayerScripts
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                var lastHitFloor = InputSystem.Instance.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
-                if (lastHitFloor != null)
-                    _pathFinder.GoTargetDestination(GridHandler.Instance.GetWorldToCell(lastHitFloor.position, eGridType.PathFinderGrid));
+                var node = DiscoData.Instance.MapData.GetPathNodeByWorldPos(InputSystem.Instance.GetMouseMapPosition());
+                _pathFinder.GoTargetDestination(node.WorldPos);
             }
         }
     }

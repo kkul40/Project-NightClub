@@ -35,7 +35,7 @@ namespace System
                     return grid4x4.WorldToCell(SwapYZ(mousePosition));
                     break;
             }
-            
+
             Debug.Log("Grid Type Could Not Found");
             return -Vector3Int.one;
         }
@@ -52,7 +52,7 @@ namespace System
                     return grid4x4.CellToWorld(SwapYZ(cellPos));
                     break;
             }
-            
+
             Debug.Log("Grid Type Could Not Found");
             return -Vector3Int.one;
         }
@@ -69,6 +69,7 @@ namespace System
                     return grid4x4.GetCellCenterWorld(SwapYZ(cellPos));
                     break;
             }
+
             Debug.Log("Grid Type Could Not Found");
             return -Vector3Int.one;
         }
@@ -85,7 +86,7 @@ namespace System
                     return grid4x4.WorldToCell(SwapYZ(worldPos));
                     break;
             }
-            
+
             Debug.Log("Grid Type Could Not Found");
             return -Vector3Int.one;
         }
@@ -137,6 +138,6 @@ namespace System
     public enum eGridType
     {
         PlacementGrid,
-        PathFinderGrid,
+        PathFinderGrid
     }
 }

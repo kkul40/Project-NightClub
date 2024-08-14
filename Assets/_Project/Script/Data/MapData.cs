@@ -18,8 +18,7 @@ namespace Data
         //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
         public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
-        
-        private PathFinderNode[,] PathFinderNodes;
+
         private PathFinderNode[,] NewPathFinderNodes;
 
         public MapData()
@@ -31,28 +30,25 @@ namespace Data
             DoorPosition = new Vector3Int(WallDoorIndex, 0, -1);
             WallDatas = new List<WallAssignmentData>();
             FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-            
+
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
-            {
-                PathFinderNodes[x, y] = new PathFinderNode();
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
-            }
-            
+
             // Test
             SetUpNewPathFinder();
         }
 
         private void SetUpNewPathFinder()
         {
-            NewPathFinderNodes = new PathFinderNode[(ConstantVariables.MaxMapSizeX * 4) +1, (ConstantVariables.MaxMapSizeY * 4) + 1];
+            NewPathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX * 4 + 1,
+                ConstantVariables.MaxMapSizeY * 4 + 1];
 
             float startX = 0;
             float startY = 0;
-            for (int x = 0; x < PathFinderSize.x; x++)
+            for (var x = 0; x < PathFinderSize.x; x++)
             {
-                for (int y = 0; y < PathFinderSize.y; y++)
+                for (var y = 0; y < PathFinderSize.y; y++)
                 {
                     NewPathFinderNodes[x, y] = new PathFinderNode();
                     var node = NewPathFinderNodes[x, y];
@@ -61,8 +57,9 @@ namespace Data
                     node.GridX = x;
                     node.GridY = y;
                     node.WorldPos = new Vector3(startX, 0, startY);
-                    startY +=0.25f;
+                    startY += 0.25f;
                 }
+
                 startY = 0;
                 startX += 0.25f;
             }
@@ -86,15 +83,9 @@ namespace Data
             foreach (var wall in gameData.SavedWallDatas) WallDatas.Add(new WallAssignmentData(wall));
 
             FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
-            PathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
-            {
-                for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
-                {
-                    FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
-                    PathFinderNodes[x, y] = new PathFinderNode();
-                }
-            }
+            for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
+                FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
             // Testing
             SetUpNewPathFinder();
 
@@ -120,30 +111,22 @@ namespace Data
             return true;
         }
 
-        public PathFinderNode GetTileNodeByCellPos(Vector3Int cellpos)
-        {
-            if (cellpos.x > PathFinderSize.x || cellpos.z > PathFinderSize.y)
-            {
-                Debug.LogError("TileNode Index Is Not Valid");
-                return null;
-            }
 
-            return PathFinderNodes[cellpos.x, cellpos.z];
-        }
-        
-        public void SetPathfinderNode(int x, int y, bool? isAvaliable = null, bool? isWalkable = null, Vector3? position = null, int? gridX = null, int? gridY = null)
+        public void SetPathfinderNode(int x, int y, bool? isAvaliable = null, bool? isWalkable = null,
+            Vector3? position = null)
         {
-            if (x > CurrentMapSize.x || y > CurrentMapSize.y)
-            {
-                Debug.LogError("TileNode Index Is Not Valid");
-                return;
-            }
-            
-            var node = PathFinderNodes[x, y];
-            node.IsWalkable = isWalkable ?? node.IsWalkable;
-            node.WorldPos = position ?? node.WorldPos;
-            node.GridX = gridX ?? node.GridX;
-            node.GridY = gridY ?? node.GridY;
+            // TODO Yeni PathFinder a gore duzenle
+            // if (x > CurrentMapSize.x || y > CurrentMapSize.y)
+            // {
+            //     Debug.LogError("TileNode Index Is Not Valid");
+            //     return;
+            // }
+            //
+            // var node = PathFinderNodes[x, y];
+            // node.IsWalkable = isWalkable ?? node.IsWalkable;
+            // node.WorldPos = position ?? node.WorldPos;
+            // node.GridX = gridX ?? node.GridX;
+            // node.GridY = gridY ?? node.GridY;
         }
 
         public PathFinderNode GetRandomPathFinderNode()
@@ -151,32 +134,21 @@ namespace Data
             return NewPathFinderNodes[Random.Range(0, PathFinderSize.x), Random.Range(0, PathFinderSize.y)];
         }
 
-        public PathFinderNode[,] GetPathFinderNode()
+        public PathFinderNode[,] GetNewPathFinderNote()
         {
-            // TODO Herseferinde bunu yeniden olusturmak yerine arada bir guncellemeyi dene
-            PathFinderNode[,] outputNode = new PathFinderNode[CurrentMapSize.x, CurrentMapSize.y];
+            var outputNode = new PathFinderNode[PathFinderSize.x, PathFinderSize.y];
 
-            for (int x = 0; x < CurrentMapSize.x; x++)
-                for (int y = 0; y < CurrentMapSize.y; y++)
-                    outputNode[x, y] = PathFinderNodes[x, y].Copy();
+            for (var x = 0; x < PathFinderSize.x; x++)
+            for (var y = 0; y < PathFinderSize.y; y++)
+                outputNode[x, y] = NewPathFinderNodes[x, y].Copy();
 
             return outputNode;
         }
 
-        public PathFinderNode[,] GetNewPathFinderNote()
+        public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
         {
-            PathFinderNode[,] outputNode = new PathFinderNode[PathFinderSize.x, PathFinderSize.y];
-
-            for (int x = 0; x < PathFinderSize.x; x++)
-                for (int y = 0; y < PathFinderSize.y; y++)
-                {
-                    outputNode[x, y] = NewPathFinderNodes[x, y].Copy();
-                    //
-                    // if (x == 0 || y == 0) ;
-                    //     outputNode[x, y].IsMarked = true;
-                }
-
-            return outputNode;
+            var convert = GridHandler.Instance.GetWorldToCell(worldPos, eGridType.PathFinderGrid);
+            return NewPathFinderNodes[convert.x, convert.z];
         }
 
         public FloorGridAssignmentData GetFloorGridAssignmentByCellPos(Vector3Int cellpos)
@@ -190,7 +162,10 @@ namespace Data
             return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
-        public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1,0 ,1), eGridType.PlacementGrid) - new Vector3(0,0.5f, 0);
+        public Vector3 EnterencePosition =>
+            GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1, 0, 1), eGridType.PlacementGrid) -
+            new Vector3(0, 0.5f, 0);
+
         public Vector3 SpawnPositon => EnterencePosition - new Vector3(0, 0, 3);
     }
 }

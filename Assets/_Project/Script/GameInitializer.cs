@@ -18,7 +18,7 @@ namespace DefaultNamespace
                     InitializeGame();
                     break;
             }
-            
+
             InitializeCommon();
         }
 

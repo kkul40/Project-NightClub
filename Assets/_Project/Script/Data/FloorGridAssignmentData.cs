@@ -38,20 +38,20 @@ namespace Data
                 Debug.LogError("Floor Object Not Assigned");
                 return;
             }
-            
-            if (newID == -1) assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
+
+            if (newID == -1)
+            {
+                assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
+            }
             else
             {
                 var foundMaterial = DiscoData.Instance.FindItemByID(newID) as MaterialItemSo;
-                if (foundMaterial == null)
-                {
-                    Debug.LogError(newID + " Could Not Found in Item List");
-                }
+                if (foundMaterial == null) Debug.LogError(newID + " Could Not Found in Item List");
                 assignedFloorTile.UpdateMaterial(foundMaterial.Material);
             }
 
             assignedMaterialID = newID;
-            
+
             // Debug.Log("New ID Assigned To FloorGridData : " + newID);
         }
     }

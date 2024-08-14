@@ -25,18 +25,20 @@ namespace BuildingSystem.Builders
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
             _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
-            _tempObject = Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
-            
+            _tempObject =
+                Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
+
             if (_tempObject.TryGetComponent(out IPropUnit propUnit))
-                MonoBehaviour.Destroy(propUnit);
-            
+                Object.Destroy(propUnit);
+
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
 
             Offset = Offset.BuildingOffset(_storeItemSo.PlacementLayer);
 
             var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_storeItemSo.PlacementLayer);
             foreach (var transform in transforms)
-                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform,
+                    MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
         }
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
@@ -77,8 +79,9 @@ namespace BuildingSystem.Builders
         {
             var createdObject = Object.Instantiate(_storeItemSo.Prefab, buildingNeedsData.CellCenterPosition,
                 buildingNeedsData.RotationData.rotation);
-            
-            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));
+
+            createdObject.transform.SetParent(
+                SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));
 
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
                 new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject,

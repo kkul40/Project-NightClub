@@ -13,7 +13,7 @@ namespace PropBehaviours
         public IPathFinder PathFinder { get; private set; }
         public bool IsBusy { get; set; }
         public Transform mTransform { get; private set; }
-        public Queue<IBartenderCommand> BartenderCommands { get; } = new Queue<IBartenderCommand>();
+        public Queue<IBartenderCommand> BartenderCommands { get; } = new();
         public IBartenderCommand CurrentCommand { get; private set; }
         public IAnimationController AnimationController { get; private set; }
 
@@ -22,9 +22,10 @@ namespace PropBehaviours
         private void Start()
         {
             PathFinder = new BartenderPathFinder(transform);
-            mTransform = this.transform;
+            mTransform = transform;
             BarMediator = new BarMediator();
-            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(), InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
+            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(),
+                InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
         }
 
         private void Update()
@@ -41,7 +42,7 @@ namespace PropBehaviours
                     BartenderCommands.Peek().SetThingsBeforeStart();
                     isStarted = true;
                 }
-                
+
                 if (!BartenderCommands.Peek().HasFinish)
                 {
                     BartenderCommands.Peek().UpdateCommand(BarMediator);
@@ -53,17 +54,18 @@ namespace PropBehaviours
                 }
             }
         }
-    
+
         public void AddCommand(IBartenderCommand command)
         {
             BartenderCommands.Enqueue(command);
         }
-    
+
         public void RemoveCommand()
         {
         }
 
         public eInteraction Interaction { get; } = eInteraction.Customer;
+
         public void OnFocus()
         {
         }

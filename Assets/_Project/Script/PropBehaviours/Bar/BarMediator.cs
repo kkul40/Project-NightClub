@@ -13,10 +13,8 @@ namespace PropBehaviours
     {
         [SerializeField] private GameObject DrinkTablePrefab;
 
-        [OdinSerialize]
-        public SerializedDictionary<int, IBartender> _bartenders;
-        [OdinSerialize]
-        public SerializedDictionary<int, IBar> _bars;
+        [OdinSerialize] public SerializedDictionary<int, IBartender> _bartenders;
+        [OdinSerialize] public SerializedDictionary<int, IBar> _bars;
 
         private void Start()
         {
@@ -39,17 +37,15 @@ namespace PropBehaviours
 
         public void AddCommand(IBar source, IBartenderCommand command)
         {
-            IBartender avaliable = GetAvaliableBartender();
+            var avaliable = GetAvaliableBartender();
             if (avaliable == null)
             {
                 Debug.Log("Could not found avaliable bartender");
                 return;
             }
+
             command.InitCommand(source, avaliable);
-            if (command.IsDoable())
-            {
-                avaliable.AddCommand(command);
-            }
+            if (command.IsDoable()) avaliable.AddCommand(command);
         }
 
         public DrinkTable CreateDrinkTable(IBar bar)
@@ -68,16 +64,14 @@ namespace PropBehaviours
                 if (!bartender.IsBusy)
                     return bartender;
 
-            int workCount = 999;
+            var workCount = 999;
             IBartender output = null;
             foreach (var bartender in _bartenders.Values)
-            {
                 if (bartender.BartenderCommands.Count < workCount)
                 {
                     workCount = bartender.BartenderCommands.Count;
                     output = bartender;
                 }
-            }
 
             return output;
         }
@@ -87,7 +81,7 @@ namespace PropBehaviours
             Debug.Log("Bar Mediatoooor");
             _bars.Clear();
             _bartenders.Clear();
-            
+
             var bars = FindObjectsOfType<MonoBehaviour>().OfType<IBar>().ToList();
             var bartenders = FindObjectsOfType<MonoBehaviour>().OfType<IBartender>().ToList();
 

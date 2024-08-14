@@ -31,20 +31,17 @@ namespace Root
             }
 
             if (showPaths)
-            {
                 foreach (var node in DiscoData.Instance.MapData.GetNewPathFinderNote())
                 {
-                    
                     if (node.IsMarked)
                         Gizmos.color = Color.blue;
-                    else if(node.IsWalkable)
+                    else if (node.IsWalkable)
                         Gizmos.color = Color.green;
                     else
                         Gizmos.color = Color.red;
-                    
+
                     Gizmos.DrawCube(node.WorldPos, new Vector3(0.2f, 0.2f, 0.2f));
                 }
-            }
         }
 
         public static void Print(string message)

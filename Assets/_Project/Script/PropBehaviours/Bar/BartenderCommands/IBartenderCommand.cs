@@ -4,7 +4,7 @@
     {
         IBar bar { get; }
         IBartender bartender { get; }
-        
+
         bool HasFinish { get; }
 
         void InitCommand(IBar bar, IBartender bartender);

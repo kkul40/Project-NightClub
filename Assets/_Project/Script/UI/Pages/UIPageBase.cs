@@ -9,21 +9,23 @@ namespace UI
             if (toggle)
             {
                 PageManager.Instance.HandleNewUIPageToggle(this);
-                this.gameObject.SetActive(true);
+                gameObject.SetActive(true);
                 return;
             }
-            this.gameObject.SetActive(false);
+
+            gameObject.SetActive(false);
         }
-        
+
         public virtual void Toggle()
         {
             if (isActiveAndEnabled)
             {
-                this.gameObject.SetActive(false);
+                gameObject.SetActive(false);
                 return;
             }
+
             PageManager.Instance.HandleNewUIPageToggle(this);
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace New_NPC.Activities
 
         private float timer = 0;
         private float delay = 0.5f;
-        
+
         public bool CanStartActivity(ActivityNeedsData and)
         {
             return true;

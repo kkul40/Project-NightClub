@@ -8,7 +8,7 @@ namespace PropBehaviours
 {
     public class DancableTile : IPropUnit, IPropUpdate, IOccupieable
     {
-        public New_NPC.NPC Owner { get; set; }
+        public NPC Owner { get; set; }
         public bool IsOccupied { get; set; }
 
         public void SetOccupied(NPC owner, bool isOccupied)
@@ -17,9 +17,16 @@ namespace PropBehaviours
             IsOccupied = true;
         }
 
+        public void OnPropPlaced()
+        {
+        }
+
         public void PropUpdate()
         {
-            // Debug.Log("Dancable Area Updated");
+        }
+
+        public void OnPropRemoved()
+        {
         }
     }
 }

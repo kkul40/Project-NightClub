@@ -30,8 +30,8 @@ namespace Data
 
         public PathFinderNode Copy()
         {
-            PathFinderNode output = new PathFinderNode();
-            
+            var output = new PathFinderNode();
+
             output.WorldPos = WorldPos;
             output.Parent = Parent;
             output.IsWalkable = IsWalkable;

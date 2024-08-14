@@ -29,8 +29,6 @@ namespace New_NPC
         {
             if (!activity.CanStartActivity(_activityNeedsData)) return;
 
-            if (!ActivitySystem.Instance.CanStartNewActivity(_currentActivity)) return;
-
             _currentActivity = activity;
             _lastActivity = _currentActivity;
             _currentActivity.OnActivityStart(_activityNeedsData);
@@ -43,7 +41,6 @@ namespace New_NPC
             if (_currentActivity.IsEnded)
             {
                 _currentActivity.OnActivityEnd(_activityNeedsData);
-                
                 StartNewActivity(GetRandomActivity());
                 return;
             }
@@ -56,7 +53,8 @@ namespace New_NPC
             var randomActivity = ActivitySystem.Instance.GetRandomActivity();
 
             var iterate = 0;
-            while (_lastActivity.GetType() == randomActivity.GetType())
+            while (_lastActivity.GetType() == randomActivity.GetType() ||
+                   !randomActivity.CanStartActivity(_activityNeedsData))
             {
                 randomActivity = ActivitySystem.Instance.GetRandomActivity();
 
@@ -69,9 +67,8 @@ namespace New_NPC
                 }
             }
 
+            randomActivity.CanStartActivity(_activityNeedsData);
             return randomActivity;
         }
-
-       
     }
 }

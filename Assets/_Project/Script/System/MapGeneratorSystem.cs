@@ -15,7 +15,7 @@ namespace System
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
-        
+
         public override void Initialize()
         {
             MapData = new MapData();
@@ -134,7 +134,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.SetPathfinderNode(x,y, isAvaliable:true, isWalkable:true, position:pos, gridX:x, gridY:y);
+            MapData.SetPathfinderNode(x, y, true, true, pos);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }

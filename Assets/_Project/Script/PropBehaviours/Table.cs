@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BuildingSystem;
 using Data;
 using UnityEngine;
@@ -9,9 +10,9 @@ namespace PropBehaviours
     {
         public List<Chair> Chairs;
 
-        public void PropUpdate()
+        public void OnPropPlaced()
         {
-            Chairs.Clear();
+            Chairs = new List<Chair>();
             foreach (var prop in DiscoData.Instance.GetPropList)
             {
                 if (Chairs.Count > 3) break;
@@ -19,16 +20,54 @@ namespace PropBehaviours
                 if (prop is Chair chair)
                 {
                     var distance = chair.CellPosition - CellPosition;
-                    if (distance.magnitude <= 1) Chairs.Add(chair);
+                    if (distance.magnitude <= 1 && IsChairFacingToThisTable(chair))
+                    {
+                        chair.IsReservedToATable = true;
+                        Chairs.Add(chair);
+                    }
                 }
             }
         }
 
-        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
-            ePlacementLayer placementLayer)
+        public void PropUpdate()
         {
-            base.Initialize(ID, cellPosition, rotationData, placementLayer);
-            PropUpdate();
+            OnPropRemoved();
+
+            OnPropPlaced();
+        }
+
+        public void OnPropRemoved()
+        {
+            Debug.Log("OnRemoved Calisti");
+            foreach (var chair in Chairs)
+                chair.IsReservedToATable = false;
+
+            Chairs.Clear();
+        }
+
+        private bool IsChairFacingToThisTable(Chair chair)
+        {
+            switch (chair.RotationData.direction)
+            {
+                case Direction.Down:
+                    if (CellPosition.z - chair.CellPosition.z == 1)
+                        return true;
+                    break;
+                case Direction.Up:
+                    if (CellPosition.z - chair.CellPosition.z == -1)
+                        return true;
+                    break;
+                case Direction.Left:
+                    if (CellPosition.x - chair.CellPosition.x == 1)
+                        return true;
+                    break;
+                case Direction.Right:
+                    if (CellPosition.x - chair.CellPosition.x == -1)
+                        return true;
+                    break;
+            }
+
+            return false;
         }
     }
 }

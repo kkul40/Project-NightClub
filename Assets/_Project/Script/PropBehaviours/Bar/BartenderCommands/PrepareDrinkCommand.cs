@@ -22,7 +22,7 @@ namespace PropBehaviours
         {
             this.bar = bar;
             this.bartender = bartender;
-            this.target = bar.BartenderWaitPosition;
+            target = bar.BartenderWaitPosition;
         }
 
         public bool IsDoable()
@@ -32,6 +32,7 @@ namespace PropBehaviours
                 Debug.Log("Can't Start Action");
                 return false;
             }
+
             return true;
         }
 
@@ -51,7 +52,7 @@ namespace PropBehaviours
                 case eState.ReachTarget:
                     if (!bartender.PathFinder.HasReachedDestination)
                         break;
-                    
+
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_PrepareDrink);
                     bartender.PathFinder.SetPositioning(bar.BartenderWaitPosition.rotation);
                     _state = eState.PrepareDrink;
@@ -62,6 +63,7 @@ namespace PropBehaviours
                         timer += Time.deltaTime;
                         break;
                     }
+
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
                     bar.CreateDrinks();
                     bar.HasDrinks = true;
@@ -74,21 +76,21 @@ namespace PropBehaviours
         private enum eState
         {
             ReachTarget,
-            PrepareDrink,
+            PrepareDrink
         }
     }
-    
+
     public class WalkToEntranceCommand : IBartenderCommand
     {
         public IBar bar { get; }
         public IBartender bartender { get; private set; }
         public bool HasFinish { get; private set; }
-    
+
         public void InitCommand(IBar bar, IBartender bartender)
         {
             this.bartender = bartender;
         }
-    
+
         public bool IsDoable()
         {
             return true;

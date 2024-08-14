@@ -75,12 +75,14 @@ namespace New_NPC
         {
             var bars = new List<T>();
             foreach (var prop in DiscoData.Instance.GetPropList)
-            {
-                if (prop is T propType) bars.Add(propType);
-            }
+                if (prop is T propType)
+                    bars.Add(propType);
 
             if (bars.Count < 1)
+            {
                 Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
+                return null;
+            }
 
             return bars;
         }

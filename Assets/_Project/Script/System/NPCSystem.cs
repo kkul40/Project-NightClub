@@ -49,15 +49,16 @@ namespace System
 
         private void SendBartender()
         {
-            var newBartender = Instantiate(_bartenderPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
+            var newBartender = Instantiate(_bartenderPrefab, DiscoData.Instance.MapData.SpawnPositon,
+                Quaternion.identity);
 
             newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
-            
-            IBartender bartender = newBartender.GetComponent<IBartender>();
-            
-            WalkToEntranceCommand command = new WalkToEntranceCommand();
+
+            var bartender = newBartender.GetComponent<IBartender>();
+
+            var command = new WalkToEntranceCommand();
             command.InitCommand(null, bartender);
-            
+
             bartender.AddCommand(command);
             OnBartenderCreated?.Invoke();
         }
@@ -101,9 +102,9 @@ namespace System
         public void RemoveNPCs()
         {
             // TODO There is bugg here 'causing null referance on Transforms
-            if(_npcSpawnRoutine != null)
+            if (_npcSpawnRoutine != null)
                 StopCoroutine(_npcSpawnRoutine);
-            
+
             foreach (var activity in _npcActivities)
                 activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
 

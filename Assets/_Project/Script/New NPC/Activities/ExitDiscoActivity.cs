@@ -11,9 +11,11 @@ namespace New_NPC.Activities
 
         private float timer = 0;
         private float delay = 1;
+        private ActivityNeedsData and;
 
         public bool CanStartActivity(ActivityNeedsData and)
         {
+            this.and = and;
             return true;
         }
 
@@ -26,19 +28,16 @@ namespace New_NPC.Activities
         public void OnActivityUpdate(ActivityNeedsData and)
         {
             if (and.Npc.PathFinder.HasReachedDestination)
-            {
-                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false, OnCompleteCallBack:OnComplete);
-            }
+                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false, OnComplete);
         }
-        
+
         private void OnComplete()
         {
-            IsEnded = true;
+            Object.DestroyImmediate(and.Npc.gameObject);
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            MonoBehaviour.DestroyImmediate(and.Npc.gameObject);
         }
     }
 }

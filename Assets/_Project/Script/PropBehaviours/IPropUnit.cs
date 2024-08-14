@@ -1,15 +1,17 @@
 ﻿using System;
 using BuildingSystem;
-using Data;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace PropBehaviours
 {
+    [SelectionBase]
     public class IPropUnit : MonoBehaviour, IInteractable
     {
         // public NewPropPlacementDataHandler.NewPlacementData PropData { get; private set; }
         public int ID { get; private set; }
-        public Vector3Int CellPosition { get; private set; }
+
+        [OdinSerialize] public Vector3Int CellPosition { get; private set; }
         public Vector3 WorldPos { get; private set; }
         public RotationData RotationData { get; private set; }
         public ePlacementLayer PlacementLayer { get; private set; }
@@ -19,7 +21,7 @@ namespace PropBehaviours
         {
             this.ID = ID;
             CellPosition = cellPosition;
-            WorldPos = GridHandler.Instance.CellToWorldPosition(cellPosition, eGridType.PlacementGrid);
+            WorldPos = GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid);
             RotationData = rotationData;
             PlacementLayer = placementLayer;
         }

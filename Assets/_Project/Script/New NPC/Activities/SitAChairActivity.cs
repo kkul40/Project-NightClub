@@ -12,21 +12,25 @@ namespace New_NPC.Activities
         private float timer = 0;
         private float delay = 5f;
         private bool startTimer = false;
-        
+
         public bool IsEnded { get; private set; }
+
         public bool CanStartActivity(ActivityNeedsData and)
         {
             _chair = and.GetAvaliablePropByType<Chair>();
 
             if (_chair == null) return false;
-            
+
+            if (_chair.IsReservedToATable) return false;
+
             return true;
         }
 
         public void OnActivityStart(ActivityNeedsData and)
         {
             this.and = and;
-            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position, OnCompleteCallBack: OnReachedToChair);
+            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position,
+                OnCompleteCallBack: OnReachedToChair);
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }

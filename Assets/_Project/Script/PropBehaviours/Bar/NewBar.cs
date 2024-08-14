@@ -24,7 +24,7 @@ namespace PropBehaviours
             get
             {
                 if (_drinkTable == null || _drinkTable.drinkAmount <= 0) return false;
-                
+
                 return true;
             }
 
@@ -35,10 +35,7 @@ namespace PropBehaviours
 
         public void GetDrink()
         {
-            if (HasDrinks)
-            {
-                _drinkTable.GetDrink();
-            }
+            if (HasDrinks) _drinkTable.GetDrink();
             Debug.Log("Nice Drink Broother!!");
         }
 

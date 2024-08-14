@@ -111,17 +111,18 @@ namespace BuildingSystem.Builders
             _lastChangableMaterial.UpdateMaterial(_previousMaterial);
             _lastChangableMaterial = null;
         }
-        
+
         /// <summary>
         /// Turn Layers To Transparent but Selected one
         /// </summary>
         /// <param name="buildingNeedsData"></param>
         private void TranspartizeOtherLayers(BuildingNeedsData buildingNeedsData)
         {
-            List<Transform> transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_materialItemSo.MaterialLayer);
-            
+            var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_materialItemSo.MaterialLayer);
+
             foreach (var transform in transforms)
-                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform, MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform,
+                    MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
         }
 
         private IChangableMaterial GetClosestWallMaterial(BuildingNeedsData buildingNeedsData)

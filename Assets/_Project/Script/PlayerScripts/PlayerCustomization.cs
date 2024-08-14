@@ -49,7 +49,7 @@ namespace PlayerScripts
         public void LoadData(GameData gameData)
         {
             var data = gameData.SavedPlayerCustomizationIndexData;
-            
+
             playerGenderIndex = data.playerGenderIndex;
             playerHairIndex = data.playerHairIndex;
             playerBeardIndex = data.playerBeardIndex;
@@ -61,7 +61,7 @@ namespace PlayerScripts
             ChangePlayerPart(playerBeardHolder, playerCDS.playerBeardPrefabs[playerBeardIndex].Prefab);
             ChangePlayerPart(playerAttachmentHolder, playerCDS.playerAttachtmentPrefabs[playerAttachmentIndex].Prefab);
             ChangePlayerPart(playerEaringHolder, playerCDS.playerEaringPrefabs[playerEaringIndex].Prefab);
-            
+
             Debug.Log("Character Loaded");
         }
 

@@ -43,6 +43,8 @@ namespace Data
 
 
         public static event Action OnPropUpdate;
+        public static event Action OnPropRemoved;
+        public static event Action OnPropPlaced;
 
         public PlacementDataHandler()
         {
@@ -112,6 +114,8 @@ namespace Data
                     placementData.PlacedPlacementItemSo.PlacementLayer);
             }
 
+            if (placementData.PlacedSceneObject.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropPlaced();
+
             UpdateProps();
         }
 
@@ -132,11 +136,12 @@ namespace Data
 
             AllPlacedObjects.Remove(data);
 
+
             var objectToRemove = data.Item1.PlacedSceneObject;
-            if (objectToRemove.TryGetComponent(out IPropUnit prop))
-            {
-                propList.Remove(prop);
-            }
+            if (objectToRemove.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropRemoved();
+
+            if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
+
 
             Object.Destroy(objectToRemove);
             UpdateProps();
@@ -147,7 +152,7 @@ namespace Data
             foreach (var prop in propList)
                 if (prop.transform.TryGetComponent(out IPropUpdate propUpdate))
                     propUpdate.PropUpdate();
-            
+
             OnPropUpdate?.Invoke();
         }
 
@@ -217,9 +222,10 @@ namespace Data
         private GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition,
             RotationData rotationData)
         {
-            Vector3 offset = new Vector3().BuildingOffset(placementItemso.PlacementLayer);
+            var offset = new Vector3().BuildingOffset(placementItemso.PlacementLayer);
             var createdObject = Object.Instantiate(placementItemso.Prefab,
-                GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid) + offset, rotationData.rotation);
+                GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid) + offset,
+                rotationData.rotation);
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
 
@@ -250,8 +256,8 @@ namespace Data
             foreach (var tuple in AllPlacedObjects)
             foreach (var keys in tuple.Item2)
             {
-                if(tuple.Item3 != layer) continue;
-                
+                if (tuple.Item3 != layer) continue;
+
                 if (keys == cellPosition)
                     return tuple.Item1.PlacedSceneObject.transform;
             }
@@ -278,12 +284,12 @@ namespace Data
 
         private MapData MapData => DiscoData.Instance.MapData;
     }
+}
 
-    public enum ePlacementLayer
-    {
-        BaseSurface, // General BaseSurface Placement
-        FloorProp, // Objects placed on the Floor
-        WallProp, // Objects placed ont the Wall
-        Null
-    }
+public enum ePlacementLayer
+{
+    BaseSurface, // General BaseSurface Placement
+    FloorProp, // Objects placed on the Floor
+    WallProp, // Objects placed ont the Wall
+    Null
 }

@@ -32,8 +32,8 @@ namespace BuildingSystem
 
         public List<Transform> GetExcludeTransformsByLayer(ePlacementLayer layer)
         {
-            List<Transform> transforms = new List<Transform>();
-            
+            var transforms = new List<Transform>();
+
             switch (layer)
             {
                 case ePlacementLayer.BaseSurface:
@@ -49,21 +49,21 @@ namespace BuildingSystem
 
             return transforms;
         }
-        
+
         public List<Transform> GetExcludeTransformsByLayer(eMaterialLayer layer)
         {
-            List<Transform> transforms = new List<Transform>();
-            
+            var transforms = new List<Transform>();
+
             switch (layer)
             {
-               case eMaterialLayer.FloorMaterial:
-                   transforms.Add(GetFloorPropHolderTransform);
-                   transforms.Add(GetSurfaceHolderTransform);
-                   break;
-               case eMaterialLayer.WallMaterial:
-                   transforms.Add(GetWallPropHolderTransform);
-                   transforms.Add(GetFloorPropHolderTransform);
-                   break;
+                case eMaterialLayer.FloorMaterial:
+                    transforms.Add(GetFloorPropHolderTransform);
+                    transforms.Add(GetSurfaceHolderTransform);
+                    break;
+                case eMaterialLayer.WallMaterial:
+                    transforms.Add(GetWallPropHolderTransform);
+                    transforms.Add(GetFloorPropHolderTransform);
+                    break;
             }
 
             return transforms;

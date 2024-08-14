@@ -17,7 +17,8 @@ namespace New_NPC
             this.mTransform = mTransform;
         }
 
-        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null)
+        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true,
+            Action OnCompleteCallBack = null)
         {
             target = targetDestination;
             HasReachedDestination = false;
@@ -41,13 +42,14 @@ namespace New_NPC
             mTransform.DORotate(lookRotation.eulerAngles, 0.5f);
         }
 
-        IEnumerator CoWalkPosition()
+        private IEnumerator CoWalkPosition()
         {
             while (Vector3.Distance(mTransform.position, target) > 0.01f)
             {
                 mTransform.position = Vector3.MoveTowards(mTransform.position, target, Time.deltaTime * 1.5f);
                 yield return null;
             }
+
             HasReachedDestination = true;
         }
     }

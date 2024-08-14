@@ -1,5 +1,4 @@
 ﻿using BuildingSystem;
-using Data;
 using New_NPC;
 using UnityEngine;
 
@@ -10,7 +9,8 @@ namespace PropBehaviours
         [SerializeField] private Transform sitPosition;
         [SerializeField] private Transform frontPosition;
 
-        public New_NPC.NPC Owner { get; private set; }
+        public NPC Owner { get; private set; }
+        public bool IsReservedToATable = false;
 
         [field: SerializeField] public bool IsOccupied { get; private set; }
 
@@ -24,7 +24,10 @@ namespace PropBehaviours
             IsOccupied = isOccupied;
         }
 
-        public Transform GetFrontPosition() => frontPosition;
+        public Transform GetFrontPosition()
+        {
+            return frontPosition;
+        }
 
         public Vector3 GetSitPosition()
         {

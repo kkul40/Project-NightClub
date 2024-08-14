@@ -11,7 +11,7 @@ namespace BuildingSystem.SO
         public Vector2Int Size;
         public bool Big = false;
 
-        [HorizontalGroup("Split", 290), EnumToggleButtons, HideLabel]
+        [HorizontalGroup("Split", 290)] [EnumToggleButtons] [HideLabel]
         public ePlacementLayer PlacementLayer;
 
         public enum eRotationType
@@ -22,7 +22,7 @@ namespace BuildingSystem.SO
             Auto
         }
 
-        [HorizontalGroup("Split", 290), EnumToggleButtons, HideLabel]
+        [HorizontalGroup("Split", 290)] [EnumToggleButtons] [HideLabel]
         public eRotationType eRotation;
     }
 }

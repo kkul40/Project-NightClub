@@ -21,6 +21,7 @@ namespace StartMenu
                 page.Initiliase();
                 page.HideImmidiatly();
             }
+
             currentPage = pages[0];
             _stack.Push(currentPage);
 
