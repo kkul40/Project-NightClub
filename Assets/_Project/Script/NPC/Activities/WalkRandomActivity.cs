@@ -1,68 +1,66 @@
-﻿// using System;
-// using Data;
-// using New_NPC;
-// using UnityEngine;
-// using Random = UnityEngine.Random;
-//
-// namespace Activities
-// {
-//     public class WalkRandomActivity : Activity
-//     {
-//         private readonly float delay = 2;
-//         private float timer;
-//         public override bool isEnded { get; protected set; }
-//         public override bool isCanceled { get; protected set; }
-//
-//         public override void StartActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//
-//             npc.SetNewDestination(GetRandomDestination());
-//             npc.SetAnimation(eNpcAnimation.Walk);
-//         }
-//
-//         public override void UpdateActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//
-//             if (!npc._navMeshAgent.hasPath)
-//             {
-//                 npc.SetAnimation(eNpcAnimation.Idle);
-//                 timer += Time.deltaTime;
-//                 if (timer > delay)
-//                 {
-//                     npc.SetNewDestination(GetRandomDestination());
-//                     npc.SetAnimation(eNpcAnimation.Walk);
-//                     timer = 0;
-//                     isEnded = true;
-//                 }
-//             }
-//         }
-//
-//         public override void EndActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//         }
-//
-//         public Vector3 GetRandomDestination()
-//         {
-//             var loopCount = 0;
-//
-//             var target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
-//             while (DiscoData.Instance.placementDataHandler.ContainsKey(GridHandler.Instance.GetWorldToCell(target),
-//                        ePlacementLayer.Floor))
-//             {
-//                 target = DiscoData.Instance.FloorMap[Random.Range(0, DiscoData.Instance.FloorMap.Count)];
-//                 loopCount++;
-//                 if (loopCount >= 99)
-//                 {
-//                     isCanceled = true;
-//                     break;
-//                 }
-//             }
-//
-//             return target;
-//         }
-//     }
-// }
+﻿using Data;
+using UnityEngine;
 
+namespace New_NPC.Activities
+{
+    public class WalkRandomActivity : IActivity
+    {
+        private readonly float delay = 2;
+        private float timer;
+
+        public bool IsEnded { get; private set; }
+
+        public bool CanStartActivity(ActivityNeedsData and)
+        {
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+            and.Npc.PathFinder.GoTargetDestination(GetRandomDestination(and));
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+        }
+
+        public void OnActivityUpdate(ActivityNeedsData and)
+        {
+            if (and.Npc.PathFinder.HasReachedDestination)
+            {
+                and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+                timer += Time.deltaTime;
+                if (timer > delay)
+                {
+                    timer = 0;
+                    IsEnded = true;
+                }
+            }
+        }
+
+        public void OnActivityEnd(ActivityNeedsData and)
+        {
+        }
+
+        public Vector3 GetRandomDestination(ActivityNeedsData and)
+        {
+            var loopCount = 0;
+
+            var target = and.DiscoData.MapData.GetRandomPathFinderNode();
+            if (target == null)
+                return and.Npc.transform.position;
+
+            while (!target.IsWalkable)
+            {
+                target = and.DiscoData.MapData.GetRandomPathFinderNode();
+
+                loopCount++;
+                if (loopCount > 100)
+                {
+                    IsEnded = true;
+                    break;
+                }
+            }
+
+            target.IsMarked = true;
+            return target.WorldPos;
+        }
+    }
+}

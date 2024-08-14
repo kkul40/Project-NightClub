@@ -1,5 +1,6 @@
 ﻿using System;
 using BuildingSystem;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 
@@ -8,15 +9,16 @@ namespace PropBehaviours
     [SelectionBase]
     public class IPropUnit : MonoBehaviour, IInteractable
     {
-        // public NewPropPlacementDataHandler.NewPlacementData PropData { get; private set; }
-        public int ID { get; private set; }
+        [ShowInInspector] public int ID { get; private set; }
+        [ShowInInspector] public Vector3Int CellPosition { get; private set; }
+        [ShowInInspector] public Vector3 WorldPos { get; private set; }
+        [ShowInInspector] public RotationData RotationData { get; private set; }
+        [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
 
-        [OdinSerialize] public Vector3Int CellPosition { get; private set; }
-        public Vector3 WorldPos { get; private set; }
-        public RotationData RotationData { get; private set; }
-        public ePlacementLayer PlacementLayer { get; private set; }
-
-        public virtual void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
+        public virtual void Initialize(
+            int ID, 
+            Vector3Int cellPosition, 
+            RotationData rotationData, 
             ePlacementLayer placementLayer)
         {
             this.ID = ID;
@@ -38,15 +40,6 @@ namespace PropBehaviours
 
         public virtual void OnClick()
         {
-        }
-
-        public IPropUnit Copy()
-        {
-            var output = new IPropUnit();
-            output.ID = ID;
-            output.CellPosition = CellPosition;
-
-            return output;
         }
     }
 }

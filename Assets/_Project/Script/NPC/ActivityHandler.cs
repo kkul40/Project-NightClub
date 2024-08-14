@@ -1,5 +1,6 @@
 ﻿using System;
 using Data;
+using DefaultNamespace;
 using New_NPC.Activities;
 using UnityEngine;
 
@@ -53,13 +54,11 @@ namespace New_NPC
             var randomActivity = ActivitySystem.Instance.GetRandomActivity();
 
             var iterate = 0;
-            while (_lastActivity.GetType() == randomActivity.GetType() ||
-                   !randomActivity.CanStartActivity(_activityNeedsData))
+            while (_lastActivity.GetType() == randomActivity.GetType() || !randomActivity.CanStartActivity(_activityNeedsData))
             {
                 randomActivity = ActivitySystem.Instance.GetRandomActivity();
 
-                iterate++;
-                if (iterate > 100)
+                if (Helper.IterateTo100(ref iterate))
                 {
                     randomActivity = new ExitDiscoActivity();
                     Debug.LogError("Could Not Found New Activity");

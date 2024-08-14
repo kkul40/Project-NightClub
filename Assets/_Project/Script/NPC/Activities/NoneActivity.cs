@@ -1,27 +1,27 @@
-﻿// namespace Activities
-// {
-//     public class NoneActivity : Activity
-//     {
-//         public override bool isEnded { get; protected set; }
-//         public override bool isCanceled { get; protected set; }
-//
-//         public override void StartActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//             isCanceled = true;
-//         }
-//
-//         public override void UpdateActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//             isCanceled = true;
-//         }
-//
-//         public override void EndActivity(New_NPC.NPC npc)
-//         {
-//             if (isCanceled) return;
-//             isCanceled = true;
-//         }
-//     }
-// }
+﻿using UnityEngine;
 
+namespace New_NPC.Activities
+{
+    public class NoneActivity : IActivity
+    {
+        public bool IsEnded { get; }
+
+        public bool CanStartActivity(ActivityNeedsData and)
+        {
+            return true;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+        }
+
+        public void OnActivityUpdate(ActivityNeedsData and)
+        {
+            Debug.Log("None Activity");
+        }
+
+        public void OnActivityEnd(ActivityNeedsData and)
+        {
+        }
+    }
+}

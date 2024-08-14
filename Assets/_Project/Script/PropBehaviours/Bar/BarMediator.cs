@@ -78,7 +78,6 @@ namespace PropBehaviours
 
         private void GetBarAndBartender()
         {
-            Debug.Log("Bar Mediatoooor");
             _bars.Clear();
             _bartenders.Clear();
 

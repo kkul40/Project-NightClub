@@ -6,35 +6,15 @@ using UnityEngine;
 
 namespace Testing
 {
-    public class CursorSystemTest : MonoBehaviour
+    public class CursorSystem : MonoBehaviour
     {
-        public HighlightProfile _interactableHighlight;
-        public HighlightProfile _propUnitHighlight;
-        public HighlightProfile _noneHighlight;
+        [SerializeField] private HighlightProfile _interactableHighlight;
+        [SerializeField] private HighlightProfile _propUnitHighlight;
+        [SerializeField] private HighlightProfile _noneHighlight;
         private GameObject _currentGameObject;
 
         private IInteractable _currentInteractable;
         private InputSystem _inputSystem => InputSystem.Instance;
-
-        private void Reset()
-        {
-            if (_currentInteractable == null) return;
-
-            _currentInteractable.OnOutFocus();
-            _currentInteractable = null;
-
-            if (_currentGameObject == null) return;
-
-            // Remove hightlilghted
-            var highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
-            if (highlightEffect != null)
-            {
-                highlightEffect.SetHighlighted(false);
-                Destroy(highlightEffect);
-            }
-
-            _currentGameObject = null;
-        }
 
         private void Update()
         {
@@ -92,6 +72,26 @@ namespace Testing
             }
 
             highlightEffect.SetHighlighted(true);
+        }
+        
+        private void Reset()
+        {
+            if (_currentInteractable == null) return;
+
+            _currentInteractable.OnOutFocus();
+            _currentInteractable = null;
+
+            if (_currentGameObject == null) return;
+
+            // Remove hightlilghted
+            var highlightEffect = _currentGameObject.GetComponent<HighlightEffect>();
+            if (highlightEffect != null)
+            {
+                highlightEffect.SetHighlighted(false);
+                Destroy(highlightEffect);
+            }
+
+            _currentGameObject = null;
         }
     }
 }

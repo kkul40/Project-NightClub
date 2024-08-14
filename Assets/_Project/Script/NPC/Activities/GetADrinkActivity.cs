@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Data;
+using DefaultNamespace;
 using DG.Tweening;
 using PropBehaviours;
 using UnityEngine;
@@ -19,7 +20,13 @@ namespace New_NPC.Activities
             if (_bars == null) return false;
 
             _bar = _bars[Random.Range(0, _bars.Count)];
-            if (!_bar.HasDrinks) return false;
+            int iteration = 0;
+            while (!_bar.HasDrinks)
+            {
+                _bar = _bars[Random.Range(0, _bars.Count)];
+
+                if (Helper.IterateTo100(ref iteration)) return false;
+            }
 
             if (!and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position)) return false;
 

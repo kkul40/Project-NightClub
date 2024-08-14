@@ -50,25 +50,23 @@ namespace New_NPC
         {
             if (DiscoData.Instance.placementDataHandler.GetPlacementDatas().Count <= 0) return null;
 
-            var closestProps = new List<T>();
+            var avaliableProps = new List<T>();
             foreach (var prop in DiscoData.Instance.GetPropList)
             {
-                // if (prop == null) continue;
-
                 if (prop.transform.TryGetComponent(out IOccupieable occupieable))
                     if (occupieable.IsOccupied)
                         continue;
 
-                if (prop is T propType) closestProps.Add(propType);
+                if (prop is T propType) avaliableProps.Add(propType);
             }
 
-            if (closestProps.Count < 1)
+            if (avaliableProps.Count < 1)
             {
                 Debug.LogWarning(typeof(T) + " Turunde Prop Ogesi Bulunamadi!");
                 return null;
             }
 
-            return closestProps;
+            return avaliableProps;
         }
 
         public List<T> GetAvaliablePropsByInterface<T>()

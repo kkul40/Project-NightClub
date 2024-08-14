@@ -38,7 +38,6 @@ namespace PropBehaviours
 
         public void OnPropRemoved()
         {
-            Debug.Log("OnRemoved Calisti");
             foreach (var chair in Chairs)
                 chair.IsReservedToATable = false;
 

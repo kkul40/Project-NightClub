@@ -1,8 +1,10 @@
-﻿using Unity.Mathematics;
+﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace BuildingSystem
 {
+    [Serializable]
     public class RotationData
     {
         public Quaternion rotation;
