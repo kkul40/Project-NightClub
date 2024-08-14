@@ -50,6 +50,8 @@ namespace New_NPC
             _routine = null;
         }
 
+        public List<Vector3> FoundPath =>_currentPath;
+
         private IEnumerator CoFollowPath(List<Vector3> path, Action OnCompleteCallBack = null)
         {
             for (var i = 0; i < path.Count; i++)
@@ -79,7 +81,7 @@ namespace New_NPC
 
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            _tileNode = DiscoData.Instance.MapData.GetPathFinderNode();
+            _tileNode = DiscoData.Instance.MapData.GetNewPathFinderNote();
 
             var startNode = NodeFromWorldPoint(startPos);
             var targetNode = NodeFromWorldPoint(targetPos);
@@ -117,13 +119,13 @@ namespace New_NPC
                 }
             }
             
-            return NullPathReturn(targetPos);
+            // return NullPathReturn(targetPos);
+            return new List<Vector3>();
         }
 
         private PathFinderNode NodeFromWorldPoint(Vector3 worldPosition)
         {
             if (worldPosition == -Vector3.one) return new PathFinderNode();
-
             var x = (int)worldPosition.x;
             var y = (int)worldPosition.z;
             return _tileNode[x, y];
@@ -169,8 +171,8 @@ namespace New_NPC
                 var checkX = node.GridX + x;
                 var checkY = node.GridY + y;
 
-                if (checkX >= 0 && checkX < MapGeneratorSystem.Instance.MapData.CurrentMapSize.x && checkY >= 0 &&
-                    checkY < MapGeneratorSystem.Instance.MapData.CurrentMapSize.y)
+                if (checkX >= 0 && checkX < MapGeneratorSystem.Instance.MapData.PathFinderSize.x && checkY >= 0 &&
+                    checkY < MapGeneratorSystem.Instance.MapData.PathFinderSize.y)
                     neighbors.Add(_tileNode[checkX, checkY]);
             }
 

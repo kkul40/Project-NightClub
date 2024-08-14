@@ -11,6 +11,7 @@ namespace Data
         public PathFinderNode Parent;
         public bool IsWalkable = false;
         public bool IsAvaliable = false;
+        public bool IsMarked = false;
 
         // Testing
         public ePathNodeType PathNodeType;

@@ -19,7 +19,7 @@ namespace PropBehaviours
         {
             this.ID = ID;
             CellPosition = cellPosition;
-            WorldPos = GridHandler.Instance.CellToWorldPosition(cellPosition);
+            WorldPos = GridHandler.Instance.CellToWorldPosition(cellPosition, eGridType.PlacementGrid);
             RotationData = rotationData;
             PlacementLayer = placementLayer;
         }

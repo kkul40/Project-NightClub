@@ -17,7 +17,7 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.GoTargetDestination(GetRandomDestination(and));
+            and.Npc.PathFinder.GoTargetDestination(new Vector3(10,10 ,10));
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
         }
 
@@ -44,7 +44,8 @@ namespace New_NPC.Activities
             var loopCount = 0;
 
             var target = and.DiscoData.MapData.GetRandomPathFinderNode();
-            if (target == null) return and.Npc.transform.position;
+            if (target == null) 
+                return and.Npc.transform.position;
 
             while (!target.IsWalkable)
             {
@@ -58,6 +59,7 @@ namespace New_NPC.Activities
                 }
             }
 
+            target.IsMarked = true;
             return target.WorldPos;
         }
     }

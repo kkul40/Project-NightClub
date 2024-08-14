@@ -55,10 +55,14 @@ namespace New_NPC
 
         private List<Vector3> path = new();
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
+            path = PathFinder.FoundPath;
+
             if (path.Count > 1)
+            {
                 for (var i = 1; i < path.Count; i++)
+                {
                     if (i == path.Count - 1)
                     {
                         Gizmos.color = Color.green;
@@ -67,8 +71,11 @@ namespace New_NPC
                     else
                     {
                         Gizmos.color = Color.blue;
-                        Gizmos.DrawLine(path[i - 1] + new Vector3(0, 0.5f, 0), path[i] + new Vector3(0, 0.5f, 0));
+                        Gizmos.DrawLine(path[i - 1] + new Vector3(0, 1f, 0), path[i] + new Vector3(0, 1, 0));
                     }
+                }
+            }
+
         }
     }
 

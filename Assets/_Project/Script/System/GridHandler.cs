@@ -24,25 +24,70 @@ namespace System
             MapGeneratorSystem.OnMapSizeChanged -= AlignGridWithMapSize;
         }
 
-        public Vector3Int GetMouseCellPosition(Vector3 mousePosition)
+        public Vector3Int GetMouseCellPosition(Vector3 mousePosition, eGridType gridType)
         {
-            var cellPos = grid1x1.WorldToCell(SwapYZ(mousePosition));
-            return cellPos;
+            switch (gridType)
+            {
+                case eGridType.PlacementGrid:
+                    return grid1x1.WorldToCell(SwapYZ(mousePosition));
+                    break;
+                case eGridType.PathFinderGrid:
+                    return grid4x4.WorldToCell(SwapYZ(mousePosition));
+                    break;
+            }
+            
+            Debug.Log("Grid Type Could Not Found");
+            return -Vector3Int.one;
         }
 
-        public Vector3 CellToWorldPosition(Vector3Int cellPos)
+        public Vector3 CellToWorldPosition(Vector3Int cellPos, eGridType gridType)
         {
-            return grid1x1.CellToWorld(SwapYZ(cellPos));
+            switch (gridType)
+            {
+                case eGridType.PlacementGrid:
+                    return grid1x1.CellToWorld(SwapYZ(cellPos));
+
+                    break;
+                case eGridType.PathFinderGrid:
+                    return grid4x4.CellToWorld(SwapYZ(cellPos));
+                    break;
+            }
+            
+            Debug.Log("Grid Type Could Not Found");
+            return -Vector3Int.one;
         }
 
-        public Vector3 GetCellCenterWorld(Vector3Int cellPos)
+        public Vector3 GetCellCenterWorld(Vector3Int cellPos, eGridType gridType)
         {
-            return grid1x1.GetCellCenterWorld(SwapYZ(cellPos));
+            switch (gridType)
+            {
+                case eGridType.PlacementGrid:
+                    return grid1x1.GetCellCenterWorld(SwapYZ(cellPos));
+
+                    break;
+                case eGridType.PathFinderGrid:
+                    return grid4x4.GetCellCenterWorld(SwapYZ(cellPos));
+                    break;
+            }
+            Debug.Log("Grid Type Could Not Found");
+            return -Vector3Int.one;
         }
 
-        public Vector3Int GetWorldToCell(Vector3 worldPos)
+        public Vector3Int GetWorldToCell(Vector3 worldPos, eGridType gridType)
         {
-            return grid1x1.WorldToCell(SwapYZ(worldPos));
+            switch (gridType)
+            {
+                case eGridType.PlacementGrid:
+                    return grid1x1.WorldToCell(SwapYZ(worldPos));
+
+                    break;
+                case eGridType.PathFinderGrid:
+                    return grid4x4.WorldToCell(SwapYZ(worldPos));
+                    break;
+            }
+            
+            Debug.Log("Grid Type Could Not Found");
+            return -Vector3Int.one;
         }
 
         private Vector3Int SwapYZ(Vector3Int vector)
@@ -87,5 +132,11 @@ namespace System
             rightWallGridPlane.transform.position = new Vector3(minimumOffset, 1.5f, (float)mapSize.y / 2);
             rightWallGridPlane.transform.localScale = new Vector3((float)mapSize.y / 10, 1, (float)3 / 10);
         }
+    }
+
+    public enum eGridType
+    {
+        PlacementGrid,
+        PathFinderGrid,
     }
 }

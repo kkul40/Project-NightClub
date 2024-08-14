@@ -25,7 +25,7 @@ namespace PlayerScripts
             {
                 var lastHitFloor = InputSystem.Instance.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
                 if (lastHitFloor != null)
-                    _pathFinder.GoTargetDestination(GridHandler.Instance.GetWorldToCell(lastHitFloor.position));
+                    _pathFinder.GoTargetDestination(GridHandler.Instance.GetWorldToCell(lastHitFloor.position, eGridType.PathFinderGrid));
             }
         }
     }

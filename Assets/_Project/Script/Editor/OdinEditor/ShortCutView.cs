@@ -9,32 +9,34 @@ using UnityEngine.SceneManagement;
 
 namespace Debugging_Tools
 {
-    public class DebuggingView : OdinEditorWindow
+    public class ShortCutView : OdinEditorWindow
     {
         #region Scenes
+
         [Button]
         [FoldoutGroup("Working Scene")]
         public void OpenMainMenu()
         {
             LoadScene("Assets/_Project/Scene/MainMenu - Demo.unity");
         }
-        
+
         [Button]
         [FoldoutGroup("Working Scene")]
         public void OpenDisco()
         {
             LoadScene("Assets/_Project/Scene/NightClub-Demo.unity");
         }
+
         #endregion
 
         #region Save-Load
-        
+
         [Button]
         [FoldoutGroup("Save And Load")]
         public void NewGame()
         {
             SavingAndLoadingSystem.Instance.NewGame();
-            LoadScene(EditorSceneManager.GetActiveScene().path);
+            LoadScene(SceneManager.GetActiveScene().path);
         }
 
         [Button]
@@ -43,26 +45,24 @@ namespace Debugging_Tools
         {
             SavingAndLoadingSystem.Instance.SaveGame();
         }
-        
+
         [Button]
         [FoldoutGroup("Save And Load")]
         public void Load()
         {
-            LoadScene(EditorSceneManager.GetActiveScene().path);
+            LoadScene(SceneManager.GetActiveScene().path);
         }
 
         #endregion
 
         #region Testing
-        
 
         #endregion
-        
-        
+
         [MenuItem("Tools/Debug")]
         private static void OpenWindow()
         {
-            GetWindow<DebuggingView>().Show();
+            GetWindow<ShortCutView>().Show();
         }
 
         private void LoadScene(string path)
@@ -72,9 +72,9 @@ namespace Debugging_Tools
                 SceneManager.LoadScene(path);
                 return;
             }
+
             if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                 EditorSceneManager.OpenScene(path);
-            
         }
     }
 }

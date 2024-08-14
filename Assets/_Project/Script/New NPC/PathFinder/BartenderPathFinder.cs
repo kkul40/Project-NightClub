@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace New_NPC
         {
             DOTween.instance.StopAllCoroutines();
         }
+
+        public List<Vector3> FoundPath { get; }
 
         private void SetRotationToTarget(Vector3 lookatTarget)
         {

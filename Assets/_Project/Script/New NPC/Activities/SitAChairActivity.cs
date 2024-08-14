@@ -55,7 +55,8 @@ namespace New_NPC.Activities
         {
             // TODO Kalkarken Bi yamukluk yasaniyor, bir ara duzelt
             _chair.SetOccupied(and.Npc, false);
-            // and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
+            and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
+            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
     }
 }

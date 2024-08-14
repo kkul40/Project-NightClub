@@ -102,7 +102,7 @@ namespace Data
             foreach (var key in keys)
             {
                 found.Item2.Add(key);
-                MapData.SetPathfinderNode(key.x, key.z, isWalkable: isWalkable);
+                MapData.SetPathfinderNode(key.x, key.z, isWalkable: false);
             }
 
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
@@ -219,7 +219,7 @@ namespace Data
         {
             Vector3 offset = new Vector3().BuildingOffset(placementItemso.PlacementLayer);
             var createdObject = Object.Instantiate(placementItemso.Prefab,
-                GridHandler.Instance.GetCellCenterWorld(cellPosition) + offset, rotationData.rotation);
+                GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid) + offset, rotationData.rotation);
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
 

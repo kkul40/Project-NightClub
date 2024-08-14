@@ -36,13 +36,14 @@ namespace PropBehaviours
 
         public void OnClick()
         {
-            var a = GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition());
-            var test = DiscoData.Instance.MapData.FloorGridDatas[a.x, a.z];
+            // var a = GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition(), eGridType.PathFinderGrid);
+            // var test = DiscoData.Instance.MapData.FloorGridDatas[a.x, a.z];
             // Debug.Log(test.CellPosition);
             // Debug.Log(test.assignedMaterialID);
 
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
-            Debug.Log(DiscoData.Instance.MapData.GetTileNodeByCellPos(a).IsWalkable);
+            // Debug.Log(GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition(), eGridType.PlacementGrid));
+            // Debug.Log(DiscoData.Instance.MapData.GetTileNodeByCellPos(a));
         }
 
         #endregion

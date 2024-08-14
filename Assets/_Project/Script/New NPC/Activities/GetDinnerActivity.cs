@@ -94,7 +94,6 @@ namespace New_NPC.Activities
              and.Npc.PathFinder.SetPositioning(newPosition: chairProp.GetFrontPosition().position);
              chairProp.SetOccupied(and.Npc, false);
              and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
-             IsEnded = true;
          }
 
          private enum DinnerState
