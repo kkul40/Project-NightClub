@@ -6519,7 +6519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a28242e2dd477a9515af7f8f1b7420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showPlacements: 0
+  showPlacements: 1
 --- !u!4 &642425710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -9595,7 +9595,7 @@ Grid:
   m_CellSize: {x: 1, y: 1, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
-  m_CellSwizzle: 0
+  m_CellSwizzle: 1
 --- !u!1001 &897905120
 PrefabInstance:
   m_ObjectHideFlags: 0

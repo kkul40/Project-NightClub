@@ -26,23 +26,33 @@ namespace System
 
         public Vector3Int GetMouseCellPosition(Vector3 mousePosition)
         {
-            var cellPos = grid1x1.WorldToCell(mousePosition);
+            var cellPos = grid1x1.WorldToCell(SwapYZ(mousePosition));
             return cellPos;
         }
 
         public Vector3 CellToWorldPosition(Vector3Int cellPos)
         {
-            return grid1x1.CellToWorld(cellPos);
+            return grid1x1.CellToWorld(SwapYZ(cellPos));
         }
 
         public Vector3 GetCellCenterWorld(Vector3Int cellPos)
         {
-            return grid1x1.GetCellCenterWorld(cellPos);
+            return grid1x1.GetCellCenterWorld(SwapYZ(cellPos));
         }
 
         public Vector3Int GetWorldToCell(Vector3 worldPos)
         {
-            return grid1x1.WorldToCell(worldPos);
+            return grid1x1.WorldToCell(SwapYZ(worldPos));
+        }
+
+        private Vector3Int SwapYZ(Vector3Int vector)
+        {
+            return new Vector3Int(vector.x, vector.z, vector.y);
+        }
+
+        private Vector3 SwapYZ(Vector3 vector)
+        {
+            return new Vector3(vector.x, vector.z, vector.y);
         }
 
         public void ToggleGrid(bool toggle)
