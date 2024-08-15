@@ -62,7 +62,6 @@ namespace System
                     LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
 
                     newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-
                     continue;
                 }
 
@@ -134,7 +133,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y) + offset;
             var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.SetPathfinderNode(x, y, true, true, pos);
+            MapData.SetPathfinderNode(x, y, true, isWalkable: true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }

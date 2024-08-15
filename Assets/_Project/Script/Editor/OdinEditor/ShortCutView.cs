@@ -1,5 +1,7 @@
-﻿using Data;
+﻿using System;
+using Data;
 using EditorNS.OdinEditor;
+using Root;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
@@ -57,7 +59,21 @@ namespace Debugging_Tools
 
         #region Testing
 
+        [FoldoutGroup("Testing")]
+        public bool ShowPlacement;
+        
+        [FoldoutGroup("Testing")]
+        public bool ShowPathFinderNode;
+        
         #endregion
+
+        private void Update()
+        {
+            if (!Application.isPlaying) return;
+
+            KDebug.Instance.showPlacements = ShowPlacement;
+            KDebug.Instance.showPathFinder = ShowPathFinderNode;
+        }
 
         [MenuItem("Tools/Debug")]
         private static void OpenWindow()

@@ -1,4 +1,5 @@
 ﻿using Data;
+using DefaultNamespace;
 using UnityEngine;
 
 namespace New_NPC.Activities
@@ -47,19 +48,20 @@ namespace New_NPC.Activities
             if (target == null)
                 return and.Npc.transform.position;
 
-            while (!target.IsWalkable)
+            while (target.IsWall || !target.IsWalkable)
             {
                 target = and.DiscoData.MapData.GetRandomPathFinderNode();
+                
 
-                loopCount++;
-                if (loopCount > 100)
+                if (Helper.IterateTo100(ref loopCount))
                 {
+                    Debug.Log("Target Node is Wall : " + target.IsWall);
+
                     IsEnded = true;
                     break;
                 }
             }
 
-            target.IsMarked = true;
             return target.WorldPos;
         }
     }

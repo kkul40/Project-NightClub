@@ -26,6 +26,10 @@ namespace Data
                 Items.Add(DiscoData.Instance.FindItemByID(data.InventoryItemID), data.Amount);
         }
 
+        /// <summary>
+        /// Add The Removed Item To Inventory
+        /// </summary>
+        /// <param name="storeItemSo"></param>
         public void AddItem(StoreItemSO storeItemSo)
         {
             if (Items.ContainsKey(storeItemSo))

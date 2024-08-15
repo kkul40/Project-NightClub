@@ -10,7 +10,6 @@ namespace System
         public static InputSystem Instance;
         [SerializeField] private Camera mainCam;
         [SerializeField] private RaycastHit lastHit;
-        [SerializeField] private Transform lastHitTransform;
 
         [SerializeField] private LayerMask mouseOverLayers;
         [SerializeField] private LayerMask ignore;
@@ -65,7 +64,6 @@ namespace System
             if (Physics.Raycast(ray, out hit, maxDistance, mouseOverLayers))
             {
                 lastHit = hit;
-                lastHitTransform = hit.transform;
                 return hit.point;
             }
 

@@ -116,12 +116,7 @@ MonoBehaviour:
   bartenderWaitPosition: {fileID: 8345200245977923918}
   customerWaitPosition: {fileID: 864066266957146545}
   counterPlacePosition: {fileID: 3303600892597171945}
-  drinkData:
-    <Name>k__BackingField: Red
-    <DrinkAmount>k__BackingField: 10
-    <PrepareTime>k__BackingField: 10
-    <Price>k__BackingField: 40
-    <Prefab>k__BackingField: {fileID: 7728130314446007940, guid: 6831137c0a312334688575a9b1254f30, type: 3}
+  drinkData: {fileID: 11400000, guid: 4868e55362324654990b32b76bf2a729, type: 2}
 --- !u!54 &7852657284703386416
 Rigidbody:
   m_ObjectHideFlags: 0

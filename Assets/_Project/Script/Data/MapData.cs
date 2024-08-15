@@ -9,7 +9,19 @@ namespace Data
     public class MapData
     {
         public Vector2Int CurrentMapSize { get; private set; }
-        public Vector2Int PathFinderSize { get; private set; }
+        
+        public Vector2Int PathFinderSize
+        {
+            get
+            {
+                return new Vector2Int((CurrentMapSize.x * ConstantVariables.PathFinderGridSize) + 1, (CurrentMapSize.y * ConstantVariables.PathFinderGridSize) + 1);
+            }
+        }
+
+        public Vector2Int ConvertFromPlacementToPathFinderSize(int x, int y)
+        {
+            return new Vector2Int(x, y ) * ConstantVariables.PathFinderGridSize;
+        }
 
         // TODO Make door ps vector2Int
         public Vector3Int DoorPosition { get; private set; }
@@ -26,7 +38,6 @@ namespace Data
             // Default
             WallDoorIndex = 1;
             CurrentMapSize = Vector2Int.one;
-            PathFinderSize = CurrentMapSize * 4;
             DoorPosition = new Vector3Int(WallDoorIndex, 0, -1);
             WallDatas = new List<WallAssignmentData>();
             FloorGridDatas = new FloorGridAssignmentData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
@@ -35,33 +46,28 @@ namespace Data
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
 
-            // Test
             SetUpNewPathFinder();
         }
 
         private void SetUpNewPathFinder()
         {
-            NewPathFinderNodes = new PathFinderNode[ConstantVariables.MaxMapSizeX * 4 + 1,
-                ConstantVariables.MaxMapSizeY * 4 + 1];
+            int MaxX = ConstantVariables.MaxMapSizeX * ConstantVariables.PathFinderGridSize + 1;
+            int MaxY = ConstantVariables.MaxMapSizeY * ConstantVariables.PathFinderGridSize + 1;
+            NewPathFinderNodes = new PathFinderNode[MaxX, MaxY];
 
-            float startX = 0;
-            float startY = 0;
-            for (var x = 0; x < PathFinderSize.x; x++)
+            for (var x = 0; x < MaxX; x++)
             {
-                for (var y = 0; y < PathFinderSize.y; y++)
+                for (var y = 0; y < MaxY; y++)
                 {
                     NewPathFinderNodes[x, y] = new PathFinderNode();
                     var node = NewPathFinderNodes[x, y];
-                    node.IsWalkable = true;
-                    node.IsAvaliable = true;
+                    node.IsWalkable = false;
                     node.GridX = x;
                     node.GridY = y;
-                    node.WorldPos = new Vector3(startX, 0, startY);
-                    startY += 0.25f;
+                    Vector3 WorldPos = GridHandler.Instance.GetCellCenterWorld(new Vector3Int(x, 0, y), eGridType.PathFinderGrid);
+                    node.WorldPos = WorldPos;
+                    
                 }
-
-                startY = 0;
-                startX += 0.25f;
             }
         }
 
@@ -75,7 +81,6 @@ namespace Data
             #region Loading...
 
             CurrentMapSize = gameData.SavedMapSize;
-            PathFinderSize = CurrentMapSize * 4;
             WallDoorIndex = gameData.WallDoorIndexOnX;
             DoorPosition = new Vector3Int(WallDoorIndex, 0, -1);
 
@@ -86,9 +91,8 @@ namespace Data
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
-            // Testing
+            
             SetUpNewPathFinder();
-
             #endregion
         }
 
@@ -107,26 +111,27 @@ namespace Data
         public bool SetCurrentMapSize(MapGeneratorSystem mapGeneratorSystem, Vector2Int mapSize)
         {
             CurrentMapSize = mapSize;
-            PathFinderSize = CurrentMapSize * 4;
             return true;
         }
 
-
-        public void SetPathfinderNode(int x, int y, bool? isAvaliable = null, bool? isWalkable = null,
-            Vector3? position = null)
+        public void SetPathfinderNode(int x, int y, bool isBig, bool? isWalkable = null, bool? isWall = null)
         {
-            // TODO Yeni PathFinder a gore duzenle
-            // if (x > CurrentMapSize.x || y > CurrentMapSize.y)
-            // {
-            //     Debug.LogError("TileNode Index Is Not Valid");
-            //     return;
-            // }
-            //
-            // var node = PathFinderNodes[x, y];
-            // node.IsWalkable = isWalkable ?? node.IsWalkable;
-            // node.WorldPos = position ?? node.WorldPos;
-            // node.GridX = gridX ?? node.GridX;
-            // node.GridY = gridY ?? node.GridY;
+            Vector2Int cellPos = ConvertFromPlacementToPathFinderSize(x, y);
+
+            int setMaxCellPosX = cellPos.x + (isBig ? ConstantVariables.PathFinderGridSize : 3);
+            int setMaxCellPosY = cellPos.y + (isBig ? ConstantVariables.PathFinderGridSize : 3);
+
+            int setMinCellPosX = cellPos.x + (isBig ? 0 : 1);
+            int setMinCellPosY = cellPos.y + (isBig ? 0 : 1);
+            
+            for (int i = setMinCellPosX; i <= setMaxCellPosX; i++)
+            for (int j = setMinCellPosY; j <= setMaxCellPosY; j++)
+            {
+                if (isWall ?? false)
+                    NewPathFinderNodes[i, j].IsWall = isWall ?? NewPathFinderNodes[i, j].IsWall;
+                
+                NewPathFinderNodes[i, j].IsWalkable = isWalkable ?? NewPathFinderNodes[i, j].IsWalkable;
+            }
         }
 
         public PathFinderNode GetRandomPathFinderNode()
@@ -140,8 +145,19 @@ namespace Data
 
             for (var x = 0; x < PathFinderSize.x; x++)
             for (var y = 0; y < PathFinderSize.y; y++)
+            {
                 outputNode[x, y] = NewPathFinderNodes[x, y].Copy();
 
+                if (x > WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && 
+                    x < WallDoorIndex * ConstantVariables.PathFinderGridSize && 
+                    y == 0) continue;
+                
+                if (x == 0 || y == 0 || x == PathFinderSize.x - 1 || y == PathFinderSize.y - 1)
+                {
+                    outputNode[x, y].IsWall = true;
+                }
+            }
+            
             return outputNode;
         }
 

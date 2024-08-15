@@ -91,12 +91,12 @@ namespace System
             return -Vector3Int.one;
         }
 
-        private Vector3Int SwapYZ(Vector3Int vector)
+        public Vector3Int SwapYZ(Vector3Int vector)
         {
             return new Vector3Int(vector.x, vector.z, vector.y);
         }
 
-        private Vector3 SwapYZ(Vector3 vector)
+        public Vector3 SwapYZ(Vector3 vector)
         {
             return new Vector3(vector.x, vector.z, vector.y);
         }

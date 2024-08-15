@@ -13,19 +13,30 @@ namespace PlayerScripts
     public class Player : MonoBehaviour, IDoorOpener
     {
         private NpcPathFinder _pathFinder;
+        private IAnimationController _animationController;
 
         private void Awake()
         {
             _pathFinder = new NpcPathFinder(transform);
+            var custom = GetComponent<PlayerCustomization>();
+            var animation = custom.playerGenderIndex == 0 ? InitConfig.Instance.GetDefaultBoyNpcAnimation : InitConfig.Instance.GetDefaultGirlNpcAnimation;
+            _animationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), animation, transform.GetChild(0));
+            
+            _animationController.PlayAnimation(eAnimationType.Bartender_Idle);
         }
 
         private void Update()
         {
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                var node = DiscoData.Instance.MapData.GetPathNodeByWorldPos(InputSystem.Instance.GetMouseMapPosition());
-                _pathFinder.GoTargetDestination(node.WorldPos);
+                _pathFinder.GoTargetDestination(InputSystem.Instance.GetMouseMapPosition(), SetIdleAnimation);
+                _animationController.PlayAnimation(eAnimationType.NPC_Walk);
             }
+        }
+
+        private void SetIdleAnimation()
+        {
+            _animationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
     }
 }

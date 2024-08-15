@@ -36,7 +36,6 @@ namespace PropBehaviours
         public void GetDrink()
         {
             if (HasDrinks) _drinkTable.GetDrink();
-            Debug.Log("Nice Drink Broother!!");
         }
 
         public void CreateDrinks()

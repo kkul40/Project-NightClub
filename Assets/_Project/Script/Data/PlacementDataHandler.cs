@@ -41,7 +41,6 @@ namespace Data
         //                  placement data     worldPositions      layer
         private HashSet<Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>> AllPlacedObjects;
 
-
         public static event Action OnPropUpdate;
         public static event Action OnPropRemoved;
         public static event Action OnPropPlaced;
@@ -94,19 +93,67 @@ namespace Data
             AllPlacedObjects.Add(new Tuple<PlacementData, List<Vector3Int>, ePlacementLayer>(placementData,
                 new List<Vector3Int>(), placementData.PlacedPlacementItemSo.PlacementLayer));
 
-            var found = AllPlacedObjects.FirstOrDefault(x =>
-                x.Item1.PlacedCellPosition == cellPos && x.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
-
-
-            var isWalkable = placementData.PlacedPlacementItemSo.PlacementLayer == ePlacementLayer.FloorProp
-                ? false
-                : true;
+            var addedData = AllPlacedObjects.FirstOrDefault(x => x.Item1.PlacedCellPosition == cellPos && x.Item3 == placementData.PlacedPlacementItemSo.PlacementLayer);
+            
             foreach (var key in keys)
-            {
-                found.Item2.Add(key);
-                MapData.SetPathfinderNode(key.x, key.z, isWalkable: false);
-            }
+                addedData.Item2.Add(key);
+            
+            UpdatePathFinder(addedData);
+            
+            AddedObjectHandler(cellPos, placementData);
+            UpdateProps();
+        }
 
+        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
+        {
+            var dataToRemove = GetPlacementDataByCellPos(cellPos, moveFromLayer);
+
+            if (dataToRemove == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
+
+            // var keys = CalculatePosition(dataToRemove.Item1.PlacedCellPosition, dataToRemove.Item1.PlacedPlacementItemSo.Size,
+            //     dataToRemove.Item1.SettedRotationData.direction);
+            
+            DiscoData.Instance.inventory.AddItem(dataToRemove.Item1.PlacedPlacementItemSo);
+            AllPlacedObjects.Remove(dataToRemove);
+            
+            UpdatePathFinderNearRemovedObject(cellPos, dataToRemove);
+            
+            RemoveObjectHandler(dataToRemove.Item1.PlacedSceneObject);
+            UpdateProps();
+        }
+
+        private void UpdatePathFinderNearRemovedObject(Vector3Int cellPos,  Tuple<PlacementData, List<Vector3Int>, ePlacementLayer> data)
+        {
+            if (data.Item3 != ePlacementLayer.FloorProp) return;
+            
+            foreach (var key in data.Item2)
+                MapData.SetPathfinderNode(key.x, key.z, data.Item1.PlacedPlacementItemSo.IsBig, true);
+            
+            List<Vector3Int> updadatableKeys = new List<Vector3Int>();
+            foreach (var worldPos in data.Item2)
+                foreach (var key in worldPos.GetNearByKeys())
+                    updadatableKeys.Add(key);
+            
+            foreach (var key in updadatableKeys)
+            {
+                var tuple = GetPlacementDataByCellPos(key, data.Item3);
+                if(tuple == null) continue;
+
+                foreach (var worldKey in tuple.Item2)
+                    MapData.SetPathfinderNode(worldKey.x, worldKey.z, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
+            }
+        }
+        
+        private void UpdatePathFinder(Tuple<PlacementData, List<Vector3Int>, ePlacementLayer> tuple)
+        {
+            if (tuple.Item3 != ePlacementLayer.FloorProp) return;
+
+            foreach (var key in tuple.Item2)
+                MapData.SetPathfinderNode(key.x, key.z, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
+        }
+        
+        private void AddedObjectHandler(Vector3Int cellPos, PlacementData placementData)
+        {
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
             {
                 propList.Add(prop);
@@ -115,36 +162,17 @@ namespace Data
             }
 
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropPlaced();
-
-            UpdateProps();
         }
 
-        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
+
+        private void RemoveObjectHandler(GameObject sceneObject)
         {
-            var data = AllPlacedObjects.FirstOrDefault(x =>
-                x.Item1.PlacedCellPosition == cellPos && x.Item3 == moveFromLayer);
-
-            if (data == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
-
-            var keys = CalculatePosition(data.Item1.PlacedCellPosition, data.Item1.PlacedPlacementItemSo.Size,
-                data.Item1.SettedRotationData.direction);
-
-            foreach (var key in keys)
-                MapData.SetPathfinderNode(key.x, key.z, isWalkable: true);
-
-            DiscoData.Instance.inventory.AddItem(data.Item1.PlacedPlacementItemSo);
-
-            AllPlacedObjects.Remove(data);
-
-
-            var objectToRemove = data.Item1.PlacedSceneObject;
+            var objectToRemove = sceneObject;
             if (objectToRemove.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropRemoved();
 
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
 
-
             Object.Destroy(objectToRemove);
-            UpdateProps();
         }
 
         private void UpdateProps()
@@ -155,7 +183,15 @@ namespace Data
 
             OnPropUpdate?.Invoke();
         }
+        
 
+        /// <summary>
+        /// Returns All Keys That Object Will Use
+        /// </summary>
+        /// <param name="cellPos"></param>
+        /// <param name="size"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         private List<Vector3Int> CalculatePosition(Vector3Int cellPos, Vector2Int size, Direction direction)
         {
             var keys = new List<Vector3Int>();
@@ -248,6 +284,33 @@ namespace Data
             foreach (var item in AllPlacedObjects)
                 output.Add(item.Item1);
 
+            return output;
+        }
+
+        public Tuple<PlacementData, List<Vector3Int>, ePlacementLayer> GetPlacementDataByCellPos(Vector3Int cellPosition, ePlacementLayer layer)
+        {
+            Tuple<PlacementData, List<Vector3Int>, ePlacementLayer> output = null;
+            
+            foreach (var item in AllPlacedObjects)
+            {
+                if(item.Item3 != layer) continue;
+                
+                if (cellPosition == item.Item1.PlacedCellPosition)
+                {
+                    output = item;
+                    break;
+                }
+
+                foreach (var key in item.Item2)
+                {
+                    if (cellPosition == key)
+                    {
+                        output = item;
+                        break;
+                    }
+                }
+            }
+            
             return output;
         }
 

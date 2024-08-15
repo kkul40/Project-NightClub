@@ -47,8 +47,7 @@ namespace New_NPC.Activities
                 case DinnerState.None:
                     if (and.Npc.PathFinder.HasReachedDestination)
                     {
-                        and.Npc.PathFinder.SetPositioning(chairProp.GetFrontPosition().rotation,
-                            chairProp.GetSitPosition());
+                        and.Npc.PathFinder.SetPositioning(chairProp.GetFrontPosition().rotation, chairProp.GetSitPosition());
                         and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Sit);
                         _dinnerState = DinnerState.Sitting;
                     }
@@ -78,19 +77,29 @@ namespace New_NPC.Activities
                     timer += Time.deltaTime;
                     if (timer > drinkingTime)
                     {
-                        timer = 0;
+                        _dinnerState = DinnerState.StandUp;
+                    }
+                    break;
+                case DinnerState.StandUp:
+                    and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+                    and.Npc.PathFinder.SetPositioning(newPosition: chairProp.GetFrontPosition().position);
+
+                    timer = 0;
+                    _dinnerState = DinnerState.End;
+                    break;
+                case DinnerState.End:
+                    timer += Time.deltaTime;
+                    if (timer > 0.5f)
+                    {
                         IsEnded = true;
                     }
-
                     break;
             }
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.SetPositioning(newPosition: chairProp.GetFrontPosition().position);
             chairProp.SetOccupied(and.Npc, false);
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
 
         private enum DinnerState
@@ -98,7 +107,9 @@ namespace New_NPC.Activities
             None,
             Sitting,
             Eating,
-            Drinking
+            Drinking,
+            StandUp,
+            End,
         }
     }
 }

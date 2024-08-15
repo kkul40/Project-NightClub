@@ -11,7 +11,8 @@ namespace New_NPC.Activities
 
         private float timer = 0;
         private float delay = 5f;
-        private bool startTimer = false;
+
+        private eState _state;
 
         public bool IsEnded { get; private set; }
 
@@ -37,14 +38,27 @@ namespace New_NPC.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (startTimer)
+
+            switch (_state)
             {
-                timer += Time.deltaTime;
-                if (timer > delay)
-                {
+                case eState.SitDown:
+                    timer += Time.deltaTime;
+                    if (timer > delay)
+                        _state = eState.StandUp;
+                    break;
+                case eState.StandUp:
+                    and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
+                    and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+
                     timer = 0;
-                    IsEnded = true;
-                }
+                    delay = 0.5f;
+                    _state = eState.End;
+                    break;
+                case eState.End:
+                    timer += Time.deltaTime;
+                    if (timer > delay)
+                        IsEnded = true;
+                    break;
             }
         }
 
@@ -52,15 +66,20 @@ namespace New_NPC.Activities
         {
             and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
             and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Sit);
-            startTimer = true;
+            _state = eState.SitDown;
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            // TODO Kalkarken Bi yamukluk yasaniyor, bir ara duzelt
             _chair.SetOccupied(and.Npc, false);
-            and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+        }
+
+        private enum eState
+        {
+            Null,
+            SitDown,
+            StandUp,
+            End,
         }
     }
 }

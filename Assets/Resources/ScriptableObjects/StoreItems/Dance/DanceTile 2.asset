@@ -18,5 +18,6 @@ MonoBehaviour:
   Price: 0
   Prefab: {fileID: 250269504976497457, guid: c2cabc55911f18c46a98432511d2d5d5, type: 3}
   Size: {x: 1, y: 1}
+  IsBig: 1
   PlacementLayer: 0
   eRotation: 0

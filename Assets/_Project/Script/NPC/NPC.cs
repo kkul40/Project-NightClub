@@ -58,18 +58,20 @@ namespace New_NPC
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;
+            if (PathFinder.FoundPath == null) return;
+            
             path = PathFinder.FoundPath;
             if (path.Count > 1)
                 for (var i = 1; i < path.Count; i++)
                     if (i == path.Count - 1)
                     {
-                        Gizmos.color = Color.green;
-                        Gizmos.DrawSphere(path[i], 0.5f);
+                        Gizmos.color = Color.magenta;
+                        Gizmos.DrawSphere(path[i], 0.15f);
                     }
                     else
                     {
                         Gizmos.color = Color.blue;
-                        Gizmos.DrawLine(path[i - 1] + new Vector3(0, 1f, 0), path[i] + new Vector3(0, 1, 0));
+                        Gizmos.DrawLine(path[i - 1] + new Vector3(0, 0.25f, 0), path[i] + new Vector3(0, 0.25f, 0));
                     }
         }
     }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerCustomizationData
   m_EditorClassIdentifier: 
   playerGenders:
-  - {fileID: -8797027551963478419, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
   - {fileID: 5606287635665740461, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
+  - {fileID: -8797027551963478419, guid: ae4e817f1401ec94a87b5a105cad53e8, type: 3}
   playerHairPrefabs:
   - Prefab: {fileID: 0}
     Icon: {fileID: 0}

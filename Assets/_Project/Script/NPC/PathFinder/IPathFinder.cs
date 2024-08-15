@@ -9,7 +9,7 @@ namespace New_NPC
     {
         Transform mTransform { get; }
         bool HasReachedDestination { get; }
-        bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true, Action OnCompleteCallBack = null);
+        bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null);
         void CancelDestination();
 
         List<Vector3> FoundPath { get; }

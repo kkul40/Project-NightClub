@@ -60,8 +60,7 @@ namespace New_NPC
 
                 if (Helper.IterateTo100(ref iterate))
                 {
-                    randomActivity = new ExitDiscoActivity();
-                    Debug.LogError("Could Not Found New Activity");
+                    randomActivity = new WalkRandomActivity();
                     break;
                 }
             }

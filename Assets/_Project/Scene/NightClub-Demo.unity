@@ -1656,7 +1656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 1076041693}
-  lastHitTransform: {fileID: 0}
   mouseOverLayers:
     serializedVersion: 2
     m_Bits: 896
@@ -4011,7 +4010,7 @@ Transform:
   m_GameObject: {fileID: 420242596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.125, y: -0.125, z: -0.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6520,7 +6519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPlacements: 0
-  showPaths: 0
+  showPathFinder: 0
 --- !u!4 &642425710 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -16204,7 +16203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fac0ec59f64a21a111aa7939557f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showTileDataWalkable: 0
 --- !u!1001 &1451294518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23439,7 +23437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.26
+      value: 5.444
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23447,7 +23445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.78
+      value: 3.517
       objectReference: {fileID: 0}
     - target: {fileID: 864115326775603874, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -23493,6 +23491,10 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: 4a5a8c8ff5d6d2e48ab8d2b27100cf57, type: 3}
+    - target: {fileID: 7526825523928111796, guid: 31e564709d68fe94dbb12c6ff491bd8d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cd8307df32bc4f6418fbc5d80528d030, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

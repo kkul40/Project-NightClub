@@ -45,6 +45,9 @@ namespace BuildingSystem
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
 
+
+        public static event Action OnRemovingStopped;
+
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
@@ -126,6 +129,9 @@ namespace BuildingSystem
         {
             if (_buildingMethod != null)
             {
+                if (_buildingMethod is RemoveHandler)
+                    OnRemovingStopped?.Invoke();
+                
                 _buildingMethod.OnStop(_buildingNeedsData);
                 _buildingMethod = null;
                 _rotationMethod = null;

@@ -17,8 +17,7 @@ namespace New_NPC
             this.mTransform = mTransform;
         }
 
-        public bool GoTargetDestination(Vector3 targetDestination, bool checkNodes = true,
-            Action OnCompleteCallBack = null)
+        public bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null)
         {
             target = targetDestination;
             HasReachedDestination = false;

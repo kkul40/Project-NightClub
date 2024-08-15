@@ -28,7 +28,7 @@ namespace New_NPC.Activities
         public void OnActivityUpdate(ActivityNeedsData and)
         {
             if (and.Npc.PathFinder.HasReachedDestination)
-                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, false, OnComplete);
+                and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.SpawnPositon, OnComplete);
         }
 
         private void OnComplete()

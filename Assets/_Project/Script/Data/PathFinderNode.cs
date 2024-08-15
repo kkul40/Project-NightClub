@@ -10,8 +10,17 @@ namespace Data
         public Vector3 WorldPos = -Vector3.one;
         public PathFinderNode Parent;
         public bool IsWalkable = false;
-        public bool IsAvaliable = false;
-        public bool IsMarked = false;
+        public bool IsWall = false;
+        public bool IsPlacable = true;
+
+        public bool GetIsWalkable
+        {
+            get
+            {
+                if (!IsWalkable || IsWall) return false;
+                return true;
+            }
+        }
 
         // Testing
         public ePathNodeType PathNodeType;
@@ -35,7 +44,6 @@ namespace Data
             output.WorldPos = WorldPos;
             output.Parent = Parent;
             output.IsWalkable = IsWalkable;
-            output.IsAvaliable = IsAvaliable;
             output.GridX = GridX;
             output.GridY = GridY;
 
