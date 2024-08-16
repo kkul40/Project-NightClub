@@ -51,7 +51,6 @@ namespace New_NPC.Activities
             while (target.IsWall || !target.IsWalkable)
             {
                 target = and.DiscoData.MapData.GetRandomPathFinderNode();
-                
 
                 if (Helper.IterateTo100(ref loopCount))
                 {
