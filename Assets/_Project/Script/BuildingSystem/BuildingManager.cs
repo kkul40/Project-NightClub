@@ -84,12 +84,9 @@ namespace BuildingSystem
 
         private void UpdateBuildingNeeds()
         {
-            _buildingNeedsData.CellPosition =
-                _gridHandler.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition(), eGridType.PlacementGrid);
-
-            _buildingNeedsData.CellCenterPosition =
-                _gridHandler.GetCellCenterWorld(_buildingNeedsData.CellPosition, eGridType.PlacementGrid) +
-                _buildingMethod.Offset;
+            _buildingNeedsData.CellPosition = InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PlacementGrid);
+            _buildingNeedsData.CellCenterPosition = _buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
+            
             _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
             _tileIndicator.RoateDirectionIndicator(_buildingNeedsData.RotationData.rotation);
         }

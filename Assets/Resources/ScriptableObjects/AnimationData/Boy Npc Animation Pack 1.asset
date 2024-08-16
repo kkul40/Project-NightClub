@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
   m_Name: Boy Npc Animation Pack 1
   m_EditorClassIdentifier: 
-  <animationDuration>k__BackingField: 1
+  <animationDuration>k__BackingField: 0.5
   <Idle>k__BackingField:
   - {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
   <Walk>k__BackingField:

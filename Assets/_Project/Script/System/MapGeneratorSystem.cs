@@ -130,10 +130,10 @@ namespace System
         private void InstantiateFloorTile(int x, int y)
         {
             var offset = new Vector3(0.5f, 0, 0.5f);
-            var pos = new Vector3Int(x, 0, y) + offset;
-            var newObject = Instantiate(floorTilePrefab, pos, Quaternion.identity);
+            var pos = new Vector3Int(x, 0, y);
+            var newObject = Instantiate(floorTilePrefab, pos + offset, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.SetPathfinderNode(x, y, true, isWalkable: true);
+            MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, isWalkable: true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }

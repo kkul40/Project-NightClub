@@ -5,8 +5,6 @@ namespace System
 {
     public class GridHandler : Singleton<GridHandler>
     {
-        [SerializeField] private Grid grid1x1;
-        [SerializeField] private Grid grid4x4;
         [SerializeField] private Shader gridSahder;
         [SerializeField] private Color gridColor;
         [SerializeField] private GameObject gridPlane;
@@ -22,83 +20,6 @@ namespace System
         private void OnDisable()
         {
             MapGeneratorSystem.OnMapSizeChanged -= AlignGridWithMapSize;
-        }
-
-        public Vector3Int GetMouseCellPosition(Vector3 mousePosition, eGridType gridType)
-        {
-            switch (gridType)
-            {
-                case eGridType.PlacementGrid:
-                    return grid1x1.WorldToCell(SwapYZ(mousePosition));
-                    break;
-                case eGridType.PathFinderGrid:
-                    return grid4x4.WorldToCell(SwapYZ(mousePosition));
-                    break;
-            }
-
-            Debug.Log("Grid Type Could Not Found");
-            return -Vector3Int.one;
-        }
-
-        public Vector3 CellToWorldPosition(Vector3Int cellPos, eGridType gridType)
-        {
-            switch (gridType)
-            {
-                case eGridType.PlacementGrid:
-                    return grid1x1.CellToWorld(SwapYZ(cellPos));
-
-                    break;
-                case eGridType.PathFinderGrid:
-                    return grid4x4.CellToWorld(SwapYZ(cellPos));
-                    break;
-            }
-
-            Debug.Log("Grid Type Could Not Found");
-            return -Vector3Int.one;
-        }
-
-        public Vector3 GetCellCenterWorld(Vector3Int cellPos, eGridType gridType)
-        {
-            switch (gridType)
-            {
-                case eGridType.PlacementGrid:
-                    return grid1x1.GetCellCenterWorld(SwapYZ(cellPos));
-
-                    break;
-                case eGridType.PathFinderGrid:
-                    return grid4x4.GetCellCenterWorld(SwapYZ(cellPos));
-                    break;
-            }
-
-            Debug.Log("Grid Type Could Not Found");
-            return -Vector3Int.one;
-        }
-
-        public Vector3Int GetWorldToCell(Vector3 worldPos, eGridType gridType)
-        {
-            switch (gridType)
-            {
-                case eGridType.PlacementGrid:
-                    return grid1x1.WorldToCell(SwapYZ(worldPos));
-
-                    break;
-                case eGridType.PathFinderGrid:
-                    return grid4x4.WorldToCell(SwapYZ(worldPos));
-                    break;
-            }
-
-            Debug.Log("Grid Type Could Not Found");
-            return -Vector3Int.one;
-        }
-
-        public Vector3Int SwapYZ(Vector3Int vector)
-        {
-            return new Vector3Int(vector.x, vector.z, vector.y);
-        }
-
-        public Vector3 SwapYZ(Vector3 vector)
-        {
-            return new Vector3(vector.x, vector.z, vector.y);
         }
 
         public void ToggleGrid(bool toggle)

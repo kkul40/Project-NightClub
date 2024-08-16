@@ -14,7 +14,6 @@ namespace BuildingSystem.Builders
     {
         public bool PressAndHold { get; }
         public bool isFinished { get; private set; }
-        public Vector3 Offset { get; private set; }
 
         private GameObject _tempObject;
         private List<MeshRenderer> _tempMeshRenderer;
@@ -32,8 +31,6 @@ namespace BuildingSystem.Builders
                 Object.Destroy(propUnit);
 
             _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-
-            Offset = Offset.BuildingOffset(_storeItemSo.PlacementLayer);
 
             var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_storeItemSo.PlacementLayer);
             foreach (var transform in transforms)

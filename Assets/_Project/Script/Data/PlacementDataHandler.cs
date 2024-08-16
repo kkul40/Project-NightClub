@@ -127,7 +127,7 @@ namespace Data
             if (data.Item3 != ePlacementLayer.FloorProp) return;
             
             foreach (var key in data.Item2)
-                MapData.SetPathfinderNode(key.x, key.z, data.Item1.PlacedPlacementItemSo.IsBig, true);
+                MapData.SetPathFinderNode(key, data.Item1.PlacedPlacementItemSo.IsBig, true);
             
             List<Vector3Int> updadatableKeys = new List<Vector3Int>();
             foreach (var worldPos in data.Item2)
@@ -140,7 +140,7 @@ namespace Data
                 if(tuple == null) continue;
 
                 foreach (var worldKey in tuple.Item2)
-                    MapData.SetPathfinderNode(worldKey.x, worldKey.z, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
+                    MapData.SetPathFinderNode(worldKey, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
             }
         }
         
@@ -149,7 +149,7 @@ namespace Data
             if (tuple.Item3 != ePlacementLayer.FloorProp) return;
 
             foreach (var key in tuple.Item2)
-                MapData.SetPathfinderNode(key.x, key.z, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
+                MapData.SetPathFinderNode(key, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
         }
         
         private void AddedObjectHandler(Vector3Int cellPos, PlacementData placementData)
@@ -233,7 +233,6 @@ namespace Data
         public void LoadGameProps(GameData gameData)
         {
             AllPlacedObjects.Clear();
-            //Sahneden Zaten Siliniyor
 
             foreach (var savedData in gameData.SavedPlacementDatas)
             {
@@ -258,10 +257,7 @@ namespace Data
         private GameObject InstantiateProp(PlacementItemSO placementItemso, Vector3Int cellPosition,
             RotationData rotationData)
         {
-            var offset = new Vector3().BuildingOffset(placementItemso.PlacementLayer);
-            var createdObject = Object.Instantiate(placementItemso.Prefab,
-                GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid) + offset,
-                rotationData.rotation);
+            var createdObject = Object.Instantiate(placementItemso.Prefab, cellPosition.CellCenterPosition(eGridType.PlacementGrid), rotationData.rotation);
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
 
@@ -327,6 +323,16 @@ namespace Data
 
             return null;
         }
+        
+        // public bool IsWorldPositionClearOfAnyPlacement(Vector3 vector)
+        // {
+        //     foreach (var value in Enum.GetValues(typeof(ePlacementLayer).GetType()))
+        //     {
+        //         if((ePlacementLayer)value == ePlacementLayer.WallProp) continue;
+        //         
+        //         ContainsKey()
+        //     }
+        // }
 
         /// <summary>
         /// Only For Debug Purposes

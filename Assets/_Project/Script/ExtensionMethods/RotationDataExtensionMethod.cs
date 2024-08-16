@@ -2,7 +2,7 @@
 
 namespace BuildingSystem
 {
-    public static class DirectionHelper
+    public static class RotationDataExtensionMethod
     {
         public static RotationData RotateClockWise(Quaternion currentQuaternion, Direction direction)
         {

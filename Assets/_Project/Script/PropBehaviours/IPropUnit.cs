@@ -1,5 +1,6 @@
 ﻿using System;
 using BuildingSystem;
+using Data;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace PropBehaviours
         {
             this.ID = ID;
             CellPosition = cellPosition;
-            WorldPos = GridHandler.Instance.GetCellCenterWorld(cellPosition, eGridType.PlacementGrid);
+            WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
             RotationData = rotationData;
             PlacementLayer = placementLayer;
         }

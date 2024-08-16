@@ -1,0 +1,65 @@
+using System;
+using UnityEngine;
+
+namespace Data
+{
+    public static class GridExtensionMethod
+    {
+        /// <summary>
+        /// Finds The PathFinder Index By PlacementPos
+        ///
+        /// Which you can use to Set PathFinderNode Accuratly
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public static Vector2Int PlacementPosToPathFinderIndex(this Vector3Int vector)
+        {
+            return new Vector2Int(vector.x, vector.z) * ConstantVariables.PathFinderGridSize;
+        }
+
+        /// <summary>
+        /// Converts a world position to selected grid cell position.
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="cellGridType"></param>
+        /// <returns></returns>
+        public static Vector3Int WorldPosToCellPos(this Vector3 vector, eGridType cellGridType)
+        {
+            switch (cellGridType)
+            {
+                case eGridType.PlacementGrid:
+                    return new Vector3Int((short)vector.x, (short)vector.y, (short)vector.z); // 1 Birim
+                    break;
+                case eGridType.PathFinderGrid:
+                    // float = 2.22; x == 8
+                    // float = 2.25 || 2.26 = x = 9;
+                    var x = vector.x / (1f / ConstantVariables.PathFinderGridSize);
+                    var y = vector.y / (1f / ConstantVariables.PathFinderGridSize);
+                    var z = vector.z / (1f / ConstantVariables.PathFinderGridSize);
+
+                    return new Vector3Int((short)x, (short)y, (short)z);
+                    break;
+            }
+
+            Debug.LogError("Conversion Returned Null when trying : " + cellGridType.ToString());
+            return -Vector3Int.one;
+        }
+
+        public static Vector3 CellCenterPosition(this Vector3Int vector, eGridType cellGridType)
+        {
+            switch (cellGridType)
+            {
+                case eGridType.PlacementGrid:
+                    float centerOffset1x1 = 0.5f;
+                    return new Vector3(vector.x + centerOffset1x1, vector.y, vector.z + centerOffset1x1);
+                    break;
+                case eGridType.PathFinderGrid:
+                    float centerOffset4x4 = 1f / ConstantVariables.PathFinderGridSize;
+                    return new Vector3(vector.x * centerOffset4x4, 0, vector.z * centerOffset4x4);
+                    break;
+            }
+
+            return -Vector3.one;
+        }
+    }
+}

@@ -11,7 +11,7 @@ namespace BuildingSystem.Builders
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
             var quaternion = GetClosestWallRotation(buildingNeedsData);
-            var direction = DirectionHelper.GetDirectionFromQuaternion(quaternion);
+            var direction = RotationDataExtensionMethod.GetDirectionFromQuaternion(quaternion);
 
             buildingNeedsData.RotationData = new RotationData(quaternion, direction);
         }

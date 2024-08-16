@@ -11,7 +11,6 @@ namespace BuildingSystem.Builders
     {
         public bool PressAndHold { get; } = true;
         public bool isFinished { get; }
-        public Vector3 Offset { get; }
 
         private MaterialItemSo _materialItemSo;
         private IChangableMaterial _changableMaterial;

@@ -18,11 +18,6 @@ namespace Data
             }
         }
 
-        public Vector2Int ConvertFromPlacementToPathFinderSize(int x, int y)
-        {
-            return new Vector2Int(x, y ) * ConstantVariables.PathFinderGridSize;
-        }
-
         // TODO Make door ps vector2Int
         public Vector3Int DoorPosition { get; private set; }
         public int WallDoorIndex { get; private set; }
@@ -64,9 +59,7 @@ namespace Data
                     node.IsWalkable = false;
                     node.GridX = x;
                     node.GridY = y;
-                    Vector3 WorldPos = GridHandler.Instance.GetCellCenterWorld(new Vector3Int(x, 0, y), eGridType.PathFinderGrid);
-                    node.WorldPos = WorldPos;
-                    
+                    node.WorldPos = new Vector3Int(x, 0, y).CellCenterPosition(eGridType.PathFinderGrid);
                 }
             }
         }
@@ -113,16 +106,22 @@ namespace Data
             CurrentMapSize = mapSize;
             return true;
         }
-
-        public void SetPathfinderNode(int x, int y, bool isBig, bool? isWalkable = null, bool? isWall = null)
+        
+        public void SetPathFinderNode(Vector3Int cellPosition, bool isBig, bool? isWalkable = null, bool? isWall = null)
         {
-            Vector2Int cellPos = ConvertFromPlacementToPathFinderSize(x, y);
+            SetPathFinderNode(cellPosition.PlacementPosToPathFinderIndex(), isBig, isWalkable, isWall);
+        }
 
-            int setMaxCellPosX = cellPos.x + (isBig ? ConstantVariables.PathFinderGridSize : 3);
-            int setMaxCellPosY = cellPos.y + (isBig ? ConstantVariables.PathFinderGridSize : 3);
+        public void SetPathFinderNode(Vector2Int pathNodeIndex, bool isBig, bool? isWalkable = null, bool? isWall = null)
+        {
+            int minimumSpace = 0;
+            int maximumSpace = 1;
+            
+            int setMaxCellPosX = pathNodeIndex.x + (isBig ? ConstantVariables.PathFinderGridSize - minimumSpace : ConstantVariables.PathFinderGridSize - maximumSpace);
+            int setMaxCellPosY = pathNodeIndex.y + (isBig ? ConstantVariables.PathFinderGridSize - minimumSpace : ConstantVariables.PathFinderGridSize - maximumSpace);
 
-            int setMinCellPosX = cellPos.x + (isBig ? 0 : 1);
-            int setMinCellPosY = cellPos.y + (isBig ? 0 : 1);
+            int setMinCellPosX = pathNodeIndex.x + (isBig ? minimumSpace : maximumSpace);
+            int setMinCellPosY = pathNodeIndex.y + (isBig ? minimumSpace : maximumSpace);
             
             for (int i = setMinCellPosX; i <= setMaxCellPosX; i++)
             for (int j = setMinCellPosY; j <= setMaxCellPosY; j++)
@@ -163,7 +162,8 @@ namespace Data
 
         public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
         {
-            var convert = GridHandler.Instance.GetWorldToCell(worldPos, eGridType.PathFinderGrid);
+            // var convert = GridHandler.Instance.GetWorldToCell(worldPos, eGridType.PathFinderGrid);
+            var convert = worldPos.WorldPosToCellPos(System.eGridType.PathFinderGrid);
             return NewPathFinderNodes[convert.x, convert.z];
         }
 
@@ -178,9 +178,8 @@ namespace Data
             return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
-        public Vector3 EnterencePosition =>
-            GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1, 0, 1), eGridType.PlacementGrid) -
-            new Vector3(0, 0.5f, 0);
+        // public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1, 0, 1), eGridType.PlacementGrid) - new Vector3(0, 0.5f, 0);
+        public Vector3 EnterencePosition => DoorPosition.ToFloat().AddVector(new Vector3Int(-1, 0, 1)).WorldPosToCellPos(eGridType.PlacementGrid).CellCenterPosition(eGridType.PlacementGrid);
 
         public Vector3 SpawnPositon => EnterencePosition - new Vector3(0, 0, 3);
     }

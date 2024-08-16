@@ -13,7 +13,7 @@ namespace BuildingSystem.Builders
             if (InputSystem.Instance.TurnLeft)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
-                var rData = DirectionHelper.RotateClockWise(tempQ, buildingNeedsData.RotationData.direction);
+                var rData = RotationDataExtensionMethod.RotateClockWise(tempQ, buildingNeedsData.RotationData.direction);
 
                 buildingNeedsData.RotationData = rData;
             }
@@ -21,7 +21,7 @@ namespace BuildingSystem.Builders
             if (InputSystem.Instance.TurnRight)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
-                var rData = DirectionHelper.RotateCounterClockWise(tempQ, buildingNeedsData.RotationData.direction);
+                var rData = RotationDataExtensionMethod.RotateCounterClockWise(tempQ, buildingNeedsData.RotationData.direction);
 
                 buildingNeedsData.RotationData = rData;
             }

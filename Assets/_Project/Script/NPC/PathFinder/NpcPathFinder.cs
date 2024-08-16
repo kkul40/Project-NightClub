@@ -243,7 +243,8 @@ namespace New_NPC
         {
             if (worldPosition == -Vector3.one) return new PathFinderNode();
             
-            var cell = GridHandler.Instance.GetWorldToCell(worldPosition, eGridType.PathFinderGrid);
+            // var cell = GridHandler.Instance.GetWorldToCell(worldPosition, eGridType.PathFinderGrid);
+            var cell = worldPosition.WorldPosToCellPos(eGridType.PathFinderGrid);
 
             cell.x = Mathf.Clamp(cell.x, 0, DiscoData.Instance.MapData.PathFinderSize.x -1);
             cell.z = Mathf.Clamp(cell.z, 0, DiscoData.Instance.MapData.PathFinderSize.y -1);

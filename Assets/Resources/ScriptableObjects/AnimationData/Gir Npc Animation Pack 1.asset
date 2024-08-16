@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
   m_Name: Gir Npc Animation Pack 1
   m_EditorClassIdentifier: 
-  <animationDuration>k__BackingField: 1
+  <animationDuration>k__BackingField: 0.5
   <Idle>k__BackingField:
   - {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
   <Walk>k__BackingField:

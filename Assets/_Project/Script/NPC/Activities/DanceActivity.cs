@@ -12,6 +12,8 @@ namespace New_NPC.Activities
         private DanceState _danceState = DanceState.None;
         private float timer;
 
+        private float danceDuration = 0;
+
         public bool CanStartActivity(ActivityNeedsData and)
         {
             var dancableTiles = and.GetAvaliablePropsByType<DancableTile>();
@@ -48,13 +50,14 @@ namespace New_NPC.Activities
                     {
                         and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Dance);
                         and.Npc.animationController.SetRootMotion(true);
+
+                        danceDuration = and.Npc.animationController.GetCurrentAnimationDuration() * 2;
                         _danceState = DanceState.Dancing;
                     }
-
                     break;
                 case DanceState.Dancing:
                     timer += Time.deltaTime;
-                    if (timer > and.Npc.animationController.GetCurrentAnimationDuration())
+                    if (timer > danceDuration)
                     {
                         timer = 0;
                         IsEnded = true;

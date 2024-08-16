@@ -6,7 +6,6 @@ namespace BuildingSystem.Builders
     {
         public bool PressAndHold { get; }
         public bool isFinished { get; }
-        public Vector3 Offset { get; }
 
         public void OnStart(BuildingNeedsData buildingNeedsData)
         {
