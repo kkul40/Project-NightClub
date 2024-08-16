@@ -28,6 +28,7 @@ namespace PropBehaviours
             PlacementLayer = placementLayer;
         }
 
+        public bool IsInteractable { get; protected set; } = true;
         public eInteraction Interaction { get; } = eInteraction.PropUnit;
 
         public virtual void OnFocus()

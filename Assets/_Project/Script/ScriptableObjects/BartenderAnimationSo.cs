@@ -10,6 +10,7 @@ namespace ScriptableObjects
         [field: SerializeField] public AnimationClip Idle { get; private set; }
         [field: SerializeField] public AnimationClip Walk { get; private set; }
         [field: SerializeField] public AnimationClip PrepareDrink { get; private set; }
+        [field: SerializeField] public AnimationClip CleanUpTable { get; private set; }
         [field: SerializeField] public AnimationClip Debug { get; private set; }
     }
 }

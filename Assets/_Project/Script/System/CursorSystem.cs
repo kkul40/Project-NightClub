@@ -18,12 +18,13 @@ namespace Testing
 
         private void Update()
         {
-            if (BuildingManager.Instance.isPlacing || !InputSystem.Instance.IsMouseCursorOnWorld)
+            if (BuildingManager.Instance.isPlacing || 
+                !InputSystem.Instance.IsMouseCursorOnWorld)
             {
                 Reset();
                 return;
             }
-
+            
             var hitTransform = _inputSystem.GetHitTransform();
 
             if (hitTransform == null)
@@ -35,8 +36,13 @@ namespace Testing
             if (hitTransform.gameObject != _currentGameObject) Reset();
 
             if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
-                if (_currentInteractable != cursorInteraction)
-                    Set(cursorInteraction, hitTransform.gameObject);
+            {
+                if (cursorInteraction.IsInteractable)
+                {
+                    if (_currentInteractable != cursorInteraction)
+                        Set(cursorInteraction, hitTransform.gameObject);
+                }
+            }
 
             if (_inputSystem.LeftClickOnWorld)
                 if (_currentInteractable != null)
@@ -46,8 +52,17 @@ namespace Testing
         private void Set(IInteractable set, GameObject gameObject)
         {
             if (_currentInteractable == set) return;
-
             _currentInteractable = set;
+            
+            if (_currentInteractable != null)
+            {
+                if (!_currentInteractable.IsInteractable)
+                {
+                    Reset();
+                    return;
+                }
+            }
+            
             _currentGameObject = gameObject;
             _currentInteractable.OnFocus();
 

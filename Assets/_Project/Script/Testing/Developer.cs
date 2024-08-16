@@ -22,5 +22,10 @@ namespace Testing
         {
             SceneManager.LoadScene(0);
         }
+
+        public void LoaodCurrentScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

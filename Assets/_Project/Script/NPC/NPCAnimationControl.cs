@@ -83,6 +83,9 @@ namespace New_NPC
                 case eAnimationType.Bartender_PrepareDrink:
                     selectedAnimationClip = _animationSo.PrepareDrink;
                     break;
+                case eAnimationType.Bartender_CleanUpTable:
+                    selectedAnimationClip = _animationSo.CleanUpTable;
+                    break;
                 default:
                     selectedAnimationClip = _animationSo.Debug;
                     break;

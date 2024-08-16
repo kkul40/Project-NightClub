@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2083042251964758387}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.852, z: 2}
+  m_LocalPosition: {x: 0, y: 0.854, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,7 +116,7 @@ MonoBehaviour:
   bartenderWaitPosition: {fileID: 8345200245977923918}
   customerWaitPosition: {fileID: 864066266957146545}
   counterPlacePosition: {fileID: 3303600892597171945}
-  drinkData: {fileID: 11400000, guid: 4868e55362324654990b32b76bf2a729, type: 2}
+  drinkData: {fileID: 11400000, guid: 1c05fad238d46ab4686bd3529c59209c, type: 2}
 --- !u!54 &7852657284703386416
 Rigidbody:
   m_ObjectHideFlags: 0

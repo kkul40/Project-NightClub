@@ -37,6 +37,7 @@ namespace New_NPC
             _activityHandler.UpdateActivity();
         }
 
+        public bool IsInteractable { get; }
         public eInteraction Interaction { get; } = eInteraction.Customer;
 
         public void OnFocus()
@@ -85,6 +86,7 @@ namespace New_NPC
         NPC_Dance,
         Bartender_Idle,
         Bartender_Walk,
-        Bartender_PrepareDrink
+        Bartender_PrepareDrink,
+        Bartender_CleanUpTable
     }
 }

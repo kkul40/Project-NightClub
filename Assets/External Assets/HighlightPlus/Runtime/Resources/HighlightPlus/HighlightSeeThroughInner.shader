@@ -123,11 +123,11 @@ Properties {
                     return 0;
                 #else
 
-                    #if HP_DEPTH_OFFSET
-                        float sceneZ = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.scrPos.xy / i.scrPos.w);
-                        float sceneDepth = GetEyeDepth(sceneZ);
-                        if (i.depth - sceneDepth - _SeeThroughDepthOffset < 0 || i.depth - sceneDepth > _SeeThroughMaxDepth) discard;
-                    #endif
+                    // #if HP_DEPTH_OFFSET
+                    //     float sceneZ = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.scrPos.xy / i.scrPos.w);
+                    //     float sceneDepth = GetEyeDepth(sceneZ);
+                    //     if (i.depth - sceneDepth - _SeeThroughDepthOffset < 0 || i.depth - sceneDepth > _SeeThroughMaxDepth) discard;
+                    // #endif
                     fixed4 col = tex2D(_MainTex, i.uv);
                     #if HP_ALPHACLIP
                         clip(col.a - _CutOff);

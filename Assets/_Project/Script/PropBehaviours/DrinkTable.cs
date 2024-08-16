@@ -12,6 +12,9 @@ namespace PropBehaviours
         public int drinkAmount;
         private bool isClicked;
 
+        public bool isFinished = true;
+
+        public bool IsInteractable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.Interactable;
 
         public void OnFocus()
@@ -36,6 +39,7 @@ namespace PropBehaviours
 
             var d = Instantiate(drink.Prefab, DrinkHolder);
 
+            isFinished = false;
             EmptyTransfrom.gameObject.SetActive(false);
             DrinkHolder.gameObject.SetActive(true);
         }
@@ -51,6 +55,7 @@ namespace PropBehaviours
             DrinkHolder.gameObject.SetActive(false);
             EmptyTransfrom.gameObject.SetActive(true);
             isClicked = true;
+            isFinished = true;
         }
     }
 }

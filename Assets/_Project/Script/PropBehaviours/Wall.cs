@@ -7,6 +7,7 @@ namespace PropBehaviours
 {
     public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
     {
+        public bool IsInteractable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.None;
 
         public void OnFocus()

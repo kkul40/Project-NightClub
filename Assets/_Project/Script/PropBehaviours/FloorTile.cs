@@ -24,6 +24,7 @@ namespace PropBehaviours
 
         #region IInteractable
 
+        public bool IsInteractable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.None;
 
         public void OnFocus()
