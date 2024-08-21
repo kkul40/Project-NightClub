@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using BuildingSystem;
 using Data;
@@ -46,33 +47,104 @@ namespace System
 
         private void SetUpMap()
         {
-            MapSize = MapData.CurrentMapSize;
-
-            for (var i = 0; i < MapSize.x; i++)
-            for (var j = 0; j < MapSize.y; j++)
-                InstantiateFloorTile(i, j);
-
-            for (var i = 1; i <= MapSize.x; i++)
-            {
-                if (i == MapData.WallDoorIndex)
-                {
-                    var newWallDoorObject =
-                        Instantiate(wallDoorPrefab, new Vector3(i - 0.5f, 0, 0), Quaternion.identity);
-
-                    LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
-
-                    newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-                    continue;
-                }
-
-                InstantiateXWall(i);
-            }
-
-            for (var i = 1; i <= MapSize.y; i++) InstantiateYWall(i);
-
             OnMapSizeChanged?.Invoke(MapSize);
+
+            float delay = 0.05f;
+            StartCoroutine(SetUpFloor(delay));
+            StartCoroutine(SetUpWall(delay));
         }
 
+        private IEnumerator SetUpFloor(float delay)
+        {
+            int x = 0;
+            int y = 0;
+            bool xDone = false;
+            bool yDone = false;
+            
+            while (!xDone || !yDone)
+            {
+                yield return new WaitForSeconds(delay);
+                
+                if (y < MapSize.y) // Y Duzelminde Ekleme
+                {
+                    for (int i = 0; i <= y; i++)
+                    {
+                        if (i >= MapSize.x)
+                            continue;
+                        
+                        InstantiateFloorTile(i, y);
+                    }
+                }
+                else
+                {
+                    yDone = true;
+                }
+
+                if (x < MapSize.x) // X Duzleminde Ekleme
+                {
+                    for (int i = 0; i < y; i++)
+                    {
+                        if (i >= MapSize.y)
+                            continue;
+                        
+                        InstantiateFloorTile(x, i);
+                    }
+                }
+                else
+                {
+                    xDone = true;
+                }
+                
+                x++;
+                y++;
+            }
+        }
+
+        private IEnumerator SetUpWall(float delay)
+        {
+            int x = 1;
+            int y = 1;
+
+            bool xDone = false;
+            bool yDone = false;
+            while (!xDone || !yDone)
+            {
+                yield return new WaitForSeconds(delay);
+
+                if (x <= MapSize.x)
+                {
+                    if (x == MapData.WallDoorIndex)
+                    {
+                        var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
+                            Quaternion.identity);
+
+                        LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
+
+                        newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+                    }
+                    else
+                    {
+                        InstantiateXWall(x);
+                    }
+                }
+                else
+                {
+                    xDone = true;
+                }
+
+                if (y <= MapSize.y)
+                {
+                    InstantiateYWall(y);
+                }
+                else
+                {
+                    yDone = true;
+                }
+                
+                x++;
+                y++;
+            }
+        }
 
         [ContextMenu("Expend X")]
         public void ExpendX()
@@ -108,9 +180,8 @@ namespace System
         private GameObject InstantiateYWall(int y)
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
-            var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.Euler(0, 90, 0));
+            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.Euler(0, 90, 0));
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
             return newWallObject;
@@ -119,7 +190,7 @@ namespace System
         private GameObject InstantiateXWall(int x)
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
-            var newWallObject = Instantiate(wallPrefab, pos2, Quaternion.identity);
+            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.identity);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
@@ -131,13 +202,14 @@ namespace System
         {
             var offset = new Vector3(0.5f, 0, 0.5f);
             var pos = new Vector3Int(x, 0, y);
-            var newObject = Instantiate(floorTilePrefab, pos + offset, Quaternion.identity);
+            var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
             MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, isWalkable: true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
 
+        
         private void LoadAndAssignFloorTileMaterial(Vector3Int cellPosition, GameObject newObject)
         {
             var data = MapData.FloorGridDatas[cellPosition.x, cellPosition.z];
@@ -163,6 +235,13 @@ namespace System
 
             data.AssignReferance(newWallObject.GetComponent<Wall>());
             data.AssignNewID(data.assignedMaterialID);
+        }
+        
+        private GameObject CreateObject(GameObject gameObject,Vector3 pos, Quaternion quaternion)
+        {
+            var ob = Instantiate(gameObject, pos, quaternion);
+            ob.AnimatedPlacement(pos);
+            return ob;
         }
     }
 }

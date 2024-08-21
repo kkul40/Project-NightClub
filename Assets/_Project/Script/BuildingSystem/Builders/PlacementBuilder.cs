@@ -76,6 +76,8 @@ namespace BuildingSystem.Builders
         {
             var createdObject = Object.Instantiate(_storeItemSo.Prefab, buildingNeedsData.CellCenterPosition,
                 buildingNeedsData.RotationData.rotation);
+            
+            createdObject.AnimatedPlacement(buildingNeedsData.CellCenterPosition);
 
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Data
@@ -21,6 +23,17 @@ namespace Data
             keys.Add(vector + new Vector3Int(1,0,-1));
             
             return keys;
+        }
+
+        public static void AnimatedPlacement(this GameObject gameObject, Vector3 placedPosition)
+        {
+            gameObject.transform.position = placedPosition.Add(y: 1);
+            gameObject.transform.DOMove(placedPosition, 0.5f).SetEase(Ease.OutExpo);
+        }
+
+        public static void AnimatedRemoval(this GameObject gameObject, Action OnComplete)
+        {
+            gameObject.transform.DOMove(gameObject.transform.position.Add(y: -3), 0.5f).SetEase(Ease.InExpo).OnComplete(() => OnComplete.Invoke());
         }
     }
 }

@@ -172,7 +172,7 @@ namespace Data
 
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
 
-            Object.Destroy(objectToRemove);
+            objectToRemove.AnimatedRemoval(() => Object.Destroy(objectToRemove));
         }
 
         private void UpdateProps()
@@ -258,8 +258,9 @@ namespace Data
             RotationData rotationData)
         {
             var createdObject = Object.Instantiate(placementItemso.Prefab, cellPosition.CellCenterPosition(eGridType.PlacementGrid), rotationData.rotation);
-            createdObject.transform.SetParent(
-                SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
+            createdObject.AnimatedPlacement(cellPosition.CellCenterPosition(eGridType.PlacementGrid));
+            
+            createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
 
             return createdObject;
         }
