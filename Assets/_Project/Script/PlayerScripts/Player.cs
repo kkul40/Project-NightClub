@@ -27,8 +27,8 @@ namespace PlayerScripts
 
         private void Update()
         {
-            Debug.Log(InputSystem.Instance.GetMouseMapPosition());
-            Debug.Log(InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PathFinderGrid));
+            // Debug.Log(InputSystem.Instance.GetMouseMapPosition());
+            // Debug.Log(InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PathFinderGrid));
             
             if (InputSystem.Instance.RightClickOnWorld)
             {

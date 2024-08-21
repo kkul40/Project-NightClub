@@ -45,6 +45,12 @@ namespace Data
             return -Vector3Int.one;
         }
 
+        /// <summary>
+        /// Gets the Centrol Position of a grid cellposition while keeping height unchanged
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="cellGridType"></param>
+        /// <returns></returns>
         public static Vector3 CellCenterPosition(this Vector3Int vector, eGridType cellGridType)
         {
             switch (cellGridType)
@@ -59,6 +65,7 @@ namespace Data
                     break;
             }
 
+            Debug.LogError("Returned Null : " + cellGridType.ToString());
             return -Vector3.one;
         }
     }

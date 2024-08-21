@@ -30,6 +30,9 @@ namespace New_NPC
         {
             if (!activity.CanStartActivity(_activityNeedsData)) return;
 
+            if(hasActivity)
+                _currentActivity.OnActivityEnd(_activityNeedsData);
+            
             _currentActivity = activity;
             _lastActivity = _currentActivity;
             _currentActivity.OnActivityStart(_activityNeedsData);
@@ -41,7 +44,6 @@ namespace New_NPC
 
             if (_currentActivity.IsEnded)
             {
-                _currentActivity.OnActivityEnd(_activityNeedsData);
                 StartNewActivity(GetRandomActivity());
                 return;
             }

@@ -25,6 +25,8 @@ namespace BuildingSystem
                     return GetSurfaceHolderTransform;
                 case ePlacementLayer.FloorProp:
                     return GetFloorPropHolderTransform;
+                case ePlacementLayer.WallProp:
+                    return GetWallPropHolderTransform;
             }
 
             return NullHolder;
