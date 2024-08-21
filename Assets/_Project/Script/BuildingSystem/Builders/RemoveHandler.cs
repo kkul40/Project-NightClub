@@ -96,9 +96,10 @@ namespace BuildingSystem
 
         public void OnPlace(BuildingNeedsData buildingNeedsData)
         {
-            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition,
-                _propUnit.PlacementLayer);
-            ResetMaterials(buildingNeedsData.MaterialColorChanger);
+            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
+            // buildingNeedsData.MaterialColorChanger.SetCustomMaterial(_propUnit.transform, MaterialColorChanger.eMaterialColor.RemovingMaterial);
+            
+            _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
             _lastCellPos = -Vector3Int.one;
         }
 
