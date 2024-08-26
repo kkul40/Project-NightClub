@@ -189,7 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1000611203216596476}
-  - component: {fileID: 5429331230373525197}
+  - component: {fileID: 572408265151360859}
   - component: {fileID: 5318688143141393565}
   - component: {fileID: 7545683648861005702}
   m_Layer: 0
@@ -219,22 +219,21 @@ Transform:
   - {fileID: 5064578938836621044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5429331230373525197
+--- !u!114 &572408265151360859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6934028013048387856}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0476e112e1c14b7594bb4956429fdd3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 434f6997dae845a8bfc12ffd21f988d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bartenderWaitPosition: {fileID: 1808988334322979529}
   customerWaitPosition: {fileID: 7658479437796650390}
   counterPlacePosition: {fileID: 5064578938836621044}
-  drinkData: {fileID: 11400000, guid: 4868e55362324654990b32b76bf2a729, type: 2}
 --- !u!65 &5318688143141393565
 BoxCollider:
   m_ObjectHideFlags: 0

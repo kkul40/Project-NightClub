@@ -24,7 +24,8 @@ namespace UI
         {
             StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
             image.sprite = StoreItemSo.Icon;
-
+            image.enabled = false;
+            
             _extendItemSo = StoreItemSo as ExtendItemSo;
             text.text = _extendItemSo.ExtendX + " x " + _extendItemSo.ExtendY;
         }
@@ -32,10 +33,10 @@ namespace UI
         public void OnClick()
         {
             for (var i = 0; i < _extendItemSo.ExtendX; i++)
-                MapGeneratorSystem.Instance.ExpendX();
+                MapGeneratorSystem.Instance.ExpendMapOnX();
 
             for (var i = 0; i < _extendItemSo.ExtendY; i++)
-                MapGeneratorSystem.Instance.ExpendY();
+                MapGeneratorSystem.Instance.ExpendMapOnY();
         }
     }
 }

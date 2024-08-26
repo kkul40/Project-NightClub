@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using BuildingSystem;
 using Data;
+using DG.Tweening;
 using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
@@ -35,8 +36,17 @@ namespace System
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
+            
+            // SetUpMap();
+            
+            var sequence = DOTween.Sequence();
+            sequence.AppendCallback(() => SetUpMap());
+            sequence.AppendInterval(Mathf.Max(MapSize.x, MapSize.y) * 0.075f);
+            sequence.AppendCallback(() => placementDataHandler.LoadGameProps(gameData));
+            sequence.AppendCallback(() => OnMapSizeChanged?.Invoke(MapSize));
+            
+            OnMapSizeChanged?.Invoke(MapSize);
             SetUpMap();
-            placementDataHandler.LoadGameProps(gameData);
         }
 
         public void SaveData(ref GameData gameData)
@@ -47,8 +57,6 @@ namespace System
 
         private void SetUpMap()
         {
-            OnMapSizeChanged?.Invoke(MapSize);
-
             float delay = 0.05f;
             StartCoroutine(SetUpFloor(delay));
             StartCoroutine(SetUpWall(delay));
@@ -116,11 +124,9 @@ namespace System
                     if (x == MapData.WallDoorIndex)
                     {
                         var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
-                            Quaternion.identity);
+                            Quaternion.identity, SceneGameObjectHandler.Instance.GetWallHolder);
 
                         LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
-
-                        newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
                     }
                     else
                     {
@@ -147,7 +153,7 @@ namespace System
         }
 
         [ContextMenu("Expend X")]
-        public void ExpendX()
+        public void ExpendMapOnX()
         {
             if (MapSize.x + 1 > ConstantVariables.MaxMapSizeX) return;
             InstantiateXWall(MapSize.x + 1);
@@ -159,7 +165,7 @@ namespace System
         }
 
         [ContextMenu("Expend Y")]
-        public void ExpendY()
+        public void ExpendMapOnY()
         {
             if (MapSize.y + 1 > ConstantVariables.MaxMapSizeY) return;
             InstantiateYWall(MapSize.y + 1);
@@ -171,17 +177,16 @@ namespace System
         }
 
         [ContextMenu("Expend Both")]
-        public void ExpendXY()
+        public void ExpendMapOnXY()
         {
-            ExpendX();
-            ExpendY();
+            ExpendMapOnX();
+            ExpendMapOnY();
         }
 
         private GameObject InstantiateYWall(int y)
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
-            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.Euler(0, 90, 0));
-            newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.Euler(0, 90, 0), SceneGameObjectHandler.Instance.GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
             return newWallObject;
@@ -190,9 +195,7 @@ namespace System
         private GameObject InstantiateXWall(int x)
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
-            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.identity);
-            newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-
+            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.identity, SceneGameObjectHandler.Instance.GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
 
             return newWallObject;
@@ -202,13 +205,11 @@ namespace System
         {
             var offset = new Vector3(0.5f, 0, 0.5f);
             var pos = new Vector3Int(x, 0, y);
-            var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity);
-            newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
+            var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity, SceneGameObjectHandler.Instance.GetFloorTileHolder);
             MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, isWalkable: true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
-
         
         private void LoadAndAssignFloorTileMaterial(Vector3Int cellPosition, GameObject newObject)
         {
@@ -237,9 +238,10 @@ namespace System
             data.AssignNewID(data.assignedMaterialID);
         }
         
-        private GameObject CreateObject(GameObject gameObject,Vector3 pos, Quaternion quaternion)
+        private GameObject CreateObject(GameObject prefab,Vector3 pos, Quaternion quaternion, Transform parent)
         {
-            var ob = Instantiate(gameObject, pos, quaternion);
+            var ob = Instantiate(prefab, pos, quaternion);
+            ob.transform.SetParent(parent);
             ob.AnimatedPlacement(pos);
             return ob;
         }

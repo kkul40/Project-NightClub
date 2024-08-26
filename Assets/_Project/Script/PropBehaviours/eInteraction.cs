@@ -2,8 +2,9 @@
 {
     public enum eInteraction
     {
-        Interactable,
-        Customer,
+        Basic,
+        NPC,
+        Bartender,
         PropUnit,
         None
     }

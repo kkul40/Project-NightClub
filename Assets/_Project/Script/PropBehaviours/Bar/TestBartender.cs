@@ -65,7 +65,7 @@ namespace PropBehaviours
         }
 
         public bool IsInteractable { get; } = true;
-        public eInteraction Interaction { get; } = eInteraction.Customer;
+        public eInteraction Interaction { get; } = eInteraction.NPC;
 
         public void OnFocus()
         {

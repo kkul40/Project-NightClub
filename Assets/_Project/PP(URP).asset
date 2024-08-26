@@ -160,7 +160,6 @@ MonoBehaviour:
   - {fileID: 8147172915972046455}
   - {fileID: 3090772721361747794}
   - {fileID: 2321236225441669934}
-  - {fileID: 3206405377661940889}
   - {fileID: -456899716757260031}
   - {fileID: -8891148912650489673}
   - {fileID: 6335445147021449559}
@@ -375,31 +374,6 @@ MonoBehaviour:
   gain:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: 0}
---- !u!114 &3206405377661940889
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
-  m_Name: MotionBlur
-  m_EditorClassIdentifier: 
-  active: 1
-  mode:
-    m_OverrideState: 0
-    m_Value: 0
-  quality:
-    m_OverrideState: 0
-    m_Value: 0
-  intensity:
-    m_OverrideState: 0
-    m_Value: 0.75
-  clamp:
-    m_OverrideState: 0
-    m_Value: 0.05
 --- !u!114 &4609065839980714424
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -412,10 +386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
   m_Name: WhiteBalance
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   temperature:
-    m_OverrideState: 0
-    m_Value: 7
+    m_OverrideState: 1
+    m_Value: -4
   tint:
     m_OverrideState: 0
     m_Value: -56

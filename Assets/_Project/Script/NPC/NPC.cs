@@ -37,8 +37,8 @@ namespace New_NPC
             _activityHandler.UpdateActivity();
         }
 
-        public bool IsInteractable { get; }
-        public eInteraction Interaction { get; } = eInteraction.Customer;
+        public bool IsInteractable { get; } = true;
+        public eInteraction Interaction { get; } = eInteraction.NPC;
 
         public void OnFocus()
         {
