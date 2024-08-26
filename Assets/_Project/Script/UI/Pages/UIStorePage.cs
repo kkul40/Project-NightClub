@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BuildingSystem;
 using BuildingSystem.SO;
 using Data;
 using UnityEngine;
@@ -22,6 +23,18 @@ namespace UI
         {
             _lastButtonClicked = uiButton;
             uiStoreInventoryView.GenerateInventory(storeDataCarrier);
+        }
+
+        public override void Show()
+        {
+            base.Show();
+            BuildingManager.Instance.ToggleGrids(true);
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+            BuildingManager.Instance.ToggleGrids(false);
         }
     }
 }

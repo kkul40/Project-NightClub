@@ -51,7 +51,11 @@ namespace BuildingSystem
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
-            _gridHandler.ToggleGrid(false);
+        }
+
+        public void ToggleGrids(bool toggle)
+        {
+            _gridHandler.ToggleGrid(toggle);
         }
 
         private void Update()

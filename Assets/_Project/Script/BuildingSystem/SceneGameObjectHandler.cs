@@ -45,7 +45,7 @@ namespace BuildingSystem
                     break;
                 case ePlacementLayer.WallProp:
                     transforms.Add(GetFloorPropHolderTransform);
-                    transforms.Add(GetWallPropHolderTransform);
+                    // transforms.Add(GetWallPropHolderTransform);
                     break;
             }
 

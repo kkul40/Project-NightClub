@@ -6,26 +6,22 @@ namespace UI
     {
         public virtual void Toggle(bool toggle)
         {
-            if (toggle)
-            {
-                PageManager.Instance.HandleNewUIPageToggle(this);
-                gameObject.SetActive(true);
-                return;
-            }
-
-            gameObject.SetActive(false);
+            PageManager.Instance.HandleNewUIPageToggle(this, toggle);
         }
 
         public virtual void Toggle()
         {
-            if (isActiveAndEnabled)
-            {
-                gameObject.SetActive(false);
-                return;
-            }
+            PageManager.Instance.HandleNewUIPageToggle(this, gameObject.activeInHierarchy ? false : true);
+        }
 
-            PageManager.Instance.HandleNewUIPageToggle(this);
+        public virtual void Show()
+        {
             gameObject.SetActive(true);
+        }
+
+        public virtual void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

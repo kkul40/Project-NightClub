@@ -14,7 +14,7 @@ namespace UI
         private void Awake()
         {
             _uiPageBases = FindObjectsOfType<MonoBehaviour>().OfType<UIPageBase>().ToList();
-            HandleNewUIPageToggle(null);
+            HandleNewUIPageToggle(null, false);
         }
 
         private void Update()
@@ -28,10 +28,23 @@ namespace UI
             }
         }
 
-        public void HandleNewUIPageToggle(UIPageBase source)
+        public void HandleNewUIPageToggle(UIPageBase source, bool toggle)
         {
             _lastPage = source;
-            foreach (var page in _uiPageBases) page.Toggle(false);
+            
+            foreach (var page in _uiPageBases)
+            {
+                if (page == source)
+                {
+                    if(toggle)
+                        page.Show();
+                    else
+                        page.Hide();
+                    
+                    continue;
+                }
+                page.Hide();
+            }
         }
     }
 }
