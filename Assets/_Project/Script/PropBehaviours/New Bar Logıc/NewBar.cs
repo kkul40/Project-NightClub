@@ -1,4 +1,5 @@
 ﻿using System;
+using UI;
 using UnityEngine;
 
 namespace PropBehaviours.New_Bar_Logıc
@@ -51,7 +52,7 @@ namespace PropBehaviours.New_Bar_Logıc
 
         public override void OnClick()
         {
-            // Display window and decide which drink to create
+            UIWorldPopUpManager.Instance.HandleNewWorldPopUpPage<UIDrinksPopup>(counterPlacePosition.position, true);
         }
     }
 }

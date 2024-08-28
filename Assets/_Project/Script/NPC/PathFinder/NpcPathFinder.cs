@@ -41,7 +41,7 @@ namespace New_NPC
                 Debug.Log("No Pathf Found : " + targetPos);
                 return false;
             }
-
+            
             _routine = CoFollowPath(_currentPath, OnCompleteCallBack);
             DiscoData.Instance.StartCoroutine(_routine);
             return true;
@@ -68,7 +68,7 @@ namespace New_NPC
                 SetRotationToTarget(newPath);
                 while (Vector3.Distance(_assignedNPC.position, newPath) > 0.1f)
                 {
-                    _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, Time.deltaTime * 1.5f);
+                    _assignedNPC.position = Vector3.MoveTowards(_assignedNPC.position, newPath, GameTime.DeltaTime * 1.5f);
                     yield return null;
                 }
             }

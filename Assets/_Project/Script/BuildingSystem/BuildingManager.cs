@@ -2,6 +2,7 @@
 using BuildingSystem.Builders;
 using BuildingSystem.SO;
 using Data;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SubsystemsImplementation;
@@ -53,9 +54,28 @@ namespace BuildingSystem
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
         }
 
-        public void ToggleGrids(bool toggle)
+        private void OnEnable()
         {
-            _gridHandler.ToggleGrid(toggle);
+            UIStoreMenu.OnPageShow += OnPageShown;
+            UIStoreMenu.OnPageHide += OnPageHidden;
+        }
+
+        private void OnDisable()
+        {
+            UIStoreMenu.OnPageShow -= OnPageShown;
+            UIStoreMenu.OnPageHide -= OnPageHidden;
+        }
+
+        private void OnPageShown()
+        {
+            _gridHandler.ToggleGrid(true);
+            GameTime.PauseGame(eTimeType.Game);
+        }
+
+        private void OnPageHidden()
+        {
+            _gridHandler.ToggleGrid(false);
+            GameTime.ResumeGame(eTimeType.Game);
         }
 
         private void Update()

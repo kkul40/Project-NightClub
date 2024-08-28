@@ -1,6 +1,8 @@
+using System;
 using System.Data.Common;
 using ScriptableObjects;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace New_NPC
 {
@@ -19,7 +21,7 @@ namespace New_NPC
             _npcAnimationSo = npcAnimationSo;
             this.animatorTransform = animatorTransform;
         }
-
+        
         public void PlayAnimation(eAnimationType eAnimationType)
         {
             switch (eAnimationType)

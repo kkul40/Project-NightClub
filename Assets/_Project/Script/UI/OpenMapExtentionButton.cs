@@ -10,7 +10,7 @@ namespace UI
 {
     public class OpenMapExtentionButton : UIButton
     {
-        [SerializeField] private UIStorePage storePage;
+        [FormerlySerializedAs("storePage")] [SerializeField] private UIStoreMenu storeMenu;
         private StoreDataCarrier _storeDataCarrier = new();
 
         private void Awake()
@@ -21,7 +21,7 @@ namespace UI
 
         public override void OnClick()
         {
-            storePage.GenerateInventory(this, _storeDataCarrier);
+            storeMenu.GenerateInventory(this, _storeDataCarrier);
         }
     }
 }

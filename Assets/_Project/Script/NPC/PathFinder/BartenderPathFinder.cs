@@ -45,7 +45,7 @@ namespace New_NPC
         {
             while (Vector3.Distance(mTransform.position, target) > 0.01f)
             {
-                mTransform.position = Vector3.MoveTowards(mTransform.position, target, Time.deltaTime * 1.5f);
+                mTransform.position = Vector3.MoveTowards(mTransform.position, target, GameTime.DeltaTime * 1.5f);
                 yield return null;
             }
 

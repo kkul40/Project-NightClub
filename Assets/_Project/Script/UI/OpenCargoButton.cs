@@ -10,7 +10,7 @@ namespace UI
 {
     public class OpenCargoButton : UIButton
     {
-        [SerializeField] private UIStorePage storePage;
+        [FormerlySerializedAs("storePage")] [SerializeField] private UIStoreMenu storeMenu;
         private StoreDataCarrier _storeDataCarrier = new();
 
         private void OnEnable()
@@ -33,7 +33,7 @@ namespace UI
 
         public override void OnClick()
         {
-            storePage.GenerateInventory(this, _storeDataCarrier);
+            storeMenu.GenerateInventory(this, _storeDataCarrier);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace UI
 {
     public class StoreButton : UIButton
     {
-        [SerializeField] private UIStorePage storePage;
+        [SerializeField] private UIStoreMenu storeMenu;
         [SerializeField] private string path;
         private List<StoreItemSO> _storeItemSos;
 
@@ -28,7 +28,7 @@ namespace UI
 
         public override void OnClick()
         {
-            storePage.GenerateInventory(this, _storeDataCarrier);
+            storeMenu.GenerateInventory(this, _storeDataCarrier);
         }
     }
 }

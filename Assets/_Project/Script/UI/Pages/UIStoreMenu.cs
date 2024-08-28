@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BuildingSystem;
 using BuildingSystem.SO;
 using Data;
@@ -7,12 +8,15 @@ using UnityEngine.Serialization;
 
 namespace UI
 {
-    public class UIStorePage : UIPageBase
+    public class UIStoreMenu : UIMenuBase
     {
         [SerializeField] private GameObject _storeButtonHolder;
         [SerializeField] private UIStoreInventoryView uiStoreInventoryView;
 
         [SerializeField] private UIButton _lastButtonClicked;
+
+        public static Action OnPageShow;
+        public static Action OnPageHide;
 
         private void OnEnable()
         {
@@ -28,13 +32,15 @@ namespace UI
         public override void Show()
         {
             base.Show();
-            BuildingManager.Instance.ToggleGrids(true);
+            OnPageShow?.Invoke();
+            // BuildingManager.Instance.ToggleGrids(true);
         }
 
         public override void Hide()
         {
             base.Hide();
-            BuildingManager.Instance.ToggleGrids(false);
+            OnPageHide?.Invoke();
+            // BuildingManager.Instance.ToggleGrids(false);
         }
     }
 }

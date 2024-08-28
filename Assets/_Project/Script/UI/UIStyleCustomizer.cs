@@ -9,7 +9,7 @@ namespace UI
 {
     public class UIStyleCustomizer : MonoBehaviour
     {
-        [SerializeField] private Image _image;
+        private Image _image;
         [SerializeField] private UIType _uiType;
 
         private void Awake()
