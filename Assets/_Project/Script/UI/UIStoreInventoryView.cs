@@ -24,7 +24,7 @@ namespace UI
 
         private StoreDataCarrier _storeDataCarrier = new();
 
-        private const int listSize = 8;
+        private const int listSize = 5;
         public int pointer;
 
         public int SetPointer

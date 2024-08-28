@@ -15,7 +15,7 @@ namespace PropBehaviours
         public bool isFinished = true;
 
         public bool IsInteractable { get; } = true;
-        public eInteraction Interaction { get; } = eInteraction.Basic;
+        public eInteraction Interaction { get; } = eInteraction.Interactable;
 
         public void OnFocus()
         {

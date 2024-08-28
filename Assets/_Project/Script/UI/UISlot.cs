@@ -38,12 +38,7 @@ namespace UI
         public void Init(StoreDataCarrier storeDataCarrier)
         {
             StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
-            
-            if(StoreItemSo.Icon != null)
-                image.sprite = StoreItemSo.Icon;
-            else
-                image.enabled = false;
-            
+            image.sprite = StoreItemSo.Icon;
             priceText.text = StoreItemSo.Price.ToString();
         }
 

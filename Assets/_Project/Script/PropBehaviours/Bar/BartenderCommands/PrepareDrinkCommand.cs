@@ -42,7 +42,7 @@ namespace PropBehaviours
         {
             bartender.IsBusy = true;
             bar.HasDrinks = true;
-            // prepareTime = bar.DrinkData.PrepareTime;
+            prepareTime = bar.DrinkData.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
             bartender.PathFinder.GoTargetDestination(target.position);
         }

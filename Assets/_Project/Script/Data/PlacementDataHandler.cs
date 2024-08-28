@@ -110,13 +110,15 @@ namespace Data
 
             if (dataToRemove == null) Debug.LogError("Data was NULL means cellpos not exist : " + cellPos);
 
+            // var keys = CalculatePosition(dataToRemove.Item1.PlacedCellPosition, dataToRemove.Item1.PlacedPlacementItemSo.Size,
+            //     dataToRemove.Item1.SettedRotationData.direction);
+            
             DiscoData.Instance.inventory.AddItem(dataToRemove.Item1.PlacedPlacementItemSo);
             AllPlacedObjects.Remove(dataToRemove);
             
             UpdatePathFinderNearRemovedObject(cellPos, dataToRemove);
             
             RemoveObjectHandler(dataToRemove.Item1.PlacedSceneObject);
-            
             UpdateProps();
         }
 

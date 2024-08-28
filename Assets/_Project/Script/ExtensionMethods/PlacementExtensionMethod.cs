@@ -28,7 +28,7 @@ namespace Data
         public static void AnimatedPlacement(this GameObject gameObject, Vector3 placedPosition)
         {
             gameObject.transform.position = placedPosition.Add(y: 1);
-            gameObject.transform.DOLocalMove(placedPosition, 0.5f).SetEase(Ease.OutExpo);
+            gameObject.transform.DOMove(placedPosition, 0.5f).SetEase(Ease.OutExpo);
         }
 
         public static void AnimatedRemoval(this GameObject gameObject, Action OnComplete)

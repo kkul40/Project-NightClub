@@ -3,13 +3,12 @@ using BuildingSystem;
 using HighlightPlus;
 using PropBehaviours;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Testing
 {
     public class CursorSystem : MonoBehaviour
     {
-        [SerializeField] private HighlightProfile _basicHighlight;
+        [SerializeField] private HighlightProfile _interactableHighlight;
         [SerializeField] private HighlightProfile _propUnitHighlight;
         [SerializeField] private HighlightProfile _noneHighlight;
         private GameObject _currentGameObject;
@@ -79,14 +78,11 @@ namespace Testing
                 case eInteraction.PropUnit:
                     highlightEffect.ProfileLoad(_propUnitHighlight);
                     break;
-                case eInteraction.Basic:
-                    highlightEffect.ProfileLoad(_basicHighlight);
+                case eInteraction.Interactable:
+                    highlightEffect.ProfileLoad(_interactableHighlight);
                     break;
-                case eInteraction.NPC:
-                    highlightEffect.ProfileLoad(_basicHighlight);
-                    break;
-                case eInteraction.Bartender:
-                    highlightEffect.ProfileLoad(_basicHighlight);
+                case eInteraction.Customer:
+                    highlightEffect.ProfileLoad(_interactableHighlight);
                     break;
             }
 

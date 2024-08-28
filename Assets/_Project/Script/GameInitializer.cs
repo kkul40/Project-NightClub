@@ -7,7 +7,7 @@ namespace DefaultNamespace
 {
     public class GameInitializer : MonoBehaviour
     {
-        private void Awake()
+        private void Start()
         {
             switch (SceneManager.GetActiveScene().buildIndex)
             {

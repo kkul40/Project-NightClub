@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3717213061088857958}
-  - component: {fileID: 5214223650526305188}
+  - component: {fileID: 7393909537751209663}
   - component: {fileID: 7852657284703386416}
   m_Layer: 0
   m_Name: NewBar
@@ -101,7 +101,7 @@ Transform:
   - {fileID: 3303600892597171945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5214223650526305188
+--- !u!114 &7393909537751209663
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,12 +110,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3785207620490192449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 434f6997dae845a8bfc12ffd21f988d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0476e112e1c14b7594bb4956429fdd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bartenderWaitPosition: {fileID: 8345200245977923918}
   customerWaitPosition: {fileID: 864066266957146545}
   counterPlacePosition: {fileID: 3303600892597171945}
+  drinkData: {fileID: 11400000, guid: 1c05fad238d46ab4686bd3529c59209c, type: 2}
 --- !u!54 &7852657284703386416
 Rigidbody:
   m_ObjectHideFlags: 0
