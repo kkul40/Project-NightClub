@@ -35,8 +35,13 @@ namespace System
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
-            SetUpMap();
-            placementDataHandler.LoadGameProps(gameData);
+            OnMapSizeChanged?.Invoke(MapSize);
+
+            float delay = 0.05f;
+            StartCoroutine(SetUpFloor(delay));
+            StartCoroutine(SetUpWall(delay, () => placementDataHandler.LoadGameProps(gameData)));
+            
+            ;
         }
 
         public void SaveData(ref GameData gameData)
@@ -45,16 +50,8 @@ namespace System
             placementDataHandler.SaveGameProps(ref gameData);
         }
 
-        private void SetUpMap()
-        {
-            OnMapSizeChanged?.Invoke(MapSize);
 
-            float delay = 0.05f;
-            StartCoroutine(SetUpFloor(delay));
-            StartCoroutine(SetUpWall(delay));
-        }
-
-        private IEnumerator SetUpFloor(float delay)
+        private IEnumerator SetUpFloor(float delay, Action callBack = null)
         {
             int x = 0;
             int y = 0;
@@ -98,9 +95,10 @@ namespace System
                 x++;
                 y++;
             }
+            callBack?.Invoke();
         }
 
-        private IEnumerator SetUpWall(float delay)
+        private IEnumerator SetUpWall(float delay, Action callBack = null)
         {
             int x = 1;
             int y = 1;
@@ -144,6 +142,8 @@ namespace System
                 x++;
                 y++;
             }
+            
+            callBack?.Invoke();
         }
 
         [ContextMenu("Expend X")]
