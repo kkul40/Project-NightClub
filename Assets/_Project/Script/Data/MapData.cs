@@ -93,12 +93,12 @@ namespace Data
         {
             gameData.SavedMapSize = CurrentMapSize;
 
-            gameData.SavedWallDatas = new List<GameData.WallSaveData>();
-            foreach (var wall in WallDatas) gameData.SavedWallDatas.Add(wall);
+            gameData.SavedWallDatas = new List<GameDataExtension.WallSaveData>();
+            foreach (var wall in WallDatas) gameData.SavedWallDatas.Add(wall.ConvertToWallSaveData());
 
             for (var x = 0; x < CurrentMapSize.x; x++)
             for (var y = 0; y < CurrentMapSize.y; y++)
-                gameData.SavedFloorDatas[new Vector3Int(x, 0, y)] = new GameData.FloorSaveData(FloorGridDatas[x, y]);
+                gameData.SavedFloorDatas[new Vector3Int(x, 0, y)] = FloorGridDatas[x, y].ConvertToFloorSaveData();
         }
 
         public bool SetCurrentMapSize(MapGeneratorSystem mapGeneratorSystem, Vector2Int mapSize)

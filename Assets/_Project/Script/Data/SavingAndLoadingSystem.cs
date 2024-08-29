@@ -17,12 +17,6 @@ namespace Data
 
         public override void Initialize()
         {
-            if (Instance != this)
-            {
-                Destroy(this);
-                return;
-            }
-
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
             LoadGame();

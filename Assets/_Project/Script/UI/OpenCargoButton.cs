@@ -26,7 +26,7 @@ namespace UI
 
         private void UpdateInventory()
         {
-            _storeDataCarrier.EUISlot = DiscoData.eUISlot.InventorySlot;
+            _storeDataCarrier.EUISlot = eUISlot.InventorySlot;
             _storeDataCarrier.inventory = DiscoData.Instance.inventory.Items;
             _storeDataCarrier.StoreItemSos = DiscoData.Instance.inventory.Items.Keys.ToList();
         }

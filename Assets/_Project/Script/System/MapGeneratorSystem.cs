@@ -1,27 +1,18 @@
 using System.Collections;
-using System.Linq;
 using BuildingSystem;
 using Data;
 using PropBehaviours;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace System
 {
     public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
     {
-        public MapData MapData { get; private set; }
-        public PlacementDataHandler placementDataHandler { get; private set; }
-
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
-
-        public override void Initialize()
-        {
-            MapData = new MapData();
-            placementDataHandler = new PlacementDataHandler();
-        }
+        public MapData MapData { get; private set; }
+        public PlacementDataHandler placementDataHandler { get; private set; }
 
         // TODO Gereksizse kaldir
         private Vector2Int MapSize
@@ -30,18 +21,14 @@ namespace System
             set => MapData.SetCurrentMapSize(this, value);
         }
 
-        public static event Action<Vector2Int> OnMapSizeChanged;
-
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
             OnMapSizeChanged?.Invoke(MapSize);
 
-            float delay = 0.05f;
+            var delay = 0.05f;
             StartCoroutine(SetUpFloor(delay));
             StartCoroutine(SetUpWall(delay, () => placementDataHandler.LoadGameProps(gameData)));
-            
-            ;
         }
 
         public void SaveData(ref GameData gameData)
@@ -50,61 +37,62 @@ namespace System
             placementDataHandler.SaveGameProps(ref gameData);
         }
 
+        public override void Initialize()
+        {
+            MapData = new MapData();
+            placementDataHandler = new PlacementDataHandler();
+        }
+
+        public static event Action<Vector2Int> OnMapSizeChanged;
+
 
         private IEnumerator SetUpFloor(float delay, Action callBack = null)
         {
-            int x = 0;
-            int y = 0;
-            bool xDone = false;
-            bool yDone = false;
-            
+            var x = 0;
+            var y = 0;
+            var xDone = false;
+            var yDone = false;
+
             while (!xDone || !yDone)
             {
                 yield return new WaitForSeconds(delay);
-                
+
                 if (y < MapSize.y) // Y Duzelminde Ekleme
-                {
-                    for (int i = 0; i <= y; i++)
+                    for (var i = 0; i <= y; i++)
                     {
                         if (i >= MapSize.x)
                             continue;
-                        
+
                         InstantiateFloorTile(i, y);
                     }
-                }
                 else
-                {
                     yDone = true;
-                }
 
                 if (x < MapSize.x) // X Duzleminde Ekleme
-                {
-                    for (int i = 0; i < y; i++)
+                    for (var i = 0; i < y; i++)
                     {
                         if (i >= MapSize.y)
                             continue;
-                        
+
                         InstantiateFloorTile(x, i);
                     }
-                }
                 else
-                {
                     xDone = true;
-                }
-                
+
                 x++;
                 y++;
             }
+
             callBack?.Invoke();
         }
 
         private IEnumerator SetUpWall(float delay, Action callBack = null)
         {
-            int x = 1;
-            int y = 1;
+            var x = 1;
+            var y = 1;
 
-            bool xDone = false;
-            bool yDone = false;
+            var xDone = false;
+            var yDone = false;
             while (!xDone || !yDone)
             {
                 yield return new WaitForSeconds(delay);
@@ -131,18 +119,14 @@ namespace System
                 }
 
                 if (y <= MapSize.y)
-                {
                     InstantiateYWall(y);
-                }
                 else
-                {
                     yDone = true;
-                }
-                
+
                 x++;
                 y++;
             }
-            
+
             callBack?.Invoke();
         }
 
@@ -204,12 +188,12 @@ namespace System
             var pos = new Vector3Int(x, 0, y);
             var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, isWalkable: true);
+            MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
 
-        
+
         private void LoadAndAssignFloorTileMaterial(Vector3Int cellPosition, GameObject newObject)
         {
             var data = MapData.FloorGridDatas[cellPosition.x, cellPosition.z];
@@ -236,8 +220,8 @@ namespace System
             data.AssignReferance(newWallObject.GetComponent<Wall>());
             data.AssignNewID(data.assignedMaterialID);
         }
-        
-        private GameObject CreateObject(GameObject gameObject,Vector3 pos, Quaternion quaternion)
+
+        private GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion)
         {
             var ob = Instantiate(gameObject, pos, quaternion);
             ob.AnimatedPlacement(pos);

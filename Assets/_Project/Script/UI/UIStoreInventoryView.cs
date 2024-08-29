@@ -60,11 +60,11 @@ namespace UI
 
             switch (storeDataCarrier.EUISlot)
             {
-                case DiscoData.eUISlot.ItemSlot:
+                case eUISlot.ItemSlot:
                     ButtonHolder.gameObject.SetActive(true);
                     break;
-                case DiscoData.eUISlot.InventorySlot:
-                case DiscoData.eUISlot.ExtentionSlot:
+                case eUISlot.InventorySlot:
+                case eUISlot.ExtentionSlot:
                     ButtonHolder.gameObject.SetActive(false);
                     break;
             }
@@ -84,13 +84,13 @@ namespace UI
                 GameObject temp = null;
                 switch (_storeDataCarrier.EUISlot)
                 {
-                    case DiscoData.eUISlot.ItemSlot:
+                    case eUISlot.ItemSlot:
                         temp = Instantiate(UISlotPrefab, SlotHolder);
                         break;
-                    case DiscoData.eUISlot.InventorySlot:
+                    case eUISlot.InventorySlot:
                         temp = Instantiate(UICargoSlotPrefab, SlotHolder);
                         break;
-                    case DiscoData.eUISlot.ExtentionSlot:
+                    case eUISlot.ExtentionSlot:
                         temp = Instantiate(UIExtenderSlotPrefab, SlotHolder);
                         break;
                 }

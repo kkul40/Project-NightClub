@@ -24,19 +24,6 @@ namespace Data
             AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
         }
 
-        public enum eDanceStyle
-        {
-            Default,
-            Hiphop
-        }
-
-        public enum eUISlot
-        {
-            ItemSlot,
-            InventorySlot,
-            ExtentionSlot
-        }
-
         public void LoadData(GameData gameData)
         {
             inventory = new Inventory(gameData);
@@ -48,13 +35,26 @@ namespace Data
             gameData.SavedInventoryDatas.Clear();
 
             foreach (var pair in inventory.Items)
-                gameData.SavedInventoryDatas.Add(new GameData.InventorySaveData(pair.Key, pair.Value));
+                gameData.SavedInventoryDatas.Add(pair.ConvertToInvetorySaveData());
         }
 
         public StoreItemSO FindItemByID(int ID)
         {
             return AllInGameItems.FirstOrDefault(x => x.ID == ID);
         }
+    }
+    
+    public enum eDanceStyle
+    {
+        Default,
+        Hiphop
+    }
+
+    public enum eUISlot
+    {
+        ItemSlot,
+        InventorySlot,
+        ExtentionSlot
     }
 
     public class ConstantVariables

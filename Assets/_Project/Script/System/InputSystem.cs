@@ -5,9 +5,8 @@ using UnityEngine.Serialization;
 namespace System
 {
     [DisallowMultipleComponent]
-    public class InputSystem : MonoBehaviour
+    public class InputSystem : Singleton<InputSystem>
     {
-        public static InputSystem Instance;
         [SerializeField] private Camera mainCam;
         [SerializeField] private RaycastHit lastHit;
 
@@ -23,11 +22,6 @@ namespace System
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
         public bool RightClickOnWorld;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         private void Update()
         {

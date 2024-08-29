@@ -20,7 +20,7 @@ namespace Data
             assignedMaterialID = -1;
         }
 
-        public WallAssignmentData(GameData.WallSaveData wallSaveData)
+        public WallAssignmentData(GameDataExtension.WallSaveData wallSaveData)
         {
             CellPosition = wallSaveData.CellPosition;
             assignedMaterialID = wallSaveData.AssignedMaterialID;

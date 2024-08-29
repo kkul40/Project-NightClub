@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using HighlightPlus;
 
 namespace HighlightPlus.Demos
 {
@@ -11,6 +10,13 @@ namespace HighlightPlus.Demos
         {
             effect = GetComponent<HighlightEffect>();
             effect.OnObjectHighlightStart += ValidateHighlightObject;
+        }
+
+        private void Update()
+        {
+            if (InputProxy.GetKeyDown("space")) effect.HitFX(Color.white, 0.2f);
+
+            if (InputProxy.GetKeyDown("c")) effect.SetGlowColor(new Color(Random.value, Random.value, Random.value));
         }
 
 
@@ -28,13 +34,6 @@ namespace HighlightPlus.Demos
         private void HighlightEnd()
         {
             Debug.Log("Gold sphere not highlighted!");
-        }
-
-        private void Update()
-        {
-            if (InputProxy.GetKeyDown("space")) effect.HitFX(Color.white, 0.2f);
-
-            if (InputProxy.GetKeyDown("c")) effect.SetGlowColor(new Color(Random.value, Random.value, Random.value));
         }
     }
 }

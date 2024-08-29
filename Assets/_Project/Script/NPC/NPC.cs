@@ -12,23 +12,30 @@ using WalkRandomActivity = New_NPC.Activities.WalkRandomActivity;
 
 namespace New_NPC
 {
+    public interface IUnit
+    {
+        public eGenderType GenderType { get; }
+        public IAnimationController AnimationController { get; }
+        public IPathFinder PathFinder { get; }
+    }
+    
+    
     [SelectionBase]
-    public class NPC : MonoBehaviour, IInteractable, IDoorOpener
+    public class NPC : MonoBehaviour, IUnit, IInteractable, IDoorOpener
     {
         /*
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}
          */
 
-        [SerializeField] private AudioClip _sinirClip;
-        public IAnimationController animationController;
+        public eGenderType GenderType { get; private set; }
+        public IAnimationController AnimationController { get; private set; }
+        public IPathFinder PathFinder { get; private set; }
         public ActivityHandler _activityHandler { get; private set; }
-        public IPathFinder PathFinder;
 
         public void Init(NpcAnimationSo npcAnimationSo)
         {
             PathFinder = new NpcPathFinder(transform);
-            animationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo,
-                transform.GetChild(0));
+            AnimationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
         }
 
@@ -50,8 +57,6 @@ namespace New_NPC
 
         public void OnClick()
         {
-            // TEST
-            MusicSystem.Instance.PlaySoundEffect(_sinirClip);
         }
 
         private List<Vector3> path = new();

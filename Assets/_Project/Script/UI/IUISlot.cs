@@ -20,6 +20,6 @@ namespace UI
         public StoreItemSO ChosedStoreItemSo = null;
         public Dictionary<StoreItemSO, int> inventory = new();
 
-        public DiscoData.eUISlot EUISlot;
+        public eUISlot EUISlot;
     }
 }

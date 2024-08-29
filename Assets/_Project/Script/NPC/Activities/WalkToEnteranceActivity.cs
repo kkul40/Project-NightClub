@@ -17,7 +17,7 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
         }
 
@@ -25,7 +25,7 @@ namespace New_NPC.Activities
         {
             if (and.Npc.PathFinder.HasReachedDestination)
             {
-                and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+                and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
                 timer += Time.deltaTime;
                 if (timer > delay)
                 {

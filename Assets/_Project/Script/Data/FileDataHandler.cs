@@ -9,14 +9,12 @@ namespace Data
         private string dataDirPath = "";
         private string dataFileName = "";
 
-
         public FileDataHandler(string dataDirPath, string dataFileName)
         {
             this.dataDirPath = dataDirPath;
             this.dataFileName = dataFileName;
             Debug.Log("Data File Path : " + dataDirPath);
         }
-
 
         public GameData Load()
         {

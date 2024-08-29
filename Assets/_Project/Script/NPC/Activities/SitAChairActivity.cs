@@ -32,7 +32,7 @@ namespace New_NPC.Activities
             this.and = and;
             and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position,
                 OnCompleteCallBack: OnReachedToChair);
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }
 
@@ -48,7 +48,7 @@ namespace New_NPC.Activities
                     break;
                 case eState.StandUp:
                     and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
-                    and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+                    and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
 
                     timer = 0;
                     delay = 0.5f;
@@ -65,7 +65,7 @@ namespace New_NPC.Activities
         private void OnReachedToChair()
         {
             and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Sit);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
             _state = eState.SitDown;
         }
 

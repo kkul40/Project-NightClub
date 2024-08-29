@@ -67,7 +67,7 @@ namespace PlayerScripts
 
         public void SaveData(ref GameData gameData)
         {
-            gameData.SavedPlayerCustomizationIndexData = this;
+            gameData.SavedPlayerCustomizationIndexData = this.ConvertPlayerCustomizationIndexData();
         }
     }
 }

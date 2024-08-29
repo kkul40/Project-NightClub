@@ -10,12 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [DisallowMultipleComponent]
 public class Outline : MonoBehaviour
 {
-    private static HashSet<Mesh> registeredMeshes = new();
-
     public enum Mode
     {
         OutlineAll,
@@ -24,6 +23,31 @@ public class Outline : MonoBehaviour
         OutlineAndSilhouette,
         SilhouetteOnly
     }
+
+    private static readonly HashSet<Mesh> registeredMeshes = new();
+
+    [SerializeField] private Mode outlineMode;
+
+    [SerializeField] private Color outlineColor = Color.white;
+
+    [SerializeField] [Range(0f, 10f)] private float outlineWidth = 2f;
+
+    [Header("Optional")]
+    [SerializeField]
+    [Tooltip(
+        "Precompute enabled: Per-vertex calculations are performed in the editor and serialized with the object. "
+        + "Precompute disabled: Per-vertex calculations are performed at runtime in Awake(). This may cause a pause for large meshes.")]
+    private bool precomputeOutline;
+
+    [SerializeField] [HideInInspector] private List<Mesh> bakeKeys = new();
+
+    [SerializeField] [HideInInspector] private List<ListVector3> bakeValues = new();
+
+    private bool needsUpdate;
+    private Material outlineFillMaterial;
+    private Material outlineMaskMaterial;
+
+    private Renderer[] renderers;
 
     public Mode OutlineMode
     {
@@ -55,35 +79,6 @@ public class Outline : MonoBehaviour
         }
     }
 
-    [Serializable]
-    private class ListVector3
-    {
-        public List<Vector3> data;
-    }
-
-    [SerializeField] private Mode outlineMode;
-
-    [SerializeField] private Color outlineColor = Color.white;
-
-    [SerializeField] [Range(0f, 10f)] private float outlineWidth = 2f;
-
-    [Header("Optional")]
-    [SerializeField]
-    [Tooltip(
-        "Precompute enabled: Per-vertex calculations are performed in the editor and serialized with the object. "
-        + "Precompute disabled: Per-vertex calculations are performed at runtime in Awake(). This may cause a pause for large meshes.")]
-    private bool precomputeOutline;
-
-    [SerializeField] [HideInInspector] private List<Mesh> bakeKeys = new();
-
-    [SerializeField] [HideInInspector] private List<ListVector3> bakeValues = new();
-
-    private Renderer[] renderers;
-    private Material outlineMaskMaterial;
-    private Material outlineFillMaterial;
-
-    private bool needsUpdate;
-
     private void Awake()
     {
         // Cache renderers
@@ -103,6 +98,16 @@ public class Outline : MonoBehaviour
         needsUpdate = true;
     }
 
+    private void Update()
+    {
+        if (needsUpdate)
+        {
+            needsUpdate = false;
+
+            UpdateMaterialProperties();
+        }
+    }
+
     private void OnEnable()
     {
         foreach (var renderer in renderers)
@@ -114,32 +119,6 @@ public class Outline : MonoBehaviour
             materials.Add(outlineFillMaterial);
 
             renderer.materials = materials.ToArray();
-        }
-    }
-
-    private void OnValidate()
-    {
-        // Update material properties
-        needsUpdate = true;
-
-        // Clear cache when baking is disabled or corrupted
-        if ((!precomputeOutline && bakeKeys.Count != 0) || bakeKeys.Count != bakeValues.Count)
-        {
-            bakeKeys.Clear();
-            bakeValues.Clear();
-        }
-
-        // Generate smooth normals when baking is enabled
-        if (precomputeOutline && bakeKeys.Count == 0) Bake();
-    }
-
-    private void Update()
-    {
-        if (needsUpdate)
-        {
-            needsUpdate = false;
-
-            UpdateMaterialProperties();
         }
     }
 
@@ -164,6 +143,22 @@ public class Outline : MonoBehaviour
         Destroy(outlineFillMaterial);
     }
 
+    private void OnValidate()
+    {
+        // Update material properties
+        needsUpdate = true;
+
+        // Clear cache when baking is disabled or corrupted
+        if ((!precomputeOutline && bakeKeys.Count != 0) || bakeKeys.Count != bakeValues.Count)
+        {
+            bakeKeys.Clear();
+            bakeValues.Clear();
+        }
+
+        // Generate smooth normals when baking is enabled
+        if (precomputeOutline && bakeKeys.Count == 0) Bake();
+    }
+
     private void Bake()
     {
         // Generate smooth normals for each mesh
@@ -178,7 +173,7 @@ public class Outline : MonoBehaviour
             var smoothNormals = SmoothNormals(meshFilter.sharedMesh);
 
             bakeKeys.Add(meshFilter.sharedMesh);
-            bakeValues.Add(new ListVector3() { data = smoothNormals });
+            bakeValues.Add(new ListVector3 { data = smoothNormals });
         }
     }
 
@@ -267,34 +262,40 @@ public class Outline : MonoBehaviour
         switch (outlineMode)
         {
             case Mode.OutlineAll:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)CompareFunction.Always);
+                outlineFillMaterial.SetFloat("_ZTest", (float)CompareFunction.Always);
                 outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
                 break;
 
             case Mode.OutlineVisible:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)CompareFunction.Always);
+                outlineFillMaterial.SetFloat("_ZTest", (float)CompareFunction.LessEqual);
                 outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
                 break;
 
             case Mode.OutlineHidden:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Greater);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)CompareFunction.Always);
+                outlineFillMaterial.SetFloat("_ZTest", (float)CompareFunction.Greater);
                 outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
                 break;
 
             case Mode.OutlineAndSilhouette:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
-                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)CompareFunction.LessEqual);
+                outlineFillMaterial.SetFloat("_ZTest", (float)CompareFunction.Always);
                 outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
                 break;
 
             case Mode.SilhouetteOnly:
-                outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
-                outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Greater);
+                outlineMaskMaterial.SetFloat("_ZTest", (float)CompareFunction.LessEqual);
+                outlineFillMaterial.SetFloat("_ZTest", (float)CompareFunction.Greater);
                 outlineFillMaterial.SetFloat("_OutlineWidth", 0f);
                 break;
         }
+    }
+
+    [Serializable]
+    private class ListVector3
+    {
+        public List<Vector3> data;
     }
 }

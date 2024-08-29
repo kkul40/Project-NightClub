@@ -21,7 +21,7 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
         }
 

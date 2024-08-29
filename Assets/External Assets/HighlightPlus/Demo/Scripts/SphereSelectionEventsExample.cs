@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using HighlightPlus;
 
 namespace HighlightPlus.Demos
 {

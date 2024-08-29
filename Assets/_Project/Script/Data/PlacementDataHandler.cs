@@ -270,7 +270,7 @@ namespace Data
             gameData.SavedPlacementDatas.Clear();
 
             foreach (var placedObject in AllPlacedObjects)
-                gameData.SavedPlacementDatas.Add(new GameData.PlacementSaveData(placedObject.Item1));
+                gameData.SavedPlacementDatas.Add(placedObject.Item1.ConvertToPlacementSaveData());
         }
 
         #endregion

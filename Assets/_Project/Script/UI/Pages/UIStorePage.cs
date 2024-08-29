@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using BuildingSystem.SO;
-using Data;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace UI
 {

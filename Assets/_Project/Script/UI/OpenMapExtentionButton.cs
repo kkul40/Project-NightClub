@@ -15,7 +15,7 @@ namespace UI
 
         private void Awake()
         {
-            _storeDataCarrier.EUISlot = DiscoData.eUISlot.ExtentionSlot;
+            _storeDataCarrier.EUISlot = eUISlot.ExtentionSlot;
             _storeDataCarrier.StoreItemSos = Resources.LoadAll<StoreItemSO>("ScriptableObjects/Extender").ToList();
         }
 

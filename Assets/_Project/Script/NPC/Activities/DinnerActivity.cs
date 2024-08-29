@@ -36,7 +36,7 @@ namespace New_NPC.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.PathFinder.GoTargetDestination(chairProp.GetFrontPosition().position);
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             chairProp.SetOccupied(and.Npc, true);
         }
 
@@ -48,7 +48,7 @@ namespace New_NPC.Activities
                     if (and.Npc.PathFinder.HasReachedDestination)
                     {
                         and.Npc.PathFinder.SetPositioning(chairProp.GetFrontPosition().rotation, chairProp.GetSitPosition());
-                        and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Sit);
+                        and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
                         _dinnerState = DinnerState.Sitting;
                     }
 
@@ -81,7 +81,7 @@ namespace New_NPC.Activities
                     }
                     break;
                 case DinnerState.StandUp:
-                    and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+                    and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
                     and.Npc.PathFinder.SetPositioning(newPosition: chairProp.GetFrontPosition().position);
 
                     timer = 0;

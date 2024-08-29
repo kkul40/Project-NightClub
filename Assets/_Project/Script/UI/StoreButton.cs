@@ -21,7 +21,7 @@ namespace UI
             // TODO Addressable Kullan!!
             _storeDataCarrier.StoreItemSos =
                 Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
-            _storeDataCarrier.EUISlot = DiscoData.eUISlot.ItemSlot;
+            _storeDataCarrier.EUISlot = eUISlot.ItemSlot;
 
             GetComponent<Button>().onClick.AddListener(OnClick);
         }

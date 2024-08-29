@@ -19,7 +19,7 @@ namespace Data
             assignedMaterialID = -1;
         }
 
-        public FloorGridAssignmentData(GameData.FloorSaveData floorSaveData)
+        public FloorGridAssignmentData(GameDataExtension.FloorSaveData floorSaveData)
         {
             CellPosition = floorSaveData.CellPosition;
             assignedMaterialID = floorSaveData.assignedMaterialID;

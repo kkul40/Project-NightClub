@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using HighlightPlus;
 
 namespace HighlightPlus.Demos
 {
     public class ManualSelectionDemo : MonoBehaviour
     {
-        private HighlightManager hm;
-
         public Transform objectToSelect;
+        private HighlightManager hm;
 
         private void Start()
         {

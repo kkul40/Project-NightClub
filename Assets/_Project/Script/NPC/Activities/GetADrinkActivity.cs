@@ -35,7 +35,7 @@ namespace New_NPC.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             DOTween.instance.StartCoroutine(CoGetDrink(and));
         }
 
@@ -46,7 +46,7 @@ namespace New_NPC.Activities
         public void OnActivityEnd(ActivityNeedsData and)
         {
             and.Npc.PathFinder.CancelDestination();
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
 
         private IEnumerator CoGetDrink(ActivityNeedsData and)
@@ -64,7 +64,7 @@ namespace New_NPC.Activities
 
             yield return new WaitUntil(() => and.Npc.PathFinder.HasReachedDestination);
 
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
             and.Npc.PathFinder.SetPositioning(_bar.CustomerWaitPosition.rotation);
             yield return new WaitForSeconds(1);
             _bar.GetDrink();

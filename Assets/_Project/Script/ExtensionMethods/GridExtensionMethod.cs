@@ -31,8 +31,6 @@ namespace Data
                     return new Vector3Int((short)vector.x, (short)vector.y, (short)vector.z); // 1 Birim
                     break;
                 case eGridType.PathFinderGrid:
-                    // float = 2.22; x == 8
-                    // float = 2.25 || 2.26 = x = 9;
                     var x = vector.x / (1f / ConstantVariables.PathFinderGridSize);
                     var y = vector.y / (1f / ConstantVariables.PathFinderGridSize);
                     var z = vector.z / (1f / ConstantVariables.PathFinderGridSize);

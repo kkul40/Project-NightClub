@@ -37,7 +37,7 @@ namespace New_NPC.Activities
         {
             var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.WorldPos);
 
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.SetOccupied(and.Npc, true);
         }
 
@@ -48,10 +48,10 @@ namespace New_NPC.Activities
                 case DanceState.None:
                     if (and.Npc.PathFinder.HasReachedDestination)
                     {
-                        and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Dance);
-                        and.Npc.animationController.SetRootMotion(true);
+                        and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Dance);
+                        and.Npc.AnimationController.SetRootMotion(true);
 
-                        danceDuration = and.Npc.animationController.GetCurrentAnimationDuration() * 2;
+                        danceDuration = and.Npc.AnimationController.GetCurrentAnimationDuration() * 2;
                         _danceState = DanceState.Dancing;
                     }
                     break;
@@ -69,9 +69,9 @@ namespace New_NPC.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            and.Npc.animationController.PlayAnimation(eAnimationType.NPC_Idle);
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
             if (_dancableTile != null) _dancableTile.IsOccupied = false;
-            and.Npc.animationController.SetRootMotion(false);
+            and.Npc.AnimationController.SetRootMotion(false);
         }
 
         private enum DanceState
