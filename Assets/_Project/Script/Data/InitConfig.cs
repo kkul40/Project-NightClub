@@ -8,6 +8,9 @@ namespace Data
 {
     public class InitConfig : Singleton<InitConfig>
     {
+        [Header("UI Style")] [SerializeField] 
+        private UIColorStyle DefaultUIColorStyle;
+        
         [Header("Default Material")] [SerializeField]
         private MaterialItemSo DefaultTileMaterial;
 
@@ -23,6 +26,8 @@ namespace Data
 
         [SerializeField] private NpcAnimationSo DefaultGirlNpcAnimation;
         [SerializeField] private BartenderAnimationSo DefaultBartenderAnimation;
+
+        public UIColorStyle GetDefaultUIColorStyle => DefaultUIColorStyle;
 
         public MaterialItemSo GetDefaultTileMaterial => DefaultTileMaterial;
         public MaterialItemSo GetDefaultWallMaterial => DefaultWallMaterial;
