@@ -81,7 +81,7 @@ namespace PropBehaviours
             _bars.Clear();
             _bartenders.Clear();
 
-            var bars = FindObjectsOfType<MonoBehaviour>().OfType<IBar>().ToList();
+            var bars = DiscoData.Instance.placementDataHandler.GetPropsByType<IBar>();
             var bartenders = FindObjectsOfType<MonoBehaviour>().OfType<IBartender>().ToList();
 
             foreach (var bar in bars)

@@ -594,6 +594,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &1941860762920096464
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bartending
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 4f5a296e11125554bbf810cede6abbea, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &1965297996388170332
 AnimatorState:
   serializedVersion: 6
@@ -708,23 +734,20 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 6812048975523225582}
-    m_Position: {x: 340, y: 100, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 188763486100018597}
-    m_Position: {x: 131.41797, y: 276.36597, z: 0}
+    m_Position: {x: 130, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5127570762828987350}
-    m_Position: {x: 141.41797, y: 286.36597, z: 0}
+    m_Position: {x: 140, y: 280, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4860451847951698395}
-    m_Position: {x: 151.41797, y: 296.36597, z: 0}
+    m_Position: {x: 150, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1662065657158337539}
     m_Position: {x: 161.41797, y: 306.36597, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1781714978199317423}
-    m_Position: {x: 171.41797, y: 316.36597, z: 0}
+    m_Position: {x: 170, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5189751325322410178}
     m_Position: {x: 181.41797, y: 326.36597, z: 0}
@@ -745,10 +768,10 @@ AnimatorStateMachine:
     m_Position: {x: 231.41797, y: 376.36597, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5997957050304675180}
-    m_Position: {x: 241.41797, y: 386.36597, z: 0}
+    m_Position: {x: 240, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1595627233411765222}
-    m_Position: {x: 251.41797, y: 396.36597, z: 0}
+    m_Position: {x: 330, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8825404999416355420}
     m_Position: {x: 261.41797, y: 406.36597, z: 0}
@@ -818,6 +841,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -5901531171503275017}
     m_Position: {x: 481.41797, y: 626.36597, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1941860762920096464}
+    m_Position: {x: 500, y: 640, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -827,7 +853,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 100, z: 0}
   m_ExitPosition: {x: 830, y: 60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 6812048975523225582}
+  m_DefaultState: {fileID: -1595627233411765222}
 --- !u!1102 &2766945454087057960
 AnimatorState:
   serializedVersion: 6
@@ -1005,32 +1031,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 2ff4780c1226e274793f7b3caf17a828, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &6812048975523225582
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Base
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 526c01cbe00701a4197847824a9d8e4a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

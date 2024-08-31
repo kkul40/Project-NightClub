@@ -353,6 +353,21 @@ namespace Data
         public List<IPropUnit> GetPropList => propList;
 
         private MapData MapData => DiscoData.Instance.MapData;
+
+        public List<T> GetPropsByType<T>()
+        {
+            var output = new List<T>();
+
+            foreach (var tuple in AllPlacedObjects)
+            {
+                if (tuple.Item1.PlacedSceneObject.TryGetComponent(out T t))
+                {
+                    output.Add(t);
+                }
+            }
+
+            return output;
+        }
     }
 }
 

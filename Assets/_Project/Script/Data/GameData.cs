@@ -10,6 +10,7 @@ namespace Data
     [Serializable]
     public class GameData
     {
+        public bool HasBeenSavedBefore = false;
         public GameDataExtension.PlayerCustomizationIndexData SavedPlayerCustomizationIndexData;
         public Vector2Int SavedMapSize;
         public int WallDoorIndexOnX;

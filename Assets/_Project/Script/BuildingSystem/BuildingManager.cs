@@ -2,6 +2,7 @@
 using BuildingSystem.Builders;
 using BuildingSystem.SO;
 using Data;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.SubsystemsImplementation;
@@ -51,7 +52,23 @@ namespace BuildingSystem
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
-            _gridHandler.ToggleGrid(false);
+            HandleToggling(false);
+        }
+
+        private void OnEnable()
+        {
+            UIStorePage.OnStoreToggle += HandleToggling;
+        }
+
+        private void OnDisable()
+        {
+            UIStorePage.OnStoreToggle -= HandleToggling;
+        }
+
+        private void HandleToggling(bool toggle)
+        {
+            _gridHandler.ToggleGrid(toggle);
+            if(!toggle) StopBuild();
         }
 
         private void Update()
@@ -78,7 +95,7 @@ namespace BuildingSystem
                     callBackOnPlaced?.Invoke().Invoke();
                 }
 
-                if (InputSystem.Instance.Esc) StopBuild();
+                if (InputSystem.Instance.RightClickOnWorld) StopBuild();
             }
         }
 
@@ -96,7 +113,6 @@ namespace BuildingSystem
         public void StartRemoving()
         {
             StopBuild();
-            _gridHandler.ToggleGrid(true);
             _storeItemSo = null;
             _rotationMethod = new NullRotationMethod();
             _buildingMethod = new RemoveHandler();
@@ -110,7 +126,6 @@ namespace BuildingSystem
         {
             StopBuild();
             callBackOnPlaced = CallBackOnPlace;
-            _gridHandler.ToggleGrid(true);
             _storeItemSo = storeItemSo;
             _rotationMethod = Builder.BuildToIRotation(storeItemSo);
             _buildingMethod = Builder.BuildToIBuilding(storeItemSo);
@@ -134,7 +149,6 @@ namespace BuildingSystem
                 _rotationMethod = null;
             }
 
-            _gridHandler.ToggleGrid(false);
             callBackOnPlaced = null;
             _tileIndicator.SetSize(Vector2.one);
             _tileIndicator.CloseTileIndicator();

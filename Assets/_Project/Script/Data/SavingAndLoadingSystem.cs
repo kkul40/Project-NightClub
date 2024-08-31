@@ -33,6 +33,7 @@ namespace Data
         {
             foreach (var save in _saveLoads) save.SaveData(ref _gameData);
 
+            _gameData.HasBeenSavedBefore = true;
             _fileDataHandler.Save(_gameData);
 
             Debug.Log("** Game Is Saved **");
@@ -58,6 +59,12 @@ namespace Data
         {
             var temp = new FileDataHandler(Application.persistentDataPath, fileName);
             temp.DeleteData();
+        }
+
+        public bool HasBeenSavedBefore()
+        {
+            if (_gameData == null) return false;
+            return _gameData.HasBeenSavedBefore;
         }
 
         // TODO Application Quite savelemek ister misin diye sor

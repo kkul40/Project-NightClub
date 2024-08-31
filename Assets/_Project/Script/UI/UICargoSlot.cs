@@ -49,7 +49,7 @@ namespace UI
             }
 
             amountText.text = "0";
-            FindObjectOfType<OpenCargoButton>().OnClick();
+            FindObjectOfType<OpenCargoButtonBase>().OnClick();
             BuildingManager.Instance.StopBuild();
         }
 

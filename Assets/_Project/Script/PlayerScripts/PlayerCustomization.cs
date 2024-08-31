@@ -49,6 +49,7 @@ namespace PlayerScripts
         public void LoadData(GameData gameData)
         {
             var data = gameData.SavedPlayerCustomizationIndexData;
+            if (data == null) return;
 
             playerGenderIndex = data.playerGenderIndex;
             playerHairIndex = data.playerHairIndex;
