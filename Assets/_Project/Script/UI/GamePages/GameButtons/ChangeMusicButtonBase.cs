@@ -12,7 +12,7 @@ namespace UI
         protected override void Start()
         {
             if(Musics.Count > 0)
-                MusicSystem.Instance.ChangeMusic(Musics[0]);
+                MusicPlayer.Instance.ChangeMusic(Musics[0]);
         }
 
         public override void OnHover()
@@ -25,7 +25,7 @@ namespace UI
             if (index >= Musics.Count)
                 index = 0;
             
-            MusicSystem.Instance.ChangeMusic(Musics[index]);
+            MusicPlayer.Instance.ChangeMusic(Musics[index]);
         }
     }
 }

@@ -2,18 +2,13 @@
 
 namespace System
 {
-    public class MusicSystem : Singleton<MusicSystem>
+    public class MusicPlayer : Singleton<MusicPlayer>
     {
         private AudioSource _audioSource;
 
         private void Awake()
         {
-            _audioSource = GetComponentInChildren<AudioSource>();
-        }
-
-        public void PlaySoundEffect(AudioClip audioClip)
-        {
-            _audioSource.PlayOneShot(audioClip);
+            _audioSource = GetComponent<AudioSource>();
         }
 
         public void ChangeMusic(AudioClip clip)
