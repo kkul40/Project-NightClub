@@ -15514,7 +15514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1372529095}
   m_Layer: 0
-  m_Name: $hUI
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19130,7 +19130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1706056530}
   m_Layer: 0
-  m_Name: $hTEMP
+  m_Name: TEMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
