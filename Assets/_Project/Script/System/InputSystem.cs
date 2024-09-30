@@ -12,6 +12,7 @@ namespace System
 
         [SerializeField] private LayerMask mouseOverLayers;
         [SerializeField] private LayerMask ignore;
+        [SerializeField] private float borderTreshold = 0.01f;
 
         public Vector2 MoveDelta;
         public float ScrollWheelDelta;
@@ -44,6 +45,47 @@ namespace System
             Esc = Input.GetKeyDown(KeyCode.Escape);
             TurnLeft = Input.GetKeyDown(KeyCode.Z);
             TurnRight = Input.GetKeyDown(KeyCode.X);
+        }
+
+        public Vector2 GetCornerMouseDelta()
+        {
+            Vector2 vector = Vector2.zero;
+            var viewport = mainCam.ScreenToViewportPoint(Input.mousePosition);
+        
+            if (viewport.x <= borderTreshold && viewport.y <= borderTreshold) // sol alt
+            {
+                vector = new Vector2(-1, -1);
+            }
+            else if(viewport.x <= borderTreshold && viewport.y >= 1 - borderTreshold) // sol ust
+            {
+                vector = new Vector2(-1, 1);
+            }
+            else if (viewport.x >= 1 - borderTreshold && viewport.y <= borderTreshold)// sag alt
+            {
+                vector = new Vector2(1, -1);
+            }
+            else if (viewport.x >= 1 - borderTreshold && viewport.y >= 1 - borderTreshold) // sag ust
+            {
+                vector = new Vector2(1, 1);
+            }
+            else if (viewport.x <= borderTreshold)
+            {
+                vector = new Vector2(-1, 0);
+            }
+            else if (viewport.x >= 1 - borderTreshold)
+            {
+                vector = new Vector2(1, 0);
+            }
+            else if (viewport.y <= borderTreshold)
+            {
+                vector = new Vector2(0, -1);
+            }
+            else if (viewport.y >= 1 - borderTreshold)
+            {
+                vector = new Vector2(0, 1);
+            }
+
+            return vector.normalized;
         }
 
         public Vector3 GetMouseMapPosition()

@@ -1712,6 +1712,7 @@ MonoBehaviour:
   ignore:
     serializedVersion: 2
     m_Bits: 256
+  borderTreshold: 0.01
   MoveDelta: {x: 0, y: 0}
   ScrollWheelDelta: 0
   Esc: 0

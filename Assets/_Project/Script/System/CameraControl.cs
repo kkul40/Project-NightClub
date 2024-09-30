@@ -15,8 +15,12 @@ namespace System
 
         private void LateUpdate()
         {
-            //TODO Fare ekranin disina cikarsa kaydir ayni loldeki gibi
             var moveDelta = InputSystem.Instance.MoveDelta;
+
+            if (InputSystem.Instance.GetCornerMouseDelta() != Vector2.zero)
+            {
+                moveDelta = InputSystem.Instance.GetCornerMouseDelta();
+            }
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
