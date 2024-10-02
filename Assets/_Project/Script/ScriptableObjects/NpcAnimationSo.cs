@@ -13,6 +13,8 @@ namespace ScriptableObjects
         [field: SerializeField] public List<AnimationClip> Walk { get; private set; }
 
         [field: SerializeField] public List<AnimationClip> Sit { get; private set; }
+        
+        [field: SerializeField] public List<AnimationClip> LeanOnWall { get; private set; }
 
         [field: SerializeField] public List<AnimationClip> Dance { get; private set; }
 

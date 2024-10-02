@@ -89,6 +89,7 @@ namespace New_NPC
         NPC_Walk,
         NPC_Sit,
         NPC_Dance,
+        NPC_Lean,
         Bartender_Idle,
         Bartender_Walk,
         Bartender_PrepareDrink,

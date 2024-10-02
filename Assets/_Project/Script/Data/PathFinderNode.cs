@@ -1,4 +1,6 @@
 ﻿using System;
+using New_NPC;
+using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,6 +14,9 @@ namespace Data
         public bool IsWalkable = false;
         public bool IsWall = false;
         public bool IsPlacable = true;
+
+        public bool HasOccupied { get; private set; }
+        public bool ChangeOccupition(NPC source, bool hasOccuipied) => HasOccupied = hasOccuipied;
 
         public bool GetIsWalkable
         {
@@ -35,6 +40,7 @@ namespace Data
 
         public PathFinderNode()
         {
+            HasOccupied = false;
         }
 
         public PathFinderNode Copy()
@@ -46,6 +52,7 @@ namespace Data
             output.IsWalkable = IsWalkable;
             output.GridX = GridX;
             output.GridY = GridY;
+            output.HasOccupied = HasOccupied;
 
             return output;
         }

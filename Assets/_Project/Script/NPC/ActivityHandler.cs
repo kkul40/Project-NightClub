@@ -67,7 +67,6 @@ namespace New_NPC
                 }
             }
 
-            randomActivity.CanStartActivity(_activityNeedsData);
             return randomActivity;
         }
     }

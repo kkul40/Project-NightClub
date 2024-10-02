@@ -18,7 +18,7 @@ namespace Data
         }
 
         /// <summary>
-        /// Converts a world position to selected grid cell position.
+        /// Converts a world position to grid cell position.
         /// </summary>
         /// <param name="vector"></param>
         /// <param name="cellGridType"></param>

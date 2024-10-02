@@ -25,6 +25,7 @@ namespace System
                 if (activity is NoneActivity) continue;
                 if (activity is WalkToEnteranceActivity) continue;
                 if (activity is ExitDiscoActivity) continue;
+                // if (activity is LeanOnWall) continue;
 
                 dictionary.Add(ac, activity);
             }

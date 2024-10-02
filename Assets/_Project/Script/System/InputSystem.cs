@@ -8,7 +8,11 @@ namespace System
     public class InputSystem : Singleton<InputSystem>
     {
         [SerializeField] private Camera mainCam;
-        [SerializeField] private RaycastHit lastHit;
+        private RaycastHit lastHit;
+        
+        [Header("Toggle")] 
+        public bool EdgeScrolling;
+        [Header("")]
 
         [SerializeField] private LayerMask mouseOverLayers;
         [SerializeField] private LayerMask ignore;
@@ -50,6 +54,9 @@ namespace System
         public Vector2 GetCornerMouseDelta()
         {
             Vector2 vector = Vector2.zero;
+            
+            if (!EdgeScrolling) return vector;
+            
             var viewport = mainCam.ScreenToViewportPoint(Input.mousePosition);
         
             if (viewport.x <= borderTreshold && viewport.y <= borderTreshold) // sol alt

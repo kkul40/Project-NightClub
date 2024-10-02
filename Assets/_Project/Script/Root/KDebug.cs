@@ -29,9 +29,11 @@ namespace Root
             }
 
             if (showPathFinder)
-                foreach (var node in DiscoData.Instance.MapData.GetNewPathFinderNote())
+                foreach (var node in DiscoData.Instance.MapData.GetPathFinderNodes())
                 {
-                    if(node.IsWall)
+                    if (node.HasOccupied)
+                        Gizmos.color = Color.blue;
+                    else if(node.IsWall)
                         Gizmos.color = Color.black;
                     else if (node.IsWalkable)
                         Gizmos.color = Color.green;

@@ -19,6 +19,9 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 62881bcadb4b79446a533542b822a93a, type: 2}
   <Sit>k__BackingField:
   - {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
+  <LeanOnWall>k__BackingField:
+  - {fileID: 7400000, guid: b1a8aa116c825114f9afa5a78908fa02, type: 2}
+  - {fileID: 7400000, guid: 5d161eafdd159064f9da1f94d0c0ebc5, type: 2}
   <Dance>k__BackingField:
   - {fileID: 7400000, guid: 8bbfd0dee216b924cbd71937df882d57, type: 2}
   - {fileID: 7400000, guid: 1f4857494dcd65d489da4c711a091174, type: 2}

@@ -33,6 +33,9 @@ namespace New_NPC
                 case eAnimationType.NPC_Sit:
                     selectedAnimationClip = _npcAnimationSo.Sit[Random.Range(0, _npcAnimationSo.Sit.Count)];
                     break;
+                case eAnimationType.NPC_Lean:
+                    selectedAnimationClip = _npcAnimationSo.LeanOnWall[Random.Range(0, _npcAnimationSo.LeanOnWall.Count)];
+                    break;
                 case eAnimationType.NPC_Dance:
                     selectedAnimationClip = _npcAnimationSo.Dance[Random.Range(0, _npcAnimationSo.Dance.Count)];
                     break;
