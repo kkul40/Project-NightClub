@@ -1,10 +1,10 @@
 ﻿using System;
 using Data;
 using DefaultNamespace;
-using New_NPC.Activities;
+using NPC_Stuff.Activities;
 using UnityEngine;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     public class ActivityHandler
     {

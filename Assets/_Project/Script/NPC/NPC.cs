@@ -2,15 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using New_NPC.Activities;
+using NPC_Stuff.Activities;
 using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-using WalkRandomActivity = New_NPC.Activities.WalkRandomActivity;
+using WalkRandomActivity = NPC_Stuff.Activities.WalkRandomActivity;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     public interface IUnit
     {

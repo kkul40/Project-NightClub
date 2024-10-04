@@ -6,7 +6,7 @@ using DefaultNamespace;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace New_NPC.Activities
+namespace NPC_Stuff.Activities
 {
     public class LeanOnWall : IActivity
     {

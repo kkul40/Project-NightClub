@@ -1,4 +1,4 @@
-﻿using New_NPC;
+﻿using NPC_Stuff;
 
 namespace PropBehaviours
 {

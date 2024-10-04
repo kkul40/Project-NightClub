@@ -1,7 +1,7 @@
 ﻿using DefaultNamespace;
 using UnityEngine;
 
-namespace New_NPC.Activities
+namespace NPC_Stuff.Activities
 {
     public class WalkRandomActivity : IActivity
     {

@@ -4,7 +4,7 @@ using Data;
 using PropBehaviours;
 using UnityEngine;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     public class ActivityNeedsData
     {

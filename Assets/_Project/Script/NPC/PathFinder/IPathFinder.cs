@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     public interface IPathFinder
     {

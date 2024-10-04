@@ -1,4 +1,4 @@
-﻿namespace New_NPC
+﻿namespace NPC_Stuff
 {
     public interface IDoorOpener
     {

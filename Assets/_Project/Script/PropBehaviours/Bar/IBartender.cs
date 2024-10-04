@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using New_NPC;
+using NPC_Stuff;
 using UnityEngine;
 
 namespace PropBehaviours

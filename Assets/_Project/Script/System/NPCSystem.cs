@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using BuildingSystem;
 using Data;
-using New_NPC;
-using New_NPC.Activities;
+using NPC_Stuff;
+using NPC_Stuff.Activities;
 using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;

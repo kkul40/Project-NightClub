@@ -1,5 +1,5 @@
 ﻿using System;
-using New_NPC;
+using NPC_Stuff;
 using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;

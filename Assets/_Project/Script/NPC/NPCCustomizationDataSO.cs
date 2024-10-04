@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     [CreateAssetMenu(fileName = "NPC", menuName = "NPC/New Customization Data")]
     public class NPCCustomizationDataSO : ScriptableObject

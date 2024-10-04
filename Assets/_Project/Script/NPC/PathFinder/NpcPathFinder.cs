@@ -7,7 +7,7 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace New_NPC
+namespace NPC_Stuff
 {
     public class NpcPathFinder : IPathFinder
     {

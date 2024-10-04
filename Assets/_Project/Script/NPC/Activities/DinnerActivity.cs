@@ -3,7 +3,7 @@ using DG.Tweening;
 using PropBehaviours;
 using UnityEngine;
 
-namespace New_NPC.Activities
+namespace NPC_Stuff.Activities
 {
     public class DinnerActivity : IActivity
     {

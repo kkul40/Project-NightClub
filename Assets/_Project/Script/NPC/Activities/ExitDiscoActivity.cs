@@ -3,7 +3,7 @@ using Data;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace New_NPC.Activities
+namespace NPC_Stuff.Activities
 {
     public class ExitDiscoActivity : IActivity
     {

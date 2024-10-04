@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
-using New_NPC;
+using NPC_Stuff;
 using UnityEngine;
 
 namespace PropBehaviours
