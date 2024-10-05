@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Table 1
   m_EditorClassIdentifier: 
   ID: -92345747
-  Name: 
+  Name: Wooden Table
   Icon: {fileID: 21300000, guid: 6c03f3bddf70f7d4aab463d27e4de010, type: 3}
   Price: 0
   Prefab: {fileID: 6178800090656037874, guid: 982a2cb2afad9c645bc214c0b0bf3f7a, type: 3}
