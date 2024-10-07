@@ -43,6 +43,12 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            if (chairProp == null || tableProp == null)
+            {
+                IsEnded = true;
+                return;
+            }
+            
             switch (_dinnerState)
             {
                 case DinnerState.None:
@@ -100,7 +106,7 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            chairProp.SetOccupied(and.Npc, false);
+            if(chairProp != null) chairProp.SetOccupied(and.Npc, false);
         }
 
         private enum DinnerState
