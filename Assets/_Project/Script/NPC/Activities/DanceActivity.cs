@@ -43,6 +43,12 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            if (_dancableTile == null)
+            {
+                IsEnded = true;
+                return;
+            }
+            
             switch (_danceState)
             {
                 case DanceState.None:

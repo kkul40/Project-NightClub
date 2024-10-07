@@ -43,6 +43,8 @@ namespace System
             }
             else
             {
+                LeftHoldClickOnWorld = false;
+                
                 IsMouseCursorOnWorld = false;
             }
 
