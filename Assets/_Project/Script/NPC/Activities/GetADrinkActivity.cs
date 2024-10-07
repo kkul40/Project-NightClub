@@ -10,6 +10,7 @@ namespace NPC_Stuff.Activities
     public class GetADrinkActivity : IActivity
     {
         //TODO Yeni BarSistemine Uyarla
+        public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
 
         private IBar _bar;
@@ -48,6 +49,7 @@ namespace NPC_Stuff.Activities
             and.Npc.PathFinder.CancelDestination();
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
+
 
         private IEnumerator CoGetDrink(ActivityNeedsData and)
         {

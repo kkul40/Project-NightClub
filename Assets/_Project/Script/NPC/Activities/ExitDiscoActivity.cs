@@ -7,6 +7,7 @@ namespace NPC_Stuff.Activities
 {
     public class ExitDiscoActivity : IActivity
     {
+        public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
 
         private float timer = 0;

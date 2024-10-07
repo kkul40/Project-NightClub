@@ -14,19 +14,21 @@ namespace NPC_Stuff
         // TODO Use DirthFlag Here
         private PathFinderNode[,] _tileNode;
         private Transform _assignedNPC;
-        private List<Vector3> _currentPath;
+        public List<Vector3> FoundPath { get; private set; }
 
         private IEnumerator _routine = null;
 
         public Transform mTransform => _assignedNPC.transform;
 
         public bool HasReachedDestination { get; private set; } = false;
+        public Vector3 TargetPosition { get; private set; }
 
         private float animationTweak = 0.5f;
 
         public NpcPathFinder(Transform assign)
         {
             _assignedNPC = assign;
+            TargetPosition = -Vector3.one;
         }
 
         public bool GoTargetDestination(Vector3 targetPos, Action OnCompleteCallBack = null)
@@ -34,15 +36,16 @@ namespace NPC_Stuff
             CancelDestination();
             
             HasReachedDestination = false;
-            _currentPath = FindPath(_assignedNPC.position, targetPos);
+            FoundPath = FindPath(_assignedNPC.position, targetPos);
 
-            if (_currentPath == null)
+            if (FoundPath == null)
             {
                 Debug.Log("No Pathf Found : " + targetPos);
                 return false;
             }
 
-            _routine = CoFollowPath(_currentPath, OnCompleteCallBack);
+            TargetPosition = targetPos;
+            _routine = CoFollowPath(FoundPath, OnCompleteCallBack);
             DiscoData.Instance.StartCoroutine(_routine);
             return true;
         }
@@ -52,11 +55,9 @@ namespace NPC_Stuff
             if (_routine == null) return;
 
             DiscoData.Instance.StopCoroutine(_routine);
-            _currentPath = new List<Vector3>();
+            FoundPath = new List<Vector3>();
             _routine = null;
         }
-
-        public List<Vector3> FoundPath => _currentPath;
 
         private IEnumerator CoFollowPath(List<Vector3> path, Action OnCompleteCallBack = null)
         {
@@ -73,6 +74,7 @@ namespace NPC_Stuff
                 }
             }
 
+            FoundPath = new List<Vector3>();
             HasReachedDestination = true;
             OnCompleteCallBack?.Invoke();
         }

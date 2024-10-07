@@ -8,6 +8,7 @@ namespace NPC_Stuff.Activities
         private readonly float delay = 2;
         private float timer;
 
+        public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
 
         public bool CanStartActivity(ActivityNeedsData and)

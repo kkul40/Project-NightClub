@@ -9,6 +9,8 @@ namespace NPC_Stuff
     {
         Transform mTransform { get; }
         bool HasReachedDestination { get; }
+        Vector3 TargetPosition { get; }
+        Vector3 CurrentPoistion => mTransform.position;
         bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null);
         void CancelDestination();
 

@@ -9,19 +9,20 @@ namespace NPC_Stuff
     public class BartenderPathFinder : IPathFinder
     {
         public bool HasReachedDestination { get; private set; }
-        private Vector3 target;
+        public Vector3 TargetPosition { get; private set; }
         public Transform mTransform { get; }
 
         public BartenderPathFinder(Transform mTransform)
         {
             this.mTransform = mTransform;
+            TargetPosition = -Vector3.one;
         }
 
         public bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null)
         {
-            target = targetDestination;
+            TargetPosition = targetDestination;
             HasReachedDestination = false;
-            SetRotationToTarget(target);
+            SetRotationToTarget(TargetPosition);
             DOTween.instance.StartCoroutine(CoWalkPosition());
             return true;
         }
@@ -43,9 +44,9 @@ namespace NPC_Stuff
 
         private IEnumerator CoWalkPosition()
         {
-            while (Vector3.Distance(mTransform.position, target) > 0.01f)
+            while (Vector3.Distance(mTransform.position, TargetPosition) > 0.01f)
             {
-                mTransform.position = Vector3.MoveTowards(mTransform.position, target, Time.deltaTime * 1.5f);
+                mTransform.position = Vector3.MoveTowards(mTransform.position, TargetPosition, Time.deltaTime * 1.5f);
                 yield return null;
             }
 

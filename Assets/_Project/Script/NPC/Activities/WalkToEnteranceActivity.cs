@@ -5,6 +5,7 @@ namespace NPC_Stuff.Activities
 {
     public class WalkToEnteranceActivity : IActivity
     {
+        public bool CheckForPlacementOnTop { get; } = false;
         public bool IsEnded { get; private set; }
 
         private float timer = 0;

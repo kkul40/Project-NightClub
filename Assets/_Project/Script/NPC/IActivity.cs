@@ -2,6 +2,7 @@
 {
     public interface IActivity
     {
+        bool CheckForPlacementOnTop { get; }
         bool IsEnded { get; }
         bool CanStartActivity(ActivityNeedsData and);
         void OnActivityStart(ActivityNeedsData and);

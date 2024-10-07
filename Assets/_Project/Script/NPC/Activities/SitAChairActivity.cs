@@ -14,6 +14,7 @@ namespace NPC_Stuff.Activities
 
         private eState _state;
 
+        public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
 
         public bool CanStartActivity(ActivityNeedsData and)

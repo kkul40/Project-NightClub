@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using DefaultNamespace;
 using NPC_Stuff.Activities;
@@ -22,6 +23,8 @@ namespace NPC_Stuff
             _activityNeedsData.Npc = npc;
             _activityNeedsData.DiscoData = DiscoData.Instance;
             _activityNeedsData.GridHandler = GridHandler.Instance;
+            
+            PlacementDataHandler.OnPlacedPositions += HasPlacementOnTop;
 
             _currentActivity = new WalkToEnteranceActivity();
             _lastActivity = _currentActivity;
@@ -71,6 +74,34 @@ namespace NPC_Stuff
 
             return randomActivity;
         }
+        
+        public void HasPlacementOnTop(List<Vector3Int> keys)
+        {
+            if (!hasActivity || !_currentActivity.CheckForPlacementOnTop) return;
+            
+            foreach (var key in keys)
+            {
+                // Is Placement on The Destination
+                if (key == _activityNeedsData.Npc.PathFinder.TargetPosition.WorldPosToCellPos(eGridType.PlacementGrid))
+                {
+                    StartNewActivity(GetRandomActivity());
+                    return;
+                }
+                
+                // Is Placement on your way
+                foreach (var path in _activityNeedsData.Npc.PathFinder.FoundPath) 
+                {
+                    if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
+                    {
+                        if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
+                            return;
+                        
+                        StartNewActivity(GetRandomActivity());
+                        return;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Use it OnDestroy To Avoid Event Problems!
@@ -79,6 +110,8 @@ namespace NPC_Stuff
         {
             if (hasActivity)
                 _currentActivity.OnActivityEnd(_activityNeedsData);
+
+            PlacementDataHandler.OnPlacedPositions -= HasPlacementOnTop;
         }
     }
 }

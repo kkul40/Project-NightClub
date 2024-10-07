@@ -4,6 +4,7 @@ namespace NPC_Stuff.Activities
 {
     public class NoneActivity : IActivity
     {
+        public bool CheckForPlacementOnTop { get; } = false;
         public bool IsEnded { get; }
 
         public bool CanStartActivity(ActivityNeedsData and)

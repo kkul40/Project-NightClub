@@ -18,6 +18,7 @@ namespace NPC_Stuff.Activities
         private float tweenDuration = 0.5f;
         private float waitingTime = 3;
 
+        public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
 
         public bool CanStartActivity(ActivityNeedsData and)
