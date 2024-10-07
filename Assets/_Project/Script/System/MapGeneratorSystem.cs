@@ -193,10 +193,9 @@ namespace System
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
 
-
         private void LoadAndAssignFloorTileMaterial(Vector3Int cellPosition, GameObject newObject)
         {
-            var data = MapData.FloorGridDatas[cellPosition.x, cellPosition.z];
+            var data = MapData.GetFloorGridData(cellPosition.x, cellPosition.z);
             if (data == null)
             {
                 Debug.Log("Data Was NULL");

@@ -65,9 +65,11 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.FloorMaterial:
-                    DiscoData.Instance.MapData
-                        .FloorGridDatas[buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z]
-                        .AssignNewID(_materialItemSo.ID);
+                    var gridData = DiscoData.Instance.MapData.GetFloorGridData(buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z);
+                    if (gridData != null)
+                    {
+                        gridData.AssignNewID(_materialItemSo.ID);
+                    }
                     break;
                 case eMaterialLayer.WallMaterial:
                     DiscoData.Instance.MapData.WallDatas

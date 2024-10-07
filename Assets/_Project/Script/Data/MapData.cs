@@ -15,12 +15,20 @@ namespace Data
 
         //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
-        public FloorGridAssignmentData[,] FloorGridDatas { get; set; }
+        private FloorGridAssignmentData[,] FloorGridDatas { get; set; }
         private PathFinderNode[,] PathFinderNodes;
 
         // Referanced
         private List<PathFinderNode> AvaliablePathsNearWall;
         private bool Flag_AvaliablePathsNearWall = true;
+
+        public FloorGridAssignmentData GetFloorGridData(int x, int y)
+        {
+            if (x < 0 || y < 0) return null;
+            if (x > CurrentMapSize.x || y > CurrentMapSize.y) return null;
+        
+            return FloorGridDatas[x, y];
+        }
         
         public Vector2Int PathFinderSize
         {
