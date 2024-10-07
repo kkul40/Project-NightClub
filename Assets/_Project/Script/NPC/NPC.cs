@@ -61,6 +61,11 @@ namespace NPC_Stuff
 
         private List<Vector3> path = new();
 
+        private void OnDestroy()
+        {
+            _activityHandler.ForceToEndActivity();
+        }
+
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;

@@ -44,6 +44,7 @@ namespace Data
         public static event Action OnPropUpdate;
         public static event Action OnPropRemoved;
         public static event Action OnPropPlaced;
+        public static event Action<List<Vector3Int>> OnPlacedPositions;
 
         public PlacementDataHandler()
         {
@@ -99,6 +100,8 @@ namespace Data
                 addedData.Item2.Add(key);
             
             UpdatePathFinder(addedData);
+            
+            OnPlacedPositions?.Invoke(keys);
             
             AddedObjectHandler(cellPos, placementData);
             UpdateProps();

@@ -16,7 +16,7 @@ namespace System
         [SerializeField] private GameObject _bartenderPrefab;
         [SerializeField] private GameObject _djPrefab;
 
-        [SerializeField] private List<NPC> _npcActivities = new();
+        [SerializeField] private List<NPC> _npcs = new();
 
         public int maxNPC = 25;
 
@@ -94,7 +94,7 @@ namespace System
                         break;
                 }
 
-                _npcActivities.Add(newNPC.GetComponent<NPC>());
+                _npcs.Add(newNPC.GetComponent<NPC>());
                 npcCount++;
             }
         }
@@ -105,10 +105,10 @@ namespace System
             if (_npcSpawnRoutine != null)
                 StopCoroutine(_npcSpawnRoutine);
 
-            foreach (var activity in _npcActivities)
+            foreach (var activity in _npcs)
                 activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
 
-            _npcActivities.Clear();
+            _npcs.Clear();
         }
     }
 }

@@ -18,6 +18,8 @@ namespace NPC_Stuff.Activities
 
         private eState currentState;
 
+        private ActivityNeedsData _and;
+
         private PathFinderNode leanablePath = new PathFinderNode();
         private float leanTime = 10;
         private float timer = 0;
@@ -44,10 +46,13 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
+            _and = and;
             currentState = eState.Walk;
             leanablePath.ChangeOccupition(and.Npc, true);
             and.Npc.PathFinder.GoTargetDestination(leanablePath.WorldPos);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
+            
+            PlacementDataHandler.OnPlacedPositions += HasPlacedOnTop;
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
@@ -79,8 +84,44 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
+            PlacementDataHandler.OnPlacedPositions -= HasPlacedOnTop;
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
             leanablePath.ChangeOccupition(and.Npc, false);
+        }
+
+        private void HasPlacedOnTop(List<Vector3Int> keys)
+        {
+            foreach (var key in keys)
+            {
+                if (currentState == eState.Lean) // Is Placement On Top of you
+                {
+                    if (key == _and.Npc.PathFinder.mTransform.position.WorldPosToCellPos(eGridType.PlacementGrid))
+                    {
+                        IsEnded = true;
+                        return;
+                    }
+                }
+                else
+                {
+                    IsEnded = true;
+                    return;
+                }
+                
+                if (key == leanablePath.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid)) // Is Placement on your destination
+                {
+                    IsEnded = true;
+                    return;
+                }
+                
+                foreach (var path in _and.Npc.PathFinder.FoundPath) // Is Placement on your way
+                {
+                    if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
+                    {
+                        _and.Npc.PathFinder.GoTargetDestination(leanablePath.WorldPos);
+                        return;
+                    }
+                }
+            }
         }
     }
 }

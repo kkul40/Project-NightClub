@@ -14,6 +14,8 @@ namespace NPC_Stuff
 
         public bool hasActivity => _currentActivity != null;
 
+        public IActivity GetCurrentActivity => _currentActivity;
+
         public ActivityHandler(NPC npc)
         {
             _activityNeedsData = new ActivityNeedsData();
@@ -68,6 +70,15 @@ namespace NPC_Stuff
             }
 
             return randomActivity;
+        }
+
+        /// <summary>
+        /// Use it OnDestroy To Avoid Event Problems!
+        /// </summary>
+        public void ForceToEndActivity()
+        {
+            if (hasActivity)
+                _currentActivity.OnActivityEnd(_activityNeedsData);
         }
     }
 }

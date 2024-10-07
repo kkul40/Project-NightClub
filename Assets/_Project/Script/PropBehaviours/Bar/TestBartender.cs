@@ -62,6 +62,10 @@ namespace PropBehaviours
 
         public void RemoveCommand()
         {
+            if (BartenderCommands.Count > 1)
+            {
+                BartenderCommands.Dequeue();
+            }
         }
 
         public bool IsInteractable { get; } = true;

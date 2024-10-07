@@ -22,14 +22,6 @@ namespace Data
         private List<PathFinderNode> AvaliablePathsNearWall;
         private bool Flag_AvaliablePathsNearWall = true;
 
-        public FloorGridAssignmentData GetFloorGridData(int x, int y)
-        {
-            if (x < 0 || y < 0) return null;
-            if (x > CurrentMapSize.x || y > CurrentMapSize.y) return null;
-        
-            return FloorGridDatas[x, y];
-        }
-        
         public Vector2Int PathFinderSize
         {
             get
@@ -227,6 +219,14 @@ namespace Data
             // var convert = GridHandler.Instance.GetWorldToCell(worldPos, eGridType.PathFinderGrid);
             var convert = worldPos.WorldPosToCellPos(System.eGridType.PathFinderGrid);
             return PathFinderNodes[convert.x, convert.z];
+        }
+        
+        public FloorGridAssignmentData GetFloorGridData(int x, int y)
+        {
+            if (x < 0 || y < 0) return null;
+            if (x > CurrentMapSize.x || y > CurrentMapSize.y) return null;
+        
+            return FloorGridDatas[x, y];
         }
 
         public FloorGridAssignmentData GetFloorGridAssignmentByCellPos(Vector3Int cellpos)
