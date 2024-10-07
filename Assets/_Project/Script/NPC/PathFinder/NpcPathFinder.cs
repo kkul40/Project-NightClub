@@ -31,6 +31,19 @@ namespace NPC_Stuff
             TargetPosition = -Vector3.one;
         }
 
+        public bool CheckIfPathAvaliable(Vector3 targetDestination)
+        {
+            var path = FindPath(_assignedNPC.position, targetDestination);
+
+            if (path == null)
+            {
+                Debug.Log("No Pathf Found : " + targetDestination);
+                return false;
+            }
+
+            return true;
+        }
+
         public bool GoTargetDestination(Vector3 targetPos, Action OnCompleteCallBack = null)
         {
             CancelDestination();

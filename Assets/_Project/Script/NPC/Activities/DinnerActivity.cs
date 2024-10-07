@@ -31,7 +31,7 @@ namespace NPC_Stuff.Activities
 
             if (chairProp == null || chairProp.IsOccupied) return false;
 
-            return true;
+            return and.Npc.PathFinder.CheckIfPathAvaliable(chairProp.GetFrontPosition().position);
         }
 
         public void OnActivityStart(ActivityNeedsData and)

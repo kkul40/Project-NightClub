@@ -29,13 +29,12 @@ namespace NPC_Stuff.Activities
                 if (Helper.IterateTo100(ref iteration)) return false;
             }
 
-            if (!and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position)) return false;
-
-            return true;
+            return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
         public void OnActivityStart(ActivityNeedsData and)
         {
+            and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             DOTween.instance.StartCoroutine(CoGetDrink(and));
         }

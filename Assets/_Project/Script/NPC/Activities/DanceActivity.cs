@@ -31,7 +31,7 @@ namespace NPC_Stuff.Activities
                     ePlacementLayer.FloorProp))
                 return false;
 
-            return true;
+            return and.Npc.PathFinder.CheckIfPathAvaliable(_dancableTile.WorldPos);
         }
 
         public void OnActivityStart(ActivityNeedsData and)

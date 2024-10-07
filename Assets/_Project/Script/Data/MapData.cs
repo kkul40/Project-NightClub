@@ -15,7 +15,7 @@ namespace Data
 
         //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
-        private FloorGridAssignmentData[,] FloorGridDatas { get; set; }
+        private FloorGridAssignmentData[,] FloorGridDatas;
         private PathFinderNode[,] PathFinderNodes;
 
         // Referanced

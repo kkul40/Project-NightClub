@@ -42,7 +42,7 @@ namespace NPC_Stuff.Activities
 
             } while (leanablePath.HasOccupied);
 
-            return true;
+            return and.Npc.PathFinder.CheckIfPathAvaliable(leanablePath.WorldPos);
         }
 
         public void OnActivityStart(ActivityNeedsData and)

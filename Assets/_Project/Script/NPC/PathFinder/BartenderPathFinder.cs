@@ -18,6 +18,11 @@ namespace NPC_Stuff
             TargetPosition = -Vector3.one;
         }
 
+        public bool CheckIfPathAvaliable(Vector3 targetDestination)
+        {
+            return true;
+        }
+
         public bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null)
         {
             TargetPosition = targetDestination;

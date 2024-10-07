@@ -11,6 +11,7 @@ namespace NPC_Stuff
         bool HasReachedDestination { get; }
         Vector3 TargetPosition { get; }
         Vector3 CurrentPoistion => mTransform.position;
+        bool CheckIfPathAvaliable(Vector3 targetDestination);
         bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null);
         void CancelDestination();
 

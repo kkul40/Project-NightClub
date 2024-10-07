@@ -25,7 +25,7 @@ namespace NPC_Stuff.Activities
 
             if (_chair.IsReservedToATable) return false;
 
-            return true;
+            return and.Npc.PathFinder.CheckIfPathAvaliable(_chair.GetFrontPosition().position);
         }
 
         public void OnActivityStart(ActivityNeedsData and)
