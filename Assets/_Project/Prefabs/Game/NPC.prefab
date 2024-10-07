@@ -1302,7 +1302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362a6d6174ca67d4b93b4fbb7ccdf96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sinirClip: {fileID: 8300000, guid: 27909e45ef21922429680ec5aa368dbd, type: 3}
 --- !u!114 &6649258213626597978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,7 +1637,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4a5a8c8ff5d6d2e48ab8d2b27100cf57, type: 3}
   m_Controller: {fileID: 9100000, guid: 77278b888bad33e4ab08e88218b3835c, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
