@@ -38,7 +38,12 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-
+            if (_chair == null)
+            {
+                IsEnded = true;
+                return;
+            }
+            
             switch (_state)
             {
                 case eState.SitDown:
@@ -64,6 +69,7 @@ namespace NPC_Stuff.Activities
 
         private void OnReachedToChair()
         {
+            if (_chair == null) return;
             and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
             _state = eState.SitDown;
@@ -71,6 +77,9 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
+            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
+            if (_chair == null) return;
+
             _chair.SetOccupied(and.Npc, false);
         }
 
