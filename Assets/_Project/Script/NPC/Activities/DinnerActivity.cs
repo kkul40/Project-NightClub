@@ -34,6 +34,12 @@ namespace NPC_Stuff.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(chairProp.GetFrontPosition().position);
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            if (chairProp == null || tableProp == null) return true;
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.PathFinder.GoTargetDestination(chairProp.GetFrontPosition().position);
@@ -43,12 +49,6 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (chairProp == null || tableProp == null)
-            {
-                IsEnded = true;
-                return;
-            }
-            
             switch (_dinnerState)
             {
                 case DinnerState.None:

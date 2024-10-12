@@ -45,6 +45,11 @@ namespace NPC_Stuff.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(leanablePath.WorldPos);
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             currentState = eState.Walk;

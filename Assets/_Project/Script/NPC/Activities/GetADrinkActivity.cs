@@ -32,6 +32,13 @@ namespace NPC_Stuff.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            if (_bar == null) return true;
+            if (!_bar.HasDrinks) return true;
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position);
@@ -52,17 +59,6 @@ namespace NPC_Stuff.Activities
 
         private IEnumerator CoGetDrink(ActivityNeedsData and)
         {
-            while (!and.Npc.PathFinder.HasReachedDestination)
-            {
-                if (!_bar.HasDrinks)
-                {
-                    IsEnded = true;
-                    yield break;
-                }
-
-                yield return null;
-            }
-
             yield return new WaitUntil(() => and.Npc.PathFinder.HasReachedDestination);
 
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);

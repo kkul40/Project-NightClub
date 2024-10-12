@@ -47,7 +47,7 @@ namespace NPC_Stuff
         {
             if (!hasActivity) return;
 
-            if (_currentActivity.IsEnded)
+            if (_currentActivity.IsEnded || _currentActivity.ForceToQuitActivity(_activityNeedsData))
             {
                 StartNewActivity(GetRandomActivity());
                 return;

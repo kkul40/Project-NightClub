@@ -34,6 +34,13 @@ namespace NPC_Stuff.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_dancableTile.WorldPos);
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            if (_dancableTile == null) return true;
+
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.WorldPos);
@@ -44,12 +51,6 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (_dancableTile == null)
-            {
-                IsEnded = true;
-                return;
-            }
-            
             switch (_danceState)
             {
                 case DanceState.None:

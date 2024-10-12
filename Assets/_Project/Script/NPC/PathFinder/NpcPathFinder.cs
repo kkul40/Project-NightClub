@@ -48,7 +48,6 @@ namespace NPC_Stuff
         {
             CancelDestination();
             
-            HasReachedDestination = false;
             FoundPath = FindPath(_assignedNPC.position, targetPos);
 
             if (FoundPath == null)
@@ -67,6 +66,7 @@ namespace NPC_Stuff
         {
             if (_routine == null) return;
 
+            HasReachedDestination = false;
             DiscoData.Instance.StopCoroutine(_routine);
             FoundPath = new List<Vector3>();
             _routine = null;

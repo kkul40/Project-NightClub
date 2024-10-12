@@ -16,6 +16,11 @@ namespace NPC_Stuff.Activities
             return true;
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.PathFinder.GoTargetDestination(GetRandomDestination(and));

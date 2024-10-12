@@ -12,7 +12,7 @@ namespace NPC_Stuff.Activities
         private float timer = 0;
         private float delay = 5f;
 
-        private eState _state;
+        private eState _state = eState.Null;
 
         public bool CheckForPlacementOnTop { get; } = true;
         public bool IsEnded { get; private set; }
@@ -28,25 +28,33 @@ namespace NPC_Stuff.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_chair.GetFrontPosition().position);
         }
 
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            if (_chair == null) return true;
+            return false;
+        }
+
         public void OnActivityStart(ActivityNeedsData and)
         {
             this.and = and;
-            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position,
-                OnCompleteCallBack: OnReachedToChair);
+            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (_chair == null)
-            {
-                IsEnded = true;
-                return;
-            }
             
             switch (_state)
             {
+                case eState.Null:
+                    if (and.Npc.PathFinder.HasReachedDestination)
+                    {
+                        and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
+                        and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
+                        _state = eState.SitDown;
+                    }
+                    break;
                 case eState.SitDown:
                     timer += Time.deltaTime;
                     if (timer > delay)
@@ -68,20 +76,10 @@ namespace NPC_Stuff.Activities
             }
         }
 
-        private void OnReachedToChair()
-        {
-            if (_chair == null) return;
-            and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
-            and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
-            _state = eState.SitDown;
-        }
-
         public void OnActivityEnd(ActivityNeedsData and)
         {
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
-            if (_chair == null) return;
-
-            _chair.SetOccupied(and.Npc, false);
+            if (_chair != null)  _chair.SetOccupied(and.Npc, false);
         }
 
         private enum eState
