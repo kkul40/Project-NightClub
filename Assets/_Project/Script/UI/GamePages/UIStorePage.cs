@@ -9,14 +9,9 @@ namespace UI
         [SerializeField] private GameObject _storeButtonHolder;
         [SerializeField] private UIStoreInventoryView uiStoreInventoryView;
 
-        [FormerlySerializedAs("_lastButtonClicked")] [SerializeField] private UIButtonBase lastButtonBaseClicked;
+        [SerializeField] private UIButtonBase lastButtonBaseClicked;
 
         public static Action<bool> OnStoreToggle;
-
-        private void OnEnable()
-        {
-            lastButtonBaseClicked.OnClick();
-        }
 
         public void GenerateInventory(UIButtonBase uiButtonBase, StoreDataCarrier storeDataCarrier)
         {
@@ -24,10 +19,15 @@ namespace UI
             uiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }
 
-        public override void Toggle(bool? toggle = null)
+        protected override void OnShow()
         {
-            base.Toggle(toggle);
-            OnStoreToggle?.Invoke(toggle ?? isActiveAndEnabled);
+            lastButtonBaseClicked.OnClick();
+            OnStoreToggle?.Invoke(true);
+        }
+
+        protected override void OnHide()
+        {
+            OnStoreToggle?.Invoke(false);
         }
     }
 }

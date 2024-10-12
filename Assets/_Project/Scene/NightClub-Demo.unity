@@ -1706,6 +1706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 1076041693}
+  EdgeScrolling: 0
   mouseOverLayers:
     serializedVersion: 2
     m_Bits: 896
@@ -1713,7 +1714,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   borderTreshold: 0.01
-  EdgeScrolling: 0
   MoveDelta: {x: 0, y: 0}
   ScrollWheelDelta: 0
   Esc: 0
@@ -9256,13 +9256,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1086089515}
-        m_TargetAssemblyTypeName: UI.PageManager, Assembly-CSharp
-        m_MethodName: ToggleNewPage
-        m_Mode: 2
+      - m_Target: {fileID: 454267300}
+        m_TargetAssemblyTypeName: UI.UIPageBase, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 454267300}
-          m_ObjectArgumentAssemblyTypeName: UI.UIPageBase, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -18885,13 +18885,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1086089515}
-        m_TargetAssemblyTypeName: UI.PageManager, Assembly-CSharp
-        m_MethodName: ToggleNewPage
-        m_Mode: 2
+      - m_Target: {fileID: 1954767697}
+        m_TargetAssemblyTypeName: UI.UIPageBase, Assembly-CSharp
+        m_MethodName: Toggle
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1954767697}
-          m_ObjectArgumentAssemblyTypeName: UI.UIPageBase, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -21961,6 +21961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe9a2bd84bf42b3a81bdcef63ffdc21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isToggled: 0
   _storeButtonHolder: {fileID: 0}
   uiStoreInventoryView: {fileID: 572044177}
   lastButtonBaseClicked: {fileID: 1400093083}
@@ -23207,7 +23208,7 @@ MonoBehaviour:
   _npcPrefab: {fileID: 6604356279042201940, guid: bd2051e4df5eb6e47b86c3afff66ceab, type: 3}
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
-  _npcActivities: []
+  _npcs: []
   maxNPC: 20
 --- !u!4 &2042784773 stripped
 Transform:

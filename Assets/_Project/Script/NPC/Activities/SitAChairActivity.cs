@@ -44,7 +44,6 @@ namespace NPC_Stuff.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            
             switch (_state)
             {
                 case eState.Null:

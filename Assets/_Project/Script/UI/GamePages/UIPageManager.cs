@@ -9,40 +9,61 @@ namespace UI
     {
         private List<UIPageBase> _uiPageBases = new();
 
-        private UIPageBase lastToggle;
+        private Stack<UIPageBase> _uiPageQue = new Stack<UIPageBase>();
 
-        private void Awake()
+        // private UIPageBase lastToggle;
+
+        private void Start()
         {
-            _uiPageBases = FindObjectsOfType<MonoBehaviour>().OfType<UIPageBase>().ToList();
             CloseAll();
         }
 
         private void Update()
         {
-            if (InputSystem.Instance.Esc && lastToggle != null)
+            if (InputSystem.Instance.Esc && _uiPageQue.Count > 0)
             {
-                lastToggle.Toggle(false);   
+                var page = _uiPageQue.Pop();
+                page.Hide();
             }
-        }
-
-        public void ToggleNewPage(UIPageBase source)
-        {
-            source.Toggle();
-            lastToggle = source;
-            CloseAll(true);
         }
 
         private void CloseAll(bool dontToggleLast = false)
         {
-            foreach (var page in _uiPageBases)
+            while (_uiPageQue.Count > 0)
             {
-                if (dontToggleLast)
-                {
-                    if(page == lastToggle) continue;
-                }
-                
-                page.Toggle(false);
+                var page = _uiPageQue.Pop();
+                page.Hide();
             }
+        }
+
+        public void RegisterOnShow(UIPageBase uiPageBase)
+        {
+            _uiPageQue.Push(uiPageBase);
+            // lastToggle = uiPageBase;
+        }
+
+        public void RegisterOnHide(UIPageBase uiPageBase)
+        {
+            Stack<UIPageBase> tempStack = new Stack<UIPageBase>();
+
+            while (_uiPageQue.Count > 0)
+            {
+                UIPageBase topItem = _uiPageQue.Pop();
+                if (!EqualityComparer<UIPageBase>.Default.Equals(topItem, uiPageBase))
+                {
+                    tempStack.Push(topItem);
+                }
+            }
+
+            while (tempStack.Count > 0)
+            {
+                _uiPageQue.Push(tempStack.Pop());
+            }
+        }
+
+        public void RegisterForPage(UIPageBase uiPageBase)
+        {
+            _uiPageBases.Add(uiPageBase);
         }
     }
 }
