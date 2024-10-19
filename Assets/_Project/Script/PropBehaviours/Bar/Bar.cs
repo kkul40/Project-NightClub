@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class NewBar : IPropUnit, IBar
+    public class Bar : IPropUnit, IBar
     {
         private BarMediator barMediator;
 
@@ -56,6 +56,8 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
+            if (!HasDrinks) return;
+            
             barMediator.AddCommand(this, new PrepareDrinkCommand());
         }
     }
