@@ -1,3 +1,5 @@
+using System;
+using Data;
 using UnityEngine;
 
 namespace BuildingSystem
@@ -37,11 +39,12 @@ namespace BuildingSystem
 
         public void SetPosition(Vector3 newPos)
         {
-            transform.position = newPos;
+            transform.position = newPos.CellCenterPosition(eGridType.PlacementGrid);
         }
 
         public void SetSize(Vector2 size)
         {
+            placingTileIndicator.transform.localPosition = new Vector3(size.x / 2, 0, size.y / 2) -  new Vector3(0.5f, 0f, 0.5f);
             placingTileIndicator.transform.localScale = new Vector3(size.x, 1, size.y);
         }
 
