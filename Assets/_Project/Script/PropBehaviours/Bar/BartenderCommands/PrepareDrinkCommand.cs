@@ -34,7 +34,6 @@ namespace PropBehaviours
                 return false;
             }
 
-
             return true;
         }
 
@@ -50,7 +49,6 @@ namespace PropBehaviours
         public void UpdateCommand(BarMediator barMediator)
         {
             if(bar == null) bartender.RemoveCommand(); 
-            
             
             switch (_state)
             {

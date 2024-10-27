@@ -43,7 +43,7 @@ namespace HighlightPlus
         {
             var vrIsRunning = false;
             displays.Clear();
-            SubsystemManager.GetInstances(displays);
+            SubsystemManager.GetSubsystems(displays);
             foreach (var displaySubsystem in displays)
                 if (displaySubsystem.running)
                 {
