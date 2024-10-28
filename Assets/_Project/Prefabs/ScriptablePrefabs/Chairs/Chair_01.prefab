@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 4740368155578238548}
   - component: {fileID: 1069912822598088149}
   - component: {fileID: 6827279499954507578}
-  - component: {fileID: 8354168909189259155}
   m_Layer: 0
   m_Name: Chair_01
   m_TagString: Untagged
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sitPosition: {fileID: 2485797321424670351}
   frontPosition: {fileID: 401532907938777972}
+  IsReservedToATable: 0
   <IsOccupied>k__BackingField: 0
 --- !u!65 &6827279499954507578
 BoxCollider:
@@ -131,37 +131,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!54 &8354168909189259155
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740368155578238536}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &7927736978233187311
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +146,6 @@ GameObject:
   - component: {fileID: 2112915219231579748}
   - component: {fileID: 8870594949564344678}
   - component: {fileID: 2679098776385997968}
-  - component: {fileID: 1503402025613784693}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -221,6 +193,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -246,25 +221,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1503402025613784693
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7927736978233187311}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7476042367807297528, guid: 703455a858136054fbfd27ea14615d03, type: 3}
