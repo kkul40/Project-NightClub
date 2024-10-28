@@ -102,6 +102,11 @@ namespace BuildingSystem
 
             return directions[closestDirectionIndex];
         }
+
+        public static Quaternion Combine(this Quaternion quaternion, Quaternion quaternionToCombine)
+        {
+            return quaternion * quaternionToCombine;
+        }
     }
 
     public enum Direction

@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 914084806023175335, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 914084806023175335, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
       propertyPath: ShapeModule.type
       value: 5
       objectReference: {fileID: 0}
@@ -30,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 914084806023175335, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
       propertyPath: ShapeModule.m_Position.z
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 914084806023175335, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
       propertyPath: ShapeModule.m_Rotation.x

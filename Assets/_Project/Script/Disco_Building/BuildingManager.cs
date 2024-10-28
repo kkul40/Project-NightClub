@@ -45,13 +45,14 @@ namespace BuildingSystem
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
         [SerializeField] private GridHandler _gridHandler;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
+        [SerializeField] private FXCreator _fxCreator;
 
 
         public static event Action OnRemovingStopped;
 
         private void Start()
         {
-            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger);
+            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger, _fxCreator);
             HandleToggling(false);
         }
 
@@ -99,7 +100,7 @@ namespace BuildingSystem
 
         private void UpdateBuildingNeeds()
         {
-            _buildingNeedsData.CellPosition = InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PlacementGrid);
+            _buildingNeedsData.CellPosition = InputSystem.Instance.MousePosition.WorldPosToCellPos(eGridType.PlacementGrid);
             _buildingNeedsData.CellCenterPosition = _buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
             
             _tileIndicator.SetPosition(_buildingNeedsData.CellPosition);
