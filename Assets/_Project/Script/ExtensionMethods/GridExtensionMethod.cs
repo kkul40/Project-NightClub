@@ -46,25 +46,13 @@ namespace Data
         /// <summary>
         /// Gets the Centrol Position of a grid cellposition while keeping height unchanged
         /// </summary>
-        /// <param name="vector"></param>
+        /// <param name="vectorInt"></param>
         /// <param name="cellGridType"></param>
         /// <returns></returns>
         public static Vector3 CellCenterPosition(this Vector3Int vector, eGridType cellGridType)
         {
-            switch (cellGridType)
-            {
-                case eGridType.PlacementGrid:
-                    float centerOffset1x1 = 0.5f;
-                    return new Vector3(vector.x + centerOffset1x1, vector.y, vector.z + centerOffset1x1);
-                    break;
-                case eGridType.PathFinderGrid:
-                    float centerOffset4x4 = 1f / ConstantVariables.PathFinderGridSize;
-                    return new Vector3(vector.x * centerOffset4x4, 0, vector.z * centerOffset4x4);
-                    break;
-            }
-
-            Debug.LogError("Returned Null : " + cellGridType.ToString());
-            return -Vector3.one;
+            Vector3 vector3 = new Vector3(vector.x, vector.y, vector.z);
+            return CellCenterPosition(vector3, cellGridType);
         }
 
         /// <summary>

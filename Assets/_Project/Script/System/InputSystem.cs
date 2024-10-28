@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Data;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
@@ -9,6 +10,7 @@ namespace System
     {
         [SerializeField] private Camera mainCam;
         private RaycastHit lastHit;
+        private Vector3Int MouseLastCellPosition;
         
         [Header("Toggle")] 
         public bool EdgeScrolling;
@@ -20,6 +22,7 @@ namespace System
 
         public Vector2 MoveDelta;
         public float ScrollWheelDelta;
+        public Vector3 MousePosition;
         [HideInInspector] public bool Esc;
         [HideInInspector] public bool TurnLeft;
         [HideInInspector] public bool TurnRight;
@@ -28,11 +31,13 @@ namespace System
         [HideInInspector] public bool LeftHoldClickOnWorld;
         public bool RightClickOnWorld;
 
+        public bool HasMouseMoveToNewCell; // Used For Optimization
+
         private void Update()
         {
             MoveDelta.x = Input.GetAxis("Horizontal");
             MoveDelta.y = Input.GetAxis("Vertical");
-
+            
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 LeftClickOnWorld = Input.GetMouseButtonDown(0);
@@ -44,16 +49,16 @@ namespace System
             else
             {
                 LeftHoldClickOnWorld = false;
-                
                 IsMouseCursorOnWorld = false;
             }
 
+            MousePosition = GetMouseMapPosition();
             Esc = Input.GetKeyDown(KeyCode.Escape);
             TurnLeft = Input.GetKeyDown(KeyCode.Z);
             TurnRight = Input.GetKeyDown(KeyCode.X);
         }
 
-        public Vector2 GetCornerMouseDelta()
+        public Vector2 GetEdgeScrollingData()
         {
             Vector2 vector = Vector2.zero;
             
@@ -97,7 +102,7 @@ namespace System
             return vector.normalized;
         }
 
-        public Vector3 GetMouseMapPosition()
+        private Vector3 GetMouseMapPosition()
         {
             var mousePOs = Input.mousePosition;
             mousePOs.z = mainCam.nearClipPlane;
@@ -108,10 +113,22 @@ namespace System
 
             if (Physics.Raycast(ray, out hit, maxDistance, mouseOverLayers))
             {
+                var hitPointCellPosition = hit.point.WorldPosToCellPos(eGridType.PlacementGrid);
+                if (MouseLastCellPosition != hitPointCellPosition)
+                {
+                    MouseLastCellPosition = hitPointCellPosition;
+                    HasMouseMoveToNewCell = true;
+                }
+                else
+                {
+                    HasMouseMoveToNewCell = false;
+                }
+                
                 lastHit = hit;
                 return hit.point;
             }
-
+            
+            HasMouseMoveToNewCell = false;
             return Vector3.zero;
         }
 

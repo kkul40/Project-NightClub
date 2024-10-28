@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BuildingSystem.SO;
 using Data;
 using PropBehaviours;
+using Testing;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace BuildingSystem.Builders
@@ -13,9 +16,13 @@ namespace BuildingSystem.Builders
         public bool isFinished { get; }
 
         private MaterialItemSo _materialItemSo;
-        private IChangableMaterial _changableMaterial;
-        private IChangableMaterial _lastChangableMaterial;
-        private Material _previousMaterial;
+        private IChangableMaterial _mouseOnChangableMaterial;
+        private IChangableMaterial _currentChangableMaterial;
+        private Material _storedMaterial;
+
+        private FloorGridAssignmentData _mouseOnFloorGrid;
+        private bool Placed = false;
+        private quaternion _wallRotation;
 
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
@@ -29,34 +36,41 @@ namespace BuildingSystem.Builders
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
         {
+            if (_mouseOnFloorGrid.assignedMaterialID == _materialItemSo.ID) return false;
+            if (Placed) return false;
             return buildingNeedsData.IsCellPosInBounds();
         }
 
         public void OnUpdate(BuildingNeedsData buildingNeedsData)
         {
+            if (!buildingNeedsData.InputSystem.HasMouseMoveToNewCell) return;
+            else
+                Placed = false;
+
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.FloorMaterial:
-                    _changableMaterial = FindMaterial(buildingNeedsData);
+                    _mouseOnChangableMaterial = FindMaterial(buildingNeedsData);
                     break;
                 case eMaterialLayer.WallMaterial:
-                    _changableMaterial = GetClosestWallMaterial(buildingNeedsData);
+                    _mouseOnChangableMaterial = GetClosestWallMaterial(buildingNeedsData);
                     break;
             }
 
-            if (_changableMaterial == null)
+            if (_mouseOnChangableMaterial == null)
             {
                 ResetPreviousMaterial();
                 return;
             }
 
-            if (_changableMaterial != _lastChangableMaterial)
+            if (_mouseOnChangableMaterial != _currentChangableMaterial)
             {
                 ResetPreviousMaterial();
-                _lastChangableMaterial = _changableMaterial;
+                _currentChangableMaterial = _mouseOnChangableMaterial;
 
-                _previousMaterial = _changableMaterial.CurrentMaterial;
-                _changableMaterial.UpdateMaterial(_materialItemSo.Material);
+                _mouseOnFloorGrid = DiscoData.Instance.MapData.GetFloorGridData(buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z);
+                _storedMaterial = _mouseOnChangableMaterial.CurrentMaterial;
+                _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo.Material);
             }
         }
 
@@ -70,15 +84,21 @@ namespace BuildingSystem.Builders
                     {
                         gridData.AssignNewID(_materialItemSo.ID);
                     }
+                    
+                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, buildingNeedsData.RotationData.rotation);
                     break;
                 case eMaterialLayer.WallMaterial:
-                    DiscoData.Instance.MapData.WallDatas
-                        .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _lastChangableMaterial)
-                        .AssignNewID(_materialItemSo.ID);
+                    var wallData = DiscoData.Instance.MapData.WallDatas
+                        .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _currentChangableMaterial);
+                    
+                    wallData.AssignNewID(_materialItemSo.ID);
+
+                    buildingNeedsData.FXCreator.CreateFX(FXType.Wall, wallData.assignedWall.transform.position, Vector2.one, _wallRotation);
                     break;
             }
 
-            _lastChangableMaterial = null;
+            Placed = true;
+            _currentChangableMaterial = null;
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)
@@ -108,9 +128,9 @@ namespace BuildingSystem.Builders
 
         private void ResetPreviousMaterial()
         {
-            if (_lastChangableMaterial == null) return;
-            _lastChangableMaterial.UpdateMaterial(_previousMaterial);
-            _lastChangableMaterial = null;
+            if (_currentChangableMaterial == null) return;
+            _currentChangableMaterial.UpdateMaterial(_storedMaterial);
+            _currentChangableMaterial = null;
         }
 
         /// <summary>
@@ -134,11 +154,12 @@ namespace BuildingSystem.Builders
             {
                 if (wall.assignedWall == null) continue;
 
-                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(),
+                var dis = Vector3.Distance(buildingNeedsData.InputSystem.MousePosition,
                     wall.assignedWall.transform.position);
                 if (dis < lastDis)
                 {
                     closestChangableMaterial = wall.assignedWall as IChangableMaterial;
+                    _wallRotation = wall.assignedWall.transform.rotation;
                     lastDis = dis;
                 }
             }

@@ -17,9 +17,9 @@ namespace System
         {
             var moveDelta = InputSystem.Instance.MoveDelta;
 
-            if (InputSystem.Instance.GetCornerMouseDelta() != Vector2.zero)
+            if (InputSystem.Instance.GetEdgeScrollingData() != Vector2.zero)
             {
-                moveDelta = InputSystem.Instance.GetCornerMouseDelta();
+                moveDelta = InputSystem.Instance.GetEdgeScrollingData();
             }
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;

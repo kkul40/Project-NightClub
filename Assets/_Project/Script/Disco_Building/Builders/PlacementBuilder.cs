@@ -4,6 +4,7 @@ using System.Linq;
 using BuildingSystem.SO;
 using Data;
 using PropBehaviours;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -85,6 +86,18 @@ namespace BuildingSystem.Builders
             buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
                 new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject,
                     buildingNeedsData.RotationData));
+            
+            switch (_storeItemSo.PlacementLayer)
+            {
+                case ePlacementLayer.FloorProp:
+                case ePlacementLayer.BaseSurface:
+                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), _storeItemSo.Size, buildingNeedsData.RotationData.rotation);
+                    break;
+                case ePlacementLayer.WallProp:
+                    // TODO Duvara yerlestirirken onune effect yapmak yerine duvar tarafindan olustur effekti
+                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid).Add(y:0.5f), _storeItemSo.Size, buildingNeedsData.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
+                    break;
+            }
         }
 
         public void OnStop(BuildingNeedsData buildingNeedsData)
