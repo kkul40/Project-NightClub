@@ -30,7 +30,7 @@ namespace PlayerScripts
 
             if (InputSystem.Instance.RightClickOnWorld)
             {
-                _pathFinder.GoTargetDestination(InputSystem.Instance.GetMouseMapPosition(), SetIdleAnimation);
+                _pathFinder.GoTargetDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 _animationController.PlayAnimation(eAnimationType.NPC_Walk);
             }
         }

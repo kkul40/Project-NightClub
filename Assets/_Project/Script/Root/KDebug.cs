@@ -8,6 +8,7 @@ namespace Root
 {
     public class KDebug : Singleton<KDebug>
     {
+        public GameObject TestCube;
         public bool showPlacements = false;
         public bool showPathFinder = false;
 

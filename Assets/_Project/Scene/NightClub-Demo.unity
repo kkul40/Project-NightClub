@@ -1724,6 +1724,7 @@ MonoBehaviour:
   borderTreshold: 0.01
   MoveDelta: {x: 0, y: 0}
   ScrollWheelDelta: 0
+  MousePosition: {x: 0, y: 0, z: 0}
   Esc: 0
   TurnLeft: 0
   TurnRight: 0
@@ -1731,6 +1732,7 @@ MonoBehaviour:
   LeftClickOnWorld: 0
   LeftHoldClickOnWorld: 0
   RightClickOnWorld: 0
+  HasMouseMoveToNewCell: 0
 --- !u!4 &156046159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0ec2c9ddb7eb5d9448bb12d58c9bc7fd, type: 3}
@@ -6694,12 +6696,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627655930}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1760755402}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &627655932
 MonoBehaviour:
@@ -6713,6 +6715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a28242e2dd477a9515af7f8f1b7420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TestCube: {fileID: 6175308207735467527, guid: cb49ec05530b707489e7ab4312fca249, type: 3}
   showPlacements: 0
   showPathFinder: 0
 --- !u!4 &642425710 stripped
@@ -14220,6 +14223,7 @@ GameObject:
   - component: {fileID: 1263105097}
   - component: {fileID: 1263105099}
   - component: {fileID: 1263105100}
+  - component: {fileID: 1263105101}
   m_Layer: 0
   m_Name: BuildingSystem
   m_TagString: Untagged
@@ -14260,6 +14264,7 @@ MonoBehaviour:
   sceneGameObjectHandler: {fileID: 1466197926}
   _gridHandler: {fileID: 884134052}
   _materialColorChanger: {fileID: 1263105100}
+  _fxCreator: {fileID: 1263105101}
 --- !u!114 &1263105100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14276,6 +14281,20 @@ MonoBehaviour:
   redMaterial: {fileID: 2100000, guid: daf573990136e0c449efda2b471dcc0f, type: 2}
   yellowMaterial: {fileID: 2100000, guid: de106eedbb3589f4b90057fdae86fb14, type: 2}
   whiteMaterial: {fileID: 2100000, guid: b2cd39a3a2f68524e84668dde374c19d, type: 2}
+--- !u!114 &1263105101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263105096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c73523322242ea97b2ff7527bbea0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _floorFX: {fileID: 3694411397295742916, guid: 54c6cf270d087f14ab6bceae5118005d, type: 3}
+  _wallFX: {fileID: 3834568683443752297, guid: dc804b9b8a991f142afcac27a7d3b841, type: 3}
 --- !u!1001 &1263576353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19896,7 +19915,6 @@ Transform:
   - {fileID: 288916297}
   - {fileID: 1735189484}
   - {fileID: 2035468389}
-  - {fileID: 627655931}
   - {fileID: 1761461688}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27471,6 +27489,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6486534537494738249, guid: 62c27fe300c707c41bdbec4e74838150, type: 3}
+      propertyPath: Cube1x1
+      value: 
+      objectReference: {fileID: 6175308207735467527, guid: cb49ec05530b707489e7ab4312fca249, type: 3}
     - target: {fileID: 6716870564232625073, guid: 62c27fe300c707c41bdbec4e74838150, type: 3}
       propertyPath: m_Name
       value: Developer
@@ -27651,6 +27673,7 @@ SceneRoots:
   - {fileID: 1372529095}
   - {fileID: 1086089514}
   - {fileID: 212570297}
+  - {fileID: 627655931}
   - {fileID: 1706056530}
   - {fileID: 1801209264}
   - {fileID: 2986221603324730704}

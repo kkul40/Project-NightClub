@@ -10,6 +10,7 @@ namespace BuildingSystem
         public InputSystem InputSystem;
         public DiscoData DiscoData;
         public MaterialColorChanger MaterialColorChanger;
+        public FXCreator FXCreator;
 
         public StoreItemSO StoreItemSo;
         public Vector3Int CellPosition;
@@ -18,11 +19,12 @@ namespace BuildingSystem
         public float MoveSpeed = 10;
 
         public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData,
-            MaterialColorChanger materialColorChanger)
+            MaterialColorChanger materialColorChanger, FXCreator fxCreator)
         {
             InputSystem = inputSystem;
             DiscoData = discoData;
             MaterialColorChanger = materialColorChanger;
+            FXCreator = fxCreator;
             RotationData = RotationData.Default;
         }
 

@@ -19,21 +19,21 @@ namespace BuildingSystem.Builders
         private Quaternion GetClosestWallRotation(BuildingNeedsData buildingNeedsData)
         {
             float lastDis = 9999;
-            var closestChangableMaterial = Quaternion.identity;
+            var closestWallRotation = Quaternion.identity;
             foreach (var wall in buildingNeedsData.DiscoData.MapData.WallDatas)
             {
                 if (wall.assignedWall == null) continue;
 
-                var dis = Vector3.Distance(buildingNeedsData.InputSystem.GetMouseMapPosition(),
+                var dis = Vector3.Distance(buildingNeedsData.InputSystem.MousePosition,
                     wall.assignedWall.transform.position);
                 if (dis < lastDis)
                 {
-                    closestChangableMaterial = wall.assignedWall.transform.rotation;
+                    closestWallRotation = wall.assignedWall.transform.rotation;
                     lastDis = dis;
                 }
             }
 
-            return closestChangableMaterial;
+            return closestWallRotation;
         }
     }
 }

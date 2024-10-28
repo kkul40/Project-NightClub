@@ -374,10 +374,3 @@ namespace Data
     }
 }
 
-public enum ePlacementLayer
-{
-    BaseSurface, // General BaseSurface Placement
-    FloorProp, // Objects placed on the Floor
-    WallProp, // Objects placed ont the Wall
-    Null
-}

@@ -48,6 +48,11 @@ namespace BuildingSystem
             placingTileIndicator.transform.localScale = new Vector3(size.x, 1, size.y);
         }
 
+        public void GetCurrentCenterPosition()
+        {
+            // TODO Return placing Tile Center Position
+        }
+
         public void RoateDirectionIndicator(Quaternion quaternion)
         {
             transform.rotation = quaternion;

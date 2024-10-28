@@ -216,7 +216,6 @@ namespace Data
 
         public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
         {
-            // var convert = GridHandler.Instance.GetWorldToCell(worldPos, eGridType.PathFinderGrid);
             var convert = worldPos.WorldPosToCellPos(System.eGridType.PathFinderGrid);
             return PathFinderNodes[convert.x, convert.z];
         }
@@ -240,7 +239,6 @@ namespace Data
             return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
-        // public Vector3 EnterencePosition => GridHandler.Instance.GetCellCenterWorld(DoorPosition + new Vector3Int(-1, 0, 1), eGridType.PlacementGrid) - new Vector3(0, 0.5f, 0);
         public Vector3 EnterencePosition => DoorPosition.ToFloat().AddVector(new Vector3Int(-1, 0, 1)).WorldPosToCellPos(eGridType.PlacementGrid).CellCenterPosition(eGridType.PlacementGrid);
 
         public Vector3 SpawnPositon => EnterencePosition - new Vector3(0, 0, 3);

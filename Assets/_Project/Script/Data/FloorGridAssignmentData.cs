@@ -16,7 +16,7 @@ namespace Data
         public FloorGridAssignmentData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
-            assignedMaterialID = -1;
+            assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
         }
 
         public FloorGridAssignmentData(GameDataExtension.FloorSaveData floorSaveData)
@@ -33,6 +33,7 @@ namespace Data
 
         public void AssignNewID(int newID)
         {
+            // TODO Instead of finding material here find it before you place and assign here
             if (assignedFloorTile == null)
             {
                 Debug.LogError("Floor Object Not Assigned");
@@ -42,15 +43,15 @@ namespace Data
             if (newID == -1)
             {
                 assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
+                assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
             }
             else
             {
                 var foundMaterial = DiscoData.Instance.FindItemByID(newID) as MaterialItemSo;
                 if (foundMaterial == null) Debug.LogError(newID + " Could Not Found in Item List");
                 assignedFloorTile.UpdateMaterial(foundMaterial.Material);
+                assignedMaterialID = newID;
             }
-
-            assignedMaterialID = newID;
 
             // Debug.Log("New ID Assigned To FloorGridData : " + newID);
         }
