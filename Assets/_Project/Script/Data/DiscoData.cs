@@ -12,6 +12,7 @@ namespace Data
     [DisallowMultipleComponent]
     public class DiscoData : Singleton<DiscoData>, ISaveLoad
     {
+        // Verileri Once Data ya yaz daha sonra Modeli datadaki veriye gore guncelle!
         public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory = new();

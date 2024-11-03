@@ -20,7 +20,6 @@ namespace BuildingSystem.Builders
         private IChangableMaterial _currentChangableMaterial;
         private Material _storedMaterial;
 
-        private FloorGridAssignmentData _mouseOnFloorGrid;
         private bool Placed = false;
         private quaternion _wallRotation;
 
@@ -36,7 +35,6 @@ namespace BuildingSystem.Builders
 
         public bool OnValidate(BuildingNeedsData buildingNeedsData)
         {
-            if (_mouseOnFloorGrid.assignedMaterialID == _materialItemSo.ID) return false;
             if (Placed) return false;
             return buildingNeedsData.IsCellPosInBounds();
         }
@@ -50,7 +48,7 @@ namespace BuildingSystem.Builders
             switch (_materialItemSo.MaterialLayer)
             {
                 case eMaterialLayer.FloorMaterial:
-                    _mouseOnChangableMaterial = FindMaterial(buildingNeedsData);
+                    _mouseOnChangableMaterial = FindFloorMaterial(buildingNeedsData);
                     break;
                 case eMaterialLayer.WallMaterial:
                     _mouseOnChangableMaterial = GetClosestWallMaterial(buildingNeedsData);
@@ -68,7 +66,6 @@ namespace BuildingSystem.Builders
                 ResetPreviousMaterial();
                 _currentChangableMaterial = _mouseOnChangableMaterial;
 
-                _mouseOnFloorGrid = DiscoData.Instance.MapData.GetFloorGridData(buildingNeedsData.CellPosition.x, buildingNeedsData.CellPosition.z);
                 _storedMaterial = _mouseOnChangableMaterial.CurrentMaterial;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo.Material);
             }
@@ -83,9 +80,8 @@ namespace BuildingSystem.Builders
                     if (gridData != null)
                     {
                         gridData.AssignNewID(_materialItemSo.ID);
+                        buildingNeedsData.FXCreator.CreateFX(FXType.Floor, gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, buildingNeedsData.RotationData.rotation);
                     }
-                    
-                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, buildingNeedsData.RotationData.rotation);
                     break;
                 case eMaterialLayer.WallMaterial:
                     var wallData = DiscoData.Instance.MapData.WallDatas
@@ -107,18 +103,10 @@ namespace BuildingSystem.Builders
             buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
 
-        private IChangableMaterial FindMaterial(BuildingNeedsData buildingNeedsData)
+        private IChangableMaterial FindFloorMaterial(BuildingNeedsData buildingNeedsData)
         {
             Transform hitTransform = null;
-            switch (_materialItemSo.MaterialLayer)
-            {
-                case eMaterialLayer.FloorMaterial:
-                    hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(7);
-                    break;
-                case eMaterialLayer.WallMaterial:
-                    hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(8);
-                    break;
-            }
+            hitTransform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(7);
 
             if (hitTransform != null && hitTransform.TryGetComponent(out IChangableMaterial changableMaterial))
                 return changableMaterial;
