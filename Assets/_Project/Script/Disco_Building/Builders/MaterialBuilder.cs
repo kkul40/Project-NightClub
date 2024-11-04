@@ -36,7 +36,13 @@ namespace BuildingSystem.Builders
         public bool OnValidate(BuildingNeedsData BD)
         {
             if (Placed) return false;
+
+            if (!BD.IsCellPosInBounds()) return false;
+            
+            if (_currentChangableMaterial == null) return false;
+            
             if (_currentChangableMaterial.assignedMaterialID == _storedMaterial.ID) return false;
+
             return BD.IsCellPosInBounds();
         }
 
