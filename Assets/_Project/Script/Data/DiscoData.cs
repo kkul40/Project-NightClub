@@ -16,13 +16,17 @@ namespace Data
         public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory = new();
-        public HashSet<StoreItemSO> AllInGameItems { get; private set; }
+        public Dictionary<int ,StoreItemSO> AllInGameItems { get; private set; }
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
         public override void Initialize()
         {
-            AllInGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
+            AllInGameItems = new Dictionary<int, StoreItemSO>();
+            
+            var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
+            foreach (var gItems in allGameItems)
+                AllInGameItems.Add(gItems.ID, gItems);
         }
 
         public void LoadData(GameData gameData)
@@ -39,9 +43,9 @@ namespace Data
                 gameData.SavedInventoryDatas.Add(pair.ConvertToInvetorySaveData());
         }
 
-        public StoreItemSO FindItemByID(int ID)
+        public StoreItemSO FindAItemByID(int ID)
         {
-            return AllInGameItems.FirstOrDefault(x => x.ID == ID);
+            return AllInGameItems[ID];
         }
     }
     

@@ -47,7 +47,7 @@ namespace Data
             }
             else
             {
-                var foundMaterial = DiscoData.Instance.FindItemByID(newID) as MaterialItemSo;
+                var foundMaterial = DiscoData.Instance.FindAItemByID(newID) as MaterialItemSo;
                 if (foundMaterial == null) Debug.LogError(newID + " Could Not Found in Item List");
                 assignedFloorTile.UpdateMaterial(foundMaterial.Material);
                 assignedMaterialID = newID;

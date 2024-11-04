@@ -23,7 +23,7 @@ namespace Data
             Items = new Dictionary<StoreItemSO, int>();
 
             foreach (var data in gameData.SavedInventoryDatas)
-                Items.Add(DiscoData.Instance.FindItemByID(data.InventoryItemID), data.Amount);
+                Items.Add(DiscoData.Instance.FindAItemByID(data.InventoryItemID), data.Amount);
         }
 
         public void AddItem(StoreItemSO storeItemSo)

@@ -239,7 +239,7 @@ namespace Data
 
             foreach (var savedData in gameData.SavedPlacementDatas)
             {
-                var placementItemSo = DiscoData.Instance.FindItemByID(savedData.PropID) as PlacementItemSO;
+                var placementItemSo = DiscoData.Instance.FindAItemByID(savedData.PropID) as PlacementItemSO;
 
                 if (placementItemSo == null)
                 {

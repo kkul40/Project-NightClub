@@ -86,10 +86,13 @@ namespace BuildingSystem.Builders
                 case eMaterialLayer.WallMaterial:
                     var wallData = DiscoData.Instance.MapData.WallDatas
                         .FirstOrDefault(x => x.assignedWall as IChangableMaterial == _currentChangableMaterial);
-                    
-                    wallData.AssignNewID(_materialItemSo.ID);
 
-                    buildingNeedsData.FXCreator.CreateFX(FXType.Wall, wallData.assignedWall.transform.position, Vector2.one, _wallRotation);
+                    if (wallData != null)
+                    {
+                        wallData.AssignNewID(_materialItemSo.ID);
+                        buildingNeedsData.FXCreator.CreateFX(FXType.Wall, wallData.assignedWall.transform.position, Vector2.one, _wallRotation);
+                    }
+
                     break;
             }
 
