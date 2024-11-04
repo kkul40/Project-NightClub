@@ -1,5 +1,6 @@
 ﻿using System;
 using BuildingSystem;
+using BuildingSystem.SO;
 using Data;
 using UnityEngine;
 
@@ -9,15 +10,16 @@ namespace PropBehaviours
     {
         #region IChangableMaterial
 
+        public int assignedMaterialID { get; private set; }
         public MeshRenderer _meshRenderer => GetComponentInChildren<MeshRenderer>();
 
         public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.FloorMaterial;
 
         public Material CurrentMaterial => _meshRenderer.material;
-
-        public void UpdateMaterial(Material material)
+        public void UpdateMaterial(MaterialItemSo materialItemSo)
         {
-            _meshRenderer.material = material;
+            _meshRenderer.material = materialItemSo.Material;
+            assignedMaterialID = materialItemSo.ID;
         }
 
         #endregion

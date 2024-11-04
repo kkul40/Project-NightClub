@@ -22,22 +22,22 @@ namespace BuildingSystem
 
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
-        public void OnStart(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData BD)
         {
             _propUnit = null;
         }
 
-        public bool OnValidate(BuildingNeedsData buildingNeedsData)
+        public bool OnValidate(BuildingNeedsData BD)
         {
             var transform =
-                DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(buildingNeedsData.CellPosition,
+                DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(BD.CellPosition,
                     ePlacementLayer.WallProp);
             if (transform == null)
                 transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(
-                    buildingNeedsData.CellPosition, ePlacementLayer.FloorProp);
+                    BD.CellPosition, ePlacementLayer.FloorProp);
             if (transform == null)
                 transform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(
-                    buildingNeedsData.CellPosition, ePlacementLayer.BaseSurface);
+                    BD.CellPosition, ePlacementLayer.BaseSurface);
 
             if (transform == null)
             {
@@ -46,7 +46,7 @@ namespace BuildingSystem
             }
 
             if (transform.TryGetComponent(out IPropUnit prop))
-                if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition,
+                if (BD.DiscoData.placementDataHandler.ContainsKey(prop.CellPosition,
                         prop.PlacementLayer))
                 {
                     _propUnit = prop;
@@ -57,31 +57,31 @@ namespace BuildingSystem
             return false;
         }
 
-        public void OnUpdate(BuildingNeedsData buildingNeedsData)
+        public void OnUpdate(BuildingNeedsData BD)
         {
-            if (_lastCellPos == buildingNeedsData.CellPosition) return;
-            if (!buildingNeedsData.IsCellPosInBounds())
+            if (_lastCellPos == BD.CellPosition) return;
+            if (!BD.IsCellPosInBounds())
             {
-                _lastCellPos = buildingNeedsData.CellPosition;
-                ResetMaterials(buildingNeedsData.MaterialColorChanger);
+                _lastCellPos = BD.CellPosition;
+                ResetMaterials(BD.MaterialColorChanger);
                 return;
             }
 
-            _lastCellPos = buildingNeedsData.CellPosition;
+            _lastCellPos = BD.CellPosition;
 
-            OnValidate(buildingNeedsData);
+            OnValidate(BD);
 
             if (_propUnit == null)
             {
-                ResetMaterials(buildingNeedsData.MaterialColorChanger);
+                ResetMaterials(BD.MaterialColorChanger);
                 return;
             }
 
             if (_propUnit != _lastPropUnit)
             {
-                ResetMaterials(buildingNeedsData.MaterialColorChanger);
+                ResetMaterials(BD.MaterialColorChanger);
                 _lastPropUnit = _propUnit;
-                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(_propUnit.transform,
+                BD.MaterialColorChanger.SetCustomMaterial(_propUnit.transform,
                     MaterialColorChanger.eMaterialColor.RemovingMaterial, ref _materialDatas);
             }
         }
@@ -94,18 +94,18 @@ namespace BuildingSystem
             _lastPropUnit = null;
         }
 
-        public void OnPlace(BuildingNeedsData buildingNeedsData)
+        public void OnPlace(BuildingNeedsData BD)
         {
-            buildingNeedsData.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
+            BD.DiscoData.placementDataHandler.RemovePlacement(_propUnit.CellPosition, _propUnit.PlacementLayer);
             // buildingNeedsData.MaterialColorChanger.SetCustomMaterial(_propUnit.transform, MaterialColorChanger.eMaterialColor.RemovingMaterial);
             
             _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
             _lastCellPos = -Vector3Int.one;
         }
 
-        public void OnStop(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData BD)
         {
-            ResetMaterials(buildingNeedsData.MaterialColorChanger);
+            ResetMaterials(BD.MaterialColorChanger);
             isFinished = true;
         }
     }

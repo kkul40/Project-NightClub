@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BuildingSystem.SO;
+using UnityEngine;
 
 namespace PropBehaviours
 {
@@ -10,11 +11,12 @@ namespace PropBehaviours
 
         public override Material CurrentMaterial => _meshRenderer.materials[2];
 
-        public override void UpdateMaterial(Material material)
+        public override void UpdateMaterial(MaterialItemSo materialItemSo)
         {
             var materials = _meshRenderer.materials;
-            materials[2] = material;
+            materials[2] = materialItemSo.Material;
             _meshRenderer.materials = materials;
+            assignedMaterialID = materialItemSo.ID;
         }
     }
 }

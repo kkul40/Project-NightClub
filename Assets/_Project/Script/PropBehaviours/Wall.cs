@@ -1,5 +1,6 @@
 ﻿using System;
 using BuildingSystem;
+using BuildingSystem.SO;
 using Data;
 using UnityEngine;
 
@@ -27,17 +28,19 @@ namespace PropBehaviours
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.WallDatas.Count);
         }
 
+        public int assignedMaterialID { get; protected set; }
         public virtual MeshRenderer _meshRenderer => transform.GetComponentInChildren<MeshRenderer>();
 
         public eMaterialLayer MaterialLayer { get; } = eMaterialLayer.WallMaterial;
 
         public virtual Material CurrentMaterial => _meshRenderer.materials[1];
 
-        public virtual void UpdateMaterial(Material material)
+        public virtual void UpdateMaterial(MaterialItemSo materialItemSo)
         {
             var materials = _meshRenderer.materials;
-            materials[1] = material;
+            materials[1] = materialItemSo.Material;
             _meshRenderer.materials = materials;
+            assignedMaterialID = materialItemSo.ID;
         }
     }
 }

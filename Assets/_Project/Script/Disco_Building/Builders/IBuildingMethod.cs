@@ -6,10 +6,10 @@ namespace BuildingSystem.Builders
     {
         bool PressAndHold { get; }
         bool isFinished { get; }
-        void OnStart(BuildingNeedsData buildingNeedsData);
-        bool OnValidate(BuildingNeedsData buildingNeedsData);
-        void OnUpdate(BuildingNeedsData buildingNeedsData);
-        void OnPlace(BuildingNeedsData buildingNeedsData);
-        void OnStop(BuildingNeedsData buildingNeedsData);
+        void OnStart(BuildingNeedsData BD);
+        bool OnValidate(BuildingNeedsData BD);
+        void OnUpdate(BuildingNeedsData BD);
+        void OnPlace(BuildingNeedsData BD);
+        void OnStop(BuildingNeedsData BD);
     }
 }

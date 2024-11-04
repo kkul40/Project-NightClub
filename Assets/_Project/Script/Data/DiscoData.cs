@@ -45,7 +45,10 @@ namespace Data
 
         public StoreItemSO FindAItemByID(int ID)
         {
-            return AllInGameItems[ID];
+            if(AllInGameItems.ContainsKey(ID))
+                return AllInGameItems[ID];
+            
+            return null;
         }
     }
     

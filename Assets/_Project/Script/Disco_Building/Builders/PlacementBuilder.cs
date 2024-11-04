@@ -22,89 +22,89 @@ namespace BuildingSystem.Builders
 
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
-        public void OnStart(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData BD)
         {
-            _storeItemSo = buildingNeedsData.StoreItemSo as PlacementItemSO;
+            _storeItemSo = BD.StoreItemSo as PlacementItemSO;
             _tempObject =
-                Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, buildingNeedsData.RotationData.rotation);
+                Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, BD.RotationData.rotation);
 
             if (_tempObject.TryGetComponent(out IPropUnit propUnit))
                 Object.Destroy(propUnit);
 
-            _tempMeshRenderer = buildingNeedsData.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+            _tempMeshRenderer = BD.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
 
             var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_storeItemSo.PlacementLayer);
             foreach (var transform in transforms)
-                buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform,
+                BD.MaterialColorChanger.SetCustomMaterial(transform,
                     MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
         }
 
-        public bool OnValidate(BuildingNeedsData buildingNeedsData)
+        public bool OnValidate(BuildingNeedsData BD)
         {
             Transform transform = null;
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.BaseSurface:
-                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
+                    transform = BD.InputSystem.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
                     break;
                 case ePlacementLayer.WallProp:
-                    transform = buildingNeedsData.InputSystem.GetHitTransformWithLayer(ConstantVariables.WalllayerID);
+                    transform = BD.InputSystem.GetHitTransformWithLayer(ConstantVariables.WalllayerID);
                     break;
             }
 
             if (transform == null) return false;
 
-            if (buildingNeedsData.DiscoData.placementDataHandler.ContainsKey(buildingNeedsData.CellPosition,
-                    _storeItemSo.Size, buildingNeedsData.RotationData,
+            if (BD.DiscoData.placementDataHandler.ContainsKey(BD.CellPosition,
+                    _storeItemSo.Size, BD.RotationData,
                     _storeItemSo.PlacementLayer)) return false;
 
             return true;
         }
 
-        public void OnUpdate(BuildingNeedsData buildingNeedsData)
+        public void OnUpdate(BuildingNeedsData BD)
         {
             _tempObject.transform.position = Vector3.Lerp(_tempObject.transform.position,
-                buildingNeedsData.CellCenterPosition + new Vector3(0.02f, 0.02f, 0.02f),
-                Time.deltaTime * buildingNeedsData.MoveSpeed);
-            _tempObject.transform.rotation = buildingNeedsData.RotationData.rotation;
+                BD.CellCenterPosition + new Vector3(0.02f, 0.02f, 0.02f),
+                Time.deltaTime * BD.MoveSpeed);
+            _tempObject.transform.rotation = BD.RotationData.rotation;
 
-            buildingNeedsData.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer,
-                OnValidate(buildingNeedsData));
+            BD.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer,
+                OnValidate(BD));
         }
 
-        public void OnPlace(BuildingNeedsData buildingNeedsData)
+        public void OnPlace(BuildingNeedsData BD)
         {
-            var createdObject = Object.Instantiate(_storeItemSo.Prefab, buildingNeedsData.CellCenterPosition,
-                buildingNeedsData.RotationData.rotation);
+            var createdObject = Object.Instantiate(_storeItemSo.Prefab, BD.CellCenterPosition,
+                BD.RotationData.rotation);
             
-            createdObject.AnimatedPlacement(buildingNeedsData.CellCenterPosition);
+            createdObject.AnimatedPlacement(BD.CellCenterPosition);
 
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));
 
-            buildingNeedsData.DiscoData.placementDataHandler.AddPlacement(buildingNeedsData.CellPosition,
-                new PlacementDataHandler.PlacementData(_storeItemSo, buildingNeedsData.CellPosition, createdObject,
-                    buildingNeedsData.RotationData));
+            BD.DiscoData.placementDataHandler.AddPlacement(BD.CellPosition,
+                new PlacementDataHandler.PlacementData(_storeItemSo, BD.CellPosition, createdObject,
+                    BD.RotationData));
             
             switch (_storeItemSo.PlacementLayer)
             {
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.BaseSurface:
-                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), _storeItemSo.Size, buildingNeedsData.RotationData.rotation);
+                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid), _storeItemSo.Size, BD.RotationData.rotation);
                     break;
                 case ePlacementLayer.WallProp:
                     // TODO Duvara yerlestirirken onune effect yapmak yerine duvar tarafindan olustur effekti
-                    buildingNeedsData.FXCreator.CreateFX(FXType.Floor, buildingNeedsData.CellPosition.CellCenterPosition(eGridType.PlacementGrid).Add(y:0.5f), _storeItemSo.Size, buildingNeedsData.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
+                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid).Add(y:0.5f), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
                     break;
             }
         }
 
-        public void OnStop(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData BD)
         {
             Object.Destroy(_tempObject);
             isFinished = true;
-            buildingNeedsData.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
+            BD.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
     }
 }

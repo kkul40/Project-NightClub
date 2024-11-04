@@ -7,24 +7,24 @@ namespace BuildingSystem.Builders
         public bool PressAndHold { get; }
         public bool isFinished { get; }
 
-        public void OnStart(BuildingNeedsData buildingNeedsData)
+        public void OnStart(BuildingNeedsData BD)
         {
         }
 
-        public bool OnValidate(BuildingNeedsData buildingNeedsData)
+        public bool OnValidate(BuildingNeedsData BD)
         {
             return false;
         }
 
-        public void OnUpdate(BuildingNeedsData buildingNeedsData)
+        public void OnUpdate(BuildingNeedsData BD)
         {
         }
 
-        public void OnPlace(BuildingNeedsData buildingNeedsData)
+        public void OnPlace(BuildingNeedsData BD)
         {
         }
 
-        public void OnStop(BuildingNeedsData buildingNeedsData)
+        public void OnStop(BuildingNeedsData BD)
         {
         }
     }

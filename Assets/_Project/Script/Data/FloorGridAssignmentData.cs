@@ -31,7 +31,7 @@ namespace Data
             CellPosition = cellPosition;
         }
 
-        public void AssignNewID(int newID)
+        public void AssignNewID(MaterialItemSo materialItemSo)
         {
             // TODO Instead of finding material here find it before you place and assign here
             if (assignedFloorTile == null)
@@ -40,20 +40,8 @@ namespace Data
                 return;
             }
 
-            if (newID == -1)
-            {
-                assignedFloorTile.UpdateMaterial(InitConfig.Instance.GetDefaultTileMaterial.Material);
-                assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
-            }
-            else
-            {
-                var foundMaterial = DiscoData.Instance.FindAItemByID(newID) as MaterialItemSo;
-                if (foundMaterial == null) Debug.LogError(newID + " Could Not Found in Item List");
-                assignedFloorTile.UpdateMaterial(foundMaterial.Material);
-                assignedMaterialID = newID;
-            }
-
-            // Debug.Log("New ID Assigned To FloorGridData : " + newID);
+            assignedFloorTile.UpdateMaterial(materialItemSo);
+            assignedMaterialID = materialItemSo.ID;
         }
     }
 

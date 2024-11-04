@@ -1,5 +1,6 @@
 using System.Collections;
 using BuildingSystem;
+using BuildingSystem.SO;
 using Data;
 using PropBehaviours;
 using UnityEngine;
@@ -203,7 +204,14 @@ namespace System
             }
 
             data.AssignReferance(newObject.GetComponent<FloorTile>(), cellPosition);
-            data.AssignNewID(data.assignedMaterialID);
+            
+            var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
+            if (found == null)
+            {
+                data.AssignNewID(InitConfig.Instance.GetDefaultTileMaterial);
+                return;
+            }
+            data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
         }
 
         private void LoadAndAssignWallMaterial(Vector3Int cellPosition, GameObject newWallObject)
@@ -217,7 +225,14 @@ namespace System
             }
 
             data.AssignReferance(newWallObject.GetComponent<Wall>());
-            data.AssignNewID(data.assignedMaterialID);
+            
+            var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
+            if (found == null)
+            {
+                data.AssignNewID(InitConfig.Instance.GetDefaultWallMaterial);
+                return;
+            }
+            data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
         }
 
         private GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion)

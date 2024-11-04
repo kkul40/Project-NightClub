@@ -23,7 +23,7 @@ namespace PropBehaviours
         {
             PathFinder = new BartenderPathFinder(transform);
             mTransform = transform;
-            BarMediator = new BarMediator();
+            BarMediator = BarMediator.Instance;
             AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(),
                 InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
         }

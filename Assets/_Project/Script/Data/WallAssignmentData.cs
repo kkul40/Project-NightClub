@@ -31,7 +31,7 @@ namespace Data
             assignedWall = assignment;
         }
 
-        public void AssignNewID(int newID)
+        public void AssignNewID(MaterialItemSo materialItemSo)
         {
             if (assignedWall == null)
             {
@@ -39,23 +39,8 @@ namespace Data
                 return;
             }
 
-            if (newID == -1)
-            {
-                assignedWall.UpdateMaterial(InitConfig.Instance.GetDefaultWallMaterial.Material);
-                return;
-            }
-
-            var foundMaterial = DiscoData.Instance.FindAItemByID(newID) as MaterialItemSo;
-            if (foundMaterial == null)
-            {
-                Debug.LogError(newID + " Could Not Found in Item List");
-                return;
-            }
-
-            assignedWall.UpdateMaterial(foundMaterial.Material);
-            assignedMaterialID = newID;
-
-            KDebug.Print("New ID Assigned to Wall : " + newID);
+            assignedWall.UpdateMaterial(materialItemSo);
+            assignedMaterialID = materialItemSo.ID;
         }
     }
 }
