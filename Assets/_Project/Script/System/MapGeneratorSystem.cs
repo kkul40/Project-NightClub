@@ -39,7 +39,7 @@ namespace System
             placementDataHandler.SaveGameProps(ref gameData);
         }
 
-        public override void Initialize()
+        public override void Initialize(GameInitializer gameInitializer)
         {
             MapData = new MapData();
             placementDataHandler = new PlacementDataHandler();

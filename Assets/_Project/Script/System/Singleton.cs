@@ -28,7 +28,7 @@ namespace System
             }
         }
 
-        public virtual void Initialize()
+        public virtual void Initialize(GameInitializer gameInitializer)
         {
             Debug.Log(typeof(T) + "Not Initialized");
         }

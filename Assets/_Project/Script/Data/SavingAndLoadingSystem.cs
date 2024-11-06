@@ -15,7 +15,7 @@ namespace Data
         private GameData _gameData = new();
         private List<ISaveLoad> _saveLoads = new();
 
-        public override void Initialize()
+        public override void Initialize(GameInitializer gameInitializer)
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();

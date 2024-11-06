@@ -17,7 +17,7 @@ public class GameInitializer : MonoBehaviour
                 break;
         }
 
-        InitializeCommon();
+        InitializeCommon(this);
     }
 
     private void InitializeMainMenu() // 0
@@ -26,13 +26,13 @@ public class GameInitializer : MonoBehaviour
 
     private void InitializeGame() // 1
     {
-        DiscoData.Instance.Initialize();
-        ActivitySystem.Instance.Initialize();
-        MapGeneratorSystem.Instance.Initialize();
+        DiscoData.Instance.Initialize(this);
+        ActivitySystem.Instance.Initialize(this);
+        MapGeneratorSystem.Instance.Initialize(this);
     }
 
-    private void InitializeCommon()
+    private void InitializeCommon(GameInitializer gameInitializer)
     {
-        SavingAndLoadingSystem.Instance.Initialize();
+        SavingAndLoadingSystem.Instance.Initialize(gameInitializer);
     }
 }

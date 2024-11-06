@@ -165,9 +165,5 @@ namespace Disco_Building
         }
         #endregion
 
-        public override void Initialize()
-        {
-            Initialize();
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Data
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
-        public override void Initialize()
+        public override void Initialize(GameInitializer gameInitializer)
         {
             AllInGameItems = new Dictionary<int, StoreItemSO>();
             

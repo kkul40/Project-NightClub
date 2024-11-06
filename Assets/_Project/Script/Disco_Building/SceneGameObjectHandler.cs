@@ -76,9 +76,5 @@ namespace Disco_Building
                 Destroy(child.gameObject);
         }
 
-        public override void Initialize()
-        {
-            Initialize();
-        }
     }
 }
