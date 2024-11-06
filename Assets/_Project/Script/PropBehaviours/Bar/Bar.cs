@@ -56,7 +56,7 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            if (!HasDrinks) return;
+            if (HasDrinks) return;
             
             barMediator.AddCommand(this, new PrepareDrinkCommand());
         }
