@@ -2,9 +2,17 @@
 
 namespace UI.GamePages
 {
+    public enum PageType
+    {
+        FullPage,
+        MiniPage,
+    }
+    
     public abstract class UIPageBase : MonoBehaviour
     {
         public bool isToggled = false;
+
+        public abstract PageType PageType { get; protected set; }
 
         protected virtual void OnAwake(){}
         protected virtual void OnShow(){}

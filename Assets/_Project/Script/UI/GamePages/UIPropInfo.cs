@@ -20,6 +20,8 @@ namespace UI.GamePages
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _text;
 
+        public override PageType PageType { get; protected set; } = PageType.MiniPage;
+
         protected override void OnAwake()
         {
             _followTarget = GetComponent<UI_FollowTarget>();

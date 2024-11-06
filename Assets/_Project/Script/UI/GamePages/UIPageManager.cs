@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PropBehaviours;
 using UnityEngine;
 using Object = System.Object;
 
@@ -25,13 +26,31 @@ namespace UI.GamePages
         {
             if (InputSystem.Instance.Esc)
             {
-                CloseAllPages();
+                CloseAllPages(PageType.FullPage);
+            }
+
+            if (InputSystem.Instance.LeftClickOnWorld)
+            {
+                var hitTransform = InputSystem.Instance.GetHitTransform();
+
+                if (hitTransform.TryGetComponent(out IInteractable interactable))
+                {
+                    if(interactable.Interaction == eInteraction.None)
+                        CloseAllPages(PageType.MiniPage);
+                }
+                else
+                    CloseAllPages(PageType.MiniPage);
             }
         }
 
         public void RequestAPage<T>(UIPageBase requestedPage, T data = null) where T : class
         {
             var page = GetPage(requestedPage);
+
+            if (page.PageType == PageType.FullPage)
+            {
+                CloseAllPages(PageType.MiniPage);
+            }
 
             if (data != null)
             {
@@ -45,6 +64,12 @@ namespace UI.GamePages
         public bool IsPageIsToggled(UIPageBase reqeustedPage)
         {
             var page = GetPage(reqeustedPage);
+            
+            if (page.PageType == PageType.FullPage)
+            {
+                CloseAllPages(PageType.MiniPage);
+            }
+            
             return page.isToggled;
         }
         
@@ -56,6 +81,14 @@ namespace UI.GamePages
         {
             var page = GetPage(requestedPage);
             page.Toggle();
+
+            if (page.isToggled)
+            {
+                if (page.PageType == PageType.FullPage)
+                {
+                    CloseAllPages(PageType.MiniPage);
+                }
+            }
         }
 
         public void CloseAPage<T>(T requestedPage) where T : UIPageBase
@@ -70,6 +103,15 @@ namespace UI.GamePages
             foreach (var page in _uiPageBases)
             {
                 page.Hide();
+            }
+        }
+
+        public void CloseAllPages(PageType pageType)
+        {
+            foreach (var page in _uiPageBases)
+            {
+                if(page.PageType == pageType)
+                    page.Hide();
             }
         }
 

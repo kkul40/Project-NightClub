@@ -6,6 +6,8 @@ namespace UI.GamePages
 {
     public class UIStorePage : UIPageBase
     {
+        public override PageType PageType { get; protected set; } = PageType.FullPage;
+
         [SerializeField] private GameObject _storeButtonHolder;
         [SerializeField] private UIStoreInventoryView uiStoreInventoryView;
 
@@ -18,6 +20,7 @@ namespace UI.GamePages
             lastButtonBaseClicked = uiButtonBase;
             uiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }
+
 
         protected override void OnShow()
         {
