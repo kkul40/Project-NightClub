@@ -1,16 +1,10 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using NPC_Stuff.Activities;
+using NPC.PathFinder;
 using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Rendering;
-using WalkRandomActivity = NPC_Stuff.Activities.WalkRandomActivity;
 
-namespace NPC_Stuff
+namespace NPC
 {
     public interface IUnit
     {

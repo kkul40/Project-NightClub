@@ -1,4 +1,4 @@
-﻿using BuildingSystem.SO;
+﻿using Disco_ScriptableObject;
 using UnityEngine;
 
 namespace PropBehaviours

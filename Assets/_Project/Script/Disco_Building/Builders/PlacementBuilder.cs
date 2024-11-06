@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using BuildingSystem.SO;
 using Data;
+using Disco_ScriptableObject;
+using ExtensionMethods;
 using PropBehaviours;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BuildingSystem.Builders
+namespace Disco_Building.Builders
 {
     public class PlacementBuilder : IBuildingMethod
     {
@@ -97,6 +95,11 @@ namespace BuildingSystem.Builders
                     // TODO Duvara yerlestirirken onune effect yapmak yerine duvar tarafindan olustur effekti
                     BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid).Add(y:0.5f), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
                     break;
+            }
+
+            if (BD.isReplacing)
+            {
+                OnStop(BD);
             }
         }
 

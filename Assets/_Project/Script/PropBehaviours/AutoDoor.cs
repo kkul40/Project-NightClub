@@ -1,6 +1,6 @@
 ﻿using System;
 using DG.Tweening;
-using NPC_Stuff;
+using NPC;
 using UnityEngine;
 
 namespace PropBehaviours

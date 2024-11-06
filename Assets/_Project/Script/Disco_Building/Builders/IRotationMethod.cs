@@ -1,4 +1,4 @@
-﻿namespace BuildingSystem.Builders
+﻿namespace Disco_Building.Builders
 {
     public interface IRotationMethod
     {

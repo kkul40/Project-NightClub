@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Data
+namespace ExtensionMethods
 {
     public static class Vector3ExtensionMethod
     {

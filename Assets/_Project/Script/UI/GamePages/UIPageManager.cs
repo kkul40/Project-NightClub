@@ -2,68 +2,85 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = System.Object;
 
-namespace UI
+namespace UI.GamePages
 {
+    
     public class UIPageManager : Singleton<UIPageManager>
     {
-        private List<UIPageBase> _uiPageBases = new();
+        private HashSet<UIPageBase> _uiPageBases = new HashSet<UIPageBase>();
 
-        private Stack<UIPageBase> _uiPageQue = new Stack<UIPageBase>();
-
-        // private UIPageBase lastToggle;
+        private void Awake()
+        {
+            _uiPageBases = FindObjectsByType<UIPageBase>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToHashSet();
+        }
 
         private void Start()
         {
-            CloseAll();
+            CloseAllPages();
         }
 
         private void Update()
         {
-            if (InputSystem.Instance.Esc && _uiPageQue.Count > 0)
+            if (InputSystem.Instance.Esc)
             {
-                var page = _uiPageQue.Pop();
+                CloseAllPages();
+            }
+        }
+
+        public void RequestAPage<T>(UIPageBase requestedPage, T data = null) where T : class
+        {
+            var page = GetPage(requestedPage);
+
+            if (data != null)
+            {
+                page.Show(data);
+                return;
+            }
+
+            page.Show();
+        }
+
+        public bool IsPageIsToggled(UIPageBase reqeustedPage)
+        {
+            var page = GetPage(reqeustedPage);
+            return page.isToggled;
+        }
+        
+        /// <summary>
+        /// For Button Call
+        /// </summary>
+        /// <param name="requestedPage"></param>
+        public void ToggleAPage(UIPageBase requestedPage)
+        {
+            var page = GetPage(requestedPage);
+            page.Toggle();
+        }
+
+        public void CloseAPage<T>(T requestedPage) where T : UIPageBase
+        {
+            var page = GetPage(requestedPage);
+            
+            page.Hide();
+        }
+
+        public void CloseAllPages()
+        {
+            foreach (var page in _uiPageBases)
+            {
                 page.Hide();
             }
         }
 
-        private void CloseAll(bool dontToggleLast = false)
+        private UIPageBase GetPage(UIPageBase findPage)
         {
-            while (_uiPageQue.Count > 0)
+            var page = _uiPageBases.FirstOrDefault(page => page.GetType() == findPage.GetType());
+            if (page == null)
             {
-                var page = _uiPageQue.Pop();
-                page.Hide();
+                Debug.LogError("Page Could Not Found : " + findPage.ToString());
             }
-        }
-
-        public void RegisterOnShow(UIPageBase uiPageBase)
-        {
-            _uiPageQue.Push(uiPageBase);
-            // lastToggle = uiPageBase;
-        }
-
-        public void RegisterOnHide(UIPageBase uiPageBase)
-        {
-            Stack<UIPageBase> tempStack = new Stack<UIPageBase>();
-
-            while (_uiPageQue.Count > 0)
-            {
-                UIPageBase topItem = _uiPageQue.Pop();
-                if (!EqualityComparer<UIPageBase>.Default.Equals(topItem, uiPageBase))
-                {
-                    tempStack.Push(topItem);
-                }
-            }
-
-            while (tempStack.Count > 0)
-            {
-                _uiPageQue.Push(tempStack.Pop());
-            }
-        }
-
-        public void RegisterForPage(UIPageBase uiPageBase)
-        {
-            _uiPageBases.Add(uiPageBase);
+            return page;
         }
     }
 }

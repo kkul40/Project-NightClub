@@ -1,7 +1,6 @@
-﻿using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public enum FXType
     {

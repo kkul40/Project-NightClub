@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Data
+namespace ExtensionMethods
 {
     public static class PlacementExtensionMethod
     {

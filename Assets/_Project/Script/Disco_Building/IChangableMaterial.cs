@@ -1,8 +1,8 @@
-﻿using BuildingSystem.SO;
-using Data;
+﻿using Data;
+using Disco_ScriptableObject;
 using UnityEngine;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public interface IChangableMaterial
     {

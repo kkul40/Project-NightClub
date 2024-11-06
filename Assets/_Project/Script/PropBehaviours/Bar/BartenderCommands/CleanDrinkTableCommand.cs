@@ -1,7 +1,7 @@
-﻿using PropBehaviours;
+﻿using NPC;
 using UnityEngine;
 
-namespace NPC_Stuff.Activities
+namespace PropBehaviours
 {
     public class CleanDrinkTableCommand : IBartenderCommand
     {

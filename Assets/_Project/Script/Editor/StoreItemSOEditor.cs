@@ -1,8 +1,8 @@
-using BuildingSystem.SO;
+using Disco_ScriptableObject;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorNS
+namespace _Project
 {
     [CustomEditor(typeof(StoreItemSO), true)]
     public class StoreItemSOEditor : Editor

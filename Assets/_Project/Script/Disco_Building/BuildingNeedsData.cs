@@ -1,9 +1,9 @@
 ﻿using System;
-using BuildingSystem.SO;
 using Data;
+using Disco_ScriptableObject;
 using UnityEngine;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public class BuildingNeedsData
     {
@@ -17,6 +17,7 @@ namespace BuildingSystem
         public Vector3 CellCenterPosition;
         public RotationData RotationData;
         public float MoveSpeed = 10;
+        public bool isReplacing = false;
 
         public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData,
             MaterialColorChanger materialColorChanger, FXCreator fxCreator)

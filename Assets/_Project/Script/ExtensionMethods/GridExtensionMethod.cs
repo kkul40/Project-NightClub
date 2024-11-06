@@ -1,7 +1,8 @@
 using System;
+using Data;
 using UnityEngine;
 
-namespace Data
+namespace ExtensionMethods
 {
     public static class GridExtensionMethod
     {

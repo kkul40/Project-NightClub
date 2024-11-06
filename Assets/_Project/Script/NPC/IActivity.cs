@@ -1,4 +1,4 @@
-﻿namespace NPC_Stuff
+﻿namespace NPC
 {
     public interface IActivity
     {

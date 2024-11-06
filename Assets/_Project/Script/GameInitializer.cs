@@ -3,39 +3,36 @@ using Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DefaultNamespace
+public class GameInitializer : MonoBehaviour
 {
-    public class GameInitializer : MonoBehaviour
+    private void Start()
     {
-        private void Start()
+        switch (SceneManager.GetActiveScene().buildIndex)
         {
-            switch (SceneManager.GetActiveScene().buildIndex)
-            {
-                case 0:
-                    InitializeMainMenu();
-                    break;
-                case 1:
-                    InitializeGame();
-                    break;
-            }
-
-            InitializeCommon();
+            case 0:
+                InitializeMainMenu();
+                break;
+            case 1:
+                InitializeGame();
+                break;
         }
 
-        private void InitializeMainMenu() // 0
-        {
-        }
+        InitializeCommon();
+    }
 
-        private void InitializeGame() // 1
-        {
-            DiscoData.Instance.Initialize();
-            ActivitySystem.Instance.Initialize();
-            MapGeneratorSystem.Instance.Initialize();
-        }
+    private void InitializeMainMenu() // 0
+    {
+    }
 
-        private void InitializeCommon()
-        {
-            SavingAndLoadingSystem.Instance.Initialize();
-        }
+    private void InitializeGame() // 1
+    {
+        DiscoData.Instance.Initialize();
+        ActivitySystem.Instance.Initialize();
+        MapGeneratorSystem.Instance.Initialize();
+    }
+
+    private void InitializeCommon()
+    {
+        SavingAndLoadingSystem.Instance.Initialize();
     }
 }

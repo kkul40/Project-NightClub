@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NPC_Stuff;
-using NPC_Stuff.Activities;
+using NPC;
+using NPC.Activities;
 using UnityEngine;
 
 namespace System

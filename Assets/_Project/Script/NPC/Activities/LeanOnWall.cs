@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using BuildingSystem;
-using Data;
-using DefaultNamespace;
+﻿using Data;
+using Disco_Building;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace NPC_Stuff.Activities
+namespace NPC.Activities
 {
     public class LeanOnWall : IActivity
     {

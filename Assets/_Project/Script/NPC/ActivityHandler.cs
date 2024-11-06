@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
-using DefaultNamespace;
-using NPC_Stuff.Activities;
+using ExtensionMethods;
+using NPC.Activities;
 using UnityEngine;
 
-namespace NPC_Stuff
+namespace NPC
 {
     public class ActivityHandler
     {

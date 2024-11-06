@@ -1,8 +1,10 @@
 ﻿using System;
-using BuildingSystem;
 using Data;
+using Disco_Building;
+using ExtensionMethods;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UI.GamePages;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -42,6 +44,7 @@ namespace PropBehaviours
 
         public virtual void OnClick()
         {
+            UIPageManager.Instance.RequestAPage(new UIPropInfo(), this);
         }
     }
 }

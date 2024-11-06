@@ -1,6 +1,6 @@
 ﻿using System;
-using BuildingSystem.SO;
-using NPC_Stuff;
+using Disco_ScriptableObject;
+using NPC;
 using ScriptableObjects;
 using UnityEngine;
 

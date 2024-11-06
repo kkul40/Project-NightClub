@@ -1,7 +1,7 @@
 ﻿using PropBehaviours;
 using UnityEngine;
 
-namespace NPC_Stuff.Activities
+namespace NPC.Activities
 {
     public class SitAChairActivity : IActivity
     {

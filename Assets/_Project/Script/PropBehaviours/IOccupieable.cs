@@ -1,11 +1,9 @@
-﻿using NPC_Stuff;
-
-namespace PropBehaviours
+﻿namespace PropBehaviours
 {
     public interface IOccupieable
     {
-        public NPC Owner { get; }
+        public NPC.NPC Owner { get; }
         bool IsOccupied { get; }
-        public void SetOccupied(NPC owner, bool isOccupied);
+        public void SetOccupied(NPC.NPC owner, bool isOccupied);
     }
 }

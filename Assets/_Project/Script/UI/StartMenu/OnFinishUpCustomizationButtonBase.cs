@@ -1,7 +1,8 @@
 ﻿using Data;
+using UI.GamePages.GameButtons;
 using UnityEngine.SceneManagement;
 
-namespace UI.MainMenu
+namespace UI.StartMenu
 {
     public class OnFinishUpCustomizationButtonBase : UIButtonBase
     {

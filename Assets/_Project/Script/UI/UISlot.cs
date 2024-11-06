@@ -1,7 +1,7 @@
 using System;
-using BuildingSystem;
-using BuildingSystem.SO;
 using Data;
+using Disco_Building;
+using Disco_ScriptableObject;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;

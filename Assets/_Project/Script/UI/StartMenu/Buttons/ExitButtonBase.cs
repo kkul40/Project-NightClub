@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using UI.GamePages.GameButtons;
+using UnityEngine;
 
-namespace UI.MainMenu
+namespace UI.StartMenu.Buttons
 {
     public class ExitButtonBase : UIButtonBase
     {

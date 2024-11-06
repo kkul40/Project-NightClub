@@ -1,13 +1,12 @@
 ﻿using System;
-using BuildingSystem.Builders;
-using BuildingSystem.SO;
 using Data;
-using UI;
+using Disco_Building.Builders;
+using Disco_ScriptableObject;
+using ExtensionMethods;
+using UI.GamePages;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.SubsystemsImplementation;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public class BuildingManager : Singleton<BuildingManager>
     {
@@ -92,6 +91,10 @@ namespace BuildingSystem
                 {
                     _buildingMethod.OnPlace(_buildingNeedsData);
                     callBackOnPlaced?.Invoke().Invoke();
+                    if (_buildingNeedsData.isReplacing)
+                    {
+                        StopBuild();
+                    }
                 }
 
                 if (InputSystem.Instance.RightClickOnWorld) StopBuild();
@@ -131,6 +134,7 @@ namespace BuildingSystem
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
+            _buildingNeedsData.isReplacing = false;
 
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
             if (storeItemSo is PlacementItemSO placementItemSo) _tileIndicator.SetSize(placementItemSo.Size);
@@ -153,6 +157,12 @@ namespace BuildingSystem
             _tileIndicator.CloseTileIndicator();
         }
 
+        public void ReplaceObject(StoreItemSO storeItemSo ,Vector3Int cellPos, ePlacementLayer moveFromLayer)
+        {
+            DiscoData.Instance.placementDataHandler.RemovePlacement(cellPos, moveFromLayer, false);
+            StartBuild(storeItemSo);
+            _buildingNeedsData.isReplacing = true;
+        }
         #endregion
 
         public override void Initialize()

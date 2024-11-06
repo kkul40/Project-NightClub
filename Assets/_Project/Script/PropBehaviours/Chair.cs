@@ -1,6 +1,5 @@
-﻿using BuildingSystem;
-using Data;
-using NPC_Stuff;
+﻿using Data;
+using Disco_Building;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -10,7 +9,7 @@ namespace PropBehaviours
         [SerializeField] private Transform sitPosition;
         [SerializeField] private Transform frontPosition;
 
-        public NPC Owner { get; private set; }
+        public NPC.NPC Owner { get; private set; }
         public bool IsReservedToATable = false;
 
         [field: SerializeField] public bool IsOccupied { get; private set; }
@@ -19,7 +18,7 @@ namespace PropBehaviours
         ///     Returns Sit Position
         /// </summary>
         /// <returns></returns>
-        public void SetOccupied(NPC owner, bool isOccupied)
+        public void SetOccupied(NPC.NPC owner, bool isOccupied)
         {
             Owner = owner;
             IsOccupied = isOccupied;

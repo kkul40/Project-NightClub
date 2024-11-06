@@ -1,6 +1,5 @@
 ﻿using Data;
-using NPC_Stuff;
-using NPC_Stuff.Activities;
+using NPC;
 using UnityEngine;
 
 namespace PropBehaviours

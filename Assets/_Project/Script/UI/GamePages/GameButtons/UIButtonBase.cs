@@ -1,10 +1,7 @@
-﻿using System;
-using PropBehaviours;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public abstract class UIButtonBase : MonoBehaviour, IButton
     {

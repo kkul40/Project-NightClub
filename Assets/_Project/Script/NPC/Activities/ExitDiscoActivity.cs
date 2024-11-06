@@ -1,9 +1,7 @@
-﻿using System;
-using Data;
-using UnityEngine;
+﻿using Data;
 using Object = UnityEngine.Object;
 
-namespace NPC_Stuff.Activities
+namespace NPC.Activities
 {
     public class ExitDiscoActivity : IActivity
     {

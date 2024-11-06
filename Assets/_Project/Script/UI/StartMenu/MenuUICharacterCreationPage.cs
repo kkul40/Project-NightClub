@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace StartMenu
+namespace UI.StartMenu
 {
     public class MenuUICharacterCreationPage : Menu_UI_Page
     {

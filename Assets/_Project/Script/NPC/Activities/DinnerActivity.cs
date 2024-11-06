@@ -1,9 +1,7 @@
-﻿using Data;
-using DG.Tweening;
-using PropBehaviours;
+﻿using PropBehaviours;
 using UnityEngine;
 
-namespace NPC_Stuff.Activities
+namespace NPC.Activities
 {
     public class DinnerActivity : IActivity
     {

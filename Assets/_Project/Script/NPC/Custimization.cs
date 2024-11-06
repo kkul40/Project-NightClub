@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace NPC_Stuff
+namespace NPC
 {
     public class Custimization : MonoBehaviour
     {

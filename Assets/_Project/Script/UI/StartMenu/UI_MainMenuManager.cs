@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace StartMenu
+namespace UI.StartMenu
 {
     public class UI_MainMenuManager : MonoBehaviour
     {
