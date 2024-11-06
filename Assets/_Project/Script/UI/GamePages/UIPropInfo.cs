@@ -15,9 +15,16 @@ namespace UI.GamePages
         private int _lastInstanceID = -1;
         private IPropUnit _lastPropUnit;
 
+        private UI_FollowTarget _followTarget;
+
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _text;
-        
+
+        protected override void OnAwake()
+        {
+            _followTarget = GetComponent<UI_FollowTarget>();
+        }
+
         protected override void OnShow<T>(T data)
         {
             var propUnit = data as IPropUnit;
@@ -33,7 +40,13 @@ namespace UI.GamePages
             _lastPropUnit = propUnit;
             _toggle = true;
             
+            _followTarget.SetTarget(propUnit.gameObject);
             UpdateVisual();
+        }
+
+        protected override void OnHide()
+        {
+            _toggle = false;
         }
 
         private void UpdateVisual()

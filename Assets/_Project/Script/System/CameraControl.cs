@@ -1,13 +1,16 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace System
 {
-    public class CameraControl : MonoBehaviour
+    public class CameraControl : Singleton<CameraControl>
     {
         [SerializeField] private Camera mainCam;
 
         [SerializeField] private float speed;
         [SerializeField] private float zoomMultiplier;
+        [SerializeField] private AnimationCurve _zoomAnimationCurve;
+
 
         [Range(1, 9)] [SerializeField] private float cameraSize = 5;
 
@@ -39,5 +42,9 @@ namespace System
             mainCam.orthographicSize =
                 Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomMultiplier * 2);
         }
+
+        public float3 GetCameraSize => new float3(1, 9, cameraSize);
+        public AnimationCurve GetAnimationCurve => _zoomAnimationCurve;
+
     }
 }
