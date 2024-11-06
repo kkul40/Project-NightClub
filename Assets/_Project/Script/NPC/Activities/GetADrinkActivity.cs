@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using Data;
-using DefaultNamespace;
 using DG.Tweening;
 using PropBehaviours;
 using UnityEngine;
 
-namespace NPC_Stuff.Activities
+namespace NPC.Activities
 {
     public class GetADrinkActivity : IActivity
     {

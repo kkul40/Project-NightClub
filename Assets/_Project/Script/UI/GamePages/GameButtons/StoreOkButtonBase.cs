@@ -1,4 +1,4 @@
-﻿namespace UI
+﻿namespace UI.GamePages.GameButtons
 {
     public class StoreOkButtonBase : UIButtonBase
     {

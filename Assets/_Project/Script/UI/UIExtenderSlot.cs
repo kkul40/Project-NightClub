@@ -1,5 +1,5 @@
 ﻿using System;
-using BuildingSystem.SO;
+using Disco_ScriptableObject;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

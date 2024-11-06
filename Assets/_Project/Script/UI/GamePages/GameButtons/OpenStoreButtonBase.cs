@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public class OpenStoreButtonBase : UIButtonBase
     {

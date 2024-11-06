@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
-using NPC_Stuff;
+using NPC;
+using NPC.PathFinder;
 using UnityEngine;
 
 namespace PropBehaviours

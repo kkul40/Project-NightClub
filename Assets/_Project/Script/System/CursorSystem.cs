@@ -1,10 +1,9 @@
-﻿using System;
-using BuildingSystem;
+﻿using Disco_Building;
 using HighlightPlus;
 using PropBehaviours;
 using UnityEngine;
 
-namespace Testing
+namespace System
 {
     public class CursorSystem : MonoBehaviour
     {

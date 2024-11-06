@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public class MaterialColorChanger : MonoBehaviour
     {

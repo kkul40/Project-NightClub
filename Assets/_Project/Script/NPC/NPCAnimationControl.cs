@@ -1,8 +1,7 @@
-﻿using System.Data.Common;
-using ScriptableObjects;
+﻿using ScriptableObjects;
 using UnityEngine;
 
-namespace NPC_Stuff
+namespace NPC
 {
     public class NPCAnimationControl : IAnimationController
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace BuildingSystem.SO
+namespace Disco_ScriptableObject
 {
     public class StoreItemSO : ScriptableObject
     {

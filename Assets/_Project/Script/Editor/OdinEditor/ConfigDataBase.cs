@@ -1,4 +1,4 @@
-﻿using BuildingSystem.SO;
+﻿using Disco_ScriptableObject;
 using ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -6,7 +6,7 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorNS.OdinEditor
+namespace _Project.OdinEditor
 {
     public class ConfigDataBase : OdinMenuEditorWindow
     {

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Disco_Building;
+using UnityEngine;
 
-namespace BuildingSystem
+namespace ExtensionMethods
 {
     public static class RotationDataExtensionMethod
     {

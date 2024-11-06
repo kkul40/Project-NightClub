@@ -1,31 +1,30 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Testing;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SceneLoader : Singleton<SceneLoader>
+namespace Root
 {
-    [SerializeField] private Transform loadingScreen;
-    [SerializeField] private Slider slider;
-
-    private void Awake()
+    public class SceneLoader : Singleton<SceneLoader>
     {
-        DontDestroyOnLoad(gameObject);
-        StartCoroutine(CoSceneLoader(1));
-    }
+        [SerializeField] private Transform loadingScreen;
+        [SerializeField] private Slider slider;
 
-    public void LoadScene(int sceneID)
-    {
-        StartCoroutine(CoSceneLoader(sceneID));
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+            StartCoroutine(CoSceneLoader(1));
+        }
 
-    private IEnumerator CoSceneLoader(int sceneID)
-    {
-        loadingScreen.gameObject.SetActive(false);
-        yield break;
+        public void LoadScene(int sceneID)
+        {
+            StartCoroutine(CoSceneLoader(sceneID));
+        }
+
+        private IEnumerator CoSceneLoader(int sceneID)
+        {
+            loadingScreen.gameObject.SetActive(false);
+            yield break;
+        }
     }
 }

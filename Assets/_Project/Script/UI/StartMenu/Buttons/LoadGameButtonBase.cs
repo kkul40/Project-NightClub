@@ -1,4 +1,6 @@
-﻿namespace UI.MainMenu
+﻿using UI.GamePages.GameButtons;
+
+namespace UI.StartMenu.Buttons
 {
     public class LoadGameButtonBase : UIButtonBase
     {

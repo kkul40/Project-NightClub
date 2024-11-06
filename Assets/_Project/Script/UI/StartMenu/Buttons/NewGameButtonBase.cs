@@ -1,6 +1,6 @@
-﻿using StartMenu;
+﻿using UI.GamePages.GameButtons;
 
-namespace UI.MainMenu
+namespace UI.StartMenu.Buttons
 {
     public class NewGameButtonBase : UIButtonBase
     {

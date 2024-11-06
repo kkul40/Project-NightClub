@@ -1,8 +1,7 @@
-﻿using BuildingSystem.Builders;
-using BuildingSystem.SO;
-using Data;
+﻿using Disco_Building.Builders;
+using Disco_ScriptableObject;
 
-namespace BuildingSystem
+namespace Disco_Building
 {
     public static class Builder
     {

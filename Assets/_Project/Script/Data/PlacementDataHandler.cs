@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Transactions;
-using BuildingSystem;
-using BuildingSystem.Builders;
-using BuildingSystem.SO;
+using Disco_Building;
+using Disco_ScriptableObject;
+using ExtensionMethods;
 using PropBehaviours;
 using SerializableTypes;
 using UnityEngine;
@@ -107,7 +107,7 @@ namespace Data
             UpdateProps();
         }
 
-        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer)
+        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer, bool addToInventory = true)
         {
             var dataToRemove = GetPlacementDataByCellPos(cellPos, moveFromLayer);
 
@@ -116,7 +116,9 @@ namespace Data
             // var keys = CalculatePosition(dataToRemove.Item1.PlacedCellPosition, dataToRemove.Item1.PlacedPlacementItemSo.Size,
             //     dataToRemove.Item1.SettedRotationData.direction);
             
-            DiscoData.Instance.inventory.AddItem(dataToRemove.Item1.PlacedPlacementItemSo);
+            if(addToInventory)
+                DiscoData.Instance.inventory.AddItem(dataToRemove.Item1.PlacedPlacementItemSo);
+            
             AllPlacedObjects.Remove(dataToRemove);
             
             UpdatePathFinderNearRemovedObject(cellPos, dataToRemove);

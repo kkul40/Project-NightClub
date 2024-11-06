@@ -1,5 +1,4 @@
 ﻿using System;
-using NPC_Stuff;
 using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,7 +15,7 @@ namespace Data
         public bool IsPlacable = true;
 
         public bool HasOccupied { get; private set; }
-        public bool ChangeOccupition(NPC source, bool hasOccuipied) => HasOccupied = hasOccuipied;
+        public bool ChangeOccupition(NPC.NPC source, bool hasOccuipied) => HasOccupied = hasOccuipied;
 
         public bool GetIsWalkable
         {

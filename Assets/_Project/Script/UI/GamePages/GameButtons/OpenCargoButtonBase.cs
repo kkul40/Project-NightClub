@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BuildingSystem.SO;
+﻿using System.Linq;
 using Data;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public class OpenCargoButtonBase : UIButtonBase
     {

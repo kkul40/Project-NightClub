@@ -1,7 +1,7 @@
 ﻿using Data;
 using UnityEngine;
 
-namespace BuildingSystem.SO
+namespace Disco_ScriptableObject
 {
     [CreateAssetMenu(menuName = "New Item/New Material Item")]
     public class MaterialItemSo : StoreItemSO

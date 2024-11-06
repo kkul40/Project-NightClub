@@ -1,18 +1,18 @@
-﻿using System;
+﻿using UnityEngine;
 
-namespace UI
+namespace UI.GamePages
 {
-    public class UIPageBase : Singleton<UIPageBase>
+    public abstract class UIPageBase : MonoBehaviour
     {
         public bool isToggled = false;
 
         protected virtual void OnAwake(){}
         protected virtual void OnShow(){}
+        protected virtual void OnShow<T>(T data){}
         protected virtual void OnHide(){}
 
         private void Awake()
         {
-            UIPageManager.Instance.RegisterForPage(this);
             OnAwake();
             Show();
         }
@@ -29,15 +29,20 @@ namespace UI
         {
             isToggled = true;
             gameObject.SetActive(true);
-            UIPageManager.Instance.RegisterOnShow(this);
             OnShow();
+        }
+
+        public void Show<T>(T data)
+        {
+            isToggled = true;
+            gameObject.SetActive(true);
+            OnShow(data);
         }
 
         public void Hide()
         {
             isToggled = false;
             gameObject.SetActive(false);
-            UIPageManager.Instance.RegisterOnHide(this);
             OnHide();
         }
     }

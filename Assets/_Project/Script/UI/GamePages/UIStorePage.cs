@@ -1,8 +1,8 @@
 ﻿using System;
+using UI.GamePages.GameButtons;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace UI
+namespace UI.GamePages
 {
     public class UIStorePage : UIPageBase
     {

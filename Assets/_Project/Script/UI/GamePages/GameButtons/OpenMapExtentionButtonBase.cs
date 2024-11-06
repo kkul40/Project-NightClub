@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using BuildingSystem.SO;
+﻿using System.Linq;
 using Data;
+using Disco_ScriptableObject;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public class OpenMapExtentionButtonBase : UIButtonBase
     {

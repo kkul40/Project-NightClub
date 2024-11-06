@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BuildingSystem.SO;
 using Data;
-using PropBehaviours;
-using Testing;
+using Disco_ScriptableObject;
+using ExtensionMethods;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace BuildingSystem.Builders
+namespace Disco_Building.Builders
 {
     public class MaterialBuilder : IBuildingMethod
     {

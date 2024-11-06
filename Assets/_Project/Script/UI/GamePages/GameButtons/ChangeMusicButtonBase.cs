@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public class ChangeMusicButtonBase : UIButtonBase
     {

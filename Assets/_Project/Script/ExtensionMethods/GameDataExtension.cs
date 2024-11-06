@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using BuildingSystem;
-using BuildingSystem.SO;
+using Data;
+using Disco_ScriptableObject;
 using PlayerScripts;
 using UnityEngine;
 
-namespace Data
+namespace ExtensionMethods
 {
     public static class GameDataExtension
     {

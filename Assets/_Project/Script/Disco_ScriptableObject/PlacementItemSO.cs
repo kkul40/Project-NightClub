@@ -1,9 +1,8 @@
 ﻿using Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace BuildingSystem.SO
+namespace Disco_ScriptableObject
 {
     [CreateAssetMenu(menuName = "New Item/New Placement Item")]
     public class PlacementItemSO : StoreItemSO

@@ -1,7 +1,6 @@
-﻿using BuildingSystem;
-using UnityEngine;
+﻿using Disco_Building;
 
-namespace UI
+namespace UI.GamePages.GameButtons
 {
     public class RemoveButtonBase : UIButtonBase
     {

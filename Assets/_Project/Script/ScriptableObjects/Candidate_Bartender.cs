@@ -1,7 +1,7 @@
-﻿using UI;
+﻿using UI.GamePages.GameButtons;
 using UnityEngine;
 
-namespace Data.SO
+namespace ScriptableObjects
 {
     public class Candidate_Bartender : UIButtonBase
     {

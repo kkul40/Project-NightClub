@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BuildingSystem.SO;
-using Data;
+﻿using Disco_ScriptableObject;
 using ScriptableObjects;
-using UnityEngine;
-using UnityEditor;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Demos.RPGEditor;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
+using UnityEditor;
+using UnityEngine;
 
-namespace EditorNS.OdinEditor
+namespace _Project.OdinEditor
 {
     public class StoreItemView : OdinMenuEditorWindow
     {

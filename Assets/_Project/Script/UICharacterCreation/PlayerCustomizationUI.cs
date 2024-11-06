@@ -1,8 +1,7 @@
-using Data;
 using PlayerScripts;
 using UnityEngine;
 
-namespace UI
+namespace UICharacterCreation
 {
     public class PlayerCustomizationUI : MonoBehaviour
     {

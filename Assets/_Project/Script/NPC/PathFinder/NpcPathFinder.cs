@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data;
-using DefaultNamespace;
 using DG.Tweening;
+using ExtensionMethods;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace NPC_Stuff
+namespace NPC.PathFinder
 {
     public class NpcPathFinder : IPathFinder
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using Data;
-using EditorNS.OdinEditor;
+﻿using Data;
 using Root;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -9,7 +7,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Debugging_Tools
+namespace _Project.OdinEditor
 {
     public class ShortCutView : OdinEditorWindow
     {
