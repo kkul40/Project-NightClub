@@ -32,7 +32,8 @@ namespace Disco_Building
         {
             var obj = Instantiate(gameObject, transform);
             // TODO Extension Method For Getinng center of bigger objects.
-            obj.transform.localScale = new Vector3(objectSize.x, objectSize.y, objectSize.x);
+            float biggest = Mathf.Max(objectSize.x, objectSize.y);
+            obj.transform.localScale = new Vector3(biggest,biggest,biggest);
             obj.transform.rotation = quaternion;
             obj.transform.position = position;
 

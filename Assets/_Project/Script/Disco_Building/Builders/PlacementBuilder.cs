@@ -64,6 +64,7 @@ namespace Disco_Building.Builders
             _tempObject.transform.position = Vector3.Lerp(_tempObject.transform.position,
                 BD.CellCenterPosition + new Vector3(0.02f, 0.02f, 0.02f),
                 Time.deltaTime * BD.MoveSpeed);
+            
             _tempObject.transform.rotation = BD.RotationData.rotation;
 
             BD.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer,
@@ -88,7 +89,7 @@ namespace Disco_Building.Builders
             {
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.BaseSurface:
-                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid), _storeItemSo.Size, BD.RotationData.rotation);
+                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction), _storeItemSo.Size, BD.RotationData.rotation);
                     break;
                 case ePlacementLayer.WallProp:
                     Vector3 smokeOffset = new Vector3(0, 0.5f, 0);
