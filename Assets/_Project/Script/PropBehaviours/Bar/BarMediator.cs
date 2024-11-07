@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 
 namespace PropBehaviours
 {
-    public class BarMediator : Singleton<BarMediator>
+    public class BarMediator : Singleton<BarMediator>, ISaveLoad
     {
         [SerializeField] private GameObject DrinkTablePrefab;
 
@@ -48,12 +48,12 @@ namespace PropBehaviours
             if (command.IsDoable()) avaliable.AddCommand(command);
         }
 
-        public DrinkTable CreateDrinkTable(IBar bar)
+        public DrinkTable CreateDrinkTable(IBar bar, DrinkSO drinkData)
         {
             var obj = Instantiate(DrinkTablePrefab, bar.CounterPlacePosition);
             obj.transform.position = bar.CounterPlacePosition.position;
             var drinkTable = obj.GetComponent<DrinkTable>();
-            drinkTable.SetUpTable(bar.DrinkData);
+            drinkTable.SetUpTable(drinkData, bar);
 
             return drinkTable;
         }
@@ -90,5 +90,17 @@ namespace PropBehaviours
             foreach (var bartender in bartenders)
                 _bartenders.Add(bartender.InstanceID, bartender);
         }
+
+        #region SavingAndLoading...
+
+        public void LoadData(GameData gameData)
+        {
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+        }
+
+        #endregion
     }
 }

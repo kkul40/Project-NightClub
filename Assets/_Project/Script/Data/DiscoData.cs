@@ -5,6 +5,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Disco_ScriptableObject;
 using ExtensionMethods;
 using PropBehaviours;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,16 +19,22 @@ namespace Data
         public MapData MapData => MapGeneratorSystem.Instance.MapData;
         public Inventory inventory = new();
         public Dictionary<int ,StoreItemSO> AllInGameItems { get; private set; }
+        public Dictionary<int, DrinkSO> AllInGameDrinks { get; private set; }
 
         public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
 
         public override void Initialize(GameInitializer gameInitializer)
         {
             AllInGameItems = new Dictionary<int, StoreItemSO>();
+            AllInGameDrinks = new Dictionary<int, DrinkSO>();
             
             var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
             foreach (var gItems in allGameItems)
                 AllInGameItems.Add(gItems.ID, gItems);
+
+            var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToHashSet();
+            foreach (var dItem in allDrinkItems)
+                AllInGameDrinks.Add(dItem.ID, dItem);
         }
 
         public void LoadData(GameData gameData)
@@ -49,6 +56,14 @@ namespace Data
             if(AllInGameItems.ContainsKey(ID))
                 return AllInGameItems[ID];
             
+            return null;
+        }
+
+        public DrinkSO FindDrinkByID(int ID)
+        {
+            if (AllInGameDrinks.ContainsKey(ID))
+                return AllInGameDrinks[ID];
+
             return null;
         }
     }

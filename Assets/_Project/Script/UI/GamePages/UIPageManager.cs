@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Disco_Building;
 using PropBehaviours;
 using UnityEngine;
 using Object = System.Object;
@@ -47,10 +48,7 @@ namespace UI.GamePages
         {
             var page = GetPage(requestedPage);
 
-            if (page.PageType == PageType.FullPage)
-            {
-                CloseAllPages(PageType.MiniPage);
-            }
+            CloseAllPages(PageType.MiniPage);
 
             if (data != null)
             {

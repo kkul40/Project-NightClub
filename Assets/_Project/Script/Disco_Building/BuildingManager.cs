@@ -124,7 +124,7 @@ namespace Disco_Building
             _tileIndicator.SetTileIndicator(ePlacingType.Remove);
         }
 
-        public void StartBuild(StoreItemSO storeItemSo, Func<Action> CallBackOnPlace = null)
+        public void StartBuild(StoreItemSO storeItemSo, bool? isReplacing = false, Func<Action> CallBackOnPlace = null)
         {
             StopBuild();
             callBackOnPlaced = CallBackOnPlace;
@@ -132,9 +132,9 @@ namespace Disco_Building
             _rotationMethod = Builder.BuildToIRotation(storeItemSo);
             _buildingMethod = Builder.BuildToIBuilding(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
+            _buildingNeedsData.isReplacing = isReplacing ?? false;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
-            _buildingNeedsData.isReplacing = false;
 
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
             if (storeItemSo is PlacementItemSO placementItemSo) _tileIndicator.SetSize(placementItemSo.Size);
@@ -159,9 +159,8 @@ namespace Disco_Building
 
         public void ReplaceObject(StoreItemSO storeItemSo ,Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
-            DiscoData.Instance.placementDataHandler.RemovePlacement(cellPos, moveFromLayer, false);
-            StartBuild(storeItemSo);
-            _buildingNeedsData.isReplacing = true;
+            DiscoData.Instance.placementDataHandler.RemovePlacement(cellPos, moveFromLayer, false, true);
+            StartBuild(storeItemSo, true);
         }
         #endregion
 

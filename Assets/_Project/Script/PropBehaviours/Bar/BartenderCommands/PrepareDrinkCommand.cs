@@ -1,5 +1,6 @@
 ﻿using Data;
 using NPC;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -13,10 +14,14 @@ namespace PropBehaviours
 
         private float timer = 0;
         private float prepareTime = 0;
-
-        private int executionOrder = 0;
+        private DrinkSO _drinkSoToPrepare;
 
         private eState _state = eState.ReachTarget;
+
+        public PrepareDrinkCommand(DrinkSO drinkSoToPrepare)
+        {
+            _drinkSoToPrepare = drinkSoToPrepare;
+        }
 
         public void InitCommand(IBar bar, IBartender bartender)
         {
@@ -40,7 +45,7 @@ namespace PropBehaviours
         {
             bartender.IsBusy = true;
             bar.HasDrinks = true;
-            prepareTime = bar.DrinkData.PrepareTime;
+            prepareTime = _drinkSoToPrepare.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
             bartender.PathFinder.GoTargetDestination(target.position);
         }
@@ -67,7 +72,7 @@ namespace PropBehaviours
                     }
 
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
-                    bar.CreateDrinks();
+                    bar.CreateDrinks(_drinkSoToPrepare);
                     bar.HasDrinks = true;
                     bartender.IsBusy = false;
                     HasFinish = true;

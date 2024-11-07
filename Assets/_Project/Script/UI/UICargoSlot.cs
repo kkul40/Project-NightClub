@@ -57,7 +57,7 @@ namespace UI
         public void OnClick()
         {
             if (DiscoData.Instance.inventory.Items.ContainsKey(StoreItemSo))
-                BuildingManager.Instance.StartBuild(StoreItemSo, () => Action);
+                BuildingManager.Instance.StartBuild(StoreItemSo, CallBackOnPlace:() => Action);
         }
 
         private void Action()

@@ -31,28 +31,26 @@ namespace PropBehaviours
 
         private void Update()
         {
-            UpdateCommand();
+            if(BartenderCommands.Count > 0)
+                UpdateCommand();
         }
 
         public void UpdateCommand()
         {
-            if (BartenderCommands.Count != 0)
+            if (!isStarted)
             {
-                if (!isStarted)
-                {
-                    BartenderCommands.Peek().SetThingsBeforeStart();
-                    isStarted = true;
-                }
+                BartenderCommands.Peek().SetThingsBeforeStart();
+                isStarted = true;
+            }
 
-                if (!BartenderCommands.Peek().HasFinish)
-                {
-                    BartenderCommands.Peek().UpdateCommand(BarMediator);
-                }
-                else
-                {
-                    BartenderCommands.Dequeue();
-                    isStarted = false;
-                }
+            if (!BartenderCommands.Peek().HasFinish)
+            {
+                BartenderCommands.Peek().UpdateCommand(BarMediator);
+            }
+            else
+            {
+                BartenderCommands.Dequeue();
+                isStarted = false;
             }
         }
 

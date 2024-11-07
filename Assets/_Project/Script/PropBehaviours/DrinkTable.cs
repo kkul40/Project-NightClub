@@ -8,7 +8,8 @@ namespace PropBehaviours
         [SerializeField] private Transform EmptyTransfrom;
         [SerializeField] private Transform DrinkHolder;
 
-        private Drink drink;
+        private IBar _bar;
+        private DrinkSO _drinkSo;
         public int drinkAmount;
         private bool isClicked;
 
@@ -27,17 +28,19 @@ namespace PropBehaviours
 
         public void OnClick()
         {
-            if (EmptyTransfrom.gameObject.activeInHierarchy) transform.gameObject.SetActive(false);
+            // Clean UP
+            // TODO Show Drink Info
         }
 
-        public void SetUpTable(Drink drink)
+        public void SetUpTable(DrinkSO drinkSo, IBar bar)
         {
-            this.drink = drink;
-            drinkAmount = drink.DrinkAmount;
+            this._drinkSo = drinkSo;
+            _bar = bar;
+            drinkAmount = drinkSo.DrinkAmount;
 
             for (var i = DrinkHolder.childCount - 1; i > 0; i--) Destroy(DrinkHolder.GetChild(i).gameObject);
 
-            var d = Instantiate(drink.Prefab, DrinkHolder);
+            var d = Instantiate(drinkSo.Prefab, DrinkHolder);
 
             isFinished = false;
             EmptyTransfrom.gameObject.SetActive(false);
@@ -48,6 +51,11 @@ namespace PropBehaviours
         {
             drinkAmount--;
             if (drinkAmount <= 0) EmptyTable();
+        }
+
+        public void CleanUP()
+        {
+            if (EmptyTransfrom.gameObject.activeInHierarchy) transform.gameObject.SetActive(false);
         }
 
         public void EmptyTable()

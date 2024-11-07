@@ -10,17 +10,17 @@ namespace PropBehaviours
         public bool HasFinish { get; private set; }
         
         private Transform target;
+        private eState _state;
 
         private float timer = 0;
         private float cleanDelay = 5;
-
-        private bool startTimer = false;
 
         public void InitCommand(IBar bar, IBartender bartender)
         {
             this.bar = bar;
             this.bartender = bartender;
             target = bar.BartenderWaitPosition;
+            _state = eState.ReachTarget;
         }
 
         public bool IsDoable()
@@ -34,27 +34,37 @@ namespace PropBehaviours
         {
             bartender.IsBusy = true;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
-            bartender.PathFinder.GoTargetDestination(target.position, OnReach);
+            bartender.PathFinder.GoTargetDestination(target.position);
         }
 
         public void UpdateCommand(BarMediator barMediator)
         {
-            if (!startTimer) return;
-            
-            timer += Time.deltaTime;
-            if (timer > cleanDelay)
+            switch (_state)
             {
-                bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
-                // MonoBehaviour.Destroy();
-                HasFinish = true;
+                case eState.ReachTarget:
+                    if (bartender.PathFinder.HasReachedDestination)
+                    {
+                        bartender.PathFinder.SetPositioning(bar.BartenderWaitPosition.rotation);
+                        bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_CleanUpTable);
+                        _state = eState.CleanTable;
+                    }
+                    break;
+                case eState.CleanTable:
+                    timer += Time.deltaTime;
+                    if (timer > cleanDelay)
+                    {
+                        bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
+                        bar.DrinkTable.CleanUP();
+                        HasFinish = true;
+                    }
+                    break;
             }
         }
-
-        private void OnReach()
+        
+        private enum eState
         {
-            startTimer = true;
-            bartender.PathFinder.SetPositioning(bar.BartenderWaitPosition.rotation);
-            bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_CleanUpTable);
+            ReachTarget,
+            CleanTable,
         }
     }
 }

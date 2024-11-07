@@ -23,8 +23,7 @@ namespace Disco_Building.Builders
         public void OnStart(BuildingNeedsData BD)
         {
             _storeItemSo = BD.StoreItemSo as PlacementItemSO;
-            _tempObject =
-                Object.Instantiate(_storeItemSo.Prefab, Vector3.zero, BD.RotationData.rotation);
+            _tempObject = Object.Instantiate(_storeItemSo.Prefab, BD.InputSystem.MousePosition, BD.RotationData.rotation);
 
             if (_tempObject.TryGetComponent(out IPropUnit propUnit))
                 Object.Destroy(propUnit);
@@ -92,22 +91,26 @@ namespace Disco_Building.Builders
                     BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid), _storeItemSo.Size, BD.RotationData.rotation);
                     break;
                 case ePlacementLayer.WallProp:
-                    // TODO Duvara yerlestirirken onune effect yapmak yerine duvar tarafindan olustur effekti
-                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid).Add(y:0.5f), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
+                    Vector3 smokeOffset = new Vector3(0, 0.5f, 0);
+                    switch (BD.RotationData.direction)
+                    {
+                        case Direction.Left:
+                            smokeOffset.x = -0.5f;
+                            break;
+                        case Direction.Down:
+                            smokeOffset.z = -0.5f;
+                            break;
+                    }
+                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid).AddVector(smokeOffset), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
                     break;
-            }
-
-            if (BD.isReplacing)
-            {
-                OnStop(BD);
             }
         }
 
         public void OnStop(BuildingNeedsData BD)
         {
             Object.Destroy(_tempObject);
-            isFinished = true;
             BD.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
+            isFinished = true;
         }
     }
 }

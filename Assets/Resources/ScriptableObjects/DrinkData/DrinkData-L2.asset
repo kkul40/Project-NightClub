@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08cf17a8986445a4ad5ebe0e57b4abab, type: 3}
   m_Name: DrinkData-L2
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Red Drink
   DrinkAmount: 10
   PrepareTime: 3
   Price: 0

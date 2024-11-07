@@ -55,7 +55,10 @@ namespace Disco_Building
             {
                 var listMesh = materialDatas[key].MeshRenderer;
                 for (var i = 0; i < listMesh.Count; i++)
+                {
+                    if(listMesh[i] == null) continue;
                     listMesh[i].materials = materialDatas[key].Materials[i].ToArray();
+                }
             }
 
             materialDatas = new Dictionary<Transform, MaterialData>();

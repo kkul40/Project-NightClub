@@ -107,7 +107,7 @@ namespace Data
             UpdateProps();
         }
 
-        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer, bool addToInventory = true)
+        public void RemovePlacement(Vector3Int cellPos, ePlacementLayer moveFromLayer, bool addToInventory = true, bool removeImidietly = false)
         {
             var dataToRemove = GetPlacementDataByCellPos(cellPos, moveFromLayer);
 
@@ -123,7 +123,7 @@ namespace Data
             
             UpdatePathFinderNearRemovedObject(cellPos, dataToRemove);
             
-            RemoveObjectHandler(dataToRemove.Item1.PlacedSceneObject);
+            RemoveObjectHandler(dataToRemove.Item1.PlacedSceneObject, removeImidietly);
             UpdateProps();
         }
 
@@ -159,25 +159,31 @@ namespace Data
         
         private void AddedObjectHandler(Vector3Int cellPos, PlacementData placementData)
         {
+            IPropUnit propUnit = null;
+            
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUnit prop))
-            {
-                propList.Add(prop);
-                prop.Initialize(placementData.ID, cellPos, placementData.SettedRotationData,
-                    placementData.PlacedPlacementItemSo.PlacementLayer);
-            }
+                propUnit = prop;
+            else
+                propUnit = placementData.PlacedSceneObject.AddComponent<IPropUnit>();
+            
+            propList.Add(prop);
+            prop.Initialize(placementData.ID, cellPos, placementData.SettedRotationData, placementData.PlacedPlacementItemSo.PlacementLayer);
 
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropPlaced();
         }
 
 
-        private void RemoveObjectHandler(GameObject sceneObject)
+        private void RemoveObjectHandler(GameObject sceneObject, bool removeImmidietly)
         {
             var objectToRemove = sceneObject;
             if (objectToRemove.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropRemoved();
 
             if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
 
-            objectToRemove.AnimatedRemoval(() => Object.Destroy(objectToRemove));
+            if (removeImmidietly)
+                Object.Destroy(objectToRemove);
+            else
+                objectToRemove.AnimatedRemoval(() => Object.Destroy(objectToRemove));
         }
 
         private void UpdateProps()
