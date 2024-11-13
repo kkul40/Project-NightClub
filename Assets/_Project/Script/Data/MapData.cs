@@ -21,7 +21,7 @@ namespace Data
 
         // Referanced
         private List<PathFinderNode> AvaliablePathsNearWall;
-        private bool Flag_AvaliablePathsNearWall = true;
+        private bool DirtyFlag_AvaliablePathsNearWall = true;
 
         public Vector2Int PathFinderSize
         {
@@ -37,10 +37,10 @@ namespace Data
         {
             get
             {
-                if (Flag_AvaliablePathsNearWall)
+                if (DirtyFlag_AvaliablePathsNearWall)
                 {
                     UpdateNearWallPaths();
-                    Flag_AvaliablePathsNearWall = false;
+                    DirtyFlag_AvaliablePathsNearWall = false;
                 }
                 
                 return AvaliablePathsNearWall;
@@ -124,7 +124,7 @@ namespace Data
         {
             CurrentMapSize = mapSize;
             
-            Flag_AvaliablePathsNearWall = true;
+            DirtyFlag_AvaliablePathsNearWall = true;
             return true;
         }
 
@@ -161,7 +161,7 @@ namespace Data
             }
 
             // Flag
-            Flag_AvaliablePathsNearWall = true;
+            DirtyFlag_AvaliablePathsNearWall = true;
         }
 
         public void UpdateNearWallPaths()
@@ -180,6 +180,15 @@ namespace Data
                 PathFinderNode node = PathFinderNodes[howFarFromWall,y];
                 if (!ContainsKey(node, ePlacementLayer.BaseSurface) && !ContainsKey(node, ePlacementLayer.FloorProp))
                     AvaliablePathsNearWall.Add(node);
+            }
+
+            for (int i = AvaliablePathsNearWall.Count - 1; i >= 0; i--)
+            {
+                if (AvaliablePathsNearWall[i].WorldPos.WorldPosToCellPos(eGridType.PlacementGrid) == EnterencePosition.WorldPosToCellPos(eGridType.PlacementGrid))
+                {
+                    AvaliablePathsNearWall.RemoveAt(i);
+                    break;
+                }
             }
         }
 
