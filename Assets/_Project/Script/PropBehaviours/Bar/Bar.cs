@@ -1,5 +1,4 @@
-﻿using System;
-using ScriptableObjects;
+﻿using ScriptableObjects;
 using UI.GamePages;
 using UnityEngine;
 
@@ -15,31 +14,29 @@ namespace PropBehaviours
         public Transform BartenderWaitPosition => bartenderWaitPosition;
         public Transform CustomerWaitPosition => customerWaitPosition;
         public Transform CounterPlacePosition => counterPlacePosition;
+        
         private DrinkTable _drinkTable;
-
-        public DrinkTable DrinkTable => _drinkTable;
+        private bool HasBarCleaned = true;
 
         public bool HasDrinks
         {
             get
             {
-                if (_drinkTable == null || _drinkTable.drinkAmount <= 0)
-                {
-                    return false;
-                }
+                if (_drinkTable == null) return false;
+                if (_drinkTable.drinksLeft <= 0) return false;
                 return true;
             }
-
-            set { }
         }
 
+        public bool IsBusy { get; set; }
 
         public void GetDrink()
         {
-            if (HasDrinks)
+            if (!HasDrinks) return;
+            
+            if (!_drinkTable.IsOutOfDrinks)
             {
-                _drinkTable.GetDrink();
-                return;
+                _drinkTable.RemoveDrink(1);
             }
         }
 
@@ -47,18 +44,37 @@ namespace PropBehaviours
         {
             if (HasDrinks) return;
             
-            _drinkTable = BarMediator.Instance.CreateDrinkTable(this, drinkToCreate);
+            _drinkTable = CreateDrinkTable(drinkToCreate);
+            HasBarCleaned = false;
+        }
+        
+        private DrinkTable CreateDrinkTable(DrinkSO drinkData)
+        {
+            var obj = Instantiate(BarMediator.Instance.DrinkTablePrefab, counterPlacePosition);
+            obj.transform.position = counterPlacePosition.position;
+            var drinkTable = obj.GetComponent<DrinkTable>();
+            drinkTable.SetUpTable(drinkData, this);
+
+            return drinkTable;
+        }
+
+        public void CleanBar()
+        {
+            _drinkTable.CleanUP();
+            HasBarCleaned = true;
         }
 
         public override void OnClick()
         {
-            if (_drinkTable != null && _drinkTable.drinkAmount <= 0)
+            // TODO Add isbusy To Cancel
+            if (HasBarCleaned)
+            {
+                UIPageManager.Instance.RequestAPage(new UIBarPage(), this);
+            }
+            else if(_drinkTable.IsOutOfDrinks)
             {
                 BarMediator.Instance.AddCommand(this, new CleanDrinkTableCommand());
-                return;
             }
-
-            UIPageManager.Instance.RequestAPage(new UIBarPage(), this);
         }
     }
 }

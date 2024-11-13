@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Data;
-using ScriptableObjects;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -11,7 +9,7 @@ namespace PropBehaviours
 {
     public class BarMediator : Singleton<BarMediator>, ISaveLoad
     {
-        [SerializeField] private GameObject DrinkTablePrefab;
+        [SerializeField] public GameObject DrinkTablePrefab;
 
         [OdinSerialize] public SerializedDictionary<int, IBartender> _bartenders;
         [OdinSerialize] public SerializedDictionary<int, IBar> _bars;
@@ -46,16 +44,6 @@ namespace PropBehaviours
 
             command.InitCommand(source, avaliable);
             if (command.IsDoable()) avaliable.AddCommand(command);
-        }
-
-        public DrinkTable CreateDrinkTable(IBar bar, DrinkSO drinkData)
-        {
-            var obj = Instantiate(DrinkTablePrefab, bar.CounterPlacePosition);
-            obj.transform.position = bar.CounterPlacePosition.position;
-            var drinkTable = obj.GetComponent<DrinkTable>();
-            drinkTable.SetUpTable(drinkData, bar);
-
-            return drinkTable;
         }
 
         private IBartender GetAvaliableBartender()

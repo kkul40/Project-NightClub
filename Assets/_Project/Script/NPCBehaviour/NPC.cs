@@ -15,7 +15,7 @@ namespace NPCBehaviour
     
     
     [SelectionBase]
-    public class NPC : MonoBehaviour, IUnit, IInteractable, IDoorOpener
+    public class NPC : MonoBehaviour, IUnit, IInteractable, IDoorTrigger
     {
         /*
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}

@@ -36,7 +36,6 @@ namespace UI.GamePages
             if (_lastInstanceID == bar.GetInstanceID() && _toggle)
             {
                 Hide();
-                _toggle = false;
                 return;
             }
             
@@ -46,6 +45,11 @@ namespace UI.GamePages
             
             _followTarget.SetTarget(bar.gameObject);
             UpdateVisual();
+        }
+
+        protected override void OnHide()
+        {
+            _toggle = false;
         }
 
         private void UpdateVisual()
