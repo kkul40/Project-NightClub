@@ -27,7 +27,7 @@ namespace NPCBehaviour.Activities
 
                 if (Helper.IterateTo100(ref iteration)) return false;
             }
-
+ 
             return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
