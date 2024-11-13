@@ -13,6 +13,7 @@ namespace NPCBehaviour.Activities
         public bool IsEnded { get; private set; }
 
         private IBar _bar;
+        private Coroutine _routine;
 
         public bool CanStartActivity(ActivityNeedsData and)
         {
@@ -42,7 +43,7 @@ namespace NPCBehaviour.Activities
         {
             and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            DOTween.instance.StartCoroutine(CoGetDrink(and));
+            _routine = DOTween.instance.StartCoroutine(CoGetDrink(and));
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
@@ -53,6 +54,11 @@ namespace NPCBehaviour.Activities
         {
             and.Npc.PathFinder.CancelDestination();
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
+            
+            if (_routine != null)
+            {
+                DOTween.instance.StopCoroutine(_routine);
+            }
         }
 
         private IEnumerator CoGetDrink(ActivityNeedsData and)
