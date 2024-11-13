@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameInitializer : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         switch (SceneManager.GetActiveScene().buildIndex)
         {
@@ -16,12 +16,11 @@ public class GameInitializer : MonoBehaviour
                 InitializeGame();
                 break;
         }
-
-        InitializeCommon(this);
     }
 
     private void InitializeMainMenu() // 0
     {
+        SavingAndLoadingSystem.Instance.Initialize(this);
     }
 
     private void InitializeGame() // 1
@@ -29,10 +28,7 @@ public class GameInitializer : MonoBehaviour
         DiscoData.Instance.Initialize(this);
         ActivitySystem.Instance.Initialize(this);
         MapGeneratorSystem.Instance.Initialize(this);
-    }
-
-    private void InitializeCommon(GameInitializer gameInitializer)
-    {
-        SavingAndLoadingSystem.Instance.Initialize(gameInitializer);
+        UpdatableHandler.Instance.Initialize(this);
+        SavingAndLoadingSystem.Instance.Initialize(this);
     }
 }

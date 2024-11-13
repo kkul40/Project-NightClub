@@ -1,6 +1,6 @@
 ﻿using System;
 using Disco_ScriptableObject;
-using NPC;
+using NPCBehaviour;
 using ScriptableObjects;
 using UnityEngine;
 

@@ -1,9 +1,11 @@
-﻿namespace PropBehaviours
+﻿using NPCBehaviour;
+
+namespace PropBehaviours
 {
     public interface IOccupieable
     {
-        public NPC.NPC Owner { get; }
+        public NPC Owner { get; }
         bool IsOccupied { get; }
-        public void SetOccupied(NPC.NPC owner, bool isOccupied);
+        public void SetOccupied(NPC owner, bool isOccupied);
     }
 }

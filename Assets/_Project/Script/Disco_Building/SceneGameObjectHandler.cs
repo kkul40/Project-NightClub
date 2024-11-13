@@ -14,6 +14,8 @@ namespace Disco_Building
         [field: SerializeField] public Transform GetEmployeeHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetFloorTileHolder { get; private set; }
         [field: SerializeField] public Transform GetWallHolder { get; private set; }
+        
+        [field: SerializeField] public Transform PooledObjectHolder { get; private set; }
         [field: SerializeField] public Transform NullHolder { get; private set; }
 
         public Transform GetHolderByLayer(ePlacementLayer layer)
@@ -31,7 +33,7 @@ namespace Disco_Building
             return NullHolder;
         }
 
-        public List<Transform> GetExcludeTransformsByLayer(ePlacementLayer layer)
+        public List<Transform> GetExcludedTransformsByLayer(ePlacementLayer layer)
         {
             var transforms = new List<Transform>();
 
@@ -51,7 +53,7 @@ namespace Disco_Building
             return transforms;
         }
 
-        public List<Transform> GetExcludeTransformsByLayer(eMaterialLayer layer)
+        public List<Transform> GetExcludedTransformsByLayer(eMaterialLayer layer)
         {
             var transforms = new List<Transform>();
 
@@ -70,11 +72,10 @@ namespace Disco_Building
             return transforms;
         }
 
-        private void RemoveChildren(Transform holder)
+        private void DestroyChildren(Transform holder)
         {
             foreach (Transform child in holder)
                 Destroy(child.gameObject);
         }
-
     }
 }

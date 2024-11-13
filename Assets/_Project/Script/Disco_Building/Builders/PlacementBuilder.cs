@@ -30,7 +30,7 @@ namespace Disco_Building.Builders
 
             _tempMeshRenderer = BD.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
 
-            var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_storeItemSo.PlacementLayer);
+            var transforms = SceneGameObjectHandler.Instance.GetExcludedTransformsByLayer(_storeItemSo.PlacementLayer);
             foreach (var transform in transforms)
                 BD.MaterialColorChanger.SetCustomMaterial(transform,
                     MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);

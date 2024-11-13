@@ -1,4 +1,4 @@
-﻿using NPC;
+﻿using NPCBehaviour;
 using UnityEngine;
 
 namespace PropBehaviours

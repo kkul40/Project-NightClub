@@ -1,0 +1,33 @@
+﻿using UnityEngine;
+
+namespace NPCBehaviour.Activities
+{
+    public class NoneActivity : IActivity
+    {
+        public bool CheckForPlacementOnTop { get; } = false;
+        public bool IsEnded { get; }
+
+        public bool CanStartActivity(ActivityNeedsData and)
+        {
+            return true;
+        }
+
+        public bool ForceToQuitActivity(ActivityNeedsData and)
+        {
+            return false;
+        }
+
+        public void OnActivityStart(ActivityNeedsData and)
+        {
+        }
+
+        public void OnActivityUpdate(ActivityNeedsData and)
+        {
+            Debug.Log("None Activity");
+        }
+
+        public void OnActivityEnd(ActivityNeedsData and)
+        {
+        }
+    }
+}

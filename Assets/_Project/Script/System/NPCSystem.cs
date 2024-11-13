@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Data;
 using Disco_Building;
-using NPC;
-using NPC.Activities;
+using NPCBehaviour;
+using NPCBehaviour.Activities;
 using PropBehaviours;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,7 +16,7 @@ namespace System
         [SerializeField] private GameObject _bartenderPrefab;
         [SerializeField] private GameObject _djPrefab;
 
-        [SerializeField] private List<NPC.NPC> _npcs = new();
+        [SerializeField] private List<NPC> _npcs = new();
 
         public int maxNPC = 25;
 
@@ -85,16 +85,16 @@ namespace System
                     case eGenderType.Male:
                         newNPC.GetComponent<Custimization>()
                             .Randomize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
-                        newNPC.GetComponent<NPC.NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
                         break;
                     case eGenderType.Female:
                         newNPC.GetComponent<Custimization>()
                             .Randomize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
-                        newNPC.GetComponent<NPC.NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }
 
-                _npcs.Add(newNPC.GetComponent<NPC.NPC>());
+                _npcs.Add(newNPC.GetComponent<NPC>());
                 npcCount++;
             }
         }

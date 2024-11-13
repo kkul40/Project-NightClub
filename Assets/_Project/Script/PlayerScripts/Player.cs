@@ -1,7 +1,7 @@
 using System;
 using Data;
-using NPC;
-using NPC.PathFinder;
+using NPCBehaviour;
+using NPCBehaviour.PathFinder;
 using UnityEngine;
 
 namespace PlayerScripts

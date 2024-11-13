@@ -134,7 +134,7 @@ namespace Disco_Building.Builders
         /// <param name="buildingNeedsData"></param>
         private void TranspartizeOtherLayers(BuildingNeedsData buildingNeedsData)
         {
-            var transforms = SceneGameObjectHandler.Instance.GetExcludeTransformsByLayer(_materialItemSo.MaterialLayer);
+            var transforms = SceneGameObjectHandler.Instance.GetExcludedTransformsByLayer(_materialItemSo.MaterialLayer);
 
             foreach (var transform in transforms)
                 buildingNeedsData.MaterialColorChanger.SetCustomMaterial(transform,

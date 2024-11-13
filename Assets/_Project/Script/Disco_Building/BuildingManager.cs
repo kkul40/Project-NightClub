@@ -159,6 +159,7 @@ namespace Disco_Building
 
         public void ReplaceObject(StoreItemSO storeItemSo ,Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
+            StopBuild();
             DiscoData.Instance.placementDataHandler.RemovePlacement(cellPos, moveFromLayer, false, true);
             StartBuild(storeItemSo, true);
         }

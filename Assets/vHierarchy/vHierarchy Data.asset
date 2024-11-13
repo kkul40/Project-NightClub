@@ -30,6 +30,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-420242596-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1760755401-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-627655930-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-632578359-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -52,6 +53,8 @@ MonoBehaviour:
         - colorIndex: 1
           iconNameOrGuid: 
         - colorIndex: 0
-          iconNameOrGuid: cs Script Icon
+          iconNameOrGuid: PreMatQuad
         - colorIndex: 1
           iconNameOrGuid: 
+        - colorIndex: 0
+          iconNameOrGuid: PreMatQuad

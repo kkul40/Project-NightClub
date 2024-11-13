@@ -1,5 +1,5 @@
 ﻿using Data;
-using NPC;
+using NPCBehaviour;
 using ScriptableObjects;
 using UnityEngine;
 
