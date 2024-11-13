@@ -38,13 +38,15 @@ namespace PropBehaviours
                 return false;
             }
 
+            if (bar.IsBusy) return false;
+
             return true;
         }
 
         public void SetThingsBeforeStart()
         {
             bartender.IsBusy = true;
-            bar.HasDrinks = true;
+            bar.IsBusy = true;
             prepareTime = _drinkSoToPrepare.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
             bartender.PathFinder.GoTargetDestination(target.position);
@@ -73,8 +75,8 @@ namespace PropBehaviours
 
                     bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
                     bar.CreateDrinks(_drinkSoToPrepare);
-                    bar.HasDrinks = true;
                     bartender.IsBusy = false;
+                    bar.IsBusy = false;
                     HasFinish = true;
                     break;
             }

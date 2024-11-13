@@ -30,7 +30,7 @@ namespace PropBehaviours
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.transform.TryGetComponent(out IDoorOpener opener))
+            if (other.transform.TryGetComponent(out IDoorTrigger opener))
             {
                 ToggleDoor(true);
                 timer = 0;

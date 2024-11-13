@@ -1,53 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
 using Data;
-using ScriptableObjects;
+using NPCBehaviour;
+using NPCBehaviour.PathFinder;
 using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class Bartender : MonoBehaviour
+    public class Bartender : MonoBehaviour, IBartender, IInteractable, IDoorTrigger
     {
-        //     private BarMediator BarMediator;
-        //     
-        //     
-        //     public Drink drink; // Test
-        //     public Bar bar;
-        //
-        //     private Coroutine _coroutine;
-        //     private bool isBusy => _coroutine != null;
-        //
-        //     public IPathFinder PathFinder;
-        //
-        //     public eInteraction Interaction { get; } = eInteraction.Interactable;
-        //
-        //     public void Init()
-        //     {
-        //         PathFinder = new BartenderPathFinder();
-        //     }
-        //
-        //     public void OnFocus()
-        //     {
-        //     }
-        //
-        //     public void OnOutFocus()
-        //     {
-        //     }
-        //
-        //     public void OnClick()
-        //     {
-        //         if (!isBusy && !bar.HasTable)
-        //         {
-        //             Debug.Log("Bartender Clicked");
-        //             _coroutine = StartCoroutine(PrepareDrinkCo());
-        //             BarMediator.Notify(this);
-        //         }
-        //     }
-        //
-        //     private IEnumerator PrepareDrinkCo()
-        //     {
-        //         yield return new WaitForSeconds(drink.PrepareTime);
-        //         bar.SetDrinkTable(drink);
-        //
-        //         _coroutine = null;
-        //     }
+        public int InstanceID => GetInstanceID();
+        public BarMediator BarMediator { get; private set; }
+        public IPathFinder PathFinder { get; private set; }
+        public bool IsBusy { get; set; }
+        public Transform mTransform { get; private set; }
+        public Queue<IBartenderCommand> BartenderCommands { get; } = new();
+        public IBartenderCommand CurrentCommand { get; private set; }
+        public IAnimationController AnimationController { get; private set; }
+
+        private bool isStarted = false;
+
+        private void Start()
+        {
+            PathFinder = new BartenderPathFinder(transform);
+            mTransform = transform;
+            BarMediator = BarMediator.Instance;
+            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(),
+                InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
+        }
+
+        private void Update()
+        {
+            if(BartenderCommands.Count > 0)
+                UpdateCommand();
+        }
+
+        public void UpdateCommand()
+        {
+            if (!isStarted)
+            {
+                BartenderCommands.Peek().SetThingsBeforeStart();
+                isStarted = true;
+            }
+
+            if (!BartenderCommands.Peek().HasFinish)
+            {
+                BartenderCommands.Peek().UpdateCommand(BarMediator);
+            }
+            else
+            {
+                BartenderCommands.Dequeue();
+                isStarted = false;
+            }
+        }
+
+        public void AddCommand(IBartenderCommand command)
+        {
+            BartenderCommands.Enqueue(command);
+        }
+
+        public void RemoveCommand()
+        {
+            if (BartenderCommands.Count > 1)
+            {
+                BartenderCommands.Dequeue();
+            }
+        }
+
+        public bool IsInteractable { get; } = true;
+        public eInteraction Interaction { get; } = eInteraction.Customer;
+
+        public void OnFocus()
+        {
+        }
+
+        public void OnOutFocus()
+        {
+        }
+
+        public void OnClick()
+        {
+        }
     }
 }

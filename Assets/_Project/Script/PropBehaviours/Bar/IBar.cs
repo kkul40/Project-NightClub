@@ -8,9 +8,10 @@ namespace PropBehaviours
         Transform BartenderWaitPosition { get; }
         Transform CustomerWaitPosition { get; }
         Transform CounterPlacePosition { get; }
-        DrinkTable DrinkTable { get; }
-        bool HasDrinks { get; set; }
+        bool HasDrinks { get; }
+        bool IsBusy { get; set; }
         void GetDrink();
         void CreateDrinks(DrinkSO drinkToCreate);
+        void CleanBar();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace System
+namespace System.ObjectPooling
 {
     public class IPooled : MonoBehaviour
     {

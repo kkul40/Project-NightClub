@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PlayerScripts
 {
-    public class Player : MonoBehaviour, IDoorOpener
+    public class Player : MonoBehaviour, IDoorTrigger
     {
         private IAnimationController _animationController;
         private NpcPathFinder _pathFinder;

@@ -26,6 +26,7 @@ namespace PropBehaviours
         public bool IsDoable()
         {
             if (bar.HasDrinks) return false;
+            if (bar.IsBusy) return false;
             
             return true;
         }
@@ -33,6 +34,7 @@ namespace PropBehaviours
         public void SetThingsBeforeStart()
         {
             bartender.IsBusy = true;
+            bar.IsBusy = true;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
             bartender.PathFinder.GoTargetDestination(target.position);
         }
@@ -54,7 +56,9 @@ namespace PropBehaviours
                     if (timer > cleanDelay)
                     {
                         bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Idle);
-                        bar.DrinkTable.CleanUP();
+                        bartender.IsBusy = false;
+                        bar.IsBusy = false;
+                        bar.CleanBar();
                         HasFinish = true;
                     }
                     break;

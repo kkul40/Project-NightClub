@@ -1,6 +1,6 @@
 ﻿namespace NPCBehaviour
 {
-    public interface IDoorOpener
+    public interface IDoorTrigger
     {
     }
 }
