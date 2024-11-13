@@ -25,6 +25,7 @@ namespace NPCBehaviour.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
+            and.Npc.TriggerDoor = true;
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
         }
@@ -42,6 +43,7 @@ namespace NPCBehaviour.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
+            and.Npc.TriggerDoor = false;
         }
     }
 }

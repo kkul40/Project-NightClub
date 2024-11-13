@@ -81,5 +81,7 @@ namespace PropBehaviours
         public void OnClick()
         {
         }
+
+        public bool TriggerDoor { get; set; } = true;
     }
 }

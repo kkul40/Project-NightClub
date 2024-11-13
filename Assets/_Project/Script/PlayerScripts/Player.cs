@@ -40,5 +40,7 @@ namespace PlayerScripts
         {
             _animationController.PlayAnimation(eAnimationType.NPC_Idle);
         }
+
+        public bool TriggerDoor { get; set; } = true;
     }
 }

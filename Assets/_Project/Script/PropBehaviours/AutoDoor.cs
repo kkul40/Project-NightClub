@@ -32,6 +32,8 @@ namespace PropBehaviours
         {
             if (other.transform.TryGetComponent(out IDoorTrigger opener))
             {
+                if (!opener.TriggerDoor) return;
+                
                 ToggleDoor(true);
                 timer = 0;
             }

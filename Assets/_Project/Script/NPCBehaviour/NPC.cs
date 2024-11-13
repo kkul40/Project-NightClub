@@ -79,6 +79,8 @@ namespace NPCBehaviour
                         Gizmos.DrawLine(path[i - 1] + new Vector3(0, 0.25f, 0), path[i] + new Vector3(0, 0.25f, 0));
                     }
         }
+
+        public bool TriggerDoor { get; set; }
     }
 
 
