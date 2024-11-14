@@ -6599,25 +6599,7 @@ MonoBehaviour:
   zoomMultiplier: 5
   _zoomAnimationCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -7338,7 +7320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a28242e2dd477a9515af7f8f1b7420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TestCube: {fileID: 6175308207735467527, guid: cb49ec05530b707489e7ab4312fca249, type: 3}
+  TestCube: {fileID: 0}
   showPlacements: 0
   showPathFinder: 0
 --- !u!1 &632578359
@@ -22037,7 +22019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  storePage: {fileID: 1954767697}
+  storePage: {fileID: 0}
 --- !u!1 &1840500589
 GameObject:
   m_ObjectHideFlags: 0
@@ -23830,7 +23812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isToggled: 0
-  _storeButtonHolder: {fileID: 0}
+  _storeButtonHolder: {fileID: 1028276280}
   uiStoreInventoryView: {fileID: 572044177}
   lastButtonBaseClicked: {fileID: 1400093083}
 --- !u!114 &1954767698
@@ -25529,7 +25511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  storePage: {fileID: 1954767697}
+  storePage: {fileID: 0}
 --- !u!4 &2049841877 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -26427,7 +26409,7 @@ RectTransform:
   m_GameObject: {fileID: 6240585919625722353}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 401020458}
@@ -26446,7 +26428,7 @@ RectTransform:
   m_GameObject: {fileID: 4972855707539210992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 401020458}
@@ -29442,7 +29424,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 57b50c446ed5d8e429dfa263c68eb5e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f60e0efa2d9fce4ab9aad0690079cd0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29560,7 +29542,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 57b50c446ed5d8e429dfa263c68eb5e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f60e0efa2d9fce4ab9aad0690079cd0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

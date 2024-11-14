@@ -6,14 +6,6 @@ using UnityEngine;
 
 namespace NPCBehaviour
 {
-    public interface IUnit
-    {
-        public eGenderType GenderType { get; }
-        public IAnimationController AnimationController { get; }
-        public IPathFinder PathFinder { get; }
-    }
-    
-    
     [SelectionBase]
     public class NPC : MonoBehaviour, IUnit, IInteractable, IDoorTrigger
     {
@@ -39,7 +31,7 @@ namespace NPCBehaviour
         }
 
         public bool IsInteractable { get; }
-        public eInteraction Interaction { get; } = eInteraction.Customer;
+        public eInteraction Interaction { get; private set; } = eInteraction.Customer;
 
         public void OnFocus()
         {
@@ -81,19 +73,5 @@ namespace NPCBehaviour
         }
 
         public bool TriggerDoor { get; set; }
-    }
-
-
-    public enum eAnimationType
-    {
-        NPC_Idle,
-        NPC_Walk,
-        NPC_Sit,
-        NPC_Dance,
-        NPC_Lean,
-        Bartender_Idle,
-        Bartender_Walk,
-        Bartender_PrepareDrink,
-        Bartender_CleanUpTable
     }
 }

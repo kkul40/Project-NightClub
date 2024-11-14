@@ -14,7 +14,7 @@ namespace System
 
         private IInteractable _currentInteractable;
         private InputSystem _inputSystem => InputSystem.Instance;
-
+        
         private void Update()
         {
             if (BuildingManager.Instance.isPlacing || 
@@ -45,7 +45,7 @@ namespace System
 
             if (_inputSystem.LeftClickOnWorld)
                 if (_currentInteractable != null)
-                    _currentInteractable.OnClick();
+                    HandleOnClick();
         }
 
         private void Set(IInteractable set, GameObject gameObject)
@@ -106,6 +106,11 @@ namespace System
             }
 
             _currentGameObject = null;
+        }
+
+        private void HandleOnClick()
+        {
+            _currentInteractable.OnClick();
         }
     }
 }

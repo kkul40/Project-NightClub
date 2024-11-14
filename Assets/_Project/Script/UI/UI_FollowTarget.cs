@@ -38,13 +38,13 @@ namespace UI
                 maxZoom
             );
 
-            float targetScale = zoomCurve.Evaluate(Mathf.InverseLerp(maxZoom, 1, scaleMultiplier));
-
-            transform.localScale = Mathf.LerpUnclamped(
-                transform.localScale.x, 
-                targetScale, 
-                Time.deltaTime * 20
-            ) * Vector3.one;
+            // float targetScale = zoomCurve.Evaluate(Mathf.InverseLerp(maxZoom, 1, scaleMultiplier));
+            //
+            // transform.localScale = Mathf.LerpUnclamped(
+            //     transform.localScale.x, 
+            //     targetScale, 
+            //     Time.deltaTime * 20
+            // ) * Vector3.one;
             
             AnchorPos();
         }

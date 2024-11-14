@@ -3,6 +3,19 @@ using UnityEngine;
 
 namespace NPCBehaviour
 {
+    public enum eAnimationType
+    {
+        NPC_Idle,
+        NPC_Walk,
+        NPC_Sit,
+        NPC_Dance,
+        NPC_Lean,
+        Bartender_Idle,
+        Bartender_Walk,
+        Bartender_PrepareDrink,
+        Bartender_CleanUpTable
+    }
+    
     public class NPCAnimationControl : IAnimationController
     {
         private NpcAnimationSo _npcAnimationSo;

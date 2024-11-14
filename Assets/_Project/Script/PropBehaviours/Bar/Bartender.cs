@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
 using NPCBehaviour;
 using NPCBehaviour.PathFinder;
@@ -7,6 +6,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
+    [SelectionBase]
     public class Bartender : MonoBehaviour, IBartender, IInteractable, IDoorTrigger
     {
         public int InstanceID => GetInstanceID();
