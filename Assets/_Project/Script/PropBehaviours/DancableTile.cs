@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PropBehaviours
 {
-    public class DancableTile : IPropUnit, IPropUpdate, IOccupieable
+    public class DancableTile : IPropUnit, IOccupieable
     {
         public NPC Owner { get; set; }
         public bool IsOccupied { get; set; }
@@ -14,18 +14,6 @@ namespace PropBehaviours
         {
             Owner = owner;
             IsOccupied = true;
-        }
-
-        public void OnPropPlaced()
-        {
-        }
-
-        public void PropUpdate()
-        {
-        }
-
-        public void OnPropRemoved()
-        {
         }
     }
 }

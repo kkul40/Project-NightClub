@@ -30,7 +30,7 @@ namespace System
 
         public virtual void Initialize(GameInitializer gameInitializer)
         {
-            Debug.LogError(typeof(T) + "Not Initialized");
+            // Debug.LogError(typeof(T) + "Not Initialized");
         }
     }
 }
