@@ -28,7 +28,20 @@ namespace PropBehaviours
             }
         }
 
-        public bool IsBusy { get; set; }
+        private bool isBusy;
+
+        public bool IsBusy
+        {
+            get
+            {
+                return isBusy;
+            }
+            set
+            {
+                isBusy = value;
+                IsInteractable = !value;
+            }
+        }
 
         public void GetDrink()
         {
@@ -68,7 +81,7 @@ namespace PropBehaviours
         {
             if (HasBarCleaned)
             {
-                UIPageManager.Instance.RequestAPage(typeof(UIBarPage), this);
+                UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage),this);
             }
             else if(_drinkTable.IsOutOfDrinks)
             {

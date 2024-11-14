@@ -47,8 +47,14 @@ namespace NPCBehaviour
         {
             if (!hasActivity) return;
 
-            if (_currentActivity.IsEnded || _currentActivity.ForceToQuitActivity(_activityNeedsData))
+            if (_currentActivity.IsEnded)
             {
+                StartNewActivity(GetRandomActivity());
+                return;
+            }
+            else if (_currentActivity.ForceToQuitActivity(_activityNeedsData))
+            {
+                _currentActivity.OnActivityEnd(_activityNeedsData);
                 StartNewActivity(GetRandomActivity());
                 return;
             }
@@ -102,7 +108,7 @@ namespace NPCBehaviour
                 }
             }
         }
-
+        
         /// <summary>
         /// Use it OnDestroy To Avoid Event Problems!
         /// </summary>

@@ -63,7 +63,7 @@ namespace System
                 }
                 
                 if (_inputSystem.LeftClickOnWorld)
-                    if (_currentInteractable != null)
+                    if (_currentInteractable != null && _currentInteractable.IsInteractable)
                         HandleOnClick();
             }
         }
@@ -130,12 +130,8 @@ namespace System
 
         private void HandleOnClick()
         {
-            // _currentInteractable.OnClick();
-            if(_currentGameObject.TryGetComponent(out IPropUnit propUnit))
-            {
-                UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage),propUnit);
-                clicked = true;
-            }
+            _currentInteractable.OnClick();
+            clicked = true;
         }
     }
 }
