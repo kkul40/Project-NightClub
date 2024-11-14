@@ -35,11 +35,5 @@ namespace PropBehaviours
             return sitPosition.position - new Vector3(0, 0.375f, 0);
             // 0.375f is the height of every chair
         }
-
-        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData,
-            ePlacementLayer placementLayer)
-        {
-            base.Initialize(ID, cellPosition, rotationData, placementLayer);
-        }
     }
 }

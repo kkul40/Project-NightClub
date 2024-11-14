@@ -30,6 +30,7 @@ namespace System
         [HideInInspector] public bool IsMouseCursorOnWorld;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
+        [FormerlySerializedAs("RightClick")] public bool CancelClick;
         public bool RightClickOnWorld;
 
         public bool HasMouseMoveToNewCell; // Used For Optimization
@@ -52,6 +53,8 @@ namespace System
                 LeftHoldClickOnWorld = false;
                 IsMouseCursorOnWorld = false;
             }
+
+            CancelClick = Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape);
 
             MousePosition = GetMouseMapPosition();
             Esc = Input.GetKeyDown(KeyCode.Escape);

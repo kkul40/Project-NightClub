@@ -1,6 +1,7 @@
 ﻿using Disco_Building;
 using HighlightPlus;
 using PropBehaviours;
+using UI.GamePages;
 using UnityEngine;
 
 namespace System
@@ -10,42 +11,61 @@ namespace System
         [SerializeField] private HighlightProfile _interactableHighlight;
         [SerializeField] private HighlightProfile _propUnitHighlight;
         [SerializeField] private HighlightProfile _noneHighlight;
+        
         private GameObject _currentGameObject;
-
         private IInteractable _currentInteractable;
         private InputSystem _inputSystem => InputSystem.Instance;
 
+        private bool clicked;
+        
         private void Update()
         {
-            if (BuildingManager.Instance.isPlacing || 
-                !InputSystem.Instance.IsMouseCursorOnWorld)
-            {
-                Reset();
-                return;
-            }
-            
-            var hitTransform = _inputSystem.GetHitTransform();
-
-            if (hitTransform == null)
+            if (BuildingManager.Instance.isPlacing)
             {
                 Reset();
                 return;
             }
 
-            if (hitTransform.gameObject != _currentGameObject) Reset();
-
-            if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
+            if (clicked)
             {
-                if (cursorInteraction.IsInteractable)
+                if (_inputSystem.CancelClick)
                 {
-                    if (_currentInteractable != cursorInteraction)
-                        Set(cursorInteraction, hitTransform.gameObject);
+                    clicked = false;
+                    UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
+                    Reset();
+                }
+                else if (_inputSystem.LeftClickOnWorld)
+                {
+                    clicked = false;
+                    UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
                 }
             }
 
-            if (_inputSystem.LeftClickOnWorld)
-                if (_currentInteractable != null)
-                    _currentInteractable.OnClick();
+            if (!clicked)
+            {
+                var hitTransform = _inputSystem.GetHitTransform();
+                
+                if (hitTransform == null)
+                {
+                    Reset();
+                    return;
+                }
+
+                if (hitTransform.gameObject != _currentGameObject) Reset();
+
+                if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
+                {
+                    if (cursorInteraction.IsInteractable)
+                    {
+                        if (_currentInteractable != cursorInteraction)
+                            Set(cursorInteraction, hitTransform.gameObject);
+                    }
+                }
+                
+                if (_inputSystem.LeftClickOnWorld)
+                    if (_currentInteractable != null)
+                        HandleOnClick();
+            }
         }
 
         private void Set(IInteractable set, GameObject gameObject)
@@ -106,6 +126,16 @@ namespace System
             }
 
             _currentGameObject = null;
+        }
+
+        private void HandleOnClick()
+        {
+            // _currentInteractable.OnClick();
+            if(_currentGameObject.TryGetComponent(out IPropUnit propUnit))
+            {
+                UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage),propUnit);
+                clicked = true;
+            }
         }
     }
 }

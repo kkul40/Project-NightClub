@@ -66,10 +66,9 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            // TODO Add isbusy To Cancel
             if (HasBarCleaned)
             {
-                UIPageManager.Instance.RequestAPage(new UIBarPage(), this);
+                UIPageManager.Instance.RequestAPage(typeof(UIBarPage), this);
             }
             else if(_drinkTable.IsOutOfDrinks)
             {

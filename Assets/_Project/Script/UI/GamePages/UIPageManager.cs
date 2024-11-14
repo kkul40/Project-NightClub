@@ -28,21 +28,13 @@ namespace UI.GamePages
                 CloseAllPages(PageType.FullPage);
             }
 
-            if (InputSystem.Instance.LeftClickOnWorld)
+            if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
             {
-                var hitTransform = InputSystem.Instance.GetHitTransform();
-
-                if (hitTransform.TryGetComponent(out IInteractable interactable))
-                {
-                    if(interactable.Interaction == eInteraction.None)
-                        CloseAllPages(PageType.MiniPage);
-                }
-                else
-                    CloseAllPages(PageType.MiniPage);
+                CloseAllPages(PageType.MiniPage);
             }
         }
 
-        public void RequestAPage<T>(UIPageBase requestedPage, T data = null) where T : class
+        public void RequestAPage<T>(Type requestedPage, T data = null) where T : class
         {
             var page = GetPage(requestedPage);
 
@@ -57,25 +49,20 @@ namespace UI.GamePages
             page.Show();
         }
 
-        public bool IsPageIsToggled(UIPageBase reqeustedPage)
+        public bool IsPageToggled(Type reqeustedPage)
         {
             var page = GetPage(reqeustedPage);
-            
-            if (page.PageType == PageType.FullPage)
-            {
-                CloseAllPages(PageType.MiniPage);
-            }
-            
             return page.isToggled;
         }
         
         /// <summary>
-        /// For Button Call
+        /// For Button Calls
         /// </summary>
         /// <param name="requestedPage"></param>
         public void ToggleAPage(UIPageBase requestedPage)
         {
-            var page = GetPage(requestedPage);
+            var type = requestedPage.GetType();
+            var page = GetPage(type);
             page.Toggle();
 
             if (page.isToggled)
@@ -87,7 +74,7 @@ namespace UI.GamePages
             }
         }
 
-        public void CloseAPage<T>(T requestedPage) where T : UIPageBase
+        public void CloseAPage(Type requestedPage)
         {
             var page = GetPage(requestedPage);
             
@@ -111,9 +98,9 @@ namespace UI.GamePages
             }
         }
 
-        private UIPageBase GetPage(UIPageBase findPage)
+        private UIPageBase GetPage(Type findPage)
         {
-            var page = _uiPageBases.FirstOrDefault(page => page.GetType() == findPage.GetType());
+            var page = _uiPageBases.FirstOrDefault(page => page.GetType() == findPage);
             if (page == null)
             {
                 Debug.LogError("Page Could Not Found : " + findPage.ToString());
