@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Clock 1
   m_EditorClassIdentifier: 
   ID: -1993631677
-  Name: 
+  Name: Shows Time
   Icon: {fileID: 0}
   Price: 0
   Prefab: {fileID: 3810206519391753182, guid: 4330e92e341c51a43b787bc433b6b20a, type: 3}
   Size: {x: 1, y: 1}
+  IsBig: 0
   PlacementLayer: 2
   eRotation: 3
