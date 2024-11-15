@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data;
+using Disco_Building;
+using Disco_ScriptableObject;
 using PropBehaviours;
 using UnityEngine;
 
@@ -11,11 +14,12 @@ namespace UI.GamePages
 
         private RectTransform _rectTransform;
         private UI_FollowTarget _followTarget;
-        private List<GameObject> _allButtons = new List<GameObject>();
+        [SerializeField] private List<GameObject> _allButtons = new List<GameObject>();
 
         [SerializeField] private GameObject InfoButton;
-        [SerializeField] private GameObject RelocateButton;
         [SerializeField] private GameObject DrinkButton;
+        [SerializeField] private GameObject RelocateButton;
+        [SerializeField] private GameObject RemoveButton;
 
         private RectTransform InfoButtonRect;
         
@@ -32,10 +36,6 @@ namespace UI.GamePages
             CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
             _rectTransform = GetComponent<RectTransform>();
-            
-            _allButtons.Add(DrinkButton);
-            _allButtons.Add(RelocateButton);
-            _allButtons.Add(InfoButton);
         }
 
         protected override void OnShow<T>(T data)
@@ -52,16 +52,16 @@ namespace UI.GamePages
         private void SetUpButtons()
         {
             // Activate Buttons
+            if (_lastPropUnit is IPropUnit)
+            {
+                InfoButton.SetActive(true);
+                RelocateButton.SetActive(true);
+                RemoveButton.SetActive(true);
+            }
+            
             if (_lastPropUnit is Bar)
             {
-                InfoButton.SetActive(true);
-                RelocateButton.SetActive(true);
                 DrinkButton.SetActive(true);
-            }
-            else
-            {
-                InfoButton.SetActive(true);
-                RelocateButton.SetActive(true);
             }
             
             // Position Buttons
@@ -91,18 +91,27 @@ namespace UI.GamePages
                 button.SetActive(false);
         }
 
-        public void OpenInfoPage()
+        public void OpenPropInfo()
         {
-        }
-
-        public void RelocatePage()
-        {
-            UIPageManager.Instance.RequestAPage(typeof(UIPropRelocatePage), _lastPropUnit);
+            UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), _lastPropUnit);
         }
 
         public void OpenDrinkPage()
         {
             UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), _lastPropUnit);
+        }
+        
+        public void Relocate()
+        {
+            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastPropUnit.ID);
+            BuildingManager.Instance.ReplaceObject(item, _lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer);
+            Hide();
+        }
+
+        public void Remove()
+        {
+            DiscoData.Instance.placementDataHandler.RemovePlacement(_lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer, true);
+            Hide();
         }
         
         private void GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints, out List<Vector2> pointPositions)

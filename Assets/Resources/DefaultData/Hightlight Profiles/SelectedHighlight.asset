@@ -30,7 +30,7 @@ MonoBehaviour:
   cameraDistanceFadeFar: 1000
   constantWidth: 0
   minimumWidth: 0
-  overlay: 0.5
+  overlay: 0.8
   overlayMode: 0
   overlayColor: {r: 0.30319762, g: 1, b: 0, a: 1}
   overlayAnimationSpeed: 1

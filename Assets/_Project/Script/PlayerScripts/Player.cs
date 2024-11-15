@@ -2,6 +2,7 @@ using System;
 using Data;
 using NPCBehaviour;
 using NPCBehaviour.PathFinder;
+using UI.GamePages;
 using UnityEngine;
 
 namespace PlayerScripts
@@ -29,7 +30,7 @@ namespace PlayerScripts
             // Debug.Log(InputSystem.Instance.GetMouseMapPosition());
             // Debug.Log(InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PathFinderGrid));
 
-            if (InputSystem.Instance.RightClickOnWorld)
+            if (InputSystem.Instance.RightClickOnWorld && !UIPageManager.Instance.IsAnyUIToggled())
             {
                 _pathFinder.GoTargetDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 _animationController.PlayAnimation(eAnimationType.NPC_Walk);

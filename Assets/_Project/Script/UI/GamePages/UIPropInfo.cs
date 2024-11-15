@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace UI.GamePages
 {
-    public class UIPropRelocatePage : UIPageBase
+    public class UIPropInfo : UIPageBase
     {
         private bool _toggle;
         private int _lastInstanceID = -1;
@@ -19,6 +19,7 @@ namespace UI.GamePages
 
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private TextMeshProUGUI _textDescription;
 
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
@@ -57,19 +58,7 @@ namespace UI.GamePages
 
             _image.sprite= item.Icon;
             _text.text = item.Name;
-        }
-
-        public void Replace()
-        {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastINT.ID);
-            BuildingManager.Instance.ReplaceObject(item, _lastINT.CellPosition, _lastINT.PlacementLayer);
-            Hide();
-        }
-
-        public void Remove()
-        {
-            DiscoData.Instance.placementDataHandler.RemovePlacement(_lastINT.CellPosition, _lastINT.PlacementLayer, true);
-            Hide();
+            _textDescription.text = item.Description;
         }
     }
 }

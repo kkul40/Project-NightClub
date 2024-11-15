@@ -6,6 +6,8 @@ namespace Disco_ScriptableObject
     {
         public int ID;
         public string Name;
+        [TextArea(3, 3)] 
+        public string Description;
         public Sprite Icon;
         public int Price;
 

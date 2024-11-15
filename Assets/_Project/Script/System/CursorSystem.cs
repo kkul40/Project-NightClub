@@ -70,30 +70,24 @@ namespace System
                             Reset();
                             _cursorState = CursorState.Free;
                         }
-                        // else
-                        // {
-                        //     if (hitTransform.TryGetComponent(out IInteractable interaction))
-                        //     {
-                        //         if (interaction.IsInteractable)
-                        //         {
-                        //             if (_currentInteractable != interaction)
-                        //             {
-                        //                 Reset();
-                        //                 Set(interaction, hitTransform.gameObject, true);
-                        //                 _currentInteractable.OnClick();
-                        //             }
-                        //         }
-                        //     }
-                        //     else
-                        //     {
-                        //         Reset();
-                        //         _cursorState = CursorState.Free;
-                        //     }
-                        // }
                         else
                         {
-                            Reset();
-                            _cursorState = CursorState.Free;
+                            var interaction = hitTransform.GetComponent<IInteractable>();
+                            
+                            if (interaction != null && interaction.IsInteractable && interaction.Interaction != eInteraction.None)
+                            {
+                                if (_currentInteractable != interaction)
+                                {
+                                    Reset();
+                                    Set(interaction, hitTransform.gameObject, true);
+                                    _currentInteractable.OnClick();
+                                }
+                            }
+                            else
+                            {
+                                Reset();
+                                _cursorState = CursorState.Free;
+                            }
                         }
                     }
                     else if (_inputSystem.CancelClick)

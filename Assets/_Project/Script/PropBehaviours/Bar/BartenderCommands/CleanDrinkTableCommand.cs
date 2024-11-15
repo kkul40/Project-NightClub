@@ -28,6 +28,7 @@ namespace PropBehaviours
             if (bar.HasDrinks) return false;
             if (bar.IsBusy) return false;
             
+            bar.IsBusy = true;
             return true;
         }
 

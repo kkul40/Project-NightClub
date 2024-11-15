@@ -37,9 +37,9 @@ namespace PropBehaviours
                 Debug.Log("Can't Start Action");
                 return false;
             }
-
             if (bar.IsBusy) return false;
 
+            bar.IsBusy = true;
             return true;
         }
 
