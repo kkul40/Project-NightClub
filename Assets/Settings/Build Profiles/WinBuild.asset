@@ -45,12 +45,12 @@ MonoBehaviour:
     - line: '|   defaultCursor: {fileID: 2800000, guid: 9f715941211c9ab498f575956bc1b240,
         type: 3}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
-    - line: '|   m_SplashScreenBackgroundColor: {r: 0.050980397, g: 0, b: 0.06666667,
+    - line: '|   m_SplashScreenBackgroundColor: {r: 0, g: 0.2509804, b: 0.7137255,
         a: 1}'
-    - line: '|   m_ShowUnitySplashScreen: 0'
+    - line: '|   m_ShowUnitySplashScreen: 1'
     - line: '|   m_ShowUnitySplashLogo: 0'
     - line: '|   m_SplashScreenOverlayOpacity: 1'
-    - line: '|   m_SplashScreenAnimation: 0'
+    - line: '|   m_SplashScreenAnimation: 1'
     - line: '|   m_SplashScreenLogoStyle: 1'
     - line: '|   m_SplashScreenDrawMode: 0'
     - line: '|   m_SplashScreenBackgroundAnimationZoom: 1'
@@ -70,9 +70,9 @@ MonoBehaviour:
     - line: '|     width: 1'
     - line: '|     height: 1'
     - line: '|   m_SplashScreenLogos:'
-    - line: '|   - logo: {fileID: 21300000, guid: 85f619490496bf44b935488abbce1b0d,
+    - line: '|   - logo: {fileID: 21300000, guid: 854d46e98d80ddf409917fab470bac0a,
         type: 3}'
-    - line: '|     duration: 2'
+    - line: '|     duration: 3'
     - line: '|   m_VirtualRealitySplashScreen: {instanceID: 0}'
     - line: '|   m_HolographicTrackingLossScreen: {instanceID: 0}'
     - line: '|   defaultScreenWidth: 1920'
@@ -173,7 +173,7 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 0.2.5'
+    - line: '|   bundleVersion: 0.2.8'
     - line: '|   preloadedAssets: []'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'
