@@ -60,11 +60,6 @@ namespace UI.GamePages
             SetButtonPosition();
         }
         
-        private void Update()
-        {
-            // SetButtonPosition();
-        }
-
         private void SetButtonPosition()
         {
             List<GameObject> activeButtons = new List<GameObject>();

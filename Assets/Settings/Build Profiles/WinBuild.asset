@@ -42,7 +42,8 @@ MonoBehaviour:
     - line: '|   accelerometerFrequency: 60'
     - line: '|   companyName: Konna Games'
     - line: '|   productName: Project-NightClub'
-    - line: '|   defaultCursor: {instanceID: 0}'
+    - line: '|   defaultCursor: {fileID: 2800000, guid: 9f715941211c9ab498f575956bc1b240,
+        type: 3}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.050980397, g: 0, b: 0.06666667,
         a: 1}'

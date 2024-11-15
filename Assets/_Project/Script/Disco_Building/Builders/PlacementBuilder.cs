@@ -102,7 +102,7 @@ namespace Disco_Building.Builders
                             smokeOffset.z = -0.5f;
                             break;
                     }
-                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.CellCenterPosition(eGridType.PlacementGrid).AddVector(smokeOffset), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
+                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction).AddVector(smokeOffset), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
                     break;
             }
         }
