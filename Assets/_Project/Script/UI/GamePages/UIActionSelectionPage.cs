@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
+using DG.Tweening;
 using Disco_Building;
 using Disco_ScriptableObject;
 using PropBehaviours;
@@ -12,24 +13,29 @@ namespace UI.GamePages
     {
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
+        [SerializeField] private Canvas _canvas;
         private RectTransform _rectTransform;
         private UI_FollowTarget _followTarget;
+        
+        [Header("Order Of Buttons")]
         [SerializeField] private List<GameObject> _allButtons = new List<GameObject>();
 
+        [Header("Buttons")]
         [SerializeField] private GameObject InfoButton;
         [SerializeField] private GameObject DrinkButton;
         [SerializeField] private GameObject RelocateButton;
         [SerializeField] private GameObject RemoveButton;
 
         private RectTransform InfoButtonRect;
-        
         private int _lastInstanceID;
-
         private IPropUnit _lastPropUnit;
         
+        [Header("Circle Placement Settings")]
         public int pointCoutn;
         public float radius;
         public float angleBetween;
+
+        private List<Tween> _tweens = new List<Tween>();
 
         protected override void OnAwake()
         {
@@ -43,8 +49,8 @@ namespace UI.GamePages
             _lastPropUnit = data as IPropUnit;
 
             _lastInstanceID = data.GetHashCode();
-            _followTarget.SetTarget(_lastPropUnit.gameObject);
             
+            _followTarget.SetTarget(_lastPropUnit.gameObject);
             CloseAllButtons();
             Invoke(nameof(SetUpButtons), 0.1f);
         }
@@ -77,11 +83,18 @@ namespace UI.GamePages
             List<Vector2> endPoints = new List<Vector2>();
             GenerateCirclePoints(activeButtons.Count, radius, angleBetween, out endPoints);
 
+
+            foreach (var tween in _tweens)
+            {
+                tween.Kill();
+            }
+            
             for (int i = 0; i < activeButtons.Count; i++)
             {
                 RectTransform rectTransform = activeButtons[i].GetComponent<RectTransform>();
-                Vector3 endPoint = new Vector3(endPoints[i].x, endPoints[i].y, 0);
-                rectTransform.position = _rectTransform.position + endPoint;
+                Vector2 targetPoint = new Vector2(endPoints[i].x, endPoints[i].y);
+                rectTransform.anchoredPosition = Vector3.zero;
+                _tweens.Add(rectTransform.DOAnchorPos(targetPoint, 0.5f).SetEase(Ease.OutExpo).SetLink(rectTransform.gameObject));
             }
         }
         
@@ -116,7 +129,8 @@ namespace UI.GamePages
         
         private void GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints, out List<Vector2> pointPositions)
         {
-            var fixedRadius = radius * Screen.height / 10;
+            float fixedRadius = Screen.height * radius / _canvas.scaleFactor;
+            Debug.Log(Screen.height);
             pointPositions = new List<Vector2>();
             float totalArcAngle = (numberOfPoints - 1) * angleBetweenPoints;
         
