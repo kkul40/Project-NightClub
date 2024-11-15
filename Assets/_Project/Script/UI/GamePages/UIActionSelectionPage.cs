@@ -19,6 +19,8 @@ namespace UI.GamePages
 
         private RectTransform InfoButtonRect;
         
+        private int _lastInstanceID;
+
         private IPropUnit _lastPropUnit;
         
         public int pointCoutn;
@@ -27,7 +29,7 @@ namespace UI.GamePages
 
         protected override void OnAwake()
         {
-            CloseAll();
+            CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
             _rectTransform = GetComponent<RectTransform>();
             
@@ -38,14 +40,19 @@ namespace UI.GamePages
 
         protected override void OnShow<T>(T data)
         {
-            IPropUnit propUnit = data as IPropUnit;
+            _lastPropUnit = data as IPropUnit;
 
-            _lastPropUnit = propUnit;
+            _lastInstanceID = data.GetHashCode();
             _followTarget.SetTarget(_lastPropUnit.gameObject);
             
-            CloseAll();
-
-            if (propUnit is Bar)
+            CloseAllButtons();
+            Invoke(nameof(SetUpButtons), 0.1f);
+        }
+        
+        private void SetUpButtons()
+        {
+            // Activate Buttons
+            if (_lastPropUnit is Bar)
             {
                 InfoButton.SetActive(true);
                 RelocateButton.SetActive(true);
@@ -57,11 +64,7 @@ namespace UI.GamePages
                 RelocateButton.SetActive(true);
             }
             
-            SetButtonPosition();
-        }
-        
-        private void SetButtonPosition()
-        {
+            // Position Buttons
             List<GameObject> activeButtons = new List<GameObject>();
             for (int i = 0; i < _allButtons.Count; i++)
             {
@@ -82,7 +85,7 @@ namespace UI.GamePages
             }
         }
         
-        private void CloseAll()
+        private void CloseAllButtons()
         {
             foreach (var button in _allButtons)
                 button.SetActive(false);
@@ -104,9 +107,7 @@ namespace UI.GamePages
         
         private void GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints, out List<Vector2> pointPositions)
         {
-            var fixedRadius = radius * Screen.height / 1000;
-            Debug.Log(fixedRadius);
-            Debug.Log(Screen.height);
+            var fixedRadius = radius * Screen.height / 10;
             pointPositions = new List<Vector2>();
             float totalArcAngle = (numberOfPoints - 1) * angleBetweenPoints;
         

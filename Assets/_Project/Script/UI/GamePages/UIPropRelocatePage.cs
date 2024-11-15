@@ -13,7 +13,7 @@ namespace UI.GamePages
     {
         private bool _toggle;
         private int _lastInstanceID = -1;
-        private IPropUnit _lastPropUnit;
+        private IPropUnit _lastINT;
 
         private UI_FollowTarget _followTarget;
 
@@ -39,7 +39,7 @@ namespace UI.GamePages
             }
             
             _lastInstanceID = propUnit.GetInstanceID();
-            _lastPropUnit = propUnit;
+            _lastINT = propUnit;
             _toggle = true;
             
             _followTarget.SetTarget(propUnit.gameObject);
@@ -53,7 +53,7 @@ namespace UI.GamePages
 
         private void UpdateVisual()
         {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastPropUnit.ID);
+            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastINT.ID);
 
             _image.sprite= item.Icon;
             _text.text = item.Name;
@@ -61,14 +61,14 @@ namespace UI.GamePages
 
         public void Replace()
         {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastPropUnit.ID);
-            BuildingManager.Instance.ReplaceObject(item, _lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer);
+            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastINT.ID);
+            BuildingManager.Instance.ReplaceObject(item, _lastINT.CellPosition, _lastINT.PlacementLayer);
             Hide();
         }
 
         public void Remove()
         {
-            DiscoData.Instance.placementDataHandler.RemovePlacement(_lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer, true);
+            DiscoData.Instance.placementDataHandler.RemovePlacement(_lastINT.CellPosition, _lastINT.PlacementLayer, true);
             Hide();
         }
     }
