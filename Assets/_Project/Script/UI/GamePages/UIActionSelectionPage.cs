@@ -71,7 +71,6 @@ namespace UI.GamePages
 
             if (activeButtons.Count == 0) return;
 
-            Debug.Log(activeButtons.Count);
             List<Vector2> endPoints = new List<Vector2>();
             GenerateCirclePoints(activeButtons.Count, radius, angleBetween, out endPoints);
 
@@ -105,6 +104,9 @@ namespace UI.GamePages
         
         private void GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints, out List<Vector2> pointPositions)
         {
+            var fixedRadius = radius * Screen.height / 1000;
+            Debug.Log(fixedRadius);
+            Debug.Log(Screen.height);
             pointPositions = new List<Vector2>();
             float totalArcAngle = (numberOfPoints - 1) * angleBetweenPoints;
         
@@ -114,8 +116,8 @@ namespace UI.GamePages
             {
                 float angle = startAngle + i * angleBetweenPoints * Mathf.Deg2Rad;
 
-                float x = Mathf.Cos(angle) * radius;
-                float y = Mathf.Sin(angle) * radius;
+                float x = Mathf.Cos(angle) * fixedRadius;
+                float y = Mathf.Sin(angle) * fixedRadius;
 
                 pointPositions.Add(new Vector2(x, y));
             }
@@ -123,16 +125,16 @@ namespace UI.GamePages
        
         private void OnDrawGizmos()
         {
-            if (_rectTransform == null) return;
-            if (angleBetween <= 0) return;
-            List<Vector2> endPoints = new List<Vector2>();
-            GenerateCirclePoints(pointCoutn, radius, angleBetween, out endPoints);
-
-            foreach (var point in endPoints)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(_rectTransform.position + new Vector3(point.x, point.y, 0), 5);
-            }
+            // if (_rectTransform == null) return;
+            // if (angleBetween <= 0) return;
+            // List<Vector2> endPoints = new List<Vector2>();
+            // GenerateCirclePoints(pointCoutn, radius, angleBetween, out endPoints);
+            //
+            // foreach (var point in endPoints)
+            // {
+            //     Gizmos.color = Color.red;
+            //     Gizmos.DrawSphere(_rectTransform.position + new Vector3(point.x, point.y, 0), 5);
+            // }
         }
     }
 }
