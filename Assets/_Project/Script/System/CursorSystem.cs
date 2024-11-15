@@ -25,43 +25,41 @@ namespace System
                 Reset();
                 return;
             }
-
-            if (clicked)
+            //
+            // if (clicked)
+            // {
+            //     if (_inputSystem.CancelClick || _inputSystem.LeftClickOnWorld)
+            //     {
+            //         clicked = false;
+            //         UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
+            //         Reset();
+            //     }
+            //
+            //     return;
+            // }
+            
+            var hitTransform = _inputSystem.GetHitTransform();
+                
+            if (hitTransform == null)
             {
-                if (_inputSystem.CancelClick || _inputSystem.LeftClickOnWorld)
-                {
-                    clicked = false;
-                    UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
-                    Reset();
-                    return;
-                }
+                Reset();
+                return;
             }
 
-            if (!clicked)
+            if (hitTransform.gameObject != _currentGameObject) Reset();
+
+            if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
             {
-                var hitTransform = _inputSystem.GetHitTransform();
-                
-                if (hitTransform == null)
+                if (cursorInteraction.IsInteractable)
                 {
-                    Reset();
-                    return;
+                    if (_currentInteractable != cursorInteraction)
+                        Set(cursorInteraction, hitTransform.gameObject);
                 }
-
-                if (hitTransform.gameObject != _currentGameObject) Reset();
-
-                if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
-                {
-                    if (cursorInteraction.IsInteractable)
-                    {
-                        if (_currentInteractable != cursorInteraction)
-                            Set(cursorInteraction, hitTransform.gameObject);
-                    }
-                }
-                
-                if (_inputSystem.LeftClickOnWorld)
-                    if (_currentInteractable != null && _currentInteractable.IsInteractable)
-                        HandleOnClick();
             }
+                
+            if (_inputSystem.LeftClickOnWorld)
+                if (_currentInteractable != null && _currentInteractable.IsInteractable)
+                    HandleOnClick();
         }
 
         private void Set(IInteractable set, GameObject gameObject)

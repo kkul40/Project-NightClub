@@ -11461,7 +11461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &958687927
 Transform:
   m_ObjectHideFlags: 0
@@ -23226,7 +23226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  storePage: {fileID: 0}
+  storePage: {fileID: 1954767697}
 --- !u!1 &1840500589
 GameObject:
   m_ObjectHideFlags: 0
@@ -26718,7 +26718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  storePage: {fileID: 0}
+  storePage: {fileID: 1954767697}
 --- !u!4 &2049841877 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}

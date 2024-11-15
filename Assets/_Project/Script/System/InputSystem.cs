@@ -143,7 +143,7 @@ namespace System
             var ray = mainCam.ScreenPointToRay(mousePOs);
 
             RaycastHit hit;
-            float maxDistance = 100;
+            float maxDistance = 1000;
 
             // TODO Ignore Layer Ekle ki kapi bugg da kalmasin
             // int ignoreLayer = ignore;
