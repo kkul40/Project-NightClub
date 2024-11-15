@@ -28,16 +28,12 @@ namespace System
 
             if (clicked)
             {
-                if (_inputSystem.CancelClick)
+                if (_inputSystem.CancelClick || _inputSystem.LeftClickOnWorld)
                 {
                     clicked = false;
                     UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
                     Reset();
-                }
-                else if (_inputSystem.LeftClickOnWorld)
-                {
-                    clicked = false;
-                    UIPageManager.Instance.CloseAPage(typeof(UIActionSelectionPage));
+                    return;
                 }
             }
 

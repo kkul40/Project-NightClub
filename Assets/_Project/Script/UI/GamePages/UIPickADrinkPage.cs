@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIBarPage : UIPageBase
+    public class UIPickADrinkPage : UIPageBase
     {
         private UI_FollowTarget _followTarget;
         private int _lastInstanceID = -1;

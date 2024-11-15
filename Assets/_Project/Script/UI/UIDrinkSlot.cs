@@ -16,21 +16,21 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _priceText;
 
-        private UIBarPage _barPage;
+        private UIPickADrinkPage _pickADrinkPage;
 
-        public void Init(DrinkSO drinkSoToStore, UIBarPage barPage)
+        public void Init(DrinkSO drinkSoToStore, UIPickADrinkPage pickADrinkPage)
         {
             _drinkSo = drinkSoToStore;
             _image.sprite = drinkSoToStore.Icon;
             _nameText.text = drinkSoToStore.Name;
             _priceText.text = drinkSoToStore.Price.ToString();
             
-            _barPage = barPage;
+            _pickADrinkPage = pickADrinkPage;
         }
 
         public void OnClick()
         {
-            _barPage.SelectADrink(_drinkSo);
+            _pickADrinkPage.SelectADrink(_drinkSo);
         }
     }
 }

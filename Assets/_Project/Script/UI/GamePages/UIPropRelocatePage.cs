@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace UI.GamePages
 {
-    public class UIPropInfo : UIPageBase
+    public class UIPropRelocatePage : UIPageBase
     {
         private bool _toggle;
         private int _lastInstanceID = -1;
