@@ -118,5 +118,12 @@ namespace ExtensionMethods
             
             return playerCustomizationIndexData;
         }
+
+        [Serializable]
+        public class GameSettingsData
+        {
+            public float MusicVolume = 1;
+            public float SoundVolume = 1;
+        }
     }
 }
