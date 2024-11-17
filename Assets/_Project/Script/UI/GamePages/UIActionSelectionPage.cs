@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using DG.Tweening;
 using Disco_Building;
@@ -23,12 +24,13 @@ namespace UI.GamePages
         [Header("Buttons")]
         [SerializeField] private GameObject InfoButton;
         [SerializeField] private GameObject DrinkButton;
+        [SerializeField] private GameObject CancelButton;
         [SerializeField] private GameObject RelocateButton;
         [SerializeField] private GameObject RemoveButton;
 
         private RectTransform InfoButtonRect;
         private int _lastInstanceID;
-        private IPropUnit _lastPropUnit;
+        private object _lastData;
         
         [Header("Circle Placement Settings")]
         public int pointCoutn;
@@ -46,48 +48,50 @@ namespace UI.GamePages
 
         protected override void OnShow<T>(T data)
         {
-            _lastPropUnit = data as IPropUnit;
-
-            _lastInstanceID = data.GetHashCode();
+            _lastData = data;
             
-            _followTarget.SetTarget(_lastPropUnit.gameObject);
             CloseAllButtons();
             Invoke(nameof(SetUpButtons), 0.1f);
         }
-        
+
         private void SetUpButtons()
         {
-            // Activate Buttons
-            if (_lastPropUnit is IPropUnit)
+            HandleDataAndActivateButton();
+            ArrangeButtonInCircle();
+        }
+
+        private void HandleDataAndActivateButton()
+        {
+            if (_lastData is IPropUnit lastProp)
             {
                 InfoButton.SetActive(true);
                 RelocateButton.SetActive(true);
                 RemoveButton.SetActive(true);
+                _followTarget.SetTarget(lastProp.gameObject);
             }
-            
-            if (_lastPropUnit is Bar)
+
+            if (_lastData is Bar _lastBar)
             {
                 DrinkButton.SetActive(true);
-            }
-            
-            // Position Buttons
-            List<GameObject> activeButtons = new List<GameObject>();
-            for (int i = 0; i < _allButtons.Count; i++)
-            {
-                if (_allButtons[i].activeInHierarchy)
-                    activeButtons.Add(_allButtons[i]);
+                _followTarget.SetTarget(_lastBar.gameObject);
             }
 
+            if (_lastData is Bartender _lastBartender)
+            {
+                CancelButton.SetActive(true);
+                _followTarget.SetTarget(_lastBartender.gameObject);
+            }
+        }
+        
+        private void ArrangeButtonInCircle()
+        {
+            var activeButtons = _allButtons.Where(button => button.activeInHierarchy).ToList();
             if (activeButtons.Count == 0) return;
 
-            List<Vector2> endPoints = new List<Vector2>();
-            GenerateCirclePoints(activeButtons.Count, radius, angleBetween, out endPoints);
+            List<Vector2> endPoints = GenerateCirclePoints(activeButtons.Count, radius, angleBetween);
 
-
-            foreach (var tween in _tweens)
-            {
-                tween.Kill();
-            }
+            _tweens.ForEach(t => t.Kill());
+            _tweens.Clear();
             
             for (int i = 0; i < activeButtons.Count; i++)
             {
@@ -97,7 +101,7 @@ namespace UI.GamePages
                 _tweens.Add(rectTransform.DOAnchorPos(targetPoint, 0.5f).SetEase(Ease.OutExpo).SetLink(rectTransform.gameObject));
             }
         }
-        
+
         private void CloseAllButtons()
         {
             foreach (var button in _allButtons)
@@ -106,34 +110,48 @@ namespace UI.GamePages
 
         public void OpenPropInfo()
         {
-            UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), _lastPropUnit);
+            var propUnit = _lastData as IPropUnit;
+            if (propUnit == null) return;
+            UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), _lastData as IPropUnit);
+            Hide();
         }
 
         public void OpenDrinkPage()
         {
-            UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), _lastPropUnit);
+            var bar = _lastData as Bar;
+            if (bar == null) return;
+            UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
+            Hide();
+        }
+
+        public void HandleCancelButton()
+        {
+            
         }
         
         public void Relocate()
         {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastPropUnit.ID);
-            BuildingManager.Instance.ReplaceObject(item, _lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer);
+            var propUnit = _lastData as IPropUnit;
+            if (propUnit == null) return;
+            StoreItemSO item = DiscoData.Instance.FindAItemByID(propUnit.ID);
+            BuildingManager.Instance.ReplaceObject(item, propUnit.CellPosition, propUnit.PlacementLayer);
             Hide();
         }
 
         public void Remove()
         {
-            DiscoData.Instance.placementDataHandler.RemovePlacement(_lastPropUnit.CellPosition, _lastPropUnit.PlacementLayer, true);
+            var propUnit = _lastData as IPropUnit;
+            if (propUnit == null) return;
+            DiscoData.Instance.placementDataHandler.RemovePlacement(propUnit.CellPosition, propUnit.PlacementLayer, true);
             Hide();
         }
         
-        private void GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints, out List<Vector2> pointPositions)
+        private List<Vector2> GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints)
         {
             float fixedRadius = Screen.height * radius / _canvas.scaleFactor;
-            Debug.Log(Screen.height);
-            pointPositions = new List<Vector2>();
+            List<Vector2> pointPositions = new List<Vector2>();
+            
             float totalArcAngle = (numberOfPoints - 1) * angleBetweenPoints;
-        
             float startAngle = Mathf.PI / 2 - (totalArcAngle / 2 * Mathf.Deg2Rad); 
 
             for (int i = 0; i < numberOfPoints; i++)
@@ -145,6 +163,8 @@ namespace UI.GamePages
 
                 pointPositions.Add(new Vector2(x, y));
             }
+
+            return pointPositions;
         }
        
         private void OnDrawGizmos()

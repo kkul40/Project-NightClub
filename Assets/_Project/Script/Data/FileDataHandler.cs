@@ -32,7 +32,10 @@ namespace Data
                             dataToLoad = reader.ReadToEnd();
                         }
                     }
-
+#if UNITY_WEBGL
+                    // WEB-GL Load
+                    dataToLoad = PlayerPrefs.GetString("JSON");
+#endif
                     loadedGameData = JsonUtility.FromJson<GameData>(dataToLoad);
                 }
                 catch (Exception e)
@@ -57,6 +60,8 @@ namespace Data
                     using (var write = new StreamWriter(stream))
                     {
                         write.Write(dataToStore);
+                        // WEB-GL Save
+                        PlayerPrefs.SetString("JSON", dataToStore);
                     }
                 }
             }
@@ -70,6 +75,7 @@ namespace Data
         {
             var fullPath = Path.Combine(dataDirPath, dataFileName);
 
+            PlayerPrefs.SetString("JSON", "");
             if (File.Exists(fullPath))
                 try
                 {

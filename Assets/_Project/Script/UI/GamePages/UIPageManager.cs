@@ -111,12 +111,8 @@ namespace UI.GamePages
         public bool IsAnyUIToggled()
         {
             foreach (var pages in _uiPageBases)
-            {
                 if (pages.isToggled)
-                {
                     return true;
-                }
-            }
 
             return false;
         }

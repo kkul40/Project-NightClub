@@ -19,6 +19,7 @@ namespace Data
         public SerializableDictionary<Vector3Int, GameDataExtension.FloorSaveData> SavedFloorDatas;
         public List<GameDataExtension.PlacementSaveData> SavedPlacementDatas;
         public List<GameDataExtension.InventorySaveData> SavedInventoryDatas;
+        public GameDataExtension.GameSettingsData GameSettingsData;
 
         public GameData()
         {
@@ -52,6 +53,9 @@ namespace Data
 
             // Inventory Data
             SavedInventoryDatas = new List<GameDataExtension.InventorySaveData>();
+
+            // Game Settings Data
+            GameSettingsData = new GameDataExtension.GameSettingsData();
         }
     }
 }

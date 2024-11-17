@@ -2,6 +2,7 @@
 using Data;
 using NPCBehaviour;
 using NPCBehaviour.PathFinder;
+using UI.GamePages;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -80,6 +81,7 @@ namespace PropBehaviours
 
         public void OnClick()
         {
+            UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
         }
 
         public bool TriggerDoor { get; set; } = true;
