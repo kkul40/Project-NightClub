@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI.GamePages
 {
-    public class UISettingsPage : UIPageBase, ISaveLoad
+    public class UISettingsPage : UIPageBase
     {
         public override PageType PageType { get; protected set; } = PageType.FullPage;
         
@@ -23,6 +23,12 @@ namespace UI.GamePages
             soundVolumeSlider.onValueChanged.AddListener(SetSoundVolume);
         }
 
+        private void OnEnable()
+        {
+            musicVolumeSlider.value = _musicVolume;
+            soundVolumeSlider.value = _soundVolume;
+        }
+
         public void SetMusicVolume(float value)
         {
             _musicVolume = value;
@@ -35,15 +41,13 @@ namespace UI.GamePages
             mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
         }
 
-        public void LoadData(GameData gameData)
+        public void LoadSettingsData(GameData gameData)
         {
             SetMusicVolume(gameData.GameSettingsData.MusicVolume);
             SetSoundVolume(gameData.GameSettingsData.SoundVolume);
-            musicVolumeSlider.value = _musicVolume;
-            soundVolumeSlider.value = _soundVolume;
         }
 
-        public void SaveData(ref GameData gameData)
+        public void SaveSettingsData(ref GameData gameData)
         {
             gameData.GameSettingsData.MusicVolume = _musicVolume;
             gameData.GameSettingsData.SoundVolume = _soundVolume;
