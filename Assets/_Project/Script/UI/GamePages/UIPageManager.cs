@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
 using PropBehaviours;
 using UnityEngine;
 
 namespace UI.GamePages
 {
     
-    public class UIPageManager : Singleton<UIPageManager>
+    public class UIPageManager : Singleton<UIPageManager>, ISaveLoad
     {
+        [SerializeField] private UISettingsPage _settingsPage;
         private HashSet<UIPageBase> _uiPageBases = new HashSet<UIPageBase>();
 
         private void Awake()
@@ -115,6 +117,16 @@ namespace UI.GamePages
                     return true;
 
             return false;
+        }
+
+        public void LoadData(GameData gameData)
+        {
+            _settingsPage.LoadSettingsData(gameData);
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            _settingsPage.SaveSettingsData(ref gameData);
         }
     }
 }

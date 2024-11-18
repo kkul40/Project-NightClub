@@ -19,10 +19,6 @@ namespace Data
         {
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
-        }
-
-        private void Start()
-        {
             LoadGame();
         }
 
