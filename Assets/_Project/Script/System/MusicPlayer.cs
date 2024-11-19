@@ -30,7 +30,6 @@ namespace System
 
         public void LoadData(GameData gameData)
         {
-            Debug.Log(gameData.GameSettingsData.MusicVolume);
             SetMusicVolume(gameData.GameSettingsData.MusicVolume);
         }
 
