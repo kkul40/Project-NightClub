@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -863902411
   Name: Square Table
+  Description: A Placeholder
   Icon: {fileID: 21300000, guid: 36350119cb4d3d1439f88990aed2b482, type: 3}
   Price: 0
   Prefab: {fileID: 4028892776164866389, guid: 23982da1feba06d48b2deeb62ebc551d, type: 3}

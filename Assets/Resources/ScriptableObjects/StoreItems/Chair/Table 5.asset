@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -148157075
   Name: Diamond Table
+  Description: A Placeholder
   Icon: {fileID: 21300000, guid: 36350119cb4d3d1439f88990aed2b482, type: 3}
   Price: 0
   Prefab: {fileID: 8952477242271958752, guid: 733af365a3b950e42a383ce612b8e791, type: 3}
