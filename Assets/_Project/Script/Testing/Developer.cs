@@ -8,24 +8,7 @@ namespace Testing
     {
         private void Awake()
         {
-#if UNITY_ANDROID
-      Application.targetFrameRate = 120;
-#endif
-        }
-
-        public void NextScene()
-        {
-            SceneManager.LoadScene(1);
-        }
-
-        public void PreviousScene()
-        {
-            SceneManager.LoadScene(0);
-        }
-
-        public void LoaodCurrentScene()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // Application.targetFrameRate = 120;
         }
     }
 }
