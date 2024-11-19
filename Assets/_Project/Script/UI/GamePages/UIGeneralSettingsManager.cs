@@ -4,7 +4,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class UIGeneralSettings : Singleton<UIGeneralSettings>, ISaveLoad
+public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISaveLoad
 {
     [Header("Toggle")]
     [SerializeField] private UIToggleButton EdgeScrollingToggle;
