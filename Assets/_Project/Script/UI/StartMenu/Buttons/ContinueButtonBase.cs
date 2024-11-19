@@ -6,7 +6,7 @@ namespace UI.StartMenu.Buttons
 {
     public class ContinueButtonBase : UIButtonBase
     {
-        protected override void Start()
+        public override void OnAwake()
         {
             button.interactable = SavingAndLoadingSystem.Instance.HasBeenSavedBefore();
         }

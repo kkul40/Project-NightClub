@@ -25,9 +25,21 @@ namespace System
         private CursorState _cursorState = CursorState.Free;
         private InputSystem _inputSystem => InputSystem.Instance;
 
+        private bool _isCursorLocked = false;
+
+        private void OnEnable()
+        {
+            UISettingsPage.OnUISettingsToggle += ToggleCursorLock;
+        }
+
+        private void OnDisable()
+        {
+            UISettingsPage.OnUISettingsToggle -= ToggleCursorLock;
+        }
+
         private void Update()
         {
-            if (BuildingManager.Instance.isPlacing)
+            if (BuildingManager.Instance.isPlacing || _isCursorLocked)
             {
                 Reset();
                 return;
@@ -125,7 +137,6 @@ namespace System
             if (selection)
             {
                 highlightEffect.ProfileLoad(_selectionHightlight);
-                Debug.Log("Selection Loaded");
             }
             else
             {
@@ -168,5 +179,6 @@ namespace System
 
             _currentGameObject = null;
         }
+        public void ToggleCursorLock(bool toggle) => _isCursorLocked = toggle;
     }
 }

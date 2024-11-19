@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace UI.GamePages
@@ -9,48 +9,58 @@ namespace UI.GamePages
     public class UISettingsPage : UIPageBase
     {
         public override PageType PageType { get; protected set; } = PageType.FullPage;
-        
-        private float _musicVolume = 1;
-        private float _soundVolume = 1;
 
-        [SerializeField] private AudioMixer mixer;
+        [SerializeField] private List<GameObject> DropDownPages = new List<GameObject>();
+
+        [SerializeField] private GameObject _lastDropDownPage;
+        
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider soundVolumeSlider;
 
+        public static Action<bool> OnUISettingsToggle;
+
         protected override void OnAwake()
         {
-            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
-            soundVolumeSlider.onValueChanged.AddListener(SetSoundVolume);
+            musicVolumeSlider.onValueChanged.AddListener(MusicPlayer.Instance.SetMusicVolume);
+            soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
         }
 
         private void OnEnable()
         {
-            musicVolumeSlider.value = _musicVolume;
-            soundVolumeSlider.value = _soundVolume;
+            musicVolumeSlider.value = MusicPlayer.Instance.MusicVolume;
+            soundVolumeSlider.value = SFXPlayer.Instance.SoundVolume;
+
+            OpenADropDownPage(_lastDropDownPage);
+            
+            OnUISettingsToggle?.Invoke(true);
         }
 
-        public void SetMusicVolume(float value)
+        private void OnDisable()
         {
-            _musicVolume = value;
-            mixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
+            OnUISettingsToggle?.Invoke(false);
         }
 
-        public void SetSoundVolume(float value)
+        public void OpenADropDownPage(GameObject pageObject)
         {
-            _soundVolume = value;
-            mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
+            CloseAllDropDown();
+            pageObject.SetActive(true);
+            _lastDropDownPage = pageObject;
+        }
+
+        private void CloseAllDropDown()
+        {
+            foreach (var page in DropDownPages)
+            {
+                page.SetActive(false);
+            }
         }
 
         public void LoadSettingsData(GameData gameData)
         {
-            SetMusicVolume(gameData.GameSettingsData.MusicVolume);
-            SetSoundVolume(gameData.GameSettingsData.SoundVolume);
         }
 
         public void SaveSettingsData(ref GameData gameData)
         {
-            gameData.GameSettingsData.MusicVolume = _musicVolume;
-            gameData.GameSettingsData.SoundVolume = _soundVolume;
         }
     }
 }

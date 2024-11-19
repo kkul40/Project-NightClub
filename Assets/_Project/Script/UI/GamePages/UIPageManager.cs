@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using PropBehaviours;
 using UnityEngine;
 
 namespace UI.GamePages
