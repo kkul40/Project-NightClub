@@ -13,6 +13,11 @@ namespace UI.GamePages.GameButtons
             button.onClick.AddListener(OnClick);
         }
 
+        public virtual void OnAwake()
+        {
+            
+        }
+
         protected virtual void Start()
         {
         }
