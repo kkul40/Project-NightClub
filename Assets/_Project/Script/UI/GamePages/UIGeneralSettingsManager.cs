@@ -13,7 +13,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
     private void Start()
     {
         EdgeScrollingToggle.ToggleCheckMark(EdgeScrollingEnabled);
-        EdgeScrollingToggle.AddToggleListener(() => ToggleEdgeScrolling());
+        // EdgeScrollingToggle.AddToggleListener(() => ToggleEdgeScrolling());
     }
 
     public void SaveGame()

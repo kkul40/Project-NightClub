@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Data;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VFX;
 
 namespace UI
 {
@@ -16,57 +13,20 @@ namespace UI
 
         [SerializeField] private Transform ButtonHolder;
 
-        [SerializeField] private Button NextBtn;
-        [SerializeField] private Button PreviousBtn;
-
         private IUISlot[] _uiSlots;
 
         private StoreDataCarrier _storeDataCarrier = new();
 
-        private const int listSize = 8;
-        public int pointer;
-
-        public int SetPointer
-        {
-            get => pointer;
-            set
-            {
-                NextBtn.gameObject.SetActive(true);
-                PreviousBtn.gameObject.SetActive(true);
-
-                if (value == 0) pointer = 0;
-
-                if (value >= 0 && value < _storeDataCarrier.StoreItemSos.Count) pointer = value;
-
-                if (pointer <= 0) PreviousBtn.gameObject.SetActive(false);
-
-                if (pointer + listSize >= _storeDataCarrier.StoreItemSos.Count) NextBtn.gameObject.SetActive(false);
-            }
-        }
+        private const int listSize = 50;
 
         private void Awake()
         {
-            NextBtn.onClick.AddListener(Next);
-            PreviousBtn.onClick.AddListener(Previous);
-
             _uiSlots = new IUISlot[listSize];
         }
 
         public void GenerateInventory(StoreDataCarrier storeDataCarrier)
         {
             _storeDataCarrier = storeDataCarrier;
-            SetPointer = 0;
-
-            switch (storeDataCarrier.EUISlot)
-            {
-                case eUISlot.ItemSlot:
-                    ButtonHolder.gameObject.SetActive(true);
-                    break;
-                case eUISlot.InventorySlot:
-                case eUISlot.ExtentionSlot:
-                    ButtonHolder.gameObject.SetActive(false);
-                    break;
-            }
 
             InstantiateSlots();
             Load();
@@ -74,7 +34,7 @@ namespace UI
 
         private void InstantiateSlots()
         {
-            _uiSlots = new IUISlot[listSize];
+            _uiSlots = new IUISlot[_storeDataCarrier.StoreItemSos.Count];
 
             for (var i = SlotHolder.childCount - 1; i >= 0; i--) Destroy(SlotHolder.GetChild(i).gameObject);
 
@@ -101,30 +61,12 @@ namespace UI
 
         private void Load()
         {
-            for (var i = 0; i < listSize; i++)
+            for (var i = 0; i < _uiSlots.Length; i++)
             {
-                if (i + pointer < _storeDataCarrier.StoreItemSos.Count)
-                {
-                    _uiSlots[i].mGameobject.SetActive(true);
-                    _storeDataCarrier.ChosedStoreItemSo = _storeDataCarrier.StoreItemSos[i + pointer];
-                    _uiSlots[i].Init(_storeDataCarrier);
-                    continue;
-                }
-
-                _uiSlots[i].mGameobject.SetActive(false);
+                _uiSlots[i].mGameobject.SetActive(true);
+                _storeDataCarrier.ChosedStoreItemSo = _storeDataCarrier.StoreItemSos[i];
+                _uiSlots[i].Init(_storeDataCarrier);
             }
-        }
-
-        public void Next()
-        {
-            SetPointer += listSize;
-            Load();
-        }
-
-        public void Previous()
-        {
-            SetPointer -= listSize;
-            Load();
         }
     }
 }
