@@ -21,7 +21,6 @@ namespace UI.GamePages
             uiStoreInventoryView.GenerateInventory(storeDataCarrier);
         }
 
-
         protected override void OnShow()
         {
             lastButtonBaseClicked.OnClick();
