@@ -1,5 +1,6 @@
 ﻿using System;
 using Data;
+using Root;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,13 +24,14 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
 
     public void LoadGame()
     {
-        SceneManager.LoadScene(1);
+        SceneLoader.Instance.LoadScene(1);
+        // SceneManager.LoadScene(1);
         // SavingAndLoadingSystem.Instance.LoadGame();
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneLoader.Instance.LoadScene(0);
     }
 
     public void QuitGame()
