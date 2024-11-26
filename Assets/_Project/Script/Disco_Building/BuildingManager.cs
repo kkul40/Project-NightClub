@@ -86,15 +86,25 @@ namespace Disco_Building
                 _rotationMethod.OnRotate(_buildingNeedsData);
                 _buildingMethod.OnUpdate(_buildingNeedsData);
 
-                if ((_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld)
-                    && _buildingMethod.OnValidate(_buildingNeedsData))
+                if ((_buildingMethod.PressAndHold ? InputSystem.Instance.LeftHoldClickOnWorld : InputSystem.Instance.LeftClickOnWorld))
                 {
-                    _buildingMethod.OnPlace(_buildingNeedsData);
-                    callBackOnPlaced?.Invoke().Invoke();
-                    if (_buildingNeedsData.isReplacing)
+                    if (_buildingMethod.OnValidate(_buildingNeedsData))
                     {
-                        StopBuild();
+                        _buildingMethod.OnPlace(_buildingNeedsData);
+                        callBackOnPlaced?.Invoke().Invoke();
+                        
+                        if (_buildingNeedsData.isReplacing)
+                        {
+                            StopBuild();
+                        }
+                        
+                        SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
                     }
+                    else
+                    {
+                        SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, _buildingMethod.PressAndHold);
+                    }
+                    
                 }
 
                 if (InputSystem.Instance.RightClickOnWorld) StopBuild();

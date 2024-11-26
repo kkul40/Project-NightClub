@@ -7,16 +7,34 @@ namespace System
     public class SFXPlayer : Singleton<SFXPlayer>, ISaveLoad
     {
         private AudioSource _audioSource;
+
+        private float timer = 0;
         [SerializeField] private AudioMixer mixer;
+
+        [Header("Sound FX")]
+        public AudioClip Succes;
+        public AudioClip Error;
+        
         public float SoundVolume { get; private set; }
 
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
         }
-        public void PlaySoundEffect(AudioClip audioClip)
+        public void PlaySoundEffect(AudioClip audioClip, bool timerPlay = false)
         {
+            float time = Time.time;
+
+            if (timerPlay)
+            {
+                if (time - timer < audioClip.length)
+                {
+                    return;
+                }
+            }
+            
             _audioSource.PlayOneShot(audioClip);
+            timer = Time.time;
         }
         
         public void SetSoundVolume(float value)
