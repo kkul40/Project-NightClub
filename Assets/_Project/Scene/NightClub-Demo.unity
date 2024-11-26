@@ -17403,6 +17403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mixer: {fileID: 24100000, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
+  Succes: {fileID: 8300000, guid: 4ce482aef6335499aa71500406610c1f, type: 3}
+  Error: {fileID: 8300000, guid: c1f47c4aad5f14a138bf7c0467396b25, type: 3}
 --- !u!4 &1002932950 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
