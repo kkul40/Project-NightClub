@@ -1,4 +1,5 @@
 ﻿using Data;
+using Root;
 using UI.GamePages.GameButtons;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,8 @@ namespace UI.StartMenu.Buttons
 
         public override void OnClick()
         {
-            SceneManager.LoadScene(1);
+            SceneLoader.Instance.LoadScene(1);
+            // SceneManager.LoadScene(1);
         }
     }
 }
