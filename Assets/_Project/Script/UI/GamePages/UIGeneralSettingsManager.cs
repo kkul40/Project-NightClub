@@ -3,7 +3,6 @@ using Data;
 using Root;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISaveLoad
 {
@@ -13,7 +12,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
 
     private void Start()
     {
-        EdgeScrollingToggle.ToggleCheckMark(EdgeScrollingEnabled);
+        // EdgeScrollingToggle.ToggleCheckMark(EdgeScrollingEnabled);
         // EdgeScrollingToggle.AddToggleListener(() => ToggleEdgeScrolling());
     }
 
@@ -48,9 +47,12 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
 
     public void LoadData(GameData gameData)
     {
+        EdgeScrollingEnabled = !gameData.GameSettingsData.isEdgeScrollingEnabled;
+        ToggleEdgeScrolling();
     }
 
     public void SaveData(ref GameData gameData)
     {
+        gameData.GameSettingsData.isEdgeScrollingEnabled = EdgeScrollingEnabled;
     }
 }

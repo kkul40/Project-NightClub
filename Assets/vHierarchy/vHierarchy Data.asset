@@ -60,7 +60,7 @@ MonoBehaviour:
           iconNameOrGuid: PreMatQuad
         - colorIndex: 1
           iconNameOrGuid: 
-        - colorIndex: 0
+        - colorIndex: 3
           iconNameOrGuid: PreMatQuad
         - colorIndex: 0
           iconNameOrGuid: PreMatQuad

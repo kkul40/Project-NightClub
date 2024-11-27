@@ -4,6 +4,7 @@ using Data;
 using Disco_ScriptableObject;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ExtensionMethods
 {
@@ -122,6 +123,7 @@ namespace ExtensionMethods
         [Serializable]
         public class GameSettingsData
         {
+            public bool isEdgeScrollingEnabled;
             public float MusicVolume = 1;
             public float SoundVolume = 1;
         }
