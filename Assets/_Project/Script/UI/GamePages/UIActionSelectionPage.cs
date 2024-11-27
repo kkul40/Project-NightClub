@@ -4,7 +4,6 @@ using System.Linq;
 using Data;
 using DG.Tweening;
 using Disco_Building;
-using Disco_ScriptableObject;
 using PropBehaviours;
 using UnityEngine;
 
@@ -15,10 +14,6 @@ namespace UI.GamePages
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
         [SerializeField] private Canvas _canvas;
-        private RectTransform _rectTransform;
-        private UI_FollowTarget _followTarget;
-        
-        [Header("Order Of Buttons")]
         [SerializeField] private List<GameObject> _allButtons = new List<GameObject>();
 
         [Header("Buttons")]
@@ -28,77 +23,139 @@ namespace UI.GamePages
         [SerializeField] private GameObject RelocateButton;
         [SerializeField] private GameObject RemoveButton;
 
-        private RectTransform InfoButtonRect;
-        private int _lastInstanceID;
-        private object _lastData;
-        
         [Header("Circle Placement Settings")]
-        public int pointCoutn;
-        public float radius;
-        public float angleBetween;
+        public float radius = 100f;
+        public float angleBetween = 30f;
 
-        private List<Tween> _tweens = new List<Tween>();
+        private UI_FollowTarget _followTarget;
+        private object _lastData;
+        private readonly Dictionary<Type, List<Action<object>>> _typeBehaviors = new();
+        private List<Tween> _tweens = new();
 
         protected override void OnAwake()
         {
             CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
-            _rectTransform = GetComponent<RectTransform>();
+
+            RegisterBehaviors();
         }
 
         protected override void OnShow<T>(T data)
         {
             _lastData = data;
-            
+
             CloseAllButtons();
-            Invoke(nameof(SetUpButtons), 0.1f);
+            Invoke(nameof(ActivateButtonsAndArrange), 0.1f);
         }
 
-        private void SetUpButtons()
+        private void ActivateButtonsAndArrange()
         {
-            HandleDataAndActivateButton();
-            ArrangeButtonInCircle();
+            ActivateButtonsBasedOnData();
+            ArrangeButtonsInCircle();
         }
 
-        private void HandleDataAndActivateButton()
+        private void RegisterBehaviors()
         {
-            if (_lastData is IPropUnit lastProp)
+            AddBehavior<IPropUnit>(data =>
             {
-                InfoButton.SetActive(true);
-                RelocateButton.SetActive(true);
-                RemoveButton.SetActive(true);
-                _followTarget.SetTarget(lastProp.gameObject);
+                EnableButtons(InfoButton, RelocateButton, RemoveButton);
+            });
+
+            AddBehavior<Bar>(data =>
+            {
+                EnableButtons(DrinkButton);
+            });
+
+            AddBehavior<Bartender>(data =>
+            {
+                EnableButtons(CancelButton);
+            });
+
+            AddBehavior<DancableTile>(data =>
+            {
+                EnableButtons(CancelButton);
+            });
+        }
+
+        private void ActivateButtonsBasedOnData()
+        {
+            if (_lastData == null) return;
+
+            Type currentType = _lastData.GetType();
+
+            // Traverse type hierarchy and apply all registered behaviors
+            while (currentType != null)
+            {
+                if (_typeBehaviors.TryGetValue(currentType, out var actions))
+                {
+                    foreach (var action in actions)
+                        action(_lastData);
+                }
+
+                currentType = currentType.BaseType;
+            }
+            
+            SetFollowTarget(_lastData);
+        }
+
+        private void AddBehavior<T>(Action<object> action)
+        {
+            var type = typeof(T);
+            if (!_typeBehaviors.ContainsKey(type))
+            {
+                _typeBehaviors[type] = new List<Action<object>>();
             }
 
-            if (_lastData is Bar _lastBar)
-            {
-                DrinkButton.SetActive(true);
-                _followTarget.SetTarget(_lastBar.gameObject);
-            }
+            _typeBehaviors[type].Add(action);
+        }
 
-            if (_lastData is Bartender _lastBartender)
+        private void SetFollowTarget(object data)
+        {
+            var property = data.GetType().GetProperty("gameObject");
+            if (property != null)
             {
-                CancelButton.SetActive(true);
-                _followTarget.SetTarget(_lastBartender.gameObject);
+                var targetGameObject = property.GetValue(data) as GameObject;
+                _followTarget.SetTarget(targetGameObject);
             }
         }
-        
-        private void ArrangeButtonInCircle()
+  
+        private void EnableButtons(params GameObject[] buttons)
         {
+            foreach (var button in buttons)
+            {
+                button.SetActive(true);
+            }
+        }
+
+        private void ArrangeButtonsInCircle()
+        {
+            float moveDuration = 0.5f;
+            float fadeDuration = 0.5f;
+            
             var activeButtons = _allButtons.Where(button => button.activeInHierarchy).ToList();
             if (activeButtons.Count == 0) return;
 
-            List<Vector2> endPoints = GenerateCirclePoints(activeButtons.Count, radius, angleBetween);
+            float fixedRadius = Screen.height * radius / _canvas.scaleFactor;
+            float totalArcAngle = (activeButtons.Count - 1) * angleBetween;
+            float startAngle = Mathf.PI / 2 - (totalArcAngle / 2 * Mathf.Deg2Rad);
 
+            // Clear exist tweens
             _tweens.ForEach(t => t.Kill());
             _tweens.Clear();
-            
+
+            // Position buttons in a circular arrangement
             for (int i = 0; i < activeButtons.Count; i++)
             {
-                RectTransform rectTransform = activeButtons[i].GetComponent<RectTransform>();
-                Vector2 targetPoint = new Vector2(endPoints[i].x, endPoints[i].y);
+                var rectTransform = activeButtons[i].GetComponent<RectTransform>();
+                var canvasGroup = activeButtons[i].GetComponent<CanvasGroup>();
+                canvasGroup.alpha = 0;
+                
+                float angle = startAngle + i * angleBetween * Mathf.Deg2Rad;
+                Vector2 targetPoint = new Vector2(Mathf.Cos(angle) * fixedRadius, Mathf.Sin(angle) * fixedRadius);
+
                 rectTransform.anchoredPosition = Vector3.zero;
-                _tweens.Add(rectTransform.DOAnchorPos(targetPoint, 0.5f).SetEase(Ease.OutExpo).SetLink(rectTransform.gameObject));
+                _tweens.Add(rectTransform.DOAnchorPos(targetPoint, moveDuration).SetEase(Ease.OutExpo).SetLink(rectTransform.gameObject));
+                _tweens.Add(canvasGroup.DOFade(1, fadeDuration));
             }
         }
 
@@ -110,75 +167,39 @@ namespace UI.GamePages
 
         public void OpenPropInfo()
         {
-            var propUnit = _lastData as IPropUnit;
-            if (propUnit == null) return;
-            UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), _lastData as IPropUnit);
-            Hide();
+            if (_lastData is IPropUnit propUnit)
+            {
+                UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), propUnit);
+                Hide();
+            }
         }
 
         public void OpenDrinkPage()
         {
-            var bar = _lastData as Bar;
-            if (bar == null) return;
-            UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
-            Hide();
+            if (_lastData is Bar bar)
+            {
+                UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
+                Hide();
+            }
         }
 
-        public void HandleCancelButton()
-        {
-            
-        }
-        
         public void Relocate()
         {
-            var propUnit = _lastData as IPropUnit;
-            if (propUnit == null) return;
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(propUnit.ID);
-            BuildingManager.Instance.ReplaceObject(item, propUnit.CellPosition, propUnit.PlacementLayer);
-            Hide();
+            if (_lastData is IPropUnit propUnit)
+            {
+                var item = DiscoData.Instance.FindAItemByID(propUnit.ID);
+                BuildingManager.Instance.ReplaceObject(item, propUnit.CellPosition, propUnit.PlacementLayer);
+                Hide();
+            }
         }
 
         public void Remove()
         {
-            var propUnit = _lastData as IPropUnit;
-            if (propUnit == null) return;
-            DiscoData.Instance.placementDataHandler.RemovePlacement(propUnit.CellPosition, propUnit.PlacementLayer, true);
-            Hide();
-        }
-        
-        private List<Vector2> GenerateCirclePoints(int numberOfPoints, float radius, float angleBetweenPoints)
-        {
-            float fixedRadius = Screen.height * radius / _canvas.scaleFactor;
-            List<Vector2> pointPositions = new List<Vector2>();
-            
-            float totalArcAngle = (numberOfPoints - 1) * angleBetweenPoints;
-            float startAngle = Mathf.PI / 2 - (totalArcAngle / 2 * Mathf.Deg2Rad); 
-
-            for (int i = 0; i < numberOfPoints; i++)
+            if (_lastData is IPropUnit propUnit)
             {
-                float angle = startAngle + i * angleBetweenPoints * Mathf.Deg2Rad;
-
-                float x = Mathf.Cos(angle) * fixedRadius;
-                float y = Mathf.Sin(angle) * fixedRadius;
-
-                pointPositions.Add(new Vector2(x, y));
+                DiscoData.Instance.placementDataHandler.RemovePlacement(propUnit.CellPosition, propUnit.PlacementLayer, true);
+                Hide();
             }
-
-            return pointPositions;
-        }
-       
-        private void OnDrawGizmos()
-        {
-            // if (_rectTransform == null) return;
-            // if (angleBetween <= 0) return;
-            // List<Vector2> endPoints = new List<Vector2>();
-            // GenerateCirclePoints(pointCoutn, radius, angleBetween, out endPoints);
-            //
-            // foreach (var point in endPoints)
-            // {
-            //     Gizmos.color = Color.red;
-            //     Gizmos.DrawSphere(_rectTransform.position + new Vector3(point.x, point.y, 0), 5);
-            // }
         }
     }
 }
