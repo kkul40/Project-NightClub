@@ -22,6 +22,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
     
     [Header("Quality")]
     [SerializeField] private TMP_Dropdown _qualityDropDown;
+    private int _currentGraphicQualityIndex;
 
     
     [Header("Toggle")]
@@ -32,9 +33,25 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
     {
         InitResolution();
         InitFullScreenMode();
-        
+        InitQuality();
+    }
+
+    private void InitQuality()
+    {
         _qualityDropDown.ClearOptions();
-        
+
+        List<string> options = new List<string>()
+        {
+            "Low",
+            "Very Low",
+            "Medium",
+            "High",
+            "Very High",
+            "Ultra",
+        };
+        _qualityDropDown.AddOptions(options);
+        _qualityDropDown.value = 5;
+        _qualityDropDown.RefreshShownValue();
     }
 
     private void InitFullScreenMode()
@@ -99,6 +116,11 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
     {
         Resolution resolution = Screen.currentResolution;
         Screen.SetResolution(resolution.width, resolution.height, _fullScreenModes[index]);
+    }
+
+    public void SetQuality(int index)
+    {
+        QualitySettings.SetQualityLevel(index, true);
     }
 
     public void SaveGame()
