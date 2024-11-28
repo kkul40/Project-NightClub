@@ -1,5 +1,7 @@
-﻿using Data;
+﻿using System;
+using Data;
 using Disco_Building;
+using ExtensionMethods;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -39,6 +41,9 @@ namespace NPCBehaviour.Activities
 
             } while (leanablePath.HasOccupied);
 
+            if (and.DiscoData.placementDataHandler.ContainsKeyOnWall(leanablePath.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid), 2))
+                return false;
+            
             return and.Npc.PathFinder.CheckIfPathAvaliable(leanablePath.WorldPos);
         }
 
