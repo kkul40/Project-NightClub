@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using Data;
+using ExtensionMethods;
+using UnityEngine;
 
 namespace NPCBehaviour.Activities
 {
@@ -46,13 +49,14 @@ namespace NPCBehaviour.Activities
 
         public Vector3 GetRandomDestination(ActivityNeedsData and)
         {
+            Debug.Log("Random Walk Asked");
             var loopCount = 0;
 
             var target = and.DiscoData.MapData.GetRandomPathFinderNode();
             if (target == null)
                 return and.Npc.transform.position;
 
-            while (target.IsWall || !target.IsWalkable)
+            while (CheckTargetDestinationForHeight(and, target) || CheckTargetDestinationForDanceFloor(and,target) || target.IsWall || !target.IsWalkable)
             {
                 target = and.DiscoData.MapData.GetRandomPathFinderNode();
 
@@ -66,6 +70,18 @@ namespace NPCBehaviour.Activities
             }
 
             return target.WorldPos;
+        }
+
+        private bool CheckTargetDestinationForHeight(ActivityNeedsData and, PathFinderNode target)
+        {
+            return and.DiscoData.placementDataHandler.ContainsKeyOnWall(
+                target.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid), 2);
+        }
+
+        private bool CheckTargetDestinationForDanceFloor(ActivityNeedsData and, PathFinderNode target)
+        {
+            return and.DiscoData.placementDataHandler.ContainsKey(
+                target.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid), ePlacementLayer.BaseSurface);
         }
     }
 }

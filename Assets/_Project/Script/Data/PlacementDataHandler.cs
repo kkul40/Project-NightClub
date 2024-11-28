@@ -81,6 +81,16 @@ namespace Data
             return false;
         }
 
+        public bool ContainsKeyOnWall(Vector3Int cellPos, int height)
+        {
+            for (int i = 0; i < height; i++)
+            {
+                if (ContainsKey(cellPos.Add(y:i), ePlacementLayer.WallProp)) return true;
+            }
+
+            return false;
+        }
+
         public bool ContainsKey(Vector3Int cellPos, Vector2Int size, RotationData rotationData, ePlacementLayer layer)
         {
             var keys = CalculatePosition(cellPos, size,

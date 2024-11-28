@@ -31,6 +31,9 @@ namespace NPCBehaviour.Activities
                     ePlacementLayer.FloorProp))
                 return false;
 
+            if (and.DiscoData.placementDataHandler.ContainsKeyOnWall(_dancableTile.CellPosition, 2))
+                return false;
+
             return and.Npc.PathFinder.CheckIfPathAvaliable(_dancableTile.WorldPos);
         }
 
