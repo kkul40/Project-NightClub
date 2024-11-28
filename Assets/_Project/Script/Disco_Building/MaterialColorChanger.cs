@@ -11,13 +11,11 @@ namespace Disco_Building
             TransparentMaterial,
             RemovingMaterial
         }
-
-        public Material greenMaterial;
-        public Material greenMaterial2;
-        public Material redMaterial;
-        public Material yellowMaterial;
-        public Material whiteMaterial;
-
+        
+        [SerializeField] private Material greenMaterial;
+        [SerializeField] private Material redMaterial;
+        [SerializeField] private Material yellowMaterial;
+        [SerializeField] private Material whiteMaterial;
         public void SetMaterialsColorByValidity(List<MeshRenderer> meshRenderers, bool canPlace)
         {
             var tempMaterial = canPlace ? greenMaterial : redMaterial;

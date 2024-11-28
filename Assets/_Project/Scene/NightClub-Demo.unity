@@ -7430,13 +7430,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 0}
   Musics:
-  - {fileID: 8300000, guid: a712cf91535961749b5737c3508b0dd0, type: 3}
-  - {fileID: 8300000, guid: dea4bbf3b69afa04daa7a41fba5c7722, type: 3}
+  - {fileID: 8300000, guid: dacd899780accfb49b6d4cfe8c90bc79, type: 3}
   - {fileID: 8300000, guid: 8f2f32b453a8f90429a06462432f1f96, type: 3}
   - {fileID: 8300000, guid: a8362de2852b6af4ca36b80ad65afed6, type: 3}
   - {fileID: 8300000, guid: e184c0fb61a65e4448a935d80fcfedfb, type: 3}
   - {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
-  - {fileID: 8300000, guid: b0a4f0f189096904aaba12cdcc483b75, type: 3}
 --- !u!1001 &445758723
 PrefabInstance:
   m_ObjectHideFlags: 0
