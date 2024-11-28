@@ -8,24 +8,19 @@ namespace PropBehaviours
 {
     public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
     {
-        public bool IsInteractable { get; } = true;
-        public eInteraction Interaction { get; } = eInteraction.None;
+        public virtual bool IsInteractable { get; } = true;
+        public virtual eInteraction Interaction { get; } = eInteraction.None;
 
-        public void OnFocus()
+        public virtual void OnFocus()
         {
         }
 
-        public void OnOutFocus()
+        public virtual void OnOutFocus()
         {
         }
 
-        public void OnClick()
+        public virtual void OnClick()
         {
-            // Debug.Log(DiscoData.Instance.mapData.WallDatas.Find(x => x.assignedWall == this).assignedMaterialID);
-            // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.WallDatas.Find(x => x.assignedWall == this).assignedMaterialID);
-
-            // Debug.Log(DiscoData.Instance.mapData.WallDatas.Count);
-            // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.WallDatas.Count);
         }
 
         public int assignedMaterialID { get; protected set; }

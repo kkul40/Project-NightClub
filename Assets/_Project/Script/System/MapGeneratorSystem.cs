@@ -101,10 +101,10 @@ namespace System
 
                 if (x <= MapSize.x)
                 {
-                    if (x == MapData.WallDoorIndex)
+                    if (MapData.IsWallDoorOnX && x == MapData.WallDoorIndex)
                     {
                         var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
-                            Quaternion.identity);
+                            RotationData.Down.rotation);
 
                         LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
 
@@ -121,7 +121,21 @@ namespace System
                 }
 
                 if (y <= MapSize.y)
-                    InstantiateYWall(y);
+                {
+                    if (!MapData.IsWallDoorOnX && y == MapData.WallDoorIndex)
+                    {
+                        var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(0, 0, y - 0.5f),
+                            RotationData.Left.rotation);
+
+                        LoadAndAssignWallMaterial(new Vector3Int(0, 0, MapData.WallDoorIndex), newWallDoorObject);
+
+                        newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+                    }
+                    else
+                    {
+                        InstantiateYWall(y);    
+                    }
+                }
                 else
                     yDone = true;
 
@@ -166,7 +180,7 @@ namespace System
         private GameObject InstantiateYWall(int y)
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
-            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.Euler(0, 90, 0));
+            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Left.rotation);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
@@ -176,7 +190,7 @@ namespace System
         private GameObject InstantiateXWall(int x)
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
-            var newWallObject = CreateObject(wallPrefab, pos2, Quaternion.identity);
+            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
@@ -190,7 +204,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y);
             var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.SetPathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
+            MapData.UpdatePathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
@@ -222,7 +236,7 @@ namespace System
             {
                 Debug.Log("Data Was NULL");
                 MapData.WallDatas.Add(new WallAssignmentData(cellPosition));
-                data = MapData.WallDatas[MapData.WallDatas.Count - 1];
+                data = MapData.WallDatas[^1];
             }
 
             data.AssignReferance(newWallObject.GetComponent<Wall>());
@@ -236,11 +250,14 @@ namespace System
             data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
         }
 
-        private GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion)
+        public GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion)
         {
             var ob = Instantiate(gameObject, pos, quaternion);
             ob.AnimatedPlacement(pos);
             return ob;
         }
+
+        public GameObject GetWallDoorPrefab => wallDoorPrefab;
+        public GameObject GetWallPrefab => wallPrefab;
     }
 }

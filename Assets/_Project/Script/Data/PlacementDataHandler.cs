@@ -60,6 +60,14 @@ namespace Data
                 cellPos.z >= MapData.CurrentMapSize.y)
                 return true;
 
+            
+            Debug.Log($"cell Pos : {cellPos} - door Pos {MapData.DoorPosition}");
+
+            if (cellPos == MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
+            {
+                return true;
+            }
+
             foreach (var usedKeys in AllPlacedObjects)
             {
                 if (usedKeys.Item3 != layer) continue;
@@ -132,7 +140,7 @@ namespace Data
             if (data.Item3 != ePlacementLayer.FloorProp) return;
             
             foreach (var key in data.Item2)
-                MapData.SetPathFinderNode(key, data.Item1.PlacedPlacementItemSo.IsBig, true);
+                MapData.UpdatePathFinderNode(key, data.Item1.PlacedPlacementItemSo.IsBig, true);
             
             List<Vector3Int> updadatableKeys = new List<Vector3Int>();
             foreach (var worldPos in data.Item2)
@@ -145,7 +153,7 @@ namespace Data
                 if(tuple == null) continue;
 
                 foreach (var worldKey in tuple.Item2)
-                    MapData.SetPathFinderNode(worldKey, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
+                    MapData.UpdatePathFinderNode(worldKey, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
             }
         }
         
@@ -154,7 +162,7 @@ namespace Data
             if (tuple.Item3 != ePlacementLayer.FloorProp) return;
 
             foreach (var key in tuple.Item2)
-                MapData.SetPathFinderNode(key, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
+                MapData.UpdatePathFinderNode(key, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
         }
         
         private void AddedObjectHandler(Vector3Int cellPos, PlacementData placementData)

@@ -66,10 +66,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
             options.Add(_fullScreenModes.GetValue(i).ToString());
 
             if (_fullScreenModes.GetValue(i).Equals(Screen.fullScreenMode))
-            {
-                Debug.Log("Equelllsss");
                 _currentDisplayModeIndex = i;
-            }
         }
       
         _displayModeDropDown.AddOptions(options);
@@ -85,9 +82,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
         _filteredResolution = new List<Resolution>();
 
         for (int i = 0; i < _resolutions.Length; i++)
-        {
             _filteredResolution.Add(_resolutions[i]);
-        }
 
         List<string> options = new List<string>();
         for (int i = 0; i < _filteredResolution.Count; i++)
@@ -96,9 +91,7 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
             options.Add(resolution);
 
             if (_filteredResolution[i].width == Screen.currentResolution.width && _filteredResolution[i].height == Screen.currentResolution.height)
-            {
                 _currentResolutionIndex = i;
-            }
         }
         
         _resolutionDropDown.AddOptions(options);

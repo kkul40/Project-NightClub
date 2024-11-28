@@ -29,7 +29,8 @@ namespace UI
         public void SetTarget(GameObject target)
         {
             targetObject = target;
-
+            
+            if (target == null) return;
             centerPosition = CalculateCenter(targetObject.GetComponents<Collider>());
            
             AnchorPos();
@@ -37,16 +38,16 @@ namespace UI
 
         private void Update()
         {
-            float minZoom = _cameraMinMaxCurrentSize.x;
-            float maxZoom = _cameraMinMaxCurrentSize.y;
-            float cameraSize = _cameraMinMaxCurrentSize.z;
-            AnimationCurve zoomCurve = CameraControl.Instance.GetAnimationCurve;
-
-            float scaleMultiplier = Mathf.Clamp(
-                maxZoom - (cameraSize - minZoom), 
-                minZoom, 
-                maxZoom
-            );
+            // float minZoom = _cameraMinMaxCurrentSize.x;
+            // float maxZoom = _cameraMinMaxCurrentSize.y;
+            // float cameraSize = _cameraMinMaxCurrentSize.z;
+            // AnimationCurve zoomCurve = CameraControl.Instance.GetAnimationCurve;
+            //
+            // float scaleMultiplier = Mathf.Clamp(
+            //     maxZoom - (cameraSize - minZoom), 
+            //     minZoom, 
+            //     maxZoom
+            // );
 
             // float targetScale = zoomCurve.Evaluate(Mathf.InverseLerp(maxZoom, 1, scaleMultiplier));
             //

@@ -21,6 +21,7 @@ namespace UI.GamePages
         [SerializeField] private GameObject DrinkButton;
         [SerializeField] private GameObject CancelButton;
         [SerializeField] private GameObject RelocateButton;
+        [SerializeField] private GameObject RelocateDoorButon;
         [SerializeField] private GameObject RemoveButton;
 
         [Header("Circle Placement Settings")]
@@ -71,9 +72,9 @@ namespace UI.GamePages
                 EnableButtons(CancelButton);
             });
 
-            AddBehavior<DancableTile>(data =>
+            AddBehavior<WallDoor>(data =>
             {
-                EnableButtons(CancelButton);
+                EnableButtons(RelocateDoorButon);
             });
         }
 
@@ -189,6 +190,15 @@ namespace UI.GamePages
             {
                 var item = DiscoData.Instance.FindAItemByID(propUnit.ID);
                 BuildingManager.Instance.ReplaceObject(item, propUnit.CellPosition, propUnit.PlacementLayer);
+                Hide();
+            }
+        }
+
+        public void RelocateDoor()
+        {
+            if (_lastData is WallDoor wallDoor)
+            {
+                BuildingManager.Instance.ChangeDoorPosition(wallDoor);
                 Hide();
             }
         }
