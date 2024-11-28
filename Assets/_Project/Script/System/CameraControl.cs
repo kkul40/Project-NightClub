@@ -1,3 +1,4 @@
+using NPCBehaviour;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,9 +13,14 @@ namespace System
         [SerializeField] private AnimationCurve _zoomAnimationCurve;
 
 
+        [SerializeField] private Vector3 _followNPCOffset;
+        
         [Range(1, 9)] [SerializeField] private float cameraSize = 5;
 
+        private Vector3 nextPosition;
         private float timeElapsed = 0;
+
+        private NPC _targetNPC;
 
         private void LateUpdate()
         {
@@ -27,10 +33,22 @@ namespace System
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
-            var nextPos = transform.position + (transform.forward * moveDelta.y + transform.right * moveDelta.x) *
-                (speed * Time.deltaTime);
+            if (moveDelta != Vector2.zero) _targetNPC = null;
 
-            transform.position = nextPos;
+            if (_targetNPC != null)
+            {
+                Vector3 npcPos = _targetNPC.transform.position;
+                nextPosition = Vector3.Lerp(nextPosition, new Vector3(npcPos.x, 0, npcPos.z) + _followNPCOffset,
+                    speed * Time.deltaTime);
+            }
+            else
+            {
+                nextPosition = transform.position + (transform.forward * moveDelta.y + transform.right * moveDelta.x) *
+                    (speed * Time.deltaTime);
+            }
+           
+
+            transform.position = nextPosition;
 
             SetCameraSize();
         }
@@ -46,5 +64,9 @@ namespace System
         public float3 GetCameraSize => new float3(1, 9, cameraSize);
         public AnimationCurve GetAnimationCurve => _zoomAnimationCurve;
 
+        public void FollowNPC(NPC npc)
+        {
+            _targetNPC = npc;
+        }
     }
 }
