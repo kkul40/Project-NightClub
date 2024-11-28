@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data;
 using ExtensionMethods;
 using NPCBehaviour.Activities;
+using UI.Emotes;
 using UnityEngine;
 
 namespace NPCBehaviour
@@ -54,8 +55,10 @@ namespace NPCBehaviour
             }
             else if (_currentActivity.ForceToQuitActivity(_activityNeedsData))
             {
+                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Angry, _activityNeedsData.Npc);
+                
                 _currentActivity.OnActivityEnd(_activityNeedsData);
-                StartNewActivity(GetRandomActivity());
+                StartNewActivity(new ExitDiscoActivity());
                 return;
             }
 
