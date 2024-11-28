@@ -25,13 +25,13 @@ namespace NPCBehaviour.Activities
         public bool IsEnded { get; private set; }
         public bool CanStartActivity(ActivityNeedsData and)
         {
-            if (and.DiscoData.MapData.GetAvaliablePathsNearWall.Count < 1) return false;
+            if (and.DiscoData.MapData.GetAvaliableWallPaths.Count < 1) return false;
 
             int loopCount = 0;
             
             do
             {
-                leanablePath = and.DiscoData.MapData.GetAvaliablePathsNearWall[Random.Range(0, and.DiscoData.MapData.GetAvaliablePathsNearWall.Count)];
+                leanablePath = and.DiscoData.MapData.GetAvaliableWallPaths[Random.Range(0, and.DiscoData.MapData.GetAvaliableWallPaths.Count)];
                 if (Helper.IterateTo100(ref loopCount))
                 {
                     return false;

@@ -14,13 +14,15 @@ namespace Data
         public bool HasBeenSavedBefore = false;
         public GameDataExtension.PlayerCustomizationIndexData SavedPlayerCustomizationIndexData;
         public Vector2Int SavedMapSize;
-        public int WallDoorIndexOnX;
+        public bool IsWallOnX;
+        public int WallDoorIndex;
         public List<GameDataExtension.WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, GameDataExtension.FloorSaveData> SavedFloorDatas;
         public List<GameDataExtension.PlacementSaveData> SavedPlacementDatas;
         public List<GameDataExtension.InventorySaveData> SavedInventoryDatas;
         public GameDataExtension.GameSettingsData GameSettingsData;
 
+        // Default GameData
         public GameData()
         {
             // Player Customization Data
@@ -30,7 +32,8 @@ namespace Data
             SavedMapSize = new Vector2Int(11, 11);
 
             // Wall Door Index
-            WallDoorIndexOnX = SavedMapSize.x <= 6 ? SavedMapSize.x - 1 : 6;
+            IsWallOnX = false;
+            WallDoorIndex = SavedMapSize.x <= 6 ? SavedMapSize.x - 1 : 6;
 
             // Wall Data
             var defaltMaterialID = -1;

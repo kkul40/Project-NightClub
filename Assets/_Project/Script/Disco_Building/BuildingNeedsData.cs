@@ -1,6 +1,7 @@
 ﻿using System;
 using Data;
 using Disco_ScriptableObject;
+using PropBehaviours;
 using UnityEngine;
 
 namespace Disco_Building
@@ -18,6 +19,8 @@ namespace Disco_Building
         public RotationData RotationData;
         public float MoveSpeed = 10;
         public bool isReplacing = false;
+
+        public WallDoor WallDoor = null;
 
         public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData,
             MaterialColorChanger materialColorChanger, FXCreator fxCreator)

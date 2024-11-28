@@ -3,6 +3,7 @@ using Data;
 using Disco_Building.Builders;
 using Disco_ScriptableObject;
 using ExtensionMethods;
+using PropBehaviours;
 using UI.GamePages;
 using UnityEngine;
 
@@ -148,6 +149,20 @@ namespace Disco_Building
 
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
             if (storeItemSo is PlacementItemSO placementItemSo) _tileIndicator.SetSize(placementItemSo.Size);
+        }
+
+        public void ChangeDoorPosition(WallDoor door)
+        {
+            StopBuild();
+            _rotationMethod = new NullRotationMethod();
+            _buildingMethod = new WallDoorBuilderMethod();
+            _buildingNeedsData.WallDoor = door;
+            _buildingNeedsData.isReplacing = true;
+            _rotationMethod.OnStart(_buildingNeedsData);
+            _buildingMethod.OnStart(_buildingNeedsData);
+            
+            _tileIndicator.SetTileIndicator(ePlacingType.Place);
+            _tileIndicator.SetSize(Vector2.one);
         }
 
         public void StopBuild()
