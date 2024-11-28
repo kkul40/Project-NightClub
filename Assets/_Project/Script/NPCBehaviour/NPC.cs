@@ -50,6 +50,7 @@ namespace NPCBehaviour
         private void OnDestroy()
         {
             _activityHandler.ForceToEndActivity();
+            PathFinder.CancelDestination();
         }
 
         private void OnDrawGizmosSelected()
