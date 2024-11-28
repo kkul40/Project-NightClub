@@ -1,4 +1,6 @@
 ﻿using Disco_ScriptableObject;
+using UI.GamePages;
+using UI.StartMenu;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -18,5 +20,17 @@ namespace PropBehaviours
             _meshRenderer.materials = materials;
             assignedMaterialID = materialItemSo.ID;
         }
+
+        #region Interactable
+        public override eInteraction Interaction { get; } = eInteraction.PropUnit;
+
+        public override void OnClick()
+        {
+            Debug.Log("Clicked");
+            UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+        }
+
+        #endregion
+
     }
 }

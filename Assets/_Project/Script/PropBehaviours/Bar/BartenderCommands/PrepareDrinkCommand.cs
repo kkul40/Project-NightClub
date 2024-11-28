@@ -108,7 +108,7 @@ namespace PropBehaviours
         public void SetThingsBeforeStart()
         {
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
-            bartender.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition);
+            bartender.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition());
         }
 
         public void UpdateCommand(BarMediator barMediator)

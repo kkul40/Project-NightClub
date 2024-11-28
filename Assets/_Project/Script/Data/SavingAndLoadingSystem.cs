@@ -9,7 +9,7 @@ namespace Data
 {
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
-        private string fileName = "GameData";
+        private string fileName = "GameData.json";
 
         private FileDataHandler _fileDataHandler;
         private GameData _gameData = new();
