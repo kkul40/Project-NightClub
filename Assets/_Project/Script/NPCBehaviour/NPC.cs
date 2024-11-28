@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NPCBehaviour.PathFinder;
 using PropBehaviours;
@@ -30,7 +31,7 @@ namespace NPCBehaviour
             _activityHandler.UpdateActivity();
         }
 
-        public bool IsInteractable { get; }
+        public bool IsInteractable { get; } = true;
         public eInteraction Interaction { get; private set; } = eInteraction.Customer;
 
         public void OnFocus()
@@ -43,6 +44,7 @@ namespace NPCBehaviour
 
         public void OnClick()
         {
+            CameraControl.Instance.FollowNPC(this);
         }
 
         private List<Vector3> path = new();
