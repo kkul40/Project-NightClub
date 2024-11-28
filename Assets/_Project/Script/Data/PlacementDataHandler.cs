@@ -60,12 +60,10 @@ namespace Data
                 cellPos.z >= MapData.CurrentMapSize.y)
                 return true;
 
-            
-            Debug.Log($"cell Pos : {cellPos} - door Pos {MapData.DoorPosition}");
-
-            if (cellPos == MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
+            for (int i = 0; i < ConstantVariables.DoorHeight; i++)
             {
-                return true;
+                if (cellPos == MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid).Add(y:i))
+                    return true;
             }
 
             foreach (var usedKeys in AllPlacedObjects)

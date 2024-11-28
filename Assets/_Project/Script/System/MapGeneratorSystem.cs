@@ -231,15 +231,7 @@ namespace System
 
         private void LoadAndAssignWallMaterial(Vector3Int cellPosition, GameObject newWallObject)
         {
-            var data = MapData.WallDatas.Find(x => x.CellPosition == cellPosition);
-            if (data == null)
-            {
-                Debug.Log("Data Was NULL");
-                MapData.WallDatas.Add(new WallAssignmentData(cellPosition));
-                data = MapData.WallDatas[^1];
-            }
-
-            data.AssignReferance(newWallObject.GetComponent<Wall>());
+            var data = MapData.AddNewWallData(cellPosition, newWallObject);
             
             var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
             if (found == null)

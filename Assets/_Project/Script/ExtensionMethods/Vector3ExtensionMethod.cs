@@ -23,5 +23,16 @@ namespace ExtensionMethods
         {
             return vector - (vectorToSubtract ?? Vector3.zero);
         }
+
+        public static Vector3Int Add(this Vector3Int vector, int? x = null, int? y = null, int? z = null)
+        {
+            Vector3 output = vector.ToFloat().Add(x, y, z);
+            return new Vector3Int((int)output.x, (int)output.y, (int)output.z);
+        }
+        
+        public static Vector3Int FlattenToGround(this Vector3Int vector)
+        {
+            return new Vector3Int(vector.x, 0, vector.z);
+        }
     }
 }

@@ -30,14 +30,11 @@ namespace ExtensionMethods
             {
                 case eGridType.PlacementGrid:
                     return new Vector3Int((short)vector.x, (short)vector.y, (short)vector.z); // 1 Birim
-                    break;
                 case eGridType.PathFinderGrid:
                     var x = vector.x / (1f / ConstantVariables.PathFinderGridSize);
                     var y = vector.y / (1f / ConstantVariables.PathFinderGridSize);
                     var z = vector.z / (1f / ConstantVariables.PathFinderGridSize);
-
                     return new Vector3Int((short)x, (short)y, (short)z);
-                    break;
             }
 
             Debug.LogError("Conversion Returned Null when trying : " + cellGridType.ToString());
@@ -69,11 +66,9 @@ namespace ExtensionMethods
                 case eGridType.PlacementGrid:
                     float centerOffset1x1 = 0.5f;
                     return new Vector3(vector.x + centerOffset1x1, vector.y, vector.z + centerOffset1x1);
-                    break;
                 case eGridType.PathFinderGrid:
                     float centerOffset4x4 = 1f / ConstantVariables.PathFinderGridSize;
                     return new Vector3(vector.x * centerOffset4x4, 0, vector.z * centerOffset4x4);
-                    break;
             }
 
             Debug.LogError("Returned Null : " + cellGridType.ToString());

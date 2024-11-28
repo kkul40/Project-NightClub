@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Disco_ScriptableObject;
 using ExtensionMethods;
+using PropBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -147,6 +149,8 @@ namespace Data
                 DoorPosition = new Vector3Int(WallDoorIndex - 1, 0, 0);
             else
                 DoorPosition = new Vector3Int(0, 0, WallDoorIndex - 1);
+
+            DirtyFlag_AvaliablePathsNearWall = true;
         }
 
         public void UpdatePathFinderNode(Vector3Int cellPosition, bool isBig, bool? isWalkable = null, bool? isWall = null)
@@ -270,9 +274,63 @@ namespace Data
             return FloorGridDatas[cellpos.x, cellpos.z];
         }
 
-        public Vector3 EnterencePosition()
+        /// <summary>
+        /// Adds New Wall Data and Returns It
+        /// </summary>
+        /// <param name="cellPosition"></param>
+        /// <param name="wallObject"></param>
+        /// <returns>Return Added WallAssignmentData</returns>
+        public WallAssignmentData AddNewWallData(Vector3Int cellPosition, GameObject wallObject)
         {
-            Vector3 enterancePosition = DoorPosition;
+            var data = GetWallDataByCellPos(cellPosition);
+            if (data == null)
+            {
+                Debug.Log("Data Was NULL");
+                WallDatas.Add(new WallAssignmentData(cellPosition));
+                data = WallDatas[^1];
+            }
+
+            data.AssignReferance(wallObject.GetComponent<Wall>());
+            
+            DirtyFlag_AvaliablePathsNearWall = true;
+
+            return data;
+        }
+
+        public void RemoveWallData(Vector3Int cellPosition)
+        {
+            var data = GetWallDataByCellPos(cellPosition);
+
+            if (data.assignedWall != null)
+            {
+                MonoBehaviour.Destroy(data.assignedWall.gameObject);
+                Debug.Log("Destoryed");
+            }
+            
+            WallDatas.Remove(data);
+            
+            DirtyFlag_AvaliablePathsNearWall = true;
+        }
+
+        public WallAssignmentData GetWallDataByCellPos(Vector3Int cellPosition)
+        {
+            DirtyFlag_AvaliablePathsNearWall = true;
+            return WallDatas.Find(x => x.CellPosition == cellPosition);
+        }
+
+        public WallAssignmentData GetWallDataByWall(Wall wall)
+        {
+            return WallDatas.Find(x => x.assignedWall.GetInstanceID() == wall.GetInstanceID());
+        }
+
+        public WallAssignmentData GetLastIndexWallData()
+        {
+            return WallDatas[^1];
+        }
+
+        public Vector3 EnterencePosition(Vector3Int? doorPositon = null)
+        {
+            Vector3 enterancePosition = doorPositon ?? DoorPosition;
             if (IsWallDoorOnX)
                 enterancePosition.AddVector(new Vector3(-1, 0, 1));
             else
