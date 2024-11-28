@@ -32,7 +32,7 @@ namespace Data
             SavedMapSize = new Vector2Int(11, 11);
 
             // Wall Door Index
-            IsWallOnX = false;
+            IsWallOnX = true;
             WallDoorIndex = SavedMapSize.x <= 6 ? SavedMapSize.x - 1 : 6;
 
             // Wall Data
