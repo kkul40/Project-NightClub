@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
+  m_Name: Heart Table
+  m_EditorClassIdentifier: 
+  ID: 1051173920
+  Name: Heart Table
+  Description: 'Special Heart Table
+
+'
+  Icon: {fileID: 21300000, guid: a5fa881b848140a429f7036c98e46595, type: 3}
+  Price: 0
+  Prefab: {fileID: 4006220728029679546, guid: de2c47296bd2e19449326a5dcebb0f73, type: 3}
+  Size: {x: 1, y: 1}
+  IsBig: 0
+  PlacementLayer: 1
+  eRotation: 1
