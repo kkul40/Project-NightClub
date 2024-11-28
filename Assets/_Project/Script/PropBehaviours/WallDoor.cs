@@ -26,7 +26,6 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            Debug.Log("Clicked");
             UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
         }
 

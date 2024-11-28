@@ -104,7 +104,7 @@ namespace System
                     if (MapData.IsWallDoorOnX && x == MapData.WallDoorIndex)
                     {
                         var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
-                            RotationData.Down.rotation);
+                            RotationData.Down.rotation, true);
 
                         LoadAndAssignWallMaterial(new Vector3Int(MapData.WallDoorIndex, 0, 0), newWallDoorObject);
 
@@ -125,7 +125,7 @@ namespace System
                     if (!MapData.IsWallDoorOnX && y == MapData.WallDoorIndex)
                     {
                         var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(0, 0, y - 0.5f),
-                            RotationData.Left.rotation);
+                            RotationData.Left.rotation, true);
 
                         LoadAndAssignWallMaterial(new Vector3Int(0, 0, MapData.WallDoorIndex), newWallDoorObject);
 
@@ -180,7 +180,7 @@ namespace System
         private GameObject InstantiateYWall(int y)
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
-            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Left.rotation);
+            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Left.rotation, true);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
@@ -190,7 +190,7 @@ namespace System
         private GameObject InstantiateXWall(int x)
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
-            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation);
+            var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation, true);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
@@ -202,7 +202,7 @@ namespace System
         {
             var offset = new Vector3(0.5f, 0, 0.5f);
             var pos = new Vector3Int(x, 0, y);
-            var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity);
+            var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity, true);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
             MapData.UpdatePathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
 
@@ -242,10 +242,15 @@ namespace System
             data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
         }
 
-        public GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion)
+        public GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion, bool playAnimation)
         {
             var ob = Instantiate(gameObject, pos, quaternion);
-            ob.AnimatedPlacement(pos);
+            
+            if(playAnimation)
+                ob.AnimatedPlacement(pos);
+            else
+                ob.transform.position = pos;
+            
             return ob;
         }
 

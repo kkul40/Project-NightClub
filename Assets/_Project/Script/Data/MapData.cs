@@ -304,7 +304,6 @@ namespace Data
             if (data.assignedWall != null)
             {
                 MonoBehaviour.Destroy(data.assignedWall.gameObject);
-                Debug.Log("Destoryed");
             }
             
             WallDatas.Remove(data);

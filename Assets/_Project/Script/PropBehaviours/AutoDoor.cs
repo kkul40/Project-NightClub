@@ -11,6 +11,7 @@ namespace PropBehaviours
 
         private float timer;
         private bool isToggled = true;
+        public bool Locked;
 
         private void Start()
         {
@@ -19,6 +20,12 @@ namespace PropBehaviours
 
         private void Update()
         {
+            if (Locked)
+            {
+                ToggleDoor(true);
+                return;
+            }
+            
             if (timer > 1)
             {
                 ToggleDoor(false);

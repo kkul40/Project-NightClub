@@ -3,6 +3,7 @@ using Data;
 using Disco_Building.Builders;
 using Disco_ScriptableObject;
 using ExtensionMethods;
+using JetBrains.Annotations;
 using PropBehaviours;
 using UI.GamePages;
 using UnityEngine;
@@ -95,9 +96,7 @@ namespace Disco_Building
                         callBackOnPlaced?.Invoke().Invoke();
                         
                         if (_buildingNeedsData.isReplacing)
-                        {
                             StopBuild();
-                        }
                         
                         SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
                     }
@@ -135,7 +134,7 @@ namespace Disco_Building
             _tileIndicator.SetTileIndicator(ePlacingType.Remove);
         }
 
-        public void StartBuild(StoreItemSO storeItemSo, bool? isReplacing = false, Func<Action> CallBackOnPlace = null)
+        public void StartBuild(StoreItemSO storeItemSo, bool? isReplacing = false, [CanBeNull] RotationData startingRotation = null, Func<Action> CallBackOnPlace = null)
         {
             StopBuild();
             callBackOnPlaced = CallBackOnPlace;
@@ -144,6 +143,7 @@ namespace Disco_Building
             _buildingMethod = Builder.BuildToIBuilding(storeItemSo);
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _buildingNeedsData.isReplacing = isReplacing ?? false;
+            _buildingNeedsData.RotationData = startingRotation ?? RotationData.Default;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
 
@@ -185,8 +185,9 @@ namespace Disco_Building
         public void ReplaceObject(StoreItemSO storeItemSo ,Vector3Int cellPos, ePlacementLayer moveFromLayer)
         {
             StopBuild();
+            var placementData = DiscoData.Instance.placementDataHandler.GetPlacementDataByCellPos(cellPos, moveFromLayer);
             DiscoData.Instance.placementDataHandler.RemovePlacement(cellPos, moveFromLayer, false, true);
-            StartBuild(storeItemSo, true);
+            StartBuild(storeItemSo, true, placementData.Item1.SettedRotationData);
         }
         #endregion
 
