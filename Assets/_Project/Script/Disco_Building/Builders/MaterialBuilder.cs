@@ -19,6 +19,7 @@ namespace Disco_Building.Builders
         private IChangableMaterial _currentChangableMaterial;
         private MaterialItemSo _storedMaterial;
 
+        private bool updateGuard = false;
         private bool Placed = false;
         private quaternion _wallRotation;
 
@@ -47,6 +48,8 @@ namespace Disco_Building.Builders
 
         public void OnUpdate(BuildingNeedsData BD)
         {
+            if (!BD.IsCellPosInBounds() && updateGuard) return;
+
             Placed = false;
 
             switch (_materialItemSo.MaterialLayer)
@@ -73,6 +76,8 @@ namespace Disco_Building.Builders
                 _storedMaterial = BD.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
             }
+
+            updateGuard = true;
         }
 
         public void OnPlace(BuildingNeedsData BD)

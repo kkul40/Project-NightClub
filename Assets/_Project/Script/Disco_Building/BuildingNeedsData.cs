@@ -37,7 +37,7 @@ namespace Disco_Building
             if (CellPosition.x >= DiscoData.MapData.CurrentMapSize.x ||
                 CellPosition.z >= DiscoData.MapData.CurrentMapSize.y) return false;
 
-            if (CellPosition.x < 0 || CellPosition.y < 0) return false;
+            if (CellPosition.x < 0 || CellPosition.z < 0) return false;
 
             return true;
         }
