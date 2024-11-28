@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: DanceTile 2
   m_EditorClassIdentifier: 
-  ID: -1937140858
+  ID: 1133351994
   Name: Blue Dance Floor
-  Icon: {fileID: 21300000, guid: ce5ed4111818b8642aff49cf8665af7b, type: 3}
+  Description: 
+  Icon: {fileID: 21300000, guid: 112885ac0035ad5438003436d43dcdc2, type: 3}
   Price: 0
   Prefab: {fileID: 250269504976497457, guid: c2cabc55911f18c46a98432511d2d5d5, type: 3}
   Size: {x: 1, y: 1}

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GR
+  m_Name: RP Square
   m_Shader: {fileID: 4800000, guid: 1f67b66c29dfd4f45aa8cc07bf5e901a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,12 +24,8 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseTexture:
-        m_Texture: {fileID: 2800000, guid: 36150e972e30a6a4eba79d1c523bddfd, type: 3}
+        m_Texture: {fileID: 2800000, guid: e7d61cb14d37bff40b532e39a903822f, type: 3}
         m_Scale: {x: 0.5, y: 0.5}
-        m_Offset: {x: 0, y: 0}
-    - _Base_Texture:
-        m_Texture: {fileID: 2800000, guid: 970d574d72d68e744b59382781515142, type: 3}
-        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Buildings_Diffuse_01:
         m_Texture: {fileID: 2800000, guid: 8d62ef60a478479458b717cd16718c5a, type: 3}
@@ -55,10 +51,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Colour_Texture:
-        m_Texture: {fileID: 2800000, guid: cf357ff0c3f2ea442834b58f71017eaa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -76,8 +68,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive:
-        m_Texture: {fileID: 2800000, guid: 76e9e7de66846ab4a96b8e4a8a9d6617, type: 3}
-        m_Scale: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: b5d7096c82a69d841afc3307549f4b24, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveMask:
         m_Texture: {fileID: 0}
@@ -89,10 +81,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Gradient:
         m_Texture: {fileID: 2800000, guid: 1aa1a60b399b5474f980a840ef7b2cec, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _LED_Mask_01:
-        m_Texture: {fileID: 2800000, guid: 5669792805fe08b4bb7e31a730309bfc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -138,18 +126,13 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _Spec: 0
     - _SpecularHighlights: 1
-    - _Speed: 10
     - _SrcBlend: 1
-    - _Texture_Toggle: 0
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 1
     - _speed: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Colour: {r: 0, g: 0, b: 0, a: 0}
-    - _Colour_01: {r: 0, g: 0.8694534, b: 1, a: 0}
-    - _Colour_02: {r: 0, g: 0.8694534, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Speed: {r: 1, g: 0, b: 0, a: 0}
     - _Street_Colour: {r: 1, g: 0.7209212, b: 0.33490568, a: 0}

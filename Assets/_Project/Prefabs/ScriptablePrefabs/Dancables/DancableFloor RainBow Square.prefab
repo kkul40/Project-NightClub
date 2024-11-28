@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e8d89cfbdf5d87f46a59c325cfe78801, type: 2}
     - target: {fileID: 8944718490761708534, guid: 2a43293c933284748bd3ad5c6c6fbb3d, type: 3}
       propertyPath: m_Name
-      value: DancableFloor Variant
+      value: DancableFloor RainBow Square
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
