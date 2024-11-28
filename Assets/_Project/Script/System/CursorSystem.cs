@@ -26,6 +26,8 @@ namespace System
         private InputSystem _inputSystem => InputSystem.Instance;
 
         private bool _isCursorLocked = false;
+        private bool delaySelection = false;
+        private float delayTimer = 0;
 
         private void OnEnable()
         {
@@ -42,6 +44,20 @@ namespace System
             if (BuildingManager.Instance.isPlacing || _isCursorLocked)
             {
                 Reset();
+                delaySelection = true;
+                return;
+            }
+
+            if (delaySelection)
+            {
+                delayTimer += Time.deltaTime;
+                
+                if (delayTimer >= 0.2f)
+                {
+                    delaySelection = false;
+                    delayTimer = 0;
+                }
+                
                 return;
             }
             
@@ -137,6 +153,7 @@ namespace System
             if (selection)
             {
                 highlightEffect.ProfileLoad(_selectionHightlight);
+                delaySelection = true;
             }
             else
             {

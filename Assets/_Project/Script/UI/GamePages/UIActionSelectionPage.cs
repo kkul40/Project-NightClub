@@ -47,6 +47,7 @@ namespace UI.GamePages
 
             CloseAllButtons();
             Invoke(nameof(ActivateButtonsAndArrange), 0.1f);
+            // ActivateButtonsAndArrange();
         }
 
         private void ActivateButtonsAndArrange()

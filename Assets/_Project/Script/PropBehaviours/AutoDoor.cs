@@ -10,6 +10,7 @@ namespace PropBehaviours
         [SerializeField] private Transform ChieldDoorTransform;
 
         private float timer;
+        private bool isToggled = true;
 
         private void Start()
         {
@@ -41,10 +42,13 @@ namespace PropBehaviours
 
         private void ToggleDoor(bool toggle)
         {
-            if (toggle)
-                ChieldDoorTransform.DORotate(new Vector3(0, 105, 0), 0.5f);
-            else
-                ChieldDoorTransform.DORotate(new Vector3(0, 180, 0), 0.5f);
+            if (isToggled == toggle) return;
+
+            isToggled = toggle;
+
+            float targetYRotation = toggle ? 90f : 180f;
+
+            ChieldDoorTransform.DOLocalRotate(new Vector3(0, targetYRotation, 0), 0.5f);
         }
     }
 }
