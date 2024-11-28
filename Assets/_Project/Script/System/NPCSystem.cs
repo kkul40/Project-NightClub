@@ -105,8 +105,12 @@ namespace System
             if (_npcSpawnRoutine != null)
                 StopCoroutine(_npcSpawnRoutine);
 
-            foreach (var activity in _npcs)
-                activity._activityHandler.StartNewActivity(new ExitDiscoActivity());
+            foreach (var npc in _npcs)
+            {
+                if (npc == null) continue;
+                if(npc._activityHandler.GetCurrentActivity is ExitDiscoActivity) continue;
+                npc._activityHandler.StartNewActivity(new ExitDiscoActivity());
+            }
 
             _npcs.Clear();
         }

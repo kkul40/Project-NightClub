@@ -44,6 +44,8 @@ namespace NPCBehaviour.Activities
 
         public bool ForceToQuitActivity(ActivityNeedsData and)
         {
+            if (!and.DiscoData.MapData.GetAvaliableWallPaths.Contains(leanablePath)) return true;
+            // TODO Quit When Object Placed On Top of You
             return false;
         }
 
