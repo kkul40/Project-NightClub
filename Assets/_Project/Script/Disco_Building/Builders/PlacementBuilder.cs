@@ -18,6 +18,7 @@ namespace Disco_Building.Builders
         private PlacementItemSO _storeItemSo;
 
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
+        private Material _storedDiscoFloorMaterial;
 
         public void OnStart(BuildingNeedsData BD)
         {
@@ -33,6 +34,8 @@ namespace Disco_Building.Builders
             foreach (var transform in transforms)
                 BD.MaterialColorChanger.SetCustomMaterial(transform,
                     MaterialColorChanger.eMaterialColor.TransparentMaterial, ref _materialDatas);
+
+            _storedDiscoFloorMaterial = _tempMeshRenderer[0].material;
         }
 
         public bool OnValidate(BuildingNeedsData BD)
@@ -66,8 +69,17 @@ namespace Disco_Building.Builders
             
             _tempObject.transform.rotation = BD.RotationData.rotation;
 
-            BD.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer,
-                OnValidate(BD));
+            if (_storeItemSo.PlacementLayer != ePlacementLayer.BaseSurface)
+            {
+                BD.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(BD));
+            }
+            else
+            {
+                if (OnValidate(BD))
+                    BD.MaterialColorChanger.SetMaterialColor(_tempMeshRenderer, _storedDiscoFloorMaterial);
+                else
+                    BD.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, false);
+            }
         }
 
         public void OnPlace(BuildingNeedsData BD)

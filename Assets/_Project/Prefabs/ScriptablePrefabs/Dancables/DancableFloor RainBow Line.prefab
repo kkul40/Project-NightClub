@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7699214061376321505, guid: 0ad667541f9d9a44c8d3fd0f35fbed52, type: 3}
       propertyPath: m_Name
-      value: DancableFloor Variant
+      value: DancableFloor RainBow Line
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

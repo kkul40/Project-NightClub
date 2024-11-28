@@ -12,15 +12,21 @@ namespace Disco_Building
             RemovingMaterial
         }
 
-        [SerializeField] private Material blueMaterial;
-        [SerializeField] private Material redMaterial;
-        [SerializeField] private Material yellowMaterial;
-        [SerializeField] private Material whiteMaterial;
+        public Material greenMaterial;
+        public Material greenMaterial2;
+        public Material redMaterial;
+        public Material yellowMaterial;
+        public Material whiteMaterial;
 
         public void SetMaterialsColorByValidity(List<MeshRenderer> meshRenderers, bool canPlace)
         {
-            var tempMaterial = canPlace ? blueMaterial : redMaterial;
+            var tempMaterial = canPlace ? greenMaterial : redMaterial;
             SetMaterial(meshRenderers, tempMaterial);
+        }
+
+        public void SetMaterialColor(List<MeshRenderer> meshRenderers, Material material)
+        {
+            SetMaterial(meshRenderers, material);
         }
 
         public void SetCustomMaterial(Transform transform, eMaterialColor eMaterialColor,
