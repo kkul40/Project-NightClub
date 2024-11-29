@@ -35,6 +35,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-256299497-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1126876492-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-9191934-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-212570294-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-2688344837535098277-1310598312
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-246593791-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -70,3 +73,9 @@ MonoBehaviour:
           iconNameOrGuid: PreMatQuad
         - colorIndex: 0
           iconNameOrGuid: PreMatQuad
+        - colorIndex: 1
+          iconNameOrGuid: 
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: ReflectionProbe Icon

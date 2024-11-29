@@ -15,10 +15,107 @@ MonoBehaviour:
   folderDatas_byGuid:
     keys:
     - bb2c96510cd032643bf85dee28b4b6a5
+    - 4eebd726fca4d2449a1eabee32ed5d7f
+    - d08b116459eb021438de4f9722373b66
+    - 354a316846bfd8b4fa9ae7b8d437ca8a
+    - 69318257e42090743ae949af18e28ef6
+    - 0c1dfb2d1bd9b654f80e6940ac3067c0
+    - 4703454faa658714dbdfa7effd50da13
+    - 194aec171a12aa44391a1cac9f08d487
+    - 60cbb8ef881a72d47aea992d047c2f62
+    - b0f2004441a6fba4eb4460338495f1f2
+    - 997670fed37b5d544acdd7ebc29ed063
+    - d8f2934b359b7fd4ab4f37c15c87ad6d
+    - a580ac1526f7eef4ba52e7f85bf7f403
+    - f203da2124185c841b56dd5ce274dc69
+    - d4e1acbe00eaa034b803c9a641b0633e
+    - 561c3985bad51594c84ad967b18991f7
+    - fd3b3bc6c285b1c4eb9605253f71efdf
+    - 60a584243a7000449bd075a60e93fd94
+    - f343ece98ca80ad42888ffde0b81cfe0
+    - 7b07a9a700a542e084dda7d992c5348d
     values:
     - iconNameOrGuid: RawImage Icon
       colorIndex: 0
       isIconRecursive: 0
       isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: RawImage Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AnimationClip Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: sv_icon_none
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: TextAsset Icon
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AudioClip Icon
+      colorIndex: 3
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 10
+      isIconRecursive: 0
+      isColorRecursive: 0
   bookmarks:
   - guid: 4eebd726fca4d2449a1eabee32ed5d7f
+  - guid: 354a316846bfd8b4fa9ae7b8d437ca8a
+  - guid: 7b07a9a700a542e084dda7d992c5348d

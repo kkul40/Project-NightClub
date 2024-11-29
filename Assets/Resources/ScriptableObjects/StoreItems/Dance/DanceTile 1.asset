@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: DanceTile 1
   m_EditorClassIdentifier: 
-  ID: 548790199
+  ID: 92799902
   Name: Red Dance Floor
-  Icon: {fileID: 21300000, guid: a9e1a7963d390a34d89605d0662ad914, type: 3}
+  Description: 
+  Icon: {fileID: 21300000, guid: 92881768239b57743ba1412b966b6c29, type: 3}
   Price: 0
   Prefab: {fileID: 7699214061376321505, guid: 0ad667541f9d9a44c8d3fd0f35fbed52, type: 3}
   Size: {x: 1, y: 1}

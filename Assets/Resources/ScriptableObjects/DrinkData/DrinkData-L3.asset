@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrinkData-L3
   m_EditorClassIdentifier: 
   ID: 307452552
-  Icon: {fileID: 21300000, guid: 7a519c00b3dd7d84a8fea6d3df65689f, type: 3}
+  Icon: {fileID: 21300000, guid: 930fdf2fe369ef44ab15f31ff84fd042, type: 3}
   Name: Purple Drink
   DrinkAmount: 6
   PrepareTime: 6
