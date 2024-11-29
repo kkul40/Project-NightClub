@@ -18,7 +18,7 @@ namespace NPCBehaviour.Activities
             return true;
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             return false;
         }
@@ -49,7 +49,6 @@ namespace NPCBehaviour.Activities
 
         public Vector3 GetRandomDestination(ActivityNeedsData and)
         {
-            Debug.Log("Random Walk Asked");
             var loopCount = 0;
 
             var target = and.DiscoData.MapData.GetRandomPathFinderNode();
@@ -62,8 +61,6 @@ namespace NPCBehaviour.Activities
 
                 if (Helper.IterateTo100(ref loopCount))
                 {
-                    Debug.Log("Target Node is Wall : " + target.IsWall);
-
                     IsEnded = true;
                     break;
                 }

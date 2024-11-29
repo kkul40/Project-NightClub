@@ -28,7 +28,7 @@ namespace NPCBehaviour.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_chair.GetFrontPosition().position);
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             if (_chair == null) return true;
             return false;

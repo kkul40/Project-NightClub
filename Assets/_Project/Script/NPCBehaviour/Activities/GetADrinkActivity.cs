@@ -32,7 +32,7 @@ namespace NPCBehaviour.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             if (_bar == null) return true;
             if (!_bar.HasDrinks) return true;

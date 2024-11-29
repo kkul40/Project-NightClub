@@ -27,30 +27,26 @@ namespace NPCBehaviour.Activities
         public bool IsEnded { get; private set; }
         public bool CanStartActivity(ActivityNeedsData and)
         {
-            if (and.DiscoData.MapData.GetAvaliableWallPaths.Count < 1) return false;
+            if (and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count < 1) return false;
 
             int loopCount = 0;
             
             do
             {
-                leanablePath = and.DiscoData.MapData.GetAvaliableWallPaths[Random.Range(0, and.DiscoData.MapData.GetAvaliableWallPaths.Count)];
+                leanablePath = and.DiscoData.MapData.Path.GetAvaliableWallPaths[Random.Range(0, and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count)];
                 if (Helper.IterateTo100(ref loopCount))
                 {
                     return false;
                 }
 
             } while (leanablePath.HasOccupied);
-
-            if (and.DiscoData.placementDataHandler.ContainsKeyOnWall(leanablePath.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid), 2))
-                return false;
             
             return and.Npc.PathFinder.CheckIfPathAvaliable(leanablePath.WorldPos);
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
-            if (!and.DiscoData.MapData.GetAvaliableWallPaths.Contains(leanablePath)) return true;
-            // TODO Quit When Object Placed On Top of You
+            if (!and.DiscoData.MapData.Path.GetAvaliableWallPaths.Contains(leanablePath)) return true;
             return false;
         }
 
@@ -93,6 +89,7 @@ namespace NPCBehaviour.Activities
         {
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
             leanablePath.ChangeOccupition(and.Npc, false);
+            IsEnded = true;
         }
     }
 }

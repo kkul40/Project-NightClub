@@ -120,6 +120,7 @@ namespace Data
             
             UpdatePathFinder(addedData);
             
+            OnPropPlaced?.Invoke();
             OnPlacedPositions?.Invoke(keys);
             
             AddedObjectHandler(cellPos, placementData);
@@ -143,6 +144,7 @@ namespace Data
             UpdatePathFinderNearRemovedObject(cellPos, dataToRemove);
             
             RemoveObjectHandler(dataToRemove.Item1.PlacedSceneObject, removeImidietly);
+            OnPropRemoved?.Invoke();
             UpdateProps();
         }
 
@@ -151,7 +153,7 @@ namespace Data
             if (data.Item3 != ePlacementLayer.FloorProp) return;
             
             foreach (var key in data.Item2)
-                MapData.UpdatePathFinderNode(key, data.Item1.PlacedPlacementItemSo.IsBig, true);
+                MapData.Path.UpdatePathFinderNode(key, data.Item1.PlacedPlacementItemSo.IsBig, true);
             
             List<Vector3Int> updadatableKeys = new List<Vector3Int>();
             foreach (var worldPos in data.Item2)
@@ -164,7 +166,7 @@ namespace Data
                 if(tuple == null) continue;
 
                 foreach (var worldKey in tuple.Item2)
-                    MapData.UpdatePathFinderNode(worldKey, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
+                    MapData.Path.UpdatePathFinderNode(worldKey, tuple.Item1.PlacedPlacementItemSo.IsBig, false);
             }
         }
         
@@ -173,7 +175,7 @@ namespace Data
             if (tuple.Item3 != ePlacementLayer.FloorProp) return;
 
             foreach (var key in tuple.Item2)
-                MapData.UpdatePathFinderNode(key, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
+                MapData.Path.UpdatePathFinderNode(key, tuple.Item1.PlacedPlacementItemSo.IsBig , false);
         }
         
         private void AddedObjectHandler(Vector3Int cellPos, PlacementData placementData)

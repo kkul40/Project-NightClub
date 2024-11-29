@@ -12,7 +12,7 @@ namespace NPCBehaviour.Activities
             return true;
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             return false;
         }
