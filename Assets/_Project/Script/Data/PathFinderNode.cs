@@ -1,8 +1,6 @@
 ﻿using System;
 using NPCBehaviour;
-using PropBehaviours;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Data
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ExtensionMethods;
-using NUnit.Framework;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -155,6 +154,35 @@ namespace Data
         {
             Vector2Int Size = PathFinderSize();
             return PathFinderNodes[Random.Range(0, Size.x), Random.Range(0, Size.y)];
+        }
+        
+        public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
+        {
+            var convert = worldPos.WorldPosToCellPos(eGridType.PathFinderGrid);
+            return PathFinderNodes[convert.x, convert.z];
+        }
+        
+        public PathFinderNode[,] GetUsablePathFinderNodes()
+        {
+            Vector2Int mapSize = PathFinderSize();
+            var outputNode = new PathFinderNode[mapSize.x, mapSize.y];
+
+            for (var x = 0; x < mapSize.x; x++)
+            for (var y = 0; y < mapSize.y; y++)
+            {
+                outputNode[x, y] = PathFinderNodes[x, y].Copy();
+                    
+                if (x > _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && 
+                    x < _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize && 
+                    y == 0) continue;
+                
+                if (x == 0 || y == 0 || x == mapSize.x - 1 || y == mapSize.y - 1)
+                {
+                    outputNode[x, y].IsWall = true;
+                }
+            }
+            
+            return outputNode;
         }
         
         public void SetFlags(bool? avaliablePathFlag)

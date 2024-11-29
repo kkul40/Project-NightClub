@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Disco_ScriptableObject;
 using ExtensionMethods;
 using PropBehaviours;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Data
 {
@@ -34,11 +32,10 @@ namespace Data
 
         public MapData()
         {
-            return;
             // Intensional Broken Data
+            Debug.LogError("Initialized With No Data");
             
             Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
-            
             CurrentMapSize = Vector2Int.one;
             
             ChangeDoorPosition(1, true);
@@ -54,9 +51,8 @@ namespace Data
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
-
+            
         }
-
 
         public MapData(GameData gameData)
         {
@@ -67,7 +63,6 @@ namespace Data
         public void LoadData(GameData gameData)
         {
             Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
-            
             CurrentMapSize = gameData.SavedMapSize;
             WallDoorIndex = gameData.WallDoorIndex;
             
@@ -123,34 +118,6 @@ namespace Data
         public PathFinderNode GetRandomPathFinderNode()
         {
             return Path.GetRandomPathNode();
-        }
-
-        public PathFinderNode[,] GetPathFinderNodes()
-        {
-            var outputNode = new PathFinderNode[PathFinderSize.x, PathFinderSize.y];
-
-            for (var x = 0; x < PathFinderSize.x; x++)
-            for (var y = 0; y < PathFinderSize.y; y++)
-            {
-                outputNode[x, y] = Path.GetPath(x,y).Copy();
-
-                if (x > WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && 
-                    x < WallDoorIndex * ConstantVariables.PathFinderGridSize && 
-                    y == 0) continue;
-                
-                if (x == 0 || y == 0 || x == PathFinderSize.x - 1 || y == PathFinderSize.y - 1)
-                {
-                    outputNode[x, y].IsWall = true;
-                }
-            }
-            
-            return outputNode;
-        }
-
-        public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
-        {
-            var convert = worldPos.WorldPosToCellPos(eGridType.PathFinderGrid);
-            return Path.GetPath(convert.x, convert.z);
         }
         
         public FloorGridAssignmentData GetFloorGridData(int x, int y)

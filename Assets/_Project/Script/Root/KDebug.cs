@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using Data;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Root
 {
@@ -31,7 +29,7 @@ namespace Root
             }
 
             if (showPathFinder)
-                foreach (var node in DiscoData.Instance.MapData.GetPathFinderNodes())
+                foreach (var node in DiscoData.Instance.MapData.Path.GetUsablePathFinderNodes())
                 {
                     if (node.HasOccupied)
                         Gizmos.color = Color.blue;

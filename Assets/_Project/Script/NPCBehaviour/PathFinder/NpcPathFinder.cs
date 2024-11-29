@@ -101,7 +101,7 @@ namespace NPCBehaviour.PathFinder
 
         private List<Vector3> FindPath(Vector3 startPos, Vector3 targetPos)
         {
-            _tileNode = DiscoData.Instance.MapData.GetPathFinderNodes();
+            _tileNode = DiscoData.Instance.MapData.Path.GetUsablePathFinderNodes();
 
             var startNode = NodeFromWorldPoint(startPos);
             var targetNode = NodeFromWorldPoint(targetPos);
