@@ -16,43 +16,29 @@ namespace Data
         public Vector2Int CurrentMapSize { get; private set; }
         public Vector3Int DoorPosition { get; private set; }
 
+        public PathData Path;
+
         //TODO Dinamik olarak 2 dimension arraylari ayarla
         public List<WallAssignmentData> WallDatas { get; set; }
         private FloorGridAssignmentData[,] FloorGridDatas;
-        private PathFinderNode[,] PathFinderNodes;
 
         // Referanced
         private List<PathFinderNode> AvaliableWallPaths;
-        private bool DirtyFlag_AvaliablePathsNearWall = true;
+        
+        // Flags
 
-        public Vector2Int PathFinderSize
-        {
-            get
-            {
-                return new Vector2Int((CurrentMapSize.x * ConstantVariables.PathFinderGridSize) + 1,
-                    (CurrentMapSize.y * ConstantVariables.PathFinderGridSize) + 1);
-            }
-        }
+        public Vector2Int PathFinderSize => Path.PathFinderSize();
 
         // TODO Do More Optimization
-        public List<PathFinderNode> GetAvaliableWallPaths
-        {
-            get
-            {
-                if (DirtyFlag_AvaliablePathsNearWall)
-                {
-                    UpdateAvaliableWallPaths();
-                    DirtyFlag_AvaliablePathsNearWall = false;
-                }
-                
-                return AvaliableWallPaths;
-            }
-        }
+        
 
         public MapData()
         {
             return;
             // Intensional Broken Data
+            
+            Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
+            
             CurrentMapSize = Vector2Int.one;
             
             ChangeDoorPosition(1, true);
@@ -69,28 +55,8 @@ namespace Data
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(new Vector3Int(x, 0, y));
 
-            SetUpNewPathFinder();
         }
 
-        private void SetUpNewPathFinder()
-        {
-            int MaxX = ConstantVariables.MaxMapSizeX * ConstantVariables.PathFinderGridSize + 1;
-            int MaxY = ConstantVariables.MaxMapSizeY * ConstantVariables.PathFinderGridSize + 1;
-            PathFinderNodes = new PathFinderNode[MaxX, MaxY];
-
-            for (var x = 0; x < MaxX; x++)
-            {
-                for (var y = 0; y < MaxY; y++)
-                {
-                    PathFinderNodes[x, y] = new PathFinderNode();
-                    var node = PathFinderNodes[x, y];
-                    node.IsWalkable = false;
-                    node.GridX = x;
-                    node.GridY = y;
-                    node.WorldPos = new Vector3Int(x, 0, y).CellCenterPosition(eGridType.PathFinderGrid);
-                }
-            }
-        }
 
         public MapData(GameData gameData)
         {
@@ -100,6 +66,8 @@ namespace Data
         #region Saving And Loading...
         public void LoadData(GameData gameData)
         {
+            Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
+            
             CurrentMapSize = gameData.SavedMapSize;
             WallDoorIndex = gameData.WallDoorIndex;
             
@@ -112,8 +80,6 @@ namespace Data
             for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
             for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
                 FloorGridDatas[x, y] = new FloorGridAssignmentData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
-
-            SetUpNewPathFinder();
         }
 
         public void SaveData(ref GameData gameData)
@@ -136,7 +102,8 @@ namespace Data
         {
             CurrentMapSize = mapSize;
             
-            DirtyFlag_AvaliablePathsNearWall = true;
+            Path.SetFlags(avaliablePathFlag:true);
+
             return true;
         }
 
@@ -150,81 +117,12 @@ namespace Data
             else
                 DoorPosition = new Vector3Int(0, 0, WallDoorIndex - 1);
 
-            DirtyFlag_AvaliablePathsNearWall = true;
-        }
-
-        public void UpdatePathFinderNode(Vector3Int cellPosition, bool isBig, bool? isWalkable = null, bool? isWall = null)
-        {
-            UpdatePathFinderNode(cellPosition.PlacementPosToPathFinderIndex(), isBig, isWalkable, isWall);
-        }
-
-        public void UpdatePathFinderNode(Vector2Int pathNodeIndex, bool isBig, bool? isWalkable = null,
-            bool? isWall = null)
-        {
-            int minimumSpace = 0;
-            int maximumSpace = 1;
-
-            int setMaxCellPosX = pathNodeIndex.x +
-                                 (isBig
-                                     ? ConstantVariables.PathFinderGridSize - minimumSpace
-                                     : ConstantVariables.PathFinderGridSize - maximumSpace);
-            int setMaxCellPosY = pathNodeIndex.y +
-                                 (isBig
-                                     ? ConstantVariables.PathFinderGridSize - minimumSpace
-                                     : ConstantVariables.PathFinderGridSize - maximumSpace);
-
-            int setMinCellPosX = pathNodeIndex.x + (isBig ? minimumSpace : maximumSpace);
-            int setMinCellPosY = pathNodeIndex.y + (isBig ? minimumSpace : maximumSpace);
-
-            for (int i = setMinCellPosX; i <= setMaxCellPosX; i++)
-            for (int j = setMinCellPosY; j <= setMaxCellPosY; j++)
-            {
-                if (isWall ?? false)
-                    PathFinderNodes[i, j].IsWall = isWall ?? PathFinderNodes[i, j].IsWall;
-
-                PathFinderNodes[i, j].IsWalkable = isWalkable ?? PathFinderNodes[i, j].IsWalkable;
-            }
-
-            // Flag
-            DirtyFlag_AvaliablePathsNearWall = true;
-        }
-
-        public void UpdateAvaliableWallPaths()
-        {
-            AvaliableWallPaths = new List<PathFinderNode>();
-
-            int howFarFromWall = 1;
-            for (int x = ConstantVariables.PathFinderGridSize / 2; x < PathFinderSize.x; x += ConstantVariables.PathFinderGridSize)
-            {
-                PathFinderNode node = PathFinderNodes[x,howFarFromWall];
-                if (!ContainsKeyOnPath(node, ePlacementLayer.BaseSurface) && !ContainsKeyOnPath(node, ePlacementLayer.FloorProp))
-                    AvaliableWallPaths.Add(node);
-            }
-            for (int y = ConstantVariables.PathFinderGridSize / 2; y < PathFinderSize.y; y += ConstantVariables.PathFinderGridSize)
-            {
-                PathFinderNode node = PathFinderNodes[howFarFromWall,y];
-                if (!ContainsKeyOnPath(node, ePlacementLayer.BaseSurface) && !ContainsKeyOnPath(node, ePlacementLayer.FloorProp))
-                    AvaliableWallPaths.Add(node);
-            }
-
-            for (int i = AvaliableWallPaths.Count - 1; i >= 0; i--)
-            {
-                if (AvaliableWallPaths[i].WorldPos.WorldPosToCellPos(eGridType.PlacementGrid) == EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
-                {
-                    AvaliableWallPaths.RemoveAt(i);
-                    break;
-                }
-            }
-        }
-
-        private bool ContainsKeyOnPath(PathFinderNode node, ePlacementLayer layer)
-        {
-            return DiscoData.Instance.placementDataHandler.ContainsKey(node.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid), layer);
+            Path.SetFlags(avaliablePathFlag:true);
         }
 
         public PathFinderNode GetRandomPathFinderNode()
         {
-            return PathFinderNodes[Random.Range(0, PathFinderSize.x), Random.Range(0, PathFinderSize.y)];
+            return Path.GetRandomPathNode();
         }
 
         public PathFinderNode[,] GetPathFinderNodes()
@@ -234,7 +132,7 @@ namespace Data
             for (var x = 0; x < PathFinderSize.x; x++)
             for (var y = 0; y < PathFinderSize.y; y++)
             {
-                outputNode[x, y] = PathFinderNodes[x, y].Copy();
+                outputNode[x, y] = Path.GetPath(x,y).Copy();
 
                 if (x > WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && 
                     x < WallDoorIndex * ConstantVariables.PathFinderGridSize && 
@@ -251,8 +149,8 @@ namespace Data
 
         public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
         {
-            var convert = worldPos.WorldPosToCellPos(System.eGridType.PathFinderGrid);
-            return PathFinderNodes[convert.x, convert.z];
+            var convert = worldPos.WorldPosToCellPos(eGridType.PathFinderGrid);
+            return Path.GetPath(convert.x, convert.z);
         }
         
         public FloorGridAssignmentData GetFloorGridData(int x, int y)
@@ -292,7 +190,7 @@ namespace Data
 
             data.AssignReferance(wallObject.GetComponent<Wall>());
             
-            DirtyFlag_AvaliablePathsNearWall = true;
+            Path.SetFlags(avaliablePathFlag:true);
 
             return data;
         }
@@ -308,12 +206,11 @@ namespace Data
             
             WallDatas.Remove(data);
             
-            DirtyFlag_AvaliablePathsNearWall = true;
+            Path.SetFlags(avaliablePathFlag:true);
         }
 
         public WallAssignmentData GetWallDataByCellPos(Vector3Int cellPosition)
         {
-            DirtyFlag_AvaliablePathsNearWall = true;
             return WallDatas.Find(x => x.CellPosition == cellPosition);
         }
 

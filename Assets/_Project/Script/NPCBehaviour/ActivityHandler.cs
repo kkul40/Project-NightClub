@@ -53,7 +53,7 @@ namespace NPCBehaviour
                 StartNewActivity(GetRandomActivity());
                 return;
             }
-            else if (_currentActivity.ForceToQuitActivity(_activityNeedsData))
+            else if (_currentActivity.OnActivityErrorHandler(_activityNeedsData))
             {
                 UIEmoteManager.Instance.ShowEmote(EmoteTypes.Angry, _activityNeedsData.Npc);
                 
@@ -90,24 +90,36 @@ namespace NPCBehaviour
             
             foreach (var key in keys)
             {
-                // Is Placement on The Destination
-                if (key == _activityNeedsData.Npc.PathFinder.TargetPosition.WorldPosToCellPos(eGridType.PlacementGrid))
+                if (!_activityNeedsData.Npc.PathFinder.HasReachedDestination)
                 {
-                    StartNewActivity(GetRandomActivity());
-                    return;
-                }
-                
-                // Is Placement on your way
-                foreach (var path in _activityNeedsData.Npc.PathFinder.FoundPath) 
-                {
-                    if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
+                    // Is Placement on The Destination
+                    if (key == _activityNeedsData.Npc.PathFinder.TargetPosition.WorldPosToCellPos(eGridType.PlacementGrid))
                     {
-                        if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
-                            return;
-                        
                         StartNewActivity(GetRandomActivity());
                         return;
                     }
+                }
+                else
+                {
+                    // Is Placement on your way
+                    foreach (var path in _activityNeedsData.Npc.PathFinder.FoundPath) 
+                    {
+                        if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
+                        {
+                            if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
+                                return;
+                        
+                            StartNewActivity(GetRandomActivity());
+                            return;
+                        }
+                    }
+                }
+               
+                // Is Placement On Top Of You
+                if (key == _activityNeedsData.Npc.transform.position.WorldPosToCellPos(eGridType.PlacementGrid))
+                {
+                    StartNewActivity(GetRandomActivity());
+                    return;
                 }
             }
         }

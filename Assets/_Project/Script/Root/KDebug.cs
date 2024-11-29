@@ -11,6 +11,7 @@ namespace Root
         public GameObject TestCube;
         public bool showPlacements = false;
         public bool showPathFinder = false;
+        public bool showAvaliableLeanPosition = false;
 
         private void OnDrawGizmos()
         {
@@ -41,9 +42,20 @@ namespace Root
                     else
                         Gizmos.color = Color.red;
 
-                    Gizmos.DrawCube(node.WorldPos, new Vector3(0.8f, 0.8f, 0.8f) / ConstantVariables.PathFinderGridSize);
+                    Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
                 }
+
+            if (showAvaliableLeanPosition)
+            {
+                foreach (var node in MapGeneratorSystem.Instance.MapData.Path.GetAvaliableWallPaths)
+                {
+                    Gizmos.color = Color.magenta;
+                    Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
+                }
+            }
         }
+
+        public Vector3 DefaultSize => new Vector3(0.8f, 0.8f, 0.8f);
 
         public static void Print(string message)
         {

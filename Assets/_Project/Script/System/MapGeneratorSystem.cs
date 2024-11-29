@@ -4,6 +4,8 @@ using Disco_Building;
 using Disco_ScriptableObject;
 using ExtensionMethods;
 using PropBehaviours;
+using Root;
+using Testing;
 using UnityEngine;
 
 namespace System
@@ -204,7 +206,7 @@ namespace System
             var pos = new Vector3Int(x, 0, y);
             var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity, true);
             newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
-            MapData.UpdatePathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
+            MapData.Path.UpdatePathFinderNode(pos.PlacementPosToPathFinderIndex(), true, true);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }

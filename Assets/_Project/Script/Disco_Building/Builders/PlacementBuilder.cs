@@ -46,9 +46,13 @@ namespace Disco_Building.Builders
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.BaseSurface:
                     transform = BD.InputSystem.GetHitTransformWithLayer(ConstantVariables.FloorLayerID);
+                    if (BD.DiscoData.placementDataHandler.ContainsKeyOnWall(BD.CellPosition, 1)) 
+                        return false;
                     break;
                 case ePlacementLayer.WallProp:
                     transform = BD.InputSystem.GetHitTransformWithLayer(ConstantVariables.WalllayerID);
+                    if (BD.DiscoData.placementDataHandler.ContainsKey(BD.CellPosition, ePlacementLayer.FloorProp))
+                        return false;
                     break;
             }
 
@@ -57,6 +61,7 @@ namespace Disco_Building.Builders
             if (BD.DiscoData.placementDataHandler.ContainsKey(BD.CellPosition,
                     _storeItemSo.Size, BD.RotationData,
                     _storeItemSo.PlacementLayer)) return false;
+
 
             return true;
         }

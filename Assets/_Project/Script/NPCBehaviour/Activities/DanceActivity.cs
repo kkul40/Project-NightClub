@@ -37,7 +37,7 @@ namespace NPCBehaviour.Activities
             return and.Npc.PathFinder.CheckIfPathAvaliable(_dancableTile.WorldPos);
         }
 
-        public bool ForceToQuitActivity(ActivityNeedsData and)
+        public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             if (_dancableTile == null) return true;
 

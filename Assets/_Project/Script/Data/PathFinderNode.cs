@@ -43,6 +43,11 @@ namespace Data
             HasOccupied = false;
         }
 
+        public PathFinderNode Init()
+        {
+            return new PathFinderNode();
+        }
+
         public PathFinderNode Copy()
         {
             var output = new PathFinderNode();
