@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrinkData-L1
   m_EditorClassIdentifier: 
   ID: 277912461
-  Icon: {fileID: 21300000, guid: 7a519c00b3dd7d84a8fea6d3df65689f, type: 3}
+  Icon: {fileID: 21300000, guid: 9df6620314f87c443909d006f9177588, type: 3}
   Name: Green Drink
   DrinkAmount: 10
   PrepareTime: 4

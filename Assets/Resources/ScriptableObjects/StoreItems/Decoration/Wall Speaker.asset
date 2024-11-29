@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: Wall Speaker
   m_EditorClassIdentifier: 
-  ID: -1130938901
+  ID: 77805187
   Name: Plays Music
-  Icon: {fileID: 21300000, guid: f61d83f591fa3354982830dab2faa9da, type: 3}
+  Description: 
+  Icon: {fileID: 21300000, guid: 0fe8cec54eb42ad4d957c9a474e41956, type: 3}
   Price: 0
   Prefab: {fileID: 4359942769920054165, guid: 056c2c2b617c94b4494ecfd4a850b041, type: 3}
   Size: {x: 1, y: 1}
