@@ -11,7 +11,8 @@ namespace System
         private float timer = 0;
         [SerializeField] private AudioMixer mixer;
 
-        [Header("Sound FX")]
+        [Header("Sound FX")] 
+        public AudioClip Click;
         public AudioClip Succes;
         public AudioClip Error;
         

@@ -80,7 +80,7 @@ namespace System
                         if (_inputSystem.LeftClickOnWorld && cursorInteraction.IsInteractable && cursorInteraction.Interaction != eInteraction.None)
                         {
                             Set(cursorInteraction, hitTransform.gameObject, true);
-                            cursorInteraction.OnClick();
+                            OnClickHandler(cursorInteraction);
                             _cursorState = CursorState.Selected;
                         }
                         else
@@ -108,7 +108,7 @@ namespace System
                                 {
                                     Reset();
                                     Set(interaction, hitTransform.gameObject, true);
-                                    _currentInteractable.OnClick();
+                                    OnClickHandler(_currentInteractable);
                                 }
                             }
                             else
@@ -195,6 +195,12 @@ namespace System
             }
 
             _currentGameObject = null;
+        }
+
+        private void OnClickHandler(IInteractable interactable)
+        {
+            interactable.OnClick();
+            SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
         }
         public void ToggleCursorLock(bool toggle) => _isCursorLocked = toggle;
     }

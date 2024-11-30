@@ -38,6 +38,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-212570294-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-2688344837535098277-1310598312
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-246593791-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1086089510-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -53,7 +54,7 @@ MonoBehaviour:
           iconNameOrGuid: DirectionalLight Icon
         - colorIndex: 0
           iconNameOrGuid: Folder Icon
-        - colorIndex: 0
+        - colorIndex: 2
           iconNameOrGuid: Folder Icon
         - colorIndex: 1
           iconNameOrGuid: 
@@ -79,3 +80,5 @@ MonoBehaviour:
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
           iconNameOrGuid: ReflectionProbe Icon
+        - colorIndex: 3
+          iconNameOrGuid: 

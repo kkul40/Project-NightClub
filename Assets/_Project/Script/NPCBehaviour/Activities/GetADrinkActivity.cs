@@ -14,7 +14,9 @@ namespace NPCBehaviour.Activities
 
         private IBar _bar;
         private Coroutine _routine;
-
+        private bool gotADrink = false;
+        
+        
         public bool CanStartActivity(ActivityNeedsData and)
         {
             var _bars = and.GetAvaliablePropsByInterface<IBar>();
@@ -35,7 +37,6 @@ namespace NPCBehaviour.Activities
         public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             if (_bar == null) return true;
-            if (!_bar.HasDrinks) return true;
             return false;
         }
 
@@ -68,10 +69,17 @@ namespace NPCBehaviour.Activities
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
             and.Npc.PathFinder.SetPositioning(_bar.CustomerWaitPosition.rotation);
             yield return new WaitForSeconds(1);
-            _bar.GetDrink();
-            UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
+            if (_bar.HasDrinks)
+            {
+                _bar.GetDrink();
+                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Sad, and.Npc);
+            }
 
-            yield return new WaitForSeconds(0.5f);
 
             IsEnded = true;
 
