@@ -19,6 +19,7 @@ namespace UI.GamePages
         [Header("Buttons")]
         [SerializeField] private GameObject InfoButton;
         [SerializeField] private GameObject DrinkButton;
+        [SerializeField] private GameObject MusicButton;
         [SerializeField] private GameObject CancelButton;
         [SerializeField] private GameObject RelocateButton;
         [SerializeField] private GameObject RelocateDoorButon;
@@ -61,21 +62,30 @@ namespace UI.GamePages
             AddBehavior<IPropUnit>(data =>
             {
                 EnableButtons(InfoButton, RelocateButton, RemoveButton);
+                SetFollowTarget(data);
             });
 
             AddBehavior<Bar>(data =>
             {
                 EnableButtons(DrinkButton);
+                SetFollowTarget(data);
             });
 
             AddBehavior<Bartender>(data =>
             {
                 EnableButtons(CancelButton);
+                SetFollowTarget(data);
             });
 
             AddBehavior<WallDoor>(data =>
             {
                 EnableButtons(RelocateDoorButon);
+                SetFollowTarget(data);
+            });
+
+            AddBehavior<DJ>(data =>
+            {
+                EnableButtons(MusicButton);
             });
         }
 
@@ -96,8 +106,6 @@ namespace UI.GamePages
 
                 currentType = currentType.BaseType;
             }
-            
-            SetFollowTarget(_lastData);
         }
 
         private void AddBehavior<T>(Action<object> action)
@@ -172,6 +180,7 @@ namespace UI.GamePages
             if (_lastData is IPropUnit propUnit)
             {
                 UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), propUnit);
+                PlaySFXOnButtonClick();
                 Hide();
             }
         }
@@ -181,6 +190,17 @@ namespace UI.GamePages
             if (_lastData is Bar bar)
             {
                 UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
+                PlaySFXOnButtonClick();
+                Hide();
+            }
+        }
+
+        public void OpenSongPage()
+        {
+            if (_lastData is DJ dj)
+            {
+                // TODO Open Pagre
+                PlaySFXOnButtonClick();
                 Hide();
             }
         }
@@ -191,6 +211,7 @@ namespace UI.GamePages
             {
                 var item = DiscoData.Instance.FindAItemByID(propUnit.ID);
                 BuildingManager.Instance.ReplaceObject(item, propUnit.CellPosition, propUnit.PlacementLayer);
+                PlaySFXOnButtonClick();
                 Hide();
             }
         }
@@ -200,6 +221,7 @@ namespace UI.GamePages
             if (_lastData is WallDoor wallDoor)
             {
                 BuildingManager.Instance.ChangeDoorPosition(wallDoor);
+                PlaySFXOnButtonClick();
                 Hide();
             }
         }
@@ -209,8 +231,14 @@ namespace UI.GamePages
             if (_lastData is IPropUnit propUnit)
             {
                 DiscoData.Instance.placementDataHandler.RemovePlacement(propUnit.CellPosition, propUnit.PlacementLayer, true);
+                PlaySFXOnButtonClick();
                 Hide();
             }
+        }
+
+        private void PlaySFXOnButtonClick()
+        {
+            SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
         }
     }
 }
