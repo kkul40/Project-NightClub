@@ -54,23 +54,29 @@ namespace Disco_Building
         private void Start()
         {
             _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger, _fxCreator);
-            HandleToggling(false);
+            HandleTogglingGrid(false);
         }
 
         private void OnEnable()
         {
-            UIStorePage.OnStoreToggle += HandleToggling;
+            UIStorePage.OnStoreToggle += HandleTogglingGrid;
         }
 
         private void OnDisable()
         {
-            UIStorePage.OnStoreToggle -= HandleToggling;
+            UIStorePage.OnStoreToggle -= HandleTogglingGrid;
         }
 
-        private void HandleToggling(bool toggle)
+        private void HandleTogglingGrid(bool toggle)
         {
+            if (!toggle)
+            {
+                if(UIPageManager.Instance.IsPageToggled(typeof(UIStorePage)) || isPlacing)
+                {
+                    return;
+                }
+            }
             _gridHandler.ToggleGrid(toggle);
-            if(!toggle) StopBuild();
         }
 
         private void Update()
@@ -147,6 +153,7 @@ namespace Disco_Building
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
 
+            HandleTogglingGrid(true);
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
             if (storeItemSo is PlacementItemSO placementItemSo) _tileIndicator.SetSize(placementItemSo.Size);
         }
@@ -161,6 +168,7 @@ namespace Disco_Building
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);
             
+            HandleTogglingGrid(true);
             _tileIndicator.SetTileIndicator(ePlacingType.Place);
             _tileIndicator.SetSize(Vector2.one);
         }
@@ -180,6 +188,7 @@ namespace Disco_Building
             callBackOnPlaced = null;
             _tileIndicator.SetSize(Vector2.one);
             _tileIndicator.CloseTileIndicator();
+            HandleTogglingGrid(false);
         }
 
         public void ReplaceObject(StoreItemSO storeItemSo ,Vector3Int cellPos, ePlacementLayer moveFromLayer)

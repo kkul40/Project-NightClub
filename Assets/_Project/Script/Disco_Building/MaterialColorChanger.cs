@@ -18,6 +18,7 @@ namespace Disco_Building
         [SerializeField] private Material whiteMaterial;
         public void SetMaterialsColorByValidity(List<MeshRenderer> meshRenderers, bool canPlace)
         {
+            // TODO There is A Memory Leak On This Fucntion. Fix It Later.
             var tempMaterial = canPlace ? greenMaterial : redMaterial;
             SetMaterial(meshRenderers, tempMaterial);
         }
