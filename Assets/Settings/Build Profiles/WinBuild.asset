@@ -45,8 +45,7 @@ MonoBehaviour:
     - line: '|   defaultCursor: {fileID: 2800000, guid: 9f715941211c9ab498f575956bc1b240,
         type: 3}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
-    - line: '|   m_SplashScreenBackgroundColor: {r: 0, g: 0.2509804, b: 0.7137255,
-        a: 1}'
+    - line: '|   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}'
     - line: '|   m_ShowUnitySplashScreen: 1'
     - line: '|   m_ShowUnitySplashLogo: 0'
     - line: '|   m_SplashScreenOverlayOpacity: 1'
@@ -70,7 +69,7 @@ MonoBehaviour:
     - line: '|     width: 1'
     - line: '|     height: 1'
     - line: '|   m_SplashScreenLogos:'
-    - line: '|   - logo: {fileID: 21300000, guid: 854d46e98d80ddf409917fab470bac0a,
+    - line: '|   - logo: {fileID: 21300000, guid: 148aed86ff78d80428708012b0f72f08,
         type: 3}'
     - line: '|     duration: 3'
     - line: '|   m_VirtualRealitySplashScreen: {instanceID: 0}'

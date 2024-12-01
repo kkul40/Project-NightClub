@@ -5,6 +5,7 @@ using Data;
 using DG.Tweening;
 using Disco_Building;
 using PropBehaviours;
+using UI.GamePages.GameButtons;
 using UnityEngine;
 
 namespace UI.GamePages
@@ -199,9 +200,8 @@ namespace UI.GamePages
         {
             if (_lastData is DJ dj)
             {
-                // TODO Open Pagre
+                DJMusicManager.Instance.PlayeNextSong();
                 PlaySFXOnButtonClick();
-                Hide();
             }
         }
 
