@@ -39,6 +39,7 @@ namespace System
         {
             MoveDelta.x = Input.GetAxis("Horizontal");
             MoveDelta.y = Input.GetAxis("Vertical");
+
             
             if (!EventSystem.current.IsPointerOverGameObject())
             {

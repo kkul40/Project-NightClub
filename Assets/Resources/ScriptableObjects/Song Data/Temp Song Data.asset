@@ -16,9 +16,24 @@ MonoBehaviour:
   Dance: []
   Pop: []
   Temp:
-  - {fileID: 8300000, guid: f17c40b192dd8244c9a087cd51431ba7, type: 3}
-  - {fileID: 8300000, guid: 8f2f32b453a8f90429a06462432f1f96, type: 3}
-  - {fileID: 8300000, guid: a8362de2852b6af4ca36b80ad65afed6, type: 3}
-  - {fileID: 8300000, guid: dacd899780accfb49b6d4cfe8c90bc79, type: 3}
-  - {fileID: 8300000, guid: e184c0fb61a65e4448a935d80fcfedfb, type: 3}
-  - {fileID: 8300000, guid: dea4bbf3b69afa04daa7a41fba5c7722, type: 3}
+  - Artist: Custom
+    SongName: Solitudo
+    Clip: {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
+  - Artist: Walen
+    SongName: Retrowave
+    Clip: {fileID: 8300000, guid: 12dc77280f46cdd4b9a5109ac2a99422, type: 3}
+  - Artist: Burgundy
+    SongName: Tell Me
+    Clip: {fileID: 8300000, guid: 5b559ec29bf04ad4484c82f63b9b52c9, type: 3}
+  - Artist: Burgundy
+    SongName: Get Yours, Get Out
+    Clip: {fileID: 8300000, guid: 19d52cfcb20224e4ba967c72b0723bf5, type: 3}
+  - Artist: Burgundy
+    SongName: Fashion Jive
+    Clip: {fileID: 8300000, guid: 662035f5e5e96ea4dbbeaa8f0f5c6ced, type: 3}
+  - Artist: Burgundy
+    SongName: Dreams of Tomorrow
+    Clip: {fileID: 8300000, guid: 5084307c620a4094d84955a220383a56, type: 3}
+  - Artist: Aylex
+    SongName: 80s
+    Clip: {fileID: 8300000, guid: 702d67e734dcdbe47bdbc7a90bc89bf7, type: 3}
