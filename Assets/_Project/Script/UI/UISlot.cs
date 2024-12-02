@@ -39,7 +39,11 @@ namespace UI
         {
             StoreItemSo = storeDataCarrier.ChosedStoreItemSo;
             image.sprite = StoreItemSo.Icon;
-            priceText.text = StoreItemSo.Price.ToString();
+
+            if (StoreItemSo.Price == 0)
+                priceText.text = "Free";
+            else
+                priceText.text = StoreItemSo.Price.ToString();
         }
 
         public void OnClick()

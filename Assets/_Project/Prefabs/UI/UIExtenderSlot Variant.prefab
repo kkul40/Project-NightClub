@@ -20,9 +20,21 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UI.UIExtenderSlot, Assembly-CSharp
       objectReference: {fileID: 0}
-    - target: {fileID: 5841191574190521016, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
-      propertyPath: m_Name
-      value: Text
+    - target: {fileID: 2659441818549216356, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659441818549216356, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2659441818549216356, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243616769956846016, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8243616770128476232, guid: fa7dae9aff08e11458f4987b7c60bcdf, type: 3}
       propertyPath: m_Name
@@ -142,7 +154,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 8026738284029638558}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
