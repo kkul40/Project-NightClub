@@ -49,6 +49,10 @@ namespace UI.GamePages.GameButtons
         private void StopSong(IPropUnit propUnit)
         {
             if (propUnit is not DJ) return;
+            
+            var djs = DiscoData.Instance.placementDataHandler.GetPropsByType<DJ>();
+            if (djs.Count > 0)
+                return;
 
             MusicPlayer.Instance.PauseMusic();
             isPlaying = false;
