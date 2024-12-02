@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "new Npc Animation Set")]
+    [CreateAssetMenu(fileName = "new Bartender Animation Set", menuName = "Data/Bartender Animation Set")]
     public class BartenderAnimationSo : ScriptableObject
     {
         [field: SerializeField] public float animationDuration { get; private set; }

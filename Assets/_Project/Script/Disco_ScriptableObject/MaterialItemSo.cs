@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Disco_ScriptableObject
 {
-    [CreateAssetMenu(menuName = "New Item/New Material Item")]
+    [CreateAssetMenu(fileName = "New Material Item", menuName = "Item/Material Item")]
     public class MaterialItemSo : StoreItemSO
     {
         public Material Material;

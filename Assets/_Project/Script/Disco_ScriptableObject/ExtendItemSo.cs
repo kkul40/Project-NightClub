@@ -2,7 +2,7 @@
 
 namespace Disco_ScriptableObject
 {
-    [CreateAssetMenu(menuName = "New Item/New Extend Item")]
+    [CreateAssetMenu(fileName = "New Extend Item", menuName = "Item/Extend Item")]
     public class ExtendItemSo : StoreItemSO
     {
         public int ExtendX;

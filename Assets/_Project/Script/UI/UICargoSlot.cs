@@ -1,18 +1,15 @@
 ﻿using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
-using ScriptableObjects;
 using TMPro;
 using UI.GamePages.GameButtons;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
 {
     public class UICargoSlot : MonoBehaviour, IUISlot
     {
-        public TextStyleSo textStyleSo;
         public GameObject mGameobject { get; private set; }
         public StoreItemSO StoreItemSo { get; private set; }
 

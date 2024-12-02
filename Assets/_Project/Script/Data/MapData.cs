@@ -202,6 +202,6 @@ namespace Data
             return enterancePosition.WorldPosToCellPos(eGridType.PlacementGrid).CellCenterPosition(eGridType.PlacementGrid);
         }
 
-        public Vector3 SpawnPositon => EnterencePosition() - (IsWallDoorOnX ? new Vector3(0, 0, 3) : new Vector3(3, 0, 0));
+        public Vector3 SpawnPositon => EnterencePosition() - (IsWallDoorOnX ? new Vector3(0, 0, 1) : new Vector3(1, 0, 0));
     }
 }

@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a525f51505ab4af6a9d227832aafe94a, type: 3}
-  m_Name: Default Text
+  m_Script: {fileID: 11500000, guid: f4266156885b4f869091799a06699b71, type: 3}
+  m_Name: Default Text Style
   m_EditorClassIdentifier: 
-  FontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  FontSize: 25
+  UITextAsset: {fileID: 11400000, guid: 500366cc7582f0548a0461b3ad661b27, type: 2}

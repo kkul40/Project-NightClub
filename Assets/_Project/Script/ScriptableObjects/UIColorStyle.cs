@@ -2,7 +2,7 @@
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "UI Color Style", menuName = "New UI Color Style")]
+    [CreateAssetMenu(fileName = "UI Color Style", menuName = "UI/UI Color Style")]
     public class UIColorStyle : ScriptableObject
     {
         public Color UIWindowColor;
