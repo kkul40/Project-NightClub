@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "new Song Data")]
+    [CreateAssetMenu(fileName = "New Song Data", menuName = "Data/Song Data")]
     public class SongDataSo : ScriptableObject
     {
         public List<SongData> Hiphop;

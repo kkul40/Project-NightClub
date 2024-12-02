@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ScriptableObjects
 {
+    [CreateAssetMenu(fileName = "New Drink Data", menuName = "Item/Drink Data")]
+
     public class DrinkSO : ScriptableObject
     {
         public int ID;

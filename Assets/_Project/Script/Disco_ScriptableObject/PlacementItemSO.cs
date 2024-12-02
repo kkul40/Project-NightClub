@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Disco_ScriptableObject
 {
-    [CreateAssetMenu(menuName = "New Item/New Placement Item")]
+    [CreateAssetMenu(fileName = "New Placement Item", menuName = "Item/Placement Item")]
     public class PlacementItemSO : StoreItemSO
     {
         public GameObject Prefab;

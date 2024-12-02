@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New Player Customization Data")]
+    [CreateAssetMenu(fileName = "New Player Customization Data", menuName = "Data/Player Customization")]
     public class PlayerCustomizationDataSo : ScriptableObject
     {
         [Tooltip("0 = Male, 1 = Female")] public List<Mesh> playerGenders;

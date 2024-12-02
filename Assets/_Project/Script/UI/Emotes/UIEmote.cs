@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace UI.Emotes
@@ -24,7 +23,14 @@ namespace UI.Emotes
             _followTarget = followTarget;
             
             transform.position = _followTarget.position + Offset;
-            _tween = transform.DOMove(_followTarget.position + Offset + (Vector3.up * 0.2f), 1f).SetEase(Ease.OutExpo).SetLink(gameObject);
+            transform.SetParent(followTarget.transform);
+            _tween = transform.DOLocalMove(_followTarget.position + Offset + (Vector3.up * 0.2f), 1f).SetEase(Ease.OutElastic).SetLink(gameObject);
+        }
+
+        private void Update()
+        {
+            transform.LookAt(Camera.main.transform, Vector3.up);
+            transform.position = _followTarget.position + Offset;
         }
     }
 }
