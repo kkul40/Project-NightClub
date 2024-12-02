@@ -6,13 +6,13 @@ namespace System.ObjectPooling
 {
     public class ObjectPooler : IUpdateable
     {
-        public List<IPooled> _pooledObjects;
+        public List<IPoolable> _pooledObjects;
 
         private GameObject _prefab;
         
         public ObjectPooler(GameObject prefab)
         {
-            _pooledObjects = new List<IPooled>();
+            _pooledObjects = new List<IPoolable>();
             _prefab = prefab;
             
 
@@ -38,10 +38,10 @@ namespace System.ObjectPooling
 
         public GameObject GetObject(float disposeTime)
         {
-            IPooled selected = null;
+            IPoolable selected = null;
             foreach (var pooledObject in _pooledObjects)
             {
-                if (!pooledObject.gameObject.activeInHierarchy)
+                if (!pooledObject.mTransform.gameObject.activeInHierarchy)
                 {
                     selected = pooledObject;
                     break;
@@ -52,15 +52,20 @@ namespace System.ObjectPooling
                 selected = CreateNew();
             
             selected.Init(this, disposeTime);
-            selected.gameObject.SetActive(true);
-            return selected.gameObject;
+            selected.mTransform.gameObject.SetActive(true);
+            return selected.mTransform.gameObject;
         }
         
-        private IPooled CreateNew()
+        private IPoolable CreateNew()
         {
             var obj = MonoBehaviour.Instantiate(_prefab, SceneGameObjectHandler.Instance.PooledObjectHolder);
-            var pooledObject = obj.AddComponent<IPooled>();
+            var pooledObject = obj.GetComponent<IPoolable>();
             obj.SetActive(false);
+
+            if (pooledObject == null)
+            {
+                Debug.LogError($"Could Not Found IPollable Objects {obj.name}");
+            }
             _pooledObjects.Add(pooledObject);
             return pooledObject;
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Data;
+using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -9,10 +11,47 @@ namespace UI.GamePages.GameButtons
         [SerializeField] private SongDataSo _songDataSo;
         private int index = 0;
 
+        private bool isPlaying;
+
         protected void Start()
         {
+            // var djs = DiscoData.Instance.placementDataHandler.GetPropsByType<DJ>();
+            // if (djs.Count > 0)
+            // {
+            //     StartSong(djs[0]);
+            // }
+        }
+
+        private void OnEnable()
+        {
+            PlacementDataHandler.OnPropPlacedWithData += StartSong;
+            PlacementDataHandler.OnPropRemovedWithData += StopSong;
+        }
+
+        private void OnDisable()
+        {
+            PlacementDataHandler.OnPropPlacedWithData -= StartSong;
+            PlacementDataHandler.OnPropRemovedWithData -= StopSong;
+        }
+
+        private void StartSong(IPropUnit propUnit)
+        {
+            if (propUnit is not DJ) return;
+
+            if (isPlaying) return;
+            
             if(_songDataSo.Temp.Count > 0)
                 MusicPlayer.Instance.ChangeMusic(_songDataSo.Temp[0].Clip);
+
+            isPlaying = true;
+        }
+
+        private void StopSong(IPropUnit propUnit)
+        {
+            if (propUnit is not DJ) return;
+
+            MusicPlayer.Instance.StopMusic();
+            isPlaying = false;
         }
 
         public void PlayeNextSong()

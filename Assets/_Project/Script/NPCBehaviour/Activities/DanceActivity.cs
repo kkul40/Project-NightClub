@@ -1,5 +1,6 @@
 ﻿using Data;
 using PropBehaviours;
+using UI.Emotes;
 using UnityEngine;
 
 namespace NPCBehaviour.Activities
@@ -71,6 +72,7 @@ namespace NPCBehaviour.Activities
                     if (timer > danceDuration)
                     {
                         timer = 0;
+                        UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
                         IsEnded = true;
                     }
 

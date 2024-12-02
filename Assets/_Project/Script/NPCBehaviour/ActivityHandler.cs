@@ -95,6 +95,7 @@ namespace NPCBehaviour
                     // Is Placement on The Destination
                     if (key == _activityNeedsData.Npc.PathFinder.TargetPosition.WorldPosToCellPos(eGridType.PlacementGrid))
                     {
+                        // UIEmoteManager.Instance.ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc);
                         StartNewActivity(GetRandomActivity());
                         return;
                     }
@@ -109,6 +110,7 @@ namespace NPCBehaviour
                             if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
                                 return;
                         
+                            UIEmoteManager.Instance.ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc);
                             StartNewActivity(GetRandomActivity());
                             return;
                         }
@@ -118,6 +120,7 @@ namespace NPCBehaviour
                 // Is Placement On Top Of You
                 if (key == _activityNeedsData.Npc.transform.position.WorldPosToCellPos(eGridType.PlacementGrid))
                 {
+                    UIEmoteManager.Instance.ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc);
                     StartNewActivity(GetRandomActivity());
                     return;
                 }

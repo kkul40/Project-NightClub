@@ -14,12 +14,19 @@ namespace System
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            StopMusic();
         }
 
         public void ChangeMusic(AudioClip clip)
         {
             _audioSource.clip = clip;
             _audioSource.Play();
+        }
+
+        public void StopMusic()
+        {
+            _audioSource.Stop();
+            _audioSource.clip = null;
         }
         
         public void SetMusicVolume(float value)

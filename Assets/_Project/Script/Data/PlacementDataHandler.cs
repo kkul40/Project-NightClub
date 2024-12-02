@@ -38,7 +38,9 @@ namespace Data
 
         public static event Action OnPropUpdate;
         public static event Action OnPropRemoved;
+        public static event Action<IPropUnit> OnPropRemovedWithData;
         public static event Action OnPropPlaced;
+        public static event Action<IPropUnit> OnPropPlacedWithData; 
         public static event Action<List<Vector3Int>> OnPlacedPositions;
 
         public PlacementDataHandler()
@@ -184,6 +186,7 @@ namespace Data
             
             propList.Add(prop);
             prop.Initialize(placementData.ID, cellPos, placementData.SettedRotationData, placementData.PlacedPlacementItemSo.PlacementLayer);
+            OnPropPlacedWithData?.Invoke(propUnit);
 
             if (placementData.PlacedSceneObject.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropPlaced();
         }
@@ -194,7 +197,11 @@ namespace Data
             var objectToRemove = sceneObject;
             if (objectToRemove.TryGetComponent(out IPropUpdate propUpdate)) propUpdate.OnPropRemoved();
 
-            if (objectToRemove.TryGetComponent(out IPropUnit prop)) propList.Remove(prop);
+            if (objectToRemove.TryGetComponent(out IPropUnit prop))
+            {
+                OnPropRemovedWithData?.Invoke(prop);
+                propList.Remove(prop);
+            }
 
             if (removeImmidietly)
                 Object.Destroy(objectToRemove);
