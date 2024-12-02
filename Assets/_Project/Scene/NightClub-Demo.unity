@@ -1043,8 +1043,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3849158593147068746, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
-  m_Resource: {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -3932,8 +3932,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3966,7 +3966,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -4887,7 +4887,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
+  m_CellSize: {x: 150, y: 100}
   m_Spacing: {x: 20, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -5186,7 +5186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -13436,8 +13436,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -13470,7 +13470,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -14901,7 +14901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 96dd31e60307a2e45be085f2f02ee2a9, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -19289,8 +19289,8 @@ RectTransform:
   m_Children:
   - {fileID: 9191935}
   - {fileID: 1126876493}
-  - {fileID: 1339551633}
   - {fileID: 256299498}
+  - {fileID: 1339551633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -25097,7 +25097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 801346934656143830, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -325
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 801346934656143830, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25153,7 +25153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -29415,7 +29415,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 96dd31e60307a2e45be085f2f02ee2a9, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32631,7 +32631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 801346934656143830, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 325
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 801346934656143830, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.y
@@ -32687,7 +32687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4608916234337891433, guid: b7a475c7f8aab9b48bbdcab23269a952, type: 3}
       propertyPath: m_AnchoredPosition.x

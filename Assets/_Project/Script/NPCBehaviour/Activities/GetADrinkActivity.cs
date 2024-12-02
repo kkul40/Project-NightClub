@@ -49,6 +49,13 @@ namespace NPCBehaviour.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            if (!_bar.HasDrinks)
+            {
+                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Sad, and.Npc);
+                DOTween.instance.StopCoroutine(_routine);
+                _routine = null;
+                IsEnded = true;
+            }
         }
 
         public void OnActivityEnd(ActivityNeedsData and)
@@ -75,11 +82,6 @@ namespace NPCBehaviour.Activities
                 UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
                 yield return new WaitForSeconds(0.5f);
             }
-            else
-            {
-                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Sad, and.Npc);
-            }
-
 
             IsEnded = true;
 
