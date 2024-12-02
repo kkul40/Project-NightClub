@@ -14,7 +14,7 @@ namespace System
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            StopMusic();
+            PauseMusic();
         }
 
         public void ChangeMusic(AudioClip clip)
@@ -23,10 +23,14 @@ namespace System
             _audioSource.Play();
         }
 
-        public void StopMusic()
+        public void ResumeMusic()
         {
-            _audioSource.Stop();
-            _audioSource.clip = null;
+            _audioSource.Play();
+        }
+
+        public void PauseMusic()
+        {
+            _audioSource.Pause();
         }
         
         public void SetMusicVolume(float value)

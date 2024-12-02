@@ -41,7 +41,7 @@ namespace UI.GamePages.GameButtons
             if (isPlaying) return;
             
             if(_songDataSo.Temp.Count > 0)
-                MusicPlayer.Instance.ChangeMusic(_songDataSo.Temp[0].Clip);
+                MusicPlayer.Instance.ChangeMusic(_songDataSo.Temp[index].Clip);
 
             isPlaying = true;
         }
@@ -50,7 +50,7 @@ namespace UI.GamePages.GameButtons
         {
             if (propUnit is not DJ) return;
 
-            MusicPlayer.Instance.StopMusic();
+            MusicPlayer.Instance.PauseMusic();
             isPlaying = false;
         }
 
