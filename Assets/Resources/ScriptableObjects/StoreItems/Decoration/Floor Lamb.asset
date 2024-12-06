@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
-  m_Name: Table 5
+  m_Name: Floor Lamb
   m_EditorClassIdentifier: 
-  ID: -148157075
-  Name: Diamond Table
-  Description: A Placeholder
+  ID: -585418418
+  Name: Plays Music
+  Description: 
   Icon: {fileID: 21300000, guid: 795fc2cf92696a94cb779bf76dd254dc, type: 3}
   Price: 0
-  Prefab: {fileID: 8952477242271958752, guid: 733af365a3b950e42a383ce612b8e791, type: 3}
+  Prefab: {fileID: 1235735838680475760, guid: 4fde97531d012af44a021fc7b81b9a49, type: 3}
   Size: {x: 1, y: 1}
   IsBig: 0
   PlacementLayer: 1
-  eRotation: 1
+  eRotation: 0
