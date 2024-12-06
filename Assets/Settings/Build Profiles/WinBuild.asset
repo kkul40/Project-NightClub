@@ -809,7 +809,7 @@ MonoBehaviour:
     - line: '|   additionalCompilerArguments: {}'
     - line: '|   platformArchitecture: {}'
     - line: '|   scriptingBackend:'
-    - line: '|     Standalone: 1'
+    - line: '|     Standalone: 0'
     - line: '|   il2cppCompilerConfiguration:'
     - line: '|     Standalone: 1'
     - line: '|   il2cppCodeGeneration: {}'
