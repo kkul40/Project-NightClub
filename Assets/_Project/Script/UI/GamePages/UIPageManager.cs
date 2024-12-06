@@ -26,7 +26,10 @@ namespace UI.GamePages
         {
             if (InputSystem.Instance.Esc)
             {
-                CloseAllPages(PageType.FullPage);
+                if (!IsAnyUIToggled())
+                    RequestAPage<UISettingsPage>(typeof(UISettingsPage));
+                else
+                    CloseAllPages(PageType.FullPage);
             }
 
             if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
