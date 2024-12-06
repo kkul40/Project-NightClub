@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 1925613602
   Name: Regular Table
   Description: A Placeholder
-  Icon: {fileID: 21300000, guid: 36350119cb4d3d1439f88990aed2b482, type: 3}
+  Icon: {fileID: 21300000, guid: 795fc2cf92696a94cb779bf76dd254dc, type: 3}
   Price: 0
   Prefab: {fileID: 3540904270509784806, guid: 2aca0607c3bb72a4a9f210dbc6fec965, type: 3}
   Size: {x: 1, y: 1}

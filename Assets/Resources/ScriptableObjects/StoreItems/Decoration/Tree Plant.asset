@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 2119384583
   Name: 
   Description: 
-  Icon: {fileID: 21300000, guid: 7d1c0fde14adcde439b7786c514fd916, type: 3}
+  Icon: {fileID: 21300000, guid: 795fc2cf92696a94cb779bf76dd254dc, type: 3}
   Price: 0
   Prefab: {fileID: 8499499731098589708, guid: 64e7c0ded23138c4e8d944d269ececbf, type: 3}
   Size: {x: 1, y: 1}
