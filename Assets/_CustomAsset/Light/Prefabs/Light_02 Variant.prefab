@@ -229,8 +229,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5099451913199646082, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2515093584226487032, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
+    - {fileID: 8390068959100713533, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
     m_RemovedGameObjects:
     - {fileID: 944572376325244294, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
     m_AddedGameObjects:
@@ -240,10 +245,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4017320393462636902, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1947292699820784632}
-    - targetCorrespondingSourceObject: {fileID: 4017320393462636902, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4551657791071279878}
+      addedObject: {fileID: 3174256764076110270}
   m_SourcePrefab: {fileID: 100100000, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
 --- !u!4 &213131815187618234 stripped
 Transform:
@@ -255,7 +257,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4017320393462636902, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
   m_PrefabInstance: {fileID: 4687543258621155849}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1947292699820784632
+--- !u!114 &3174256764076110270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,27 +266,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8560529660883106671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57792350500e404dba065ce114592ee2, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ea7f4aa7c3e4d9582c7460b243eddee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &4551657791071279878
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8560529660883106671}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 1, z: -0.25}
+  _light: {fileID: 6938334461369717551}

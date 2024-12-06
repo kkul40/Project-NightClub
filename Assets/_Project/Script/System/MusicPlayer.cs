@@ -7,6 +7,8 @@ namespace System
     public class MusicPlayer : Singleton<MusicPlayer>, ISaveLoad
     {
         private AudioSource _audioSource;
+
+        private BassDetector _bassDetector;
         
         [SerializeField] private AudioMixer mixer;
         public float MusicVolume { get; private set; }
@@ -14,7 +16,13 @@ namespace System
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            _bassDetector = new BassDetector(_audioSource);
             PauseMusic();
+        }
+
+        private void Update()
+        {
+            _bassDetector.UpdateDetector();
         }
 
         public void ChangeMusic(AudioClip clip)
