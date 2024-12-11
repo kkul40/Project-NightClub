@@ -124,6 +124,7 @@ namespace ExtensionMethods
         public class GameSettingsData
         {
             public bool isEdgeScrollingEnabled;
+            public bool isSnappyCameraEnabled;
             public float MusicVolume = 1;
             public float SoundVolume = 1;
         }

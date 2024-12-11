@@ -1,6 +1,7 @@
 ﻿using System;
-using System.ObjectPooling;
 using Disco_Building;
+using DiscoSystem;
+using DiscoSystem.ObjectPooling;
 using NPCBehaviour;
 using UnityEngine;
 

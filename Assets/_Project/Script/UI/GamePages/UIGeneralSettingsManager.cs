@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
+using DiscoSystem;
 using Root;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISaveLoad
 {
@@ -27,7 +29,9 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
     
     [Header("Toggle")]
     [SerializeField] private UIToggleButton EdgeScrollingToggle;
+    [SerializeField] private UIToggleButton SnappyCameraToggle;
     private bool EdgeScrollingEnabled = false;
+    private bool SnappyCameraEnabled = false;
 
     private void Start()
     {
@@ -144,17 +148,26 @@ public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISa
         InputSystem.Instance.EdgeScrolling = EdgeScrollingEnabled;
         EdgeScrollingToggle.ToggleCheckMark(EdgeScrollingEnabled);
     }
-
+    
+    public void ToggleSnappyCamera()
+    {
+        SnappyCameraEnabled = !SnappyCameraEnabled;
+        InputSystem.Instance.SnappyCamera = SnappyCameraEnabled;
+        SnappyCameraToggle.ToggleCheckMark(SnappyCameraEnabled);
+    }
     
 
     public void LoadData(GameData gameData)
     {
         EdgeScrollingEnabled = !gameData.GameSettingsData.isEdgeScrollingEnabled;
+        SnappyCameraEnabled = !gameData.GameSettingsData.isSnappyCameraEnabled;
         ToggleEdgeScrolling();
+        ToggleSnappyCamera();
     }
 
     public void SaveData(ref GameData gameData)
     {
         gameData.GameSettingsData.isEdgeScrollingEnabled = EdgeScrollingEnabled;
+        gameData.GameSettingsData.isSnappyCameraEnabled = SnappyCameraEnabled;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Data;
+using DiscoSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,6 +28,7 @@ public class GameInitializer : MonoBehaviour
     {
         DiscoData.Instance.Initialize(this);
         ActivitySystem.Instance.Initialize(this);
+        MusicPlayer.Instance.Initialize(this);
         MapGeneratorSystem.Instance.Initialize(this);
         UpdatableHandler.Instance.Initialize(this);
         SavingAndLoadingSystem.Instance.Initialize(this);
