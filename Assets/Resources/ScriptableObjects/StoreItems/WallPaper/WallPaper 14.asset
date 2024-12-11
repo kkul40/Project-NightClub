@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 1558449011
   Name: 
   Description: 
-  Icon: {fileID: 21300000, guid: 8c6a3ee408879fa489932a7d942a5df7, type: 3}
+  Icon: {fileID: 21300000, guid: 12d38ab10a4d7bc4f8ff65de91ceb392, type: 3}
   Price: 0
   Material: {fileID: 2100000, guid: fab8df42a57a15e4d8ad921bc34604af, type: 2}
   MaterialLayer: 1

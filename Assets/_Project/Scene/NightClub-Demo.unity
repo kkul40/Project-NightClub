@@ -27126,7 +27126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59f9e1c720d49748ca44401b151018d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _songDataSo: {fileID: 11400000, guid: c435d3ec999211f48808833414a642c3, type: 2}
+  _songDataSo: {fileID: 11400000, guid: 1347632f2128a0c43821b5dc7a750242, type: 2}
 --- !u!1 &1497792362
 GameObject:
   m_ObjectHideFlags: 0
@@ -34563,7 +34563,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2043725831}
   m_HandleRect: {fileID: 2043725830}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
