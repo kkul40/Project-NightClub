@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Light 2
   m_EditorClassIdentifier: 
   ID: 1120584378
-  Name: 
-  Description: 
+  Name: Bass Light
+  Description: RGB light that reacts to bass.
   Icon: {fileID: 21300000, guid: 217000511893b2642acfd3ba9338267a, type: 3}
   Price: 0
   Prefab: {fileID: 8560529660883106671, guid: acfa804a8419fbe48a1d6fd82cd32e33, type: 3}
