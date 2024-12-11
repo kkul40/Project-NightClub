@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LCD Screen 4
   m_EditorClassIdentifier: 
   ID: -711337335
-  Name: 
+  Name: Scree
   Description: 
   Icon: {fileID: 21300000, guid: 1c22f118db5731a45a77d1b84127c451, type: 3}
   Price: 0
