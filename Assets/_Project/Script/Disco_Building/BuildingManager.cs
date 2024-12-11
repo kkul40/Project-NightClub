@@ -58,25 +58,25 @@ namespace Disco_Building
             HandleTogglingGrid(false);
         }
 
-        private void OnEnable()
-        {
-            UIStorePage.OnStoreToggle += HandleTogglingGrid;
-        }
-
-        private void OnDisable()
-        {
-            UIStorePage.OnStoreToggle -= HandleTogglingGrid;
-        }
+        // private void OnEnable()
+        // {
+        //     UIStorePage.OnStoreToggle += HandleTogglingGrid;
+        // }
+        //
+        // private void OnDisable()
+        // {
+        //     UIStorePage.OnStoreToggle -= HandleTogglingGrid;
+        // }
 
         private void HandleTogglingGrid(bool toggle)
         {
-            if (!toggle)
-            {
-                if(UIPageManager.Instance.IsPageToggled(typeof(UIStorePage)) || isPlacing)
-                {
-                    return;
-                }
-            }
+            // if (!toggle)
+            // {
+            //     if(UIPageManager.Instance.IsPageToggled(typeof(UIStorePage)) || isPlacing)
+            //     {
+            //         return;
+            //     }
+            // }
             _gridHandler.ToggleGrid(toggle);
         }
 

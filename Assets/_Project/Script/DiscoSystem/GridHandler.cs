@@ -29,12 +29,12 @@ namespace DiscoSystem
         private void AlignGridWithMapSize(Vector2Int mapSize)
         {
             // Floor Shader
-            var minimumOffset = 0.001f;
+            var minimumOffset = 0.015f;
             var shaderMaterial = new Material(gridSahder);
             shaderMaterial.SetColor("_Color", gridColor);
             shaderMaterial.SetVector("_CellSize", new Vector4(mapSize.x, mapSize.y, 0, 0));
             floorGridPlane.GetComponent<MeshRenderer>().material = shaderMaterial;
-            floorGridPlane.transform.position = new Vector3((float)mapSize.x / 2, minimumOffset, (float)mapSize.y / 2);
+            floorGridPlane.transform.position = new Vector3((float)mapSize.x / 2 + minimumOffset, minimumOffset, (float)mapSize.y / 2 + minimumOffset);
             floorGridPlane.transform.localScale = new Vector3((float)mapSize.x / 10, 1, (float)mapSize.y / 10);
 
             // Left Wall Shader
@@ -42,7 +42,7 @@ namespace DiscoSystem
             shaderLeftWallMaterial.SetColor("_Color", gridColor);
             shaderLeftWallMaterial.SetVector("_CellSize", new Vector4(mapSize.x, 3, 0, 0));
             leftWallGridPlane.GetComponent<MeshRenderer>().material = shaderLeftWallMaterial;
-            leftWallGridPlane.transform.position = new Vector3((float)mapSize.x / 2, 1.5f, minimumOffset);
+            leftWallGridPlane.transform.position = new Vector3((float)mapSize.x / 2 + minimumOffset, 1.5f, minimumOffset);
             leftWallGridPlane.transform.localScale = new Vector3((float)mapSize.x / 10, 1, (float)3 / 10);
 
             // Right Wall Shader
@@ -50,7 +50,7 @@ namespace DiscoSystem
             shaderRightWallMaterial.SetColor("_Color", gridColor);
             shaderRightWallMaterial.SetVector("_CellSize", new Vector4(mapSize.y, 3, 0, 0));
             rightWallGridPlane.GetComponent<MeshRenderer>().material = shaderRightWallMaterial;
-            rightWallGridPlane.transform.position = new Vector3(minimumOffset, 1.5f, (float)mapSize.y / 2);
+            rightWallGridPlane.transform.position = new Vector3(minimumOffset, 1.5f, (float)mapSize.y / 2 + minimumOffset);
             rightWallGridPlane.transform.localScale = new Vector3((float)mapSize.y / 10, 1, (float)3 / 10);
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Data;
 using Disco_ScriptableObject;
 using UnityEngine;
@@ -11,25 +10,30 @@ namespace UI.GamePages.GameButtons
     {
         [SerializeField] private UIStorePage storePage;
         [SerializeField] private string path;
-        private List<StoreItemSO> _storeItemSos;
 
         private StoreDataCarrier _storeDataCarrier = new();
 
         protected override void Start()
         {
+            GetComponent<Button>().onClick.AddListener(OnClick);
+        }
+
+        private void LoadAssets()
+        {
+            if (_storeDataCarrier.StoreItemSos.Count != 0) return;
+            
             // TODO Addressable Kullan!!
-            _storeDataCarrier.StoreItemSos =
-                Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
+            _storeDataCarrier.StoreItemSos = Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
             _storeDataCarrier.EUISlot = eUISlot.ItemSlot;
             
             if(_storeDataCarrier.StoreItemSos.Count != 0)
                 _storeDataCarrier.StoreItemSos.Sort((a, b) => string.Compare(a.name, b.name));
-
-            GetComponent<Button>().onClick.AddListener(OnClick);
         }
+        
 
         public override void OnClick()
         {
+            LoadAssets();
             storePage.GenerateInventory(this, _storeDataCarrier);
         }
     }
