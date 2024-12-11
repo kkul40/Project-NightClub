@@ -33,10 +33,7 @@ namespace DiscoSystem
             bassAmplitude *= Sensitivity;
 
             if (bassAmplitude > Threshold && bassAmplitude > _previousBassAmplitude)
-            {
-                Debug.Log(bassAmplitude);
                 OnBassDetected?.Invoke();
-            }
             
             _previousBassAmplitude = bassAmplitude;
         }

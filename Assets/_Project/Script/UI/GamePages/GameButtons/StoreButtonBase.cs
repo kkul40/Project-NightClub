@@ -21,6 +21,9 @@ namespace UI.GamePages.GameButtons
             _storeDataCarrier.StoreItemSos =
                 Resources.LoadAll<StoreItemSO>("ScriptableObjects/StoreItems/" + path).ToList();
             _storeDataCarrier.EUISlot = eUISlot.ItemSlot;
+            
+            if(_storeDataCarrier.StoreItemSos.Count != 0)
+                _storeDataCarrier.StoreItemSos.Sort((a, b) => string.Compare(a.name, b.name));
 
             GetComponent<Button>().onClick.AddListener(OnClick);
         }
