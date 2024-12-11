@@ -69,7 +69,7 @@ MonoBehaviour:
     - line: '|     width: 1'
     - line: '|     height: 1'
     - line: '|   m_SplashScreenLogos:'
-    - line: '|   - logo: {fileID: 21300000, guid: 148aed86ff78d80428708012b0f72f08,
+    - line: '|   - logo: {fileID: 21300000, guid: c4cc647fe070dee4ea2b97aaa7aa48a3,
         type: 3}'
     - line: '|     duration: 3'
     - line: '|   m_VirtualRealitySplashScreen: {instanceID: 0}'
