@@ -16,9 +16,6 @@ MonoBehaviour:
   Dance: []
   Pop: []
   Temp:
-  - Artist: Bass
-    SongName: 
-    Clip: {fileID: 8300000, guid: 70dfe31a1e9f9d64b947edac6715333d, type: 3}
   - Artist: Custom
     SongName: Solitudo
     Clip: {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
