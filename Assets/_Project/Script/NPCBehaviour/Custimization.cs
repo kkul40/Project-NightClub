@@ -15,7 +15,7 @@ namespace NPCBehaviour
 
             TryAplly(customizationDataSo.NpcHairPrefabs, Head);
             TryAplly(customizationDataSo.NpcBeardPrefabs, Head);
-            if (Random.value > 0.8f) TryAplly(customizationDataSo.NpcAttachtmentPrefabs, Head);
+            if (Random.value > 0.2f) TryAplly(customizationDataSo.NpcAttachtmentPrefabs, Head);
             TryAplly(customizationDataSo.NpcEaringPrefabs, Head);
         }
 
