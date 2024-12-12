@@ -18,9 +18,6 @@ MonoBehaviour:
   Temp:
   - Artist: 
     SongName: 
-    Clip: {fileID: 8300000, guid: dfc981fef307a1344bb8536d7b2ae378, type: 3}
-  - Artist: 
-    SongName: 
     Clip: {fileID: 8300000, guid: 4e2e7ff765d1f9c48873aa3f21d1f05a, type: 3}
   - Artist: 
     SongName: 
@@ -28,3 +25,6 @@ MonoBehaviour:
   - Artist: 
     SongName: 
     Clip: {fileID: 8300000, guid: d90a907bd662a6d4fa076f496eb72689, type: 3}
+  - Artist: 
+    SongName: 
+    Clip: {fileID: 8300000, guid: dfc981fef307a1344bb8536d7b2ae378, type: 3}

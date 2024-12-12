@@ -8,7 +8,6 @@ namespace PropBehaviours
 {
     public class BassLightProp : IPropUnit
     {
-        
         [SerializeField] private Light _light;
         private float startIntencity;
         private Tween _tween;
