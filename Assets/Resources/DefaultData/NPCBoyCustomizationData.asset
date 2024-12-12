@@ -29,6 +29,7 @@ MonoBehaviour:
   - {fileID: 6834754426650162229, guid: 5a9ee9836666c3642a81c8db88972be0, type: 3}
   - {fileID: 4190461367950945276, guid: ac2727cb46afc6e448a5bb1ecdec89e5, type: 3}
   NpcAttachtmentPrefabs:
+  - {fileID: 919132149155446097, guid: c67088253a547da4abbabb1ac15fe5de, type: 3}
   - {fileID: 6202954935644718513, guid: 662699974bab42144a3eee25d0b4a07b, type: 3}
   - {fileID: 8077304995754912966, guid: 9f174152eec3b7346a6a37537607ddc3, type: 3}
   - {fileID: 3744682234929270283, guid: be423fef891454144bd68c7ee8ae04aa, type: 3}
