@@ -16,7 +16,7 @@ namespace PropBehaviours
         public override void UpdateMaterial(MaterialItemSo materialItemSo)
         {
             var materials = _meshRenderer.materials;
-            materials[2] = materialItemSo.Material;
+            materials[3] = materialItemSo.Material;
             _meshRenderer.materials = materials;
             assignedMaterialID = materialItemSo.ID;
         }
