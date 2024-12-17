@@ -43,6 +43,8 @@ namespace PropBehaviours
             }
         }
 
+        public bool IsServing { get; set; }
+
         public void GetDrink()
         {
             if (!HasDrinks) return;
