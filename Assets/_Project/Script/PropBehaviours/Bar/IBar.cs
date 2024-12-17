@@ -10,6 +10,7 @@ namespace PropBehaviours
         Transform CounterPlacePosition { get; }
         bool HasDrinks { get; }
         bool IsBusy { get; set; }
+        bool IsServing { get; set; }
         void GetDrink();
         void CreateDrinks(DrinkSO drinkToCreate);
         void CleanBar();

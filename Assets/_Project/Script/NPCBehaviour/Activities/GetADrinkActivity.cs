@@ -23,13 +23,16 @@ namespace NPCBehaviour.Activities
             if (_bars == null) return false;
 
             _bar = _bars[Random.Range(0, _bars.Count)];
-            int iteration = 0;
-            while (!_bar.HasDrinks)
-            {
-                _bar = _bars[Random.Range(0, _bars.Count)];
 
-                if (Helper.IterateTo100(ref iteration)) return false;
-            }
+            if (!_bar.HasDrinks) return false;
+            if (_bar.IsServing) return false;
+            // int iteration = 0;
+            // while (!_bar.HasDrinks)
+            // {
+            //     _bar = _bars[Random.Range(0, _bars.Count)];
+            //
+            //     if (Helper.IterateTo100(ref iteration)) return false;
+            // }
  
             return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
         }
@@ -42,6 +45,7 @@ namespace NPCBehaviour.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
+            _bar.IsServing = true;
             and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _routine = DOTween.instance.StartCoroutine(CoGetDrink(and));
@@ -62,6 +66,11 @@ namespace NPCBehaviour.Activities
         {
             and.Npc.PathFinder.CancelDestination();
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
+
+            if (_bar != null)
+            {
+                _bar.IsServing = false;
+            }
             
             if (_routine != null)
             {
