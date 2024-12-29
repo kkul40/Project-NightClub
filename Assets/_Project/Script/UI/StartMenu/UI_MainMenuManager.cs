@@ -17,6 +17,10 @@ namespace UI.StartMenu
 
             foreach (var page in pages)
             {
+                if (!page.gameObject.activeInHierarchy)
+                {
+                    page.gameObject.SetActive(true);
+                }
                 page.Initiliase();
                 page.HideImmidiatly();
             }
