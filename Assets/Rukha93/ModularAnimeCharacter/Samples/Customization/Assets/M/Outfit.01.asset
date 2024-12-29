@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbbe4c4aad0c09429ce37c5e344b1ed, type: 3}
   m_Name: Outfit.01
   m_EditorClassIdentifier: 
-  bodyParts: 000000001e0000001f000000010000000200000003000000
+  bodyParts: 1e1f01020003
   meshes:
   - {fileID: 3612654830960466099, guid: a1b5377a45e9b7343b9840f4cee1ffed, type: 3}
   objects: []
