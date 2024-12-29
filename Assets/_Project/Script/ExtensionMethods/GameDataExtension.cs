@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CharacterCustomization;
 using Data;
 using Disco_ScriptableObject;
 using PlayerScripts;
@@ -107,15 +108,15 @@ namespace ExtensionMethods
             public int playerEaringIndex = 1;
         }
 
-        public static PlayerCustomizationIndexData ConvertPlayerCustomizationIndexData(this PlayerCustomization playerCustomization)
+        public static PlayerCustomizationIndexData ConvertPlayerCustomizationIndexData(this CharacterCustomizationPartLoader characterCustomizationPartLoader)
         {
             PlayerCustomizationIndexData playerCustomizationIndexData = new PlayerCustomizationIndexData();   
             
-            playerCustomizationIndexData.playerGenderIndex = playerCustomization.playerGenderIndex;
-            playerCustomizationIndexData.playerHairIndex = playerCustomization.playerHairIndex;
-            playerCustomizationIndexData.playerBeardIndex = playerCustomization.playerBeardIndex;
-            playerCustomizationIndexData.playerAttachmentIndex = playerCustomization.playerAttachmentIndex;
-            playerCustomizationIndexData.playerEaringIndex = playerCustomization.playerEaringIndex;
+            playerCustomizationIndexData.playerGenderIndex = characterCustomizationPartLoader.playerGenderIndex;
+            playerCustomizationIndexData.playerHairIndex = characterCustomizationPartLoader.playerHairIndex;
+            playerCustomizationIndexData.playerBeardIndex = characterCustomizationPartLoader.playerBeardIndex;
+            playerCustomizationIndexData.playerAttachmentIndex = characterCustomizationPartLoader.playerAttachmentIndex;
+            playerCustomizationIndexData.playerEaringIndex = characterCustomizationPartLoader.playerEaringIndex;
             
             return playerCustomizationIndexData;
         }
