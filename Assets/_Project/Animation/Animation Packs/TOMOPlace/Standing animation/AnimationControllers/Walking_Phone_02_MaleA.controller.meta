@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 01ed5b69ef9dd1e4f8f525ee49bd0d81
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/AnimationControllers/Walking_Phone_02_MaleA.controller
+  uploadId: 495701

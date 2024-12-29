@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e037d0382eb072241baeb144a540b5c5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/AnimationControllers/Standing_Idle_02_FemaleB.controller
+  uploadId: 495701

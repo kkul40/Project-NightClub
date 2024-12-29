@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 312fd8182a8c1294ea075bcb5f696111
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293451
+  packageName: 150+ Bar Animations
+  packageVersion: 1.0.4
+  assetPath: Assets/150+ Bar Animations/Demo/DemoCameraController.cs
+  uploadId: 690010

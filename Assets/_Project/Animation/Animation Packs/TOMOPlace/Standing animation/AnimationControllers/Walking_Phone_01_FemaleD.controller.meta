@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 063cc987df34026498a9ad34e83f7f6d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/AnimationControllers/Walking_Phone_01_FemaleD.controller
+  uploadId: 495701

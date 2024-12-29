@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc70c8c370cb09f40b7153c6d9b281d3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/AnimationControllers/Standing_Idle_01_MaleB.controller
+  uploadId: 495701

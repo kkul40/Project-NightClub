@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9ccaa32797273054386c817ee2b2e841
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/Prefabs/Robot.prefab
+  uploadId: 495701
