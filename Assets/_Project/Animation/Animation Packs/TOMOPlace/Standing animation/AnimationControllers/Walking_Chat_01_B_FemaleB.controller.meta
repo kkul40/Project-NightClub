@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f896413c0a8aecf4bad8584227b99677
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 219976
+  packageName: Basic Standing animation package
+  packageVersion: 1.0
+  assetPath: Assets/TOMOPlace/Standing animation/AnimationControllers/Walking_Chat_01_B_FemaleB.controller
+  uploadId: 495701
