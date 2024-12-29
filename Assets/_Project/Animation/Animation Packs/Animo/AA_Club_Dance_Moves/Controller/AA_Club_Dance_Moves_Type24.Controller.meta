@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cc56be7c81d39934b88510672a9e7a0e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 262812
+  packageName: AA_Club_Dance_Moves
+  packageVersion: 1.0
+  assetPath: Assets/Animo/AA_Club_Dance_Moves/Controller/AA_Club_Dance_Moves_Type24.Controller
+  uploadId: 671688
