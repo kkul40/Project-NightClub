@@ -1171,7 +1171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2328236501454063520, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_text
-      value: Beard
+      value: Accessories
       objectReference: {fileID: 0}
     - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_Pivot.x
@@ -1881,22 +1881,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92a14194b456a42b4b2fd297546bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaleCharacter: {fileID: 731249386106909259, guid: acd4f936cf4caec48b4bf1d1cbe39fd8, type: 3}
-  FemaleCharacter: {fileID: 6974521556414156316, guid: be3f2b3e6e6cda444ab4b99e08a962b0, type: 3}
+  _So: {fileID: 11400000, guid: 06e59141389da44479bcfd0232a8ccc8, type: 2}
   m_Player: {fileID: 6747703779353093721}
   Gender: {fileID: 694851936}
-  Hair: {fileID: 1553416703}
+  Head: {fileID: 1553416703}
+  Hair: {fileID: 685314512}
   Accessories: {fileID: 259691730}
   Top: {fileID: 1046359842}
   Bottom: {fileID: 1660459601}
   Shoes: {fileID: 1463545700}
-  _skinnedMeshRenderers:
-  - {fileID: 11400000, guid: 7854d8a517fadca4481a8ef45c3b315c, type: 2}
-  - {fileID: 11400000, guid: b4bca058b73d30e488c8ed48e7d1d596, type: 2}
-  - {fileID: 11400000, guid: c0cca3d81996f804ea808b95d4a285de, type: 2}
-  - {fileID: 11400000, guid: a798a73f9fac8ef41930a90ef9884392, type: 2}
-  - {fileID: 11400000, guid: 56284222f0d49074786104e027156a05, type: 2}
-  - {fileID: 11400000, guid: 7c5fcb1cb4fbe014abaf03ab7b10a0e1, type: 2}
 --- !u!1 &410786514
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,6 +2609,22 @@ RectTransform:
   m_AnchoredPosition: {x: 249.5985, y: -332.5}
   m_SizeDelta: {x: 459.197, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &685314512 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4272712695273223437, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+  m_PrefabInstance: {fileID: 1667800849}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cc264f14474ee5bfcb7891f6609346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &685314513 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+  m_PrefabInstance: {fileID: 1667800849}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &694851935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5738,9 +5747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2328236501454063520, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_text
-      value: 'Earing
-
-'
+      value: Shoes
       objectReference: {fileID: 0}
     - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_Pivot.x
@@ -5931,6 +5938,7 @@ RectTransform:
   - {fileID: 712618791}
   - {fileID: 850902717}
   - {fileID: 1553416702}
+  - {fileID: 685314513}
   - {fileID: 357654760}
   - {fileID: 1629048638}
   - {fileID: 1550438608}
@@ -6553,7 +6561,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2089921908489156445, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_Name
-      value: Hair
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 2328236501454063520, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_text
+      value: Head
       objectReference: {fileID: 0}
     - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_Pivot.x
@@ -7015,9 +7027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2328236501454063520, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_text
-      value: 'Earing
-
-'
+      value: Bottom
       objectReference: {fileID: 0}
     - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
       propertyPath: m_Pivot.x
@@ -7171,6 +7181,159 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cc264f14474ee5bfcb7891f6609346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1667800849
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1475950632}
+    m_Modifications:
+    - target: {fileID: 2089921908489156445, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_Name
+      value: Hair
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595491911738364252, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 366832266}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHairNextButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.PlayerCustomizationUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6728919974707679639, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 366832266}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnHairPreviousButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.PlayerCustomizationUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7384077481783397734, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d15229291931f8a4b902c0f647efe7d0, type: 3}
 --- !u!1 &1706312072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8493,7 +8656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d75333838a42c0b3e2f6770e672491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterCustomization: {fileID: 11400000, guid: 3d4ba772944d1934686224f65e1da7de, type: 2}
 --- !u!4 &2037331863
 Transform:
   m_ObjectHideFlags: 0

@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Rukha93.ModularAnimeCharacter.Customization
-{
-    public enum BodyPartType
+public enum BodyPartType
     {
         Torso_Hips = 0,
         Torso_Spine01,
@@ -25,6 +22,5 @@ namespace Rukha93.ModularAnimeCharacter.Customization
 
     public class BodyPartTag : MonoBehaviour
     {
-        public BodyPartType type;
+        [FormerlySerializedAs("type")] public BodyPartType bodyTag;
     }
-}

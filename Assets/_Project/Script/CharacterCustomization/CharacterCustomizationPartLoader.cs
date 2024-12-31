@@ -37,7 +37,7 @@ namespace CharacterCustomization
             }
         }
 
-        public void ChangeIndex(ref int index, ref Transform holder, ref List<CustomizationItem> prefabs, int change)
+        public void ChangeIndex(ref int index, ref Transform holder, ref List<ScriptableObjects.CustomizationItem> prefabs, int change)
         {
             index += change;
             if (index > prefabs.Count - 1)
