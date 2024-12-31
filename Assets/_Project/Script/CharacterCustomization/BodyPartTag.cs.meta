@@ -14,5 +14,5 @@ AssetOrigin:
   productId: 255279
   packageName: Modular Stylized Character 1
   packageVersion: 2.0.3
-  assetPath: Assets/Rukha93/ModularAnimeCharacter/Samples/Customization/Scripts/CustomizationSystem/BodyPartTag.cs
+  assetPath: Assets/_Project/Script/CharacterCustomization/BodyPartTag.cs
   uploadId: 692775
