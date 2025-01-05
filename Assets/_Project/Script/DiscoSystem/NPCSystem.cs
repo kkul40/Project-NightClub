@@ -83,13 +83,13 @@ namespace DiscoSystem
                 switch (gender)
                 {
                     case eGenderType.Male:
-                        newNPC.GetComponent<Custimization>()
-                            .Randomize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
+                        // newNPC.GetComponent<Custimization>()
+                            // .Randomize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
                         break;
                     case eGenderType.Female:
-                        newNPC.GetComponent<Custimization>()
-                            .Randomize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
+                        // newNPC.GetComponent<Custimization>()
+                            // .Randomize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
                         break;
                 }

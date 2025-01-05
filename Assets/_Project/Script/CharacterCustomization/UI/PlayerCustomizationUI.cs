@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using CharacterCustomization.Scriptables;
+using Data;
+using ExtensionMethods;
 using JetBrains.Annotations;
 using NPCBehaviour;
 using Sirenix.OdinInspector;
@@ -7,7 +9,7 @@ using UnityEngine;
 
 namespace CharacterCustomization.UI
 {
-    public class PlayerCustomizationUI : MonoBehaviour
+    public class PlayerCustomizationUI : MonoBehaviour, ISaveLoad
     {
         public class EquipedItem
         {
@@ -18,6 +20,7 @@ namespace CharacterCustomization.UI
         
         public class PlayerEquipments
         {
+            public eGenderType PlayerGender;
             public Dictionary<BodyPart, EquipedItem> EquipedItems;
             public PlayerEquipments()
             {
@@ -42,7 +45,6 @@ namespace CharacterCustomization.UI
             Shoes,
         }
 
-        // Variables
         [Required]
         public CustomizationItemsSo _So;
 
@@ -54,8 +56,6 @@ namespace CharacterCustomization.UI
         private BodyPartTag[] m_BodyPartTags;
         private PlayerEquipments m_PlayerEquipments;
         public Dictionary<BodyPart, List<CustomizationItem>> m_ItemGroup;
-        
-        // Data
         
         // UI
         [SerializeField] private UIItemSwapper Gender;
@@ -127,8 +127,15 @@ namespace CharacterCustomization.UI
             m_ItemGroup.Add(BodyPart.Top, group.Top);
             m_ItemGroup.Add(BodyPart.Bottom, group.Bottom);
             m_ItemGroup.Add(BodyPart.Shoes, group.Shoes);
+            
+            // Equip Defaults
+            InitItem(m_ItemGroup[BodyPart.Head][0], m_PlayerEquipments.EquipedItems[BodyPart.Head]);
+            InitItem(m_ItemGroup[BodyPart.Hair][0], m_PlayerEquipments.EquipedItems[BodyPart.Hair]);
+            // InitItem(m_ItemGroup[BodyPart.Accessories][0], m_PlayerEquipments.EquipedItems[BodyPart.Accessories]);
+            InitItem(m_ItemGroup[BodyPart.Top][0], m_PlayerEquipments.EquipedItems[BodyPart.Top]);
+            InitItem(m_ItemGroup[BodyPart.Bottom][0], m_PlayerEquipments.EquipedItems[BodyPart.Bottom]);
+            InitItem(m_ItemGroup[BodyPart.Shoes][0], m_PlayerEquipments.EquipedItems[BodyPart.Shoes]);
         }
-
 
         private void NextBodyPart(BodyPart bodyPart)
         {
@@ -215,45 +222,19 @@ namespace CharacterCustomization.UI
                 }
             }
         }
-
        
-
         private void ChangeGender(eGenderType gender)
         {
             InitBody(gender);
-            //
-            // foreach (var objects in currentEquipped.instantiatedObjects)
-            //     Destroy(objects);
-            //
-
-
-            // //initialize all tagged body parts
-            // //they be used to disable meshes that are hidden by clothes
-            // var bodyparts = body.GetComponentsInChildren<BodyPartTag>();
-            // foreach (var part in bodyparts)
-            //     m_BodyParts[part.type] = part;
-            //
-            // var equip = new CustomizationDemo.EquipedItem()
-            // {
-            //     path = path,
-            //     assetReference = null,
-            //     instantiatedObjects = new List<GameObject>() { m_Character.gameObject }
-            // };
-            // InitRenderersForItem(equip);
-            // m_Equiped["body"] = equip;
-            //
-            // //update ui
-            // m_UI.SetCategoryValue(m_Categories.IndexOf("body"), path);
-            // if (m_UI.IsCustomizationOpen && m_UI.CurrentCategory == "body")
-            //     m_UI.SetCustomizationMaterials(equip.renderers);
         }
 
-       
-        private int GetLoopIndex(int currentIndex, int maxIndex, int increase)
+        public void LoadData(GameData gameData)
         {
-            currentIndex = maxIndex;
+        }
 
-            return currentIndex + increase;
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.SavedPlayerCustomizationIndexData = m_PlayerEquipments.ConvertPlayerCustomizationIndexData();
         }
     }
 }
