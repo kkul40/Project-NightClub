@@ -16,7 +16,6 @@ namespace UI
 
         public void ToggleCheckMark(bool toggle)
         {
-            Debug.Log("Toggled Check Mark");
             CheckMarkImage.enabled = toggle;
         }
 

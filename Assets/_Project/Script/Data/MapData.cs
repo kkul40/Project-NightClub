@@ -34,7 +34,7 @@ namespace Data
         public MapData()
         {
             // Intensional Broken Data
-            Debug.LogError("Initialized With No Data");
+            // Debug.LogError("Initialized With No Data");
             
             Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
             CurrentMapSize = Vector2Int.one;

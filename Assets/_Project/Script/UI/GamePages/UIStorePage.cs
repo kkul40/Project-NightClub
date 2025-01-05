@@ -23,7 +23,6 @@ namespace UI.GamePages
 
         protected override void OnShow()
         {
-            Debug.Log("Shownnn");
             lastButtonBaseClicked.OnClick();
             OnStoreToggle?.Invoke(true);
         }
