@@ -1,4 +1,5 @@
-﻿using CharacterCustomization.Scriptables;
+﻿using Animancer;
+using CharacterCustomization.Scriptables;
 using Data;
 using ExtensionMethods;
 using JetBrains.Annotations;
@@ -16,6 +17,7 @@ namespace CharacterCustomization
         public eGenderType gender;
         private Transform _armature;
         private Animator _animator;
+        private AnimancerComponent _animancer;
         private SkinnedMeshRenderer _skinMeshRenderers;
         private BodyPartTag[] _bodyPartTags;
 
@@ -55,6 +57,7 @@ namespace CharacterCustomization
             }
             
             _animator = _armature.GetComponent<Animator>();
+            _animancer = _armature.GetComponent<AnimancerComponent>();
             
             var meshes = _armature.GetComponentsInChildren<SkinnedMeshRenderer>();
             _skinMeshRenderers = meshes[meshes.Length / 2];
@@ -112,6 +115,7 @@ namespace CharacterCustomization
         }
 
         public Animator GetAnimator => _animator;
+        public AnimancerComponent GetAnimancer => _animancer;
         public Transform GetArmature => _armature;
     }
 }
