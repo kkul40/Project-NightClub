@@ -43,7 +43,7 @@ namespace PlayerScripts
                 ? InitConfig.Instance.GetDefaultBoyNpcAnimation
                 : InitConfig.Instance.GetDefaultGirlNpcAnimation;
             
-            _animationController = new NPCAnimationControl(_customizeLoader.GetAnimator, animation, _customizeLoader.GetArmature);
+            _animationController = new NPCAnimationControl(_customizeLoader.GetAnimator, _customizeLoader.GetAnimancer, animation, _customizeLoader.GetArmature);
             _animationController.PlayAnimation(eAnimationType.Bartender_Walk);
         }
 

@@ -1,4 +1,5 @@
-﻿using ScriptableObjects;
+﻿using Animancer;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace NPCBehaviour
@@ -20,14 +21,16 @@ namespace NPCBehaviour
     {
         private NpcAnimationSo _npcAnimationSo;
         public Animator animator { get; }
+        public AnimancerComponent animancer { get; }
         public AnimationClip CurrentAnimation { get; private set; }
 
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
-        public NPCAnimationControl(Animator animator, NpcAnimationSo npcAnimationSo, Transform animatorTransform)
+        public NPCAnimationControl(Animator animator, AnimancerComponent animancer, NpcAnimationSo npcAnimationSo, Transform animatorTransform)
         {
             this.animator = animator;
+            this.animancer = animancer;
             _npcAnimationSo = npcAnimationSo;
             this.animatorTransform = animatorTransform;
         }
@@ -59,7 +62,8 @@ namespace NPCBehaviour
             if (CurrentAnimation == selectedAnimationClip) return;
 
             CurrentAnimation = selectedAnimationClip;
-            animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
+            // animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
+            animancer.Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
 
             animatorTransform.localRotation = Quaternion.identity;
             animatorTransform.localPosition = Vector3.zero;
@@ -70,15 +74,17 @@ namespace NPCBehaviour
     {
         private BartenderAnimationSo _animationSo;
         public Animator animator { get; private set; }
+        public AnimancerComponent animancer { get; }
         public AnimationClip CurrentAnimation { get; private set; }
 
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
-        public BartenderAnimationControl(Animator animator, BartenderAnimationSo animationSo,
+        public BartenderAnimationControl(Animator animator, AnimancerComponent animancer, BartenderAnimationSo animationSo,
             Transform animatorTransform)
         {
             this.animator = animator;
+            this.animancer = animancer;
             _animationSo = animationSo;
             this.animatorTransform = animatorTransform;
 
@@ -119,6 +125,9 @@ namespace NPCBehaviour
     public interface IAnimationController
     {
         Animator animator { get; }
+
+        AnimancerComponent animancer { get; }
+
         AnimationClip CurrentAnimation { get; }
         void PlayAnimation(eAnimationType eAnimationType);
 

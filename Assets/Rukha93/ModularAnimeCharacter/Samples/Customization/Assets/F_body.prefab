@@ -2076,6 +2076,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3914715469680610146}
   - component: {fileID: 6968177128872857880}
+  - component: {fileID: 4454608084261716736}
   m_Layer: 0
   m_Name: F_body
   m_TagString: Untagged
@@ -2128,22 +2129,26 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'CC_BaseRing2.L'\n\tTransform 'CC_BaseRing3.R'\n\tTransform
-    'CC_BaseThigh.L'\n\tTransform 'CC_BaseThumb3.R'\n\tTransform 'RL_BoneRoot'\n\tTransform
-    'CC_BaseClavicle.R'\n\tTransform 'CC_BasePinky3.L'\n\tTransform 'CC_Base_Head'\n\tTransform
-    'CC_Base_NeckTwist01'\n\tTransform 'CC_BaseToeBase.L'\n\tand more ...\n\tFrom
-    animation clip 'M_body_girl sitting on the bar counter - 001'\n\tFrom animation
-    clip 'M_body_girl sitting on the bar counter - 002'\n\tFrom animation clip 'M_body_girl
-    sitting on the bar counter - 003'\n\tFrom animation clip 'M_body_girl sitting
-    on the bar counter - 004'\n\tFrom animation clip 'M_body_girl sitting on the
-    bar counter - 005'\n\tFrom animation clip 'M_body_girl sitting on the bar counter
-    - 006'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4454608084261716736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402282199760130520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 6968177128872857880}
+  _Transitions: {fileID: 0}
+  _ActionOnDisable: 0
 --- !u!1 &4415639931765647448
 GameObject:
   m_ObjectHideFlags: 0
