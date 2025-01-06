@@ -1,9 +1,11 @@
 ﻿using System;
+using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using NPCBehaviour;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Data
 {
@@ -17,9 +19,10 @@ namespace Data
         [SerializeField] private MaterialItemSo DefaultTileMaterial;
         [SerializeField] private MaterialItemSo DefaultWallMaterial;
 
+        [FormerlySerializedAs("DefaultBoyNpcCustomization")]
         [Header("Default NPC Customization")] 
-        [SerializeField] private NPCCustomizationDataSO DefaultBoyNpcCustomization;
-        [SerializeField] private NPCCustomizationDataSO DefaultGirlNpcCustomization;
+        [SerializeField] private CustomizationItemsSo DefaultNPCCustomization;
+        [SerializeField] private CustomizationItemsSo DefaultBartenderCustomization;
 
         [Header("Default NPC Animation")] 
         [SerializeField] private NpcAnimationSo DefaultBoyNpcAnimation;
@@ -31,8 +34,8 @@ namespace Data
         public UIColorStyle GetDefaultUIColorStyle => DefaultUIColorStyle;
         public MaterialItemSo GetDefaultTileMaterial => DefaultTileMaterial;
         public MaterialItemSo GetDefaultWallMaterial => DefaultWallMaterial;
-        public NPCCustomizationDataSO GetDefaultBoyNpcCustomization => DefaultBoyNpcCustomization;
-        public NPCCustomizationDataSO GetDefaultGirlNpcCustomization => DefaultGirlNpcCustomization;
+        public CustomizationItemsSo GetDefaultNPCCustomization => DefaultNPCCustomization;
+        public CustomizationItemsSo GetefaultBartenderCustomization => DefaultBartenderCustomization;
         public NpcAnimationSo GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
         public NpcAnimationSo GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
         public BartenderAnimationSo GetDefaultBartenderAnimation => DefaultBartenderAnimation;

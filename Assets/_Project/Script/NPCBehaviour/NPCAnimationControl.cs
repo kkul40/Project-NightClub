@@ -115,7 +115,8 @@ namespace NPCBehaviour
             if (CurrentAnimation == selectedAnimationClip) return;
 
             CurrentAnimation = selectedAnimationClip;
-            animator.CrossFadeInFixedTime(selectedAnimationClip.name, _animationSo.animationDuration, 0);
+            // animator.CrossFadeInFixedTime(selectedAnimationClip.name, _animationSo.animationDuration, 0);
+            animancer.Play(selectedAnimationClip, _animationSo.animationDuration);
 
             animatorTransform.localRotation = Quaternion.identity;
             animatorTransform.localPosition = Vector3.zero;
