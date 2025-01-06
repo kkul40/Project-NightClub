@@ -236,7 +236,6 @@ MonoBehaviour:
     - assetType: 1
       meshes:
       - {fileID: -2478535699552615655, guid: 5da8577ca83cbba4fa75a154ec38935b, type: 3}
-      - {fileID: -2478535699552615655, guid: 5da8577ca83cbba4fa75a154ec38935b, type: 3}
       objects: []
       hiddenBodyParts: 0100000002000000030000001500000014000000
     - assetType: 1
