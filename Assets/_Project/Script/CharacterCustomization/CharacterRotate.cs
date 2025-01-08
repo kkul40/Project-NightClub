@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CharacterCustomization.UI
+namespace CharacterCustomization
 {
     public class CharacterRotate : MonoBehaviour
     {

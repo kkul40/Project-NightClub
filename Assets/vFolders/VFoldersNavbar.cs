@@ -14,7 +14,6 @@ using UnityEditor.IMGUI.Controls;
 using Type = System.Type;
 using static VFolders.Libs.VUtils;
 using static VFolders.Libs.VGUI;
-// using static VTools.VDebug;
 using static VFolders.VFoldersData;
 using static VFolders.VFolders;
 
@@ -86,16 +85,6 @@ namespace VFolders
 
                 menu.AddDisabledItem(new GUIContent("vFolders hidden menu"));
 
-                if (isOneColumn)
-                {
-                    var backForwardButtonsEnabled = EditorPrefsCached.GetBool("vFolders-showBackForwardButtonsInOneColumn", defaultValue: false);
-
-                    menu.AddSeparator("");
-                    menu.AddItem(new GUIContent("Show + button"), false, backForwardButtonsEnabled ? () => EditorPrefsCached.SetBool("vFolders-showBackForwardButtonsInOneColumn", false) : null);
-                    menu.AddItem(new GUIContent("Show < > buttons"), false, backForwardButtonsEnabled ? null : () => EditorPrefsCached.SetBool("vFolders-showBackForwardButtonsInOneColumn", true));
-                }
-
-
                 menu.AddSeparator("");
                 menu.AddItem(new GUIContent("Select data"), false, selectData);
                 menu.AddItem(new GUIContent("Select palette"), false, selectPalette);
@@ -107,11 +96,8 @@ namespace VFolders
 
             }
 
-            void backButton()
+            void moveBackButton()
             {
-                if (isOneColumn && !EditorPrefsCached.GetBool("vFolders-showBackForwardButtonsInOneColumn", defaultValue: false)) return;
-
-
                 var buttonRect = navbarRect.SetWidth(30).MoveX(4);
 
                 if (Application.unityVersion.StartsWith("6000"))
@@ -139,11 +125,8 @@ namespace VFolders
                     history.MoveBack_TwoColumns();
 
             }
-            void forwardButton()
+            void moveForwardButton()
             {
-                if (isOneColumn && !EditorPrefsCached.GetBool("vFolders-showBackForwardButtonsInOneColumn", defaultValue: false)) return;
-
-
                 var buttonRect = navbarRect.SetWidth(30).MoveX(30).MoveX(1).AddWidthFromMid(-6);
 
                 if (Application.unityVersion.StartsWith("6000"))
@@ -171,31 +154,6 @@ namespace VFolders
                     history.MoveForward_TwoColumns();
 
             }
-            void plusButton_oneColumn()
-            {
-                if (!isOneColumn) return;
-                if (EditorPrefsCached.GetBool("vFolders-showBackForwardButtonsInOneColumn", defaultValue: false)) return;
-
-
-                var buttonRect = navbarRect.SetWidth(28).MoveX(4.5f);
-
-                if (Application.unityVersion.StartsWith("6000"))
-                    buttonRect = buttonRect.MoveY(-.49f);
-
-
-                var iconName = "Plus Thicker";
-                var iconSize = 16;
-                var colorNormal = Greyscale(isDarkTheme ? .7f : .44f);
-                var colorHovered = Greyscale(isDarkTheme ? 1f : .42f);
-                var colorPressed = Greyscale(isDarkTheme ? .75f : .6f);
-
-
-                if (!IconButton(buttonRect, iconName, iconSize, colorNormal, colorHovered, colorPressed)) return;
-
-                EditorUtility.DisplayPopupMenu(buttonRect.MoveX(24), "Assets/Create", null);
-
-            }
-
 
             void searchButton()
             {
@@ -216,9 +174,8 @@ namespace VFolders
                 window.SetMemberValue("m_FocusSearchField", true);
 
             }
-            void plusButton_twoColumns()
+            void plusButton()
             {
-                if (isOneColumn) return;
                 if (searchAnimationT == 1) return;
 
 
@@ -254,26 +211,6 @@ namespace VFolders
                 }
 
                 EditorUtility.DisplayPopupMenu(buttonRect.MoveX(24), "Assets/Create", null);
-
-            }
-            void collapseAllButton_oneColumn()
-            {
-                if (!isOneColumn) return;
-                if (searchAnimationT == 1) return;
-
-
-                var buttonRect = navbarRect.SetWidthFromRight(28).MoveX(-33);
-
-                var iconName = "Collapse";
-                var iconSize = 16;
-                var colorNormal = Greyscale(isDarkTheme ? .71f : .44f);
-                var colorHovered = Greyscale(isDarkTheme ? 1f : .42f);
-                var colorPressed = Greyscale(isDarkTheme ? .75f : .6f);
-
-
-                if (!IconButton(buttonRect, iconName, iconSize, colorNormal, colorHovered, colorPressed)) return;
-
-                controller.CollapseAll();
 
             }
             void bookmarks()
@@ -463,9 +400,9 @@ namespace VFolders
                 var lerpSpeed = 8f;
 
                 if (isSearchActive)
-                    MathUtil.SmoothDamp(ref searchAnimationT, 1, lerpSpeed, ref searchAnimationDerivative, editorDeltaTime);
+                    SmoothDamp(ref searchAnimationT, 1, lerpSpeed, ref searchAnimationDerivative, editorDeltaTime);
                 else
-                    MathUtil.SmoothDamp(ref searchAnimationT, 0, lerpSpeed, ref searchAnimationDerivative, editorDeltaTime);
+                    SmoothDamp(ref searchAnimationT, 0, lerpSpeed, ref searchAnimationDerivative, editorDeltaTime);
 
 
                 if (isSearchActive && searchAnimationT > .99f)
@@ -485,8 +422,7 @@ namespace VFolders
                 GUI.BeginGroup(window.position.SetPos(0, 0).MoveX(-searchAnimationDistance * searchAnimationT));
 
                 searchButton();
-                plusButton_twoColumns();
-                collapseAllButton_oneColumn();
+                plusButton();
                 bookmarks();
 
                 GUI.EndGroup();
@@ -515,9 +451,8 @@ namespace VFolders
             background();
             hiddenMenu();
 
-            backButton();
-            forwardButton();
-            plusButton_oneColumn();
+            moveBackButton();
+            moveForwardButton();
 
             searchAnimation();
             buttonsAndBookmarks();
@@ -885,6 +820,8 @@ namespace VFolders
 
         public float lastBookmarkX;
 
+        static Material brightenIconMaterial;
+
 
 
 
@@ -1110,6 +1047,7 @@ namespace VFolders
                 accept();
 
                 data.Dirty();
+                data.Save();
 
             }
             void acceptFromInside()
@@ -1186,48 +1124,11 @@ namespace VFolders
 
                 DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
 
-                if (draggingBookmarkFromInside) // otherwise it breaks vTabs dragndrop
-                    EditorGUIUtility.hotControl = EditorGUIUtility.GetControlID(FocusType.Passive);
+                EditorGUIUtility.hotControl = EditorGUIUtility.GetControlID(FocusType.Passive);
 
 
 
                 insertDraggedBookmarkAtIndex = GetBookmarkIndex(curEvent.mousePosition.x + draggedBookmarkHoldOffset.x);
-
-            }
-
-            void dropIntoBookmark()
-            {
-                if (draggingBookmark) return;
-                if (!bookmarksRect.IsHovered()) return;
-                if (!DragAndDrop.objectReferences.Any()) return;
-                if (!DragAndDrop.objectReferences.Any(r => r is not DefaultAsset)) return;
-                if (!DragAndDrop.objectReferences.All(r => AssetDatabase.Contains(r))) return;
-
-                if (!mouseHoversBookmark) return;
-                if (lastHoveredBookmark.isDeleted) return;
-
-
-                if (curEvent.isDragUpdate)
-                    DragAndDrop.visualMode = DragAndDropVisualMode.Move;
-
-
-                if (!curEvent.isDragPerform) return;
-
-                DragAndDrop.AcceptDrag();
-
-                curEvent.Use();
-
-
-                var oldPaths = DragAndDrop.objectReferences.Select(r => r.GetPath()).ToList();
-
-                var newPaths = oldPaths.Select(r => lastHoveredBookmark.guid.ToPath().CombinePath(r.GetFilename(withExtension: true)))
-                                       .Select(r => AssetDatabase.GenerateUniqueAssetPath(r)).ToList();
-
-
-                typeof(Undo).GetMethod("RegisterAssetsMoveUndo", maxBindingFlags).Invoke(null, new object[] { oldPaths.ToArray() });
-
-                for (int i = 0; i < newPaths.Count; i++)
-                    AssetDatabase.MoveAsset(oldPaths[i], newPaths[i]);
 
             }
 
@@ -1243,7 +1144,6 @@ namespace VFolders
 
             update();
 
-            dropIntoBookmark();
 
         }
 
@@ -1274,9 +1174,9 @@ namespace VFolders
 
                 for (int i = 0; i < gaps.Count; i++)
                     if (makeSpaceForDraggedBookmark && i == insertDraggedBookmarkAtIndex)
-                        gaps[i] = MathUtil.Lerp(gaps[i], GetBookmarkWidth(draggedBookmark), lerpSpeed, editorDeltaTime);
+                        gaps[i] = Lerp(gaps[i], GetBookmarkWidth(draggedBookmark), lerpSpeed, editorDeltaTime);
                     else
-                        gaps[i] = MathUtil.Lerp(gaps[i], 0, lerpSpeed, editorDeltaTime);
+                        gaps[i] = Lerp(gaps[i], 0, lerpSpeed, editorDeltaTime);
 
 
 
@@ -1298,7 +1198,7 @@ namespace VFolders
 
                 var targX = GetBookmarkCenterX(data.bookmarks.IndexOf(droppedBookmark), includeGaps: false);
 
-                MathUtil.SmoothDamp(ref droppedBookmarkX, targX, lerpSpeed, ref droppedBookmarkXDerivative, editorDeltaTime);
+                SmoothDamp(ref droppedBookmarkX, targX, lerpSpeed, ref droppedBookmarkXDerivative, editorDeltaTime);
 
                 if ((droppedBookmarkX - targX).Abs() < .5f)
                     animatingDroppedBookmark = false;
@@ -1313,9 +1213,9 @@ namespace VFolders
                 var lerpSpeed = UnityEditorInternal.InternalEditorUtility.isApplicationActive ? 15 : 12321;
 
                 if (mouseHoversBookmark && !draggingBookmark && !hideTooltip)
-                    MathUtil.SmoothDamp(ref tooltipOpacity, 1, lerpSpeed, ref tooltipOpacityDerivative, editorDeltaTime);
+                    SmoothDamp(ref tooltipOpacity, 1, lerpSpeed, ref tooltipOpacityDerivative, editorDeltaTime);
                 else
-                    MathUtil.SmoothDamp(ref tooltipOpacity, 0, lerpSpeed, ref tooltipOpacityDerivative, editorDeltaTime);
+                    SmoothDamp(ref tooltipOpacity, 0, lerpSpeed, ref tooltipOpacityDerivative, editorDeltaTime);
 
 
                 if (tooltipOpacity > .99f)

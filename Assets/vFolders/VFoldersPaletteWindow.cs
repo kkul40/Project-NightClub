@@ -16,7 +16,6 @@ using static VFolders.VFoldersPalette;
 using static VFolders.VFoldersCache;
 using static VFolders.Libs.VUtils;
 using static VFolders.Libs.VGUI;
-// using static VTools.VDebug;
 
 
 namespace VFolders
@@ -103,12 +102,12 @@ namespace VFolders
 
                         var colorRaw = palette ? palette.colors[i - 1] : VFoldersPalette.GetDefaultColor(i - 1);
 
-                        var color = MathUtil.Lerp(Greyscale(.2f), colorRaw, brightness);
+                        var color = Lerp(Greyscale(.2f), colorRaw, brightness);
 
                         Color.RGBToHSV(color, out float h, out float s, out float v);
                         color = Color.HSVToRGB(h, s * saturation, v);
 
-                        color = MathUtil.Lerp(color, colorRaw, .5f).SetAlpha(1);
+                        color = Lerp(color, colorRaw, .5f).SetAlpha(1);
 
 
 
@@ -380,8 +379,8 @@ namespace VFolders
                 {
                     var speed = 9;
 
-                    MathUtil.SmoothDamp(ref currentPosition, targetPosition, speed, ref positionDeriv, deltaTime);
-                    // MathfUtils.Lerp(ref currentPosition, targetPosition, speed, deltaTime);
+                    SmoothDamp(ref currentPosition, targetPosition, speed, ref positionDeriv, deltaTime);
+                    // Lerp(ref currentPosition, targetPosition, speed, deltaTime);
 
                 }
                 void setCurPos()
@@ -527,8 +526,7 @@ namespace VFolders
         }
         void SaveData()
         {
-            if (!VFoldersData.storeDataInMetaFiles) return;
-            // if (!VFoldersData.storeDataInMetaFiles) { data.Save(); return; }
+            if (!VFoldersData.storeDataInMetaFiles) { data.Save(); return; }
 
             for (int i = 0; i < guids.Count; i++)
                 if (folderDatas[i].iconNameOrGuid == "" && folderDatas[i].colorIndex == 0)
@@ -610,7 +608,6 @@ namespace VFolders
             {
                 if (!palette.colorsEnabled && !palette.iconRows.Any(r => r.enabled && !r.isEmpty)) // somehow happened on first palette window opening in 2022.3.50
                     palette.InvokeMethod("Reset");
-
 
 
                 var rowCellCounts = new List<int>();

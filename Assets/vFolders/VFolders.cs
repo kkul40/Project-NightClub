@@ -14,7 +14,6 @@ using UnityEditor.IMGUI.Controls;
 using Type = System.Type;
 using static VFolders.Libs.VUtils;
 using static VFolders.Libs.VGUI;
-// using static VTools.VDebug;
 using static VFolders.VFoldersData;
 using static VFolders.VFoldersCache;
 
@@ -25,7 +24,7 @@ namespace VFolders
     public static class VFolders
     {
 
-        static void WrappedGUI(EditorWindow window)
+        static void WrappedBrowserOnGUI(EditorWindow window)
         {
             var navbarHeight = 26;
 
@@ -63,20 +62,7 @@ namespace VFolders
                 window.SetFieldValue("m_Pos", m_Pos_original.AddHeightFromBottom(-topOffset));
 
 
-                try { window.InvokeMethod("OnGUI"); }
-                catch (System.Exception exception)
-                {
-                    if (exception.InnerException is ExitGUIException)
-                        throw exception.InnerException;
-                    else
-                        throw exception;
-
-                    // GUIUtility.ExitGUI() works by throwing ExitGUIException, which just exits imgui loop and doesn't appear in console
-                    // but if ExitGUI is called from a reflected method (OnGUI in this case), the exception becomes TargetInvokationException
-                    // which gets logged to console (only if debugger is attached, for some reason)
-                    // so here in such cases we rethrow the original ExitGUIException
-
-                }
+                window.InvokeMethod("OnGUI");
 
 
                 window.SetFieldValue("m_Pos", m_Pos_original);
@@ -192,7 +178,7 @@ namespace VFolders
 
 
 
-        static void UpdateGUIWrapping(EditorWindow window)
+        static void UpdateGUIWrappingForBrowser(EditorWindow window)
         {
             if (!window.hasFocus) return;
 
@@ -206,9 +192,12 @@ namespace VFolders
 
             void wrap()
             {
+                if (isWrapped) return;
+                if (!shouldBeWrapped) return;
+
                 var hostView = window.GetMemberValue("m_Parent");
 
-                var newDelegate = typeof(VFolders).GetMethod(nameof(WrappedGUI), maxBindingFlags).CreateDelegate(t_EditorWindowDelegate, window);
+                var newDelegate = typeof(VFolders).GetMethod(nameof(WrappedBrowserOnGUI), maxBindingFlags).CreateDelegate(t_EditorWindowDelegate, window);
 
                 hostView.SetMemberValue("m_OnGUI", newDelegate);
 
@@ -217,6 +206,10 @@ namespace VFolders
             }
             void unwrap()
             {
+                if (!isWrapped) return;
+                if (shouldBeWrapped) return;
+
+
                 var hostView = window.GetMemberValue("m_Parent");
 
                 var originalDelegate = hostView.InvokeMethod("CreateDelegate", "OnGUI");
@@ -227,21 +220,17 @@ namespace VFolders
 
             }
 
-
-            if (shouldBeWrapped && !isWrapped)
-                wrap();
-
-            if (!shouldBeWrapped && isWrapped)
-                unwrap();
+            wrap();
+            unwrap();
 
         }
-        static void UpdateGUIWrappingForAllBrowsers() => allBrowsers.ForEach(r => UpdateGUIWrapping(r));
+        static void UpdateGUIWrappingForAllBrowsers() => allBrowsers.ForEach(r => UpdateGUIWrappingForBrowser(r));
 
         static void OnDomainReloaded() => toCallInGUI += UpdateGUIWrappingForAllBrowsers;
 
         static void OnWindowUnmaximized() => UpdateGUIWrappingForAllBrowsers();
 
-        static void OnBrowserFocused() => UpdateGUIWrapping(EditorWindow.focusedWindow);
+        static void OnBrowserFocused() => UpdateGUIWrappingForBrowser(EditorWindow.focusedWindow);
 
         static void OnDelayCall() => UpdateGUIWrappingForAllBrowsers();
 
@@ -654,8 +643,8 @@ namespace VFolders
                     t = t.Clamp01();
 #endif
 
-                var assetIconOffset = MathUtil.Lerp(assetIconOffsetMin, assetIconOffsetMax, t);
-                var assetIconSize = MathUtil.Lerp(assetIconSizeMin, assetIconSizeMax, t);
+                var assetIconOffset = Lerp(assetIconOffsetMin, assetIconOffsetMax, t);
+                var assetIconSize = Lerp(assetIconSizeMin, assetIconSizeMax, t);
 
                 assetIconRect = folderIconRect.Move(assetIconOffset).SetSizeFromMid(assetIconSize, assetIconSize).AlignToPixelGrid();
 
@@ -785,8 +774,8 @@ namespace VFolders
             folderData.iconNameOrGuid = iconName ?? "";
             folderData.isIconRecursive = recursive;
 
-
             folderInfoCache.Clear();
+
 
             EditorApplication.RepaintProjectWindow();
 
@@ -798,8 +787,8 @@ namespace VFolders
             folderData.colorIndex = colorIndex;
             folderData.isColorRecursive = recursive;
 
-
             folderInfoCache.Clear();
+
 
             EditorApplication.RepaintProjectWindow();
 
@@ -857,7 +846,7 @@ namespace VFolders
                 curEvent.Use();
 
 
-                controllers_byWindow[hoveredWindow].CollapseAll();
+                controllers_byWindow[hoveredWindow].CollapseEverything();
 
             }
             void collapseEverythingElse()
@@ -876,7 +865,7 @@ namespace VFolders
                 if (lastHoveredTreeItem.children.Count == 0) return;
 
 
-                controllers_byWindow[hoveredWindow].Isolate(lastHoveredTreeItem);
+                controllers_byWindow[hoveredWindow].CollapseEverythingExcept(lastHoveredTreeItem);
 
             }
 
@@ -1032,7 +1021,7 @@ namespace VFolders
 
                 var rawColor = palette ? palette.colors[colorIndex - 1] : VFoldersPalette.GetDefaultColor(colorIndex - 1);
 
-                var brightenedColor = MathUtil.Lerp(Greyscale(.2f), rawColor, brightness);
+                var brightenedColor = Lerp(Greyscale(.2f), rawColor, brightness);
 
                 Color.RGBToHSV(brightenedColor, out float h, out float s, out float v);
                 var saturatedColor = Color.HSVToRGB(h, s * saturation, v);
@@ -1072,6 +1061,9 @@ namespace VFolders
         public static Dictionary<string, FolderInfo> folderInfoCache = new();
 
         public static List<MethodInfo> rules = null;
+
+        public static void OnProjectChanged() => folderInfoCache.Clear();
+        public static void OnDataSerialization() => folderInfoCache.Clear();
 
 
 
@@ -1325,10 +1317,6 @@ namespace VFolders
 
 
 
-        public static void OnProjectChanged() => folderInfoCache.Clear();
-        public static void OnDataSerialization() => folderInfoCache.Clear();
-
-
 
 
 
@@ -1573,14 +1561,14 @@ namespace VFolders
         static Type t_VTabs = Type.GetType("VTabs.VTabs") ?? Type.GetType("VTabs.VTabs, VTabs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
         static Type t_VFavorites = Type.GetType("VFavorites.VFavorites") ?? Type.GetType("VFavorites.VFavorites, VFavorites, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
 
-        static MethodInfo mi_WrappedBrowserOnGUI = typeof(VFolders).GetMethod(nameof(WrappedGUI), maxBindingFlags);
-        static MethodInfo mi_VFavorites_WrappedOnGUI = t_VFavorites?.GetMethod("WrappedOnGUI", maxBindingFlags);
+        static MethodInfo mi_WrappedBrowserOnGUI = typeof(VFolders).GetMethod(nameof(WrappedBrowserOnGUI), maxBindingFlags);
+        static MethodInfo mi_VFavorites_WrappedOnGUI = t_VFavorites?.GetMethod("WrappedOnGUI", maxBindingFlags) ?? t_VFavorites?.GetMethod("OnGUI", maxBindingFlags);
 
 
 
 
 
-        const string version = "2.1.5";
+        const string version = "2.1.3";
 
     }
 
