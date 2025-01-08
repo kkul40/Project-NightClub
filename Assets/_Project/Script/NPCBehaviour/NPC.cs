@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Animancer;
 using DiscoSystem;
 using NPCBehaviour.PathFinder;
 using PropBehaviours;
@@ -24,7 +23,7 @@ namespace NPCBehaviour
         public void Init(NpcAnimationSo npcAnimationSo)
         {
             PathFinder = new NpcPathFinder(transform);
-            AnimationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimancerComponent>(), npcAnimationSo, transform.GetChild(0));
+            AnimationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), npcAnimationSo, transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
         }
 
