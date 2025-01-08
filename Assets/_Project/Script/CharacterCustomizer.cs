@@ -43,11 +43,10 @@ namespace DefaultNamespace
         }
 
         // Random NPC
-        public CharacterCustomizer(CustomizationItemsSo customizationData, Transform characterTransform)
+        public CharacterCustomizer(eGenderType gender, CustomizationItemsSo customizationData, Transform characterTransform)
         {
             _characterTransform = characterTransform;
             _customizationData = customizationData;
-            gender = Random.value < 0.5 ? eGenderType.Male : eGenderType.Female;
             CustomizationItemsSo.ItemGroup group = gender == eGenderType.Male ? customizationData.MaleItems : customizationData.FemaleItems;
             
             InitBody(gender);
