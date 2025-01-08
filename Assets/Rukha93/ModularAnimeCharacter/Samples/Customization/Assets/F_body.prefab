@@ -2124,22 +2124,11 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 77095d09c232f0041a68100be3a68320, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'CC_BaseRing2.L'\n\tTransform 'CC_BaseRing3.R'\n\tTransform
-    'CC_BaseThigh.L'\n\tTransform 'CC_BaseThumb3.R'\n\tTransform 'RL_BoneRoot'\n\tTransform
-    'CC_BaseClavicle.R'\n\tTransform 'CC_BasePinky3.L'\n\tTransform 'CC_Base_Head'\n\tTransform
-    'CC_Base_NeckTwist01'\n\tTransform 'CC_BaseToeBase.L'\n\tand more ...\n\tFrom
-    animation clip 'M_body_girl sitting on the bar counter - 001'\n\tFrom animation
-    clip 'M_body_girl sitting on the bar counter - 002'\n\tFrom animation clip 'M_body_girl
-    sitting on the bar counter - 003'\n\tFrom animation clip 'M_body_girl sitting
-    on the bar counter - 004'\n\tFrom animation clip 'M_body_girl sitting on the
-    bar counter - 005'\n\tFrom animation clip 'M_body_girl sitting on the bar counter
-    - 006'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -2315,7 +2304,7 @@ GameObject:
   - component: {fileID: 4426851719428957076}
   - component: {fileID: 4386335107905698083}
   m_Layer: 0
-  m_Name: F_body_neck
+  m_Name: F_body_torso.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3507,7 +3496,7 @@ GameObject:
   - component: {fileID: 8610300536585579698}
   - component: {fileID: 6735738136914020360}
   m_Layer: 0
-  m_Name: F_body_chest_lower
+  m_Name: F_body_torso.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4097,7 +4086,7 @@ GameObject:
   - component: {fileID: 2622974019420282453}
   - component: {fileID: 1243430916946308558}
   m_Layer: 0
-  m_Name: F_body_chest
+  m_Name: F_body_torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

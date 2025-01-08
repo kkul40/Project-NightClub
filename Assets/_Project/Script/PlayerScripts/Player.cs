@@ -1,3 +1,4 @@
+using System;
 using CharacterCustomization;
 using Data;
 using DiscoSystem;
@@ -8,23 +9,33 @@ using UnityEngine;
 
 namespace PlayerScripts
 {
-    public class Player : MonoBehaviour, IDoorTrigger, ISaveLoad
+    public class Player : MonoBehaviour, IDoorTrigger
     {
         private IAnimationController _animationController;
         private NpcPathFinder _pathFinder;
-        private CharacterCustomizeLoader _customizeLoader;
 
         private void Awake()
         {
             _pathFinder = new NpcPathFinder(transform);
+            var custom = GetComponent<CharacterCustomizationPartLoader>();
+            var animation = custom.playerGenderIndex == 0
+                ? InitConfig.Instance.GetDefaultBoyNpcAnimation
+                : InitConfig.Instance.GetDefaultGirlNpcAnimation;
+            _animationController =
+                new NPCAnimationControl(GetComponentInChildren<Animator>(), animation, transform.GetChild(0));
+
+            _animationController.PlayAnimation(eAnimationType.Bartender_Idle);
         }
 
         private void Update()
         {
+            // Debug.Log(InputSystem.Instance.GetMouseMapPosition());
+            // Debug.Log(InputSystem.Instance.GetMouseMapPosition().WorldPosToCellPos(eGridType.PathFinderGrid));
+
             if (InputSystem.Instance.RightClickOnWorld && !UIPageManager.Instance.IsAnyUIToggled())
             {
                 _pathFinder.GoTargetDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
-                _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
+                _animationController.PlayAnimation(eAnimationType.NPC_Walk);
             }
         }
 
@@ -34,21 +45,5 @@ namespace PlayerScripts
         }
 
         public bool TriggerDoor { get; set; } = true;
-        public void LoadData(GameData gameData)
-        {
-            _customizeLoader = GetComponent<CharacterCustomizeLoader>();
-            _customizeLoader.Init(gameData);
-            
-            var animation = _customizeLoader.gender == eGenderType.Male
-                ? InitConfig.Instance.GetDefaultBoyNpcAnimation
-                : InitConfig.Instance.GetDefaultGirlNpcAnimation;
-            
-            _animationController = new NPCAnimationControl(_customizeLoader.GetAnimator, animation, _customizeLoader.GetArmature);
-            _animationController.PlayAnimation(eAnimationType.Bartender_Walk);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-        }
     }
 }
