@@ -26975,7 +26975,7 @@ MonoBehaviour:
   DefaultUIColorStyle: {fileID: 11400000, guid: 170e854df72c8b147ba65c9152df1039, type: 2}
   DefaultTileMaterial: {fileID: 11400000, guid: f73747c4d7e5dde4aba615624d70eed3, type: 2}
   DefaultWallMaterial: {fileID: 11400000, guid: 93f5edabc6ca8e74594e0283a425e989, type: 2}
-  DefaultNPCCustomization: {fileID: 11400000, guid: 06e59141389da44479bcfd0232a8ccc8, type: 2}
+  DefaultNPCCustomization: {fileID: 11400000, guid: ce58dbdb2e955a44b9abba3970748ed8, type: 2}
   DefaultBartenderCustomization: {fileID: 11400000, guid: acc813fae69c6424db9c4317a5c42566, type: 2}
   DefaultBoyNpcAnimation: {fileID: 11400000, guid: d0325ffe7c3c84b4e87fcc22a88ca226, type: 2}
   DefaultGirlNpcAnimation: {fileID: 11400000, guid: de71111a11b58454d974f5c1cae51003, type: 2}

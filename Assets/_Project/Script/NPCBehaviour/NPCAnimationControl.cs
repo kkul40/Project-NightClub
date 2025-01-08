@@ -64,6 +64,8 @@ namespace NPCBehaviour
             CurrentAnimation = selectedAnimationClip;
             // animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
             animancer.Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
+            // animancer.TryPlay("S_StandToSit", 1);
+
 
             animatorTransform.localRotation = Quaternion.identity;
             animatorTransform.localPosition = Vector3.zero;
