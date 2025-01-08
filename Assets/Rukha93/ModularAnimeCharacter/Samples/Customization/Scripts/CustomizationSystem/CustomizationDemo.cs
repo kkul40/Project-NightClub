@@ -1,6 +1,7 @@
 using Rukha93.ModularAnimeCharacter.Customization.UI;
 using System.Collections;
 using System.Collections.Generic;
+using CharacterCustomization;
 using UnityEngine;
 
 namespace Rukha93.ModularAnimeCharacter.Customization
