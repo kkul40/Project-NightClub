@@ -26917,7 +26917,7 @@ MonoBehaviour:
   DefaultBoyNpcCustomization: {fileID: 11400000, guid: 73a14197271ff9d4783debc51883bfe3, type: 2}
   DefaultGirlNpcCustomization: {fileID: 11400000, guid: f986cd7540a8f044fa9cc3c8a3d42062, type: 2}
   DefaultBoyNpcAnimation: {fileID: 11400000, guid: d0325ffe7c3c84b4e87fcc22a88ca226, type: 2}
-  DefaultGirlNpcAnimation: {fileID: 11400000, guid: de71111a11b58454d974f5c1cae51003, type: 2}
+  DefaultGirlNpcAnimation: {fileID: 11400000, guid: d3c97e0c17ff48846aae6249f6adfdad, type: 2}
   DefaultBartenderAnimation: {fileID: 11400000, guid: f657ee860e5bb9447bedd03c4572e030, type: 2}
 --- !u!1001 &1451294518
 PrefabInstance:
