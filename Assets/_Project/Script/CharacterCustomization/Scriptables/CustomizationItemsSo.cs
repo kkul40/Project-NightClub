@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CharacterCustomization.UI;
-using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEditor;
 using UnityEngine;
 
 namespace CharacterCustomization.Scriptables
@@ -23,9 +21,7 @@ namespace CharacterCustomization.Scriptables
             public List<CustomizationItem> Shoes;
         }
         
-        [Searchable]
         public ItemGroup MaleItems;
-        [Searchable]
         public ItemGroup FemaleItems;
     }
 }

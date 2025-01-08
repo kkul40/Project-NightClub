@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using CharacterCustomization.Scriptables;
 using JetBrains.Annotations;
 using NPCBehaviour;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace CharacterCustomization.UI
@@ -43,10 +42,8 @@ namespace CharacterCustomization.UI
         }
 
         // Variables
-        [Required]
         public CustomizationItemsSo _So;
 
-        [Required]
         [SerializeField] private Transform m_Player;
         private Transform m_Armature;
         private Animator m_Animator;
@@ -108,7 +105,7 @@ namespace CharacterCustomization.UI
                     m_Armature = Instantiate(_So.MaleItems.ArmaturePrefab, m_Player).transform;
                     break;
                 case eGenderType.Female:
-                    group = _So.FemaleItems;
+                    group = _So.MaleItems; // TODO Change it Female
                     m_Armature = Instantiate(_So.FemaleItems.ArmaturePrefab, m_Player).transform;
                     break;
             }
