@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbbe4c4aad0c09429ce37c5e344b1ed, type: 3}
   m_Name: Shoes.01
   m_EditorClassIdentifier: 
-  bodyParts: 21
+  bodyParts: 21000000
   meshes:
   - {fileID: -7909931796879246135, guid: 41482633462e38b49859abdba946e105, type: 3}
   objects: []
