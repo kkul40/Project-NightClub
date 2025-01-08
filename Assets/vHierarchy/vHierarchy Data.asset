@@ -15,7 +15,6 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - 4e4517d321554a54d993e9dbc84b7b55
-    - e0cd0c2d51efbb045bcb9da746138f93
     values:
     - goDatas_byGlobalId:
         keys:
@@ -82,13 +81,4 @@ MonoBehaviour:
         - colorIndex: 0
           iconNameOrGuid: ReflectionProbe Icon
         - colorIndex: 3
-          iconNameOrGuid: 
-    - goDatas_byGlobalId:
-        keys:
-        - globalObjectIdString: GlobalObjectId_V1-2-e0cd0c2d51efbb045bcb9da746138f93-1218332341-0
-        - globalObjectIdString: GlobalObjectId_V1-2-e0cd0c2d51efbb045bcb9da746138f93-6974521556414156316-890561382
-        values:
-        - colorIndex: 9
-          iconNameOrGuid: 
-        - colorIndex: 9
           iconNameOrGuid: 
