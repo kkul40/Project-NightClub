@@ -14,7 +14,6 @@ using UnityEditor.IMGUI.Controls;
 using Type = System.Type;
 using static VFolders.Libs.VUtils;
 using static VFolders.Libs.VGUI;
-// using static VTools.VDebug;
 using static VFolders.VFolders;
 using static VFolders.VFoldersData;
 using static VFolders.VFoldersCache;
@@ -274,13 +273,13 @@ namespace VFolders
 
             if (withAnimation)
             {
-                controller.StartScrollAnimation(prevState.scrollPos);
-                controller.StartExpandAnimation(prevState.expandedIds);
+                controller.SetScrollPos_withAnimation(prevState.scrollPos);
+                controller.SetExpandedIds_withAnimation(prevState.expandedIds);
             }
             else
             {
-                controller.SetScrollPos(prevState.scrollPos);
-                controller.SetExpandedIds(prevState.expandedIds);
+                controller.SetScrollPos_withoutAnimation(prevState.scrollPos);
+                controller.SetExpandedIds_withoutAnimation(prevState.expandedIds);
             }
 
         }
@@ -295,13 +294,13 @@ namespace VFolders
 
             if (withAnimation)
             {
-                controller.StartScrollAnimation(nextState.scrollPos);
-                controller.StartExpandAnimation(nextState.expandedIds);
+                controller.SetScrollPos_withAnimation(nextState.scrollPos);
+                controller.SetExpandedIds_withAnimation(nextState.expandedIds);
             }
             else
             {
-                controller.SetScrollPos(nextState.scrollPos);
-                controller.SetExpandedIds(nextState.expandedIds);
+                controller.SetScrollPos_withoutAnimation(nextState.scrollPos);
+                controller.SetExpandedIds_withoutAnimation(nextState.expandedIds);
             }
 
         }

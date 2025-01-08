@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CharacterCustomization.UI
+namespace UI
 {
     public class UIRotater : MonoBehaviour
     {

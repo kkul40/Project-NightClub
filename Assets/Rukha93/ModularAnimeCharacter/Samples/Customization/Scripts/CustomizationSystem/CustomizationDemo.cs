@@ -81,7 +81,7 @@ namespace Rukha93.ModularAnimeCharacter.Customization
             //they be used to disable meshes that are hidden by clothes
             var bodyparts = m_Character.GetComponentsInChildren<BodyPartTag>();
             foreach (var part in bodyparts)
-                m_BodyParts[part.bodyTag] = part;
+                m_BodyParts[part.type] = part;
 
             var equip = new EquipedItem()
             {
