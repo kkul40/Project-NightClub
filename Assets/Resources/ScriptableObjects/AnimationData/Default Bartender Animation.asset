@@ -15,6 +15,6 @@ MonoBehaviour:
   <animationDuration>k__BackingField: 0.5
   <Idle>k__BackingField: {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
   <Walk>k__BackingField: {fileID: 7400000, guid: 53a89e9ddf7958347ac638335daa68a0, type: 2}
-  <PrepareDrink>k__BackingField: {fileID: 7400000, guid: c26af4909c6849e4eb4b8026c1782f25, type: 2}
-  <CleanUpTable>k__BackingField: {fileID: 7400000, guid: d0eb8ceed5802f24d91c052af9374193, type: 2}
+  <PrepareDrink>k__BackingField: {fileID: 7400000, guid: 4f5a296e11125554bbf810cede6abbea, type: 2}
+  <CleanUpTable>k__BackingField: {fileID: 7400000, guid: 9623e259befcbbc4896db0da400c1a0d, type: 2}
   <Debug>k__BackingField: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}
