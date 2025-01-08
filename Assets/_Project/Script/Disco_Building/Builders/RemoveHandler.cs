@@ -21,13 +21,6 @@ namespace Disco_Building.Builders
 
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
-        private ePlacementLayer removeLayer;
-
-        public RemoveHandler(ePlacementLayer? removeLayer = null)
-        {
-            this.removeLayer = removeLayer ?? ePlacementLayer.Null;
-        }
-
         public void OnStart(BuildingNeedsData BD)
         {
             _propUnit = null;
@@ -35,30 +28,6 @@ namespace Disco_Building.Builders
 
         public bool OnValidate(BuildingNeedsData BD)
         {
-            if (removeLayer != ePlacementLayer.Null)
-            {
-                var placementTransform = DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(BD.CellPosition,
-                    removeLayer);
-            
-                if (placementTransform == null)
-                {
-                    _propUnit = null;
-                    return false;
-                }
-            
-                if (placementTransform.TryGetComponent(out IPropUnit propUnit))
-                    if (BD.DiscoData.placementDataHandler.ContainsKey(propUnit.CellPosition,
-                            propUnit.PlacementLayer))
-                    {
-                        _propUnit = propUnit;
-                        return true;
-                    }
-
-                _propUnit = null;
-                return false;
-            }
-           
-            
             var transform =
                 DiscoData.Instance.placementDataHandler.GetPlacementObjectByCellPos(BD.CellPosition,
                     ePlacementLayer.WallProp);

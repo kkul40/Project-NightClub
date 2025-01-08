@@ -129,12 +129,12 @@ namespace Disco_Building
 
         #region Building
 
-        public void StartRemoving(ePlacementLayer? removeLayer = null)
+        public void StartRemoving()
         {
             StopBuild();
             _storeItemSo = null;
             _rotationMethod = new NullRotationMethod();
-            _buildingMethod = new RemoveHandler(removeLayer);
+            _buildingMethod = new RemoveHandler();
             _buildingNeedsData.StoreItemSo = _storeItemSo;
             _rotationMethod.OnStart(_buildingNeedsData);
             _buildingMethod.OnStart(_buildingNeedsData);

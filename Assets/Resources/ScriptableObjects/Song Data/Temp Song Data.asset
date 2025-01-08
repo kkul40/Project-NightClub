@@ -18,13 +18,13 @@ MonoBehaviour:
   Temp:
   - Artist: Custom
     SongName: Solitudo
-    Clip: {fileID: 8300000, guid: 70dfe31a1e9f9d64b947edac6715333d, type: 3}
+    Clip: {fileID: 8300000, guid: ae31a5ac6695d3a4a93bcb1f6c49711b, type: 3}
   - Artist: Walen
     SongName: Retrowave
-    Clip: {fileID: 8300000, guid: dfc981fef307a1344bb8536d7b2ae378, type: 3}
+    Clip: {fileID: 8300000, guid: 12dc77280f46cdd4b9a5109ac2a99422, type: 3}
   - Artist: Burgundy
     SongName: Tell Me
-    Clip: {fileID: 8300000, guid: d90a907bd662a6d4fa076f496eb72689, type: 3}
+    Clip: {fileID: 8300000, guid: 5b559ec29bf04ad4484c82f63b9b52c9, type: 3}
   - Artist: Burgundy
     SongName: Get Yours, Get Out
     Clip: {fileID: 8300000, guid: 19d52cfcb20224e4ba967c72b0723bf5, type: 3}
