@@ -4,11 +4,11 @@ using UnityEngine.Serialization;
 public enum BodyPartType
     {
         Torso_Hips = 0,
-        Torso_Lower_Chest,
-        Torso_Chest,
+        Torso_Spine01,
+        Torso_Spine02,
         Torso_Shoulders,
         Torso_Head,
-        Torso_Neck,
+        Torso_Spine03,
 
         Arms_Lower = 20,
         Arms_Upper,
