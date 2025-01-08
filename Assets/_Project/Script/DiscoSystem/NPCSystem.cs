@@ -55,10 +55,8 @@ namespace DiscoSystem
 
             newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
 
-            var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
-
             CharacterCustomizer customizer =
-                new CharacterCustomizer(gender, InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
+                new CharacterCustomizer(InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
 
             newBartender.GetComponent<Bartender>().Init(customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
 
@@ -92,12 +90,12 @@ namespace DiscoSystem
                 {
                     case eGenderType.Male:
                         CharacterCustomizer customizer =
-                            new CharacterCustomizer(eGenderType.Male ,InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
+                            new CharacterCustomizer(InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation, customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
                         break;
                     case eGenderType.Female:
                         CharacterCustomizer customizer2 =
-                            new CharacterCustomizer(eGenderType.Female, InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
+                            new CharacterCustomizer(InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
                         newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation,customizer2.GetAnimator, customizer2.GetAnimancer, customizer2.GetArmature);
                         break;
                 }

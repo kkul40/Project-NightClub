@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <animationDuration>k__BackingField: 0.5
   <Idle>k__BackingField:
-  - {fileID: 7400000, guid: 1a7c2b971f72d5b48942235a9ff227ff, type: 2}
+  - {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
   <Walk>k__BackingField:
-  - {fileID: 7400000, guid: b8950f5fa4019034f9583e6f16bd635b, type: 2}
+  - {fileID: 7400000, guid: 53a89e9ddf7958347ac638335daa68a0, type: 2}
   <Sit>k__BackingField:
   - {fileID: 7400000, guid: 433f14cee6a331a47b03823cc11b9149, type: 2}
   <LeanOnWall>k__BackingField:
