@@ -105,7 +105,7 @@ namespace CharacterCustomization.UI
                     m_Armature = Instantiate(_So.MaleItems.ArmaturePrefab, m_Player).transform;
                     break;
                 case eGenderType.Female:
-                    group = _So.MaleItems; // TODO Change it Female
+                    group = _So.FemaleItems;
                     m_Armature = Instantiate(_So.FemaleItems.ArmaturePrefab, m_Player).transform;
                     break;
             }
@@ -132,20 +132,6 @@ namespace CharacterCustomization.UI
             EquipedItem equipment = m_PlayerEquipments.EquipedItems[bodyPart];
           
             equipment.index = (equipment.index + 1) % m_ItemGroup[bodyPart].Count;
-            CustomizationItem customizationItem = m_ItemGroup[bodyPart][equipment.index];
-            
-            InitItem(customizationItem, equipment);
-        }
-        
-        private void PreviousBodyPart(BodyPart bodyPart)
-        {
-            EquipedItem equipment = m_PlayerEquipments.EquipedItems[bodyPart];
-          
-            equipment.index = (equipment.index - 1) % m_ItemGroup[bodyPart].Count;
-            if (equipment.index < 0)
-            {
-                equipment.index = m_ItemGroup[bodyPart].Count - 1;
-            }
             CustomizationItem customizationItem = m_ItemGroup[bodyPart][equipment.index];
             
             InitItem(customizationItem, equipment);
@@ -213,7 +199,10 @@ namespace CharacterCustomization.UI
             }
         }
 
-       
+        private void PreviousBodyPart(BodyPart bodyPart)
+        {
+            
+        }
 
         private void ChangeGender(eGenderType gender)
         {
