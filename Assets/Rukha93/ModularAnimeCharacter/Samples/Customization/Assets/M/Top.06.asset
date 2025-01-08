@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbbe4c4aad0c09429ce37c5e344b1ed, type: 3}
   m_Name: Top.06
   m_EditorClassIdentifier: 
-  bodyParts: 010000000200000003000000
+  bodyParts: 010203
   meshes:
   - {fileID: -7941180630670399259, guid: ceef7fb968ed3ba488b1ad0bc422916c, type: 3}
   objects: []
