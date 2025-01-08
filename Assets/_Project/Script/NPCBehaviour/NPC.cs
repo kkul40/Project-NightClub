@@ -21,10 +21,10 @@ namespace NPCBehaviour
         public IPathFinder PathFinder { get; private set; }
         public ActivityHandler _activityHandler { get; private set; }
 
-        public void Init(NpcAnimationSo npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
+        public void Init(NpcAnimationSo npcAnimationSo)
         {
             PathFinder = new NpcPathFinder(transform);
-            AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
+            AnimationController = new NPCAnimationControl(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimancerComponent>(), npcAnimationSo, transform.GetChild(0));
             _activityHandler = new ActivityHandler(this);
         }
 
