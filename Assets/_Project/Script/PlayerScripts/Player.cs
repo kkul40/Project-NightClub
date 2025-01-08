@@ -1,5 +1,4 @@
 using System;
-using CharacterCustomization;
 using Data;
 using DiscoSystem;
 using NPCBehaviour;
@@ -17,7 +16,7 @@ namespace PlayerScripts
         private void Awake()
         {
             _pathFinder = new NpcPathFinder(transform);
-            var custom = GetComponent<CharacterCustomizationPartLoader>();
+            var custom = GetComponent<PlayerCustomization>();
             var animation = custom.playerGenderIndex == 0
                 ? InitConfig.Instance.GetDefaultBoyNpcAnimation
                 : InitConfig.Instance.GetDefaultGirlNpcAnimation;
