@@ -22,12 +22,13 @@ namespace PropBehaviours
 
         private bool isStarted = false;
 
-        public void Init(Animator animator, AnimancerComponent animancer, Transform armature)
+        private void Start()
         {
             PathFinder = new BartenderPathFinder(transform);
             mTransform = transform;
             BarMediator = BarMediator.Instance;
-            AnimationController = new BartenderAnimationControl(animator, animancer, InitConfig.Instance.GetDefaultBartenderAnimation, armature);
+            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimancerComponent>(),
+                InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
         }
 
         private void Update()
