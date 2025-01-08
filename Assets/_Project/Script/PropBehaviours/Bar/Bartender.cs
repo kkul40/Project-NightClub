@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Animancer;
 using Data;
 using NPCBehaviour;
 using NPCBehaviour.PathFinder;
@@ -27,7 +26,7 @@ namespace PropBehaviours
             PathFinder = new BartenderPathFinder(transform);
             mTransform = transform;
             BarMediator = BarMediator.Instance;
-            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimancerComponent>(),
+            AnimationController = new BartenderAnimationControl(GetComponentInChildren<Animator>(),
                 InitConfig.Instance.GetDefaultBartenderAnimation, transform.GetChild(0));
         }
 
