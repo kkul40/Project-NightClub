@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5ffbd819b84793bd6cb9c06e830db6, type: 3}
+  m_Name: BartenderCustomization
+  m_EditorClassIdentifier: 
+  MaleItems:
+    ArmaturePrefab: {fileID: 3172258966209387761, guid: c2ed88dc23a0ad74cb8a33a1e870e92a, type: 3}
+    Head:
+    - assetType: 1
+      meshes:
+      - {fileID: -7911885146746591235, guid: f3c17ad6cb35b6d42bf166bd5d0f76ad, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: 5831518410709389769, guid: d349c1c7fa0632245aba344420ed6c8c, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -7233672034910888097, guid: a53699dfd2615174eac3827cb3021265, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -3459723013696634872, guid: bf9d1d27a23f8974ca8f231a6344a684, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    Hair:
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7241678832772198468, guid: a1f4ef475d6dced4a8e613f7e5476eb8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3662406358619881683, guid: aaa0575c6f778194fa29a8cdf6d2d660, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 9020585589484151328, guid: e833763c49c59c84ca99d7d829fd0c4d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1398059577341380902, guid: d20df99f819391b4cb82b98fb1c0a751, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3834789752565888624, guid: 8fa16b650ba3ac74688272a6c700845d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5986377285347600169, guid: 852fcece5c953864e989abe7739fb26f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7557105645905069180, guid: 6a3ca631b618d8241a275c7403139ea8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5818141721773630617, guid: 80ef01842f9c0954998d821578021a59, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Accessoriees: []
+    Top:
+    - assetType: 1
+      meshes:
+      - {fileID: 1711984657694847882, guid: 683924316c8f7a94fab40da10b8f04e7, type: 3}
+      objects: []
+      hiddenBodyParts: 01000000020000000300000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: -252188080311335245, guid: f77f637865057ac409be50b05262f38e, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    Bottom:
+    - assetType: 1
+      meshes:
+      - {fileID: -788841589184409268, guid: eff7d7ea71048f345a1dec8db4848cef, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e0000001f000000
+    - assetType: 1
+      meshes:
+      - {fileID: 729672618969631787, guid: 62cb54f3cdadafd46b8ba3b3189691fa, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e00000020000000
+    Shoes:
+    - assetType: 1
+      meshes:
+      - {fileID: -5622541813597508203, guid: ee30680f22b3aa94f82d61ccca40916e, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+  FemaleItems:
+    ArmaturePrefab: {fileID: 4402282199760130520, guid: 3cc386d87b27539409599beb42d93335, type: 3}
+    Head:
+    - assetType: 1
+      meshes:
+      - {fileID: -1952089518116217376, guid: eb84891b8fb0c2d43a5f293d703af276, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -4311012133420324994, guid: 834f090152dc37d44bee83f1d4ddcfbb, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: 3551795902802379249, guid: 7819bfa1d31234e43816518619690e42, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -3996560475987957571, guid: dc75ea0198227804298b3fcf1acc674c, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    Hair:
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7241678832772198468, guid: a1f4ef475d6dced4a8e613f7e5476eb8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3662406358619881683, guid: aaa0575c6f778194fa29a8cdf6d2d660, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6046162921176745828, guid: 0c777e1212c3f434b8125a1cb242a76e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7574265888287135416, guid: db6c6c515a81b0847ac14dc04e50a7c2, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7207276181113328629, guid: ccc0cea7d42e99143b52f324c194db2e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7018654806610842727, guid: c60c3b42a32508945b46801f090c227e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1697427029389153800, guid: 018c0d45e22b50e4eb33c66f5b47c3f9, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1383938724453698940, guid: 2e4e6610fbc100749997b92d9ab3596f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Accessoriees: []
+    Top:
+    - assetType: 1
+      meshes:
+      - {fileID: 298094935749147364, guid: 74fcd5f50cc43b64885d3eb95556533b, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    Bottom:
+    - assetType: 1
+      meshes:
+      - {fileID: 6535567932184160068, guid: a7ebdac90b65dd24385e38ce4d856c3b, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: -4121190152782363324, guid: 5fcf6b68a3b9fec4ba6de4c7dcefe7fa, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e00000020000000
+    Shoes:
+    - assetType: 1
+      meshes:
+      - {fileID: -5622541813597508203, guid: ee30680f22b3aa94f82d61ccca40916e, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000

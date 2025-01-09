@@ -1,7 +1,6 @@
 ﻿using Data;
 using Root;
 using UI.GamePages.GameButtons;
-using UnityEngine.SceneManagement;
 
 namespace UI.StartMenu
 {
@@ -9,7 +8,6 @@ namespace UI.StartMenu
     {
         public override void OnHover()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void OnClick()

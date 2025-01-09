@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using DefaultNamespace;
 using Disco_Building;
 using NPCBehaviour;
 using NPCBehaviour.Activities;
@@ -54,6 +55,13 @@ namespace DiscoSystem
 
             newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
 
+            var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
+
+            CharacterCustomizer customizer =
+                new CharacterCustomizer(gender, InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
+
+            newBartender.GetComponent<Bartender>().Init(customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
+
             var bartender = newBartender.GetComponent<IBartender>();
 
             var command = new WalkToEntranceCommand();
@@ -83,14 +91,14 @@ namespace DiscoSystem
                 switch (gender)
                 {
                     case eGenderType.Male:
-                        newNPC.GetComponent<Custimization>()
-                            .Randomize(InitConfig.Instance.GetDefaultBoyNpcCustomization, eGenderType.Male);
-                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation);
+                        CharacterCustomizer customizer =
+                            new CharacterCustomizer(eGenderType.Male ,InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultBoyNpcAnimation, customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
                         break;
                     case eGenderType.Female:
-                        newNPC.GetComponent<Custimization>()
-                            .Randomize(InitConfig.Instance.GetDefaultGirlNpcCustomization, eGenderType.Female);
-                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation);
+                        CharacterCustomizer customizer2 =
+                            new CharacterCustomizer(eGenderType.Female, InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
+                        newNPC.GetComponent<NPC>().Init(InitConfig.Instance.GetDefaultGirlNpcAnimation,customizer2.GetAnimator, customizer2.GetAnimancer, customizer2.GetArmature);
                         break;
                 }
 

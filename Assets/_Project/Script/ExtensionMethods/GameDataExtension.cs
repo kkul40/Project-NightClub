@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Data;
 using Disco_ScriptableObject;
-using PlayerScripts;
 using UnityEngine;
-using UnityEngine.Serialization;
+using CharacterCustomization;
+using CharacterCustomization.UI;
+using NPCBehaviour;
 
 namespace ExtensionMethods
 {
@@ -99,23 +100,26 @@ namespace ExtensionMethods
         [Serializable]
         public class PlayerCustomizationIndexData
         {
-            // Default = 0
             public int playerGenderIndex = 1;
-            public int playerHairIndex = 1;
-            public int playerBeardIndex = 0;
-            public int playerAttachmentIndex = 1;
-            public int playerEaringIndex = 1;
+            public int playerHeadIndex = 1;
+            public int playerHairIndex = 0;
+            public int playerAccessoriesIndex = 0;
+            public int playerTopIndex = 0;
+            public int playerBottomIndex = 0;
+            public int playerShoesIndex = 0;
         }
 
-        public static PlayerCustomizationIndexData ConvertPlayerCustomizationIndexData(this PlayerCustomization playerCustomization)
+        public static PlayerCustomizationIndexData ConvertPlayerCustomizationIndexData(this PlayerCustomizationUI.PlayerEquipments playerEquipments)
         {
             PlayerCustomizationIndexData playerCustomizationIndexData = new PlayerCustomizationIndexData();   
             
-            playerCustomizationIndexData.playerGenderIndex = playerCustomization.playerGenderIndex;
-            playerCustomizationIndexData.playerHairIndex = playerCustomization.playerHairIndex;
-            playerCustomizationIndexData.playerBeardIndex = playerCustomization.playerBeardIndex;
-            playerCustomizationIndexData.playerAttachmentIndex = playerCustomization.playerAttachmentIndex;
-            playerCustomizationIndexData.playerEaringIndex = playerCustomization.playerEaringIndex;
+            playerCustomizationIndexData.playerGenderIndex = playerEquipments.PlayerGender == eGenderType.Male ? 0 : 1;
+            playerCustomizationIndexData.playerHeadIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Head].index;
+            playerCustomizationIndexData.playerHairIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Hair].index;
+            playerCustomizationIndexData.playerAccessoriesIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Accessories].index;
+            playerCustomizationIndexData.playerTopIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Top].index;
+            playerCustomizationIndexData.playerBottomIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Bottom].index;
+            playerCustomizationIndexData.playerShoesIndex = playerEquipments.EquipedItems[PlayerCustomizationUI.BodyPart.Shoes].index;
             
             return playerCustomizationIndexData;
         }

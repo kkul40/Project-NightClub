@@ -1,0 +1,696 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5ffbd819b84793bd6cb9c06e830db6, type: 3}
+  m_Name: PlayerCustomization
+  m_EditorClassIdentifier: 
+  MaleItems:
+    ArmaturePrefab: {fileID: 3172258966209387761, guid: c2ed88dc23a0ad74cb8a33a1e870e92a, type: 3}
+    Head:
+    - assetType: 1
+      meshes:
+      - {fileID: -7911885146746591235, guid: f3c17ad6cb35b6d42bf166bd5d0f76ad, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: 5831518410709389769, guid: d349c1c7fa0632245aba344420ed6c8c, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -7233672034910888097, guid: a53699dfd2615174eac3827cb3021265, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -3459723013696634872, guid: bf9d1d27a23f8974ca8f231a6344a684, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    Hair:
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7241678832772198468, guid: a1f4ef475d6dced4a8e613f7e5476eb8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3662406358619881683, guid: aaa0575c6f778194fa29a8cdf6d2d660, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 9020585589484151328, guid: e833763c49c59c84ca99d7d829fd0c4d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1398059577341380902, guid: d20df99f819391b4cb82b98fb1c0a751, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6992893729710466335, guid: e6dd1109a81cd2142af681e8f45625d4, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6569430983206793253, guid: 96ca0666e0e13444ca5e7d7a6e5556fa, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7478209522975825686, guid: 20f17f4a0c9171243b066fda72aafe22, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 2508792684523485923, guid: cc83e4f2c4c64c94083ef2363f98e32b, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 983731601397045570, guid: a3cda2b4d005a284f9a13ffc991d47d8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 394677566108294647, guid: b587a84c935fdfc4fb5d76e3500a1bb3, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6046162921176745828, guid: 0c777e1212c3f434b8125a1cb242a76e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7635575811675592412, guid: 5566124a7947c104291586bac7ac6b73, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4912725203346357234, guid: c5c3c73092c85aa4d9ee85892580954f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7574265888287135416, guid: db6c6c515a81b0847ac14dc04e50a7c2, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3834789752565888624, guid: 8fa16b650ba3ac74688272a6c700845d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5116799755048112001, guid: e73808cfcab935740b7127fa5598d957, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5602655001372632041, guid: a9f3e7f64778ce94eb807e9e42223c2b, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5986377285347600169, guid: 852fcece5c953864e989abe7739fb26f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7557105645905069180, guid: 6a3ca631b618d8241a275c7403139ea8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5818141721773630617, guid: 80ef01842f9c0954998d821578021a59, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7207276181113328629, guid: ccc0cea7d42e99143b52f324c194db2e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7018654806610842727, guid: c60c3b42a32508945b46801f090c227e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3897669597225961932, guid: 611911455b2b691449cbe9848f439464, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 527804738595469006, guid: ad91fd69f2362d14bb002c70efbead35, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1697427029389153800, guid: 018c0d45e22b50e4eb33c66f5b47c3f9, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1383938724453698940, guid: 2e4e6610fbc100749997b92d9ab3596f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7210877508454545425, guid: 1b8508ea92d42dd40b4f5e98b7bfab21, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Accessoriees:
+    - assetType: 0
+      meshes: []
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 9119345942327377244, guid: 096c27d35824c1449a7405e306c00444, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4876037951994480605, guid: 07d4c6e881ed440428b0d68a2e7a2168, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Top:
+    - assetType: 1
+      meshes:
+      - {fileID: 3158858512863340516, guid: a5d08f4c62047f84e8e23ae5711f1761, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: -2478535699552615655, guid: 5da8577ca83cbba4fa75a154ec38935b, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001500000014000000
+    - assetType: 1
+      meshes:
+      - {fileID: -8411446044968194421, guid: 2ed1c73564441bb4e94e574590dc54ae, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001500000014000000
+    - assetType: 1
+      meshes:
+      - {fileID: -2572826337078754839, guid: 06d8e072ba369e84b91fd70b52964d47, type: 3}
+      objects: []
+      hiddenBodyParts: 01000000020000000300000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: 1711984657694847882, guid: 683924316c8f7a94fab40da10b8f04e7, type: 3}
+      objects: []
+      hiddenBodyParts: 01000000020000000300000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: -7941180630670399259, guid: ceef7fb968ed3ba488b1ad0bc422916c, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: 5356450634523456689, guid: 943dd2e9645bdc145bd746159a335775, type: 3}
+      objects: []
+      hiddenBodyParts: 020000000300000002000000
+    - assetType: 1
+      meshes:
+      - {fileID: 1949119677455146609, guid: ecb19e3defde8d64784f2169197ec699, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: 5523673008819709651, guid: 5af91cc6e736fb04c9febc2839fa9c90, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: -252188080311335245, guid: f77f637865057ac409be50b05262f38e, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: -6546643709553607492, guid: 034c8cec21579ad49826ce711c4be9fe, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    Bottom:
+    - assetType: 1
+      meshes:
+      - {fileID: -788841589184409268, guid: eff7d7ea71048f345a1dec8db4848cef, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e0000001f000000
+    - assetType: 1
+      meshes:
+      - {fileID: 2360546160703955790, guid: aeb060fe1e18e4c4c82893ea1778d2ee, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: 2956991856695705274, guid: de6bcea3add048744b93ebaeef2257c8, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: 729672618969631787, guid: 62cb54f3cdadafd46b8ba3b3189691fa, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e00000020000000
+    - assetType: 1
+      meshes:
+      - {fileID: -2378099906719021076, guid: b2de68501329ba1499209840f973abda, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: 7773281485548085827, guid: dbced30a6a6d274469a041e399e8b3cf, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e0000001f000000
+    Shoes:
+    - assetType: 1
+      meshes:
+      - {fileID: -7909931796879246135, guid: 41482633462e38b49859abdba946e105, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: 349827083850394249, guid: a54bd6882c9e27044822bae6121c8762, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: -6279438882299472187, guid: e77407a005728d743a28ba280d5abfc1, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: 5960987510430263111, guid: d3039d436f025d24ab80c0ba497da0e1, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: -5622541813597508203, guid: ee30680f22b3aa94f82d61ccca40916e, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: -1991692316972232302, guid: e69fa0557ee5ece4ab3ce1d6d9c19a26, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: -7158203851736023673, guid: 6444592506003c24abfb87962dfc80a3, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+  FemaleItems:
+    ArmaturePrefab: {fileID: 4402282199760130520, guid: 3cc386d87b27539409599beb42d93335, type: 3}
+    Head:
+    - assetType: 1
+      meshes:
+      - {fileID: -1952089518116217376, guid: eb84891b8fb0c2d43a5f293d703af276, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -4311012133420324994, guid: 834f090152dc37d44bee83f1d4ddcfbb, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: 3551795902802379249, guid: 7819bfa1d31234e43816518619690e42, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    - assetType: 1
+      meshes:
+      - {fileID: -3996560475987957571, guid: dc75ea0198227804298b3fcf1acc674c, type: 3}
+      objects: []
+      hiddenBodyParts: 04000000
+    Hair:
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7241678832772198468, guid: a1f4ef475d6dced4a8e613f7e5476eb8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3662406358619881683, guid: aaa0575c6f778194fa29a8cdf6d2d660, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 9020585589484151328, guid: e833763c49c59c84ca99d7d829fd0c4d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1398059577341380902, guid: d20df99f819391b4cb82b98fb1c0a751, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6992893729710466335, guid: e6dd1109a81cd2142af681e8f45625d4, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6569430983206793253, guid: 96ca0666e0e13444ca5e7d7a6e5556fa, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7478209522975825686, guid: 20f17f4a0c9171243b066fda72aafe22, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 2508792684523485923, guid: cc83e4f2c4c64c94083ef2363f98e32b, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 983731601397045570, guid: a3cda2b4d005a284f9a13ffc991d47d8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 394677566108294647, guid: b587a84c935fdfc4fb5d76e3500a1bb3, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4404392203768034768, guid: e7778d4830cbe6542b1188aa3327a590, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 6046162921176745828, guid: 0c777e1212c3f434b8125a1cb242a76e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7635575811675592412, guid: 5566124a7947c104291586bac7ac6b73, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4912725203346357234, guid: c5c3c73092c85aa4d9ee85892580954f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7574265888287135416, guid: db6c6c515a81b0847ac14dc04e50a7c2, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3834789752565888624, guid: 8fa16b650ba3ac74688272a6c700845d, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5116799755048112001, guid: e73808cfcab935740b7127fa5598d957, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5602655001372632041, guid: a9f3e7f64778ce94eb807e9e42223c2b, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5986377285347600169, guid: 852fcece5c953864e989abe7739fb26f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7557105645905069180, guid: 6a3ca631b618d8241a275c7403139ea8, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 5818141721773630617, guid: 80ef01842f9c0954998d821578021a59, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7207276181113328629, guid: ccc0cea7d42e99143b52f324c194db2e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7018654806610842727, guid: c60c3b42a32508945b46801f090c227e, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 3897669597225961932, guid: 611911455b2b691449cbe9848f439464, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 527804738595469006, guid: ad91fd69f2362d14bb002c70efbead35, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1697427029389153800, guid: 018c0d45e22b50e4eb33c66f5b47c3f9, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 1383938724453698940, guid: 2e4e6610fbc100749997b92d9ab3596f, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 7210877508454545425, guid: 1b8508ea92d42dd40b4f5e98b7bfab21, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Accessoriees:
+    - assetType: 0
+      meshes: []
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 9119345942327377244, guid: 096c27d35824c1449a7405e306c00444, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    - assetType: 2
+      meshes: []
+      objects:
+      - prefab: {fileID: 4876037951994480605, guid: 07d4c6e881ed440428b0d68a2e7a2168, type: 3}
+        targetBone: 10
+      hiddenBodyParts: 
+    Top:
+    - assetType: 1
+      meshes:
+      - {fileID: 6424535760400575881, guid: eda3df96cb733284fbff7fffbdc1dde7, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: -2839161049728361461, guid: 9ed52c1fd17892644a479afbc02be012, type: 3}
+      - {fileID: -2839161049728361461, guid: 9ed52c1fd17892644a479afbc02be012, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001500000014000000
+    - assetType: 1
+      meshes:
+      - {fileID: -4764998617224718813, guid: 46f4a251f7218fe4eb4d20819b6927dd, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001500000014000000
+    - assetType: 1
+      meshes:
+      - {fileID: -442689659780453287, guid: eb14c363c530a4a4384cb3dc22f910b0, type: 3}
+      objects: []
+      hiddenBodyParts: 01000000020000000300000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: 7308181609318262205, guid: 3b0ca61ae8619bf45867d96c426c4a98, type: 3}
+      objects: []
+      hiddenBodyParts: 01000000020000000300000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: 8703143834595691336, guid: 97a0fc4dfd002534493e57e4eadd3cca, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: -8562725950971408071, guid: 8a225aea9fcdc2340b6b041785f47f02, type: 3}
+      objects: []
+      hiddenBodyParts: 020000000300000002000000
+    - assetType: 1
+      meshes:
+      - {fileID: 6722648540036280053, guid: 26d16dd13dfad8d4a9b3da9e2e7cb2f6, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: -5512175237796439935, guid: 71db4a5207974f74293d9895b59d8514, type: 3}
+      objects: []
+      hiddenBodyParts: 010000000200000003000000
+    - assetType: 1
+      meshes:
+      - {fileID: -8724497955819557658, guid: 577bf66686a12d047bd1a0a00a7caabd, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: 298094935749147364, guid: 74fcd5f50cc43b64885d3eb95556533b, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    - assetType: 1
+      meshes:
+      - {fileID: 1217795306229955160, guid: d3fbd63c74c3ecf41ad4d94af90d4f35, type: 3}
+      objects: []
+      hiddenBodyParts: 0100000002000000030000001400000015000000
+    Bottom:
+    - assetType: 1
+      meshes:
+      - {fileID: 1386196079066990407, guid: 5f4020d9b6a17a54ba982d4d46296c1e, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e0000001f000000
+    - assetType: 1
+      meshes:
+      - {fileID: 6535567932184160068, guid: a7ebdac90b65dd24385e38ce4d856c3b, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: 4495269558751691430, guid: db5942e118bf7354ba66bb48c95a5aa4, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: -4121190152782363324, guid: 5fcf6b68a3b9fec4ba6de4c7dcefe7fa, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e00000020000000
+    - assetType: 1
+      meshes:
+      - {fileID: 8872488253470324806, guid: 3658ca9f4d2d9c04aa60502a78a1c384, type: 3}
+      objects: []
+      hiddenBodyParts: 00000000
+    - assetType: 1
+      meshes:
+      - {fileID: 4036190792340454457, guid: ed7c2584fc54f1d47b20b913b0e90c9a, type: 3}
+      objects: []
+      hiddenBodyParts: 000000001e0000001f000000
+    Shoes:
+    - assetType: 1
+      meshes:
+      - {fileID: -7909931796879246135, guid: 41482633462e38b49859abdba946e105, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: 349827083850394249, guid: a54bd6882c9e27044822bae6121c8762, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: -6279438882299472187, guid: e77407a005728d743a28ba280d5abfc1, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: 5960987510430263111, guid: d3039d436f025d24ab80c0ba497da0e1, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: -5622541813597508203, guid: ee30680f22b3aa94f82d61ccca40916e, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
+    - assetType: 1
+      meshes:
+      - {fileID: -1991692316972232302, guid: e69fa0557ee5ece4ab3ce1d6d9c19a26, type: 3}
+      objects: []
+      hiddenBodyParts: 
+    - assetType: 1
+      meshes:
+      - {fileID: -7158203851736023673, guid: 6444592506003c24abfb87962dfc80a3, type: 3}
+      objects: []
+      hiddenBodyParts: 21000000
