@@ -8,8 +8,15 @@ namespace PropBehaviours
 {
     public class Wall : MonoBehaviour, IInteractable, IChangableMaterial
     {
+        public GameObject mGameobject { get; private set; }
         public virtual bool IsInteractable { get; } = true;
+        public bool IsAnimatable { get; }
         public virtual eInteraction Interaction { get; } = eInteraction.None;
+
+        private void Awake()
+        {
+            mGameobject = gameObject;
+        }
 
         public virtual void OnFocus()
         {

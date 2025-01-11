@@ -248,7 +248,7 @@ namespace DiscoSystem
             var ob = Instantiate(gameObject, pos, quaternion);
             
             if(playAnimation)
-                ob.AnimatedPlacement(pos);
+                ob.AnimatedPlacement(ePlacementAnimationType.MoveDown);
             else
                 ob.transform.position = pos;
             

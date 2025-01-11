@@ -28,6 +28,8 @@ namespace PropBehaviours
             mTransform = transform;
             BarMediator = BarMediator.Instance;
             AnimationController = new BartenderAnimationControl(animator, animancer, InitConfig.Instance.GetDefaultBartenderAnimation, armature);
+
+            mGameobject = gameObject;
         }
 
         private void Update()
@@ -68,7 +70,9 @@ namespace PropBehaviours
             }
         }
 
+        public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
+        public bool IsAnimatable { get; } = false;
         public eInteraction Interaction { get; } = eInteraction.Customer;
 
         public void OnFocus()

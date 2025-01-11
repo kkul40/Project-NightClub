@@ -26,8 +26,15 @@ namespace PropBehaviours
 
         #region IInteractable
 
+        public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
+        public bool IsAnimatable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.None;
+
+        private void Start()
+        {
+            mGameobject = gameObject;
+        }
 
         public void OnFocus()
         {

@@ -33,7 +33,9 @@ namespace NPCBehaviour
             _activityHandler.UpdateActivity();
         }
 
+        public GameObject mGameobject { get; }
         public bool IsInteractable { get; } = true;
+        public bool IsAnimatable { get; } = false;
         public eInteraction Interaction { get; private set; } = eInteraction.Customer;
 
         public void OnFocus()

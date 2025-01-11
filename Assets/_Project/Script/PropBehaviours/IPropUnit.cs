@@ -29,9 +29,13 @@ namespace PropBehaviours
             WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
             RotationData = rotationData;
             PlacementLayer = placementLayer;
+            
+            mGameobject = gameObject;
         }
 
+        public GameObject mGameobject { get; protected set; }
         public bool IsInteractable { get; protected set; } = true;
+        public bool IsAnimatable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.PropUnit;
 
         public virtual void OnFocus()

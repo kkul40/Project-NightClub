@@ -7,6 +7,19 @@ using UnityEngine;
 
 namespace ExtensionMethods
 {
+    public enum ePlacementAnimationType
+    {
+        BouncyScaleUp,
+        Shaky,
+        MoveDown,
+    }
+
+    public enum eInPlaceAnimationType
+    {
+        Shake,
+        Bounce,
+    }
+    
     public static class PlacementExtensionMethod
     {
         public static List<Vector3Int> GetNearByKeys(this Vector3Int vector)
@@ -55,15 +68,29 @@ namespace ExtensionMethods
             return output;
         }
 
-        public static void AnimatedPlacement(this GameObject gameObject, Vector3 placedPosition)
+        public static void AnimatedPlacement(this GameObject gameObject, ePlacementAnimationType animationType)
         {
-            gameObject.transform.position = placedPosition.Add(y: 1);
-            gameObject.transform.DOMove(placedPosition, 0.5f).SetEase(Ease.OutExpo);
+            switch (animationType)
+            {
+                case ePlacementAnimationType.BouncyScaleUp:
+                    float startScale = 0.8f;
+                    gameObject.transform.localScale = new Vector3(startScale, startScale, startScale);
+                    gameObject.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
+                    break;
+                case ePlacementAnimationType.Shaky:
+                    gameObject.transform.DOShakeScale(0.5f, 0.05f);
+                    break;
+                case ePlacementAnimationType.MoveDown:
+                    Vector3 storedPosition = gameObject.transform.position;
+                    gameObject.transform.position = storedPosition.Add(y: 1);
+                    gameObject.transform.DOMove(storedPosition, 0.5f).SetEase(Ease.OutExpo);
+                    break;
+            }
         }
-
+        
         public static void AnimatedRemoval(this GameObject gameObject, Action OnComplete)
         {
-            gameObject.transform.DOMove(gameObject.transform.position.Add(y: -3), 0.5f).SetEase(Ease.InExpo).OnComplete(() => OnComplete.Invoke());
+            gameObject.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutSine).OnComplete(() => OnComplete.Invoke());
         }
     }
 }

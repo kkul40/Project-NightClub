@@ -1,4 +1,5 @@
 ﻿using Disco_Building;
+using ExtensionMethods;
 using HighlightPlus;
 using PropBehaviours;
 using UI.GamePages;
@@ -201,6 +202,8 @@ namespace DiscoSystem
         {
             interactable.OnClick();
             SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
+            if(interactable.IsAnimatable)
+                interactable.mGameobject.AnimatedPlacement(ePlacementAnimationType.Shaky);
         }
         public void ToggleCursorLock(bool toggle) => _isCursorLocked = toggle;
     }

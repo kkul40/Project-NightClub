@@ -293,7 +293,7 @@ namespace Data
             RotationData rotationData)
         {
             var createdObject = Object.Instantiate(placementItemso.Prefab, cellPosition.CellCenterPosition(eGridType.PlacementGrid), rotationData.rotation);
-            createdObject.AnimatedPlacement(cellPosition.CellCenterPosition(eGridType.PlacementGrid));
+            createdObject.AnimatedPlacement(ePlacementAnimationType.Shaky);
             
             createdObject.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(placementItemso.PlacementLayer));
 

@@ -27,6 +27,8 @@ namespace PropBehaviours
             IsOutOfDrinks = false;
             EmptyTransfrom.gameObject.SetActive(false);
             DrinkHolder.gameObject.SetActive(true);
+
+            mGameobject = gameObject;
         }
 
         public void RemoveDrink(int removeAmount)
@@ -54,7 +56,10 @@ namespace PropBehaviours
         }
         
         #region IInteractable
+
+        public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
+        public bool IsAnimatable { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.Interactable;
 
         public void OnFocus()

@@ -91,6 +91,7 @@ namespace Disco_Building.Builders
                     {
                         gridData.AssignNewID(_materialItemSo);
                         BD.FXCreator.CreateFX(FXType.Floor, gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, BD.RotationData.rotation);
+                        gridData.assignedFloorTile.gameObject.AnimatedPlacement(ePlacementAnimationType.BouncyScaleUp);
                     }
                     break;
                 case eMaterialLayer.WallMaterial:
@@ -101,7 +102,9 @@ namespace Disco_Building.Builders
                     {
                         wallData.AssignNewID(_materialItemSo);
                         BD.FXCreator.CreateFX(FXType.Wall, wallData.assignedWall.transform.position, Vector2.one, _wallRotation);
+                        wallData.assignedWall.gameObject.AnimatedPlacement(ePlacementAnimationType.Shaky);
                     }
+                    
 
                     break;
             }

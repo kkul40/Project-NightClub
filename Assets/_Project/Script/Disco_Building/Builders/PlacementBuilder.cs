@@ -105,7 +105,7 @@ namespace Disco_Building.Builders
             var createdObject = Object.Instantiate(_storeItemSo.Prefab, BD.CellCenterPosition,
                 BD.RotationData.rotation);
             
-            createdObject.AnimatedPlacement(BD.CellCenterPosition);
+            createdObject.AnimatedPlacement(ePlacementAnimationType.BouncyScaleUp);
 
             createdObject.transform.SetParent(
                 SceneGameObjectHandler.Instance.GetHolderByLayer(_storeItemSo.PlacementLayer));
