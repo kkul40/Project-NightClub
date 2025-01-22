@@ -89,6 +89,7 @@ namespace NPCBehaviour.Activities
             {
                 _bar.GetDrink();
                 UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
+                and.Npc.AnimationController.PlayActionAnimation(eActionAnimationType.NPC_HoldDrink);
                 yield return new WaitForSeconds(0.5f);
             }
 

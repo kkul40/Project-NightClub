@@ -70,7 +70,7 @@ namespace UI.GamePages
             AddBehavior<Bar>(data =>
             {
                 EnableButtons(DrinkButton);
-                SetFollowTarget(data);
+                // SetFollowTarget(data);
             });
 
             AddBehavior<Bartender>(data =>

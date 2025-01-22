@@ -370,11 +370,6 @@ MonoBehaviour:
       hiddenBodyParts: 010000000200000003000000
     - assetType: 1
       meshes:
-      - {fileID: -2839161049728361461, guid: 9ed52c1fd17892644a479afbc02be012, type: 3}
-      objects: []
-      hiddenBodyParts: 0100000002000000030000001500000014000000
-    - assetType: 1
-      meshes:
       - {fileID: -4764998617224718813, guid: 46f4a251f7218fe4eb4d20819b6927dd, type: 3}
       objects: []
       hiddenBodyParts: 0100000002000000030000001500000014000000

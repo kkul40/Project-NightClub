@@ -1,6 +1,9 @@
-﻿using Animancer;
+﻿using System;
+using Animancer;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace NPCBehaviour
 {
@@ -16,6 +19,12 @@ namespace NPCBehaviour
         Bartender_PrepareDrink,
         Bartender_CleanUpTable
     }
+
+    public enum eActionAnimationType
+    {
+        Null,
+        NPC_HoldDrink,
+    }
     
     public class NPCAnimationControl : IAnimationController
     {
@@ -27,12 +36,15 @@ namespace NPCBehaviour
         private Transform animatorTransform;
         private AnimationClip selectedAnimationClip;
 
+        private WeightedMaskLayers rightUpperArm;
+
         public NPCAnimationControl(Animator animator, AnimancerComponent animancer, NpcAnimationSo npcAnimationSo, Transform animatorTransform)
         {
             this.animator = animator;
             this.animancer = animancer;
             _npcAnimationSo = npcAnimationSo;
             this.animatorTransform = animatorTransform;
+            rightUpperArm = this.animatorTransform.GetComponent<WeightedMaskLayers>();
         }
 
         public void PlayAnimation(eAnimationType eAnimationType)
@@ -62,13 +74,36 @@ namespace NPCBehaviour
             if (CurrentAnimation == selectedAnimationClip) return;
 
             CurrentAnimation = selectedAnimationClip;
-            // animator.CrossFadeInFixedTime(selectedAnimationClip.name, _npcAnimationSo.animationDuration, 0);
-            animancer.Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
+            var actionLayer = animancer.Layers[0];
+            actionLayer.ApplyFootIK = true;
+            actionLayer.Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
             // animancer.TryPlay("S_StandToSit", 1);
-
 
             animatorTransform.localRotation = Quaternion.identity;
             animatorTransform.localPosition = Vector3.zero;
+        }
+
+        public void PlayActionAnimation(eActionAnimationType eActionAnimationType)
+        {
+            var actionLayer = animancer.Layers[1];
+            switch (eActionAnimationType)
+            {
+                case eActionAnimationType.Null:
+                    actionLayer.StartFade(0, _npcAnimationSo.animationDuration);
+                    break;
+                case eActionAnimationType.NPC_HoldDrink:
+                    animancer.Layers[1].Mask = CreateBoneMask(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm));
+                    actionLayer.Play(_npcAnimationSo.HoldingDrink);
+                    actionLayer.StartFade(1, _npcAnimationSo.animationDuration);
+                    break;
+            }
+        }
+
+        private AvatarMask CreateBoneMask(Transform bone)
+        {
+            var mask = new AvatarMask();
+            mask.AddTransformPath(bone);
+            return mask;
         }
     }
 
@@ -123,6 +158,11 @@ namespace NPCBehaviour
             animatorTransform.localRotation = Quaternion.identity;
             animatorTransform.localPosition = Vector3.zero;
         }
+
+        public void PlayActionAnimation(eActionAnimationType eActionAnimationType)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IAnimationController
@@ -133,6 +173,8 @@ namespace NPCBehaviour
 
         AnimationClip CurrentAnimation { get; }
         void PlayAnimation(eAnimationType eAnimationType);
+
+        void PlayActionAnimation(eActionAnimationType eActionAnimationType);
 
         void SetRootMotion(bool applyRootMotion)
         {

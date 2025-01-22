@@ -15,7 +15,6 @@ namespace NPCBehaviour
         /*
          * Play Animation {Idle, walk, sit, dance, argue, puke, drink}
          */
-
         public eGenderType GenderType { get; private set; }
         public IAnimationController AnimationController { get; private set; }
         public IPathFinder PathFinder { get; private set; }

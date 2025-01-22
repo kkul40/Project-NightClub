@@ -2077,6 +2077,8 @@ GameObject:
   - component: {fileID: 3914715469680610146}
   - component: {fileID: 6968177128872857880}
   - component: {fileID: 4454608084261716736}
+  - component: {fileID: 2820559184878591813}
+  - component: {fileID: 8028841018902339442}
   m_Layer: 0
   m_Name: F_body
   m_TagString: Untagged
@@ -2122,7 +2124,7 @@ Animator:
   m_GameObject: {fileID: 4402282199760130520}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e3f26e14f277c6d4c97ab6487552b69b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 77095d09c232f0041a68100be3a68320, type: 2}
+  m_Controller: {fileID: 9100000, guid: 77278b888bad33e4ab08e88218b3835c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2149,6 +2151,61 @@ MonoBehaviour:
   _Animator: {fileID: 6968177128872857880}
   _Transitions: {fileID: 0}
   _ActionOnDisable: 0
+--- !u!114 &2820559184878591813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402282199760130520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 005fb639ab942fa46adf4e9a009744d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animancer: {fileID: 4454608084261716736}
+  _Definition:
+    _Transforms:
+    - {fileID: 7642654849807012449}
+    - {fileID: 8599379075108135558}
+    - {fileID: 4520467301720492938}
+    - {fileID: 7336738936274020303}
+    - {fileID: 6186072199956183791}
+    - {fileID: 7022884645434887223}
+    - {fileID: 365276013921836983}
+    - {fileID: 3118426710282194538}
+    - {fileID: 562783449684992093}
+    - {fileID: 3411213313644863029}
+    - {fileID: 7702029603338718518}
+    _Weights:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+--- !u!114 &8028841018902339442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402282199760130520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4c361dd5a388a41b638b1d55ed2b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 6968177128872857880}
+  _Clip: {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
+  _NormalizedStartTime: 0
+  _Speed: 1
+  _ApplyInEditMode: 0
 --- !u!1 &4415639931765647448
 GameObject:
   m_ObjectHideFlags: 0

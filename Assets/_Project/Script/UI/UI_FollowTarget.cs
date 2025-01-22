@@ -1,9 +1,4 @@
-﻿using System;
-using Data;
-using Disco_ScriptableObject;
-using DiscoSystem;
-using ExtensionMethods;
-using PropBehaviours;
+﻿using DiscoSystem;
 using UI.GamePages;
 using Unity.Mathematics;
 using UnityEngine;
@@ -39,25 +34,6 @@ namespace UI
 
         private void Update()
         {
-            // float minZoom = _cameraMinMaxCurrentSize.x;
-            // float maxZoom = _cameraMinMaxCurrentSize.y;
-            // float cameraSize = _cameraMinMaxCurrentSize.z;
-            // AnimationCurve zoomCurve = CameraControl.Instance.GetAnimationCurve;
-            //
-            // float scaleMultiplier = Mathf.Clamp(
-            //     maxZoom - (cameraSize - minZoom), 
-            //     minZoom, 
-            //     maxZoom
-            // );
-
-            // float targetScale = zoomCurve.Evaluate(Mathf.InverseLerp(maxZoom, 1, scaleMultiplier));
-            //
-            // transform.localScale = Mathf.LerpUnclamped(
-            //     transform.localScale.x, 
-            //     targetScale, 
-            //     Time.deltaTime * 20
-            // ) * Vector3.one;
-            
             AnchorPos();
         }
         

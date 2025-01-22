@@ -17,7 +17,8 @@ namespace ScriptableObjects
         [field: SerializeField] public List<AnimationClip> LeanOnWall { get; private set; }
 
         [field: SerializeField] public List<AnimationClip> Dance { get; private set; }
-
+        
+        [field: SerializeField] public AnimationClip HoldingDrink { get; private set; }
         [field: SerializeField] public List<AnimationClip> Debug { get; private set; }
     }
 }

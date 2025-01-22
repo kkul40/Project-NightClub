@@ -43,5 +43,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: 9623e259befcbbc4896db0da400c1a0d, type: 2}
   - {fileID: 7400000, guid: 8c058f81ec6662448be943d0b85faba3, type: 2}
   - {fileID: 7400000, guid: 5a878d2f22464594fbab488c7788e38b, type: 2}
+  <HoldingDrink>k__BackingField: {fileID: 7400000, guid: 2e618ca46c3a7fc4b99f6e99984c9845, type: 2}
   <Debug>k__BackingField:
   - {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}
