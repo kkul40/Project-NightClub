@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: LCD Screen 3
   m_EditorClassIdentifier: 
-  ID: -308052808
+  ID: 363563676
   Name: Screen
   Description: 
   Icon: {fileID: 21300000, guid: 3d69ded3ff5dfc3459a350d4bee13b56, type: 3}
@@ -20,5 +20,7 @@ MonoBehaviour:
   Prefab: {fileID: 1535466843612046813, guid: 42390aabc8a6a0845a64b747878e2653, type: 3}
   Size: {x: 2, y: 1}
   IsBig: 0
+  canPlaceOntoOtherObjects: 0
+  GridSizes: 1
   PlacementLayer: 2
   eRotation: 3

@@ -20,5 +20,7 @@ MonoBehaviour:
   Prefab: {fileID: 1235735838680475760, guid: 4fde97531d012af44a021fc7b81b9a49, type: 3}
   Size: {x: 1, y: 1}
   IsBig: 0
+  canPlaceOntoOtherObjects: 0
+  GridSizes: 1
   PlacementLayer: 1
   eRotation: 0

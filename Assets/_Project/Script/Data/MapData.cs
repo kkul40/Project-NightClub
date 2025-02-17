@@ -124,7 +124,7 @@ namespace Data
         public FloorGridAssignmentData GetFloorGridData(int x, int y)
         {
             if (x < 0 || y < 0) return null;
-            if (x > CurrentMapSize.x || y > CurrentMapSize.y) return null;
+            if (x >= CurrentMapSize.x || y >= CurrentMapSize.y) return null;
         
             return FloorGridDatas[x, y];
         }

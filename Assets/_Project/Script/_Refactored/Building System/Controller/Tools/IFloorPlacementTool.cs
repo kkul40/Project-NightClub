@@ -16,28 +16,21 @@ public class IFloorPlacementTool : ITool
 
     private Transform hitSurface;
     private bool isSnappedToSurface;
-    private Vector3 LastPosition;
-    private Quaternion LastRotation;
     
     // Box Collider Values
     // private Collider _collider;
-    private Vector3 colliderExtend;
-    private Vector3 colliderSize;
 
-    private Collider[] Colliders;
-
-
-    public bool isFinished { get; }
+    public bool isFinished { get; private set; }
 
     public void OnStart(ToolHelper TH)
     {
-        Debug.Log("Floor Placemenet Tool Started");
         _placementItem = TH.SelectedStoreItem as PlacementItemSO;
 
         _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         _tempObject.transform.SetParent(null);
+        
+        TH.CalculateBounds(_tempObject.GetComponents<Collider>());
 
-        CalculateBounds();
         _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
     }
     
@@ -49,31 +42,26 @@ public class IFloorPlacementTool : ITool
         // Check For Surface
         
         // Boundry Check
-        Vector3 center = GetCenterOfBounds();
-        Vector3 size = colliderSize * 0.98f;
-        Vector3 TopCenter = center + new Vector3(0f, size.y / 2, 0f);
-        Vector3 BottomCenter = center - new Vector3(0f, size.y / 2, 0f);
-        if (TopCenter.y > 3 + 0.01f || BottomCenter.y < -0.01)
-        {
-            return false;
-        }
+        if (!TH.HeightCheck()) return false;
+
+        // Map Boundry
+        if (!TH.MapBoundryCheck()) return false;
 
         if (isSnappedToSurface)
-        {
-            if (!CheckIfPlacedOnSurface()) return false;
-        }
+            if (!CheckIfPlacedOnSurface(TH)) return false;
         
         // Collision Check
-        var colliders = Physics.OverlapBox(center,colliderExtend * 0.98f, LastRotation);
+        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
+        Debug.Log(colliders.Length);
         for (int i = 0; i < colliders.Length; i++)
         {
             var hitObject = colliders[i];
+            
+            if (hitObject.TryGetComponent(out AutoDoor door)) return false;
 
             var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
-            if(hitUnit == null || hitUnit.transform == _tempObject.transform) continue;
-            
-            if (hitObject.transform.parent.TryGetComponent(out Wall wall))
-                return false;
+            if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                continue;
 
             IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
            
@@ -82,10 +70,7 @@ public class IFloorPlacementTool : ITool
                 if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
                     return false;
 
-                if (propUnit.PlacementLayer == ePlacementLayer.WallProp && _placementItem.PlacementLayer == ePlacementLayer.FloorProp)
-                    return false;
-
-                if (propUnit.PlacementLayer == ePlacementLayer.FloorProp && _placementItem.PlacementLayer == ePlacementLayer.WallProp)
+                if (propUnit.PlacementLayer == ePlacementLayer.WallProp)
                     return false;
             }
         }
@@ -97,32 +82,27 @@ public class IFloorPlacementTool : ITool
         FloorRotation(TH);
         FloorPositioning(TH);
 
+        // Surface Placement Check
         if (_placementItem.canPlaceOntoOtherObjects)
         {
             hitSurface = TH.InputSystem.GetHitTransformWithLayer(ToolHelper.SurfaceLayerID);
 
             if (hitSurface != null)
-                SnapToSurfaceGrid(hitSurface.GetComponent<Collider>().bounds);
+                TH.SnapToSurfaceGrid(TH, hitSurface);
 
             isSnappedToSurface = hitSurface != null;
         }
          
-        if(_tempObject != null)
-        {
-            // Apply To Object
-            _tempObject.transform.position = LastPosition;
-            // _tempObject.transform.position = LastPosition - (Camera.main.transform.forward * 0.02f);
-            _tempObject.transform.rotation = LastRotation;
-        }
+        // Apply To Object
+        _tempObject.transform.position = TH.LastPosition;
+        _tempObject.transform.rotation = TH.LastRotation;
         
         TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
     }
     
     public void OnPlace(ToolHelper TH)
     {
-        GameObject obj;
-        
-        obj = Object.Instantiate(_placementItem.Prefab, LastPosition, LastRotation);
+        var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
         // Setting Parent Object
         if (isSnappedToSurface)
@@ -150,10 +130,8 @@ public class IFloorPlacementTool : ITool
             unit = propUnit;
         else
             unit = obj.AddComponent<IPropUnit>();
-        
 
-        TH.LastPosition = LastPosition;
-        TH.LastRotation = LastRotation;
+        unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.FloorProp);
     }
 
     public void OnStop(ToolHelper TH)
@@ -173,89 +151,28 @@ public class IFloorPlacementTool : ITool
     /// </summary>
     ///
 
-    private void CalculateBounds()
-    {
-        Colliders = _tempObject.transform.GetComponentsInChildren<Collider>();
-
-        if (Colliders.Length == 0)
-        {
-            Debug.LogWarning("No Colliders found in the object.");
-            return;
-        }
-
-        Bounds combinedBounds = Colliders[0].bounds;
-
-        foreach (var col in Colliders)
-        {
-            if (col.gameObject.layer == ToolHelper.SurfaceLayerID) continue;
-            
-            combinedBounds.Encapsulate(col.bounds);
-        }
-
-        colliderSize = combinedBounds.size;
-        colliderExtend = combinedBounds.extents;
-    }
-
-    private Vector3 GetCenterOfBounds()
-    {
-        Bounds combinedBounds = Colliders[0].bounds;
-
-        foreach (var col in Colliders)
-            combinedBounds.Encapsulate(col.bounds);
-
-        return combinedBounds.center;
-    }
-
     private void FloorPositioning(ToolHelper TH)
     {
-        LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
-        LastPosition.y = 0;
+        TH.LastPosition = TH.SnapToGrid(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID), _placementItem.GridSizes);
+        TH.LastPosition.y = 0;
 
-        if (Input.GetKey(KeyCode.LeftAlt)) // Free Placement
+        if (TH.InputSystem.FreePlacementKey) // Free Placement
         {
-            LastPosition = InputSystem.Instance.MousePosition;
+            TH.LastPosition = InputSystem.Instance.MousePosition;
         }
     }
-
 
     private void FloorRotation(ToolHelper TH)
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
-        else if(Input.GetKeyDown(KeyCode.E))
-            LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
+        if (TH.InputSystem.RotateLeft)
+            TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
+        else if(TH.InputSystem.RotateRight)
+            TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
     }
 
-    public void SnapToSurfaceGrid(Bounds surfaceBounds)
+    private bool CheckIfPlacedOnSurface(ToolHelper TH)
     {
-        float gridSize = 0.25f;
-        Vector3 surfaceCenter = surfaceBounds.center;
-        // Get Surface Position From Input 
-        // KInputSystem.MousePosition(BuildinSystemConstants.surfaceLayer);
-        Vector3 localPosition = InputSystem.Instance.MousePosition;
-        
-        Debug.Log(localPosition);
-
-        Vector3 offsetFromCenter = localPosition - surfaceCenter;
-
-        Vector3 snappedOffset = new Vector3(
-            Mathf.Round(offsetFromCenter.x / gridSize) * gridSize,
-            Mathf.Round(offsetFromCenter.y / gridSize) * gridSize,
-            Mathf.Round(offsetFromCenter.z / gridSize) * gridSize
-        );
-
-        Vector3 snappedPosition = surfaceCenter + snappedOffset;
-        LastPosition = snappedPosition;
-
-        if (Input.GetKey(KeyCode.LeftAlt)) // Free Placement
-        {
-            LastPosition = InputSystem.Instance.MousePosition;
-        }
-    }
-
-    private bool CheckIfPlacedOnSurface()
-    {
-        foreach (var vector3 in GetRotatedFloorCorners(GetCenterOfBounds(), colliderSize, LastRotation))
+        foreach (var vector3 in TH.GetRotatedFloorCorners(TH.LastRotation))
         {
             Debug.Log(vector3);
             Ray ray = new Ray(vector3, Vector3.down);
@@ -271,25 +188,5 @@ public class IFloorPlacementTool : ITool
             }
         }
         return true;
-    }
-    
-    private Vector3[] GetRotatedFloorCorners(Vector3 center, Vector3 size, Quaternion rotation)
-    {
-        // Calculate local positions of the floor corners relative to the center
-        Vector3[] localCorners = new Vector3[]
-        {
-            new Vector3(-size.x / 2, -size.y / 2, -size.z / 2), // Bottom Front Left
-            new Vector3(size.x / 2, -size.y / 2, -size.z / 2),  // Bottom Front Right
-            new Vector3(-size.x / 2, -size.y / 2, size.z / 2),  // Bottom Back Left
-            new Vector3(size.x / 2, -size.y / 2, size.z / 2)   // Bottom Back Right
-        };
-
-        // Apply rotation and translation to get world-space positions
-        for (int i = 0; i < localCorners.Length; i++)
-        {
-            localCorners[i] = rotation * localCorners[i] + center;
-        }
-
-        return localCorners;
     }
 }

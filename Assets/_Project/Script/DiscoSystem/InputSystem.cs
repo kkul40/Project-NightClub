@@ -25,8 +25,9 @@ namespace DiscoSystem
         public float ScrollWheelDelta;
         public Vector3 MousePosition;
         [HideInInspector] public bool Esc;
-        [HideInInspector] public bool TurnLeft;
-        [HideInInspector] public bool TurnRight;
+        [HideInInspector] public bool RotateLeft;
+        [HideInInspector] public bool RotateRight;
+        public bool FreePlacementKey;
         [HideInInspector] public bool IsMouseCursorOnWorld;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
@@ -72,8 +73,9 @@ namespace DiscoSystem
 
             MousePosition = GetMouseMapPosition();
             Esc = Input.GetKeyDown(KeyCode.Escape);
-            TurnLeft = Input.GetKeyDown(KeyCode.Z);
-            TurnRight = Input.GetKeyDown(KeyCode.X);
+            RotateLeft = Input.GetKeyDown(KeyCode.Z);
+            RotateRight = Input.GetKeyDown(KeyCode.X);
+            FreePlacementKey = Input.GetKey(KeyCode.LeftAlt);
         }
 
         public Vector2 GetEdgeScrollingData()
@@ -147,6 +149,23 @@ namespace DiscoSystem
             }
             
             HasMouseMoveToNewCell = false;
+            return Vector3.zero;
+        }
+
+        public Vector3 GetMousePositionOnLayer(int layerID)
+        {
+            var mousePOs = Input.mousePosition;
+            mousePOs.z = mainCam.nearClipPlane;
+            var ray = mainCam.ScreenPointToRay(mousePOs);
+
+            RaycastHit hit;
+            float maxDistance = 100;
+
+            if (Physics.Raycast(ray, out hit, maxDistance, 1 << layerID))
+            {
+                return hit.point;
+            }
+            
             return Vector3.zero;
         }
 

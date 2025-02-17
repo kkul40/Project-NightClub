@@ -3,7 +3,6 @@ using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
-using ExtensionMethods;
 using RMC.Mini;
 using RMC.Mini.Controller;
 
@@ -28,37 +27,60 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
         base.Initialize(context);
         
         _view.InstantiateItems(_model.StoreItems);
-        _view.OnSlotItemClicked += OnSlotClickHandler;
+        _view.OnSlotItemClicked += StartATool;
+        
+        // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
     }
 
     public void Update(float deltaTime)
     {
+        RequireIsInitialized();
+        
+        if (InputSystem.Instance.Esc)
+        {
+            if (currentTool != null)
+            {
+                currentTool.OnStop(_toolHelper);
+                currentTool = null;
+            }
+        }
         if (currentTool == null) return;
-
+        
         UpdateTool(_toolHelper);
         
         currentTool.OnUpdate(_toolHelper);
 
+        // TODO Puth This InputSystem key fucntion somewhere that is not this controller
         if (InputSystem.Instance.LeftClickOnWorld && currentTool.OnValidate(_toolHelper))
         {
             currentTool.OnPlace(_toolHelper);
-            currentTool.OnStop(_toolHelper);
-            currentTool = null;
+            if (currentTool.isFinished)
+            {
+                StopTool();
+            }
         }
     }
 
     private void UpdateTool(ToolHelper toolHelper)
     {
-        toolHelper.CellPosition = InputSystem.Instance.MousePosition.WorldPosToCellPos(eGridType.PlacementGrid);
     }
 
-    private void OnSlotClickHandler(StoreItemSO storeItemSo)
+    private void StartATool(StoreItemSO storeItemSo)
     {
+        StopTool();
+        
         _toolHelper.SelectedStoreItem = storeItemSo;
         
         currentTool = SelectBuildingMethod(storeItemSo);
         if(currentTool != null)
             currentTool.OnStart(_toolHelper);
+    }
+
+    private void StopTool()
+    {
+        if(currentTool != null) currentTool.OnStop(_toolHelper);
+
+        currentTool = null;
     }
 
     private ITool SelectBuildingMethod(StoreItemSO storeItemSo)

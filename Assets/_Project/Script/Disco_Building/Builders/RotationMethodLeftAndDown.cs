@@ -14,9 +14,9 @@ namespace Disco_Building.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            if (InputSystem.Instance.TurnLeft) buildingNeedsData.RotationData = RotationData.Left;
+            if (InputSystem.Instance.RotateLeft) buildingNeedsData.RotationData = RotationData.Left;
 
-            if (InputSystem.Instance.TurnRight) buildingNeedsData.RotationData = RotationData.Down;
+            if (InputSystem.Instance.RotateRight) buildingNeedsData.RotationData = RotationData.Down;
         }
     }
 }

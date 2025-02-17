@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: Heart Table
   m_EditorClassIdentifier: 
-  ID: 1051173920
+  ID: 1617682124
   Name: Heart Table
   Description: 'Special Heart Table
 
@@ -22,5 +22,7 @@ MonoBehaviour:
   Prefab: {fileID: 4006220728029679546, guid: de2c47296bd2e19449326a5dcebb0f73, type: 3}
   Size: {x: 1, y: 1}
   IsBig: 0
+  canPlaceOntoOtherObjects: 0
+  GridSizes: 1
   PlacementLayer: 1
   eRotation: 1

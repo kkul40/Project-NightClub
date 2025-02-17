@@ -12,7 +12,7 @@ namespace Disco_Building.Builders
 
         public void OnRotate(BuildingNeedsData buildingNeedsData)
         {
-            if (InputSystem.Instance.TurnLeft)
+            if (InputSystem.Instance.RotateLeft)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
                 var rData = RotationDataExtensionMethod.RotateClockWise(tempQ, buildingNeedsData.RotationData.direction);
@@ -20,7 +20,7 @@ namespace Disco_Building.Builders
                 buildingNeedsData.RotationData = rData;
             }
 
-            if (InputSystem.Instance.TurnRight)
+            if (InputSystem.Instance.RotateRight)
             {
                 var tempQ = buildingNeedsData.RotationData.rotation;
                 var rData = RotationDataExtensionMethod.RotateCounterClockWise(tempQ, buildingNeedsData.RotationData.direction);

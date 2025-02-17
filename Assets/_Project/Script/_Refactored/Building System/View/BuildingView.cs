@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class BuildingView : BaseView
 {
+    [SerializeField] private Transform _contentParent;
     public Action<StoreItemSO> OnSlotItemClicked;
 
     public GameObject SlotPrefab;
@@ -17,7 +18,7 @@ public class BuildingView : BaseView
         foreach (var storeItem in storeItemSos)
         {
             var slot = Instantiate(SlotPrefab);
-            slot.transform.SetParent(transform);
+            slot.transform.SetParent(_contentParent);
             UI_StoreItemSlot slotClass = slot.GetComponent<UI_StoreItemSlot>();
             slotClass.Initialize(storeItem);
             

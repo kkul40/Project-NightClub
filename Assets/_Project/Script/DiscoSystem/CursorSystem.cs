@@ -42,6 +42,7 @@ namespace DiscoSystem
 
         private void Update()
         {
+            return;
             if (BuildingManager.Instance.isPlacing || _isCursorLocked)
             {
                 Reset();

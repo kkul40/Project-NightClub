@@ -1,30 +1,125 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
+using Data;
+using Disco_Building;
+using Disco_ScriptableObject;
+using PropBehaviours;
+using UnityEngine;
 
 public class IWallPlacementTool : ITool
 {
+    private GameObject _tempObject;
+    
+    private PlacementItemSO _placementItem;
+    private List<MeshRenderer> _tempMeshRenderer;
+
+    private List<WallAssignmentData> _walls;
+    
     public bool isFinished { get; }
     public void OnStart(ToolHelper TH)
     {
-        throw new NotImplementedException();
+        _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+
+        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+        _tempObject.transform.SetParent(null);
+        
+        TH.CalculateBounds(_tempObject.GetComponents<Collider>());
+
+        _walls = TH.DiscoData.MapData.WallDatas.ToList();
+
+        _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
     }
 
     public bool OnValidate(ToolHelper TH)
     {
-        throw new NotImplementedException();
+        if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
+        if (!TH.HeightCheck()) return false;
+        if (!TH.MapBoundryCheck()) return false;
+
+        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            var hitObject = colliders[i];
+
+            if (hitObject.TryGetComponent(out AutoDoor door)) return false;
+            
+            var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
+            if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                continue;
+
+            IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
+           
+            if (propUnit != null)
+            {
+                if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
+                    return false;
+
+                if (propUnit.PlacementLayer == ePlacementLayer.FloorProp)
+                    return false;
+            }
+        }
+        
+        return true;
     }
 
     public void OnUpdate(ToolHelper TH)
     {
-        throw new NotImplementedException();
+        TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
+        
+        if (TH.InputSystem.FreePlacementKey) // Free Placement
+        {
+            TH.LastPosition = TH.InputSystem.MousePosition;
+        }
+        
+        WallAssignmentData closestWall = GetClosestWall(TH);
+        if (closestWall != null)
+            TH.LastRotation = closestWall.assignedWall.transform.rotation;
+        
+
+        _tempObject.transform.rotation = TH.LastRotation;
+        _tempObject.transform.position = TH.LastPosition;
+        
+        TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+    }
+
+    private WallAssignmentData GetClosestWall(ToolHelper TH)
+    {
+        Vector3 mousePos = TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
+        float maxDistance = float.MaxValue;
+
+        WallAssignmentData output = null;
+
+        foreach (var wall in _walls)
+        {
+            float dis = Vector3.Distance(mousePos, wall.assignedWall.transform.position);
+            if (dis < maxDistance)
+            {
+                maxDistance = dis;
+                output = wall;
+            }
+        }
+
+        return output;
     }
 
     public void OnPlace(ToolHelper TH)
     {
-        throw new NotImplementedException();
+        var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+        
+        IPropUnit unit;
+        if (obj.TryGetComponent(out IPropUnit propUnit))
+            unit = propUnit;
+        else
+            unit = obj.AddComponent<IPropUnit>();
+
+        unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
     }
 
     public void OnStop(ToolHelper TH)
     {
-        throw new NotImplementedException();
+        if (_tempObject != null)
+        {
+            Object.Destroy(_tempObject.gameObject);
+        }
     }
 }
