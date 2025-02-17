@@ -11,6 +11,9 @@ namespace Disco_ScriptableObject
         public Vector2Int Size;
         public bool IsBig;
 
+        public bool canPlaceOntoOtherObjects;
+        public GridSizes GridSizes;
+
         [HorizontalGroup("Split", 290)] [EnumToggleButtons] [HideLabel]
         public ePlacementLayer PlacementLayer;
 

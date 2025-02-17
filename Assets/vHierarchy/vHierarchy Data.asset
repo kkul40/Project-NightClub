@@ -40,6 +40,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-2688344837535098277-1310598312
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-246593791-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1086089510-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-226081665-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -81,6 +82,8 @@ MonoBehaviour:
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
           iconNameOrGuid: ReflectionProbe Icon
+        - colorIndex: 3
+          iconNameOrGuid: 
         - colorIndex: 3
           iconNameOrGuid: 
     - goDatas_byGlobalId:
