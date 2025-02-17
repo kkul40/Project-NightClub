@@ -5,6 +5,8 @@ using Disco_ScriptableObject;
 using DiscoSystem;
 using RMC.Mini;
 using RMC.Mini.Controller;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 public enum GridSizes
 {
@@ -16,26 +18,28 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
 {
     private ToolHelper _toolHelper;
     private ITool currentTool;
-    
-    public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem, DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreator fxCreator) : base(model, view, service)
+
+    public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem,
+        DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreator fxCreator) : base(model, view,
+        service)
     {
-        _toolHelper = new ToolHelper(inputSystem, discoData, materialColorChanger, fxCreator);
+        _toolHelper = new ToolHelper(this, inputSystem, discoData, materialColorChanger, fxCreator);
     }
 
     public override void Initialize(IContext context)
     {
         base.Initialize(context);
-        
+
         _view.InstantiateItems(_model.StoreItems);
         _view.OnSlotItemClicked += StartATool;
-        
+
         // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
     }
 
     public void Update(float deltaTime)
     {
         RequireIsInitialized();
-        
+
         if (InputSystem.Instance.Esc)
         {
             if (currentTool != null)
@@ -44,10 +48,11 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
                 currentTool = null;
             }
         }
+
         if (currentTool == null) return;
-        
+
         UpdateTool(_toolHelper);
-        
+
         currentTool.OnUpdate(_toolHelper);
 
         // TODO Puth This InputSystem key fucntion somewhere that is not this controller
@@ -68,17 +73,17 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
     private void StartATool(StoreItemSO storeItemSo)
     {
         StopTool();
-        
+
         _toolHelper.SelectedStoreItem = storeItemSo;
-        
+
         currentTool = SelectBuildingMethod(storeItemSo);
-        if(currentTool != null)
+        if (currentTool != null)
             currentTool.OnStart(_toolHelper);
     }
 
     private void StopTool()
     {
-        if(currentTool != null) currentTool.OnStop(_toolHelper);
+        if (currentTool != null) currentTool.OnStop(_toolHelper);
 
         currentTool = null;
     }
@@ -101,6 +106,37 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
                     throw new ArgumentOutOfRangeException();
             }
         }
+        else if (storeItemSo is MaterialItemSo material)
+        {
+            switch (material.MaterialLayer)
+            {
+                case eMaterialLayer.FloorMaterial:
+                case eMaterialLayer.WallMaterial:
+                    return new IWallMaterialPlacementTool();
+                case eMaterialLayer.Null:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         return null;
+    }
+
+    public void ToggleBuildingPage(bool toggle)
+    {
+        _view.ToggleView(toggle);
+    }
+
+    public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition,
+        Quaternion placedRotation)
+    {
+        _model.PlacedItems.Add(sceneObject.GetInstanceID(), new Tuple<int, Transform, Vector3, Quaternion>(itemSo.ID, sceneObject, placedPosition, placedRotation));
+    }
+
+    public void RemovePlacementItemData(int InstanceID)
+    {
+        Transform sceneObject = _model.PlacedItems[InstanceID].Item2;
+        Object.Destroy(sceneObject.gameObject);
+        _model.PlacedItems.Remove(InstanceID);
     }
 }

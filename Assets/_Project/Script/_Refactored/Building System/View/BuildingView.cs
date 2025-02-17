@@ -31,5 +31,11 @@ public class BuildingView : BaseView
     {
         OnSlotItemClicked?.Invoke(storeItemSo);
         EventSystem.current.SetSelectedGameObject(button.gameObject);
+        button.Select();
+    }
+
+    public void ToggleView(bool toggle)
+    {
+        gameObject.SetActive(toggle);
     }
 }

@@ -86,6 +86,8 @@ public class ISurfacePlacementTool : ITool
             unit = obj.AddComponent<IPropUnit>();
 
         unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.BaseSurface);
+        
+        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
     }
 
     public void OnStop(ToolHelper TH)

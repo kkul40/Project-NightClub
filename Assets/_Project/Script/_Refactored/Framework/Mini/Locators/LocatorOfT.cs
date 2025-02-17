@@ -49,7 +49,7 @@ namespace RMC.Mini
             if (!_items[type].ContainsKey(key))
             {
                 _items[type][key] = item;
-                OnItemAdded.Invoke(item);
+                OnItemAdded?.Invoke(item);
             }
             else
             {

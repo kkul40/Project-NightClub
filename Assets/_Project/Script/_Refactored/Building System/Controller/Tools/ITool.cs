@@ -1,6 +1,8 @@
+using Data;
+
 public interface ITool
 {
-    // bool isCanceld { get; }
+    // bool isCanceled { get; }
     bool isFinished { get; }
 
     void OnStart(ToolHelper TH);

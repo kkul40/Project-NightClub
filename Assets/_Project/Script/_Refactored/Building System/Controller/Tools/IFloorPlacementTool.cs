@@ -132,6 +132,8 @@ public class IFloorPlacementTool : ITool
             unit = obj.AddComponent<IPropUnit>();
 
         unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.FloorProp);
+
+        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
     }
 
     public void OnStop(ToolHelper TH)

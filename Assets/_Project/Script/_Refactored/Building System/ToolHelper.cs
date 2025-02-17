@@ -16,6 +16,7 @@ public class ToolHelper
     public const float HitCollisionLeniency = 0.98f;
     
     // Instance Variables
+    public BuildingController BuildingController;
     public InputSystem InputSystem;
     public DiscoData DiscoData;
     public MaterialColorChanger MaterialColorChanger;
@@ -31,9 +32,10 @@ public class ToolHelper
     public Quaternion LastRotation;
     public Vector3 LastPosition;
     
-    public ToolHelper(InputSystem inputSystem, DiscoData discoData,
+    public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
         MaterialColorChanger materialColorChanger, FXCreator fxCreator)
     {
+        BuildingController = controller;
         InputSystem = inputSystem;
         DiscoData = discoData;
         MaterialColorChanger = materialColorChanger;
@@ -111,6 +113,30 @@ public class ToolHelper
     
     #endregion
 
+    #region Helper Functions
+
+    public WallAssignmentData GetClosestWall()
+    {
+        Vector3 mousePos = InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
+        float maxDistance = float.MaxValue;
+
+        WallAssignmentData output = null;
+
+        foreach (var wall in DiscoData.MapData.WallDatas)
+        {
+            float dis = Vector3.Distance(mousePos, wall.assignedWall.transform.position);
+            if (dis < maxDistance)
+            {
+                maxDistance = dis;
+                output = wall;
+            }
+        }
+
+        return output;
+    }
+
+    #endregion
+
     #region Collider Functions
 
     public void CalculateBounds(Collider[] colliders)
@@ -168,6 +194,15 @@ public class ToolHelper
     #endregion
 
     #region  Validation Functions
+
+    public bool MouseInBoundryCheck()
+    {
+        Vector3 position = InputSystem.GetMousePositionOnLayer(GroundLayerID);
+        if (position.x < 0 || position.z < 0) return false;
+        if (position.x > DiscoData.MapData.CurrentMapSize.x || position.z > DiscoData.MapData.CurrentMapSize.y) return false;
+        
+        return true;
+    }
 
     public bool HeightCheck()
     {

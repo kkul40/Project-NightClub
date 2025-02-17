@@ -26,6 +26,7 @@ public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingVie
             
             //
             _context = new Context();
+            // _context.ModelLocator.AddItem(new DummyModel(), "dummy");
             _model = new BuildingModel();
             _view = _buildingView;
             _service = new BuildingService();

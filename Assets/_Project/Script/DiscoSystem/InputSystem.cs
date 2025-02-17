@@ -162,9 +162,7 @@ namespace DiscoSystem
             float maxDistance = 100;
 
             if (Physics.Raycast(ray, out hit, maxDistance, 1 << layerID))
-            {
                 return hit.point;
-            }
             
             return Vector3.zero;
         }

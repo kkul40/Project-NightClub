@@ -71,7 +71,7 @@ public class IWallPlacementTool : ITool
             TH.LastPosition = TH.InputSystem.MousePosition;
         }
         
-        WallAssignmentData closestWall = GetClosestWall(TH);
+        WallAssignmentData closestWall = TH.GetClosestWall();
         if (closestWall != null)
             TH.LastRotation = closestWall.assignedWall.transform.rotation;
         
@@ -82,25 +82,7 @@ public class IWallPlacementTool : ITool
         TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
     }
 
-    private WallAssignmentData GetClosestWall(ToolHelper TH)
-    {
-        Vector3 mousePos = TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
-        float maxDistance = float.MaxValue;
-
-        WallAssignmentData output = null;
-
-        foreach (var wall in _walls)
-        {
-            float dis = Vector3.Distance(mousePos, wall.assignedWall.transform.position);
-            if (dis < maxDistance)
-            {
-                maxDistance = dis;
-                output = wall;
-            }
-        }
-
-        return output;
-    }
+    
 
     public void OnPlace(ToolHelper TH)
     {
@@ -113,6 +95,8 @@ public class IWallPlacementTool : ITool
             unit = obj.AddComponent<IPropUnit>();
 
         unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
+        
+        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
     }
 
     public void OnStop(ToolHelper TH)
