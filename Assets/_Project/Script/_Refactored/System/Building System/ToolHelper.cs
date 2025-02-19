@@ -182,7 +182,6 @@ public class ToolHelper
             new Vector3(size.x / 2, -size.y / 2, size.z / 2)   // Bottom Back Right
         };
 
-        // Apply rotation and translation to get world-space positions
         for (int i = 0; i < localCorners.Length; i++)
         {
             localCorners[i] = rotation * localCorners[i] + GetCenterOfBounds();
@@ -216,7 +215,7 @@ public class ToolHelper
 
         return true;
     }
-
+    
     public bool MapBoundryCheck()
     {
         foreach (var vector in GetRotatedFloorCorners(LastRotation))

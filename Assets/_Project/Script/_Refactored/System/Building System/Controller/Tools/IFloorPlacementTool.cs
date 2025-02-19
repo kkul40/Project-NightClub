@@ -43,10 +43,10 @@ public class IFloorPlacementTool : ITool
         
         // Boundry Check
         if (!TH.HeightCheck()) return false;
-
+        
         // Map Boundry
         if (!TH.MapBoundryCheck()) return false;
-
+        
         if (isSnappedToSurface)
             if (!CheckIfPlacedOnSurface(TH)) return false;
         

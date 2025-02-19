@@ -4,7 +4,9 @@ using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using ExtensionMethods;
 using PropBehaviours;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class IWallPlacementTool : ITool
@@ -21,7 +23,7 @@ public class IWallPlacementTool : ITool
     {
         _placementItem = TH.SelectedStoreItem as PlacementItemSO;
 
-        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
         _tempObject.transform.SetParent(null);
         
         TH.CalculateBounds(_tempObject.GetComponents<Collider>());
@@ -35,9 +37,9 @@ public class IWallPlacementTool : ITool
     {
         if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
         if (!TH.HeightCheck()) return false;
-        if (!TH.MapBoundryCheck()) return false;
+        if (!TH.MapBoundryCheck()) return false; 
 
-        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
+        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * (ToolHelper.HitCollisionLeniency - 0.02f), TH.LastRotation);
         for (int i = 0; i < colliders.Length; i++)
         {
             var hitObject = colliders[i];
@@ -107,6 +109,8 @@ public class IWallPlacementTool : ITool
             unit = obj.AddComponent<IPropUnit>();
 
         unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
+        
+        obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
         TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
     }
