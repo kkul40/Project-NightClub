@@ -1,4 +1,5 @@
-﻿using Disco_Building;
+﻿using DefaultNamespace._Refactored.Event;
+using Disco_Building;
 using ExtensionMethods;
 using HighlightPlus;
 using PropBehaviours;
@@ -9,11 +10,28 @@ namespace DiscoSystem
 {
     public class CursorSystem : MonoBehaviour
     {
+        public enum eCursorTypes
+        {
+            Default,
+            Building,
+            Dragging,
+            Rotating,
+            Settings,
+        }
         private enum CursorState
         {
             Free,
             Selected,
         }
+        
+        public Texture2D DefaultCursor;
+        public Texture2D BuildingCursor;
+        public Texture2D DraggingCursor;
+        public Texture2D RotatingCursor;
+        public Texture2D SettingsCursor;
+
+        private eCursorTypes currentCursor = eCursorTypes.Default;
+        private eCursorTypes previousCursor = eCursorTypes.Default;
         
         [SerializeField] private HighlightProfile _interactableHighlight;
         [SerializeField] private HighlightProfile _propUnitHighlight;
@@ -33,15 +51,26 @@ namespace DiscoSystem
         private void OnEnable()
         {
             UISettingsPage.OnUISettingsToggle += ToggleCursorLock;
+            KEvent_Cursor.OnChangeCursor += SetCursor;
+            KEvent_Cursor.OnChangeCursorToPrevious += SetToPreviousChangeCursorTo;
         }
 
         private void OnDisable()
         {
             UISettingsPage.OnUISettingsToggle -= ToggleCursorLock;
+            KEvent_Cursor.OnChangeCursor -= SetCursor;
+            KEvent_Cursor.OnChangeCursorToPrevious -= SetToPreviousChangeCursorTo;
+        }
+
+        private void Start()
+        {
+            SetCursor(eCursorTypes.Default);
         }
 
         private void Update()
         {
+            
+
             return;
             if (BuildingManager.Instance.isPlacing || _isCursorLocked)
             {
@@ -205,6 +234,37 @@ namespace DiscoSystem
             SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
             if(interactable.IsAnimatable)
                 interactable.mGameobject.AnimatedPlacement(ePlacementAnimationType.Shaky);
+        }
+
+        public void SetCursor(eCursorTypes cursorType)
+        {
+            switch (cursorType)
+            {
+                case eCursorTypes.Default:
+                    Cursor.SetCursor(DefaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case eCursorTypes.Building:
+                    Cursor.SetCursor(BuildingCursor, Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case eCursorTypes.Dragging:
+                    Cursor.SetCursor(DraggingCursor, Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case eCursorTypes.Rotating:
+                    Cursor.SetCursor(RotatingCursor, Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+                case eCursorTypes.Settings:
+                    Cursor.SetCursor(SettingsCursor, Vector2.zero, CursorMode.ForceSoftware);
+                    break;
+            }
+
+            previousCursor = currentCursor;
+            currentCursor = cursorType;
+        }
+
+        public void SetToPreviousChangeCursorTo()
+        {
+            currentCursor = previousCursor;
+            SetCursor(currentCursor);
         }
         public void ToggleCursorLock(bool toggle) => _isCursorLocked = toggle;
     }

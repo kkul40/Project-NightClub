@@ -24,7 +24,6 @@ namespace NPCBehaviour
             _activityNeedsData = new ActivityNeedsData();
             _activityNeedsData.Npc = npc;
             _activityNeedsData.DiscoData = DiscoData.Instance;
-            _activityNeedsData.GridHandler = GridHandler.Instance;
             
             PlacementDataHandler.OnPlacedPositions += HasPlacementOnTop;
 

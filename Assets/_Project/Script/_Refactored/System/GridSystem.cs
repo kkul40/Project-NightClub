@@ -1,29 +1,38 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace._Refactored.Event;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DiscoSystem
 {
-    public class GridHandler : Singleton<GridHandler>
+    public class GridSystem : MonoBehaviour
     {
         [SerializeField] private Shader gridSahder;
         [SerializeField] private Color gridColor;
-        [SerializeField] private GameObject gridPlane;
+        [SerializeField] private GameObject GridTransform;
         [SerializeField] private GameObject floorGridPlane;
         [SerializeField] private GameObject leftWallGridPlane;
         [SerializeField] private GameObject rightWallGridPlane;
 
+        public void Initialize()
+        {
+            ToggleGrid(false);
+        }
+
         private void OnEnable()
         {
-            MapGeneratorSystem.OnMapSizeChanged += AlignGridWithMapSize;
+            KEvent_Map.OnMapSizeChanged += AlignGridWithMapSize;
+            KEvent_Building.OnBuildingToggled += ToggleGrid;
         }
 
         private void OnDisable()
         {
-            MapGeneratorSystem.OnMapSizeChanged -= AlignGridWithMapSize;
+            KEvent_Map.OnMapSizeChanged -= AlignGridWithMapSize;
+            KEvent_Building.OnBuildingToggled -= ToggleGrid;
         }
 
-        public void ToggleGrid(bool toggle)
+        private void ToggleGrid(bool toggle)
         {
-            gridPlane.SetActive(toggle);
+            GridTransform.SetActive(toggle);
         }
 
         private void AlignGridWithMapSize(Vector2Int mapSize)

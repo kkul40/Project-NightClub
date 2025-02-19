@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using PropBehaviours;
 using UI.GamePages;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Disco_Building
 {
@@ -45,16 +46,16 @@ namespace Disco_Building
 
         [SerializeField] private TileIndicator _tileIndicator;
         [SerializeField] private SceneGameObjectHandler sceneGameObjectHandler;
-        [SerializeField] private GridHandler _gridHandler;
+        [FormerlySerializedAs("_gridHandler")] [SerializeField] private GridSystem gridSystem;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
-        [SerializeField] private FXCreator _fxCreator;
+        [FormerlySerializedAs("_fxCreator")] [SerializeField] private FXCreatorSystem fxCreatorSystem;
 
 
         public static event Action OnRemovingStopped;
 
         private void Start()
         {
-            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger, _fxCreator);
+            _buildingNeedsData = new BuildingNeedsData(InputSystem.Instance, DiscoData.Instance, _materialColorChanger, fxCreatorSystem);
             HandleTogglingGrid(false);
         }
 
@@ -77,7 +78,7 @@ namespace Disco_Building
             //         return;
             //     }
             // }
-            _gridHandler.ToggleGrid(toggle);
+            // _gridHandler.ToggleGrid(toggle);
         }
 
         private void Update()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Disco_Building;
 using Disco_ScriptableObject;
+using DiscoSystem;
 using UnityEngine;
 
 public class IWallMaterialPlacementTool : ITool
@@ -24,17 +25,15 @@ public class IWallMaterialPlacementTool : ITool
 
     public bool OnValidate(ToolHelper TH)
     {
-        if (!TH.MouseInBoundryCheck()) return false;
+        if (_materialItemSo.Material == _storedMaterial.Material) return false;
         return true;
     }
 
     public void OnUpdate(ToolHelper TH)
     {
-        
-        Debug.Log(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID));
         _mouseOnChangableMaterial = GetClosestWallMaterial(TH);
         
-        if (_mouseOnChangableMaterial == null || !TH.MouseInBoundryCheck())
+        if (_mouseOnChangableMaterial == null)
         {
             ResetPreviousMaterial();
             return;
@@ -47,12 +46,25 @@ public class IWallMaterialPlacementTool : ITool
 
             _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
             _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
-            Debug.Log("Material Changed");
+        }
+        
+        if (TH.InputSystem.LeftHoldClickOnWorld)
+        {
+            if (OnValidate(TH))
+            {
+                OnPlace(TH);
+                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+            }
+            else
+            {
+                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+            }
         }
     }
 
     public void OnPlace(ToolHelper TH)
     {
+        _currentChangableMaterial = null;
     }
 
     public void OnStop(ToolHelper TH)
@@ -76,7 +88,7 @@ public class IWallMaterialPlacementTool : ITool
         {
             if (wall.assignedWall == null) continue;
 
-            var dis = Vector3.Distance(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID), wall.assignedWall.transform.position);
+            var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.assignedWall.transform.position);
             if (dis < lastDis)
             {
                 closestChangableMaterial = wall.assignedWall;

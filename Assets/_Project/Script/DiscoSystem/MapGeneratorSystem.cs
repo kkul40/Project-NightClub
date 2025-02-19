@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Data;
+using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using ExtensionMethods;
@@ -14,6 +15,12 @@ namespace DiscoSystem
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
         [SerializeField] private GameObject wallDoorPrefab;
+
+        [SerializeField] private GameObject shadowCeilingPrefab;
+        [SerializeField] private GameObject shadowWall_X_Prefab;
+        [SerializeField] private GameObject shadowWall_Y_Prefab;
+        
+        
         public MapData MapData { get; private set; }
         public PlacementDataHandler placementDataHandler { get; private set; }
 
@@ -27,9 +34,17 @@ namespace DiscoSystem
         public void LoadData(GameData gameData)
         {
             MapData = new MapData(gameData);
-            OnMapSizeChanged?.Invoke(MapSize);
+            KEvent_Map.TriggerMapSizeChanged(MapSize);
 
             var delay = 0.05f;
+            
+            
+            // SetUP Shadow Wall
+            var shadowCeiling = Instantiate(shadowCeilingPrefab);
+            shadowCeiling.transform.SetParent(SceneGameObjectHandler.Instance.transform);
+            shadowCeiling.transform.position = new Vector3(-0.1f, 3.1f, -0.1f);
+            shadowCeiling.transform.localScale = new Vector3(MapSize.x + 0.1f, 1, MapSize.y + 0.1f);
+            
             StartCoroutine(SetUpFloor(delay));
             StartCoroutine(SetUpWall(delay, () => placementDataHandler.LoadGameProps(gameData)));
         }
@@ -45,8 +60,6 @@ namespace DiscoSystem
             MapData = new MapData();
             placementDataHandler = new PlacementDataHandler();
         }
-
-        public static event Action<Vector2Int> OnMapSizeChanged;
 
 
         private IEnumerator SetUpFloor(float delay, Action callBack = null)
@@ -156,7 +169,7 @@ namespace DiscoSystem
             for (var i = 0; i < MapSize.y; i++) InstantiateFloorTile(MapSize.x, i);
             MapSize += Vector2Int.right;
 
-            OnMapSizeChanged?.Invoke(MapSize);
+            KEvent_Map.TriggerMapSizeChanged(MapSize);
         }
 
         [ContextMenu("Expend Y")]
@@ -168,7 +181,7 @@ namespace DiscoSystem
             for (var i = 0; i < MapSize.x; i++) InstantiateFloorTile(i, MapSize.y);
             MapSize += Vector2Int.up;
 
-            OnMapSizeChanged?.Invoke(MapSize);
+            KEvent_Map.TriggerMapSizeChanged(MapSize);
         }
 
         [ContextMenu("Expend Both")]

@@ -1,4 +1,0 @@
-﻿namespace Disco_Building
-{
-    
-}

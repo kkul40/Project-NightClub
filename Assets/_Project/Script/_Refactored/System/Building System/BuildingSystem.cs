@@ -3,6 +3,7 @@ using Disco_Building;
 using DiscoSystem;
 using RMC.Mini;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingView, BuildingController, BuildingService>
 {
@@ -11,12 +12,7 @@ public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingVie
     [SerializeField] private InputSystem _inputSystem;
     [SerializeField] private DiscoData _discoData;
     [SerializeField] private MaterialColorChanger _materialColorChanger;
-    [SerializeField] private FXCreator _fxCreator;
-
-    private void Awake()
-    {
-        Initialize();
-    }
+    [FormerlySerializedAs("_fxCreator")] [SerializeField] private FXCreatorSystem fxCreatorSystem;
 
     public override void Initialize()
     {
@@ -30,7 +26,7 @@ public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingVie
             _model = new BuildingModel();
             _view = _buildingView;
             _service = new BuildingService();
-            _controller = new BuildingController(_model, _view, _service, _inputSystem, _discoData, _materialColorChanger, _fxCreator);
+            _controller = new BuildingController(_model, _view, _service, _inputSystem, _discoData, _materialColorChanger, fxCreatorSystem);
             //
 
             _model.Initialize(_context);
@@ -43,7 +39,6 @@ public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingVie
     private void Update()
     {
         RequireIsInitialized();
-        
         _controller.Update(Time.deltaTime);
     }
 }

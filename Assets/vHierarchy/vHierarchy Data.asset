@@ -42,6 +42,9 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1086089510-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-226081665-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1948649705-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1946347497-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1532718405-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1726907429-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -86,7 +89,13 @@ MonoBehaviour:
         - colorIndex: 3
           iconNameOrGuid: 
         - colorIndex: 3
-          iconNameOrGuid: 
+          iconNameOrGuid: Settings Icon
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
+        - colorIndex: 0
+          iconNameOrGuid: Folder Icon
         - colorIndex: 0
           iconNameOrGuid: Folder Icon
     - goDatas_byGlobalId:

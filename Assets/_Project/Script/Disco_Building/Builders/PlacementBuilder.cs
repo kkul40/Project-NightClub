@@ -118,7 +118,7 @@ namespace Disco_Building.Builders
             {
                 case ePlacementLayer.FloorProp:
                 case ePlacementLayer.BaseSurface:
-                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction), _storeItemSo.Size, BD.RotationData.rotation);
+                    BD.FXCreatorSystem.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction), _storeItemSo.Size, BD.RotationData.rotation);
                     break;
                 case ePlacementLayer.WallProp:
                     Vector3 smokeOffset = new Vector3(0, 0.5f, 0);
@@ -131,7 +131,7 @@ namespace Disco_Building.Builders
                             smokeOffset.z = -0.5f;
                             break;
                     }
-                    BD.FXCreator.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction).AddVector(smokeOffset), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
+                    BD.FXCreatorSystem.CreateFX(FXType.Floor, BD.CellPosition.GetPlacementCenter(_storeItemSo.Size, BD.RotationData.direction).AddVector(smokeOffset), _storeItemSo.Size, BD.RotationData.rotation.Combine(Quaternion.AngleAxis(90, Vector3.right)));
                     break;
             }
         }

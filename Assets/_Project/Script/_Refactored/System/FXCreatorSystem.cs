@@ -7,10 +7,16 @@ namespace Disco_Building
         Floor,
         Wall,
     }
-    public class FXCreator : MonoBehaviour
+    
+    public class FXCreatorSystem : MonoBehaviour
     {
         [SerializeField] private GameObject _floorFX;
         [SerializeField] private GameObject _wallFX;
+
+        public void Initialize()
+        {
+            
+        }
 
         public void CreateFX(FXType fxType, Vector3 position, Vector2 objectSize, Quaternion quaternion)
         {

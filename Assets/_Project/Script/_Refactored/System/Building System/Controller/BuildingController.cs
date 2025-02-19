@@ -1,5 +1,6 @@
 using System;
 using Data;
+using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
@@ -20,10 +21,10 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
     private ITool currentTool;
 
     public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem,
-        DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreator fxCreator) : base(model, view,
+        DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem) : base(model, view,
         service)
     {
-        _toolHelper = new ToolHelper(this, inputSystem, discoData, materialColorChanger, fxCreator);
+        _toolHelper = new ToolHelper(this, inputSystem, discoData, materialColorChanger, fxCreatorSystem);
     }
 
     public override void Initialize(IContext context)
@@ -54,16 +55,20 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
         UpdateTool(_toolHelper);
 
         currentTool.OnUpdate(_toolHelper);
-
-        // TODO Puth This InputSystem key fucntion somewhere that is not this controller
-        if (InputSystem.Instance.LeftClickOnWorld && currentTool.OnValidate(_toolHelper))
+        
+        if (InputSystem.Instance.CancelClick || currentTool.isFinished)
         {
-            currentTool.OnPlace(_toolHelper);
-            if (currentTool.isFinished)
-            {
-                StopTool();
-            }
+            StopTool();
         }
+
+        // // TODO Puth This InputSystem key fucntion somewhere that is not this controller
+        // if (InputSystem.Instance.LeftClickOnWorld && currentTool.OnValidate(_toolHelper))
+        // {
+        //     currentTool.OnPlace(_toolHelper);
+        //     if (currentTool.isFinished)
+        //     {
+        //     }
+        // }
     }
 
     private void UpdateTool(ToolHelper toolHelper)
@@ -79,6 +84,9 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
         currentTool = SelectBuildingMethod(storeItemSo);
         if (currentTool != null)
             currentTool.OnStart(_toolHelper);
+        
+        KEvent_Cursor.ChangeCursor(CursorSystem.eCursorTypes.Building);
+        KEvent_Building.TriggerBuildingToggle(true);
     }
 
     private void StopTool()
@@ -86,6 +94,9 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
         if (currentTool != null) currentTool.OnStop(_toolHelper);
 
         currentTool = null;
+        
+        KEvent_Cursor.ChangeToPrevious();
+        KEvent_Building.TriggerBuildingToggle(false);
     }
 
     private ITool SelectBuildingMethod(StoreItemSO storeItemSo)
@@ -111,6 +122,7 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
             switch (material.MaterialLayer)
             {
                 case eMaterialLayer.FloorMaterial:
+                    return new IFloorMaterialPlacerTool();
                 case eMaterialLayer.WallMaterial:
                     return new IWallMaterialPlacementTool();
                 case eMaterialLayer.Null:

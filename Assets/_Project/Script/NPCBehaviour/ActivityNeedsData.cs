@@ -11,7 +11,6 @@ namespace NPCBehaviour
     {
         public NPC Npc;
         public DiscoData DiscoData;
-        public GridHandler GridHandler;
 
         public T GetAvaliablePropByType<T>() where T : IPropUnit
         {

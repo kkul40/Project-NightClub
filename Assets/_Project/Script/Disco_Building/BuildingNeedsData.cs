@@ -12,7 +12,7 @@ namespace Disco_Building
         public InputSystem InputSystem;
         public DiscoData DiscoData;
         public MaterialColorChanger MaterialColorChanger;
-        public FXCreator FXCreator;
+        public FXCreatorSystem FXCreatorSystem;
 
         public StoreItemSO StoreItemSo;
         public Vector3Int CellPosition;
@@ -24,12 +24,12 @@ namespace Disco_Building
         public WallDoor WallDoor = null;
 
         public BuildingNeedsData(InputSystem inputSystem, DiscoData discoData,
-            MaterialColorChanger materialColorChanger, FXCreator fxCreator)
+            MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem)
         {
             InputSystem = inputSystem;
             DiscoData = discoData;
             MaterialColorChanger = materialColorChanger;
-            FXCreator = fxCreator;
+            FXCreatorSystem = fxCreatorSystem;
             RotationData = RotationData.Default;
         }
 

@@ -20,7 +20,7 @@ public class ToolHelper
     public InputSystem InputSystem;
     public DiscoData DiscoData;
     public MaterialColorChanger MaterialColorChanger;
-    public FXCreator FXCreator;
+    public FXCreatorSystem FXCreatorSystem;
     
     // Static Variables
     public StoreItemSO SelectedStoreItem;
@@ -33,13 +33,13 @@ public class ToolHelper
     public Vector3 LastPosition;
     
     public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
-        MaterialColorChanger materialColorChanger, FXCreator fxCreator)
+        MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem)
     {
         BuildingController = controller;
         InputSystem = inputSystem;
         DiscoData = discoData;
         MaterialColorChanger = materialColorChanger;
-        FXCreator = fxCreator;
+        FXCreatorSystem = fxCreatorSystem;
     }
 
     #region Position Rotation Functions
