@@ -19,6 +19,10 @@ namespace DiscoSystem
         [SerializeField] private GameObject shadowCeilingPrefab;
         [SerializeField] private GameObject shadowWall_X_Prefab;
         [SerializeField] private GameObject shadowWall_Y_Prefab;
+
+        private Transform sCeiling;
+        private Transform sWall_X;
+        private Transform sWall_Y;
         
         
         public MapData MapData { get; private set; }
@@ -38,13 +42,17 @@ namespace DiscoSystem
 
             var delay = 0.05f;
             
-            
             // SetUP Shadow Wall
-            var shadowCeiling = Instantiate(shadowCeilingPrefab);
-            shadowCeiling.transform.SetParent(SceneGameObjectHandler.Instance.transform);
-            shadowCeiling.transform.position = new Vector3(-0.1f, 3.1f, -0.1f);
-            shadowCeiling.transform.localScale = new Vector3(MapSize.x + 0.1f, 1, MapSize.y + 0.1f);
+            sCeiling = Instantiate(shadowCeilingPrefab).transform;
+            sCeiling.SetParent(SceneGameObjectHandler.Instance.transform);
+            sCeiling.position = new Vector3(-0.05f, 3.005f, -0.05f);
+
+            sWall_X = Instantiate(shadowWall_X_Prefab).transform;
+            sWall_X.SetParent(SceneGameObjectHandler.Instance.transform);
             
+            sWall_Y = Instantiate(shadowWall_Y_Prefab).transform;
+            sWall_Y.SetParent(SceneGameObjectHandler.Instance.transform);
+
             StartCoroutine(SetUpFloor(delay));
             StartCoroutine(SetUpWall(delay, () => placementDataHandler.LoadGameProps(gameData)));
         }
@@ -198,6 +206,13 @@ namespace DiscoSystem
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
+            Vector3 scale = sCeiling.localScale;
+            sCeiling.localScale = new Vector3(scale.x, 1, y + 0.05f); 
+            
+            scale = sWall_Y.localScale;
+            sWall_Y.localScale = new Vector3(scale.x, scale.y, y);
+            sWall_X.position = new Vector3(0, 0, y);
+
             return newWallObject;
         }
 
@@ -206,9 +221,15 @@ namespace DiscoSystem
             var pos2 = new Vector3(x - 0.5f, 0, 0);
             var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation, true);
             newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
 
+            Vector3 scale = sCeiling.localScale;
+            sCeiling.localScale = new Vector3(x + 0.05f, 1, scale.z); 
+            
+            scale = sWall_X.localScale;
+            sWall_X.localScale = new Vector3(x, scale.y, scale.z);
+            sWall_Y.position = new Vector3(x, 0, 0);
+            
             return newWallObject;
         }
 
@@ -266,6 +287,17 @@ namespace DiscoSystem
                 ob.transform.position = pos;
             
             return ob;
+        }
+
+        private void ExpendShadow(int scaleX, int scaleY)
+        {
+            sCeiling.localScale = new Vector3(scaleX - 1, 0, scaleY - 1);
+            
+            sWall_X.localScale = new Vector3(scaleX, 0, 0);
+            sWall_X.position = new Vector3(scaleX, 0, 0);
+            
+            sWall_Y.localScale = new Vector3(0, 0, scaleY);
+            sWall_Y.position = new Vector3(0, 0, scaleY);
         }
 
         public GameObject GetWallDoorPrefab => wallDoorPrefab;
