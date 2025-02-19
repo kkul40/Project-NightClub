@@ -5,6 +5,7 @@ using Disco_ScriptableObject;
 using DiscoSystem;
 using ExtensionMethods;
 using PropBehaviours;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ISurfacePlacementTool : ITool
@@ -18,7 +19,7 @@ public class ISurfacePlacementTool : ITool
     {
         _placementItem = TH.SelectedStoreItem as PlacementItemSO;
         
-        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
         _tempObject.transform.SetParent(null);
         
         TH.CalculateBounds(_tempObject.GetComponents<Collider>());
