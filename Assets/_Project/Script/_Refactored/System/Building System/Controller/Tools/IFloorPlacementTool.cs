@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Data;
+using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
@@ -53,7 +54,6 @@ public class IFloorPlacementTool : ITool
         
         // Collision Check
         var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
-        Debug.Log(colliders.Length);
         for (int i = 0; i < colliders.Length; i++)
         {
             var hitObject = colliders[i];

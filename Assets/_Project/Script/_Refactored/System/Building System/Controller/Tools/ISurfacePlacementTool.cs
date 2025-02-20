@@ -64,7 +64,6 @@ public class ISurfacePlacementTool : ITool
 
         var gridData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
         
-        Debug.Log(gridData);
         if (gridData != null)
         {
             TH.LastPosition = gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);

@@ -143,6 +143,7 @@ public class BuildingController : BaseController<BuildingModel, BuildingView, Bu
         Quaternion placedRotation)
     {
         _model.PlacedItems.Add(sceneObject.GetInstanceID(), new Tuple<int, Transform, Vector3, Quaternion>(itemSo.ID, sceneObject, placedPosition, placedRotation));
+        KEvent_Building.TriggerPlacementPlaced();
     }
 
     public void RemovePlacementItemData(int InstanceID)

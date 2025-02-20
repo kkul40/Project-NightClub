@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
@@ -113,6 +114,7 @@ public class IWallPlacementTool : ITool
         obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
         TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+        KEvent_Building.TriggerPlacementPlaced();
     }
 
     public void OnStop(ToolHelper TH)

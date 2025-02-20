@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DefaultNamespace._Refactored.Event;
 using DiscoSystem;
 using ExtensionMethods;
+using PlayerScripts;
+using PropBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -36,8 +40,10 @@ namespace Data
             PathFinderNodes = new PathFinderNode[sizeX, sizeY];
             _mapData = mapData;
 
-            PlacementDataHandler.OnPropPlaced += () => SetFlags(avaliablePathFlag:true);
+
             Init();
+            // PlacementDataHandler.OnPropPlaced += () => SetFlags(avaliablePathFlag:true);
+            KEvent_Building.OnPlacementPlaced += UpdateAllPaths;
         }
 
         private void Init()
@@ -60,6 +66,35 @@ namespace Data
                     PathFinderNodes[x, y] = node;
                 }
             }
+        }
+
+        private async void UpdateAllPaths()
+        {
+            Vector2Int size = PathFinderSize();
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
+                {
+                    PathFinderNodes[x, y].IsWalkable = await IsWalkable(PathFinderNodes[x, y]);
+                }
+            }
+        }
+
+        private async Task<bool> IsWalkable(PathFinderNode node)
+        {
+            Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
+            Debug.DrawRay(ray.origin, ray.direction * 2, Color.red, 0.2f);
+            var colliders = Physics.RaycastAll(ray.origin, Vector3.up, ConstantVariables.DoorHeight+ 0.4f);
+
+            foreach (var hit in colliders)
+            {
+                if (hit.transform.TryGetComponent(out IPropUnit unit))
+                {
+                    if(unit.IsInitialized)
+                        return false;
+                }
+            }
+            return true;
         }
         
         public void UpdatePathFinderNode(Vector3Int cellPosition, bool isBig, bool? isWalkable = null, bool? isWall = null)

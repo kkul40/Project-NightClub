@@ -1,6 +1,4 @@
-﻿using Data;
-using Disco_Building;
-using NPCBehaviour;
+﻿using NPCBehaviour;
 using UnityEngine;
 
 namespace PropBehaviours

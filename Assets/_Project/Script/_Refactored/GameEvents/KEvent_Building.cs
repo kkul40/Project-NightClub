@@ -7,7 +7,7 @@ namespace DefaultNamespace._Refactored.Event
         public static event Action<bool> OnBuildingToggled; 
         public static event Action OnPlacementPlaced;
 
-        public static void PlacementPlaced()
+        public static void TriggerPlacementPlaced()
         {
             OnPlacementPlaced?.Invoke();
         }

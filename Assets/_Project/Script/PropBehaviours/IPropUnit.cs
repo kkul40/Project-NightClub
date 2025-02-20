@@ -12,6 +12,7 @@ namespace PropBehaviours
     [SelectionBase]
     public class IPropUnit : MonoBehaviour, IInteractable
     {
+        [ShowInInspector] public bool IsInitialized;
         [ShowInInspector] public int ID { get; private set; }
         [ShowInInspector] public Vector3Int CellPosition { get; private set; }
         [ShowInInspector] public Vector3 WorldPos { get; private set; }
@@ -24,6 +25,7 @@ namespace PropBehaviours
             RotationData rotationData, 
             ePlacementLayer placementLayer)
         {
+            IsInitialized = true;
             this.ID = ID;
             CellPosition = cellPosition;
             WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
