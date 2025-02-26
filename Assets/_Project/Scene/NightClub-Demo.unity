@@ -4141,6 +4141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingSystem: {fileID: 225165448}
   _gridSystem: {fileID: 884134052}
+  _mapGeneratorSystem: {fileID: 0}
 --- !u!1 &239320811
 GameObject:
   m_ObjectHideFlags: 0
@@ -24686,6 +24687,10 @@ PrefabInstance:
     - target: {fileID: 2688344837535098277, guid: df4eeeae6a372704d8873287ab3e813e, type: 3}
       propertyPath: m_Name
       value: GameInitializer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688344837535098277, guid: df4eeeae6a372704d8873287ab3e813e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8009297293914132484, guid: df4eeeae6a372704d8873287ab3e813e, type: 3}
       propertyPath: m_LocalPosition.x

@@ -86,7 +86,6 @@ public class ISurfacePlacementTool : ITool
             }
         }
     }
-    
 
     public void OnPlace(ToolHelper TH)
     {

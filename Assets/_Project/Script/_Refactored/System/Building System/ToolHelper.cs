@@ -3,6 +3,7 @@ using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using ExtensionMethods;
 using UnityEngine;
 
 public class ToolHelper
@@ -223,7 +224,6 @@ public class ToolHelper
             if (vector.x < 0 || vector.z < 0) return false;
             if (vector.x > DiscoData.Instance.MapData.CurrentMapSize.x || vector.z > DiscoData.Instance.MapData.CurrentMapSize.y) return false;
         }
-
         return true;
     }
 

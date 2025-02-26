@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using DiscoSystem;
 using TMPro;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Root
         [SerializeField] private GameObject loadingScreen;
         [SerializeField] private Image loadingBar;
         [SerializeField] private TextMeshProUGUI loadingText;
-        
+        [SerializeField] private CanvasGroup canvasGroup;
         
         private void Awake()
         {
@@ -37,6 +38,11 @@ namespace Root
 
             loadingScreen.SetActive(true);
             loadingBar.fillAmount = 0;
+            canvasGroup.alpha = 0;
+            
+            canvasGroup.DOFade(1, 0.2f).SetEase(Ease.OutCubic);
+            yield return new WaitUntil(() => canvasGroup.alpha == 1);
+            
             LoadingText(loadingBar.fillAmount);
             
             var sceneToLoad = SceneManager.LoadSceneAsync(sceneID);
@@ -50,9 +56,15 @@ namespace Root
             }
             
             yield return new WaitUntil( () => sceneToLoad.isDone);
+            yield return new WaitForSeconds(0.2f);
+            
+            canvasGroup.DOFade(0, 0.2f).SetEase(Ease.OutCubic);
+            yield return new WaitUntil(() => canvasGroup.alpha == 0);
+            
             loadingBar.fillAmount = 1;
             LoadingText(loadingBar.fillAmount);
             loadingScreen.SetActive(false);
+            canvasGroup.alpha = 0;
             
             isSceneLoading = false;
         }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Data;
 using Disco_ScriptableObject;
 using UnityEngine;
-using CharacterCustomization;
 using CharacterCustomization.UI;
 using NPCBehaviour;
 

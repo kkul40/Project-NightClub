@@ -15,17 +15,12 @@ public class BuildingModel : BaseModel
     
     public override void Initialize(IContext context)
     {
-        if (!IsInitialized)
-        {
-            StoreItems = new List<StoreItemSO>();
-            foreach (var item in DiscoData.Instance.AllInGameItems)
-            {
-                StoreItems.Add(item.Value);
-            }
+        base.Initialize(context);
+        
+        StoreItems = new List<StoreItemSO>();
+        foreach (var item in DiscoData.Instance.AllInGameItems)
+            StoreItems.Add(item.Value);
 
-            PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
-        }
+        PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
     }
-
-    
 }

@@ -7,6 +7,7 @@ namespace DefaultNamespace._Refactored
     {
         [SerializeField] private BuildingSystem _buildingSystem;
         [SerializeField] private GridSystem _gridSystem;
+        [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
         private void Awake()
         {
             if (_buildingSystem == null)
@@ -22,14 +23,10 @@ namespace DefaultNamespace._Refactored
             }
             
             
-            
-            
-            
-            
-            
-            
-            
-            
+            // Init Data
+            // Init Saving Data
+            // Generate Map
+            // Generate Scene Items
             
             _gridSystem.Initialize();
             _buildingSystem.Initialize();

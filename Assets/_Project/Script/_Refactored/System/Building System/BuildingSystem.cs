@@ -19,7 +19,7 @@ public class BuildingSystem : SimpleMiniMvcs<Context, BuildingModel, BuildingVie
         if (!IsInitialized)
         {
             _isInitialized = true;
-            
+
             //
             _context = new Context();
             // _context.ModelLocator.AddItem(new DummyModel(), "dummy");
