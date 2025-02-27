@@ -1,4 +1,6 @@
-namespace RMC.Mini.Model
+using Framework.Context;
+
+namespace Framework.Mvcs.Model
 {
     /// <summary>
     /// The Model stores runtime data 

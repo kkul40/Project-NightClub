@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using DiscoSystem;
 using UnityEngine;
 
-namespace PropBehaviours
+namespace PropBehaviours.LightBehaviours
 {
     public class BassSpeakerProp : IPropUnit
     {

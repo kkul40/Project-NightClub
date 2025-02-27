@@ -2,10 +2,8 @@
 using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
 using DiscoSystem;
-using NPCBehaviour;
 using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Data
 {
@@ -19,7 +17,6 @@ namespace Data
         [SerializeField] private MaterialItemSo DefaultTileMaterial;
         [SerializeField] private MaterialItemSo DefaultWallMaterial;
 
-        [FormerlySerializedAs("DefaultBoyNpcCustomization")]
         [Header("Default NPC Customization")] 
         [SerializeField] private CustomizationItemsSo DefaultNPCCustomization;
         [SerializeField] private CustomizationItemsSo DefaultBartenderCustomization;

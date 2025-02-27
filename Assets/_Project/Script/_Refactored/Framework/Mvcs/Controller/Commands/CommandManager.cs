@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Framework.Context;
 
-namespace RMC.Mini.Controller.Commands
+namespace Framework.Mvcs.Controller.Commands
 {
     /// <summary>
     /// The CommandManager allows to observe and invoke

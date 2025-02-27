@@ -1,10 +1,10 @@
-﻿using RMC.Mini.Controller;
-using RMC.Mini.Model;
-using RMC.Mini.Service;
-using RMC.Mini.View;
+﻿using Framework.Mvcs.Controller;
+using Framework.Mvcs.Model;
+using Framework.Mvcs.Service;
+using Framework.Mvcs.View;
 
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Structures.Standard
 {
     /// <summary>
     /// Enforces API for types which Initialize.
@@ -13,14 +13,14 @@ namespace RMC.Mini
     {
         //  Properties  ------------------------------------
         public bool IsInitialized { get; }
-        public IMiniMvcs<Context,
+        public IMiniMvcs<Context.Context,
             IModel,
             IView,
             IController,
             IService> MiniMvcs { get; }
 
         //  General Methods  ------------------------------
-        public void Initialize(IMiniMvcs<Context,
+        public void Initialize(IMiniMvcs<Context.Context,
             IModel,
             IView,
             IController,

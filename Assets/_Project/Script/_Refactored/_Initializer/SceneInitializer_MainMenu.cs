@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace._Refactored
+namespace _Initializer
 {
     public class SceneInitializer_MainMenu : MonoBehaviour
     {

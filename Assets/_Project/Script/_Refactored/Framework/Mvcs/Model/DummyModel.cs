@@ -1,5 +1,5 @@
 
-namespace RMC.Mini.Model
+namespace Framework.Mvcs.Model
 {
     /// <summary>
     /// Optional. Useful when you want to use 'no concern' here,

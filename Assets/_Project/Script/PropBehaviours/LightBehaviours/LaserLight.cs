@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Data;
-using DiscoSystem;
 using ExtensionMethods;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace PropBehaviours
+namespace PropBehaviours.LightBehaviours
 {
     public class LaserLight : IPropUnit
     {

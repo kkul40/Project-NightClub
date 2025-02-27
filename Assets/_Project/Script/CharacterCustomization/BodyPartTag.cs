@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum BodyPartType
+namespace CharacterCustomization
+{
+    public enum BodyPartType
     {
         Torso_Hips = 0,
         Torso_Lower_Chest,
@@ -24,3 +26,4 @@ public enum BodyPartType
     {
         [FormerlySerializedAs("type")] public BodyPartType bodyTag;
     }
+}

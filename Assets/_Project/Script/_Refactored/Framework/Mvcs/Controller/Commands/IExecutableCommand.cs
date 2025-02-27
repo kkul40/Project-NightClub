@@ -1,4 +1,6 @@
-﻿namespace RMC.Mini.Controller.Commands
+﻿using Framework.Context;
+
+namespace Framework.Mvcs.Controller.Commands
 {
 	/// <summary>
 	/// Complex type of <see cref="ICommand"/>.

@@ -1,6 +1,8 @@
 ﻿using System;
+using Framework.Context;
+using Framework.Structures.Standard;
 
-namespace RMC.Mini.Features
+namespace Framework.Features
 {
     /// <summary>
     /// A <see cref="IFeature"/> is a collection of one or more <see cref="IConcern"/>

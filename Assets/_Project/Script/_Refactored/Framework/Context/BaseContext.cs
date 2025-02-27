@@ -1,8 +1,9 @@
-﻿using RMC.Mini.Controller.Commands;
-using RMC.Mini.Model;
+﻿using Framework.Locators;
+using Framework.Mvcs.Controller.Commands;
+using Framework.Mvcs.Model;
 
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Context
 {
 	/// <summary>
 	/// See <see cref="Context"/>

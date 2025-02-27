@@ -1,5 +1,7 @@
 
-namespace RMC.Mini.Features
+using Framework.Context;
+
+namespace Framework.Features
 {
     /// <summary>
     /// Set up a collection of related <see cref="IConcern"/> instances

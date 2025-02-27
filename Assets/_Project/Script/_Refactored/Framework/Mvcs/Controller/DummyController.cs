@@ -1,9 +1,9 @@
-using RMC.Mini.Model;
-using RMC.Mini.Service;
-using RMC.Mini.View;
+using Framework.Mvcs.Model;
+using Framework.Mvcs.Service;
+using Framework.Mvcs.View;
 
 //Keep As:RMC.Mini.Controller
-namespace RMC.Mini.Controller
+namespace Framework.Mvcs.Controller
 {
     /// <summary>
     /// Optional. Useful when you want to use 'no concern' here,

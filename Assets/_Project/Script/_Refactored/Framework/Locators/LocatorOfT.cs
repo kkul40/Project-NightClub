@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RMC.Mini
+namespace Framework.Locators
 {
     //  Namespace Properties ------------------------------
 

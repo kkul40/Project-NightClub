@@ -1,7 +1,8 @@
 using System;
+using Framework.Context;
 
 //Keep As:RMC.Mini.Controller
-namespace RMC.Mini.Controller
+namespace Framework.Mvcs.Controller
 {
     //  Namespace Properties ------------------------------
 

@@ -1,13 +1,14 @@
-using Data;
-
-public interface ITool
+namespace System.Building_System.Controller.Tools
 {
-    // bool isCanceled { get; }
-    bool isFinished { get; }
+    public interface ITool
+    {
+        // bool isCanceled { get; }
+        bool isFinished { get; }
 
-    void OnStart(ToolHelper TH);
-    bool OnValidate(ToolHelper TH);
-    void OnUpdate(ToolHelper TH);
-    void OnPlace(ToolHelper TH);
-    void OnStop(ToolHelper TH);
+        void OnStart(ToolHelper TH);
+        bool OnValidate(ToolHelper TH);
+        void OnUpdate(ToolHelper TH);
+        void OnPlace(ToolHelper TH);
+        void OnStop(ToolHelper TH);
+    }
 }

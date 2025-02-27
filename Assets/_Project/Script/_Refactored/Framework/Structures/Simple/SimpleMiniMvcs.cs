@@ -1,12 +1,13 @@
 using System;
-using RMC.Mini.Controller;
-using RMC.Mini.Model;
-using RMC.Mini.Service;
-using RMC.Mini.View;
+using Framework.Context;
+using Framework.Mvcs.Controller;
+using Framework.Mvcs.Model;
+using Framework.Mvcs.Service;
+using Framework.Mvcs.View;
 using UnityEngine;
 
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Structures.Simple
 {
     /// <summary>
     /// The SimpleMiniMvcs is the parent object containing

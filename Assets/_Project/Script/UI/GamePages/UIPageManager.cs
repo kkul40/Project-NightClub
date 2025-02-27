@@ -122,6 +122,8 @@ namespace UI.GamePages
             return false;
         }
 
+        public SavePriority Priority { get; } = SavePriority.Medium;
+
         public void LoadData(GameData gameData)
         {
             _settingsPage.LoadSettingsData(gameData);

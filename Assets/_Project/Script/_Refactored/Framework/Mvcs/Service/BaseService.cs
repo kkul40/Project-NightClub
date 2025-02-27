@@ -1,6 +1,7 @@
 using System;
+using Framework.Context;
 
-namespace RMC.Mini.Service
+namespace Framework.Mvcs.Service
 {
     //  Namespace Properties ------------------------------
 

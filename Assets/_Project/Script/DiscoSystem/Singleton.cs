@@ -27,10 +27,5 @@ namespace DiscoSystem
                 return _instance;
             }
         }
-
-        public virtual void Initialize(GameInitializer gameInitializer)
-        {
-            // Debug.LogError(typeof(T) + "Not Initialized");
-        }
     }
 }

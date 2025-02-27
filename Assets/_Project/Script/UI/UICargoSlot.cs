@@ -48,13 +48,13 @@ namespace UI
 
             amountText.text = "0";
             FindObjectOfType<OpenCargoButtonBase>().OnClick();
-            BuildingManager.Instance.StopBuild();
+            // BuildingManager.Instance.StopBuild();
         }
 
         public void OnClick()
         {
-            if (DiscoData.Instance.inventory.Items.ContainsKey(StoreItemSo))
-                BuildingManager.Instance.StartBuild(StoreItemSo, CallBackOnPlace:() => Action);
+            if (DiscoData.Instance.inventory.Items.ContainsKey(StoreItemSo)) ;
+            // BuildingManager.Instance.StartBuild(StoreItemSo, CallBackOnPlace:() => Action);
         }
 
         private void Action()

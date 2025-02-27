@@ -1,6 +1,6 @@
 ﻿
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Context
 {
 	/// <summary>
 	/// Most users will use <see cref="BaseContext"/>

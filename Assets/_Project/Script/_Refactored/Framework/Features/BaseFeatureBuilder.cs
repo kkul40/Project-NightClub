@@ -1,10 +1,12 @@
 using System;
-using RMC.Mini.Controller;
-using RMC.Mini.Model;
-using RMC.Mini.Service;
-using RMC.Mini.View;
+using Framework.Locators;
+using Framework.Mvcs.Controller;
+using Framework.Mvcs.Model;
+using Framework.Mvcs.Service;
+using Framework.Mvcs.View;
+using Framework.Structures.Standard;
 
-namespace RMC.Mini.Features
+namespace Framework.Features
 {
     /// <summary>
     /// The Model stores runtime data 
@@ -16,14 +18,14 @@ namespace RMC.Mini.Features
 
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
-        public IMiniMvcs<Context, IModel, IView, IController, IService> MiniMvcs { get; private set; }
+        public IMiniMvcs<Context.Context, IModel, IView, IController, IService> MiniMvcs { get; private set; }
         public Locator<IFeature> FeatureLocator { get; private set; }
         
         //  Fields ----------------------------------------
 
         
         //  Initialization  -------------------------------
-        public virtual void Initialize(IMiniMvcs<Context, IModel, IView, IController, IService> miniMvcs)
+        public virtual void Initialize(IMiniMvcs<Context.Context, IModel, IView, IController, IService> miniMvcs)
         {
             if (!IsInitialized)
             {

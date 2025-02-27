@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DefaultNamespace._Refactored.Event
+namespace GameEvents
 {
     public enum eVerificiationTypes
     {

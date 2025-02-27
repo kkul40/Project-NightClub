@@ -1,6 +1,9 @@
-﻿using RMC.Mini.Service;
+﻿using Framework.Mvcs.Service;
 
-public class BuildingService : BaseService
+namespace System.Building_System.Service
 {
+    public class BuildingService : BaseService
+    {
     
+    }
 }

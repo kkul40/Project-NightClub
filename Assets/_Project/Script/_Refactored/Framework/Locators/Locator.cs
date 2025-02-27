@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Locators
 {
     //  Namespace Properties ------------------------------
 

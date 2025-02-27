@@ -13,7 +13,7 @@ namespace PropBehaviours
         public void OnPropPlaced()
         {
             Chairs = new List<Chair>();
-            foreach (var prop in DiscoData.Instance.GetPropList)
+            foreach (var prop in DiscoData.Instance.GetPropList())
             {
                 if (Chairs.Count > 3) break;
 

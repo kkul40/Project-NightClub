@@ -1,5 +1,4 @@
 ﻿using Data;
-using Disco_Building;
 using UnityEngine;
 
 namespace UI.GamePages.GameButtons
@@ -9,7 +8,8 @@ namespace UI.GamePages.GameButtons
         [SerializeField] private ePlacementLayer removeLayer;
         public override void OnClick()
         {
-            BuildingManager.Instance.StartRemoving(removeLayer);
+            // TODO Implement Removing Toll By Surface Layer            
+            // BuildingManager.Instance.StartRemoving(removeLayer);
         }
     }
 }

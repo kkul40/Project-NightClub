@@ -1,5 +1,7 @@
-﻿using ScriptableObjects;
+﻿using Prop_Behaviours.Bar;
+using ScriptableObjects;
 using UI.GamePages;
+using UI.PopUp;
 using UnityEngine;
 
 namespace PropBehaviours

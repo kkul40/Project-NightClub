@@ -1,6 +1,7 @@
 using System;
+using Framework.Context;
 
-namespace RMC.Mini.Model
+namespace Framework.Mvcs.Model
 {
     //  Namespace Properties ------------------------------
 

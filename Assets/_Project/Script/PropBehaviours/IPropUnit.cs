@@ -5,6 +5,7 @@ using DiscoSystem;
 using ExtensionMethods;
 using Sirenix.OdinInspector;
 using UI.GamePages;
+using UI.PopUp;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -19,7 +20,7 @@ namespace PropBehaviours
         [ShowInInspector] public RotationData RotationData { get; private set; }
         [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
 
-        public virtual void Initialize(
+        public void Initialize(
             int ID, 
             Vector3Int cellPosition, 
             RotationData rotationData, 
@@ -28,7 +29,8 @@ namespace PropBehaviours
             IsInitialized = true;
             this.ID = ID;
             CellPosition = cellPosition;
-            WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
+            // WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
+            WorldPos = transform.position;
             RotationData = rotationData;
             PlacementLayer = placementLayer;
             

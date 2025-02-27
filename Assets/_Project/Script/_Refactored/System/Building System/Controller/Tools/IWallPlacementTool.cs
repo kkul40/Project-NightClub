@@ -1,127 +1,129 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using ExtensionMethods;
+using GameEvents;
 using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class IWallPlacementTool : ITool
+namespace System.Building_System.Controller.Tools
 {
-    private GameObject _tempObject;
-    
-    private PlacementItemSO _placementItem;
-    private List<MeshRenderer> _tempMeshRenderer;
-
-    private List<WallAssignmentData> _walls;
-    
-    public bool isFinished { get; }
-    public void OnStart(ToolHelper TH)
+    public class IWallPlacementTool : ITool
     {
-        _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+        private GameObject _tempObject;
+    
+        private PlacementItemSO _placementItem;
+        private List<MeshRenderer> _tempMeshRenderer;
 
-        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
-        _tempObject.transform.SetParent(null);
-        
-        TH.CalculateBounds(_tempObject.GetComponents<Collider>());
-
-        _walls = TH.DiscoData.MapData.WallDatas.ToList();
-
-        _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-    }
-
-    public bool OnValidate(ToolHelper TH)
-    {
-        if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
-        if (!TH.HeightCheck()) return false;
-        if (!TH.MapBoundryCheck()) return false; 
-
-        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * (ToolHelper.HitCollisionLeniency - 0.02f), TH.LastRotation);
-        for (int i = 0; i < colliders.Length; i++)
+        private List<WallAssignmentData> _walls;
+    
+        public bool isFinished { get; }
+        public void OnStart(ToolHelper TH)
         {
-            var hitObject = colliders[i];
+            _placementItem = TH.SelectedStoreItem as PlacementItemSO;
 
-            if (hitObject.TryGetComponent(out AutoDoor door)) return false;
+            _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
+            _tempObject.transform.SetParent(null);
+        
+            TH.CalculateBounds(_tempObject.GetComponents<Collider>());
+
+            _walls = TH.DiscoData.MapData.WallDatas.ToList();
+
+            _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+        }
+
+        public bool OnValidate(ToolHelper TH)
+        {
+            if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
+            if (!TH.HeightCheck()) return false;
+            if (!TH.MapBoundryCheck()) return false; 
+
+            var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * (ToolHelper.HitCollisionLeniency - 0.02f), TH.LastRotation);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var hitObject = colliders[i];
+
+                if (hitObject.TryGetComponent(out AutoDoor door)) return false;
             
-            var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
-            if (hitUnit == null || hitUnit.transform == _tempObject.transform)
-                continue;
+                var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
+                if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                    continue;
 
-            IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
+                IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
            
-            if (propUnit != null)
-            {
-                if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
-                    return false;
+                if (propUnit != null)
+                {
+                    if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
+                        return false;
 
-                if (propUnit.PlacementLayer == ePlacementLayer.FloorProp)
-                    return false;
+                    if (propUnit.PlacementLayer == ePlacementLayer.FloorProp)
+                        return false;
+                }
+            }
+        
+            return true;
+        }
+
+        public void OnUpdate(ToolHelper TH)
+        {
+            TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
+        
+            if (TH.InputSystem.FreePlacementKey) // Free Placement
+            {
+                TH.LastPosition = TH.InputSystem.MousePosition;
+            }
+        
+            WallAssignmentData closestWall = TH.GetClosestWall();
+            if (closestWall != null)
+                TH.LastRotation = closestWall.assignedWall.transform.rotation;
+        
+
+            _tempObject.transform.rotation = TH.LastRotation;
+            _tempObject.transform.position = TH.LastPosition;
+        
+            TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+
+            if (TH.InputSystem.LeftClickOnWorld)
+            {
+                if (OnValidate(TH))
+                {
+                    OnPlace(TH);
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                }
+                else
+                {
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                }
             }
         }
-        
-        return true;
-    }
 
-    public void OnUpdate(ToolHelper TH)
-    {
-        TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
-        
-        if (TH.InputSystem.FreePlacementKey) // Free Placement
+        public void OnPlace(ToolHelper TH)
         {
-            TH.LastPosition = TH.InputSystem.MousePosition;
-        }
+            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
-        WallAssignmentData closestWall = TH.GetClosestWall();
-        if (closestWall != null)
-            TH.LastRotation = closestWall.assignedWall.transform.rotation;
-        
-
-        _tempObject.transform.rotation = TH.LastRotation;
-        _tempObject.transform.position = TH.LastPosition;
-        
-        TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
-
-        if (TH.InputSystem.LeftClickOnWorld)
-        {
-            if (OnValidate(TH))
-            {
-                OnPlace(TH);
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-            }
+            IPropUnit unit;
+            if (obj.TryGetComponent(out IPropUnit propUnit))
+                unit = propUnit;
             else
-            {
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-            }
+                unit = obj.AddComponent<IPropUnit>();
+
+            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
+        
+            obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
+        
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
         }
-    }
 
-    public void OnPlace(ToolHelper TH)
-    {
-        var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
-        
-        IPropUnit unit;
-        if (obj.TryGetComponent(out IPropUnit propUnit))
-            unit = propUnit;
-        else
-            unit = obj.AddComponent<IPropUnit>();
-
-        unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
-        
-        obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
-        
-        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
-        KEvent_Building.TriggerPlacementPlaced();
-    }
-
-    public void OnStop(ToolHelper TH)
-    {
-        if (_tempObject != null)
+        public void OnStop(ToolHelper TH)
         {
-            Object.Destroy(_tempObject.gameObject);
+            if (_tempObject != null)
+            {
+                UnityEngine.Object.Destroy(_tempObject.gameObject);
+            }
         }
     }
 }

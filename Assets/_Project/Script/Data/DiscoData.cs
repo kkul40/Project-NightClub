@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Disco_ScriptableObject;
@@ -13,18 +14,24 @@ namespace Data
     public class DiscoData : Singleton<DiscoData>, ISaveLoad
     {
         // Verileri Once Data ya yaz daha sonra Modeli datadaki veriye gore guncelle!
-        public PlacementDataHandler placementDataHandler => MapGeneratorSystem.Instance.placementDataHandler;
-        public MapData MapData => MapGeneratorSystem.Instance.MapData;
+        public MapData MapData;
         public Inventory inventory = new();
         public Dictionary<int ,StoreItemSO> AllInGameItems { get; private set; }
         public Dictionary<int, DrinkSO> AllInGameDrinks { get; private set; }
+        
+        //            instanceID   StoreID created-obj   Pos      Rot
+        public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>> PlacedItems;
 
-        public List<IPropUnit> GetPropList => placementDataHandler.GetPropList;
-
-        public override void Initialize(GameInitializer gameInitializer)
+        public void Initialize(GameData gameData)
         {
+            LoadData(gameData);
+            
             AllInGameItems = new Dictionary<int, StoreItemSO>();
             AllInGameDrinks = new Dictionary<int, DrinkSO>();
+            
+            //
+            PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
+            //
             
             var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
             foreach (var gItems in allGameItems)
@@ -35,8 +42,11 @@ namespace Data
                 AllInGameDrinks.Add(dItem.ID, dItem);
         }
 
+        public SavePriority Priority { get; } = SavePriority.VeryHigh;
+
         public void LoadData(GameData gameData)
         {
+            MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
             Debug.Log("Disco Data Loaded");
         }
@@ -64,6 +74,30 @@ namespace Data
 
             return null;
         }
+        
+        public List<T> GetPlacedPropsByType<T>()
+        {
+            // TODO Fill This
+            return null;
+        }
+
+        public List<IPropUnit> GetPropList()
+        {
+            List<IPropUnit> output = new List<IPropUnit>();
+            foreach (var value in PlacedItems.Values)
+            {
+                if (value.Item2.TryGetComponent(out IPropUnit unit))
+                {
+                    output.Add(unit);
+                }
+            }
+
+            return output;
+        }
+        // {
+        //     // TODO Fill This
+        //     return null;
+        // }
     }
     
     public enum eDanceStyle

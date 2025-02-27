@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 
 namespace DiscoSystem
 {
+    // TODO Make This Class Part Of Music Player or just put all this into MusicPlayer
     public class SFXPlayer : Singleton<SFXPlayer>, ISaveLoad
     {
         private AudioSource _audioSource;
@@ -22,6 +23,7 @@ namespace DiscoSystem
         {
             _audioSource = GetComponent<AudioSource>();
         }
+        
         public void PlaySoundEffect(AudioClip audioClip, bool timerPlay = false)
         {
             float time = Time.time;
@@ -43,6 +45,8 @@ namespace DiscoSystem
             SoundVolume = value;
             mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
         }
+
+        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

@@ -1,10 +1,8 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using DiscoSystem;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace PropBehaviours
+namespace PropBehaviours.LightBehaviours
 {
     public class BassLightProp : IPropUnit
     {

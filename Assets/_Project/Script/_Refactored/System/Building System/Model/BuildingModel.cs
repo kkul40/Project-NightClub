@@ -1,26 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
 using Disco_ScriptableObject;
-using RMC.Mini;
-using RMC.Mini.Model;
+using Framework.Context;
+using Framework.Mvcs.Model;
 using UnityEngine;
 
-public class BuildingModel : BaseModel
+namespace System.Building_System.Model
 {
-    public List<StoreItemSO> StoreItems;
-
-    //            instanceID   StoreID created-obj   Pos      Rot
-    public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>> PlacedItems;
-    
-    public override void Initialize(IContext context)
+    public class BuildingModel : BaseModel
     {
-        base.Initialize(context);
-        
-        StoreItems = new List<StoreItemSO>();
-        foreach (var item in DiscoData.Instance.AllInGameItems)
-            StoreItems.Add(item.Value);
+        public List<StoreItemSO> StoreItems;
 
-        PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
+        public override void Initialize(IContext context)
+        {
+            base.Initialize(context);
+        
+            StoreItems = new List<StoreItemSO>();
+            foreach (var item in DiscoData.Instance.AllInGameItems)
+                StoreItems.Add(item.Value);
+        }
+
+        public void AddPlacmeentItem(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation)
+        {
+            DiscoData.Instance.PlacedItems.Add(sceneObject.GetInstanceID(), new Tuple<int, Transform, Vector3, Quaternion>(itemSo.ID, sceneObject, placedPosition, placedRotation));
+        }
+
+        public void RemovePlacementItem(int ID)
+        {
+            DiscoData.Instance.PlacedItems.Remove(ID);
+        }
+
+        public Transform GetPlacedSceneObjectByID(int ID)
+        {
+            return DiscoData.Instance.PlacedItems[ID].Item2;
+        }
     }
 }

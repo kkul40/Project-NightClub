@@ -8,105 +8,108 @@ using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class ISurfacePlacementTool : ITool
+namespace System.Building_System.Controller.Tools
 {
-    private GameObject _tempObject;
-    private PlacementItemSO _placementItem;
-    private List<MeshRenderer> _tempMeshRenderer;
-
-    public bool isFinished { get; }
-    public void OnStart(ToolHelper TH)
+    public class ISurfacePlacementTool : ITool
     {
-        _placementItem = TH.SelectedStoreItem as PlacementItemSO;
-        
-        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
-        _tempObject.transform.SetParent(null);
-        
-        TH.CalculateBounds(_tempObject.GetComponents<Collider>());
-        
-        _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-    }
+        private GameObject _tempObject;
+        private PlacementItemSO _placementItem;
+        private List<MeshRenderer> _tempMeshRenderer;
 
-    public bool OnValidate(ToolHelper TH)
-    {
-        var gridData = TH.DiscoData.MapData.GetFloorGridData((int)TH.LastPosition.x, (int)TH.LastPosition.z);
-        if (gridData == null)
-            return false;
-        
-        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * 0.98f, TH.LastRotation);
-        for (int i = 0; i < colliders.Length; i++)
+        public bool isFinished { get; }
+        public void OnStart(ToolHelper TH)
         {
-            var hitObject = colliders[i];
+            _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+        
+            _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
+            _tempObject.transform.SetParent(null);
+        
+            TH.CalculateBounds(_tempObject.GetComponents<Collider>());
+        
+            _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+        }
 
-            var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
-            if (hitUnit == null || hitUnit.transform == _tempObject.transform)
-                continue;
-
-            if (hitObject.TryGetComponent(out Wall wall))
+        public bool OnValidate(ToolHelper TH)
+        {
+            var gridData = TH.DiscoData.MapData.GetFloorGridData((int)TH.LastPosition.x, (int)TH.LastPosition.z);
+            if (gridData == null)
                 return false;
-
-            IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
-           
-            if (propUnit != null)
+        
+            var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * 0.98f, TH.LastRotation);
+            for (int i = 0; i < colliders.Length; i++)
             {
-                if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
+                var hitObject = colliders[i];
+
+                var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
+                if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                    continue;
+
+                if (hitObject.TryGetComponent(out Wall wall))
                     return false;
+
+                IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
+           
+                if (propUnit != null)
+                {
+                    if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
+                        return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
 
-    public void OnUpdate(ToolHelper TH)
-    {
-        Vector3 mousePos = TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
-        
-        bool validation = OnValidate(TH);
-
-        var gridData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
-        
-        if (gridData != null)
+        public void OnUpdate(ToolHelper TH)
         {
-            TH.LastPosition = gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
-        }
+            Vector3 mousePos = TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
         
-        TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, validation);
+            bool validation = OnValidate(TH);
 
-        _tempObject.transform.position = TH.LastPosition;
+            var gridData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
         
-        if (TH.InputSystem.LeftClickOnWorld)
-        {
-            if (OnValidate(TH))
+            if (gridData != null)
             {
-                OnPlace(TH);
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                TH.LastPosition = gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
             }
+        
+            TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, validation);
+
+            _tempObject.transform.position = TH.LastPosition;
+        
+            if (TH.InputSystem.LeftClickOnWorld)
+            {
+                if (OnValidate(TH))
+                {
+                    OnPlace(TH);
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                }
+                else
+                {
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                }
+            }
+        }
+
+        public void OnPlace(ToolHelper TH)
+        {
+            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+        
+            IPropUnit unit;
+            if (obj.TryGetComponent(out IPropUnit propUnit))
+                unit = propUnit;
             else
-            {
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-            }
+                unit = obj.AddComponent<IPropUnit>();
+
+            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.BaseSurface);
+        
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
         }
-    }
 
-    public void OnPlace(ToolHelper TH)
-    {
-        var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
-        
-        IPropUnit unit;
-        if (obj.TryGetComponent(out IPropUnit propUnit))
-            unit = propUnit;
-        else
-            unit = obj.AddComponent<IPropUnit>();
-
-        unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.BaseSurface);
-        
-        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
-    }
-
-    public void OnStop(ToolHelper TH)
-    {
-        if (_tempObject != null)
+        public void OnStop(ToolHelper TH)
         {
-            Object.Destroy(_tempObject.gameObject);
+            if (_tempObject != null)
+            {
+                UnityEngine.Object.Destroy(_tempObject.gameObject);
+            }
         }
     }
 }

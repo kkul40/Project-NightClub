@@ -1,4 +1,6 @@
-namespace RMC.Mini.View
+using Framework.Context;
+
+namespace Framework.Mvcs.View
 {
     /// <summary>
     /// The View handles user interface and user input

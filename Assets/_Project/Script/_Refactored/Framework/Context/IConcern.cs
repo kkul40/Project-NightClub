@@ -3,8 +3,9 @@
 //Keep As:RMC.Mini
 
 using System;
+using Framework.Structures.Simple;
 
-namespace RMC.Mini
+namespace Framework.Context
 {
     /// <summary>
     /// Enforces API for types which are one

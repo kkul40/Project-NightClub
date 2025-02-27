@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Data;
-using DefaultNamespace._Refactored.Event;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
@@ -8,197 +7,200 @@ using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class IFloorPlacementTool : ITool
+namespace System.Building_System.Controller.Tools
 {
-    private GameObject _tempObject;
-
-    private PlacementItemSO _placementItem;
-    private Vector3 mouseDeltaStart;
-    private List<MeshRenderer> _tempMeshRenderer;
-
-    private Transform hitSurface;
-    private bool isSnappedToSurface;
-    
-    // Box Collider Values
-    // private Collider _collider;
-
-    public bool isFinished { get; private set; }
-
-    public void OnStart(ToolHelper TH)
+    public class IFloorPlacementTool : ITool
     {
-        _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+        private GameObject _tempObject;
 
-        _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
-        _tempObject.transform.SetParent(null);
-        
-        TH.CalculateBounds(_tempObject.GetComponents<Collider>());
+        private PlacementItemSO _placementItem;
+        private Vector3 mouseDeltaStart;
+        private List<MeshRenderer> _tempMeshRenderer;
 
-        _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
-    }
+        private Transform hitSurface;
+        private bool isSnappedToSurface;
     
-    public bool OnValidate(ToolHelper TH)
-    {
-        // Check For Wall
-        // Check For Other Object
-        // Check For In Boundries
-        // Check For Surface
-        
-        // Boundry Check
-        if (!TH.HeightCheck()) return false;
-        
-        // Map Boundry
-        if (!TH.MapBoundryCheck()) return false;
-        
-        if (isSnappedToSurface)
-            if (!CheckIfPlacedOnSurface(TH)) return false;
-        
-        // Collision Check
-        var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
-        for (int i = 0; i < colliders.Length; i++)
+        // Box Collider Values
+        // private Collider _collider;
+
+        public bool isFinished { get; private set; }
+
+        public void OnStart(ToolHelper TH)
         {
-            var hitObject = colliders[i];
+            _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+
+            _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
+            _tempObject.transform.SetParent(null);
+        
+            TH.CalculateBounds(_tempObject.GetComponents<Collider>());
+
+            _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+        }
+    
+        public bool OnValidate(ToolHelper TH)
+        {
+            // Check For Wall
+            // Check For Other Object
+            // Check For In Boundries
+            // Check For Surface
+        
+            // Boundry Check
+            if (!TH.HeightCheck()) return false;
+        
+            // Map Boundry
+            if (!TH.MapBoundryCheck()) return false;
+        
+            if (isSnappedToSurface)
+                if (!CheckIfPlacedOnSurface(TH)) return false;
+        
+            // Collision Check
+            var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var hitObject = colliders[i];
             
-            if (hitObject.TryGetComponent(out AutoDoor door)) return false;
+                if (hitObject.TryGetComponent(out AutoDoor door)) return false;
 
-            var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
-            if (hitUnit == null || hitUnit.transform == _tempObject.transform)
-                continue;
+                var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
+                if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                    continue;
 
-            IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
+                IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
            
-            if (propUnit != null)
-            {
-                if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
-                    return false;
+                if (propUnit != null)
+                {
+                    if (propUnit.PlacementLayer == _placementItem.PlacementLayer)
+                        return false;
 
-                if (propUnit.PlacementLayer == ePlacementLayer.WallProp)
-                    return false;
+                    if (propUnit.PlacementLayer == ePlacementLayer.WallProp)
+                        return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
     
-    public void OnUpdate(ToolHelper TH)
-    {
-        FloorRotation(TH);
-        FloorPositioning(TH);
-
-        // Surface Placement Check
-        if (_placementItem.canPlaceOntoOtherObjects)
+        public void OnUpdate(ToolHelper TH)
         {
-            hitSurface = TH.InputSystem.GetHitTransformWithLayer(ToolHelper.SurfaceLayerID);
+            FloorRotation(TH);
+            FloorPositioning(TH);
 
-            if (hitSurface != null)
-                TH.SnapToSurfaceGrid(TH, hitSurface);
+            // Surface Placement Check
+            if (_placementItem.canPlaceOntoOtherObjects)
+            {
+                hitSurface = TH.InputSystem.GetHitTransformWithLayer(ToolHelper.SurfaceLayerID);
 
-            isSnappedToSurface = hitSurface != null;
-        }
+                if (hitSurface != null)
+                    TH.SnapToSurfaceGrid(TH, hitSurface);
+
+                isSnappedToSurface = hitSurface != null;
+            }
          
-        // Apply To Object
-        _tempObject.transform.position = TH.LastPosition;
-        _tempObject.transform.rotation = TH.LastRotation;
+            // Apply To Object
+            _tempObject.transform.position = TH.LastPosition;
+            _tempObject.transform.rotation = TH.LastRotation;
         
-        TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+            TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
 
-        if (TH.InputSystem.LeftClickOnWorld)
-        {
-            if (OnValidate(TH))
+            if (TH.InputSystem.LeftClickOnWorld)
             {
-                OnPlace(TH);
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-            }
-            else
-            {
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                if (OnValidate(TH))
+                {
+                    OnPlace(TH);
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                }
+                else
+                {
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                }
             }
         }
-    }
     
-    public void OnPlace(ToolHelper TH)
-    {
-        var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
-
-        // Setting Parent Object
-        if (isSnappedToSurface)
+        public void OnPlace(ToolHelper TH)
         {
-             Transform snapHolder = hitSurface.transform.parent.Find("Snapped Object Holder");
+            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
-            if (snapHolder == null)
+            // Setting Parent Object
+            if (isSnappedToSurface)
             {
-                GameObject newHolder = new GameObject();
-                newHolder.transform.SetParent(hitSurface.parent);
+                Transform snapHolder = hitSurface.transform.parent.Find("Snapped Object Holder");
 
-                newHolder.name = "Snapped Object Holder";
-                snapHolder = newHolder.transform;
-            }
+                if (snapHolder == null)
+                {
+                    GameObject newHolder = new GameObject();
+                    newHolder.transform.SetParent(hitSurface.parent);
+
+                    newHolder.name = "Snapped Object Holder";
+                    snapHolder = newHolder.transform;
+                }
             
-            obj.transform.SetParent(snapHolder);
-        }
-        else
-        {
-            obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
-        }
-
-        IPropUnit unit;
-        if (obj.TryGetComponent(out IPropUnit propUnit))
-            unit = propUnit;
-        else
-            unit = obj.AddComponent<IPropUnit>();
-
-        unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.FloorProp);
-
-        TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
-    }
-
-    public void OnStop(ToolHelper TH)
-    {
-        if (_tempObject != null)
-        {
-            Object.Destroy(_tempObject.gameObject);
-        }
-    }
-    
-    /// <summary>
-    /// //////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
-    ///
-
-    private void FloorPositioning(ToolHelper TH)
-    {
-        TH.LastPosition = TH.SnapToGrid(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID), _placementItem.GridSizes);
-        TH.LastPosition.y = 0;
-
-        if (TH.InputSystem.FreePlacementKey) // Free Placement
-        {
-            TH.LastPosition = InputSystem.Instance.MousePosition;
-        }
-    }
-
-    private void FloorRotation(ToolHelper TH)
-    {
-        if (TH.InputSystem.RotateLeft)
-            TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
-        else if(TH.InputSystem.RotateRight)
-            TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
-    }
-
-    private bool CheckIfPlacedOnSurface(ToolHelper TH)
-    {
-        foreach (var vector3 in TH.GetRotatedFloorCorners(TH.LastRotation))
-        {
-            Debug.Log(vector3);
-            Ray ray = new Ray(vector3, Vector3.down);
-            // TODO + Check If It Hits a surface of a different object.
-            if (Physics.CheckSphere(vector3, 0.1f, 1 << ToolHelper.SurfaceLayerID))
-            {
-                Debug.DrawRay(ray.origin, ray.direction, Color.green);
+                obj.transform.SetParent(snapHolder);
             }
             else
             {
-                Debug.DrawRay(ray.origin, ray.direction, Color.red);
-                return false;
+                obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
+            }
+
+            IPropUnit unit;
+            if (obj.TryGetComponent(out IPropUnit propUnit))
+                unit = propUnit;
+            else
+                unit = obj.AddComponent<IPropUnit>();
+
+            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.FloorProp);
+
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+        }
+
+        public void OnStop(ToolHelper TH)
+        {
+            if (_tempObject != null)
+            {
+                UnityEngine.Object.Destroy(_tempObject.gameObject);
             }
         }
-        return true;
+    
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        ///
+
+        private void FloorPositioning(ToolHelper TH)
+        {
+            TH.LastPosition = TH.SnapToGrid(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID), _placementItem.GridSizes);
+            TH.LastPosition.y = 0;
+
+            if (TH.InputSystem.FreePlacementKey) // Free Placement
+            {
+                TH.LastPosition = InputSystem.Instance.MousePosition;
+            }
+        }
+
+        private void FloorRotation(ToolHelper TH)
+        {
+            if (TH.InputSystem.RotateLeft)
+                TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
+            else if(TH.InputSystem.RotateRight)
+                TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
+        }
+
+        private bool CheckIfPlacedOnSurface(ToolHelper TH)
+        {
+            foreach (var vector3 in TH.GetRotatedFloorCorners(TH.LastRotation))
+            {
+                Debug.Log(vector3);
+                Ray ray = new Ray(vector3, Vector3.down);
+                // TODO + Check If It Hits a surface of a different object.
+                if (Physics.CheckSphere(vector3, 0.1f, 1 << ToolHelper.SurfaceLayerID))
+                {
+                    Debug.DrawRay(ray.origin, ray.direction, Color.green);
+                }
+                else
+                {
+                    Debug.DrawRay(ray.origin, ray.direction, Color.red);
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

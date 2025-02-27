@@ -1,5 +1,5 @@
 ﻿//Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Context
 {
     /// <summary>
     /// Enforces API for types which Initialize.

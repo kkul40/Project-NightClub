@@ -1,4 +1,6 @@
-namespace RMC.Mini.Service
+using Framework.Context;
+
+namespace Framework.Mvcs.Service
 {
     /// <summary>
     /// The Service handles external data 

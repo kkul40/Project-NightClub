@@ -1,11 +1,13 @@
 using System;
-using RMC.Mini.Controller;
-using RMC.Mini.Model;
-using RMC.Mini.Service;
-using RMC.Mini.View;
+using Framework.Context;
+using Framework.Locators;
+using Framework.Mvcs.Controller;
+using Framework.Mvcs.Model;
+using Framework.Mvcs.Service;
+using Framework.Mvcs.View;
 
 //Keep As:RMC.Mini
-namespace RMC.Mini
+namespace Framework.Structures.Standard
 {
     /// <summary>
     /// The MiniMvcs is the parent object containing

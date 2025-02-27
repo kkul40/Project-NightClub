@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Disco_Building
+namespace System
 {
     public enum FXType
     {

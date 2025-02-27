@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Numerics;
-using DiscoSystem;
 
-namespace DefaultNamespace._Refactored.Event
+namespace GameEvents
 {
     public static class KEvent_Cursor
     {
         public static event Action<CursorSystem.eCursorTypes> OnChangeCursor;
         public static event Action OnChangeCursorToPrevious;
+        public static event Action OnResetSelection;
         public static event Action OnChangeToDefault;
         
 
@@ -24,6 +23,11 @@ namespace DefaultNamespace._Refactored.Event
         public static void ChangeToDefault()
         {
             OnChangeToDefault?.Invoke();
+        }
+
+        public static void TriggerResetSelection()
+        {
+            OnResetSelection?.Invoke();
         }
     }
 

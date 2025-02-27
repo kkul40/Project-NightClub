@@ -4,98 +4,101 @@ using Disco_ScriptableObject;
 using DiscoSystem;
 using UnityEngine;
 
-public class IWallMaterialPlacementTool : ITool
+namespace System.Building_System.Controller.Tools
 {
-    private MaterialItemSo _materialItemSo;
-    
-    private IChangableMaterial _mouseOnChangableMaterial;
-    private IChangableMaterial _currentChangableMaterial;
-    private MaterialItemSo _storedMaterial;
-    
-    private Quaternion _wallRotation;
-    
-    private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
-
-    public bool isFinished { get; private set; }
-    public void OnStart(ToolHelper TH)
+    public class IWallMaterialPlacementTool : ITool
     {
-        _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
-        _materialItemSo = TH.SelectedStoreItem as MaterialItemSo;
-    }
+        private MaterialItemSo _materialItemSo;
+    
+        private IChangableMaterial _mouseOnChangableMaterial;
+        private IChangableMaterial _currentChangableMaterial;
+        private MaterialItemSo _storedMaterial;
+    
+        private Quaternion _wallRotation;
+    
+        private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
-    public bool OnValidate(ToolHelper TH)
-    {
-        if (_materialItemSo.Material == _storedMaterial.Material) return false;
-        return true;
-    }
+        public bool isFinished { get; private set; }
+        public void OnStart(ToolHelper TH)
+        {
+            _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
+            _materialItemSo = TH.SelectedStoreItem as MaterialItemSo;
+        }
 
-    public void OnUpdate(ToolHelper TH)
-    {
-        _mouseOnChangableMaterial = GetClosestWallMaterial(TH);
+        public bool OnValidate(ToolHelper TH)
+        {
+            if (_materialItemSo.Material == _storedMaterial.Material) return false;
+            return true;
+        }
+
+        public void OnUpdate(ToolHelper TH)
+        {
+            _mouseOnChangableMaterial = GetClosestWallMaterial(TH);
         
-        if (_mouseOnChangableMaterial == null)
+            if (_mouseOnChangableMaterial == null)
+            {
+                ResetPreviousMaterial();
+                return;
+            }
+
+            if (_mouseOnChangableMaterial != _currentChangableMaterial)
+            {
+                ResetPreviousMaterial();
+                _currentChangableMaterial = _mouseOnChangableMaterial;
+
+                _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
+                _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
+            }
+        
+            if (TH.InputSystem.LeftHoldClickOnWorld)
+            {
+                if (OnValidate(TH))
+                {
+                    OnPlace(TH);
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                }
+                else
+                {
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                }
+            }
+        }
+
+        public void OnPlace(ToolHelper TH)
+        {
+            _currentChangableMaterial = null;
+        }
+
+        public void OnStop(ToolHelper TH)
         {
             ResetPreviousMaterial();
-            return;
+            TH.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
-
-        if (_mouseOnChangableMaterial != _currentChangableMaterial)
-        {
-            ResetPreviousMaterial();
-            _currentChangableMaterial = _mouseOnChangableMaterial;
-
-            _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
-            _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
-        }
-        
-        if (TH.InputSystem.LeftHoldClickOnWorld)
-        {
-            if (OnValidate(TH))
-            {
-                OnPlace(TH);
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-            }
-            else
-            {
-                SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-            }
-        }
-    }
-
-    public void OnPlace(ToolHelper TH)
-    {
-        _currentChangableMaterial = null;
-    }
-
-    public void OnStop(ToolHelper TH)
-    {
-        ResetPreviousMaterial();
-        TH.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
-    }
     
-    private void ResetPreviousMaterial()
-    {
-        if (_currentChangableMaterial == null) return;
-        _currentChangableMaterial.UpdateMaterial(_storedMaterial);
-        _currentChangableMaterial = null;
-    }
-    
-    private IChangableMaterial GetClosestWallMaterial(ToolHelper TH)
-    {
-        float lastDis = float.MaxValue;
-        IChangableMaterial closestChangableMaterial = null;
-        foreach (var wall in TH.DiscoData.MapData.WallDatas)
+        private void ResetPreviousMaterial()
         {
-            if (wall.assignedWall == null) continue;
-
-            var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.assignedWall.transform.position);
-            if (dis < lastDis)
-            {
-                closestChangableMaterial = wall.assignedWall;
-                lastDis = dis;
-            }
+            if (_currentChangableMaterial == null) return;
+            _currentChangableMaterial.UpdateMaterial(_storedMaterial);
+            _currentChangableMaterial = null;
         }
+    
+        private IChangableMaterial GetClosestWallMaterial(ToolHelper TH)
+        {
+            float lastDis = float.MaxValue;
+            IChangableMaterial closestChangableMaterial = null;
+            foreach (var wall in TH.DiscoData.MapData.WallDatas)
+            {
+                if (wall.assignedWall == null) continue;
 
-        return closestChangableMaterial;
+                var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.assignedWall.transform.position);
+                if (dis < lastDis)
+                {
+                    closestChangableMaterial = wall.assignedWall;
+                    lastDis = dis;
+                }
+            }
+
+            return closestChangableMaterial;
+        }
     }
 }

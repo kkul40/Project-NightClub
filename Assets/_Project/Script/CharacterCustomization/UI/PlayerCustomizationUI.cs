@@ -228,6 +228,8 @@ namespace CharacterCustomization.UI
             InitBody(gender);
         }
 
+        public SavePriority Priority { get; } = SavePriority.Default;
+
         public void LoadData(GameData gameData)
         {
         }

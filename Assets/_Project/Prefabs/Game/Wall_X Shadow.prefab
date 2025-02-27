@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4678807255850115660}
   - component: {fileID: 8590650511659102759}
   - component: {fileID: 4258602494716733514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5817209997257327140}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall_X Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 5733872916410720535}
   - component: {fileID: 1734239736464680261}
   - component: {fileID: 5650691659443332771}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,6 +1,9 @@
 
 //Keep As:RMC.Mini.Controller
-namespace RMC.Mini.Controller
+
+using Framework.Context;
+
+namespace Framework.Mvcs.Controller
 {
     /// <summary>
     /// The Controller coordinates everything between

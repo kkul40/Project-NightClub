@@ -1,8 +1,7 @@
-﻿using DefaultNamespace._Refactored.Event;
+﻿using GameEvents;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace DiscoSystem
+namespace System
 {
     public class GridSystem : MonoBehaviour
     {

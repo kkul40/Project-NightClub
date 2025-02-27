@@ -1,7 +1,8 @@
 using System;
+using Framework.Context;
 using UnityEngine;
 
-namespace RMC.Mini.View
+namespace Framework.Mvcs.View
 {
     //  Namespace Properties ------------------------------
 

@@ -1,5 +1,5 @@
 ﻿
-namespace RMC.Mini.Controller.Commands
+namespace Framework.Mvcs.Controller.Commands
 {
 	/// <summary>
 	/// This Command is a stand-alone object containing

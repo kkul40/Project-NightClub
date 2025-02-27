@@ -21,7 +21,6 @@ namespace Root
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            
             loadingScreen.SetActive(false);
         }
 

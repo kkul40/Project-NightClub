@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Data;
 using DiscoSystem;
+using GameEvents;
 using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
@@ -25,14 +27,14 @@ namespace UI.GamePages.GameButtons
 
         private void OnEnable()
         {
-            PlacementDataHandler.OnPropPlacedWithData += StartSong;
-            PlacementDataHandler.OnPropRemovedWithData += StopSong;
+            KEvent_Building.OnPropPlaced += StartSong;
+            KEvent_Building.OnPropRemoved += StopSong;
         }
 
         private void OnDisable()
         {
-            PlacementDataHandler.OnPropPlacedWithData -= StartSong;
-            PlacementDataHandler.OnPropRemovedWithData -= StopSong;
+            KEvent_Building.OnPropPlaced -= StartSong;
+            KEvent_Building.OnPropRemoved -= StopSong;
         }
 
         private void StartSong(IPropUnit propUnit)
@@ -51,7 +53,7 @@ namespace UI.GamePages.GameButtons
         {
             if (propUnit is not DJ) return;
             
-            var djs = DiscoData.Instance.placementDataHandler.GetPropsByType<DJ>();
+            var djs = DiscoData.Instance.GetPlacedPropsByType<DJ>();
             if (djs.Count > 0)
                 return;
 
