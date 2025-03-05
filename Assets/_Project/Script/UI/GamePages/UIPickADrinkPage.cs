@@ -42,7 +42,7 @@ namespace UI.GamePages
             _lastBar = bar;
             _toggle = true;
             
-            // _followTarget.SetTarget(bar.gameObject);
+            _followTarget.SetTarget(bar.gameObject);
             UpdateVisual();
         }
 

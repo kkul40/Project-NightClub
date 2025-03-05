@@ -7,7 +7,7 @@ namespace UI
 {
     public class UI_FollowTarget : MonoBehaviour
     {
-        public Vector3 Offset;
+        public Vector2 Offset;
         
         private Canvas _canvas;
         private GameObject targetObject;
@@ -42,7 +42,7 @@ namespace UI
             if (targetObject == null)
                 return;
 
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(centerPosition);
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(centerPosition + new Vector3(Offset.x, 0, Offset.y));
         
             Vector2 canvasPosition;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -61,13 +61,9 @@ namespace UI
 
             Vector3 cumulativeCenter = Vector3.zero;
 
-            // Sum all collider center points
             foreach (Collider col in colliders)
-            {
                 cumulativeCenter += col.bounds.center;
-            }
 
-            // Divide by the number of colliders to find the average
             Vector3 center = cumulativeCenter / colliders.Length;
 
             return center;

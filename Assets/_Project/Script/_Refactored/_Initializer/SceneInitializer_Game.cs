@@ -19,6 +19,7 @@ namespace _Initializer
         [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
         [SerializeField] private Player _player;
         [SerializeField] private NPCSystem _npcSystem;
+        [SerializeField] private GameEvents.GameEvents _gameEvents;
         
         private void Awake()
         {
@@ -51,6 +52,8 @@ namespace _Initializer
             _gridSystem.Initialize();
             _cursorSystem.Initialize(_inputSystem, 1);
             _buildingSystem.Initialize();
+            
+            _gameEvents.Initialize();
             
             _player.Initialize(gameData);
             _npcSystem.Initialize(_discoData);
