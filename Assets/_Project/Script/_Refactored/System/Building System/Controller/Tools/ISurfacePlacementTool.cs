@@ -16,10 +16,13 @@ namespace System.Building_System.Controller.Tools
         private PlacementItemSO _placementItem;
         private List<MeshRenderer> _tempMeshRenderer;
 
-        public bool isFinished { get; }
+        public bool isFinished { get; private set; }
+
         public void OnStart(ToolHelper TH)
         {
             _placementItem = TH.SelectedStoreItem as PlacementItemSO;
+            
+            TH.LastRotation = quaternion.identity;
         
             _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
             _tempObject.transform.SetParent(null);
@@ -74,23 +77,16 @@ namespace System.Building_System.Controller.Tools
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, validation);
 
             _tempObject.transform.position = TH.LastPosition;
-        
-            if (TH.InputSystem.LeftClickOnWorld)
-            {
-                if (OnValidate(TH))
-                {
-                    OnPlace(TH);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-                }
-                else
-                {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-                }
-            }
         }
 
         public void OnPlace(ToolHelper TH)
         {
+            if (TH.isReloacting)
+            {
+                isFinished = true;
+                return;
+            }
+            
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
             IPropUnit unit;
@@ -110,6 +106,11 @@ namespace System.Building_System.Controller.Tools
             {
                 UnityEngine.Object.Destroy(_tempObject.gameObject);
             }
+        }
+
+        public bool CheckPlaceInput(ToolHelper TH)
+        {
+            return TH.InputSystem.LeftClickOnWorld;
         }
     }
 }

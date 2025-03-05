@@ -4,7 +4,7 @@ using PropBehaviours;
 using UI.Emotes;
 using UnityEngine;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class GetADrinkActivity : IActivity
     {
@@ -22,7 +22,7 @@ namespace NPCBehaviour.Activities
             var _bars = and.GetAvaliablePropsByInterface<IBar>();
             if (_bars == null) return false;
 
-            _bar = _bars[Random.Range(0, _bars.Count)];
+            _bar = _bars[UnityEngine.Random.Range(0, _bars.Count)];
 
             if (!_bar.HasDrinks) return false;
             if (_bar.IsServing) return false;

@@ -1,7 +1,6 @@
 ﻿using Data;
-using Object = UnityEngine.Object;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class ExitDiscoActivity : IActivity
     {
@@ -38,7 +37,7 @@ namespace NPCBehaviour.Activities
 
         private void OnComplete()
         {
-            Object.DestroyImmediate(and.Npc.gameObject);
+            UnityEngine.Object.DestroyImmediate(and.Npc.gameObject);
         }
 
         public void OnActivityEnd(ActivityNeedsData and)

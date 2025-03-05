@@ -1,16 +1,13 @@
-using System;
+using System.Character.NPC.Activity;
+using System.Character.NPC.Activity.Activities;
 using System.Collections.Generic;
 using Animancer;
 using Data;
 using DiscoSystem;
-using DiscoSystem.DiscoSystem;
-using NPCBehaviour.Activities;
-using NPCBehaviour.PathFinder;
 using PropBehaviours;
-using ScriptableObjects;
 using UnityEngine;
 
-namespace NPCBehaviour
+namespace System.Character.NPC
 {
     [SelectionBase]
     public class NPC : MonoBehaviour, IInteractable, IDoorTrigger

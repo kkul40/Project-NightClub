@@ -1,10 +1,11 @@
-﻿using Data;
-using NPCBehaviour;
+﻿using System.Character.NPC;
+using Data;
 using Prop_Behaviours.Bar;
+using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace PropBehaviours
+namespace System.Character.Bartender.Command
 {
     public class PrepareDrinkCommand : IBartenderCommand
     {

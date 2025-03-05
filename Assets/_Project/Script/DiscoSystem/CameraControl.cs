@@ -1,4 +1,5 @@
-using NPCBehaviour;
+using System;
+using System.Character.NPC;
 using Unity.Mathematics;
 using UnityEngine;
 

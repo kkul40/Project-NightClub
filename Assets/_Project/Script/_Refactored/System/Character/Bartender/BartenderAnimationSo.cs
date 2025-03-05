@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ScriptableObjects
+namespace System.Character.Bartender
 {
     [CreateAssetMenu(fileName = "new Bartender Animation Set", menuName = "Data/Bartender Animation Set")]
     public class BartenderAnimationSo : ScriptableObject

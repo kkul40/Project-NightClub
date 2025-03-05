@@ -1,19 +1,17 @@
-﻿using System;
+﻿using System.Building_System;
+using System.Character._Player;
+using System.Character.Bartender;
+using System.Character.Bartender.Command;
+using System.Character.NPC.Activity;
+using System.Character.NPC.Activity.Activities;
 using System.Collections;
 using System.Collections.Generic;
-using CharacterCustomization.Scriptables;
 using Data;
-using Disco_Building;
-using DiscoSystem.DiscoSystem;
+using DiscoSystem;
 using GameEvents;
-using NPCBehaviour;
-using NPCBehaviour.Activities;
-using PropBehaviours;
-using ScriptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace DiscoSystem
+namespace System.Character.NPC
 {
     public class NPCSystem : Singleton<NPCSystem>
     {
@@ -75,7 +73,7 @@ namespace DiscoSystem
             CharacterCustomizer customizer =
                 new CharacterCustomizer(gender, InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
 
-            newBartender.GetComponent<Bartender>().Init(customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
+            newBartender.GetComponent<Bartender.Bartender>().Init(customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
 
             var bartender = newBartender.GetComponent<IBartender>();
 
@@ -125,7 +123,7 @@ namespace DiscoSystem
         {
             var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
             newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
-            var gender = Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
+            var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
             NPC Npc;
             if (newNPC.TryGetComponent(out NPC npc))

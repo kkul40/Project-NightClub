@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Character.Bartender;
+using System.Character.NPC;
 using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
 using DiscoSystem;

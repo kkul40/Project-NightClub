@@ -34,5 +34,11 @@ namespace System.Building_System.Model
         {
             return DiscoData.Instance.PlacedItems[ID].Item2;
         }
+
+        public StoreItemSO GetStoreItemByID(int instanceID)
+        {
+            int id = DiscoData.Instance.PlacedItems[instanceID].Item1;
+            return DiscoData.Instance.AllInGameItems[id];
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Character.NPC;
 using Animancer;
 using ScriptableObjects;
 using UnityEngine;

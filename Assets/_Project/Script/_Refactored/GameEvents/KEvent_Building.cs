@@ -9,9 +9,11 @@ namespace GameEvents
         public static event Action<bool> OnBuildingToggled; 
         public static event Action OnPlaced;
         public static event Action<IPropUnit> OnPropPlaced;
-        public static event Action<IPropUnit> OnPropRemoved; 
+        public static event Action<IPropUnit> OnPropRemoved;
+        public static event Action<IPropUnit> OnPropRelocated;
+        
         public static event Action<int> OnPlacementRemove; 
-        public static event Action<int, StoreItemSO> OnPlacementRelocate;
+        public static event Action<int> OnPlacementRelocate;
         public static event Action<WallDoor> OnWallDoorRelocate; 
 
         public static void TriggerPlaced()
@@ -19,14 +21,19 @@ namespace GameEvents
             OnPlaced?.Invoke();
         }
 
-        public static void TriggerPlaced(IPropUnit propUnit)
+        public static void TriggerPropPlaced(IPropUnit propUnit)
         {
             OnPropPlaced?.Invoke(propUnit);
         }
 
-        public static void TriggerRemoved(IPropUnit propUnit)
+        public static void TriggerPropRemoved(IPropUnit propUnit)
         {
             OnPropRemoved?.Invoke(propUnit);
+        }
+
+        public static void TriggerPropRelocated(IPropUnit propUnit)
+        {
+            OnPropRelocated?.Invoke(propUnit);
         }
 
         public static void TriggerBuildingToggle(bool toggle)
@@ -34,9 +41,9 @@ namespace GameEvents
             OnBuildingToggled?.Invoke(toggle);
         }
 
-        public static void TriggerPlacementRelocate(int instanceID, StoreItemSO storeItemSo)
+        public static void TriggerPlacementRelocate(int instanceID)
         {
-            OnPlacementRelocate?.Invoke(instanceID, storeItemSo);
+            OnPlacementRelocate?.Invoke(instanceID);
         }
 
         public static void TriggerOnWallDoorRelocate(WallDoor wallDoor)

@@ -1,8 +1,9 @@
-﻿using NPCBehaviour;
+﻿using System.Character.NPC;
 using Prop_Behaviours.Bar;
+using PropBehaviours;
 using UnityEngine;
 
-namespace PropBehaviours
+namespace System.Character.Bartender.Command
 {
     public class CleanDrinkTableCommand : IBartenderCommand
     {

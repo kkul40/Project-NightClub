@@ -1,8 +1,5 @@
-﻿namespace NPCBehaviour
+﻿public enum eGenderType
 {
-    public enum eGenderType
-    {
-        Male,
-        Female
-    }
+    Male,
+    Female
 }

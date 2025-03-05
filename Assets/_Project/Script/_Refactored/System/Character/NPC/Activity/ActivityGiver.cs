@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Character.NPC.Activity.Activities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NPCBehaviour;
-using NPCBehaviour.Activities;
 
-namespace DiscoSystem.DiscoSystem
+namespace System.Character.NPC.Activity
 {
     public class ActivityGiver
     {

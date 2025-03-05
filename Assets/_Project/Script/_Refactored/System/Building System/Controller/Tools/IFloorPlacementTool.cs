@@ -100,23 +100,16 @@ namespace System.Building_System.Controller.Tools
             _tempObject.transform.rotation = TH.LastRotation;
         
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
-
-            if (TH.InputSystem.LeftClickOnWorld)
-            {
-                if (OnValidate(TH))
-                {
-                    OnPlace(TH);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-                }
-                else
-                {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-                }
-            }
         }
     
         public void OnPlace(ToolHelper TH)
         {
+            if (TH.isReloacting)
+            {
+                isFinished = true;
+                return;
+            }
+            
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
             // Setting Parent Object
@@ -158,7 +151,12 @@ namespace System.Building_System.Controller.Tools
                 UnityEngine.Object.Destroy(_tempObject.gameObject);
             }
         }
-    
+
+        public bool CheckPlaceInput(ToolHelper TH)
+        {
+            return TH.InputSystem.LeftClickOnWorld;
+        }
+
         /// <summary>
         /// //////////////////////////////////////////////////////////////////////////////////////
         /// </summary>

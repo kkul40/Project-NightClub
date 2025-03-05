@@ -1,7 +1,7 @@
 ﻿using Data;
 using UnityEngine;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class WalkToEnteranceActivity : IActivity
     {

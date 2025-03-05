@@ -1,7 +1,7 @@
-﻿using Disco_Building;
+﻿using System.Building_System;
 using UnityEngine;
 
-namespace DiscoSystem.ObjectPooling
+namespace System.ObjectPooling
 {
     public interface IPoolable
     {

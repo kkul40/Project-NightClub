@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using CharacterCustomization.UI;
 using Data;
 using Disco_ScriptableObject;
+using ExtensionMethods;
 using UnityEngine;
-using CharacterCustomization.UI;
-using NPCBehaviour;
 
-namespace ExtensionMethods
+namespace SaveAndLoad
 {
     public static class GameDataExtension
     {

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Data;
 using DG.Tweening;
-using DiscoSystem;
 using ExtensionMethods;
 using UnityEngine;
 
-namespace NPCBehaviour.PathFinder
+namespace System.Character.NPC
 {
     public class NpcPathFinder : IPathFinder
     {

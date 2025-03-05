@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Character.Bartender.Command;
+using System.Character.NPC;
+using System.Collections.Generic;
 using Animancer;
 using Data;
-using NPCBehaviour;
-using NPCBehaviour.PathFinder;
 using Prop_Behaviours.Bar;
+using PropBehaviours;
 using UI.GamePages;
 using UI.PopUp;
 using UnityEngine;
 
-namespace PropBehaviours
+namespace System.Character.Bartender
 {
     [SelectionBase]
     public class Bartender : MonoBehaviour, IBartender, IInteractable, IDoorTrigger

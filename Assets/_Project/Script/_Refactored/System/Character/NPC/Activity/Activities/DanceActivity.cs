@@ -2,7 +2,7 @@
 using UI.Emotes;
 using UnityEngine;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class DanceActivity : IActivity
     {
@@ -22,7 +22,7 @@ namespace NPCBehaviour.Activities
             if (dancableTiles == null)
                 return false;
 
-            _dancableTile = dancableTiles[Random.Range(0, dancableTiles.Count)];
+            _dancableTile = dancableTiles[UnityEngine.Random.Range(0, dancableTiles.Count)];
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
                 return false;
@@ -50,6 +50,8 @@ namespace NPCBehaviour.Activities
 
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.SetOccupied(and.Npc, true);
+
+            // _dancableTile.OnDestroyed += () => IsEnded = true;
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
@@ -82,7 +84,11 @@ namespace NPCBehaviour.Activities
         public void OnActivityEnd(ActivityNeedsData and)
         {
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
-            if (_dancableTile != null) _dancableTile.IsOccupied = false;
+            if (_dancableTile != null)
+            {
+                _dancableTile.IsOccupied = false;
+                // _dancableTile.OnDestroyed -= () => IsEnded = true;
+            }
             and.Npc.AnimationController.SetRootMotion(false);
         }
 

@@ -3,7 +3,7 @@ using Data;
 using PropBehaviours;
 using UnityEngine;
 
-namespace NPCBehaviour
+namespace System.Character.NPC.Activity
 {
     public class ActivityNeedsData
     {

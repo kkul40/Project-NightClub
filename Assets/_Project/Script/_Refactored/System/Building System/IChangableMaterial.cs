@@ -2,7 +2,7 @@
 using Disco_ScriptableObject;
 using UnityEngine;
 
-namespace Disco_Building
+namespace System.Building_System
 {
     public interface IChangableMaterial
     {

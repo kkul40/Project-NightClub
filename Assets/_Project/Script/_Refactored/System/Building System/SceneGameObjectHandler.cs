@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Data;
 using DiscoSystem;
 using UnityEngine;
 
-namespace Disco_Building
+namespace System.Building_System
 {
     public class SceneGameObjectHandler : Singleton<SceneGameObjectHandler>
     {

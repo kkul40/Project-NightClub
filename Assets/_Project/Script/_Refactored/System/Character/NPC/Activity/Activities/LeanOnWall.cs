@@ -1,9 +1,8 @@
 ﻿using Data;
 using Disco_Building;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class LeanOnWall : IActivity
     {
@@ -31,7 +30,7 @@ namespace NPCBehaviour.Activities
             
             do
             {
-                leanablePath = and.DiscoData.MapData.Path.GetAvaliableWallPaths[Random.Range(0, and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count)];
+                leanablePath = and.DiscoData.MapData.Path.GetAvaliableWallPaths[UnityEngine.Random.Range(0, and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count)];
                 if (Helper.IterateTo100(ref loopCount))
                 {
                     return false;

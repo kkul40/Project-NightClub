@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using UnityEngine;
@@ -19,6 +18,7 @@ namespace System.Building_System.Controller.Tools
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
         public bool isFinished { get; private set; }
+
         public void OnStart(ToolHelper TH)
         {
             _materialDatas = new Dictionary<Transform, MaterialColorChanger.MaterialData>();
@@ -49,19 +49,6 @@ namespace System.Building_System.Controller.Tools
                 _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
             }
-        
-            if (TH.InputSystem.LeftHoldClickOnWorld)
-            {
-                if (OnValidate(TH))
-                {
-                    OnPlace(TH);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-                }
-                else
-                {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-                }
-            }
         }
 
         public void OnPlace(ToolHelper TH)
@@ -74,7 +61,12 @@ namespace System.Building_System.Controller.Tools
             ResetPreviousMaterial();
             TH.MaterialColorChanger.SetMaterialToDefault(ref _materialDatas);
         }
-    
+
+        public bool CheckPlaceInput(ToolHelper TH)
+        {
+            return TH.InputSystem.LeftHoldClickOnWorld;
+        }
+
         private void ResetPreviousMaterial()
         {
             if (_currentChangableMaterial == null) return;

@@ -1,10 +1,6 @@
-﻿using System;
-using Data;
-using DiscoSystem;
-using ExtensionMethods;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class WalkRandomActivity : IActivity
     {

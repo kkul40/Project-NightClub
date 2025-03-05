@@ -3,6 +3,7 @@ using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using PropBehaviours;
 using UnityEngine;
 
 namespace System.Building_System
@@ -26,6 +27,13 @@ namespace System.Building_System
     
         // Static Variables
         public StoreItemSO SelectedStoreItem;
+        
+        // Relocate Variables
+        public IPropUnit SelectedPropItem;
+        public Vector3 startPosition;
+        public Quaternion StartRotation;
+        public bool isReloacting;
+
     
         // Dynamic Variables
         private Collider[] Colliders;
@@ -33,6 +41,7 @@ namespace System.Building_System
         public Vector3 colliderExtend;
         public Quaternion LastRotation;
         public Vector3 LastPosition;
+
     
         public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
             MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem)

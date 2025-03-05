@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DiscoSystem;
 using ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-namespace DiscoSystem
+namespace System
 {
     [DisallowMultipleComponent]
     public class InputSystem : Singleton<InputSystem>

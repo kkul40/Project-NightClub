@@ -19,6 +19,9 @@ namespace PropBehaviours
         [ShowInInspector] public Vector3 WorldPos { get; private set; }
         [ShowInInspector] public RotationData RotationData { get; private set; }
         [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
+        
+        // Events
+       
 
         public void Initialize(
             int ID, 
@@ -53,6 +56,14 @@ namespace PropBehaviours
         public virtual void OnClick()
         {
             UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+        }
+
+        public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
+        {
+            transform.rotation = rotation;
+            transform.position = position;
+
+            WorldPos = position;
         }
     }
 }

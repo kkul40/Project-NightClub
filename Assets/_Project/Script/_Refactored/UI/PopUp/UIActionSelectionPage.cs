@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Building_System.Controller;
+using System.Character.Bartender;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
@@ -187,7 +189,6 @@ namespace UI.PopUp
                 UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), propUnit);
                 PlaySFXOnButtonClick();
                 Hide();
-                KEvent_Cursor.TriggerResetSelection();
             }
         }
 
@@ -198,7 +199,6 @@ namespace UI.PopUp
                 UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
                 PlaySFXOnButtonClick();
                 Hide();
-                KEvent_Cursor.TriggerResetSelection();
             }
         }
 
@@ -208,7 +208,6 @@ namespace UI.PopUp
             {
                 DJMusicManager.Instance.PlayeNextSong();
                 PlaySFXOnButtonClick();
-                KEvent_Cursor.TriggerResetSelection();
             }
         }
 
@@ -216,9 +215,8 @@ namespace UI.PopUp
         {
             if (_lastData is IPropUnit propUnit)
             {
-                var item = DiscoData.Instance.FindAItemByID(propUnit.ID);
                 var instanceID = propUnit.transform.GetInstanceID();
-                KEvent_Building.TriggerPlacementRelocate(instanceID, item);
+                KEvent_Building.TriggerPlacementRelocate(instanceID);
                 PlaySFXOnButtonClick();
                 Hide();
                 KEvent_Cursor.TriggerResetSelection();

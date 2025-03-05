@@ -1,5 +1,5 @@
-﻿using DG.Tweening;
-using NPCBehaviour;
+﻿using System.Character;
+using DG.Tweening;
 using UnityEngine;
 
 namespace PropBehaviours

@@ -1,4 +1,5 @@
-﻿using Disco_ScriptableObject;
+﻿using System.Character.NPC;
+using Disco_ScriptableObject;
 using ScriptableObjects;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;

@@ -39,7 +39,17 @@ namespace System.Building_System.Controller
             _view.InstantiateItems(_model.StoreItems);
             _view.OnSlotItemClicked += StartATool;
 
+            KEvent_Building.OnPlacementRemove += RemovePlacement;
+            KEvent_Building.OnPlacementRelocate += StartRelocatePlacement;
+
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
+        }
+
+        public override void Dispose()
+        {
+            _view.OnSlotItemClicked -= StartATool;
+            KEvent_Building.OnPlacementRemove -= RemovePlacement;
+            KEvent_Building.OnPlacementRelocate -= StartRelocatePlacement;
         }
 
         public void Update(float deltaTime)
@@ -60,11 +70,36 @@ namespace System.Building_System.Controller
             UpdateTool(_toolHelper);
 
             currentTool.OnUpdate(_toolHelper);
-        
-            if (InputSystem.Instance.CancelClick || currentTool.isFinished)
+
+            if (currentTool.CheckPlaceInput(_toolHelper))
             {
+                if (currentTool.OnValidate(_toolHelper))
+                {
+                    currentTool.OnPlace(_toolHelper);
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                }
+                else
+                {
+                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                }
+            }
+            
+     
+            if (InputSystem.Instance.CancelClick)
+            {
+                if(_toolHelper.isReloacting)
+                    RelocateHandler(false);
+                
                 StopTool();
             }
+            else if (currentTool.isFinished)
+            {
+                if(_toolHelper.isReloacting)
+                    RelocateHandler(true);
+                
+                StopTool();
+            }
+
 
             // // TODO Puth This InputSystem key fucntion somewhere that is not this controller
             // if (InputSystem.Instance.LeftClickOnWorld && currentTool.OnValidate(_toolHelper))
@@ -83,7 +118,36 @@ namespace System.Building_System.Controller
         private void StartATool(StoreItemSO storeItemSo)
         {
             StopTool();
+            ToolStartHandler(storeItemSo);
+        }
 
+        private void StartRelocatePlacement(int instanceID)
+        {
+            StopTool();
+
+            StoreItemSO item = _model.GetStoreItemByID(instanceID);
+
+            Transform sceneObject = _model.GetPlacedSceneObjectByID(instanceID);
+            sceneObject.gameObject.SetActive(false);
+
+            if (sceneObject.TryGetComponent(out IPropUnit unit))
+            {
+                _toolHelper.SelectedPropItem = unit; 
+                _toolHelper.isReloacting = true;
+                _toolHelper.startPosition = unit.WorldPos;
+                _toolHelper.StartRotation = unit.transform.rotation;
+            }
+            else
+            {
+                Debug.LogError("Can't find Relocatable Scene Unit");
+                return;
+            }
+            
+            ToolStartHandler(item);
+        }
+        
+        private void ToolStartHandler(StoreItemSO storeItemSo)
+        {
             _toolHelper.SelectedStoreItem = storeItemSo;
 
             currentTool = SelectBuildingMethod(storeItemSo);
@@ -94,14 +158,35 @@ namespace System.Building_System.Controller
             KEvent_Building.TriggerBuildingToggle(true);
         }
 
+        private void RemovePlacement(int InstanceID)
+        {
+            Transform sceneObject = _model.GetPlacedSceneObjectByID(InstanceID);
+        
+            if (sceneObject.TryGetComponent(out IPropUnit unit))
+            {
+                KEvent_Building.TriggerPropRemoved(unit);
+            }
+        
+            UnityEngine.Object.Destroy(sceneObject.gameObject);
+            _model.RemovePlacementItem(InstanceID);
+        }
+
         private void StopTool()
         {
             if (currentTool != null) currentTool.OnStop(_toolHelper);
 
             currentTool = null;
+
+            _toolHelper.SelectedPropItem = null;
+            _toolHelper.isReloacting = false;
         
             KEvent_Cursor.ChangeToPrevious();
             KEvent_Building.TriggerBuildingToggle(false);
+        }
+
+        private void CancelTool()
+        {
+            StopTool();
         }
 
         private ITool SelectBuildingMethod(StoreItemSO storeItemSo)
@@ -151,21 +236,30 @@ namespace System.Building_System.Controller
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
-                KEvent_Building.TriggerPlaced(unit);
+                KEvent_Building.TriggerPropPlaced(unit);
             }
         }
 
-        public void RemovePlacementItemData(int InstanceID)
+        private void RelocateHandler(bool isPlaced)
         {
-            Transform sceneObject = _model.GetPlacedSceneObjectByID(InstanceID);
-
-            if (sceneObject.TryGetComponent(out IPropUnit unit))
+            if (isPlaced)
             {
-                KEvent_Building.TriggerRemoved(unit);
+                if (_toolHelper.SelectedPropItem != null)
+                {
+                    _toolHelper.SelectedPropItem.SetPositionAndRotation(_toolHelper.LastPosition, _toolHelper.LastRotation);
+                    _toolHelper.SelectedPropItem.gameObject.SetActive(true);
+                    // _toolHelper.SelectedPropItem.OnRelocate();
+
+                    _toolHelper.SelectedPropItem = null;
+                    
+                    KEvent_Building.TriggerPlaced();
+                }
             }
-        
-            UnityEngine.Object.Destroy(sceneObject.gameObject);
-            _model.RemovePlacementItem(InstanceID);
+            else
+            {
+                _toolHelper.SelectedPropItem.gameObject.SetActive(true);
+                _toolHelper.SelectedPropItem = null;
+            }
         }
     }
 }

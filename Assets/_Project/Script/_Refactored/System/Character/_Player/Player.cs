@@ -1,12 +1,10 @@
+using System.Character.NPC;
 using CharacterCustomization;
 using Data;
-using DiscoSystem;
-using NPCBehaviour;
-using NPCBehaviour.PathFinder;
 using UI.GamePages;
 using UnityEngine;
 
-namespace PlayerScripts
+namespace System.Character._Player
 {
     public class Player : MonoBehaviour, IDoorTrigger, ISaveLoad
     {

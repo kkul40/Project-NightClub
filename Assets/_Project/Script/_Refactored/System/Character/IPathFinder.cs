@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-namespace NPCBehaviour.PathFinder
+namespace System.Character
 {
     public interface IPathFinder
     {

@@ -3,12 +3,9 @@ using System.Building_System.Model;
 using System.Building_System.Service;
 using System.Building_System.View;
 using Data;
-using Disco_Building;
-using DiscoSystem;
 using Framework.Context;
 using Framework.Structures.Simple;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace System.Building_System
 {
@@ -46,6 +43,14 @@ namespace System.Building_System
         {
             RequireIsInitialized();
             _controller.Update(Time.deltaTime);
+        }
+
+        private void OnDisable()
+        {
+            _model.Dispose();
+            _view.Dispose();
+            _service.Dispose();
+            _controller.Dispose();
         }
     }
 }

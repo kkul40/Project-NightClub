@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Character.Bartender;
 using PropBehaviours;
 
 namespace GameEvents

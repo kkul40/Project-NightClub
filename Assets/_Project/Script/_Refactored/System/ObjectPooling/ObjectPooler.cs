@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Disco_Building;
+﻿using System.Building_System;
+using System.Collections.Generic;
+using DiscoSystem;
 using UnityEngine;
 
-namespace DiscoSystem.ObjectPooling
+namespace System.ObjectPooling
 {
     public class ObjectPooler : IUpdateable
     {

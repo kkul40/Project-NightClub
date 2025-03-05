@@ -1,11 +1,8 @@
-﻿using System;
+﻿using System.Character.Bartender;
 using Animancer;
-using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
-namespace NPCBehaviour
+namespace System.Character.NPC
 {
     public enum eAnimationType
     {
@@ -52,22 +49,22 @@ namespace NPCBehaviour
             switch (eAnimationType)
             {
                 case eAnimationType.NPC_Idle:
-                    selectedAnimationClip = _npcAnimationSo.Idle[Random.Range(0, _npcAnimationSo.Idle.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Idle[UnityEngine.Random.Range(0, _npcAnimationSo.Idle.Count)];
                     break;
                 case eAnimationType.NPC_Walk:
-                    selectedAnimationClip = _npcAnimationSo.Walk[Random.Range(0, _npcAnimationSo.Walk.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Walk[UnityEngine.Random.Range(0, _npcAnimationSo.Walk.Count)];
                     break;
                 case eAnimationType.NPC_Sit:
-                    selectedAnimationClip = _npcAnimationSo.Sit[Random.Range(0, _npcAnimationSo.Sit.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Sit[UnityEngine.Random.Range(0, _npcAnimationSo.Sit.Count)];
                     break;
                 case eAnimationType.NPC_Lean:
-                    selectedAnimationClip = _npcAnimationSo.LeanOnWall[Random.Range(0, _npcAnimationSo.LeanOnWall.Count)];
+                    selectedAnimationClip = _npcAnimationSo.LeanOnWall[UnityEngine.Random.Range(0, _npcAnimationSo.LeanOnWall.Count)];
                     break;
                 case eAnimationType.NPC_Dance:
-                    selectedAnimationClip = _npcAnimationSo.Dance[Random.Range(0, _npcAnimationSo.Dance.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Dance[UnityEngine.Random.Range(0, _npcAnimationSo.Dance.Count)];
                     break;
                 default:
-                    selectedAnimationClip = _npcAnimationSo.Debug[Random.Range(0, _npcAnimationSo.Debug.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Debug[UnityEngine.Random.Range(0, _npcAnimationSo.Debug.Count)];
                     break;
             }
 

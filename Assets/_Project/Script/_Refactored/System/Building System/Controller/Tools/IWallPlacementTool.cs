@@ -20,8 +20,10 @@ namespace System.Building_System.Controller.Tools
         private List<MeshRenderer> _tempMeshRenderer;
 
         private List<WallAssignmentData> _walls;
-    
+
         public bool isFinished { get; }
+        public Action<object> OnPlaced { get; set; }
+
         public void OnStart(ToolHelper TH)
         {
             _placementItem = TH.SelectedStoreItem as PlacementItemSO;
@@ -86,19 +88,6 @@ namespace System.Building_System.Controller.Tools
             _tempObject.transform.position = TH.LastPosition;
         
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
-
-            if (TH.InputSystem.LeftClickOnWorld)
-            {
-                if (OnValidate(TH))
-                {
-                    OnPlace(TH);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-                }
-                else
-                {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-                }
-            }
         }
 
         public void OnPlace(ToolHelper TH)
@@ -116,6 +105,8 @@ namespace System.Building_System.Controller.Tools
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+            
+            OnPlaced.Invoke(unit);
         }
 
         public void OnStop(ToolHelper TH)
@@ -124,6 +115,11 @@ namespace System.Building_System.Controller.Tools
             {
                 UnityEngine.Object.Destroy(_tempObject.gameObject);
             }
+        }
+
+        public bool CheckPlaceInput(ToolHelper TH)
+        {
+            return TH.InputSystem.LeftClickOnWorld;
         }
     }
 }

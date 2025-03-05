@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using System.Character.Bartender;
+using System.Character.Bartender.Command;
+using Data;
 using DiscoSystem;
 using GameEvents;
 using PropBehaviours;

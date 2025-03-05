@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using NPCBehaviour;
-using NPCBehaviour.PathFinder;
+﻿using System.Character.Bartender.Command;
+using System.Character.NPC;
+using System.Collections.Generic;
 using Prop_Behaviours.Bar;
+using PropBehaviours;
 using UnityEngine;
 
-namespace PropBehaviours
+namespace System.Character.Bartender
 {
     public interface IBartender : IID
     {

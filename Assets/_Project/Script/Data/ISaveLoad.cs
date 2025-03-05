@@ -1,4 +1,6 @@
-﻿namespace Data
+﻿using SaveAndLoad;
+
+namespace Data
 {
 
     public enum SavePriority

@@ -1,5 +1,4 @@
-﻿using Disco_Building;
-using Disco_ScriptableObject;
+﻿using Disco_ScriptableObject;
 using DiscoSystem;
 using UnityEngine;
 
@@ -13,9 +12,9 @@ namespace System.Building_System.Controller.Tools
         private IChangableMaterial _currentChangableMaterial;
         private MaterialItemSo _storedMaterial;
     
-    
         public bool isFinished { get; private set; }
-    
+
+
         public void OnStart(ToolHelper TH)
         {
             _materialItemSo = TH.SelectedStoreItem as MaterialItemSo;
@@ -46,18 +45,7 @@ namespace System.Building_System.Controller.Tools
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
             }
 
-            if (TH.InputSystem.LeftHoldClickOnWorld)
-            {
-                if (OnValidate(TH))
-                {
-                    OnPlace(TH);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
-                }
-                else
-                {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
-                }
-            }
+                
         }
 
         public void OnPlace(ToolHelper TH)
@@ -68,6 +56,11 @@ namespace System.Building_System.Controller.Tools
         public void OnStop(ToolHelper TH)
         {
             ResetPreviousMaterial();
+        }
+
+        public bool CheckPlaceInput(ToolHelper TH)
+        {
+            return TH.InputSystem.LeftHoldClickOnWorld;
         }
 
         private IChangableMaterial GetFloorMaterial(ToolHelper TH)

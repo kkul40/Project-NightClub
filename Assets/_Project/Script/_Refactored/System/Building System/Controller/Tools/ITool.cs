@@ -10,5 +10,6 @@ namespace System.Building_System.Controller.Tools
         void OnUpdate(ToolHelper TH);
         void OnPlace(ToolHelper TH);
         void OnStop(ToolHelper TH);
+        bool CheckPlaceInput(ToolHelper TH);
     }
 }

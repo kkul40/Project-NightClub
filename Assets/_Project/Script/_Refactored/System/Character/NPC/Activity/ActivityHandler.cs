@@ -1,13 +1,11 @@
-﻿using System;
+﻿using System.Character.NPC.Activity.Activities;
 using System.Collections.Generic;
 using Data;
-using DiscoSystem.DiscoSystem;
 using ExtensionMethods;
-using NPCBehaviour.Activities;
 using UI.Emotes;
 using UnityEngine;
 
-namespace NPCBehaviour
+namespace System.Character.NPC.Activity
 {
     public class ActivityHandler
     {

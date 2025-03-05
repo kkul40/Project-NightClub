@@ -1,6 +1,7 @@
 ﻿using Prop_Behaviours.Bar;
+using PropBehaviours;
 
-namespace PropBehaviours
+namespace System.Character.Bartender.Command
 {
     public interface IBartenderCommand
     {

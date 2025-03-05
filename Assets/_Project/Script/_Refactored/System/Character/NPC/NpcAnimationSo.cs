@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace System.Character.NPC
 {
     [CreateAssetMenu(fileName = "new Npc Animation Set", menuName = "Data/Npc Animation Set")]
     public class NpcAnimationSo : ScriptableObject

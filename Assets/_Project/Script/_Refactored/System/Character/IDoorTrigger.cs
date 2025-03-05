@@ -1,4 +1,4 @@
-﻿namespace NPCBehaviour
+﻿namespace System.Character
 {
     public interface IDoorTrigger
     {

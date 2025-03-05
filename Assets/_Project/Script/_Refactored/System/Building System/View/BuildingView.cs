@@ -31,8 +31,6 @@ namespace System.Building_System.View
         public void ItemSlotClicked(Button button, StoreItemSO storeItemSo)
         {
             OnSlotItemClicked?.Invoke(storeItemSo);
-            EventSystem.current.SetSelectedGameObject(button.gameObject);
-            button.Select();
         }
 
         public void ToggleView(bool toggle)

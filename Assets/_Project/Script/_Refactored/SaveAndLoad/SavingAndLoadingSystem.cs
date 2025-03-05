@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Data;
 using DiscoSystem;
 using UnityEngine;
 
-namespace Data
+namespace SaveAndLoad
 {
     // TODO Refactor This in a way that no class Should be updated Automaticly They will all updated from Scene_Initializer
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>

@@ -1,9 +1,7 @@
-using System;
-using DiscoSystem;
 using ExtensionMethods;
 using UnityEngine;
 
-namespace Disco_Building
+namespace System.Building_System
 {
     public class TileIndicator : MonoBehaviour
     {

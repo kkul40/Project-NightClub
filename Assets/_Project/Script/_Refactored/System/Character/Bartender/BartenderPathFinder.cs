@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-namespace NPCBehaviour.PathFinder
+namespace System.Character.Bartender
 {
     public class BartenderPathFinder : IPathFinder
     {

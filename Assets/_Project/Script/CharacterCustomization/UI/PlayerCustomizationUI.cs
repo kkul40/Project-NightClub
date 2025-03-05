@@ -3,7 +3,7 @@ using CharacterCustomization.Scriptables;
 using Data;
 using ExtensionMethods;
 using JetBrains.Annotations;
-using NPCBehaviour;
+using SaveAndLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

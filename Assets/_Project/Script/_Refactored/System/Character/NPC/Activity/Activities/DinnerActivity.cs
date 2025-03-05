@@ -1,7 +1,7 @@
 ﻿using PropBehaviours;
 using UnityEngine;
 
-namespace NPCBehaviour.Activities
+namespace System.Character.NPC.Activity.Activities
 {
     public class DinnerActivity : IActivity
     {
@@ -25,7 +25,7 @@ namespace NPCBehaviour.Activities
 
             if (tableProp == null || tableProp.Chairs.Count < 1) return false;
 
-            chairProp = tableProp.Chairs[Random.Range(0, tableProp.Chairs.Count)];
+            chairProp = tableProp.Chairs[UnityEngine.Random.Range(0, tableProp.Chairs.Count)];
 
             if (chairProp == null || chairProp.IsOccupied) return false;
 
