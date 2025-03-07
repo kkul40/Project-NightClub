@@ -21,8 +21,7 @@ namespace System.Building_System.Controller.Tools
 
         private List<WallAssignmentData> _walls;
 
-        public bool isFinished { get; }
-        public Action<object> OnPlaced { get; set; }
+        public bool isFinished { get; private set; }
 
         public void OnStart(ToolHelper TH)
         {
@@ -92,6 +91,12 @@ namespace System.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
+            if (TH.isReloacting)
+            {
+                isFinished = true;
+                return;
+            }
+            
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
             IPropUnit unit;
@@ -105,8 +110,6 @@ namespace System.Building_System.Controller.Tools
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
-            
-            OnPlaced.Invoke(unit);
         }
 
         public void OnStop(ToolHelper TH)
