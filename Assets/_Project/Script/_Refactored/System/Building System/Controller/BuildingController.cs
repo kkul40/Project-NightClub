@@ -161,14 +161,12 @@ namespace System.Building_System.Controller
         private void RemovePlacement(int InstanceID)
         {
             Transform sceneObject = _model.GetPlacedSceneObjectByID(InstanceID);
+            _model.RemovePlacementItem(InstanceID);
         
             if (sceneObject.TryGetComponent(out IPropUnit unit))
-            {
                 KEvent_Building.TriggerPropRemoved(unit);
-            }
         
             UnityEngine.Object.Destroy(sceneObject.gameObject);
-            _model.RemovePlacementItem(InstanceID);
         }
 
         private void StopTool()

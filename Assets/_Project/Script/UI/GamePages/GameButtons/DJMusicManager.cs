@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Data;
+﻿using Data;
 using DiscoSystem;
 using GameEvents;
 using PropBehaviours;
@@ -54,6 +52,8 @@ namespace UI.GamePages.GameButtons
             if (propUnit is not DJ) return;
             
             var djs = DiscoData.Instance.GetPlacedPropsByType<DJ>();
+            
+            Debug.Log(djs.Count);
             if (djs.Count > 0)
                 return;
 

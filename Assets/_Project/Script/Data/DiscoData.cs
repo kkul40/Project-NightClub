@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Disco_ScriptableObject;
 using DiscoSystem;
-using ExtensionMethods;
 using PropBehaviours;
 using SaveAndLoad;
 using ScriptableObjects;
@@ -78,8 +77,19 @@ namespace Data
         
         public List<T> GetPlacedPropsByType<T>()
         {
-            // TODO Fill This
-            return null;
+            List<T> output = new List<T>();
+            foreach (var value in PlacedItems.Values)
+            {
+                if (value.Item2.TryGetComponent(out IPropUnit unit))
+                {
+                    if (unit is T t)
+                    {
+                        output.Add(t);
+                    }
+                }
+            }
+
+            return output;
         }
 
         public List<IPropUnit> GetPropList()
