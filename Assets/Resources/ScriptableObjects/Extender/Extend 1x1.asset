@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba824700cac404d84314ed8ad1a8832, type: 3}
   m_Name: Extend 1x1
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: -948844820
   Name: 
+  Description: 
   Icon: {fileID: 0}
   Price: 0
+  ItemType: 10
   ExtendX: 1
   ExtendY: 1

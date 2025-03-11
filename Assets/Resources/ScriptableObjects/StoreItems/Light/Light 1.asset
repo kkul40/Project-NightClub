@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: Light 1
   m_EditorClassIdentifier: 
-  ID: 1120584381
+  ID: 1619534405
   Name: Spotlight
   Description: A spotlight
   Icon: {fileID: 21300000, guid: 22f4ea9ac23245845ba289b3e250e194, type: 3}
   Price: 0
+  ItemType: 9
   Prefab: {fileID: 4017320393462636902, guid: e3e9cb771e480c54c826b9efd4c6cc08, type: 3}
   Size: {x: 1, y: 1}
   IsBig: 0
+  canPlaceOntoOtherObjects: 0
+  GridSizes: 1
   PlacementLayer: 2
   eRotation: 3

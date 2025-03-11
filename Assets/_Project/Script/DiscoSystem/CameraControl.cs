@@ -1,5 +1,6 @@
 using System;
 using System.Character.NPC;
+using GameEvents;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace DiscoSystem
         private Vector3 nextPosition;
         private float timeElapsed = 0;
 
-        private NPC _targetNPC;
+        private Transform _target;
 
         private void LateUpdate()
         {
@@ -34,11 +35,11 @@ namespace DiscoSystem
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
-            if (moveDelta != Vector2.zero) _targetNPC = null;
+            if (moveDelta != Vector2.zero) _target = null;
 
-            if (_targetNPC != null)
+            if (_target != null)
             {
-                Vector3 npcPos = _targetNPC.transform.position;
+                Vector3 npcPos = _target.transform.position;
                 nextPosition = Vector3.Lerp(nextPosition, new Vector3(npcPos.x, 0, npcPos.z) + _followNPCOffset,
                     speed * Time.deltaTime);
             }
@@ -65,9 +66,15 @@ namespace DiscoSystem
         public float3 GetCameraSize => new float3(1, 9, cameraSize);
         public AnimationCurve GetAnimationCurve => _zoomAnimationCurve;
 
-        public void FollowNPC(NPC npc)
+        public void FollowTarget(Transform target)
         {
-            _targetNPC = npc;
+            _target = target;
+            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.CameraFocus);
+        }
+
+        public void ResetTarget()
+        {
+            _target = null; 
         }
     }
 }

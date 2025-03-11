@@ -59,7 +59,7 @@ namespace PropBehaviours
 
         public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
-        public bool IsAnimatable { get; } = true;
+        public bool hasInteractionAnimation { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.Interactable;
 
         public void OnFocus()
@@ -74,6 +74,10 @@ namespace PropBehaviours
         {
             // Clean UP
             // TODO Show Drink Info
+        }
+
+        public void OnDeselect()
+        {
         }
 
         #endregion

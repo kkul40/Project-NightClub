@@ -2,6 +2,21 @@
 
 namespace Disco_ScriptableObject
 {
+    public enum StoreItemTypes
+    {
+        None,
+        Chair,
+        Table,
+        Dj,
+        Bar,
+        WallPaper,
+        DiscoTile,
+        FloorTile,
+        Decoration,
+        Light,
+        MapExtend,
+    }
+    
     public class StoreItemSO : ScriptableObject
     {
         public int ID;
@@ -10,6 +25,7 @@ namespace Disco_ScriptableObject
         public string Description;
         public Sprite Icon;
         public int Price;
+        public StoreItemTypes ItemType;
 
         private void Awake()
         {

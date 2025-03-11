@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISaveLoad
+    public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISavable
     {
         [Header("Graphics")] 
         [Header("Resolution")]
@@ -157,9 +157,6 @@ namespace UI.GamePages
             SnappyCameraToggle.ToggleCheckMark(SnappyCameraEnabled);
         }
 
-
-        public SavePriority Priority { get; } = SavePriority.Medium;
-
         public void LoadData(GameData gameData)
         {
             EdgeScrollingEnabled = !gameData.GameSettingsData.isEdgeScrollingEnabled;
@@ -167,6 +164,7 @@ namespace UI.GamePages
             ToggleEdgeScrolling();
             ToggleSnappyCamera();
         }
+
 
         public void SaveData(ref GameData gameData)
         {

@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 
 namespace DiscoSystem
 {
-    public class MusicPlayer : Singleton<MusicPlayer>, ISaveLoad
+    public class MusicPlayer : Singleton<MusicPlayer>, ISavable
     {
         private AudioSource _audioSource;
 
@@ -47,8 +47,6 @@ namespace DiscoSystem
             MusicVolume = value;
             mixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
         }
-
-        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

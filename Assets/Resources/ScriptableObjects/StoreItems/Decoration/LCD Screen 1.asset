@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: 
   Icon: {fileID: 21300000, guid: cd1f479ca0d38ae45bfbc6eabecf9ae2, type: 3}
   Price: 0
+  ItemType: 8
   Prefab: {fileID: 2764624274144738332, guid: 148455735d5dd8346bb4060620ea1cc9, type: 3}
   Size: {x: 2, y: 1}
   IsBig: 0

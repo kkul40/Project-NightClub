@@ -19,7 +19,7 @@ namespace System.Building_System.Controller.Tools
         private PlacementItemSO _placementItem;
         private List<MeshRenderer> _tempMeshRenderer;
 
-        private List<WallAssignmentData> _walls;
+        private List<WallData> _walls;
 
         public bool isFinished { get; private set; }
 
@@ -78,7 +78,7 @@ namespace System.Building_System.Controller.Tools
                 TH.LastPosition = TH.InputSystem.MousePosition;
             }
         
-            WallAssignmentData closestWall = TH.GetClosestWall();
+            WallData closestWall = TH.GetClosestWall();
             if (closestWall != null)
                 TH.LastRotation = closestWall.assignedWall.transform.rotation;
         
@@ -91,7 +91,7 @@ namespace System.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            if (TH.isReloacting)
+            if (TH.Mode == PlacementMode.Relocating)
             {
                 isFinished = true;
                 return;

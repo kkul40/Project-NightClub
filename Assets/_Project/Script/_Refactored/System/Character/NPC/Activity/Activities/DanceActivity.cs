@@ -1,4 +1,6 @@
-﻿using PropBehaviours;
+﻿using Data;
+using ExtensionMethods;
+using PropBehaviours;
 using UI.Emotes;
 using UnityEngine;
 
@@ -26,6 +28,12 @@ namespace System.Character.NPC.Activity.Activities
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
                 return false;
+
+            if (_dancableTile.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid) ==
+                DiscoData.Instance.MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
+                return false;
+            
+            
             //
             // if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
             //         ePlacementLayer.FloorProp))

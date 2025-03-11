@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Data;
 using DiscoSystem;
+using GameEvents;
 using UnityEngine;
 
 namespace SaveAndLoad
@@ -9,20 +11,21 @@ namespace SaveAndLoad
     // TODO Refactor This in a way that no class Should be updated Automaticly They will all updated from Scene_Initializer
     public class SavingAndLoadingSystem : Singleton<SavingAndLoadingSystem>
     {
-        private string fileName = "GameData.json";
+        private string fileName = "GameData";
 
         private FileDataHandler _fileDataHandler;
         private static GameData _gameData = new();
-        private List<ISaveLoad> _saveLoads = new();
+        private List<ISavable> _saveLoads = new();
         private bool isSaveLoadDirty = true;
 
-        private List<ISaveLoad> SaveLoads
+        private float passedSeconds;
+
+        private List<ISavable> SaveLoads
         {
             get
             {
                 if (isSaveLoadDirty)
                 {
-                    _saveLoads = _saveLoads.OrderByDescending(t => t.Priority).ToList();
                     isSaveLoadDirty = false;
                 }
                 return _saveLoads;
@@ -37,12 +40,24 @@ namespace SaveAndLoad
 
         public void Initialize()
         {
-            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISaveLoad>().ToList();
+            string version = "111";
+            
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName + $"{version}.json");
+            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>().ToList();
             _gameData = _fileDataHandler.Load();
             isSaveLoadDirty = true;
-            
-            NewGame();
+
+            // TODO Make sure there is only one running
+            StartCoroutine(TimerCO());
+        }
+        
+        private IEnumerator TimerCO()
+        {
+            while (true)
+            {
+                passedSeconds += Time.deltaTime;
+                yield return null;
+            }
         }
 
         public void NewGame()
@@ -54,11 +69,19 @@ namespace SaveAndLoad
 
         public void SaveGame()
         {
-            foreach (var save in SaveLoads)
-                save.SaveData(ref _gameData);
+            KEvent_SavingAndLoading.TriggerGameSave(_gameData);
 
-            _gameData.HasBeenSavedBefore = true;
+            _gameData.Details.Save(_gameData.Details.PlayTime + passedSeconds);
+            passedSeconds = 0;
+
             _fileDataHandler.Save(_gameData);
+            
+            
+            // foreach (var save in SaveLoads)
+            //     save.SaveData(ref _gameData);
+            //
+            // _gameData.HasBeenSavedBefore = true;
+            // _fileDataHandler.Save(_gameData);
 
             Debug.Log("** Game Is Saved **");
         }
@@ -85,6 +108,8 @@ namespace SaveAndLoad
         {
             var temp = new FileDataHandler(Application.persistentDataPath, fileName);
             temp.DeleteData();
+            
+            _fileDataHandler.DeleteData();
         }
 
         public bool HasBeenSavedBefore()
@@ -95,9 +120,9 @@ namespace SaveAndLoad
 
         // TODO Application Quite savelemek ister misin diye sor
 
-        public void RegisterForSaveLoad(ISaveLoad saveLoad)
+        public void RegisterForSaveLoad(ISavable savable)
         {
-            _saveLoads.Add(saveLoad);
+            _saveLoads.Add(savable);
             isSaveLoadDirty = true;
         }
     }

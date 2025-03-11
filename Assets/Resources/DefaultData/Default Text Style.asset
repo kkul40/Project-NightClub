@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4266156885b4f869091799a06699b71, type: 3}
   m_Name: Default Text Style
   m_EditorClassIdentifier: 
-  UITextAsset: {fileID: 11400000, guid: 500366cc7582f0548a0461b3ad661b27, type: 2}
+  UITextAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}

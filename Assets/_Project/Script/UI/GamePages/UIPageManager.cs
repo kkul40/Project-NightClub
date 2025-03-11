@@ -8,7 +8,7 @@ using UnityEngine;
 namespace UI.GamePages
 {
     
-    public class UIPageManager : Singleton<UIPageManager>, ISaveLoad
+    public class UIPageManager : Singleton<UIPageManager>, ISavable
     {
         [SerializeField] private UISettingsPage _settingsPage;
         private HashSet<UIPageBase> _uiPageBases = new HashSet<UIPageBase>();
@@ -121,8 +121,6 @@ namespace UI.GamePages
 
             return false;
         }
-
-        public SavePriority Priority { get; } = SavePriority.Medium;
 
         public void LoadData(GameData gameData)
         {

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d786c66bb724f27bad053ce47e0c34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsInitialized: 0
   scaleFactor: 1.07
   moveFactor: 0.03
   _animatedParts:
@@ -81,6 +82,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2395458889772367906}
     m_Modifications:
+    - target: {fileID: -8749944963226981192, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -129,9 +134,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: ef3df3d0db6a8494596967102788ea2e, type: 2}
+    - target: {fileID: -2034542844046584195, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
       propertyPath: m_Name
       value: Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3394693809837829554, guid: b8faad2e4c4b077429f2eff3483648a7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

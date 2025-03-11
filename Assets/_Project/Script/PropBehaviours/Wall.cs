@@ -11,7 +11,7 @@ namespace PropBehaviours
     {
         public virtual GameObject mGameobject { get; private set; }
         public virtual bool IsInteractable { get; } = true;
-        public virtual bool IsAnimatable { get; } = true;
+        public virtual bool hasInteractionAnimation { get; } = true;
         public virtual eInteraction Interaction { get; } = eInteraction.None;
 
         private void Awake()
@@ -29,6 +29,11 @@ namespace PropBehaviours
 
         public virtual void OnClick()
         {
+        }
+
+        public void OnDeselect()
+        {
+            
         }
 
         public int assignedMaterialID { get; protected set; }

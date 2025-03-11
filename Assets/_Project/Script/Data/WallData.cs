@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Linq;
 using Disco_ScriptableObject;
-using ExtensionMethods;
 using PropBehaviours;
-using Root;
 using SaveAndLoad;
 using UnityEngine;
 
 namespace Data
 {
     [Serializable]
-    public class WallAssignmentData
+    public class WallData
     {
         public Vector3Int CellPosition = -Vector3Int.one;
         public Wall assignedWall { get; private set; }
         public int assignedMaterialID { get; private set; }
 
-        public WallAssignmentData(Vector3Int cellPosition)
+        public WallData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
             assignedMaterialID = -1;
         }
 
-        public WallAssignmentData(GameDataExtension.WallSaveData wallSaveData)
+        public WallData(GameDataExtension.WallSaveData wallSaveData)
         {
             CellPosition = wallSaveData.CellPosition;
             assignedMaterialID = wallSaveData.AssignedMaterialID;

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0324a7b6e79e4d6f90aedf71cd6c4b03, type: 3}
   m_Name: WallPaper 1
   m_EditorClassIdentifier: 
-  ID: 2116801495
+  ID: -1835789632
   Name: Green Wallpaper
+  Description: 
   Icon: {fileID: 21300000, guid: ee4c542c95b0ba84ca4359dd82b260f8, type: 3}
   Price: 0
+  ItemType: 5
   Material: {fileID: 2100000, guid: 2c5459606442c3f4e80ba4e455187503, type: 2}
   MaterialLayer: 1

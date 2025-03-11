@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0324a7b6e79e4d6f90aedf71cd6c4b03, type: 3}
   m_Name: FloorTile 1
   m_EditorClassIdentifier: 
-  ID: -1428035241
+  ID: -890423504
   Name: Kirmizi Hali
+  Description: 
   Icon: {fileID: 21300000, guid: bedb5442be514cb47a3604f14f300d23, type: 3}
   Price: 0
+  ItemType: 7
   Material: {fileID: 2100000, guid: ea54e6fa4ca905143afbabd24a4bbc50, type: 2}
   MaterialLayer: 0

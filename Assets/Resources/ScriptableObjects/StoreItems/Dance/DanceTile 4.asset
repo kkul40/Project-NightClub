@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f13b0f460914982a331a682eca01d71, type: 3}
   m_Name: DanceTile 4
   m_EditorClassIdentifier: 
-  ID: 1236038048
+  ID: -299486350
   Name: Rainbow Zebra Dance Floor
   Description: 
   Icon: {fileID: 21300000, guid: 9de8295329fbb4349bc11b97ac7ffc57, type: 3}
   Price: 0
+  ItemType: 6
   Prefab: {fileID: 8944718490761708534, guid: 2a43293c933284748bd3ad5c6c6fbb3d, type: 3}
   Size: {x: 1, y: 1}
   IsBig: 1
+  canPlaceOntoOtherObjects: 0
+  GridSizes: 0
   PlacementLayer: 0
   eRotation: 1

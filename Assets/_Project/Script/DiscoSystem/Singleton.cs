@@ -27,5 +27,15 @@ namespace DiscoSystem
                 return _instance;
             }
         }
+
+        public void Awake()
+        {
+            // Keep Empty
+        }
+
+        public void Start()
+        {
+            // Keep Empty
+        }
     }
 }

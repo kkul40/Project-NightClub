@@ -8,6 +8,14 @@ using UnityEngine;
 
 namespace System.Building_System
 {
+    public enum PlacementMode
+    {
+        None,
+        Buying,
+        Inventory,
+        Relocating,
+    }
+    
     public class ToolHelper
     {
         // Constant Variables
@@ -32,7 +40,7 @@ namespace System.Building_System
         public IPropUnit SelectedPropItem;
         public Vector3 startPosition;
         public Quaternion StartRotation;
-        public bool isReloacting;
+        public PlacementMode Mode;
 
     
         // Dynamic Variables
@@ -126,12 +134,12 @@ namespace System.Building_System
 
         #region Helper Functions
 
-        public WallAssignmentData GetClosestWall()
+        public WallData GetClosestWall()
         {
             Vector3 mousePos = InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
             float maxDistance = float.MaxValue;
 
-            WallAssignmentData output = null;
+            WallData output = null;
 
             foreach (var wall in DiscoData.Instance.MapData.WallDatas)
             {

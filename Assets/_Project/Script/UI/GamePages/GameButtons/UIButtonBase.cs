@@ -28,7 +28,6 @@ namespace UI.GamePages.GameButtons
 
         public virtual void OnClick()
         {
-            // EventSystem.current.SetSelectedGameObject(gameObject);
         }
     }
 

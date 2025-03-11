@@ -17,5 +17,6 @@ MonoBehaviour:
   Description: 
   Icon: {fileID: 21300000, guid: 06673cdbc05a26241b32a452ebddd5da, type: 3}
   Price: 0
+  ItemType: 7
   Material: {fileID: 2100000, guid: 1d3aa98646f11294e835683bf84a4b3b, type: 2}
   MaterialLayer: 0

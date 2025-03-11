@@ -1,32 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using Disco_ScriptableObject;
+using GameEvents;
 using UnityEditor;
 using UnityEngine;
 
 namespace Data
 {
     [Serializable]
-    public class Inventory
+    public class Inventory : IDisposable
     {
+        public int Balance;
         public Dictionary<StoreItemSO, int> Items;
 
         public event Action OnInventoryChanged;
 
-        public Inventory()
-        {
-            Items = new Dictionary<StoreItemSO, int>();
-        }
-
         public Inventory(GameData gameData)
         {
+            Balance = gameData.SavedInventoryData.Balance;
             Items = new Dictionary<StoreItemSO, int>();
 
-            foreach (var data in gameData.SavedInventoryDatas)
-                Items.Add(DiscoData.Instance.FindAItemByID(data.InventoryItemID), data.Amount);
+            foreach (var data in gameData.SavedInventoryData.Items)
+                Items.Add(DiscoData.Instance.FindAItemByID(data.Key), data.Value);
+            
+            KEvent_Inventory.TriggerMoneyChange(Balance);
+            KEvent_Inventory.TriggerInventoryUpdate(Items);
+
+            KEvent_Inventory.OnStoreItemAdded += AddItem;
+            KEvent_Inventory.OnStoreItemRemoved += RemoveItem;
+        }
+        
+        public void Dispose()
+        {
+            KEvent_Inventory.OnStoreItemAdded -= AddItem;
+            KEvent_Inventory.OnStoreItemRemoved -= RemoveItem;
         }
 
-        public void AddItem(StoreItemSO storeItemSo)
+        public void AddMoney(int moneyAmount)
+        {
+            Balance += moneyAmount;
+            
+            KEvent_Inventory.TriggerMoneyChange(Balance);
+        }
+
+        public bool RemoveMoney(int moneyAmount)
+        {
+            bool hasMoney = HasEnoughMoney(moneyAmount);
+
+            if (hasMoney)
+            {
+                Balance -= moneyAmount;
+                KEvent_Inventory.TriggerMoneyChange(Balance);
+            }
+
+            return hasMoney;
+        }
+
+        public bool HasEnoughMoney(int balanceCheckAmount)
+        {
+            if (Balance < balanceCheckAmount) return false;
+
+            return true;
+        }
+
+        private void AddItem(StoreItemSO storeItemSo)
         {
             if (Items.ContainsKey(storeItemSo))
             {
@@ -39,7 +76,7 @@ namespace Data
             OnInventoryChanged?.Invoke();
         }
 
-        public void RemoveItem(StoreItemSO storeItemSo)
+        private void RemoveItem(StoreItemSO storeItemSo)
         {
             if (Items.ContainsKey(storeItemSo))
             {

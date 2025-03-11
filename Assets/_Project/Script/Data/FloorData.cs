@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using Disco_ScriptableObject;
-using ExtensionMethods;
 using PropBehaviours;
 using SaveAndLoad;
 using UnityEngine;
@@ -9,19 +7,19 @@ using UnityEngine;
 namespace Data
 {
     [Serializable]
-    public class FloorGridAssignmentData
+    public class FloorData
     {
         public Vector3Int CellPosition { get; private set; }
         public FloorTile assignedFloorTile { get; private set; }
         public int assignedMaterialID { get; private set; }
 
-        public FloorGridAssignmentData(Vector3Int cellPosition)
+        public FloorData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
             assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
         }
 
-        public FloorGridAssignmentData(GameDataExtension.FloorSaveData floorSaveData)
+        public FloorData(GameDataExtension.FloorSaveData floorSaveData)
         {
             CellPosition = floorSaveData.CellPosition;
             assignedMaterialID = floorSaveData.assignedMaterialID;
@@ -44,6 +42,7 @@ namespace Data
 
             assignedFloorTile.UpdateMaterial(materialItemSo);
             assignedMaterialID = materialItemSo.ID;
+            
         }
     }
 

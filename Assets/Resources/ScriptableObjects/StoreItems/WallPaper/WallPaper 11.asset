@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0324a7b6e79e4d6f90aedf71cd6c4b03, type: 3}
   m_Name: WallPaper 11
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 798934124
   Name: 
+  Description: 
   Icon: {fileID: 21300000, guid: 718f70a3093ebbd4e867c786a8ca9369, type: 3}
   Price: 0
+  ItemType: 5
   Material: {fileID: 2100000, guid: 33ddd81ecd3bc0f4692067d92ebd8ba7, type: 2}
   MaterialLayer: 1

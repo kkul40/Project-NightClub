@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace System.Character._Player
 {
-    public class Player : MonoBehaviour, IDoorTrigger, ISaveLoad
+    public class Player : MonoBehaviour, IDoorTrigger, ISavable
     {
         private IAnimationController _animationController;
         private NpcPathFinder _pathFinder;
@@ -34,7 +34,6 @@ namespace System.Character._Player
 
         public bool TriggerDoor { get; set; } = true;
         
-        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

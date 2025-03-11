@@ -29,7 +29,7 @@ namespace PropBehaviours
 
         public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
-        public bool IsAnimatable { get; } = true;
+        public bool hasInteractionAnimation { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.None;
 
         private void Start()
@@ -55,6 +55,10 @@ namespace PropBehaviours
             // Debug.Log(DiscoData.Instance.SavingSystem.CurrentSavedData.FloorGridDatas[a.x, a.z].assignedMaterialID);
             // Debug.Log(GridHandler.Instance.GetMouseCellPosition(InputSystem.Instance.GetMouseMapPosition(), eGridType.PlacementGrid));
             // Debug.Log(DiscoData.Instance.MapData.GetTileNodeByCellPos(a));
+        }
+
+        public void OnDeselect()
+        {
         }
 
         #endregion

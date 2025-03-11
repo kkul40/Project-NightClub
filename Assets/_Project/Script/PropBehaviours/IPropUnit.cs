@@ -1,8 +1,5 @@
-﻿using System;
-using Data;
+﻿using Data;
 using Disco_Building;
-using DiscoSystem;
-using ExtensionMethods;
 using Sirenix.OdinInspector;
 using UI.GamePages;
 using UI.PopUp;
@@ -22,8 +19,7 @@ namespace PropBehaviours
         
         // Events
        
-
-        public void Initialize(
+        public virtual void Initialize(
             int ID, 
             Vector3Int cellPosition, 
             RotationData rotationData, 
@@ -42,7 +38,7 @@ namespace PropBehaviours
 
         public GameObject mGameobject { get; protected set; }
         public bool IsInteractable { get; protected set; } = true;
-        public bool IsAnimatable { get; } = true;
+        public bool hasInteractionAnimation { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.PropUnit;
 
         public virtual void OnFocus()
@@ -56,6 +52,11 @@ namespace PropBehaviours
         public virtual void OnClick()
         {
             UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+        }
+
+        public void OnDeselect()
+        {
+            // TODO Close The Page
         }
 
         public void SetPositionAndRotation(Vector3 position, Quaternion rotation)

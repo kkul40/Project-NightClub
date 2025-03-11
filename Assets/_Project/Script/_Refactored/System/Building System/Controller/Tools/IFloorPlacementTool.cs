@@ -104,7 +104,7 @@ namespace System.Building_System.Controller.Tools
     
         public void OnPlace(ToolHelper TH)
         {
-            if (TH.isReloacting)
+            if (TH.Mode == PlacementMode.Relocating)
             {
                 isFinished = true;
                 return;

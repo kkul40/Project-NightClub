@@ -38,11 +38,12 @@ namespace System.Character.NPC
 
         public GameObject mGameobject { get; }
         public bool IsInteractable { get; } = true;
-        public bool IsAnimatable { get; } = false;
+        public bool hasInteractionAnimation { get; } = false;
         public eInteraction Interaction { get; private set; } = eInteraction.Customer;
 
         public void OnFocus()
         {
+            // TODO Show some attributes or details for npc.
         }
 
         public void OnOutFocus()
@@ -51,7 +52,12 @@ namespace System.Character.NPC
 
         public void OnClick()
         {
-            CameraControl.Instance.FollowNPC(this);
+            CameraControl.Instance.FollowTarget(transform);
+        }
+
+        public void OnDeselect()
+        {
+            CameraControl.Instance.ResetTarget();
         }
 
         private List<Vector3> path = new();

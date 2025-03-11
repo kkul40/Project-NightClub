@@ -13,7 +13,7 @@ namespace Prop_Behaviours.Bar
     // TODO Bartender Manager Class
     // TODO Add ReAssignment Logic
     // TODO Use This Script To Manage All Your Bartenders. Give them states(orders), have them clean stuff.
-    public class BarMediator : Singleton<BarMediator>, ISaveLoad
+    public class BarMediator : Singleton<BarMediator>, ISavable
     {
         [SerializeField] public GameObject DrinkTablePrefab;
 
@@ -96,8 +96,6 @@ namespace Prop_Behaviours.Bar
         }
 
         #region SavingAndLoading...
-
-        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

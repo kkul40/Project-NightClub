@@ -247,7 +247,7 @@ namespace UI.PopUp
 
         private void PlaySFXOnButtonClick()
         {
-            SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
+            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Click);
         }
     }
 }

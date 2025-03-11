@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Data;
 using DG.Tweening;
+using Disco_Building;
 using DiscoSystem;
 using UnityEngine;
 
@@ -20,7 +22,7 @@ namespace PropBehaviours.LightBehaviours
         {
             for (int i = 0; i < _animatedParts.Count; i++)
             {
-                startPositions.Add(_animatedParts[i].position);
+                startPositions.Add(_animatedParts[i].localPosition);
                 _tweenScales.Add(null);
                 _tweenMoves.Add(null);
             }
@@ -36,7 +38,7 @@ namespace PropBehaviours.LightBehaviours
             for (int i = 0; i < _animatedParts.Count; i++)
             {
                 _animatedParts[i].localScale = Vector3.one * scaleFactor;
-                _animatedParts[i].position = startPositions[i] + _animatedParts[i].forward * moveFactor;
+                _animatedParts[i].localPosition = startPositions[i] + (_animatedParts[i].forward * moveFactor);
             
                 if (_tweenMoves[i] != null)
                 {
@@ -45,7 +47,7 @@ namespace PropBehaviours.LightBehaviours
                 }
            
                 _tweenScales[i] = _animatedParts[i].DOScale(Vector3.one, 0.2f);
-                _tweenMoves[i] = _animatedParts[i].DOMove(startPositions[i], 0.2f);
+                _tweenMoves[i] = _animatedParts[i].DOLocalMove(startPositions[i], 0.2f);
             }
         }
         

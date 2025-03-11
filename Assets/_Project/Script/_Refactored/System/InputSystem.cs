@@ -197,7 +197,6 @@ namespace System
 
         public Transform GetHitTransformWithLayer(int layerID)
         {
-            LayerMask layer = 1 << layerID;
             var mousePOs = Input.mousePosition;
             mousePOs.z = mainCam.nearClipPlane;
             var ray = mainCam.ScreenPointToRay(mousePOs);
@@ -205,7 +204,7 @@ namespace System
             RaycastHit hit;
             float maxDistance = 100;
 
-            if (Physics.Raycast(ray, out hit, maxDistance, layer)) return hit.transform;
+            if (Physics.Raycast(ray, out hit, maxDistance, 1 << layerID)) return hit.transform;
             return null;
         }
     }

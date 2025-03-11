@@ -1,11 +1,29 @@
-﻿using Data;
+﻿using System;
+using Data;
+using GameEvents;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 
 namespace DiscoSystem
 {
+    public enum SoundFXType
+    {
+        Click,
+        Success,
+        Error,
+        UIClick,
+        UIBack,
+        NPCSelection,
+        PropSelection,
+        BuildingSuccess,
+        BuildingError,
+        MoneyAdd,
+        MoneyRemove,
+        CameraFocus,
+    }
     // TODO Make This Class Part Of Music Player or just put all this into MusicPlayer
-    public class SFXPlayer : Singleton<SFXPlayer>, ISaveLoad
+    public class SFXPlayer : Singleton<SFXPlayer>, ISavable
     {
         private AudioSource _audioSource;
 
@@ -16,6 +34,15 @@ namespace DiscoSystem
         public AudioClip Click;
         public AudioClip Succes;
         public AudioClip Error;
+        public AudioClip UIClick;
+        public AudioClip UIBack;
+        public AudioClip NPCSelection;
+        public AudioClip PropSelection;
+        public AudioClip BuildingSuccess;
+        public AudioClip BuildingError;
+        public AudioClip MoneyAdd;
+        public AudioClip MoneyRemove;
+        public AudioClip CameraFocus;
         
         public float SoundVolume { get; private set; }
 
@@ -23,20 +50,75 @@ namespace DiscoSystem
         {
             _audioSource = GetComponent<AudioSource>();
         }
-        
-        public void PlaySoundEffect(AudioClip audioClip, bool timerPlay = false)
+
+        private void OnEnable()
+        {
+            KEvent_SoundFX.OnSoundFXPlayed += PlaySoundFX;
+        }
+
+        private void OnDisable()
+        {
+            KEvent_SoundFX.OnSoundFXPlayed -= PlaySoundFX;
+        }
+
+        private void PlaySoundFX(SoundFXType fxType, bool delay)
+        {
+            switch (fxType)
+            {
+                case SoundFXType.Click:
+                    PlayAudioClip(Click, delay);
+                    break;
+                case SoundFXType.Success:
+                    PlayAudioClip(Succes, delay);
+                    break;
+                case SoundFXType.Error:
+                    PlayAudioClip(Error, delay);
+                    break;
+                case SoundFXType.UIClick:
+                    PlayAudioClip(UIClick, delay);
+                    break;
+                case SoundFXType.UIBack:
+                    PlayAudioClip(UIBack, delay);
+                    break;
+                case SoundFXType.NPCSelection:
+                    PlayAudioClip(NPCSelection, delay);
+                    break;
+                case SoundFXType.PropSelection:
+                    PlayAudioClip(PropSelection, delay);
+                    break;
+                case SoundFXType.BuildingSuccess:
+                    PlayAudioClip(BuildingSuccess, delay);
+                    break;
+                case SoundFXType.BuildingError:
+                    PlayAudioClip(BuildingError, delay);
+                    break;
+                case SoundFXType.MoneyAdd:
+                    PlayAudioClip(MoneyAdd, delay);
+                    break;
+                case SoundFXType.MoneyRemove:
+                    PlayAudioClip(MoneyRemove, delay);
+                    break;
+                case SoundFXType.CameraFocus:
+                    PlayAudioClip(CameraFocus, delay);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fxType), fxType, null);
+            }
+        }
+
+        private void PlayAudioClip(AudioClip clip, bool delay)
         {
             float time = Time.time;
-
-            if (timerPlay)
+            
+            if (delay)
             {
-                if (time - timer < audioClip.length)
+                if (time - timer < clip.length)
                 {
                     return;
                 }
             }
             
-            _audioSource.PlayOneShot(audioClip);
+            _audioSource.PlayOneShot(clip);
             timer = Time.time;
         }
         
@@ -45,8 +127,6 @@ namespace DiscoSystem
             SoundVolume = value;
             mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
         }
-
-        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

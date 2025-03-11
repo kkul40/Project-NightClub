@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace CharacterCustomization.UI
 {
-    public class PlayerCustomizationUI : MonoBehaviour, ISaveLoad
+    public class PlayerCustomizationUI : MonoBehaviour, ISavable
     {
         public class EquipedItem
         {
@@ -227,8 +227,6 @@ namespace CharacterCustomization.UI
         {
             InitBody(gender);
         }
-
-        public SavePriority Priority { get; } = SavePriority.Default;
 
         public void LoadData(GameData gameData)
         {

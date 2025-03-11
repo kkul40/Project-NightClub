@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExtensionMethods;
 using SaveAndLoad;
 using SerializableTypes;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,6 +10,7 @@ namespace Data
     [Serializable]
     public class GameData
     {
+        public GameDataExtension.Details Details;
         public bool HasBeenSavedBefore = false;
         public GameDataExtension.PlayerCustomizationIndexData SavedPlayerCustomizationIndexData;
         public Vector2Int SavedMapSize;
@@ -20,12 +19,15 @@ namespace Data
         public List<GameDataExtension.WallSaveData> SavedWallDatas;
         public SerializableDictionary<Vector3Int, GameDataExtension.FloorSaveData> SavedFloorDatas;
         public List<GameDataExtension.PlacementSaveData> SavedPlacementDatas;
-        public List<GameDataExtension.InventorySaveData> SavedInventoryDatas;
+        public GameDataExtension.InventorySaveData SavedInventoryData;
+        
         public GameDataExtension.GameSettingsData GameSettingsData;
 
         // Default GameData
         public GameData()
         {
+            Details = new GameDataExtension.Details();
+            
             // Player Customization Data
             SavedPlayerCustomizationIndexData = new GameDataExtension.PlayerCustomizationIndexData();
 
@@ -56,7 +58,7 @@ namespace Data
             SavedPlacementDatas = new List<GameDataExtension.PlacementSaveData>();
 
             // Inventory Data
-            SavedInventoryDatas = new List<GameDataExtension.InventorySaveData>();
+            SavedInventoryData = new GameDataExtension.InventorySaveData();
 
             // Game Settings Data
             GameSettingsData = new GameDataExtension.GameSettingsData();

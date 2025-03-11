@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using GameEvents;
 using PropBehaviours;
 using SaveAndLoad;
 using ScriptableObjects;
@@ -11,12 +12,12 @@ using UnityEngine;
 namespace Data
 {
     [DisallowMultipleComponent]
-    public class DiscoData : Singleton<DiscoData>, ISaveLoad
+    public class DiscoData : Singleton<DiscoData>
     {
         // Verileri Once Data ya yaz daha sonra Modeli datadaki veriye gore guncelle!
         public MapData MapData;
-        public Inventory inventory = new();
-        public Dictionary<int ,StoreItemSO> AllInGameItems { get; private set; }
+        public Inventory inventory;
+        public Dictionary<int, StoreItemSO> AllInGameItems { get; private set; } = new();
         public Dictionary<int, DrinkSO> AllInGameDrinks { get; private set; }
         
         //            instanceID   StoreID created-obj   Pos      Rot
@@ -24,8 +25,6 @@ namespace Data
 
         public void Initialize(GameData gameData)
         {
-            LoadData(gameData);
-            
             AllInGameItems = new Dictionary<int, StoreItemSO>();
             AllInGameDrinks = new Dictionary<int, DrinkSO>();
             
@@ -40,23 +39,24 @@ namespace Data
             var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToHashSet();
             foreach (var dItem in allDrinkItems)
                 AllInGameDrinks.Add(dItem.ID, dItem);
-        }
-
-        public SavePriority Priority { get; } = SavePriority.VeryHigh;
-
-        public void LoadData(GameData gameData)
-        {
+            
             MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
-            Debug.Log("Disco Data Loaded");
         }
+
+        private void OnDisable()
+        {
+            inventory.Dispose();
+            MapData.Dispose();
+        }
+
 
         public void SaveData(ref GameData gameData)
         {
-            gameData.SavedInventoryDatas.Clear();
+            gameData.SavedInventoryData = new GameDataExtension.InventorySaveData();
 
             foreach (var pair in inventory.Items)
-                gameData.SavedInventoryDatas.Add(pair.ConvertToInvetorySaveData());
+                gameData.SavedInventoryData.Items.Add(pair.Key.ID, pair.Value);
         }
 
         public StoreItemSO FindAItemByID(int ID)
@@ -105,10 +105,6 @@ namespace Data
 
             return output;
         }
-        // {
-        //     // TODO Fill This
-        //     return null;
-        // }
     }
     
     public enum eDanceStyle

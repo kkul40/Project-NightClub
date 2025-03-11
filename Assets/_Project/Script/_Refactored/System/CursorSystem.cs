@@ -200,6 +200,7 @@ namespace System
             if (_currentInteractable == null) return;
 
             _currentInteractable.OnOutFocus();
+            _currentInteractable.OnDeselect();
             _currentInteractable = null;
 
             if (_currentGameObject == null) return;
@@ -218,8 +219,8 @@ namespace System
         private void OnClickHandler(IInteractable interactable)
         {
             interactable.OnClick();
-            SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Click);
-            if(interactable.IsAnimatable)
+            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Click);
+            if(interactable.hasInteractionAnimation)
                 interactable.mGameobject.AnimatedPlacement(ePlacementAnimationType.Shaky);
         }
 

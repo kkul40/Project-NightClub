@@ -75,7 +75,7 @@ namespace System.Character.Bartender
 
         public GameObject mGameobject { get; private set; }
         public bool IsInteractable { get; } = true;
-        public bool IsAnimatable { get; } = false;
+        public bool hasInteractionAnimation { get; } = false;
         public eInteraction Interaction { get; } = eInteraction.Customer;
 
         public void OnFocus()
@@ -89,6 +89,11 @@ namespace System.Character.Bartender
         public void OnClick()
         {
             UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+        }
+
+        public void OnDeselect()
+        {
+            // TODO CLose The Page
         }
 
         public bool TriggerDoor { get; set; } = true;

@@ -1,15 +1,72 @@
 ﻿using System;
-using System.Collections.Generic;
 using CharacterCustomization.UI;
 using Data;
-using Disco_ScriptableObject;
-using ExtensionMethods;
+using PropBehaviours;
+using SerializableTypes;
 using UnityEngine;
 
 namespace SaveAndLoad
 {
     public static class GameDataExtension
     {
+        [Serializable]
+        public class Details
+        {
+            public string CreationDate;
+            public string LastSaveDate;
+            public float PlayTime;
+
+            public Details()
+            {
+                CreationDate = "";
+                LastSaveDate = "";
+                PlayTime = 0f;
+            }
+        }
+
+        public static Details CreateNew(this Details details)
+        {
+            details.CreationDate = GetCurrentDate();
+            details.LastSaveDate = "";
+            details.PlayTime = 0f;
+
+            return details;
+        }
+        
+        public static Details Save(this Details details, float playeTimeInSeconds)
+        {
+            details.LastSaveDate = GetCurrentDate();
+            details.PlayTime = playeTimeInSeconds;
+        
+            return details;
+        }
+
+        public static string ConvertToHour(this float seconds)
+        {
+            int converted = (int)seconds;
+            int hour = converted / 3600;
+            int min = (converted / 60) % 60;
+            int sec = converted % 60;
+
+            return $"{hour}:{min}:{sec}";
+        }
+
+        public static string GetCurrentDate()
+        {
+            DateTimeOffset Date = DateTime.Now;
+
+            int month = Date.Month;
+            int day = Date.Day;
+            int year = Date.Year;
+            
+            int hour = Date.Hour;
+            int minute = Date.Minute;
+            int second = Date.Second;
+            
+            return $"Date : {month}|{day}|{year}, Time : {hour}:{minute}:{second}";
+        }
+        
+        
         [Serializable]
         public class FloorSaveData
         {
@@ -18,12 +75,12 @@ namespace SaveAndLoad
             public int assignedMaterialID = -1;
         }
 
-        public static FloorSaveData ConvertToFloorSaveData(this FloorGridAssignmentData floorGridAssignmentData)
+        public static FloorSaveData ConvertToFloorSaveData(this FloorData floorData)
         {
             FloorSaveData floorSaveData = new FloorSaveData();
             
-            floorSaveData.CellPosition = floorGridAssignmentData.CellPosition;
-            floorSaveData.assignedMaterialID = floorGridAssignmentData.assignedMaterialID;
+            floorSaveData.CellPosition = floorData.CellPosition;
+            floorSaveData.assignedMaterialID = floorData.assignedMaterialID;
 
             return floorSaveData;
         }
@@ -36,12 +93,12 @@ namespace SaveAndLoad
             public int AssignedMaterialID = -1;
         }
 
-        public static WallSaveData ConvertToWallSaveData(this WallAssignmentData wallAssignmentData)
+        public static WallSaveData ConvertToWallSaveData(this WallData wallData)
         {
             WallSaveData wallSaveData = new WallSaveData();
             
-            wallSaveData.CellPosition = wallAssignmentData.CellPosition;
-            wallSaveData.AssignedMaterialID = wallAssignmentData.assignedMaterialID;
+            wallSaveData.CellPosition = wallData.CellPosition;
+            wallSaveData.AssignedMaterialID = wallData.assignedMaterialID;
 
             return wallSaveData;
         }
@@ -60,28 +117,50 @@ namespace SaveAndLoad
         [Serializable]
         public class InventorySaveData
         {
-            public int InventoryItemID;
-            public int Amount;
+            public class Inventory
+            {
+                public int ItemsID;
+                public int ItemAmount;
+            }
+            
+            public int Balance;
+            public SerializableDictionary<int, int> Items;
+
+            public InventorySaveData()
+            {
+                Balance = 0;
+                Items = new SerializableDictionary<int, int>();
+            }
         }
         
-        public static InventorySaveData ConvertToInvetorySaveData(this KeyValuePair<StoreItemSO, int> inventoryItem)
-        {
-            InventorySaveData invetoryData = new InventorySaveData();
-            
-            invetoryData.InventoryItemID = inventoryItem.Key.ID;
-            invetoryData.Amount = inventoryItem.Value;
-            
-            return invetoryData;
-        }
+        // public static InventorySaveData.Inventory ConvertToInvetorySaveData(this KeyValuePair<StoreItemSO, int> inventoryItem)
+        // {
+        //     InventorySaveData.Inventory InventoryItem = new InventorySaveData.Inventory();
+        //
+        //     InventoryItem.ItemsID = inventoryItem.Key.ID;
+        //     InventoryItem.ItemAmount = inventoryItem.Value;
+        //     
+        //     return InventoryItem;
+        // }
         
         [Serializable]
         public class PlacementSaveData
         {
             // Default = -1
             public int PropID = -1;
-            public Vector3Int PlacedCellPosition = -Vector3Int.one;
+            public Vector3 PlacedPosition = -Vector3.one;
             public Vector3 EularAngles = -Vector3.one;
-            public Direction Direction = Direction.Down;
+        }
+
+        public static PlacementSaveData ConverToPlacementSaveData(this IPropUnit unit)
+        {
+            PlacementSaveData saveData = new PlacementSaveData();
+
+            saveData.PropID = unit.ID;
+            saveData.PlacedPosition = unit.CellPosition;
+            saveData.EularAngles = unit.transform.rotation.eulerAngles;
+            
+            return saveData;
         }
         
         // TODO Use The Tuple Variable You Created in DiscoData named PlacedItems

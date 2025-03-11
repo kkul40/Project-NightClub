@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace System
 {
-    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISaveLoad
+    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISavable
     {
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
@@ -35,7 +35,15 @@ namespace System
             SetUpMap();
         }
 
-        public SavePriority Priority { get; } = SavePriority.High;
+        private void OnEnable()
+        {
+            KEvent_Map.OnExtendMapSize += ExpendXY;
+        }
+
+        private void OnDisable()
+        {
+            KEvent_Map.OnExtendMapSize -= ExpendXY;
+        }
 
         public void LoadData(GameData gameData)
         {
@@ -187,10 +195,13 @@ namespace System
         }
 
         [ContextMenu("Expend Both")]
-        public void ExpendXY()
+        public void ExpendXY(int x, int y)
         {
-            ExpendX();
-            ExpendY();
+            for (int i = 0; i < x; i++)
+                ExpendX();
+
+            for (int i = 0; i < y; i++)
+                ExpendY();
         }
 
         private GameObject InstantiateYWall(int y)

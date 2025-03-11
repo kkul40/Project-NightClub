@@ -22,6 +22,7 @@ namespace System.Building_System.Controller.Tools
 
         public bool OnValidate(ToolHelper TH)
         {
+            if (_mouseOnChangableMaterial == null) return false;
             if (_materialItemSo.Material == _storedMaterial.Material) return false;
             return true;
         }
@@ -44,8 +45,6 @@ namespace System.Building_System.Controller.Tools
                 _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
             }
-
-                
         }
 
         public void OnPlace(ToolHelper TH)

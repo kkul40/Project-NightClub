@@ -36,9 +36,10 @@ namespace System.Building_System.Controller
         {
             base.Initialize(context);
 
-            _view.InstantiateItems(_model.StoreItems);
+            _view.GenerateItems(_model.StoreItems);
             _view.OnSlotItemClicked += StartATool;
-
+            _view.OnStorageItemClicked += StartInventoryItemPlacement;
+            
             KEvent_Building.OnPlacementRemove += RemovePlacement;
             KEvent_Building.OnPlacementRelocate += StartRelocatePlacement;
 
@@ -48,6 +49,7 @@ namespace System.Building_System.Controller
         public override void Dispose()
         {
             _view.OnSlotItemClicked -= StartATool;
+            _view.OnStorageItemClicked -= StartInventoryItemPlacement;
             KEvent_Building.OnPlacementRemove -= RemovePlacement;
             KEvent_Building.OnPlacementRelocate -= StartRelocatePlacement;
         }
@@ -76,39 +78,29 @@ namespace System.Building_System.Controller
                 if (currentTool.OnValidate(_toolHelper))
                 {
                     currentTool.OnPlace(_toolHelper);
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Succes);
+                    KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Success);
                 }
                 else
                 {
-                    SFXPlayer.Instance.PlaySoundEffect(SFXPlayer.Instance.Error, true);
+                    KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Error, true);
                 }
             }
             
      
             if (InputSystem.Instance.CancelClick)
             {
-                if(_toolHelper.isReloacting)
+                if(_toolHelper.Mode == PlacementMode.Relocating)
                     RelocateHandler(false);
                 
                 StopTool();
             }
             else if (currentTool.isFinished)
             {
-                if(_toolHelper.isReloacting)
+                if(_toolHelper.Mode == PlacementMode.Relocating)
                     RelocateHandler(true);
                 
                 StopTool();
             }
-
-
-            // // TODO Puth This InputSystem key fucntion somewhere that is not this controller
-            // if (InputSystem.Instance.LeftClickOnWorld && currentTool.OnValidate(_toolHelper))
-            // {
-            //     currentTool.OnPlace(_toolHelper);
-            //     if (currentTool.isFinished)
-            //     {
-            //     }
-            // }
         }
 
         private void UpdateTool(ToolHelper toolHelper)
@@ -118,12 +110,16 @@ namespace System.Building_System.Controller
         private void StartATool(StoreItemSO storeItemSo)
         {
             StopTool();
+
+            _toolHelper.Mode = PlacementMode.Buying;
             ToolStartHandler(storeItemSo);
         }
 
         private void StartRelocatePlacement(int instanceID)
         {
             StopTool();
+
+            _toolHelper.Mode = PlacementMode.Relocating;
 
             StoreItemSO item = _model.GetStoreItemByID(instanceID);
 
@@ -133,7 +129,6 @@ namespace System.Building_System.Controller
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
                 _toolHelper.SelectedPropItem = unit; 
-                _toolHelper.isReloacting = true;
                 _toolHelper.startPosition = unit.WorldPos;
                 _toolHelper.StartRotation = unit.transform.rotation;
             }
@@ -144,6 +139,11 @@ namespace System.Building_System.Controller
             }
             
             ToolStartHandler(item);
+        }
+
+        private void StartInventoryItemPlacement(StoreItemSO storeItemSo, int amount)
+        {
+            
         }
         
         private void ToolStartHandler(StoreItemSO storeItemSo)
@@ -176,7 +176,7 @@ namespace System.Building_System.Controller
             currentTool = null;
 
             _toolHelper.SelectedPropItem = null;
-            _toolHelper.isReloacting = false;
+            _toolHelper.Mode = PlacementMode.None;
         
             KEvent_Cursor.ChangeToPrevious();
             KEvent_Building.TriggerBuildingToggle(false);

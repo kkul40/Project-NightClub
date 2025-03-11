@@ -11,7 +11,6 @@ namespace _Initializer
 {
     public class SceneInitializer_Game : MonoBehaviour
     {
-        [SerializeField] private SavingAndLoadingSystem _savingAndLoadingSystem;
         [SerializeField] private BuildingSystem _buildingSystem;
         [SerializeField] private GridSystem _gridSystem;
         [SerializeField] private CursorSystem _cursorSystem;
@@ -22,8 +21,8 @@ namespace _Initializer
         [SerializeField] private Player _player;
         [SerializeField] private NPCSystem _npcSystem;
         [SerializeField] private GameEvents.GameEvents _gameEvents;
-        
-        private void Awake()
+
+        private void Start()
         {
             if (_buildingSystem == null)
             {
@@ -33,7 +32,7 @@ namespace _Initializer
             
             if (_gridSystem== null)
             {
-                Debug.LogError("Building System Is Null");
+                Debug.LogError("Building System Is Null"); 
                 return;
             }
             
@@ -43,7 +42,10 @@ namespace _Initializer
             // Generate Map
             // Generate Scene Items
 
-            GameData gameData = new GameData();
+            SavingAndLoadingSystem.Instance.Initialize();
+            SavingAndLoadingSystem.Instance.NewGame();
+
+            GameData gameData = SavingAndLoadingSystem.GameData;
 
             _discoData.Initialize(gameData);
             _musicPlayer.Initialize();

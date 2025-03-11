@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: -928641844
   Name: 
+  Description: 
   Icon: {fileID: 0}
   Price: 0
+  ItemType: 10
   ExtendX: 2
   ExtendY: 2

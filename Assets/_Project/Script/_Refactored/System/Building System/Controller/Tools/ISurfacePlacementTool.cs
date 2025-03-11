@@ -34,6 +34,9 @@ namespace System.Building_System.Controller.Tools
 
         public bool OnValidate(ToolHelper TH)
         {
+            if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.FloorLayerID) == null)
+                return false;
+            
             var gridData = TH.DiscoData.MapData.GetFloorGridData((int)TH.LastPosition.x, (int)TH.LastPosition.z);
             if (gridData == null)
                 return false;
@@ -81,7 +84,7 @@ namespace System.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            if (TH.isReloacting)
+            if (TH.Mode == PlacementMode.Relocating)
             {
                 isFinished = true;
                 return;

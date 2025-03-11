@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0324a7b6e79e4d6f90aedf71cd6c4b03, type: 3}
   m_Name: FloorTile 12
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 2101525405
   Name: 
+  Description: 
   Icon: {fileID: 21300000, guid: 3940cf3ed65023743b4bd40da902ca99, type: 3}
   Price: 0
+  ItemType: 7
   Material: {fileID: 2100000, guid: ddee62e2038e5fd4eb692bfcc1499f88, type: 2}
   MaterialLayer: 0
