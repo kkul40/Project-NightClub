@@ -1,5 +1,8 @@
 ﻿using System.Character.Bartender.Command;
-using Data;
+using System.Collections.Generic;
+using Framework.Context;
+using Framework.Mvcs.View;
+using GameEvents;
 using Prop_Behaviours.Bar;
 using PropBehaviours;
 using ScriptableObjects;
@@ -7,11 +10,10 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIPickADrinkPage : UIPageBase
+    public class UIPickADrinkPage : BaseView
     {
         private UI_FollowTarget _followTarget;
         private int _lastInstanceID = -1;
-        private bool _toggle;
         private Bar _lastBar;
 
         [SerializeField] private GameObject _uiDrinkSlotPrefab;
@@ -19,39 +21,37 @@ namespace UI.GamePages
 
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
         
-        protected override void OnAwake()
+        public override void Initialize(IContext context)
         {
-            _followTarget = GetComponent<UI_FollowTarget>();
-        }
-
-        private void Start()
-        {
-            LoadDrinks();
-        }
-
-        protected override void OnShow<T>(T data)
-        {
-            Bar bar = data as Bar;
+            base.Initialize(context);
             
-            if (_lastInstanceID == bar.GetInstanceID() && _toggle)
+            _followTarget = GetComponent<UI_FollowTarget>();
+            KEvent_GameAssetBundle.OnGameDrinkDataLoaded += LoadDrinks;
+        }
+
+        public override void Dispose()
+        {
+            KEvent_GameAssetBundle.OnGameDrinkDataLoaded -= LoadDrinks;
+        }
+
+        public void Show(Bar bar)
+        {
+            if (_lastInstanceID == bar.GetInstanceID() && IsToggled)
             {
-                Hide();
+                ToggleView(false);
                 return;
             }
             
             _lastInstanceID = bar.GetInstanceID();
             _lastBar = bar;
-            _toggle = true;
+            ToggleView(true);
+
             
             _followTarget.SetTarget(bar.gameObject);
             UpdateVisual();
         }
-
-        protected override void OnHide()
-        {
-            _toggle = false;
-        }
-
+        
+ 
         private void UpdateVisual()
         {
             // Update Visuals
@@ -60,16 +60,19 @@ namespace UI.GamePages
         public void SelectADrink(DrinkSO selectedDrinkSo)
         {
             BarMediator.Instance.AddCommand(_lastBar, new PrepareDrinkCommand(selectedDrinkSo));
-            Hide();
+            ToggleView(false);
         }
 
-        private void LoadDrinks()
+        private void LoadDrinks(List<DrinkSO> drinkItems)
         {
-            foreach (var drink in DiscoData.Instance.AllInGameDrinks)
+            for (int i = _drinkContent.childCount - 1; i >= 0; i--)
+                Destroy(_drinkContent.GetChild(i).gameObject);
+            
+            foreach (var drink in drinkItems)
             {
                 var obj = Instantiate(_uiDrinkSlotPrefab, _drinkContent);
                 var drinkSlot = obj.GetComponent<UIDrinkSlot>();
-                drinkSlot.Init(drink.Value, this);
+                drinkSlot.Init(drink, this);
             }
         }
     }

@@ -27,7 +27,7 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+            UIPageManager.Instance.ShowActionSelectionPage(this);
         }
 
         #endregion

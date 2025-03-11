@@ -1,10 +1,16 @@
 using System;
 using Framework.Context;
+using UI.GamePages;
 using UnityEngine;
 
 namespace Framework.Mvcs.View
 {
-    //  Namespace Properties ------------------------------
+    public enum PageType
+    {
+        FullPage,
+        MiniPage,
+        PopUp,
+    }
 
     //  Class Attributes ----------------------------------
 
@@ -19,6 +25,17 @@ namespace Framework.Mvcs.View
         //  Properties ------------------------------------
         public bool IsInitialized { get { return _isInitialized;} }
         public IContext Context { get { return _context;} }
+        
+        public abstract PageType PageType { get; protected set; }
+
+        private bool isToggled;
+        public bool IsToggled
+        {
+            get
+            {
+                return isToggled;
+            }
+        }
 
         //  Fields ----------------------------------------
         private bool _isInitialized = false;
@@ -31,7 +48,6 @@ namespace Framework.Mvcs.View
             {
                 _isInitialized = true;
                 _context = context;
-                
             }
         }
 
@@ -43,7 +59,6 @@ namespace Framework.Mvcs.View
             }
         }
         
-        
         //  Dispose Methods --------------------------------
         public virtual void Dispose()
         {
@@ -52,6 +67,17 @@ namespace Framework.Mvcs.View
         
         
         //  Methods ---------------------------------------
+        public void ToggleView(bool toggle)
+        {
+            gameObject.SetActive(toggle);
+            isToggled = toggle;
+        }
+
+        public void ToggleView()
+        {
+            gameObject.SetActive(!gameObject.activeInHierarchy);
+            isToggled = gameObject.activeInHierarchy;
+        }
         
 
         //  Event Handlers --------------------------------

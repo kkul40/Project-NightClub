@@ -36,7 +36,6 @@ namespace System.Building_System.Controller
         {
             base.Initialize(context);
 
-            _view.GenerateItems(_model.StoreItems);
             _view.OnSlotItemClicked += StartATool;
             _view.OnStorageItemClicked += StartInventoryItemPlacement;
             
@@ -220,11 +219,6 @@ namespace System.Building_System.Controller
             }
 
             return null;
-        }
-
-        public void ToggleBuildingPage(bool toggle)
-        {
-            _view.ToggleView(toggle);
         }
 
         public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation)

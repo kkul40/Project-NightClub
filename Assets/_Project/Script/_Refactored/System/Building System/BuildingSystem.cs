@@ -42,6 +42,9 @@ namespace System.Building_System
         private void Update()
         {
             RequireIsInitialized();
+
+            if (!_isInitialized) return;
+            
             _controller.Update(Time.deltaTime);
         }
 

@@ -5,5 +5,8 @@ namespace Framework.Mvcs.View
     /// Optional. Useful when you want to use 'no concern' here,
     /// but your setup requires one.
     /// </summary>
-    public class DummyView : BaseView {}
+    public class DummyView : BaseView
+    {
+        public override PageType PageType { get; protected set; }
+    }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using Data;
 using DG.Tweening;
 using DiscoSystem;
+using Framework.Context;
+using Framework.Mvcs.View;
 using GameEvents;
 using PropBehaviours;
 using UI.GamePages;
@@ -14,7 +16,7 @@ using UnityEngine;
 
 namespace UI.PopUp
 {
-    public class UIActionSelectionPage : UIPageBase
+    public class UIActionSelectionPage : BaseView
     {
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
@@ -40,20 +42,23 @@ namespace UI.PopUp
         private readonly Dictionary<Type, List<Action<object>>> _typeBehaviors = new();
         private List<Tween> _tweens = new();
 
-        protected override void OnAwake()
+        public override void Initialize(IContext context)
         {
+            base.Initialize(context);
             CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
 
             RegisterBehaviors();
         }
 
-        protected override void OnShow<T>(T data)
+        public void Show(object data)
         {
             _lastData = data;
 
             CloseAllButtons();
             Invoke(nameof(ActivateButtonsAndArrange), 0.1f);
+            
+            ToggleView(true);
             // ActivateButtonsAndArrange();
         }
 
@@ -186,9 +191,9 @@ namespace UI.PopUp
         {
             if (_lastData is IPropUnit propUnit)
             {
-                UIPageManager.Instance.RequestAPage(typeof(UIPropInfo), propUnit);
+                UIPageManager.Instance.ShowPropInfo(propUnit);
                 PlaySFXOnButtonClick();
-                Hide();
+                ToggleView(false);
             }
         }
 
@@ -196,9 +201,9 @@ namespace UI.PopUp
         {
             if (_lastData is Bar bar)
             {
-                UIPageManager.Instance.RequestAPage(typeof(UIPickADrinkPage), bar);
+                UIPageManager.Instance.ShowDrinkPage(bar);
                 PlaySFXOnButtonClick();
-                Hide();
+                ToggleView(false);
             }
         }
 
@@ -218,7 +223,7 @@ namespace UI.PopUp
                 var instanceID = propUnit.transform.GetInstanceID();
                 KEvent_Building.TriggerPlacementRelocate(instanceID);
                 PlaySFXOnButtonClick();
-                Hide();
+                ToggleView(false);
                 KEvent_Cursor.TriggerResetSelection();
             }
         }
@@ -229,7 +234,8 @@ namespace UI.PopUp
             {
                 KEvent_Building.TriggerOnWallDoorRelocate(wallDoor);
                 PlaySFXOnButtonClick();
-                Hide();
+                ToggleView(false);
+
                 KEvent_Cursor.TriggerResetSelection();
             }
         }
@@ -240,7 +246,7 @@ namespace UI.PopUp
             {
                 KEvent_Building.TriggerPlacementRemove(propUnit.transform.GetInstanceID());
                 PlaySFXOnButtonClick();
-                Hide();
+                ToggleView(false);
                 KEvent_Cursor.TriggerResetSelection();
             }
         }

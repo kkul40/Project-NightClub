@@ -5,6 +5,7 @@ using System.Character.NPC;
 using Data;
 using DiscoSystem;
 using SaveAndLoad;
+using UI.GamePages;
 using UnityEngine;
 
 namespace _Initializer
@@ -12,6 +13,7 @@ namespace _Initializer
     public class SceneInitializer_Game : MonoBehaviour
     {
         [SerializeField] private BuildingSystem _buildingSystem;
+        [SerializeField] private UIPageManager _uiPageManager;
         [SerializeField] private GridSystem _gridSystem;
         [SerializeField] private CursorSystem _cursorSystem;
         [SerializeField] private DiscoData _discoData;
@@ -22,7 +24,7 @@ namespace _Initializer
         [SerializeField] private NPCSystem _npcSystem;
         [SerializeField] private GameEvents.GameEvents _gameEvents;
 
-        private void Start()
+        private void Awake()
         {
             if (_buildingSystem == null)
             {
@@ -47,6 +49,7 @@ namespace _Initializer
 
             GameData gameData = SavingAndLoadingSystem.GameData;
 
+            
             _discoData.Initialize(gameData);
             _musicPlayer.Initialize();
             _inputSystem.Initialize();
@@ -56,6 +59,7 @@ namespace _Initializer
             _gridSystem.Initialize();
             _cursorSystem.Initialize(_inputSystem, 1);
             _buildingSystem.Initialize();
+            _uiPageManager.Initialize();
             
             _gameEvents.Initialize();
             

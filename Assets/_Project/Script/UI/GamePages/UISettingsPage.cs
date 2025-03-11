@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using Data;
 using DiscoSystem;
+using Framework.Context;
+using Framework.Mvcs.View;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.GamePages
 {
-    public class UISettingsPage : UIPageBase
+    public class UISettingsPage : BaseView
     {
         public override PageType PageType { get; protected set; } = PageType.FullPage;
 
@@ -20,11 +22,13 @@ namespace UI.GamePages
 
         public static Action<bool> OnUISettingsToggle;
 
-        protected override void OnAwake()
+        public override void Initialize(IContext context)
         {
+            base.Initialize(context);
             musicVolumeSlider.onValueChanged.AddListener(MusicPlayer.Instance.SetMusicVolume);
             soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
         }
+
 
         private void OnEnable()
         {

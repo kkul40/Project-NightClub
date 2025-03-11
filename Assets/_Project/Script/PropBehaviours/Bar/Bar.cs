@@ -86,7 +86,7 @@ namespace PropBehaviours
         {
             if (HasBarCleaned)
             {
-                UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage),this);
+                UIPageManager.Instance.ShowActionSelectionPage(this);
             }
             else if(_drinkTable.IsOutOfDrinks)
             {

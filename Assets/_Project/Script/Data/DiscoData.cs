@@ -8,12 +8,20 @@ using PropBehaviours;
 using SaveAndLoad;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Data
 {
     [DisallowMultipleComponent]
     public class DiscoData : Singleton<DiscoData>
     {
+        [SerializeField] private AssetLabelReference _storeItemReference;
+        [SerializeField] private AssetLabelReference _drinkDataReference;
+
+        private AsyncOperationHandle<IList<StoreItemSO>> _storeItemHandle;
+        private AsyncOperationHandle<IList<DrinkSO>> _drinkItemHandle;
+        
         // Verileri Once Data ya yaz daha sonra Modeli datadaki veriye gore guncelle!
         public MapData MapData;
         public Inventory inventory;
@@ -27,28 +35,79 @@ namespace Data
         {
             AllInGameItems = new Dictionary<int, StoreItemSO>();
             AllInGameDrinks = new Dictionary<int, DrinkSO>();
-            
+           
             //
             PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
             //
             
-            var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToHashSet();
-            foreach (var gItems in allGameItems)
-                AllInGameItems.Add(gItems.ID, gItems);
+            Addressables.LoadAssetsAsync<StoreItemSO>(_storeItemReference.labelString).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    foreach (var item in handle.Result)
+                    {
+                        AllInGameItems.Add(item.ID, item);
+                    }
 
-            var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToHashSet();
-            foreach (var dItem in allDrinkItems)
-                AllInGameDrinks.Add(dItem.ID, dItem);
+                    KEvent_GameAssetBundle.TriggerStoreItemsLoad(handle.Result.ToList());
+                }
+            };
+
+            Addressables.LoadAssetsAsync<DrinkSO>(_drinkDataReference.labelString).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    foreach (var drink in handle.Result)
+                    {
+                        AllInGameDrinks.Add(drink.ID, drink);
+                    }
+                    
+                    KEvent_GameAssetBundle.TriggerDrinkDataLoad(handle.Result.ToList());
+                }
+            };
+
+            // _storeItemHandle = Addressables.LoadAssetsAsync<StoreItemSO>(_storeItemReference.labelString, addressable =>
+            // {
+            //     AllInGameItems.Add(addressable.ID, addressable);
+            // });
+            // _storeItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerStoreItemsLoad(AllInGameItems.Values.ToList());
+            //
+            // _drinkItemHandle = Addressables.LoadAssetsAsync<DrinkSO>(_drinkDataReference.labelString, addressables =>
+            // {
+            //     AllInGameDrinks.Add(addressables.ID, addressables);
+            // });
+            // _drinkItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerDrinkDataLoad(AllInGameDrinks.Values.ToList());
             
+             
             MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
         }
 
+
         private void OnDisable()
         {
+            if(_storeItemHandle.IsValid())
+                _storeItemHandle.Release();
+            
+            if(_drinkItemHandle.IsValid())
+                _drinkItemHandle.Release();
+            
             inventory.Dispose();
             MapData.Dispose();
         }
+
+        // public void Load()
+        // {
+        //     var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToList();
+        //     foreach (var gItems in allGameItems)
+        //         AllInGameItems.Add(gItems.ID, gItems);
+        //
+        //     var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToList();
+        //     foreach (var dItem in allDrinkItems)
+        //         AllInGameDrinks.Add(dItem.ID, dItem);
+        //     
+        //     KEvent_GameAssetBundle.TriggerStoreItemsLoad(allGameItems);
+        // }
 
 
         public void SaveData(ref GameData gameData)

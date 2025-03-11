@@ -9,7 +9,6 @@ namespace UI
     {
         public Vector2 Offset;
         
-        private Canvas _canvas;
         private GameObject targetObject;
         private Collider _targetCollider;
 
@@ -18,7 +17,6 @@ namespace UI
 
         private void Awake()
         {
-            _canvas = UIPageManager.Instance.transform.GetComponent<Canvas>();
             _cameraMinMaxCurrentSize = CameraControl.Instance.GetCameraSize;
         }
 
@@ -41,6 +39,14 @@ namespace UI
         {
             if (targetObject == null)
                 return;
+
+            Canvas _canvas = UIPageManager.Instance.GetCanvas;
+
+            if (_canvas == null)
+            {
+                Debug.LogError("Canvas Can't Found Anywhere");
+                return;
+            }
 
             Vector3 screenPosition = Camera.main.WorldToScreenPoint(centerPosition + new Vector3(Offset.x, 0, Offset.y));
         

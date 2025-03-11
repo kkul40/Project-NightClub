@@ -7,7 +7,7 @@ namespace _Initializer
     {
         [SerializeField] private SavingAndLoadingSystem _savingAndLoadingSystem;
         
-        private void Awake()
+        private void Start()
         {
             _savingAndLoadingSystem.Initialize();
         }

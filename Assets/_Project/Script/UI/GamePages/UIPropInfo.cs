@@ -1,5 +1,7 @@
 ﻿using Data;
 using Disco_ScriptableObject;
+using Framework.Context;
+using Framework.Mvcs.View;
 using PropBehaviours;
 using TMPro;
 using UnityEngine;
@@ -7,9 +9,8 @@ using UnityEngine.UI;
 
 namespace UI.GamePages
 {
-    public class UIPropInfo : UIPageBase
+    public class UIPropInfo : BaseView
     {
-        private bool _toggle;
         private int _lastInstanceID = -1;
         private IPropUnit _lastINT;
 
@@ -21,33 +22,27 @@ namespace UI.GamePages
 
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
-        protected override void OnAwake()
+        public override void Initialize(IContext context)
         {
+            base.Initialize(context);
             _followTarget = GetComponent<UI_FollowTarget>();
+
         }
 
-        protected override void OnShow<T>(T data)
+        public void Show(IPropUnit unit)
         {
-            var propUnit = data as IPropUnit;
-
-            if (_lastInstanceID == propUnit.GetInstanceID() && _toggle)
+            if (_lastInstanceID == unit.GetInstanceID() && IsToggled)
             {
-                Hide();
-                _toggle = false;
+                ToggleView(false);
                 return;
             }
             
-            _lastInstanceID = propUnit.GetInstanceID();
-            _lastINT = propUnit;
-            _toggle = true;
+            _lastInstanceID = unit.GetInstanceID();
+            _lastINT = unit;
+            ToggleView(true);
             
-            _followTarget.SetTarget(propUnit.gameObject);
+            _followTarget.SetTarget(unit.gameObject);
             UpdateVisual();
-        }
-
-        protected override void OnHide()
-        {
-            _toggle = false;
         }
 
         private void UpdateVisual()

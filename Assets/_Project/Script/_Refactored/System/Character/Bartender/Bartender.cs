@@ -88,7 +88,7 @@ namespace System.Character.Bartender
 
         public void OnClick()
         {
-            UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+            UIPageManager.Instance.ShowActionSelectionPage(this);
         }
 
         public void OnDeselect()

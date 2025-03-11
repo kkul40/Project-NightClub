@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Packed Assets
+  m_EditorClassIdentifier: 
+  m_GroupName: Packed Assets
+  m_GUID: e93fcaeb0c1b98949ad788d2c836eda6
+  m_SerializeEntries:
+  - m_GUID: 87b2761c318d63a4db172be508732945
+    m_Address: StoreItems
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - StoreItem
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8979a4fe73b46164eb1f271d24a6d6a3
+    m_Address: DrinkData
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DrinkData
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: b2162fb584070b14ca85fb1132ccfc6a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 849b8dab256a34a4caa252deb2515cd5, type: 2}
+    - {fileID: 11400000, guid: 7ac6bfa5cda8f9f419d89b73bb7b109e, type: 2}

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Disco_ScriptableObject;
+using Framework.Context;
 using Framework.Mvcs.View;
 using GameEvents;
+using UI.GamePages;
 using UI.GamePages.GameButtons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,12 +23,41 @@ namespace System.Building_System.View
         private List<UI_CargoItemSlot> _cargoSlots;
 
         public GameObject SlotPrefab;
-    
-        public void GenerateItems(List<StoreItemSO> storeItemSos)
+
+        public override PageType PageType { get; protected set; } = PageType.MiniPage;
+
+        public override void Initialize(IContext context)
         {
-            _slots = new List<UI_StoreItemSlot>();
+            base.Initialize(context);
+            
             _cargoSlots = new List<UI_CargoItemSlot>();
             
+            for (int i = 0; i < _buttonsParent.childCount; i++)
+            {
+                StoreButtonBase slotClass = _buttonsParent.GetChild(i).GetComponent<StoreButtonBase>();
+
+                if (slotClass != null)
+                {
+                    if (_buttonsParent.GetChild(i).TryGetComponent(out Button button))
+                        button.onClick.AddListener( () => SelectCategory(slotClass.ItemType));
+                }
+            }
+            
+            KEvent_GameAssetBundle.OnGameStoreItemsLoaded += InstantiateItems;
+        }
+
+        public override void Dispose()
+        {
+            KEvent_GameAssetBundle.OnGameStoreItemsLoaded -= InstantiateItems;
+        }
+  
+        private void InstantiateItems(List<StoreItemSO> storeItemSos)
+        {
+            _slots = new List<UI_StoreItemSlot>();
+            
+            for (int i = _contentParent.childCount - 1; i >= 0; i--)
+                Destroy(_contentParent.GetChild(i).gameObject);
+
             foreach (var storeItem in storeItemSos)
             {
                 var slot = Instantiate(SlotPrefab, _contentParent,false);
@@ -42,19 +73,6 @@ namespace System.Building_System.View
                 else
                     button.onClick.AddListener(() => ItemSlotClicked(button, storeItem));
             }
-
-            for (int i = 0; i < _buttonsParent.childCount; i++)
-            {
-                StoreButtonBase slotClass = _buttonsParent.GetChild(i).GetComponent<StoreButtonBase>();
-
-                if (slotClass != null)
-                {
-                    if (_buttonsParent.GetChild(i).TryGetComponent(out Button button))
-                        button.onClick.AddListener( () => SelectCategory(slotClass.ItemType));
-                }
-            }
-            
-            
             
             SelectCategory(StoreItemTypes.Bar);
         }
@@ -74,12 +92,6 @@ namespace System.Building_System.View
             OnStorageItemClicked?.Invoke(storeItemSo, amount);
         }
 
-        public void ToggleView(bool toggle)
-        {
-            
-            gameObject.SetActive(toggle);
-        }
-
         public void SelectCategory(StoreItemTypes storeItemType)
         {
             foreach (var slot in _slots)
@@ -89,6 +101,11 @@ namespace System.Building_System.View
                 else
                     slot.gameObject.SetActive(false);
             }
+        }
+
+        public void ToggleView()
+        {
+            gameObject.SetActive(!gameObject.activeInHierarchy);
         }
     }
 }

@@ -129,8 +129,6 @@ namespace UI.GamePages
         public void LoadGame()
         {
             SceneLoader.Instance.LoadScene(1);
-            // SceneManager.LoadScene(1);
-            // SavingAndLoadingSystem.Instance.LoadGame();
         }
 
         public void MainMenu()

@@ -51,7 +51,7 @@ namespace PropBehaviours
 
         public virtual void OnClick()
         {
-            UIPageManager.Instance.RequestAPage(typeof(UIActionSelectionPage), this);
+            UIPageManager.Instance.ShowActionSelectionPage(this);
         }
 
         public void OnDeselect()

@@ -10,5 +10,7 @@ namespace Framework.Mvcs.View
         //  Properties ------------------------------------
 
         //  Methods ---------------------------------------
+        public void ToggleView(bool toggle);
+        public void ToggleView();
     }
 }

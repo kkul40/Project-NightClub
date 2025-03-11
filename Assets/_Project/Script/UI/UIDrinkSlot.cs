@@ -1,7 +1,4 @@
-﻿using System;
-using Disco_ScriptableObject;
-using PropBehaviours;
-using ScriptableObjects;
+﻿using ScriptableObjects;
 using TMPro;
 using UI.GamePages;
 using UnityEngine;

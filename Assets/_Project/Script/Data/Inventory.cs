@@ -13,8 +13,6 @@ namespace Data
         public int Balance;
         public Dictionary<StoreItemSO, int> Items;
 
-        public event Action OnInventoryChanged;
-
         public Inventory(GameData gameData)
         {
             Balance = gameData.SavedInventoryData.Balance;
@@ -39,7 +37,6 @@ namespace Data
         public void AddMoney(int moneyAmount)
         {
             Balance += moneyAmount;
-            
             KEvent_Inventory.TriggerMoneyChange(Balance);
         }
 
@@ -68,12 +65,12 @@ namespace Data
             if (Items.ContainsKey(storeItemSo))
             {
                 Items[storeItemSo] += 1;
-                OnInventoryChanged?.Invoke();
+                KEvent_Inventory.TriggerInventoryUpdate(Items);
                 return;
             }
 
             Items.Add(storeItemSo, 1);
-            OnInventoryChanged?.Invoke();
+            KEvent_Inventory.TriggerInventoryUpdate(Items);
         }
 
         private void RemoveItem(StoreItemSO storeItemSo)
@@ -83,12 +80,13 @@ namespace Data
                 if (Items[storeItemSo] - 1 == 0)
                 {
                     Items.Remove(storeItemSo);
-                    OnInventoryChanged?.Invoke();
+                    KEvent_Inventory.TriggerInventoryUpdate(Items);
+
                     return;
                 }
 
                 Items[storeItemSo] -= 1;
-                OnInventoryChanged?.Invoke();
+                KEvent_Inventory.TriggerInventoryUpdate(Items);
             }
         }
 
