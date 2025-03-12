@@ -12,7 +12,6 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    
     public class UIPageManager : Singleton<UIPageManager>, ISavable
     {
         [SerializeField] private UISettingsPage _settingsPage;
@@ -36,20 +35,13 @@ namespace UI.GamePages
             {
                 if(!page.IsInitialized)
                     page.Initialize(new Context());
+                
+                page.EventEnable();
             }
 
             CloseAllPages();
-        }
-
-        private void OnEnable()
-        {
+            
             KEvent_Cursor.OnResetSelection += () => CloseAllPages(PageType.MiniPage);
-        }
-
-        private void OnDisable()
-        {
-            // TODO Daha Sonra bi bakam oluyormuy mus boyle!!
-            KEvent_Cursor.OnResetSelection -= () => CloseAllPages(PageType.MiniPage);
         }
 
         private void Update()
@@ -75,19 +67,19 @@ namespace UI.GamePages
         public void ShowDrinkPage(Bar bar)
         {
             UIPickADrinkPage page = GetPage(typeof(UIPickADrinkPage)) as UIPickADrinkPage;
-            page?.Show(bar);
+            page.Show(bar);
         }
 
         public void ShowActionSelectionPage(object data)
         {
             UIActionSelectionPage page = GetPage(typeof(UIActionSelectionPage)) as UIActionSelectionPage;
-            page?.Show(data);
+            page.Show(data);
         }
 
         public void ShowPropInfo(IPropUnit unit)
         {
             UIPropInfo page = GetPage(typeof(UIPropInfo)) as UIPropInfo;
-            page?.Show(unit);
+            page.Show(unit);
         }
 
         // public void RequestAPage<T>(Type requestedPage, T data = null) where T : class
@@ -159,7 +151,7 @@ namespace UI.GamePages
             var page = _uiPageBases.FirstOrDefault(page => page.GetType() == findPage);
             if (page == null)
             {
-                Debug.LogError("Page Could Not Found : " + findPage.ToString());
+                Debug.LogError("Page Could Not Found : " + findPage);
             }
             return page;
         }
@@ -182,11 +174,14 @@ namespace UI.GamePages
         {
             _settingsPage.SaveSettingsData(ref gameData);
         }
-
+        
         private void OnDestroy()
         {
             foreach (var page in _uiPageBases)
+            {
+                page.EventDisable();
                 page.Dispose();
+            }
         }
     }
 }

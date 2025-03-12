@@ -19,11 +19,9 @@ namespace System.Building_System.View
         public Action<StoreItemSO, int> OnStorageItemClicked;
 
         private List<UI_StoreItemSlot> _slots;
-
         private List<UI_CargoItemSlot> _cargoSlots;
 
         public GameObject SlotPrefab;
-
         public override PageType PageType { get; protected set; } = PageType.MiniPage;
 
         public override void Initialize(IContext context)
@@ -42,15 +40,18 @@ namespace System.Building_System.View
                         button.onClick.AddListener( () => SelectCategory(slotClass.ItemType));
                 }
             }
-            
+        }
+
+        public override void EventEnable()
+        {
             KEvent_GameAssetBundle.OnGameStoreItemsLoaded += InstantiateItems;
         }
 
-        public override void Dispose()
+        public override void EventDisable()
         {
             KEvent_GameAssetBundle.OnGameStoreItemsLoaded -= InstantiateItems;
         }
-  
+
         private void InstantiateItems(List<StoreItemSO> storeItemSos)
         {
             _slots = new List<UI_StoreItemSlot>();
@@ -101,11 +102,6 @@ namespace System.Building_System.View
                 else
                     slot.gameObject.SetActive(false);
             }
-        }
-
-        public void ToggleView()
-        {
-            gameObject.SetActive(!gameObject.activeInHierarchy);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace _Initializer
         [SerializeField] private Player _player;
         [SerializeField] private NPCSystem _npcSystem;
         [SerializeField] private GameEvents.GameEvents _gameEvents;
+        
 
         private void Awake()
         {

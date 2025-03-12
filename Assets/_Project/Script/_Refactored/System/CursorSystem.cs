@@ -56,7 +56,6 @@ namespace System
 
         private void OnEnable()
         {
-            UISettingsPage.OnUISettingsToggle += ToggleCursorSystem;
             KEvent_Cursor.OnChangeCursor += SetCursor;
             KEvent_Cursor.OnChangeCursorToPrevious += SetToPreviousChangeCursorTo;
             KEvent_Building.OnBuildingToggled += ToggleCursorSystem;
@@ -65,7 +64,6 @@ namespace System
 
         private void OnDisable()
         {
-            UISettingsPage.OnUISettingsToggle -= ToggleCursorSystem;
             KEvent_Cursor.OnChangeCursor -= SetCursor;
             KEvent_Cursor.OnChangeCursorToPrevious -= SetToPreviousChangeCursorTo;
             KEvent_Building.OnBuildingToggled -= ToggleCursorSystem;

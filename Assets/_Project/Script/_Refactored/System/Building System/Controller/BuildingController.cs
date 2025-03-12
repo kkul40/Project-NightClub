@@ -3,7 +3,6 @@ using System.Building_System.Model;
 using System.Building_System.Service;
 using System.Building_System.View;
 using Data;
-using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using Framework.Context;
@@ -41,6 +40,7 @@ namespace System.Building_System.Controller
             
             KEvent_Building.OnPlacementRemove += RemovePlacement;
             KEvent_Building.OnPlacementRelocate += StartRelocatePlacement;
+            KEvent_Building.OnWallDoorRelocate += StartWallDoorRelocate;
 
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
         }
@@ -51,6 +51,7 @@ namespace System.Building_System.Controller
             _view.OnStorageItemClicked -= StartInventoryItemPlacement;
             KEvent_Building.OnPlacementRemove -= RemovePlacement;
             KEvent_Building.OnPlacementRelocate -= StartRelocatePlacement;
+            KEvent_Building.OnWallDoorRelocate -= StartWallDoorRelocate;
         }
 
         public void Update(float deltaTime)
@@ -138,6 +139,21 @@ namespace System.Building_System.Controller
             }
             
             ToolStartHandler(item);
+        }
+
+        private void StartWallDoorRelocate(WallDoor door)
+        {
+            return;
+            
+            StopTool();
+
+            _toolHelper.Mode = PlacementMode.Relocating;
+            
+            currentTool = new IWallDoorPlacerTool();
+            currentTool.OnStart(_toolHelper);
+            
+            KEvent_Cursor.ChangeCursor(CursorSystem.eCursorTypes.Building);
+            KEvent_Building.TriggerBuildingToggle(true);
         }
 
         private void StartInventoryItemPlacement(StoreItemSO storeItemSo, int amount)

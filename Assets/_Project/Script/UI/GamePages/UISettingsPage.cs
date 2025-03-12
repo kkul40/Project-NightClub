@@ -20,8 +20,6 @@ namespace UI.GamePages
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider soundVolumeSlider;
 
-        public static Action<bool> OnUISettingsToggle;
-
         public override void Initialize(IContext context)
         {
             base.Initialize(context);
@@ -29,20 +27,16 @@ namespace UI.GamePages
             soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
         }
 
-
-        private void OnEnable()
+        public override void EventEnable()
         {
             musicVolumeSlider.value = MusicPlayer.Instance.MusicVolume;
             soundVolumeSlider.value = SFXPlayer.Instance.SoundVolume;
 
             OpenADropDownPage(_lastDropDownPage);
-            
-            OnUISettingsToggle?.Invoke(true);
         }
 
-        private void OnDisable()
+        public override void EventDisable()
         {
-            OnUISettingsToggle?.Invoke(false);
         }
 
         public void OpenADropDownPage(GameObject pageObject)

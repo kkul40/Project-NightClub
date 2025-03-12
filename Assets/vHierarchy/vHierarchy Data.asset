@@ -86,7 +86,7 @@ MonoBehaviour:
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
           iconNameOrGuid: ReflectionProbe Icon
-        - colorIndex: 3
+        - colorIndex: 4
           iconNameOrGuid: 
         - colorIndex: 3
           iconNameOrGuid: Settings Icon

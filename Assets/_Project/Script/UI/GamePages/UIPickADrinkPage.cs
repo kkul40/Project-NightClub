@@ -26,10 +26,14 @@ namespace UI.GamePages
             base.Initialize(context);
             
             _followTarget = GetComponent<UI_FollowTarget>();
+        }
+
+        public override void EventEnable()
+        {
             KEvent_GameAssetBundle.OnGameDrinkDataLoaded += LoadDrinks;
         }
 
-        public override void Dispose()
+        public override void EventDisable()
         {
             KEvent_GameAssetBundle.OnGameDrinkDataLoaded -= LoadDrinks;
         }

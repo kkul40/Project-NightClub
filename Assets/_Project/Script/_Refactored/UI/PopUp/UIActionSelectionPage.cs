@@ -51,14 +51,23 @@ namespace UI.PopUp
             RegisterBehaviors();
         }
 
+        public override void EventEnable()
+        {
+        }
+
+        public override void EventDisable()
+        {
+            CancelInvoke();
+        }
+
         public void Show(object data)
         {
             _lastData = data;
 
             CloseAllButtons();
+            ToggleView(true);
             Invoke(nameof(ActivateButtonsAndArrange), 0.1f);
             
-            ToggleView(true);
             // ActivateButtonsAndArrange();
         }
 
@@ -79,7 +88,7 @@ namespace UI.PopUp
             AddBehavior<Bar>(data =>
             {
                 EnableButtons(DrinkButton);
-                // SetFollowTarget(data);
+                SetFollowTarget(data);
             });
 
             AddBehavior<Bartender>(data =>
@@ -97,6 +106,7 @@ namespace UI.PopUp
             AddBehavior<DJ>(data =>
             {
                 EnableButtons(MusicButton);
+                SetFollowTarget(data);
             });
         }
 

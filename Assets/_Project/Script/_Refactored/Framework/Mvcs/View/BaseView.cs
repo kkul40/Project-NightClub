@@ -1,6 +1,5 @@
 using System;
 using Framework.Context;
-using UI.GamePages;
 using UnityEngine;
 
 namespace Framework.Mvcs.View
@@ -25,7 +24,6 @@ namespace Framework.Mvcs.View
         //  Properties ------------------------------------
         public bool IsInitialized { get { return _isInitialized;} }
         public IContext Context { get { return _context;} }
-        
         public abstract PageType PageType { get; protected set; }
 
         private bool isToggled;
@@ -50,7 +48,7 @@ namespace Framework.Mvcs.View
                 _context = context;
             }
         }
-
+        
         public void RequireIsInitialized()
         {
             if (!_isInitialized)
@@ -58,6 +56,17 @@ namespace Framework.Mvcs.View
                 throw new Exception("MustBeInitialized");
             }
         }
+
+        public virtual void EventEnable()
+        {
+            // Subscribe to Events.
+        }
+
+        public virtual void EventDisable()
+        {
+            // Unsubcribe to Events.
+        }
+
         
         //  Dispose Methods --------------------------------
         public virtual void Dispose()
@@ -65,20 +74,18 @@ namespace Framework.Mvcs.View
             // Optional: Handle any cleanup here...
         }
         
-        
         //  Methods ---------------------------------------
         public void ToggleView(bool toggle)
         {
-            gameObject.SetActive(toggle);
+            this.gameObject.SetActive(toggle);
             isToggled = toggle;
         }
 
         public void ToggleView()
         {
-            gameObject.SetActive(!gameObject.activeInHierarchy);
+            this.gameObject.SetActive(!gameObject.activeInHierarchy);
             isToggled = gameObject.activeInHierarchy;
         }
-        
 
         //  Event Handlers --------------------------------
     }
