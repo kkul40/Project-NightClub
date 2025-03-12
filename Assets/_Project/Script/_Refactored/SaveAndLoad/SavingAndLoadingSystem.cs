@@ -69,12 +69,14 @@ namespace SaveAndLoad
 
         public void SaveGame()
         {
-            KEvent_SavingAndLoading.TriggerGameSave(_gameData);
+            GameEvent.Trigger(new Event_StartGameSave(ref _gameData));
 
             _gameData.Details.Save(_gameData.Details.PlayTime + passedSeconds);
             passedSeconds = 0;
 
             _fileDataHandler.Save(_gameData);
+            
+            // GameEvent.Trigger(new Event_GameSaved());
             
             
             // foreach (var save in SaveLoads)

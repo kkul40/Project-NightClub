@@ -1,4 +1,4 @@
-using System.Building_System;
+using System.Building;
 using System.Collections;
 using Data;
 using Disco_Building;
@@ -33,16 +33,8 @@ namespace System
         {
             _mapData = mapData;
             SetUpMap();
-        }
 
-        private void OnEnable()
-        {
-            KEvent_Map.OnExtendMapSize += ExpendXY;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Map.OnExtendMapSize -= ExpendXY;
+            GameEvent.Subscribe<Event_ExpendMapSize>(handle => ExpendXY(handle.X, handle.Y));
         }
 
         public void LoadData(GameData gameData)
@@ -175,7 +167,7 @@ namespace System
         }
 
         [ContextMenu("Expend X")]
-        public void ExpendX()
+        private void ExpendX()
         {
             if (_mapData.CurrentMapSize.x + 1 > ConstantVariables.MaxMapSizeX) return;
             InstantiateXWall(_mapData.CurrentMapSize.x + 1);
@@ -185,7 +177,7 @@ namespace System
         }
 
         [ContextMenu("Expend Y")]
-        public void ExpendY()
+        private void ExpendY()
         {
             if (_mapData.CurrentMapSize.y + 1 > ConstantVariables.MaxMapSizeY) return;
             InstantiateYWall(_mapData.CurrentMapSize.y + 1);

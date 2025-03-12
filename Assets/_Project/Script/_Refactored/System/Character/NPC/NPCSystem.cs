@@ -1,4 +1,4 @@
-﻿using System.Building_System;
+﻿using System.Building;
 using System.Character._Player;
 using System.Character.Bartender;
 using System.Character.Bartender.Command;
@@ -81,7 +81,7 @@ namespace System.Character.NPC
             command.InitCommand(null, bartender);
             bartender.AddCommand(command);
             
-            KEvent_Employee.TriggerBartenderHired(bartender);
+            GameEvent.Trigger(new Event_BartenderHired(bartender));
         }
 
         private void SendNPCs()

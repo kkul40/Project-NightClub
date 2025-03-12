@@ -1175,7 +1175,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46218422}
-  - component: {fileID: 46218424}
   - component: {fileID: 46218423}
   m_Layer: 0
   m_Name: Music Player
@@ -1287,23 +1286,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &46218424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46218421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ba0e2e1c8444885a84ebe5951aea3f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bassDetector:
-    audioSource: {fileID: 0}
-    Sensitivity: 0
-    Threshold: 0
-  mixer: {fileID: 24100000, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
 --- !u!1 &48017344
 GameObject:
   m_ObjectHideFlags: 0
@@ -4232,6 +4214,7 @@ GameObject:
   - component: {fileID: 226081666}
   - component: {fileID: 226081667}
   - component: {fileID: 226081668}
+  - component: {fileID: 226081669}
   m_Layer: 0
   m_Name: SceneInitializer
   m_TagString: Untagged
@@ -4267,17 +4250,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4453fcf332155bb4190966f513f84f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingSystem: {fileID: 225165448}
-  _uiPageManager: {fileID: 1086089515}
-  _gridSystem: {fileID: 884134052}
-  _cursorSystem: {fileID: 1735189485}
-  _discoData: {fileID: 1451075139}
-  _musicPlayer: {fileID: 46218424}
-  _inputSystem: {fileID: 155991909}
-  _mapGeneratorSystem: {fileID: 1360520550}
-  _player: {fileID: 2072907701781959385}
-  _npcSystem: {fileID: 2035468390}
-  _gameEvents: {fileID: 1712819166}
+  gameEvent: {fileID: 226081669}
+  buildingSystem: {fileID: 225165448}
+  gridSystem: {fileID: 884134052}
+  cursorSystem: {fileID: 1735189485}
+  discoData: {fileID: 1451075139}
+  musicManager: {fileID: 288916298}
+  inputSystem: {fileID: 155991909}
+  mapGeneratorSystem: {fileID: 1360520550}
+  player: {fileID: 2072907701781959385}
+  npcSystem: {fileID: 2035468390}
+  uiHudManager: {fileID: 1948649707}
+  uiPageManager: {fileID: 1086089515}
 --- !u!114 &226081668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4288,6 +4272,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77ea61d1d5dd467bb5ec79141070329c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &226081669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226081665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0590b0422044f9acf27d4e318523c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &239320811
@@ -5115,6 +5111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 288916297}
+  - component: {fileID: 288916298}
   m_Layer: 0
   m_Name: MusicSytem
   m_TagString: Untagged
@@ -5139,6 +5136,35 @@ Transform:
   - {fileID: 999126412}
   m_Father: {fileID: 1726907430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &288916298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288916296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b493cf65592247888a2c81be08488174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSource: {fileID: 46218423}
+  soundFXSource: {fileID: 999126413}
+  mixer: {fileID: 24100000, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
+  _sfxData:
+    Click: {fileID: 8300000, guid: d77141bd174394c4092421f88654a2fe, type: 3}
+    Succes: {fileID: 8300000, guid: b49002a66e090469eaf946684e9ef9f0, type: 3}
+    Error: {fileID: 8300000, guid: 8e8468c915f6243b0836a57e32a35a07, type: 3}
+    UIClick: {fileID: 8300000, guid: 98743322818e54812925bba08fa0c62b, type: 3}
+    UIBack: {fileID: 8300000, guid: f4781d302b303408d8b02da3dd8aed5a, type: 3}
+    EmployeeSelection: {fileID: 8300000, guid: 1a7bb6d7ff6344ab79e7d1bf3ffadd67, type: 3}
+    InteractableSelection: {fileID: 8300000, guid: d77141bd174394c4092421f88654a2fe, type: 3}
+    BuildingSuccess: {fileID: 8300000, guid: 2920fba53fe76407a83bbe9dc7eeeb53, type: 3}
+    BuildingError: {fileID: 8300000, guid: c1f47c4aad5f14a138bf7c0467396b25, type: 3}
+    MoneyAdd: {fileID: 8300000, guid: 5b2461c04f4cdfc40b890b726af1f6ca, type: 3}
+    MoneyRemove: {fileID: 8300000, guid: 477bfab621dbb1b42a13ca04997f5163, type: 3}
+    CameraFocus: {fileID: 8300000, guid: 2920fba53fe76407a83bbe9dc7eeeb53, type: 3}
+    CameraZoom: {fileID: 8300000, guid: eed02a923a97e4cf9aba79d72c537514, type: 3}
 --- !u!1 &291496378
 GameObject:
   m_ObjectHideFlags: 0
@@ -18986,7 +19012,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 999126412}
-  - component: {fileID: 999126414}
   - component: {fileID: 999126413}
   m_Layer: 0
   m_Name: SFX Player
@@ -19098,31 +19123,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &999126414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999126411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95e333cee0644654b80700d8470eef25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
-  Click: {fileID: 8300000, guid: d77141bd174394c4092421f88654a2fe, type: 3}
-  Succes: {fileID: 8300000, guid: 4ce482aef6335499aa71500406610c1f, type: 3}
-  Error: {fileID: 8300000, guid: c1f47c4aad5f14a138bf7c0467396b25, type: 3}
-  UIClick: {fileID: 8300000, guid: f4781d302b303408d8b02da3dd8aed5a, type: 3}
-  UIBack: {fileID: 8300000, guid: b30d2757cc43a4de0b8ccab75fd20011, type: 3}
-  NPCSelection: {fileID: 0}
-  PropSelection: {fileID: 0}
-  BuildingSuccess: {fileID: 0}
-  BuildingError: {fileID: 0}
-  MoneyAdd: {fileID: 8300000, guid: 5b2461c04f4cdfc40b890b726af1f6ca, type: 3}
-  MoneyRemove: {fileID: 8300000, guid: 477bfab621dbb1b42a13ca04997f5163, type: 3}
-  CameraFocus: {fileID: 8300000, guid: 2920fba53fe76407a83bbe9dc7eeeb53, type: 3}
 --- !u!4 &1002932950 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2763acd1cc2f24741adc34e178d6c283, type: 3}
@@ -37226,6 +37226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948649706}
+  - component: {fileID: 1948649707}
   m_Layer: 5
   m_Name: New HUD
   m_TagString: Untagged
@@ -37255,6 +37256,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1948649707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948649705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b8d6aba6c34335bafcfe4e23fbde1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balanceText: {fileID: 896508542}
 --- !u!1001 &1949566952
 PrefabInstance:
   m_ObjectHideFlags: 0

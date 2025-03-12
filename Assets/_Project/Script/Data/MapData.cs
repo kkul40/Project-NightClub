@@ -104,7 +104,7 @@ namespace Data
         CurrentMapSize = mapSize;
         Path.SetFlags(avaliablePathFlag: true);
 
-        KEvent_Map.TriggerMapSizeChanged(CurrentMapSize);
+        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
         return true;
     }
 

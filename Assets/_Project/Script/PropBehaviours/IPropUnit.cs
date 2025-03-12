@@ -1,5 +1,6 @@
 ﻿using Data;
 using Disco_Building;
+using GameEvents;
 using Sirenix.OdinInspector;
 using UI.GamePages;
 using UI.PopUp;
@@ -32,11 +33,9 @@ namespace PropBehaviours
             WorldPos = transform.position;
             RotationData = rotationData;
             PlacementLayer = placementLayer;
-            
-            mGameobject = gameObject;
         }
 
-        public GameObject mGameobject { get; protected set; }
+        public GameObject mGameobject => gameObject;
         public bool IsInteractable { get; protected set; } = true;
         public bool hasInteractionAnimation { get; } = true;
         public eInteraction Interaction { get; } = eInteraction.PropUnit;

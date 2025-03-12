@@ -65,19 +65,6 @@ namespace Data
                     KEvent_GameAssetBundle.TriggerDrinkDataLoad(handle.Result.ToList());
                 }
             };
-
-            // _storeItemHandle = Addressables.LoadAssetsAsync<StoreItemSO>(_storeItemReference.labelString, addressable =>
-            // {
-            //     AllInGameItems.Add(addressable.ID, addressable);
-            // });
-            // _storeItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerStoreItemsLoad(AllInGameItems.Values.ToList());
-            //
-            // _drinkItemHandle = Addressables.LoadAssetsAsync<DrinkSO>(_drinkDataReference.labelString, addressables =>
-            // {
-            //     AllInGameDrinks.Add(addressables.ID, addressables);
-            // });
-            // _drinkItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerDrinkDataLoad(AllInGameDrinks.Values.ToList());
-            
              
             MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
@@ -92,23 +79,8 @@ namespace Data
             if(_drinkItemHandle.IsValid())
                 _drinkItemHandle.Release();
             
-            inventory.Dispose();
             MapData.Dispose();
         }
-
-        // public void Load()
-        // {
-        //     var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToList();
-        //     foreach (var gItems in allGameItems)
-        //         AllInGameItems.Add(gItems.ID, gItems);
-        //
-        //     var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToList();
-        //     foreach (var dItem in allDrinkItems)
-        //         AllInGameDrinks.Add(dItem.ID, dItem);
-        //     
-        //     KEvent_GameAssetBundle.TriggerStoreItemsLoad(allGameItems);
-        // }
-
 
         public void SaveData(ref GameData gameData)
         {

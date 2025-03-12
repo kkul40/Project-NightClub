@@ -1,24 +1,24 @@
 ﻿using System.Collections;
+using System.Music;
 using DiscoSystem;
 using ExtensionMethods;
 using GameEvents;
 using HighlightPlus;
 using PropBehaviours;
-using UI.GamePages;
 using UnityEngine;
 
 namespace System
 {
+    public enum eCursorTypes
+    {
+        Default,
+        Building,
+        Dragging,
+        Rotating,
+        Settings,
+    }
     public class CursorSystem : MonoBehaviour
     {
-        public enum eCursorTypes
-        {
-            Default,
-            Building,
-            Dragging,
-            Rotating,
-            Settings,
-        }
         private enum CursorState
         {
             Free,
@@ -52,24 +52,13 @@ namespace System
             _inputSystem = inputSystem;
             SetCursor(eCursorTypes.Default);
             StartCoroutine(ToggleCursorSystem(true, delay));
+            
+            GameEvent.Subscribe<Event_SelectCursor>(SetCursor);
+            GameEvent.Subscribe<Event_PreviousCursor>( handle => SetToPreviousChangeCursorTo());
+            GameEvent.Subscribe<Event_ResetSelection>( handle => Reset());
+            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleCursorSystem(handle.Toggle));
         }
 
-        private void OnEnable()
-        {
-            KEvent_Cursor.OnChangeCursor += SetCursor;
-            KEvent_Cursor.OnChangeCursorToPrevious += SetToPreviousChangeCursorTo;
-            KEvent_Building.OnBuildingToggled += ToggleCursorSystem;
-            KEvent_Cursor.OnResetSelection += Reset;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Cursor.OnChangeCursor -= SetCursor;
-            KEvent_Cursor.OnChangeCursorToPrevious -= SetToPreviousChangeCursorTo;
-            KEvent_Building.OnBuildingToggled -= ToggleCursorSystem;
-            KEvent_Cursor.OnResetSelection -= Reset;
-        }
- 
         private void Update()
         {
             if (!_isCursorSystemToggled)
@@ -217,12 +206,17 @@ namespace System
         private void OnClickHandler(IInteractable interactable)
         {
             interactable.OnClick();
-            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Click);
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.Click));
             if(interactable.hasInteractionAnimation)
                 interactable.mGameobject.AnimatedPlacement(ePlacementAnimationType.Shaky);
         }
 
-        public void SetCursor(eCursorTypes cursorType)
+        private void SetCursor(Event_SelectCursor cursorEvent)
+        {
+            SetCursor(cursorEvent.CursorType);
+        }
+        
+        private void SetCursor(eCursorTypes cursorType)
         {
             switch (cursorType)
             {

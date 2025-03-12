@@ -15,20 +15,11 @@ namespace System
         public void Initialize()
         {
             ToggleGrid(false);
-        }
 
-        private void OnEnable()
-        {
-            KEvent_Map.OnMapSizeChanged += AlignGridWithMapSize;
-            KEvent_Building.OnBuildingToggled += ToggleGrid;
+            GameEvent.Subscribe<Event_MapSizeChanged>(handle => AlignGridWithMapSize(handle.Size));
+            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleGrid(handle.Toggle));
         }
-
-        private void OnDisable()
-        {
-            KEvent_Map.OnMapSizeChanged -= AlignGridWithMapSize;
-            KEvent_Building.OnBuildingToggled -= ToggleGrid;
-        }
-
+        
         private void ToggleGrid(bool toggle)
         {
             GridTransform.SetActive(toggle);

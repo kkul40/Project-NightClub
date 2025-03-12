@@ -40,8 +40,7 @@ namespace UI.GamePages
             }
 
             CloseAllPages();
-            
-            KEvent_Cursor.OnResetSelection += () => CloseAllPages(PageType.MiniPage);
+            GameEvent.Subscribe<Event_ResetSelection>( handle => CloseAllPages(PageType.MiniPage));
         }
 
         private void Update()

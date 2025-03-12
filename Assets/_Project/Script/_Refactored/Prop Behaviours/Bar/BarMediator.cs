@@ -24,22 +24,12 @@ namespace Prop_Behaviours.Bar
         {
             _bars = new SerializedDictionary<int, IBar>();
             _bartenders = new SerializedDictionary<int, IBartender>();
-        }
-
-        private void OnEnable()
-        {
-            KEvent_Employee.OnBartenderHired += AssignBartender;
-            KEvent_Employee.OnBartenderKicked += DeassignBartender;
-            KEvent_Building.OnPropPlaced += TryAssigningBar;
-            KEvent_Building.OnPropRemoved += TryDeassigningBar;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Employee.OnBartenderHired -= AssignBartender;
-            KEvent_Employee.OnBartenderKicked -= DeassignBartender;
-            KEvent_Building.OnPropPlaced -= TryAssigningBar;
-            KEvent_Building.OnPropRemoved -= TryDeassigningBar;
+            
+            GameEvent.Subscribe<Event_BartenderHired>(AssignBartender);
+            GameEvent.Subscribe<Event_BartenderKicked>(DeassignBartender);
+            
+            GameEvent.Subscribe<Event_PropPlaced>(TryAssigningBar);
+            GameEvent.Subscribe<Event_PropRemoved>(TryDeassigningBar);
         }
 
         public void AddCommand(IBar source, IBartenderCommand command)
@@ -73,25 +63,25 @@ namespace Prop_Behaviours.Bar
             return output;
         }
 
-        private void AssignBartender(IBartender bartender)
+        private void AssignBartender(Event_BartenderHired bartenderEvent)
         {
-            _bartenders.Add(bartender.InstanceID, bartender);
+            _bartenders.Add(bartenderEvent.Bartender.InstanceID, bartenderEvent.Bartender);
         }
      
-        private void DeassignBartender(IBartender bartender)
+        private void DeassignBartender(Event_BartenderKicked bartenderEvent)
         {
-            _bartenders.Remove(bartender.InstanceID);
+            _bartenders.Remove(bartenderEvent.Bartender.InstanceID);
         }
 
-        private void TryAssigningBar(IPropUnit unit)
+        private void TryAssigningBar(Event_PropPlaced placedEvent)
         {
-            if(unit is IBar bar)
+            if(placedEvent.PropUnit is IBar bar)
                 _bars.Add(bar.InstanceID, bar);
         }
         
-        private void TryDeassigningBar(IPropUnit unit)
+        private void TryDeassigningBar(Event_PropRemoved removedEvent)
         {
-            if(unit is IBar bar)
+            if(removedEvent.PropUnit is IBar bar)
                 _bars.Remove(bar.InstanceID);
         }
 

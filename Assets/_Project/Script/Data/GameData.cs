@@ -59,6 +59,7 @@ namespace Data
 
             // Inventory Data
             SavedInventoryData = new GameDataExtension.InventorySaveData();
+            SavedInventoryData.Balance = 500;
 
             // Game Settings Data
             GameSettingsData = new GameDataExtension.GameSettingsData();

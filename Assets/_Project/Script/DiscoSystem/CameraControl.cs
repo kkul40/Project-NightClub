@@ -1,5 +1,5 @@
 using System;
-using System.Character.NPC;
+using System.Music;
 using GameEvents;
 using Unity.Mathematics;
 using UnityEngine;
@@ -58,6 +58,12 @@ namespace DiscoSystem
         private void SetCameraSize()
         {
             cameraSize -= InputSystem.Instance.ScrollWheelDelta * zoomMultiplier;
+
+            if (InputSystem.Instance.ScrollWheelDelta != 0)
+            {
+                GameEvent.Trigger(new Event_Sfx(SoundFXType.CameraZoom,0.25f, true));
+            }
+            
             cameraSize = Mathf.Clamp(cameraSize, 1, 9);
             mainCam.orthographicSize =
                 Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomMultiplier * 2);
@@ -69,7 +75,7 @@ namespace DiscoSystem
         public void FollowTarget(Transform target)
         {
             _target = target;
-            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.CameraFocus);
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.CameraFocus));
         }
 
         public void ResetTarget()

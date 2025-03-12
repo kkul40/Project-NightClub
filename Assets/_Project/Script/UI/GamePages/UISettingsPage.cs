@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Data;
-using DiscoSystem;
 using Framework.Context;
 using Framework.Mvcs.View;
+using GameEvents;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,16 +22,16 @@ namespace UI.GamePages
         public override void Initialize(IContext context)
         {
             base.Initialize(context);
-            musicVolumeSlider.onValueChanged.AddListener(MusicPlayer.Instance.SetMusicVolume);
-            soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
+            
+            GameEvent.Trigger(new Event_SetVolume(SourceVolume.Music, musicVolumeSlider.value));
+            GameEvent.Trigger(new Event_SetVolume(SourceVolume.Sfx, soundVolumeSlider.value));
+            
+            musicVolumeSlider.onValueChanged.AddListener(value => GameEvent.Trigger(new Event_SetVolume(SourceVolume.Music, value)));
+            soundVolumeSlider.onValueChanged.AddListener(value => GameEvent.Trigger(new Event_SetVolume(SourceVolume.Sfx, value)));
         }
 
         public override void EventEnable()
         {
-            musicVolumeSlider.value = MusicPlayer.Instance.MusicVolume;
-            soundVolumeSlider.value = SFXPlayer.Instance.SoundVolume;
-
-            OpenADropDownPage(_lastDropDownPage);
         }
 
         public override void EventDisable()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Music;
 using Disco_ScriptableObject;
 using GameEvents;
 using UnityEditor;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace Data
 {
     [Serializable]
-    public class Inventory : IDisposable
+    public class Inventory
     {
         public int Balance;
         public Dictionary<StoreItemSO, int> Items;
@@ -21,36 +22,36 @@ namespace Data
             foreach (var data in gameData.SavedInventoryData.Items)
                 Items.Add(DiscoData.Instance.FindAItemByID(data.Key), data.Value);
             
-            KEvent_Inventory.TriggerMoneyChange(Balance);
-            KEvent_Inventory.TriggerInventoryUpdate(Items);
-
-            KEvent_Inventory.OnStoreItemAdded += AddItem;
-            KEvent_Inventory.OnStoreItemRemoved += RemoveItem;
+            
+            GameEvent.Subscribe<Event_MoneyAdded>(AddMoney);
+            GameEvent.Subscribe<Event_RemoveMoney>(RemoveMoney);
+            
+            GameEvent.Subscribe<Event_AddItem>(AddItem);
+            GameEvent.Subscribe<Event_RemoveItem>(RemoveItem);
+            
+            GameEvent.Trigger(new Event_BalanceUpdated(Balance));
+            GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
         }
         
-        public void Dispose()
+        private void AddMoney(Event_MoneyAdded moneyEvent)
         {
-            KEvent_Inventory.OnStoreItemAdded -= AddItem;
-            KEvent_Inventory.OnStoreItemRemoved -= RemoveItem;
+            Balance += moneyEvent.Amount;
+            GameEvent.Trigger(new Event_BalanceUpdated(Balance));
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.MoneyAdd));
         }
 
-        public void AddMoney(int moneyAmount)
+        private void RemoveMoney(Event_RemoveMoney removeMoneyEventRemove)
         {
-            Balance += moneyAmount;
-            KEvent_Inventory.TriggerMoneyChange(Balance);
-        }
-
-        public bool RemoveMoney(int moneyAmount)
-        {
-            bool hasMoney = HasEnoughMoney(moneyAmount);
+            bool hasMoney = HasEnoughMoney(removeMoneyEventRemove.Amount);
 
             if (hasMoney)
             {
-                Balance -= moneyAmount;
-                KEvent_Inventory.TriggerMoneyChange(Balance);
+                Balance -= removeMoneyEventRemove.Amount;
+                GameEvent.Trigger(new Event_BalanceUpdated(Balance));
+                
+                if(removeMoneyEventRemove.PlaySfx)
+                    GameEvent.Trigger(new Event_Sfx(SoundFXType.MoneyRemove));
             }
-
-            return hasMoney;
         }
 
         public bool HasEnoughMoney(int balanceCheckAmount)
@@ -60,33 +61,33 @@ namespace Data
             return true;
         }
 
-        private void AddItem(StoreItemSO storeItemSo)
+        private void AddItem(Event_AddItem itemEvent)
         {
-            if (Items.ContainsKey(storeItemSo))
+            if (Items.ContainsKey(itemEvent.Item))
             {
-                Items[storeItemSo] += 1;
-                KEvent_Inventory.TriggerInventoryUpdate(Items);
+                Items[itemEvent.Item] += 1;
+                GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
                 return;
             }
 
-            Items.Add(storeItemSo, 1);
-            KEvent_Inventory.TriggerInventoryUpdate(Items);
+            Items.Add(itemEvent.Item, 1);
+            GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
         }
 
-        private void RemoveItem(StoreItemSO storeItemSo)
+        private void RemoveItem(Event_RemoveItem itemEvent)
         {
-            if (Items.ContainsKey(storeItemSo))
+            if (Items.ContainsKey(itemEvent.Item))
             {
-                if (Items[storeItemSo] - 1 == 0)
+                if (Items[itemEvent.Item] - 1 == 0)
                 {
-                    Items.Remove(storeItemSo);
-                    KEvent_Inventory.TriggerInventoryUpdate(Items);
+                    Items.Remove(itemEvent.Item);
+                    GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
 
                     return;
                 }
 
-                Items[storeItemSo] -= 1;
-                KEvent_Inventory.TriggerInventoryUpdate(Items);
+                Items[itemEvent.Item] -= 1;
+                GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
             }
         }
 
