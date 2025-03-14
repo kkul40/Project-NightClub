@@ -11,7 +11,6 @@ namespace System.Building
         None,
         Buy,
         Free,
-        Sell,
         Unique,
     }
     
@@ -37,10 +36,8 @@ namespace System.Building
         public PurchaseTypes PurchaseMode;
         
         // Relocate Variables
-        public bool IsRelocating;
-        public IPropUnit SelectedPropItem;
-        public Vector3 startPosition;
-        public Quaternion StartRotation;
+        // public bool IsRelocating;
+        // public IPropUnit SelectedPropItem;
 
     
         // Dynamic Variables

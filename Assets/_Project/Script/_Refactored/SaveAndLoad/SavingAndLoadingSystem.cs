@@ -79,11 +79,11 @@ namespace SaveAndLoad
             // GameEvent.Trigger(new Event_GameSaved());
             
             
-            // foreach (var save in SaveLoads)
-            //     save.SaveData(ref _gameData);
-            //
-            // _gameData.HasBeenSavedBefore = true;
-            // _fileDataHandler.Save(_gameData);
+            foreach (var save in SaveLoads)
+                save.SaveData(ref _gameData);
+            
+            _gameData.HasBeenSavedBefore = true;
+            _fileDataHandler.Save(_gameData);
 
             Debug.Log("** Game Is Saved **");
         }

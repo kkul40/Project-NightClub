@@ -9,7 +9,6 @@ namespace System.Building.Controller.Tools
         // bool isCanceled { get; }
         bool isFinished { get; }
 
-        //                     storeItem   pos     rotation  
         void OnStart(ToolHelper TH);
         bool OnValidate(ToolHelper TH);
         void OnUpdate(ToolHelper TH);

@@ -1,9 +1,7 @@
 ﻿using Data;
 using Disco_Building;
-using GameEvents;
 using Sirenix.OdinInspector;
 using UI.GamePages;
-using UI.PopUp;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -19,7 +17,6 @@ namespace PropBehaviours
         [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
         
         // Events
-       
         public virtual void Initialize(
             int ID, 
             Vector3Int cellPosition, 

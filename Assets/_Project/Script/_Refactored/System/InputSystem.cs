@@ -32,7 +32,7 @@ namespace System
         [HideInInspector] public bool IsMouseCursorOnWorld;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
-        [FormerlySerializedAs("RightClick")] public bool CancelClick;
+        public bool CancelClick;
         public bool RightClickOnWorld;
 
         public bool HasMouseMoveToNewCell; // Used For Optimization

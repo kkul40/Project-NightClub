@@ -89,13 +89,6 @@ namespace System.Building.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            if (TH.IsRelocating)
-            {
-                TH.BuildingController.RelocateHandler(true);
-                isFinished = true;
-                return;
-            }
-            
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
             IPropUnit unit;
@@ -113,12 +106,6 @@ namespace System.Building.Controller.Tools
 
         public void OnStop(ToolHelper TH)
         {
-            if (TH.IsRelocating)
-            {
-                TH.BuildingController.RelocateHandler(false);
-                return;
-            }
-            
             if (_tempObject != null)
             {
                 UnityEngine.Object.Destroy(_tempObject.gameObject);

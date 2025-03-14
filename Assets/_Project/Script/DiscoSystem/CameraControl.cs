@@ -58,11 +58,6 @@ namespace DiscoSystem
         private void SetCameraSize()
         {
             cameraSize -= InputSystem.Instance.ScrollWheelDelta * zoomMultiplier;
-
-            if (InputSystem.Instance.ScrollWheelDelta != 0)
-            {
-                GameEvent.Trigger(new Event_Sfx(SoundFXType.CameraZoom,0.25f, true));
-            }
             
             cameraSize = Mathf.Clamp(cameraSize, 1, 9);
             mainCam.orthographicSize =

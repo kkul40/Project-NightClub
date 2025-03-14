@@ -9,6 +9,7 @@ using Framework.Context;
 using Framework.Mvcs.Controller;
 using GameEvents;
 using PropBehaviours;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace System.Building.Controller
@@ -21,8 +22,60 @@ namespace System.Building.Controller
 
     public class BuildingController : BaseController<BuildingModel, BuildingView, BuildingService>
     {
+        private class RelocateData
+        {
+            public bool IsRelocating;
+            public Transform SceneObject;
+            public IPropUnit PropUnit;
+            public Vector3 SavedPosition;
+            public Quaternion SavedRotation;
+
+            /// <summary>
+            /// Null Constructor
+            /// </summary>
+            public RelocateData()
+            {
+                IsRelocating = false;
+                SceneObject = null;
+                PropUnit = null;
+                SavedPosition = Vector3.zero;
+                SavedRotation = quaternion.identity;
+            }
+
+            public RelocateData(IPropUnit propUnit)
+            {
+                IsRelocating = true;
+                SceneObject = propUnit.transform;
+                PropUnit = propUnit;
+
+                SavedPosition = SceneObject.position;
+                SavedRotation = SceneObject.rotation;
+
+                SceneObject.gameObject.SetActive(false);
+            }
+
+            public void SetPosition(Vector3 newPosition, Quaternion newRotation)
+            {
+                SceneObject.rotation = newRotation;
+                SceneObject.position = newPosition;
+            }
+
+            public void ResetPosition()
+            {
+                SceneObject.rotation = SavedRotation;
+                SceneObject.position = SavedPosition;
+            }
+
+            public void ToggleGameObject(bool toggle)
+            {
+                SceneObject.gameObject.SetActive(toggle);
+            }
+        }
+        
         private ToolHelper _toolHelper;
-        private ITool currentTool;
+        private ITool _currentTool;
+
+        private RelocateData _relocateData;
 
         public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem,
             DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem) : base(model, view,
@@ -37,11 +90,12 @@ namespace System.Building.Controller
 
             _view.OnSlotItemClicked += StartATool;
             _view.OnStorageItemClicked += StartInventoryItemPlacement;
+
+            _relocateData = new RelocateData();
             
             GameEvent.Subscribe<Event_RelocatePlacement>(StartRelocatePlacement);
             GameEvent.Subscribe<Event_RelocateWallDoor>(StartWallDoorRelocate);
             GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
-
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
         }
 
@@ -51,44 +105,79 @@ namespace System.Building.Controller
 
             if (InputSystem.Instance.Esc)
             {
-                if (currentTool != null)
+                if (_currentTool != null)
                 {
-                    currentTool.OnStop(_toolHelper);
-                    currentTool = null;
+                    _currentTool.OnStop(_toolHelper);
+                    _currentTool = null;
                 }
             }
 
-            if (currentTool == null) return;
+            if (_currentTool == null) return;
 
-            currentTool.OnUpdate(_toolHelper);
+            _currentTool.OnUpdate(_toolHelper);
 
-            if (currentTool.CheckPlaceInput(_toolHelper))
+            bool cancelClick = InputSystem.Instance.CancelClick || _currentTool.isFinished;
+
+            if (_currentTool.CheckPlaceInput(_toolHelper))
             {
-                if (currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper))
+                if (_currentTool is IWallDoorPlacerTool) // Relocate Wall Door
                 {
-                    currentTool.OnPlace(_toolHelper);
-                    GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                    if (_currentTool.OnValidate(_toolHelper))
+                    {
+                        _currentTool.OnPlace(_toolHelper);
+                        ClearBuildingCache();
+                        StopBuilding();
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
                 }
-                else
+                else if (_relocateData.IsRelocating) // Relocate Handler
                 {
-                    GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    if (_currentTool.OnValidate(_toolHelper))
+                    {
+                        RelocateHandler(true);
+                        _currentTool.OnStop(_toolHelper);
+                        ClearBuildingCache();
+                        StopBuilding();
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
+                }
+                else // Place Handler
+                {
+                    if (_currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper))
+                    {
+                        _currentTool.OnPlace(_toolHelper);
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
                 }
             }
-     
-            if (InputSystem.Instance.CancelClick || currentTool.isFinished)
+            
+            if (cancelClick)
             {
-                StopTool();
+                RelocateHandler(false);
+                ClearBuildingCache();
+                StopBuilding();
             }
         }
         
-        private bool HasMoney(ToolHelper toolHelper)
-        {
-            if(toolHelper.PurchaseMode == PurchaseTypes.Buy && toolHelper.SelectedStoreItem != null)
-                return DiscoData.Instance.inventory.HasEnoughMoney(_toolHelper.SelectedStoreItem.Price);
-
-            return true;
-        }
-
+        /* IF Placing Dont interapt Tool
+         * IF Reloating Interapt tool and get position and stuff dont place it
+         * IF Selling Dont use tool
+         * IF Cancel On Relocating Do Nothing
+         * 
+         */
+   
         private bool TryPurchase(ToolHelper toolHelper)
         {
             switch (toolHelper.PurchaseMode)
@@ -103,8 +192,6 @@ namespace System.Building.Controller
                     return false;
                 case PurchaseTypes.Free:
                     return true;
-                case PurchaseTypes.Sell:
-                    return true;
                 case PurchaseTypes.Unique:
                     return true;
             }
@@ -112,32 +199,27 @@ namespace System.Building.Controller
             return true;
         }
 
-
         private void StartATool(StoreItemSO storeItemSo)
         {
-            StopTool();
+            ClearBuildingCache();
 
             _toolHelper.PurchaseMode = PurchaseTypes.Buy;
-            StartPlacementTool(storeItemSo);
+            StartBuilding(storeItemSo);
         }
 
         private void StartRelocatePlacement(Event_RelocatePlacement relocateEvent)
         {
-            StopTool();
-
-            _toolHelper.PurchaseMode = PurchaseTypes.Free;
-            _toolHelper.IsRelocating = true;
+            ClearBuildingCache();
 
             StoreItemSO item = _model.GetStoreItemByID(relocateEvent.InstanceID);
-
             Transform sceneObject = _model.GetPlacedSceneObjectByID(relocateEvent.InstanceID);
-            sceneObject.gameObject.SetActive(false);
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
-                _toolHelper.SelectedPropItem = unit; 
-                _toolHelper.startPosition = unit.WorldPos;
-                _toolHelper.StartRotation = unit.transform.rotation;
+                _relocateData = new RelocateData(unit);
+                _toolHelper.LastPosition = _relocateData.SavedPosition;
+                _toolHelper.LastRotation = _relocateData.SavedRotation;
+                _relocateData.ToggleGameObject(false);
             }
             else
             {
@@ -145,20 +227,17 @@ namespace System.Building.Controller
                 return;
             }
             
-            StartPlacementTool(item);
+            StartBuilding(item);
         }
 
         private void StartWallDoorRelocate(Event_RelocateWallDoor relocateWallEvent)
         {
-            throw new NotImplementedException();
+            ClearBuildingCache();
 
-            StopTool();
-
-            _toolHelper.IsRelocating = true;
             _toolHelper.PurchaseMode = PurchaseTypes.Free;
             
-            currentTool = new IWallDoorPlacerTool();
-            currentTool.OnStart(_toolHelper);
+            _currentTool = new IWallDoorPlacerTool();
+            _currentTool.OnStart(_toolHelper);
             
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
@@ -169,43 +248,47 @@ namespace System.Building.Controller
             throw new NotImplementedException();
         }
 
-        private void StartPlacementTool(StoreItemSO storeItemSo)
+        private void StartBuilding(StoreItemSO storeItemSo)
         {
             _toolHelper.SelectedStoreItem = storeItemSo;
 
-            currentTool = SelectBuildingMethod(storeItemSo);
-            if (currentTool != null)
-                currentTool.OnStart(_toolHelper);
+            _currentTool = SelectBuildingMethod(storeItemSo);
+            if (_currentTool != null)
+                _currentTool.OnStart(_toolHelper);
         
             GameEvent.Trigger(new Event_SelectCursor(eCursorTypes.Building));
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
+        }
+        
+        private void ClearBuildingCache()
+        {
+            if (_currentTool != null) _currentTool.OnStop(_toolHelper);
+
+            _currentTool = null;
+            _relocateData = new RelocateData();
+            _toolHelper.PurchaseMode = PurchaseTypes.None;
+        }
+
+        private void StopBuilding()
+        {
+            ClearBuildingCache();
+            
+            GameEvent.Trigger(new Event_PreviousCursor());
+            GameEvent.Trigger(new Event_ToggleBuildingMode(false));
         }
 
         private void RemovePlacement(Event_RemovePlacement removeEvent)
         {
             Transform sceneObject = _model.GetPlacedSceneObjectByID(removeEvent.InstanceID);
             _model.RemovePlacementItem(removeEvent.InstanceID);
-        
+            
+            sceneObject.gameObject.SetActive(false);
             if (sceneObject.TryGetComponent(out IPropUnit unit))
                 GameEvent.Trigger(new Event_PropRemoved(unit));
         
             UnityEngine.Object.Destroy(sceneObject.gameObject);
         }
-
-        private void StopTool()
-        {
-            if (currentTool != null) currentTool.OnStop(_toolHelper);
-
-            currentTool = null;
-
-            _toolHelper.SelectedPropItem = null;
-            _toolHelper.IsRelocating = false;
-            _toolHelper.PurchaseMode = PurchaseTypes.None;
         
-            GameEvent.Trigger(new Event_PreviousCursor());
-            GameEvent.Trigger(new Event_ToggleBuildingMode(false));
-        }
-
         private ITool SelectBuildingMethod(StoreItemSO storeItemSo)
         {
             if (storeItemSo is PlacementItemSO placement)
@@ -251,23 +334,21 @@ namespace System.Building.Controller
             }
         }
 
-        public void RelocateHandler(bool isPlaced)
+        private void RelocateHandler(bool isVerified)
         {
-            if (isPlaced)
-            {
-                if (_toolHelper.SelectedPropItem != null)
-                {
-                    _toolHelper.SelectedPropItem.SetPositionAndRotation(_toolHelper.LastPosition, _toolHelper.LastRotation);
-                    _toolHelper.SelectedPropItem.gameObject.SetActive(true);
-                    // _toolHelper.SelectedPropItem.OnRelocate();
+            if (!_relocateData.IsRelocating) return;
+            
 
-                    _toolHelper.SelectedPropItem = null;
-                }
+            if (isVerified)
+            {
+                _relocateData.SetPosition(_toolHelper.LastPosition, _toolHelper.LastRotation);
+                _relocateData.ToggleGameObject(true);
+                GameEvent.Trigger(new Event_PropRelocated(_relocateData.PropUnit));
             }
             else
             {
-                _toolHelper.SelectedPropItem.gameObject.SetActive(true);
-                _toolHelper.SelectedPropItem = null;
+                _relocateData.ResetPosition();
+                _relocateData.ToggleGameObject(true);
             }
         }
     }

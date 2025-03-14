@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System.Collections.Generic;
+using Data;
 using GameEvents;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -14,9 +15,10 @@ namespace System.Music
 
         [SerializeField] private SfxData _sfxData;
         private BassDetector _bassDetector;
-
-        private float _delayTimer;
         
+        private Dictionary<SoundFXType, float> _delayTimer;
+
+
         private float MasterVolume
         {
             get => GetVolume("MasterVolume");
@@ -38,6 +40,7 @@ namespace System.Music
         public void Initialize()
         {
             _bassDetector = new BassDetector(musicSource);
+            _delayTimer = new Dictionary<SoundFXType, float>();
             
             GameEvent.Subscribe<Event_SetVolume>(SetVolume);
             GameEvent.Subscribe<Event_Sfx>(PlaySfx);
@@ -82,18 +85,25 @@ namespace System.Music
         public void PlayPreviousSong()
         {
         }
+
         
         private void PlaySfx(Event_Sfx eventSfx)
         {
             AudioClip clip = _sfxData.GetSfx(eventSfx.FXType);
-            float time = Time.time;
             
             if (eventSfx.Delay)
             {
-                if (time - _delayTimer < clip.length)
+                float time = Time.time;
+                
+                if (_delayTimer.ContainsKey(eventSfx.FXType))
                 {
-                    return;
+                    if (time < _delayTimer[eventSfx.FXType] + clip.length)
+                        return;
+                    else
+                        _delayTimer.Remove(eventSfx.FXType);
                 }
+                else
+                    _delayTimer.Add(eventSfx.FXType, time);
             }
             
             soundFXSource.PlayOneShot(clip, eventSfx.Volume);

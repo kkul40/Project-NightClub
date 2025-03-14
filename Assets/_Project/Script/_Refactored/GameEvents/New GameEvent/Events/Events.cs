@@ -81,6 +81,16 @@ namespace GameEvents
         }
     }
 
+    public class Event_PropRelocated
+    {
+        public IPropUnit ProUnit;
+
+        public Event_PropRelocated(IPropUnit proUnit)
+        {
+            ProUnit = proUnit;
+        }
+    }
+
     public class Event_RelocateWallDoor
     {
         public WallDoor WallDoor;
@@ -255,6 +265,7 @@ namespace GameEvents
 
     #region Map
 
+    
     public class Event_ExpendMapSize
     {
         public int X;

@@ -16,7 +16,6 @@ namespace System.Music
         MoneyAdd,
         MoneyRemove,
         CameraFocus,
-        CameraZoom,
     }
     
     [Serializable]
@@ -35,7 +34,6 @@ namespace System.Music
         public AudioClip MoneyAdd;
         public AudioClip MoneyRemove;
         public AudioClip CameraFocus;
-        public AudioClip CameraZoom;
         
         public AudioClip GetSfx(SoundFXType fxType)
         {
@@ -65,8 +63,6 @@ namespace System.Music
                     return MoneyRemove;
                 case SoundFXType.CameraFocus:
                     return CameraFocus;
-                case SoundFXType.CameraZoom:
-                    return CameraZoom;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fxType), fxType, null);
             }
