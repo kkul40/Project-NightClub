@@ -1866,7 +1866,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -5149,6 +5149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b493cf65592247888a2c81be08488174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ambientSource: {fileID: 1744982236}
   musicSource: {fileID: 46218423}
   soundFXSource: {fileID: 999126413}
   mixer: {fileID: 24100000, guid: 09270aa54d2a075438e6426b52f12ad3, type: 2}
@@ -34031,7 +34032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1761461688
 Transform:
   m_ObjectHideFlags: 0
@@ -39189,7 +39190,7 @@ MonoBehaviour:
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
   _npcs: []
-  maxNPC: 1
+  maxNPC: 10
 --- !u!4 &2042784773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8908254307360373429, guid: cc6254185f2e6c7469fe6c148238db32, type: 3}

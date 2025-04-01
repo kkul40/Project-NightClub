@@ -39,7 +39,7 @@ namespace PropBehaviours.LightBehaviours
             for (int i = 0; i < _animatedParts.Count; i++)
             {
                 _animatedParts[i].localScale = Vector3.one * scaleFactor;
-                _animatedParts[i].localPosition = startPositions[i] + (_animatedParts[i].forward * moveFactor);
+                _animatedParts[i].localPosition = startPositions[i] + (_animatedParts[i].localRotation * Vector3.forward * moveFactor);
             
                 if (_tweenMoves[i] != null)
                 {

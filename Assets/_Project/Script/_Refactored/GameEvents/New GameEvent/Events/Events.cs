@@ -215,6 +215,11 @@ namespace GameEvents
         }
     }
 
+    public class Event_StopSong
+    {
+        
+    }
+
     public enum SourceVolume
     {
         Master,

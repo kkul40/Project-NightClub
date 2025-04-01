@@ -158,7 +158,6 @@ namespace System.Building.Controller
                     }
                     else
                     {
-                        Debug.Log("Calling SFX");
                         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
                     }
                 }

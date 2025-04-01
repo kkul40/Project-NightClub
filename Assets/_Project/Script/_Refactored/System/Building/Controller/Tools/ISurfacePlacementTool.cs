@@ -39,7 +39,7 @@ namespace System.Building.Controller.Tools
             var gridData = TH.DiscoData.MapData.GetFloorGridData((int)TH.LastPosition.x, (int)TH.LastPosition.z);
             if (gridData == null)
                 return false;
-        
+            
             var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * 0.98f, TH.LastRotation);
             for (int i = 0; i < colliders.Length; i++)
             {
@@ -70,12 +70,12 @@ namespace System.Building.Controller.Tools
             bool validation = OnValidate(TH);
 
             var gridData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
-        
+            
             if (gridData != null && !TH.IsPositioningLocked())
             {
                 TH.LastPosition = gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
             }
-        
+            
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, validation);
 
             _tempObject.transform.position = TH.LastPosition;

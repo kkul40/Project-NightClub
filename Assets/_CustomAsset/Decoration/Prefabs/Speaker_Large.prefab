@@ -52,7 +52,6 @@ MonoBehaviour:
   _animatedParts:
   - {fileID: 4629242020004180539}
   - {fileID: 8717442202458587243}
-  - {fileID: 8717442202458587243}
 --- !u!65 &6891861139162151671
 BoxCollider:
   m_ObjectHideFlags: 0

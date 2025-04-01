@@ -56,8 +56,8 @@ namespace _Initializer
             uiHudManager.Initialize();
             uiPageManager.Initialize();
 
-            SavingAndLoadingSystem.Instance.Initialize();
-            SavingAndLoadingSystem.Instance.NewGame();
+            // SavingAndLoadingSystem.Instance.Initialize();
+            // SavingAndLoadingSystem.Instance.NewGame();
 
             GameData gameData = SavingAndLoadingSystem.GameData;
 

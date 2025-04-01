@@ -9,6 +9,7 @@ namespace System.Music
 {
     public class MusicManager : SystemBase
     {
+        [SerializeField] private AudioSource ambientSource;
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource soundFXSource;
         [SerializeField] private AudioMixer mixer;
@@ -40,6 +41,8 @@ namespace System.Music
             
             GameEvent.Subscribe<Event_SetVolume>(SetVolume);
             GameEvent.Subscribe<Event_Sfx>(PlaySfx);
+            GameEvent.Subscribe<Event_PlaySong>(PlaySong);
+            GameEvent.Subscribe<Event_StopSong>(PauseSong);
         }
  
         private void Update()
@@ -64,24 +67,21 @@ namespace System.Music
             }
         }
 
-        private void PlaySong(AudioClip clip)
+        private void PlaySong(Event_PlaySong eventPlaySong)
         {
-            musicSource.PlayOneShot(clip);
+            ambientSource.Stop();
+            
+            musicSource.clip = eventPlaySong.Clip;
+            musicSource.loop = false;
+            musicSource.Play();
         }
-       
-        private void PauseSong()
+
+        private void PauseSong(Event_StopSong eventStopSong)
         {
             musicSource.Stop();
+            ambientSource.Play();
         }
-
-        public void PlayNextSong()
-        {
-        }
-
-        public void PlayPreviousSong()
-        {
-        }
-
+        
 
         private float lastTime;
         private void PlaySfx(Event_Sfx eventSfx)

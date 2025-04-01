@@ -46,11 +46,6 @@ namespace PropBehaviours.LightBehaviours
             _lineRenderer.positionCount = positions.Length;
             _lineRenderer.enabled = true;
 
-            if (RotationData.direction == Direction.Up || RotationData.direction == Direction.Right)
-            {
-                Debug.LogError("There is Rotoation Bugg Here");
-                yield break;
-            }
             
             while (true)
             {
@@ -90,9 +85,9 @@ namespace PropBehaviours.LightBehaviours
             
             bool isReached = false;
             
-            switch (RotationData.direction)
+            switch (transform.rotation.eulerAngles.y)
             {
-                case Direction.Down:
+                case 0:
                     pos = positions[i];
                     pos += Vector3.forward * laserSpeed * Time.deltaTime;
                     positions[i] = pos;
@@ -100,7 +95,7 @@ namespace PropBehaviours.LightBehaviours
                     if (positions[i].z > DiscoData.Instance.MapData.GetFloorGridData(1, DiscoData.Instance.MapData.CurrentMapSize.y - 1).CellPosition.CellCenterPosition(eGridType.PlacementGrid).z)
                         isReached = true;
                     break;
-                case Direction.Left:
+                case 90:
                     pos = positions[i];
                     pos += Vector3.right * laserSpeed * Time.deltaTime;
                     positions[i] = pos;
@@ -117,15 +112,15 @@ namespace PropBehaviours.LightBehaviours
         private bool MoveBackward(Vector3[] positions, int i)
         {
             bool isReached = false;
-            switch (RotationData.direction)
+            switch (transform.rotation.eulerAngles.y)
             {
-                case Direction.Down:
+                case 0:
                     positions[i] -= Vector3.forward * laserSpeed * Time.deltaTime;
                     
                     if (positions[1].z < 0.5f)
                         isReached = true;
                     break;
-                case Direction.Left:
+                case 90:
                     positions[i] -= Vector3.right * laserSpeed * Time.deltaTime;
                     
                     if (positions[1].x < 0.5f)
@@ -143,13 +138,13 @@ namespace PropBehaviours.LightBehaviours
             Vector3[] positions = new Vector3[1];
 
             Vector2Int mapSize = DiscoData.Instance.MapData.CurrentMapSize;
-
-            switch (RotationData.direction)
+            
+            switch (transform.rotation.eulerAngles.y)
             {
-                case Direction.Down:
+                case 0:
                     positions = new Vector3[mapSize.x * 2];
                     break;
-                case Direction.Left:
+                case 90:
                     positions = new Vector3[mapSize.y * 2];
                     break;
                 default:
@@ -165,12 +160,12 @@ namespace PropBehaviours.LightBehaviours
                 else
                 {
                     Vector3 directPos = Vector3.zero;
-                    switch (RotationData.direction)
+                    switch (transform.rotation.eulerAngles.y)
                     {
-                        case Direction.Down:
+                        case 0:
                             directPos = DiscoData.Instance.MapData.GetFloorGridData(index++, 1).CellPosition.CellCenterPosition(eGridType.PlacementGrid);
                             break;
-                        case Direction.Left:
+                        case 90:
                             directPos = DiscoData.Instance.MapData.GetFloorGridData(1, index++).CellPosition.CellCenterPosition(eGridType.PlacementGrid);
                             break;
                     }

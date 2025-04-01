@@ -51,25 +51,10 @@ namespace UI.GamePages.GameButtons
             
             var djs = DiscoData.Instance.GetPlacedPropsByType<DJ>();
             
-            Debug.Log(djs.Count);
             if (djs.Count > 0)
                 return;
-
-            // MusicManager.Instance.PauseSong();
-            //
-            /*
-             *
-             *
-             *
-             *
-             *
-             *
-             *
-             * 
-             */
             
-            
-            
+            GameEvent.Trigger(new Event_StopSong());
             
             isPlaying = false;
         }
