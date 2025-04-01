@@ -1,7 +1,6 @@
 using System.Building.Controller;
 using Data;
 using Disco_ScriptableObject;
-using PropBehaviours;
 using UnityEngine;
 
 namespace System.Building
@@ -34,6 +33,8 @@ namespace System.Building
         // Static Variables
         public StoreItemSO SelectedStoreItem;
         public PurchaseTypes PurchaseMode;
+        // Keep In Position
+        public bool KeepInStartPosition;
         
         // Relocate Variables
         // public bool IsRelocating;
@@ -46,6 +47,7 @@ namespace System.Building
         public Vector3 colliderExtend;
         public Quaternion LastRotation;
         public Vector3 LastPosition;
+        public Vector3 StartMousePos;
 
     
         public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
@@ -130,6 +132,19 @@ namespace System.Building
         #endregion
 
         #region Helper Functions
+
+        public bool IsPositioningLocked()
+        {
+            if (KeepInStartPosition)
+            {
+                if (Vector3.Distance(StartMousePos, InputSystem.MousePosition) < 0.2f)
+                    return true;
+                
+                KeepInStartPosition = false;
+            }
+
+            return false;
+        }
 
         public WallData GetClosestWall()
         {
@@ -237,7 +252,7 @@ namespace System.Building
             foreach (var vector in GetRotatedFloorCorners(LastRotation))
             {
                 if (vector.x < 0 || vector.z < 0) return false;
-                if (vector.x > DiscoData.Instance.MapData.CurrentMapSize.x || vector.z > DiscoData.Instance.MapData.CurrentMapSize.y) return false;
+                if (vector.x > DiscoData.MapData.CurrentMapSize.x || vector.z > DiscoData.MapData.CurrentMapSize.y) return false;
             }
             return true;
         }

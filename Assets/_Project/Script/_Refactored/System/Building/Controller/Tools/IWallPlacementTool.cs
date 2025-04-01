@@ -24,7 +24,7 @@ namespace System.Building.Controller.Tools
         public void OnStart(ToolHelper TH)
         {
             _placementItem = TH.SelectedStoreItem as PlacementItemSO;
-
+            
             _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
             _tempObject.transform.SetParent(null);
         
@@ -69,7 +69,8 @@ namespace System.Building.Controller.Tools
 
         public void OnUpdate(ToolHelper TH)
         {
-            TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
+            if(!TH.IsPositioningLocked())
+                TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
         
             if (TH.InputSystem.FreePlacementKey) // Free Placement
             {

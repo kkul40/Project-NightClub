@@ -71,7 +71,7 @@ namespace System.Building.Controller.Tools
 
             var gridData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
         
-            if (gridData != null)
+            if (gridData != null && !TH.IsPositioningLocked())
             {
                 TH.LastPosition = gridData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
             }

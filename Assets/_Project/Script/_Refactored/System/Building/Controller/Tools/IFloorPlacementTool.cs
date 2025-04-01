@@ -18,7 +18,8 @@ namespace System.Building.Controller.Tools
 
         private Transform hitSurface;
         private bool isSnappedToSurface;
-    
+        
+        private bool keepInStartPosition;
         // Box Collider Values
         // private Collider _collider;
 
@@ -82,7 +83,8 @@ namespace System.Building.Controller.Tools
         public void OnUpdate(ToolHelper TH)
         {
             FloorRotation(TH);
-            FloorPositioning(TH);
+            if(!TH.IsPositioningLocked())
+                FloorPositioning(TH);
 
             // Surface Placement Check
             if (_placementItem.canPlaceOntoOtherObjects)

@@ -7,6 +7,7 @@ using HighlightPlus;
 using PropBehaviours;
 using UnityEngine;
 
+
 namespace System
 {
     public enum eCursorTypes
@@ -215,7 +216,7 @@ namespace System
         {
             SetCursor(cursorEvent.CursorType);
         }
-        
+
         private void SetCursor(eCursorTypes cursorType)
         {
             switch (cursorType)

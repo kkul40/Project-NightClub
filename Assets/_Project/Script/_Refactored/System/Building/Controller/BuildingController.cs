@@ -127,7 +127,7 @@ namespace System.Building.Controller
                         _currentTool.OnPlace(_toolHelper);
                         ClearBuildingCache();
                         StopBuilding();
-                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
                     }
                     else
                     {
@@ -142,7 +142,7 @@ namespace System.Building.Controller
                         _currentTool.OnStop(_toolHelper);
                         ClearBuildingCache();
                         StopBuilding();
-                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
                     }
                     else
                     {
@@ -154,10 +154,11 @@ namespace System.Building.Controller
                     if (_currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper))
                     {
                         _currentTool.OnPlace(_toolHelper);
-                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess, true));
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
                     }
                     else
                     {
+                        Debug.Log("Calling SFX");
                         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
                     }
                 }
@@ -217,6 +218,8 @@ namespace System.Building.Controller
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
                 _relocateData = new RelocateData(unit);
+                _toolHelper.KeepInStartPosition = true;
+                _toolHelper.StartMousePos = _toolHelper.InputSystem.MousePosition;
                 _toolHelper.LastPosition = _relocateData.SavedPosition;
                 _toolHelper.LastRotation = _relocateData.SavedRotation;
                 _relocateData.ToggleGameObject(false);
@@ -267,6 +270,7 @@ namespace System.Building.Controller
             _currentTool = null;
             _relocateData = new RelocateData();
             _toolHelper.PurchaseMode = PurchaseTypes.None;
+            _toolHelper.KeepInStartPosition = false;
         }
 
         private void StopBuilding()
