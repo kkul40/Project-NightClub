@@ -808,7 +808,7 @@ MonoBehaviour:
     - line: '|   additionalCompilerArguments: {}'
     - line: '|   platformArchitecture: {}'
     - line: '|   scriptingBackend:'
-    - line: '|     Standalone: 1'
+    - line: '|     Standalone: 0'
     - line: '|   il2cppCompilerConfiguration:'
     - line: '|     Standalone: 1'
     - line: '|   il2cppCodeGeneration: {}'
@@ -945,7 +945,7 @@ MonoBehaviour:
         m_ConnectProfiler: 0
         m_BuildWithDeepProfilingSupport: 0
         m_AllowDebugging: 0
-        m_WaitForManagedDebugger: 0
+        m_WaitForManagedDebugger: 1
         m_ManagedDebuggerFixedPort: 0
         m_ExplicitNullChecks: 0
         m_ExplicitDivideByZeroChecks: 0

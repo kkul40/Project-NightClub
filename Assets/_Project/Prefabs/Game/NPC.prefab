@@ -1056,7 +1056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1234271840597127588}
   - component: {fileID: 5170465969083182046}
-  - component: {fileID: 5520396637592596484}
+  - component: {fileID: 4224426341022090797}
   m_Layer: 0
   m_Name: F_body
   m_TagString: Untagged
@@ -1102,7 +1102,7 @@ Animator:
   m_GameObject: {fileID: 1903565924993035038}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e3f26e14f277c6d4c97ab6487552b69b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 77095d09c232f0041a68100be3a68320, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1114,7 +1114,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5520396637592596484
+--- !u!114 &4224426341022090797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3529,7 +3529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362a6d6174ca67d4b93b4fbb7ccdf96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpperArm: {fileID: 31900000, guid: cfbe9ecf85312e940b6d06e7ebd2d1c9, type: 2}
 --- !u!136 &8766550021517850893
 CapsuleCollider:
   m_ObjectHideFlags: 0
