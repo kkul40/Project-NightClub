@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - DrinkData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c37556690a9af074bbb390b50ec07481
+    m_Address: ScriptableObjects/Extender
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - StoreItem
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b2162fb584070b14ca85fb1132ccfc6a, type: 2}
   m_SchemaSet:

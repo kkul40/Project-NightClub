@@ -177,21 +177,23 @@ namespace System
         [ContextMenu("Expend X")]
         public void ExpendX()
         {
-            if (_mapData.CurrentMapSize.x + 1 > ConstantVariables.MaxMapSizeX) return;
-            InstantiateXWall(_mapData.CurrentMapSize.x + 1);
-
-            for (var i = 0; i < _mapData.CurrentMapSize.y; i++) InstantiateFloorTile(_mapData.CurrentMapSize.x, i);
             _mapData.SetCurrentMapSize(_mapData.CurrentMapSize + Vector2Int.right);
+            
+            if (_mapData.CurrentMapSize.x> ConstantVariables.MaxMapSizeX) return;
+            InstantiateXWall(_mapData.CurrentMapSize.x);
+
+            for (var i = 0; i < _mapData.CurrentMapSize.y; i++) InstantiateFloorTile(_mapData.CurrentMapSize.x - 1, i);
         }
 
         [ContextMenu("Expend Y")]
         public void ExpendY()
         {
-            if (_mapData.CurrentMapSize.y + 1 > ConstantVariables.MaxMapSizeY) return;
-            InstantiateYWall(_mapData.CurrentMapSize.y + 1);
-
-            for (var i = 0; i < _mapData.CurrentMapSize.x; i++) InstantiateFloorTile(i, _mapData.CurrentMapSize.y);
             _mapData.SetCurrentMapSize(_mapData.CurrentMapSize + Vector2Int.up);
+
+            if (_mapData.CurrentMapSize.y> ConstantVariables.MaxMapSizeY) return;
+            InstantiateYWall(_mapData.CurrentMapSize.y);
+
+            for (var i = 0; i < _mapData.CurrentMapSize.x; i++) InstantiateFloorTile(i, _mapData.CurrentMapSize.y - 1);
         }
 
         [ContextMenu("Expend Both")]
