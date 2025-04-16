@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Building_System.GameEvents;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExtensionMethods;
-using GameEvents;
 using PropBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -41,8 +41,10 @@ namespace Data
 
             SetUpPaths();
             // PlacementDataHandler.OnPropPlaced += () => SetFlags(avaliablePathFlag:true);
-            KEvent_Building.OnPlaced += UpdateAllPaths;
-            KEvent_Map.OnMapSizeUpdate += UpdateAllPaths;
+            GameEvent.Subscribe<Event_PropPlaced>( handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_PropRemoved>( handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_PropRelocated>(handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_ExpendMapSize>(handle => UpdateAllPaths());
         }
 
         private void SetUpPaths()

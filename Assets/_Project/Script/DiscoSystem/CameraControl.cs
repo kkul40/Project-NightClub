@@ -1,6 +1,6 @@
 using System;
+using System.Building_System.GameEvents;
 using System.Character.NPC;
-using GameEvents;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -69,7 +69,7 @@ namespace DiscoSystem
         public void FollowTarget(Transform target)
         {
             _target = target;
-            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.CameraFocus);
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.CameraFocus));
         }
 
         public void ResetTarget()

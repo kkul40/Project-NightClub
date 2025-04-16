@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Building_System.GameEvents;
 using Data;
-using GameEvents;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
@@ -49,60 +49,52 @@ namespace DiscoSystem
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            
+            GameEvent.Subscribe<Event_Sfx>(PlaySoundFX);
         }
 
-        private void OnEnable()
+        private void PlaySoundFX(Event_Sfx sfxEvent)
         {
-            KEvent_SoundFX.OnSoundFXPlayed += PlaySoundFX;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_SoundFX.OnSoundFXPlayed -= PlaySoundFX;
-        }
-
-        private void PlaySoundFX(SoundFXType fxType, bool delay)
-        {
-            switch (fxType)
+            switch (sfxEvent.FXType)
             {
                 case SoundFXType.Click:
-                    PlayAudioClip(Click, delay);
+                    PlayAudioClip(Click, sfxEvent.Delay);
                     break;
                 case SoundFXType.Success:
-                    PlayAudioClip(Succes, delay);
+                    PlayAudioClip(Succes, sfxEvent.Delay);
                     break;
                 case SoundFXType.Error:
-                    PlayAudioClip(Error, delay);
+                    PlayAudioClip(Error, sfxEvent.Delay);
                     break;
                 case SoundFXType.UIClick:
-                    PlayAudioClip(UIClick, delay);
+                    PlayAudioClip(UIClick, sfxEvent.Delay);
                     break;
                 case SoundFXType.UIBack:
-                    PlayAudioClip(UIBack, delay);
+                    PlayAudioClip(UIBack, sfxEvent.Delay);
                     break;
                 case SoundFXType.NPCSelection:
-                    PlayAudioClip(NPCSelection, delay);
+                    PlayAudioClip(NPCSelection, sfxEvent.Delay);
                     break;
                 case SoundFXType.PropSelection:
-                    PlayAudioClip(PropSelection, delay);
+                    PlayAudioClip(PropSelection, sfxEvent.Delay);
                     break;
                 case SoundFXType.BuildingSuccess:
-                    PlayAudioClip(BuildingSuccess, delay);
+                    PlayAudioClip(BuildingSuccess, sfxEvent.Delay);
                     break;
                 case SoundFXType.BuildingError:
-                    PlayAudioClip(BuildingError, delay);
+                    PlayAudioClip(BuildingError, sfxEvent.Delay);
                     break;
                 case SoundFXType.MoneyAdd:
-                    PlayAudioClip(MoneyAdd, delay);
+                    PlayAudioClip(MoneyAdd, sfxEvent.Delay);
                     break;
                 case SoundFXType.MoneyRemove:
-                    PlayAudioClip(MoneyRemove, delay);
+                    PlayAudioClip(MoneyRemove, sfxEvent.Delay);
                     break;
                 case SoundFXType.CameraFocus:
-                    PlayAudioClip(CameraFocus, delay);
+                    PlayAudioClip(CameraFocus, sfxEvent.Delay);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(fxType), fxType, null);
+                    throw new ArgumentOutOfRangeException(nameof(sfxEvent.FXType), sfxEvent.Delay, null);
             }
         }
 

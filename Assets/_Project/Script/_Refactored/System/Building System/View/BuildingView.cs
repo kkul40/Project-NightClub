@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Building_System.GameEvents;
+using System.Collections.Generic;
 using Disco_ScriptableObject;
 using Framework.Context;
 using Framework.Mvcs.View;
-using GameEvents;
 using UI.GamePages;
 using UI.GamePages.GameButtons;
 using UnityEngine;
@@ -85,7 +85,7 @@ namespace System.Building_System.View
 
         public void ExtensionSlotClicked(Button button, ExtendItemSo extendItemSo)
         {
-            KEvent_Map.TriggerExtendMapSize(extendItemSo.ExtendX, extendItemSo.ExtendY);
+            GameEvent.Trigger(new Event_ExpendMapSize(extendItemSo.ExtendX, extendItemSo.ExtendY));
         }
 
         public void StorageSlotClicked(Button button, StoreItemSO storeItemSo, int amount)

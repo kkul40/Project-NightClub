@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Building_System.Controller;
+using System.Building_System.GameEvents;
 using System.Character.Bartender;
 using System.Collections.Generic;
 using System.Linq;
-using Data;
 using DG.Tweening;
 using DiscoSystem;
 using Framework.Context;
 using Framework.Mvcs.View;
-using GameEvents;
 using PropBehaviours;
 using UI.GamePages;
 using UI.GamePages.GameButtons;
@@ -231,10 +229,10 @@ namespace UI.PopUp
             if (_lastData is IPropUnit propUnit)
             {
                 var instanceID = propUnit.transform.GetInstanceID();
-                KEvent_Building.TriggerPlacementRelocate(instanceID);
+                GameEvent.Trigger(new Event_RelocatePlacement(instanceID));
                 PlaySFXOnButtonClick();
                 ToggleView(false);
-                KEvent_Cursor.TriggerResetSelection();
+                GameEvent.Trigger(new Event_ResetSelection());
             }
         }
 
@@ -242,11 +240,11 @@ namespace UI.PopUp
         {
             if (_lastData is WallDoor wallDoor)
             {
-                KEvent_Building.TriggerOnWallDoorRelocate(wallDoor);
+                GameEvent.Trigger(new Event_RelocateWallDoor(wallDoor));
                 PlaySFXOnButtonClick();
                 ToggleView(false);
 
-                KEvent_Cursor.TriggerResetSelection();
+                GameEvent.Trigger(new Event_ResetSelection());
             }
         }
 
@@ -254,16 +252,16 @@ namespace UI.PopUp
         {
             if (_lastData is IPropUnit propUnit)
             {
-                KEvent_Building.TriggerPlacementRemove(propUnit.transform.GetInstanceID());
+                GameEvent.Trigger(new Event_RemovePlacement(propUnit.transform.GetInstanceID()));
                 PlaySFXOnButtonClick();
                 ToggleView(false);
-                KEvent_Cursor.TriggerResetSelection();
+                GameEvent.Trigger(new Event_ResetSelection());
             }
         }
 
         private void PlaySFXOnButtonClick()
         {
-            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Click);
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.Click));
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.Character.Bartender.Command;
+﻿using System.Building_System.GameEvents;
+using System.Character.Bartender.Command;
 using System.Collections.Generic;
 using Framework.Context;
 using Framework.Mvcs.View;
-using GameEvents;
 using Prop_Behaviours.Bar;
 using PropBehaviours;
 using ScriptableObjects;

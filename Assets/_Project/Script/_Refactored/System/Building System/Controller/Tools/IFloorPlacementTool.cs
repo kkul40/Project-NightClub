@@ -2,7 +2,6 @@
 using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
-using DiscoSystem;
 using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
@@ -104,12 +103,6 @@ namespace System.Building_System.Controller.Tools
     
         public void OnPlace(ToolHelper TH)
         {
-            if (TH.Mode == PlacementMode.Relocating)
-            {
-                isFinished = true;
-                return;
-            }
-            
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
             // Setting Parent Object

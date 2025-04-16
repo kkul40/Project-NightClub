@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System.Building_System.GameEvents;
+using System.Collections;
 using DiscoSystem;
 using ExtensionMethods;
-using GameEvents;
 using HighlightPlus;
 using PropBehaviours;
 using UI.GamePages;
@@ -52,22 +52,11 @@ namespace System
             _inputSystem = inputSystem;
             SetCursor(eCursorTypes.Default);
             StartCoroutine(ToggleCursorSystem(true, delay));
-        }
-
-        private void OnEnable()
-        {
-            KEvent_Cursor.OnChangeCursor += SetCursor;
-            KEvent_Cursor.OnChangeCursorToPrevious += SetToPreviousChangeCursorTo;
-            KEvent_Building.OnBuildingToggled += ToggleCursorSystem;
-            KEvent_Cursor.OnResetSelection += Reset;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Cursor.OnChangeCursor -= SetCursor;
-            KEvent_Cursor.OnChangeCursorToPrevious -= SetToPreviousChangeCursorTo;
-            KEvent_Building.OnBuildingToggled -= ToggleCursorSystem;
-            KEvent_Cursor.OnResetSelection -= Reset;
+            
+            GameEvent.Subscribe<Event_SelectCursor>(SetCursor);
+            GameEvent.Subscribe<Event_PreviousCursor>( handle => SetToPreviousChangeCursorTo());
+            GameEvent.Subscribe<Event_ResetSelection>( handle => Reset());
+            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleCursorSystem(handle.Toggle));
         }
  
         private void Update()
@@ -217,9 +206,14 @@ namespace System
         private void OnClickHandler(IInteractable interactable)
         {
             interactable.OnClick();
-            KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Click);
+            GameEvent.Trigger(new Event_Sfx(SoundFXType.Click));
             if(interactable.hasInteractionAnimation)
                 interactable.mGameobject.AnimatedPlacement(ePlacementAnimationType.Shaky);
+        }
+
+        private void SetCursor(Event_SelectCursor cursorEvent)
+        {
+            SetCursor(cursorEvent.CursorType);
         }
 
         public void SetCursor(eCursorTypes cursorType)

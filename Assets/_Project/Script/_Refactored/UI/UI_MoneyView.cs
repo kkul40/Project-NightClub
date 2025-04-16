@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace DefaultNamespace.UI
+namespace UI
 {
     public class UI_MoneyView : MonoBehaviour
     {

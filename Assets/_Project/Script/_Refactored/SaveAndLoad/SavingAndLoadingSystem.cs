@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System.Building_System.GameEvents;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
 using DiscoSystem;
-using GameEvents;
 using UnityEngine;
 
 namespace SaveAndLoad
@@ -69,7 +69,7 @@ namespace SaveAndLoad
 
         public void SaveGame()
         {
-            KEvent_SavingAndLoading.TriggerGameSave(_gameData);
+            GameEvent.Trigger(new Event_GameSaved());
 
             _gameData.Details.Save(_gameData.Details.PlayTime + passedSeconds);
             passedSeconds = 0;

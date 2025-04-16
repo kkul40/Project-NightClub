@@ -1,19 +1,16 @@
 using System.Building_System.Controller;
 using Data;
-using Disco_Building;
 using Disco_ScriptableObject;
-using DiscoSystem;
-using PropBehaviours;
 using UnityEngine;
 
 namespace System.Building_System
 {
-    public enum PlacementMode
+    public enum PurchaseTypes
     {
         None,
-        Buying,
-        Inventory,
-        Relocating,
+        Buy,
+        Free,
+        Unique,
     }
     
     public class ToolHelper
@@ -35,13 +32,10 @@ namespace System.Building_System
     
         // Static Variables
         public StoreItemSO SelectedStoreItem;
+        public PurchaseTypes PurchaseMode;
+        // Keep In Position
+        public bool KeepInStartPosition;
         
-        // Relocate Variables
-        public IPropUnit SelectedPropItem;
-        public Vector3 startPosition;
-        public Quaternion StartRotation;
-        public PlacementMode Mode;
-
     
         // Dynamic Variables
         private Collider[] Colliders;
@@ -49,6 +43,7 @@ namespace System.Building_System
         public Vector3 colliderExtend;
         public Quaternion LastRotation;
         public Vector3 LastPosition;
+        public Vector3 StartMousePos;
 
     
         public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
@@ -133,6 +128,19 @@ namespace System.Building_System
         #endregion
 
         #region Helper Functions
+
+        public bool IsPositioningLocked()
+        {
+            if (KeepInStartPosition)
+            {
+                if (Vector3.Distance(StartMousePos, InputSystem.MousePosition) < 0.2f)
+                    return true;
+                
+                KeepInStartPosition = false;
+            }
+
+            return false;
+        }
 
         public WallData GetClosestWall()
         {
@@ -240,7 +248,7 @@ namespace System.Building_System
             foreach (var vector in GetRotatedFloorCorners(LastRotation))
             {
                 if (vector.x < 0 || vector.z < 0) return false;
-                if (vector.x > DiscoData.Instance.MapData.CurrentMapSize.x || vector.z > DiscoData.Instance.MapData.CurrentMapSize.y) return false;
+                if (vector.x > DiscoData.MapData.CurrentMapSize.x || vector.z > DiscoData.MapData.CurrentMapSize.y) return false;
             }
             return true;
         }

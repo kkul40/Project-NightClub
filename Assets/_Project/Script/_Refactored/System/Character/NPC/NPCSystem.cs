@@ -1,4 +1,5 @@
 ﻿using System.Building_System;
+using System.Building_System.GameEvents;
 using System.Character._Player;
 using System.Character.Bartender;
 using System.Character.Bartender.Command;
@@ -8,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using DiscoSystem;
-using GameEvents;
 using UnityEngine;
 
 namespace System.Character.NPC
@@ -81,7 +81,7 @@ namespace System.Character.NPC
             command.InitCommand(null, bartender);
             bartender.AddCommand(command);
             
-            KEvent_Employee.TriggerBartenderHired(bartender);
+            GameEvent.Trigger(new Event_BartenderHired(bartender));
         }
 
         private void SendNPCs()

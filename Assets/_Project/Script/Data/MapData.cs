@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Building_System.GameEvents;
 using System.Collections.Generic;
 using ExtensionMethods;
-using GameEvents;
 using PropBehaviours;
 using SaveAndLoad;
 using UnityEngine;
@@ -104,7 +104,7 @@ namespace Data
         CurrentMapSize = mapSize;
         Path.SetFlags(avaliablePathFlag: true);
 
-        KEvent_Map.TriggerMapSizeChanged(CurrentMapSize);
+        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
         return true;
     }
 

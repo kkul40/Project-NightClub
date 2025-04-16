@@ -1,6 +1,7 @@
-﻿using Data;
+﻿using System;
+using System.Building_System.GameEvents;
+using Data;
 using DiscoSystem;
-using GameEvents;
 using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;
@@ -23,16 +24,10 @@ namespace UI.GamePages.GameButtons
             // }
         }
 
-        private void OnEnable()
+        private void Awake()
         {
-            KEvent_Building.OnPropPlaced += StartSong;
-            KEvent_Building.OnPropRemoved += StopSong;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Building.OnPropPlaced -= StartSong;
-            KEvent_Building.OnPropRemoved -= StopSong;
+            GameEvent.Subscribe<Event_PropPlaced>( handle=> StartSong(handle.PropUnit));
+            GameEvent.Subscribe<Event_PropRemoved>(handle=> StopSong(handle.PropUnit));
         }
 
         private void StartSong(IPropUnit propUnit)

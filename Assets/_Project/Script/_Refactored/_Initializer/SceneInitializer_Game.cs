@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Building_System;
+using System.Building_System.GameEvents;
 using System.Character._Player;
 using System.Character.NPC;
 using Data;
@@ -22,7 +23,7 @@ namespace _Initializer
         [SerializeField] private MapGeneratorSystem _mapGeneratorSystem;
         [SerializeField] private Player _player;
         [SerializeField] private NPCSystem _npcSystem;
-        [SerializeField] private GameEvents.GameEvents _gameEvents;
+        [SerializeField] private GameEvent _gameEvents;
         
 
         private void Awake()
@@ -45,6 +46,9 @@ namespace _Initializer
             // Generate Map
             // Generate Scene Items
 
+            _gameEvents.Initialize();
+
+            
             SavingAndLoadingSystem.Instance.Initialize();
             SavingAndLoadingSystem.Instance.NewGame();
 
@@ -62,7 +66,6 @@ namespace _Initializer
             _buildingSystem.Initialize();
             _uiPageManager.Initialize();
             
-            _gameEvents.Initialize();
             
             _player.Initialize(gameData);
             _npcSystem.Initialize(_discoData);

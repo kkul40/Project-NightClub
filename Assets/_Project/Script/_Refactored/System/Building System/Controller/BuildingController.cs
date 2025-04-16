@@ -1,4 +1,5 @@
 using System.Building_System.Controller.Tools;
+using System.Building_System.GameEvents;
 using System.Building_System.Model;
 using System.Building_System.Service;
 using System.Building_System.View;
@@ -7,8 +8,8 @@ using Disco_ScriptableObject;
 using DiscoSystem;
 using Framework.Context;
 using Framework.Mvcs.Controller;
-using GameEvents;
 using PropBehaviours;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace System.Building_System.Controller
@@ -21,8 +22,60 @@ namespace System.Building_System.Controller
 
     public class BuildingController : BaseController<BuildingModel, BuildingView, BuildingService>
     {
+        private class RelocateData
+        {
+            public bool IsRelocating;
+            public Transform SceneObject;
+            public IPropUnit PropUnit;
+            public Vector3 SavedPosition;
+            public Quaternion SavedRotation;
+
+            /// <summary>
+            /// Null Constructor
+            /// </summary>
+            public RelocateData()
+            {
+                IsRelocating = false;
+                SceneObject = null;
+                PropUnit = null;
+                SavedPosition = Vector3.zero;
+                SavedRotation = quaternion.identity;
+            }
+
+            public RelocateData(IPropUnit propUnit)
+            {
+                IsRelocating = true;
+                SceneObject = propUnit.transform;
+                PropUnit = propUnit;
+
+                SavedPosition = SceneObject.position;
+                SavedRotation = SceneObject.rotation;
+
+                SceneObject.gameObject.SetActive(false);
+            }
+
+            public void SetPosition(Vector3 newPosition, Quaternion newRotation)
+            {
+                SceneObject.rotation = newRotation;
+                SceneObject.position = newPosition;
+            }
+
+            public void ResetPosition()
+            {
+                SceneObject.rotation = SavedRotation;
+                SceneObject.position = SavedPosition;
+            }
+
+            public void ToggleGameObject(bool toggle)
+            {
+                SceneObject.gameObject.SetActive(toggle);
+            }
+        }
+        
         private ToolHelper _toolHelper;
-        private ITool currentTool;
+        private ITool _currentTool;
+
+        private RelocateData _relocateData;
 
         public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem,
             DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem) : base(model, view,
@@ -37,21 +90,13 @@ namespace System.Building_System.Controller
 
             _view.OnSlotItemClicked += StartATool;
             _view.OnStorageItemClicked += StartInventoryItemPlacement;
+
+            _relocateData = new RelocateData();
             
-            KEvent_Building.OnPlacementRemove += RemovePlacement;
-            KEvent_Building.OnPlacementRelocate += StartRelocatePlacement;
-            KEvent_Building.OnWallDoorRelocate += StartWallDoorRelocate;
-
+            GameEvent.Subscribe<Event_RelocatePlacement>(StartRelocatePlacement);
+            GameEvent.Subscribe<Event_RelocateWallDoor>(StartWallDoorRelocate);
+            GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
-        }
-
-        public override void Dispose()
-        {
-            _view.OnSlotItemClicked -= StartATool;
-            _view.OnStorageItemClicked -= StartInventoryItemPlacement;
-            KEvent_Building.OnPlacementRemove -= RemovePlacement;
-            KEvent_Building.OnPlacementRelocate -= StartRelocatePlacement;
-            KEvent_Building.OnWallDoorRelocate -= StartWallDoorRelocate;
         }
 
         public void Update(float deltaTime)
@@ -60,77 +105,116 @@ namespace System.Building_System.Controller
 
             if (InputSystem.Instance.Esc)
             {
-                if (currentTool != null)
+                if (_currentTool != null)
                 {
-                    currentTool.OnStop(_toolHelper);
-                    currentTool = null;
+                    _currentTool.OnStop(_toolHelper);
+                    _currentTool = null;
                 }
             }
 
-            if (currentTool == null) return;
+            if (_currentTool == null) return;
 
-            UpdateTool(_toolHelper);
+            _currentTool.OnUpdate(_toolHelper);
 
-            currentTool.OnUpdate(_toolHelper);
+            bool cancelClick = InputSystem.Instance.CancelClick || _currentTool.isFinished;
 
-            if (currentTool.CheckPlaceInput(_toolHelper))
+            if (_currentTool.CheckPlaceInput(_toolHelper))
             {
-                if (currentTool.OnValidate(_toolHelper))
+                if (_currentTool is IWallDoorPlacerTool) // Relocate Wall Door
                 {
-                    currentTool.OnPlace(_toolHelper);
-                    KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Success);
+                    if (_currentTool.OnValidate(_toolHelper))
+                    {
+                        _currentTool.OnPlace(_toolHelper);
+                        ClearBuildingCache();
+                        StopBuilding();
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
                 }
-                else
+                else if (_relocateData.IsRelocating) // Relocate Handler
                 {
-                    KEvent_SoundFX.TriggerSoundFXPlay(SoundFXType.Error, true);
+                    if (_currentTool.OnValidate(_toolHelper))
+                    {
+                        RelocateHandler(true);
+                        _currentTool.OnStop(_toolHelper);
+                        ClearBuildingCache();
+                        StopBuilding();
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
+                }
+                else // Place Handler
+                {
+                    if (_currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper))
+                    {
+                        _currentTool.OnPlace(_toolHelper);
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
+                    }
+                    else
+                    {
+                        GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
+                    }
                 }
             }
             
-     
-            if (InputSystem.Instance.CancelClick)
+            if (cancelClick)
             {
-                if(_toolHelper.Mode == PlacementMode.Relocating)
-                    RelocateHandler(false);
-                
-                StopTool();
-            }
-            else if (currentTool.isFinished)
-            {
-                if(_toolHelper.Mode == PlacementMode.Relocating)
-                    RelocateHandler(true);
-                
-                StopTool();
+                RelocateHandler(false);
+                ClearBuildingCache();
+                StopBuilding();
             }
         }
-
-        private void UpdateTool(ToolHelper toolHelper)
+        
+        private bool TryPurchase(ToolHelper toolHelper)
         {
+            switch (toolHelper.PurchaseMode)
+            {
+                case PurchaseTypes.Buy:
+                    if (DiscoData.Instance.inventory.HasEnoughMoney(_toolHelper.SelectedStoreItem.Price))
+                    {
+                        GameEvent.Trigger(new Event_RemoveMoney(_toolHelper.SelectedStoreItem.Price, false));
+                        return true;
+                    }
+
+                    return false;
+                case PurchaseTypes.Free:
+                    return true;
+                case PurchaseTypes.Unique:
+                    return true;
+            }
+
+            return true;
         }
 
         private void StartATool(StoreItemSO storeItemSo)
         {
-            StopTool();
+            ClearBuildingCache();
 
-            _toolHelper.Mode = PlacementMode.Buying;
-            ToolStartHandler(storeItemSo);
+            _toolHelper.PurchaseMode = PurchaseTypes.Buy;
+            StartBuilding(storeItemSo);
         }
 
-        private void StartRelocatePlacement(int instanceID)
+        private void StartRelocatePlacement(Event_RelocatePlacement relocateEvent)
         {
-            StopTool();
+            ClearBuildingCache();
 
-            _toolHelper.Mode = PlacementMode.Relocating;
-
-            StoreItemSO item = _model.GetStoreItemByID(instanceID);
-
-            Transform sceneObject = _model.GetPlacedSceneObjectByID(instanceID);
-            sceneObject.gameObject.SetActive(false);
+            StoreItemSO item = _model.GetStoreItemByID(relocateEvent.InstanceID);
+            Transform sceneObject = _model.GetPlacedSceneObjectByID(relocateEvent.InstanceID);
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
-                _toolHelper.SelectedPropItem = unit; 
-                _toolHelper.startPosition = unit.WorldPos;
-                _toolHelper.StartRotation = unit.transform.rotation;
+                _relocateData = new RelocateData(unit);
+                _toolHelper.KeepInStartPosition = true;
+                _toolHelper.StartMousePos = _toolHelper.InputSystem.MousePosition;
+                _toolHelper.LastPosition = _relocateData.SavedPosition;
+                _toolHelper.LastRotation = _relocateData.SavedRotation;
+                _relocateData.ToggleGameObject(false);
             }
             else
             {
@@ -138,70 +222,69 @@ namespace System.Building_System.Controller
                 return;
             }
             
-            ToolStartHandler(item);
+            StartBuilding(item);
         }
 
-        private void StartWallDoorRelocate(WallDoor door)
+        private void StartWallDoorRelocate(Event_RelocateWallDoor relocateWallEvent)
         {
-            return;
-            
-            StopTool();
+            ClearBuildingCache();
 
-            _toolHelper.Mode = PlacementMode.Relocating;
+            _toolHelper.PurchaseMode = PurchaseTypes.Free;
             
-            currentTool = new IWallDoorPlacerTool();
-            currentTool.OnStart(_toolHelper);
+            _currentTool = new IWallDoorPlacerTool();
+            _currentTool.OnStart(_toolHelper);
             
-            KEvent_Cursor.ChangeCursor(CursorSystem.eCursorTypes.Building);
-            KEvent_Building.TriggerBuildingToggle(true);
-        }
-
-        private void StartInventoryItemPlacement(StoreItemSO storeItemSo, int amount)
-        {
-            
+            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
         
-        private void ToolStartHandler(StoreItemSO storeItemSo)
+        private void StartInventoryItemPlacement(StoreItemSO arg1, int arg2)
+        {
+            _toolHelper.PurchaseMode = PurchaseTypes.Free;
+            throw new NotImplementedException();
+        }
+
+        private void StartBuilding(StoreItemSO storeItemSo)
         {
             _toolHelper.SelectedStoreItem = storeItemSo;
 
-            currentTool = SelectBuildingMethod(storeItemSo);
-            if (currentTool != null)
-                currentTool.OnStart(_toolHelper);
+            _currentTool = SelectBuildingMethod(storeItemSo);
+            if (_currentTool != null)
+                _currentTool.OnStart(_toolHelper);
         
-            KEvent_Cursor.ChangeCursor(CursorSystem.eCursorTypes.Building);
-            KEvent_Building.TriggerBuildingToggle(true);
+            GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
+            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
+        }
+        
+        private void ClearBuildingCache()
+        {
+            if (_currentTool != null) _currentTool.OnStop(_toolHelper);
+
+            _currentTool = null;
+            _relocateData = new RelocateData();
+            _toolHelper.PurchaseMode = PurchaseTypes.None;
+            _toolHelper.KeepInStartPosition = false;
         }
 
-        private void RemovePlacement(int InstanceID)
+        private void StopBuilding()
         {
-            Transform sceneObject = _model.GetPlacedSceneObjectByID(InstanceID);
-            _model.RemovePlacementItem(InstanceID);
-        
+            ClearBuildingCache();
+            
+            GameEvent.Trigger(new Event_PreviousCursor());
+            GameEvent.Trigger(new Event_ToggleBuildingMode(false));
+        }
+
+        private void RemovePlacement(Event_RemovePlacement removeEvent)
+        {
+            Transform sceneObject = _model.GetPlacedSceneObjectByID(removeEvent.InstanceID);
+            _model.RemovePlacementItem(removeEvent.InstanceID);
+            
+            sceneObject.gameObject.SetActive(false);
             if (sceneObject.TryGetComponent(out IPropUnit unit))
-                KEvent_Building.TriggerPropRemoved(unit);
+                GameEvent.Trigger(new Event_PropRemoved(unit));
         
             UnityEngine.Object.Destroy(sceneObject.gameObject);
         }
-
-        private void StopTool()
-        {
-            if (currentTool != null) currentTool.OnStop(_toolHelper);
-
-            currentTool = null;
-
-            _toolHelper.SelectedPropItem = null;
-            _toolHelper.Mode = PlacementMode.None;
         
-            KEvent_Cursor.ChangeToPrevious();
-            KEvent_Building.TriggerBuildingToggle(false);
-        }
-
-        private void CancelTool()
-        {
-            StopTool();
-        }
-
         private ITool SelectBuildingMethod(StoreItemSO storeItemSo)
         {
             if (storeItemSo is PlacementItemSO placement)
@@ -240,33 +323,28 @@ namespace System.Building_System.Controller
         public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation)
         {
             _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation);
-            KEvent_Building.TriggerPlaced();
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
-                KEvent_Building.TriggerPropPlaced(unit);
+                GameEvent.Trigger(new Event_PropPlaced(unit));
             }
         }
 
-        private void RelocateHandler(bool isPlaced)
+        private void RelocateHandler(bool isVerified)
         {
-            if (isPlaced)
-            {
-                if (_toolHelper.SelectedPropItem != null)
-                {
-                    _toolHelper.SelectedPropItem.SetPositionAndRotation(_toolHelper.LastPosition, _toolHelper.LastRotation);
-                    _toolHelper.SelectedPropItem.gameObject.SetActive(true);
-                    _toolHelper.SelectedPropItem.OnRelocated();
+            if (!_relocateData.IsRelocating) return;
+            
 
-                    _toolHelper.SelectedPropItem = null;
-                    
-                    KEvent_Building.TriggerPlaced();
-                }
+            if (isVerified)
+            {
+                _relocateData.SetPosition(_toolHelper.LastPosition, _toolHelper.LastRotation);
+                _relocateData.ToggleGameObject(true);
+                GameEvent.Trigger(new Event_PropRelocated(_relocateData.PropUnit));
             }
             else
             {
-                _toolHelper.SelectedPropItem.gameObject.SetActive(true);
-                _toolHelper.SelectedPropItem = null;
+                _relocateData.ResetPosition();
+                _relocateData.ToggleGameObject(true);
             }
         }
     }

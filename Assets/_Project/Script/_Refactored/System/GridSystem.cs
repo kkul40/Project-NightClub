@@ -1,4 +1,4 @@
-﻿using GameEvents;
+﻿using System.Building_System.GameEvents;
 using UnityEngine;
 
 namespace System
@@ -15,19 +15,11 @@ namespace System
         public void Initialize()
         {
             ToggleGrid(false);
+            
+            GameEvent.Subscribe<Event_MapSizeChanged>(handle => AlignGridWithMapSize(handle.Size));
+            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleGrid(handle.Toggle));
         }
 
-        private void OnEnable()
-        {
-            KEvent_Map.OnMapSizeChanged += AlignGridWithMapSize;
-            KEvent_Building.OnBuildingToggled += ToggleGrid;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Map.OnMapSizeChanged -= AlignGridWithMapSize;
-            KEvent_Building.OnBuildingToggled -= ToggleGrid;
-        }
 
         private void ToggleGrid(bool toggle)
         {

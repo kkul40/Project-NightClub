@@ -1,11 +1,11 @@
 using System.Building_System;
+using System.Building_System.GameEvents;
 using System.Collections;
 using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using ExtensionMethods;
-using GameEvents;
 using PropBehaviours;
 using UnityEngine;
 
@@ -33,16 +33,8 @@ namespace System
         {
             _mapData = mapData;
             SetUpMap();
-        }
-
-        private void OnEnable()
-        {
-            KEvent_Map.OnExtendMapSize += ExpendXY;
-        }
-
-        private void OnDisable()
-        {
-            KEvent_Map.OnExtendMapSize -= ExpendXY;
+            
+            GameEvent.Subscribe<Event_ExpendMapSize>(handle => ExpendXY(handle.X, handle.Y));
         }
 
         public void LoadData(GameData gameData)

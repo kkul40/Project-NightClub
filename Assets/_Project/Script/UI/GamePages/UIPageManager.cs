@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Building_System.GameEvents;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
 using DiscoSystem;
 using Framework.Context;
 using Framework.Mvcs.View;
-using GameEvents;
 using PropBehaviours;
 using UI.PopUp;
 using UnityEngine;
@@ -41,7 +41,7 @@ namespace UI.GamePages
 
             CloseAllPages();
             
-            KEvent_Cursor.OnResetSelection += () => CloseAllPages(PageType.MiniPage);
+            GameEvent.Trigger(new Event_ResetSelection());
         }
 
         private void Update()
