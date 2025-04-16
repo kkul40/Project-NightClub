@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using Disco_Building;
@@ -37,8 +38,10 @@ namespace PropBehaviours.LightBehaviours
         {
             for (int i = 0; i < _animatedParts.Count; i++)
             {
+                Vector3 localForward = transform.InverseTransformDirection(transform.forward);
+                
                 _animatedParts[i].localScale = Vector3.one * scaleFactor;
-                _animatedParts[i].localPosition = startPositions[i] + (_animatedParts[i].forward * moveFactor);
+                _animatedParts[i].localPosition = startPositions[i] + localForward * moveFactor;
             
                 if (_tweenMoves[i] != null)
                 {
