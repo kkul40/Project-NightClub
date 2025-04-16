@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Data;
+using Disco_Building;
 using ExtensionMethods;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -20,6 +21,14 @@ namespace PropBehaviours.LightBehaviours
 
         private Coroutine _routine;
 
+        private Direction direction;
+
+        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData, ePlacementLayer placementLayer)
+        {
+            base.Initialize(ID, cellPosition, rotationData, placementLayer);
+            direction = transform.rotation.GetDirectionFromQuaternion();
+        }
+
         private void Awake()
         {
             _lineRenderer = GetComponentInChildren<LineRenderer>();
@@ -27,6 +36,7 @@ namespace PropBehaviours.LightBehaviours
 
             delay = Random.Range(5, 20);
         }
+        
 
         private void Update()
         {
@@ -40,13 +50,22 @@ namespace PropBehaviours.LightBehaviours
             }
         }
 
+        public override void OnRelocated()
+        {
+            if (_routine != null)
+            {
+                StopCoroutine(_routine);
+                _lineRenderer.enabled = false;
+            }
+        }
+
         private IEnumerator ShootLaserCo()
         {
             Vector3[] positions = GetPositions();
             _lineRenderer.positionCount = positions.Length;
             _lineRenderer.enabled = true;
 
-            if (RotationData.direction == Direction.Up || RotationData.direction == Direction.Right)
+            if (direction == Direction.Up || direction == Direction.Right)
             {
                 Debug.LogError("There is Rotoation Bugg Here");
                 yield break;
@@ -90,7 +109,7 @@ namespace PropBehaviours.LightBehaviours
             
             bool isReached = false;
             
-            switch (RotationData.direction)
+            switch (direction)
             {
                 case Direction.Down:
                     pos = positions[i];
@@ -117,7 +136,7 @@ namespace PropBehaviours.LightBehaviours
         private bool MoveBackward(Vector3[] positions, int i)
         {
             bool isReached = false;
-            switch (RotationData.direction)
+            switch (direction)
             {
                 case Direction.Down:
                     positions[i] -= Vector3.forward * laserSpeed * Time.deltaTime;
@@ -137,14 +156,13 @@ namespace PropBehaviours.LightBehaviours
             return false;
         }
         
-        
         private Vector3[] GetPositions()
         {
             Vector3[] positions = new Vector3[1];
 
             Vector2Int mapSize = DiscoData.Instance.MapData.CurrentMapSize;
 
-            switch (RotationData.direction)
+            switch (direction)
             {
                 case Direction.Down:
                     positions = new Vector3[mapSize.x * 2];
@@ -165,7 +183,7 @@ namespace PropBehaviours.LightBehaviours
                 else
                 {
                     Vector3 directPos = Vector3.zero;
-                    switch (RotationData.direction)
+                    switch (direction)
                     {
                         case Direction.Down:
                             directPos = DiscoData.Instance.MapData.GetFloorGridData(index++, 1).CellPosition.CellCenterPosition(eGridType.PlacementGrid);

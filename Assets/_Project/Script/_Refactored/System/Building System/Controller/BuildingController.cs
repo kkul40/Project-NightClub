@@ -256,7 +256,7 @@ namespace System.Building_System.Controller
                 {
                     _toolHelper.SelectedPropItem.SetPositionAndRotation(_toolHelper.LastPosition, _toolHelper.LastRotation);
                     _toolHelper.SelectedPropItem.gameObject.SetActive(true);
-                    // _toolHelper.SelectedPropItem.OnRelocate();
+                    _toolHelper.SelectedPropItem.OnRelocated();
 
                     _toolHelper.SelectedPropItem = null;
                     

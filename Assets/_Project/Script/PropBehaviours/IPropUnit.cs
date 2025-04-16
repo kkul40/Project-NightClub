@@ -66,5 +66,9 @@ namespace PropBehaviours
 
             WorldPos = position;
         }
+
+        public virtual void OnRelocated()
+        {
+        }
     }
 }

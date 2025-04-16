@@ -81,7 +81,7 @@ namespace ExtensionMethods
             return quaternion;
         }
 
-        public static Direction GetDirectionFromQuaternion(Quaternion q)
+        public static Direction GetDirectionFromQuaternion(this Quaternion q)
         {
             var forwardVector = q * Vector3.forward;
             Vector3[] directionVectors = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
