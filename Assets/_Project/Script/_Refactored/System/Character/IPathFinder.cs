@@ -4,9 +4,16 @@ using UnityEngine;
 
 namespace System.Character
 {
+    public enum PathUserType
+    {
+        Player,
+        Employee,
+        Customer,
+    }
     public interface IPathFinder
     {
         Transform mTransform { get; }
+        PathUserType PathUserType { get; }
         bool HasReachedDestination { get; }
         Vector3 TargetPosition { get; }
         Vector3 CurrentPoistion => mTransform.position;

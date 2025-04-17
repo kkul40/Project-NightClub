@@ -10,6 +10,7 @@ namespace Data
         public Vector3 WorldPos = -Vector3.one;
         public PathFinderNode Parent;
         public bool IsWalkable = false;
+        public bool OnlyEmployee = false; // Only Employee Can Walk
         public bool IsWall = false;
         public bool IsPlacable = true;
 
@@ -53,6 +54,7 @@ namespace Data
             output.WorldPos = WorldPos;
             output.Parent = Parent;
             output.IsWalkable = IsWalkable;
+            output.OnlyEmployee = OnlyEmployee;
             output.GridX = GridX;
             output.GridY = GridY;
             output.HasOccupied = HasOccupied;

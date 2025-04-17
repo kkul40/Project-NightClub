@@ -17,15 +17,17 @@ namespace System.Character.NPC
         private IEnumerator _routine = null;
 
         public Transform mTransform => _assignedNPC.transform;
+        public PathUserType PathUserType { get; }
 
         public bool HasReachedDestination { get; private set; } = false;
         public Vector3 TargetPosition { get; private set; }
 
         private float animationTweak = 0.5f;
 
-        public NpcPathFinder(Transform assign)
+        public NpcPathFinder(Transform assign, PathUserType userType)
         {
             _assignedNPC = assign;
+            PathUserType = userType;
             TargetPosition = -Vector3.one;
         }
 
@@ -37,6 +39,22 @@ namespace System.Character.NPC
             {
                 Debug.Log("No Pathf Found : " + targetDestination);
                 return false;
+            }
+
+            return true;
+        }
+
+        public bool IsUserAllowed(PathFinderNode node)
+        {
+            switch (PathUserType)
+            {
+                case PathUserType.Player:
+                    return true;
+                case PathUserType.Employee:
+                    return true;
+                case PathUserType.Customer:
+                    if (node.OnlyEmployee) return false;
+                    break;
             }
 
             return true;
@@ -161,6 +179,7 @@ namespace System.Character.NPC
 
                 foreach (var neighbor in GetNeighbors(currentNode))
                 {
+                    if(!IsUserAllowed(neighbor)) continue;
                     if (!neighbor.GetIsWalkable || closedSet.Contains(neighbor)) continue;
 
                     var newMovementCostToNeighbor = currentNode.GCost + GetDistance(currentNode, neighbor);

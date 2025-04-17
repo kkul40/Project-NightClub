@@ -18771,10 +18771,10 @@ MonoBehaviour:
   Error: {fileID: 8300000, guid: c1f47c4aad5f14a138bf7c0467396b25, type: 3}
   UIClick: {fileID: 8300000, guid: f4781d302b303408d8b02da3dd8aed5a, type: 3}
   UIBack: {fileID: 8300000, guid: b30d2757cc43a4de0b8ccab75fd20011, type: 3}
-  NPCSelection: {fileID: 0}
-  PropSelection: {fileID: 0}
-  BuildingSuccess: {fileID: 0}
-  BuildingError: {fileID: 0}
+  NPCSelection: {fileID: 8300000, guid: 1a7bb6d7ff6344ab79e7d1bf3ffadd67, type: 3}
+  PropSelection: {fileID: 8300000, guid: 1a7bb6d7ff6344ab79e7d1bf3ffadd67, type: 3}
+  BuildingSuccess: {fileID: 8300000, guid: 9149cd8e2b35d4b29b75009399b09345, type: 3}
+  BuildingError: {fileID: 8300000, guid: c1f47c4aad5f14a138bf7c0467396b25, type: 3}
   MoneyAdd: {fileID: 8300000, guid: 5b2461c04f4cdfc40b890b726af1f6ca, type: 3}
   MoneyRemove: {fileID: 8300000, guid: 477bfab621dbb1b42a13ca04997f5163, type: 3}
   CameraFocus: {fileID: 8300000, guid: 2920fba53fe76407a83bbe9dc7eeeb53, type: 3}

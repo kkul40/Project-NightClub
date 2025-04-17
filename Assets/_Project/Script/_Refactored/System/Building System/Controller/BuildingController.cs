@@ -171,6 +171,7 @@ namespace System.Building_System.Controller
             }
         }
         
+        
         private bool TryPurchase(ToolHelper toolHelper)
         {
             switch (toolHelper.PurchaseMode)
@@ -262,6 +263,7 @@ namespace System.Building_System.Controller
             _currentTool = null;
             _relocateData = new RelocateData();
             _toolHelper.PurchaseMode = PurchaseTypes.None;
+            _toolHelper.LastRotation = quaternion.identity;
             _toolHelper.KeepInStartPosition = false;
         }
 

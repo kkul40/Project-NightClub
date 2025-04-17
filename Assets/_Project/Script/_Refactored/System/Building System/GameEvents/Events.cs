@@ -286,6 +286,7 @@ namespace System.Building_System.GameEvents
 
     public class Event_ResetCursor
     {
+        
     }
 
     public class Event_PreviousCursor

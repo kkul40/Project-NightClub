@@ -95,11 +95,20 @@ namespace Data
             {
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                 {
+                    if (hit.collider.isTrigger)
+                    {
+                        node.OnlyEmployee = true;
+                        return true;
+                    }
+                    
                     if (!CheckWalkable(unit)) return false;
                 }
             }
+            
+            node.OnlyEmployee = false;
             return true;
         }
+        
 
         private bool CheckWalkable(IPropUnit unit)
         {

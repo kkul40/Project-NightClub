@@ -36,6 +36,8 @@ namespace Root
                         Gizmos.color = Color.blue;
                     else if(node.IsWall)
                         Gizmos.color = Color.black;
+                    else if (node.OnlyEmployee)
+                        Gizmos.color = Color.cyan;
                     else if (node.IsWalkable)
                         Gizmos.color = Color.green;
                     else

@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 7393909537751209663}
   - component: {fileID: 9052948936149758414}
   - component: {fileID: 768789617921811839}
+  - component: {fileID: 7787571752665000670}
   m_Layer: 0
   m_Name: NewBar
   m_TagString: Untagged
@@ -114,10 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0476e112e1c14b7594bb4956429fdd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsInitialized: 0
   bartenderWaitPosition: {fileID: 8345200245977923918}
   customerWaitPosition: {fileID: 864066266957146545}
   counterPlacePosition: {fileID: 3303600892597171945}
-  drinkData: {fileID: 11400000, guid: 1c05fad238d46ab4686bd3529c59209c, type: 2}
 --- !u!65 &9052948936149758414
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -158,8 +159,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.75, z: 0.85}
-  m_Center: {x: 0, y: 0.35, z: 2}
+  m_Size: {x: 1, y: 0.75, z: 0.8499999}
+  m_Center: {x: 0, y: 0.35000002, z: 2}
+--- !u!65 &7787571752665000670
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785207620490192449}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.1, z: 1.05}
+  m_Center: {x: 0, y: 0.05, z: 1.05}
 --- !u!1 &3973992692492638338
 GameObject:
   m_ObjectHideFlags: 0

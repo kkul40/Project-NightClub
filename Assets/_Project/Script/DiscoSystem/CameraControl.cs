@@ -35,7 +35,8 @@ namespace DiscoSystem
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
 
-            if (moveDelta != Vector2.zero) _target = null;
+            if (moveDelta != Vector2.zero)
+                ResetTarget();
 
             if (_target != null)
             {
@@ -74,7 +75,11 @@ namespace DiscoSystem
 
         public void ResetTarget()
         {
-            _target = null; 
+            if (_target != null)
+            {
+                _target = null; 
+                GameEvent.Trigger(new Event_ResetSelection());
+            }
         }
     }
 }

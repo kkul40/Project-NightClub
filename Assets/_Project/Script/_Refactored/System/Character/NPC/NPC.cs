@@ -22,7 +22,7 @@ namespace System.Character.NPC
 
         public void Initialize(NpcAnimationSo npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform, DiscoData discoData)
         {
-            PathFinder = new NpcPathFinder(transform);
+            PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
             _activityHandler = new ActivityHandler(this, discoData);
             

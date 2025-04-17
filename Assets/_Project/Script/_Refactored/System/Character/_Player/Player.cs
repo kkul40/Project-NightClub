@@ -14,7 +14,7 @@ namespace System.Character._Player
 
         public void Initialize(GameData gameData)
         {
-            _pathFinder = new NpcPathFinder(transform);
+            _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
         }
   

@@ -109,8 +109,12 @@ namespace DiscoSystem
                     return;
                 }
             }
+
+            if (clip == null)
+                Debug.LogError("Missing SFX File");
+            else
+                _audioSource.PlayOneShot(clip);
             
-            _audioSource.PlayOneShot(clip);
             timer = Time.time;
         }
         
