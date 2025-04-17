@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 9052948936149758414}
   - component: {fileID: 768789617921811839}
   - component: {fileID: 7787571752665000670}
+  - component: {fileID: 6980030419933447786}
   m_Layer: 0
   m_Name: NewBar
   m_TagString: Untagged
@@ -182,6 +183,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1.05}
   m_Center: {x: 0, y: 0.05, z: 1.05}
+--- !u!114 &6980030419933447786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3785207620490192449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32bd947b1804747a1280d8a3533cd59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onlyEmployeeCollider: {fileID: 7787571752665000670}
 --- !u!1 &3973992692492638338
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2649011612526667439}
   - component: {fileID: 4695811683249298705}
   - component: {fileID: 2619094741032062044}
+  - component: {fileID: 2542480736748499173}
   m_Layer: 0
   m_Name: DJ_01
   m_TagString: Untagged
@@ -112,6 +113,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInitialized: 0
+--- !u!114 &2542480736748499173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730129324877918878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32bd947b1804747a1280d8a3533cd59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onlyEmployeeCollider: {fileID: 4695811683249298705}
 --- !u!1001 &2120555694685340965
 PrefabInstance:
   m_ObjectHideFlags: 0

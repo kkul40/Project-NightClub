@@ -2,6 +2,7 @@
 using System.Building_System.GameEvents;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DefaultNamespace.Prop_Behaviours;
 using ExtensionMethods;
 using PropBehaviours;
 using UnityEngine;
@@ -93,14 +94,14 @@ namespace Data
 
             foreach (var hit in colliders)
             {
+                if (hit.transform.TryGetComponent(out OnlyEmployeeColider onlyEmp))
+                {
+                    if(hit.collider == onlyEmp.onlyEmployeeCollider)
+                        node.OnlyEmployee = true;
+                }
+                
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                 {
-                    if (hit.collider.isTrigger)
-                    {
-                        node.OnlyEmployee = true;
-                        return true;
-                    }
-                    
                     if (!CheckWalkable(unit)) return false;
                 }
             }

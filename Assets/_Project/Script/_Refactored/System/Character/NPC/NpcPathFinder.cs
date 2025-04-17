@@ -136,22 +136,12 @@ namespace System.Character.NPC
             if (!targetNode.GetIsWalkable)
             {
                 targetNode = FindNearestWalkableNode(targetNode);
-                if (startNode == null)
+                if (targetNode == null)
                 {
                     Debug.Log("No walkable target node found, return null");
                     return null; // No walkable target node found, return null
                 }
             }
-            
-            // if (targetNode == null || !IsNodeWithinGrid(targetNode))
-            // {
-            //     targetNode = FindNearestValidNodeWithinGrid(targetPos);
-            //     if (targetNode == null)
-            //     {
-            //         Debug.Log("No valid target node found, return null");
-            //         return null; // No valid target node found, return null
-            //     }
-            // }
             
             var openSet = new List<PathFinderNode>();
             var closedSet = new HashSet<PathFinderNode>();
