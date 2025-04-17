@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Data;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using UnityEngine;
@@ -8,7 +9,8 @@ namespace System.Building_System.Controller.Tools
     public class IWallMaterialPlacementTool : ITool
     {
         private MaterialItemSo _materialItemSo;
-    
+
+        private WallData _closestWallData;
         private IChangableMaterial _mouseOnChangableMaterial;
         private IChangableMaterial _currentChangableMaterial;
         private MaterialItemSo _storedMaterial;
@@ -27,6 +29,7 @@ namespace System.Building_System.Controller.Tools
 
         public bool OnValidate(ToolHelper TH)
         {
+            if (_currentChangableMaterial == null) return false;
             if (_materialItemSo.Material == _storedMaterial.Material) return false;
             return true;
         }
@@ -53,6 +56,7 @@ namespace System.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
+            _closestWallData.AssignNewID(_materialItemSo);
             _currentChangableMaterial = null;
         }
 
@@ -85,6 +89,7 @@ namespace System.Building_System.Controller.Tools
                 var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.assignedWall.transform.position);
                 if (dis < lastDis)
                 {
+                    _closestWallData = wall;
                     closestChangableMaterial = wall.assignedWall;
                     lastDis = dis;
                 }
