@@ -80,6 +80,7 @@ namespace Data
                 for (int y = 0; y < size.y; y++)
                 {
                     PathFinderNodes[x, y].IsWalkable = IsWalkable(PathFinderNodes[x, y]);
+                    PathFinderNodes[x, y].OnlyEmployee = IsOnlyEmployee(PathFinderNodes[x, y]);
                 }
             }
 
@@ -94,20 +95,31 @@ namespace Data
 
             foreach (var hit in colliders)
             {
-                if (hit.transform.TryGetComponent(out OnlyEmployeeColider onlyEmp))
-                {
-                    if(hit.collider == onlyEmp.onlyEmployeeCollider)
-                        node.OnlyEmployee = true;
-                }
-                
+                if (hit.collider.isTrigger) continue;
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
-                {
                     if (!CheckWalkable(unit)) return false;
-                }
             }
             
-            node.OnlyEmployee = false;
             return true;
+        }
+        
+        private bool IsOnlyEmployee(PathFinderNode node)
+        {
+            Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
+            Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+            var colliders = Physics.RaycastAll(ray.origin, Vector3.up, 2);
+
+            foreach (var hit in colliders)
+            {
+                if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
+                    if (empColl.onlyEmployeeCollider == hit.collider)
+                    {
+                        Debug.Log("ads;klfjasd;flkja;sdlkfja;sdlkfj;a");
+                        return true;
+                    }
+            }
+            
+            return false;
         }
         
 

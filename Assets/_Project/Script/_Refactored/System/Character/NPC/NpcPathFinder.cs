@@ -54,7 +54,7 @@ namespace System.Character.NPC
                     return true;
                 case PathUserType.Customer:
                     if (node.OnlyEmployee) return false;
-                    break;
+                    return true;
             }
 
             return true;
@@ -122,27 +122,27 @@ namespace System.Character.NPC
 
             var startNode = NodeFromWorldPoint(startPos);
             var targetNode = NodeFromWorldPoint(targetPos);
-
-            if (!startNode.GetIsWalkable)
-            {
-                startNode = FindNearestWalkableNode(startNode);
-                if (startNode == null)
-                {
-                    Debug.Log("No walkable start node found, return null");
-                    return null; // No walkable start node found, return null
-                }
-            }
-
-            if (!targetNode.GetIsWalkable)
-            {
-                targetNode = FindNearestWalkableNode(targetNode);
-                if (targetNode == null)
-                {
-                    Debug.Log("No walkable target node found, return null");
-                    return null; // No walkable target node found, return null
-                }
-            }
-            
+            //
+            // if (!startNode.GetIsWalkable)
+            // {
+            //     startNode = FindNearestWalkableNode(startNode);
+            //     if (startNode == null)
+            //     {
+            //         Debug.Log("No walkable start node found, return null");
+            //         return null; // No walkable start node found, return null
+            //     }
+            // }
+            //
+            // if (!targetNode.GetIsWalkable)
+            // {
+            //     targetNode = FindNearestWalkableNode(targetNode);
+            //     if (targetNode == null)
+            //     {
+            //         Debug.Log("No walkable target node found, return null");
+            //         return null; // No walkable target node found, return null
+            //     }
+            // }
+            //
             var openSet = new List<PathFinderNode>();
             var closedSet = new HashSet<PathFinderNode>();
             openSet.Add(startNode);
@@ -169,8 +169,8 @@ namespace System.Character.NPC
 
                 foreach (var neighbor in GetNeighbors(currentNode))
                 {
-                    if(!IsUserAllowed(neighbor)) continue;
                     if (!neighbor.GetIsWalkable || closedSet.Contains(neighbor)) continue;
+                    if(!IsUserAllowed(neighbor)) continue;
 
                     var newMovementCostToNeighbor = currentNode.GCost + GetDistance(currentNode, neighbor);
                     if (newMovementCostToNeighbor < neighbor.GCost || !openSet.Contains(neighbor))

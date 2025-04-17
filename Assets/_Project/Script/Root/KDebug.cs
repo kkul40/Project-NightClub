@@ -29,19 +29,21 @@ namespace Root
             //     }
             // }
 
-            if (showPathFinder)
+            if (showPathFinder && DiscoData.Instance != null)
                 foreach (var node in DiscoData.Instance.MapData.Path.GetPaths())
                 {
-                    if (node.HasOccupied)
-                        Gizmos.color = Color.blue;
-                    else if(node.IsWall)
-                        Gizmos.color = Color.black;
-                    else if (node.OnlyEmployee)
-                        Gizmos.color = Color.cyan;
-                    else if (node.IsWalkable)
+                    if (node.IsWalkable)
                         Gizmos.color = Color.green;
                     else
                         Gizmos.color = Color.red;
+                    
+                    if (node.OnlyEmployee)
+                        Gizmos.color = Color.cyan;
+                    
+                    if (node.HasOccupied)
+                        Gizmos.color = Color.blue;
+                    if(node.IsWall)
+                        Gizmos.color = Color.black;
 
                     Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
                 }
