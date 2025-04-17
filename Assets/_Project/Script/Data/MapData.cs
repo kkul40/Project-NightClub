@@ -20,7 +20,7 @@ namespace Data
     public PathData Path;
 
     //TODO Dinamik olarak 2 dimension arraylari ayarla
-    public List<WallData> WallDatas { get; set; }
+    public List<WallData> WallDatas;
     private FloorData[,] FloorGridDatas;
 
     // Referanced

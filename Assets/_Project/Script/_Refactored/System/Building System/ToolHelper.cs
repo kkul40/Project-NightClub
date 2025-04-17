@@ -1,6 +1,7 @@
 using System.Building_System.Controller;
 using Data;
 using Disco_ScriptableObject;
+using PropBehaviours;
 using UnityEngine;
 
 namespace System.Building_System
@@ -144,7 +145,7 @@ namespace System.Building_System
 
         public WallData GetClosestWall()
         {
-            Vector3 mousePos = InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
+            Vector3 mousePos = InputSystem.MousePosition;
             float maxDistance = float.MaxValue;
 
             WallData output = null;

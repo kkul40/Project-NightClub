@@ -127,7 +127,7 @@ namespace System
                             RotationData.Down.rotation, true);
 
                         LoadAndAssignWallMaterial(new Vector3Int(_mapData.WallDoorIndex, 0, 0), newWallDoorObject);
-
+                        
                         newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
                     }
                     else
