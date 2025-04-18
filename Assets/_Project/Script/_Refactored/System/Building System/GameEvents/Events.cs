@@ -5,6 +5,7 @@ using Disco_ScriptableObject;
 using DiscoSystem;
 using PropBehaviours;
 using ScriptableObjects;
+using UI.Emotes;
 using UnityEngine;
 
 namespace System.Building_System.GameEvents
@@ -34,10 +35,6 @@ namespace System.Building_System.GameEvents
     
     #region Game
 
-    public class Test
-    {
-        
-    }
     public class Event_StartGameSave
     {
         public GameData GameData;
@@ -51,6 +48,18 @@ namespace System.Building_System.GameEvents
     public class Event_GameSaved
     {
         
+    }
+
+    public class Event_ShowEmote
+    {
+        public EmoteTypes EmoteTypes;
+        public Transform Target;
+
+        public Event_ShowEmote(EmoteTypes emoteTypes, Transform target)
+        {
+            EmoteTypes = emoteTypes;
+            Target = target;
+        }
     }
 
     #endregion

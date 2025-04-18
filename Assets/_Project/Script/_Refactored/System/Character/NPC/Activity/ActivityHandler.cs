@@ -1,4 +1,5 @@
-﻿using System.Character.NPC.Activity.Activities;
+﻿using System.Building_System.GameEvents;
+using System.Character.NPC.Activity.Activities;
 using System.Collections.Generic;
 using Data;
 using ExtensionMethods;
@@ -51,7 +52,7 @@ namespace System.Character.NPC.Activity
             }
             else if (_currentActivity.OnActivityErrorHandler(_activityNeedsData))
             {
-                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Angry, _activityNeedsData.Npc);
+                GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Angry, _activityNeedsData.Npc.transform));
                 
                 _currentActivity.OnActivityEnd(_activityNeedsData);
                 StartNewActivity(new ExitDiscoActivity());
@@ -106,7 +107,7 @@ namespace System.Character.NPC.Activity
                             if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
                                 return;
                         
-                            UIEmoteManager.Instance.ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc);
+                            GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc.transform));
                             StartNewActivity(GetRandomActivity());
                             return;
                         }
@@ -116,7 +117,7 @@ namespace System.Character.NPC.Activity
                 // Is Placement On Top Of You
                 if (key == _activityNeedsData.Npc.transform.position.WorldPosToCellPos(eGridType.PlacementGrid))
                 {
-                    UIEmoteManager.Instance.ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc);
+                    GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc.transform));
                     StartNewActivity(GetRandomActivity());
                     return;
                 }

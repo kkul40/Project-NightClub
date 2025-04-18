@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System.Building_System.GameEvents;
+using Data;
 using ExtensionMethods;
 using PropBehaviours;
 using UI.Emotes;
@@ -81,7 +82,7 @@ namespace System.Character.NPC.Activity.Activities
                     if (timer > danceDuration)
                     {
                         timer = 0;
-                        UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
+                        GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Happy, and.Npc.transform));
                         IsEnded = true;
                     }
 

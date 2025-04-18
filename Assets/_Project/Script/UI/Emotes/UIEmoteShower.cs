@@ -1,8 +1,5 @@
-﻿using System;
-using System.Character.NPC;
+﻿using System.Building_System.GameEvents;
 using System.ObjectPooling;
-using Disco_Building;
-using DiscoSystem;
 using UnityEngine;
 
 namespace UI.Emotes
@@ -19,7 +16,7 @@ namespace UI.Emotes
         Exclamation,
     }
     
-    public class UIEmoteManager : Singleton<UIEmoteManager>
+    public class UIEmoteShower : MonoBehaviour
     {
         [SerializeField] private GameObject _emotePrefab;
 
@@ -38,13 +35,14 @@ namespace UI.Emotes
         private void Start()
         {
             _pool = new ObjectPooler(_emotePrefab);
+            GameEvent.Subscribe<Event_ShowEmote>(ShowEmote);
         }
 
-        public void ShowEmote(EmoteTypes emoteType, NPC npc)
+        private void ShowEmote(Event_ShowEmote emoteEvent)
         {
             Sprite selected = null;
             
-            switch (emoteType)
+            switch (emoteEvent.EmoteTypes)
             {
                 case EmoteTypes.Happy:
                     selected = happy;
@@ -71,7 +69,7 @@ namespace UI.Emotes
                     selected = exclamation;
                     break;
                 default:
-                    Debug.LogError(emoteType + " : Sprite Is Missing");
+                    Debug.LogError(emoteEvent.EmoteTypes + " : Sprite Is Missing");
                     return;
             }
 
@@ -79,7 +77,7 @@ namespace UI.Emotes
             
             if (emote.TryGetComponent(out UIEmote uiEmote))
             {
-                uiEmote.Init(selected, npc.transform);
+                uiEmote.Init(selected, emoteEvent.Target);
             }
         }
     }

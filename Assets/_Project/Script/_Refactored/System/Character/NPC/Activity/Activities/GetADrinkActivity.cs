@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Building_System.GameEvents;
+using System.Collections;
 using DG.Tweening;
 using PropBehaviours;
 using UI.Emotes;
@@ -55,7 +56,7 @@ namespace System.Character.NPC.Activity.Activities
         {
             if (!_bar.HasDrinks)
             {
-                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Sad, and.Npc);
+                GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Sad, and.Npc.transform));
                 DOTween.instance.StopCoroutine(_routine);
                 _routine = null;
                 IsEnded = true;
@@ -88,7 +89,7 @@ namespace System.Character.NPC.Activity.Activities
             if (_bar.HasDrinks)
             {
                 _bar.GetDrink();
-                UIEmoteManager.Instance.ShowEmote(EmoteTypes.Happy, and.Npc);
+                GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Happy, and.Npc.transform));
                 and.Npc.AnimationController.PlayActionAnimation(eActionAnimationType.NPC_HoldDrink);
                 yield return new WaitForSeconds(0.5f);
             }

@@ -198,7 +198,7 @@ namespace Data
     {
         public const int MaxMapSizeX = 50;
         public const int MaxMapSizeY = 50;
-        public const int PathFinderGridSize = 4;
+        public const int PathFinderGridSize = 5;
         public const int DoorHeight = 2;
         public const int FloorLayerID = 7;
         public const int WalllayerID = 8;

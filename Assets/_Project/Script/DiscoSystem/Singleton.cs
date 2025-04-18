@@ -21,6 +21,7 @@ namespace DiscoSystem
                         var obj = new GameObject();
                         obj.hideFlags = HideFlags.HideAndDontSave;
                         _instance = obj.AddComponent<T>();
+                        Debug.LogError("Instance Not Found Instead Created One : " + typeof(T).Name);
                     }
                 }
 

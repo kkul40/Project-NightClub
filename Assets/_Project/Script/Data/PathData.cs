@@ -113,10 +113,7 @@ namespace Data
             {
                 if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
                     if (empColl.onlyEmployeeCollider == hit.collider)
-                    {
-                        Debug.Log("ads;klfjasd;flkja;sdlkfja;sdlkfj;a");
                         return true;
-                    }
             }
             
             return false;
