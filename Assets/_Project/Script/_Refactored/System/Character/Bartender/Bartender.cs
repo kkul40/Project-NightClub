@@ -27,7 +27,7 @@ namespace System.Character.Bartender
 
         public void Init(Animator animator, AnimancerComponent animancer, Transform armature)
         {
-            PathFinder = new BartenderPathFinder(transform);
+            PathFinder = new NpcPathFinder(transform, PathUserType.Employee);
             mTransform = transform;
             BarMediator = BarMediator.Instance;
             AnimationController = new BartenderAnimationControl(animator, animancer, InitConfig.Instance.GetDefaultBartenderAnimation, armature);

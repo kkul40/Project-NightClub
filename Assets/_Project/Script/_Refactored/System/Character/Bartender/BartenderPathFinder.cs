@@ -7,6 +7,7 @@ namespace System.Character.Bartender
 {
     public class BartenderPathFinder : IPathFinder
     {
+        // TODO Depreciated
         public PathUserType PathUserType { get; } = PathUserType.Employee;
         public bool HasReachedDestination { get; private set; }
         public Vector3 TargetPosition { get; private set; }
