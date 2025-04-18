@@ -54,7 +54,7 @@ namespace System
             StartCoroutine(ToggleCursorSystem(true, delay));
             
             GameEvent.Subscribe<Event_SelectCursor>(SetCursor);
-            GameEvent.Subscribe<Event_PreviousCursor>( handle => SetToPreviousChangeCursorTo());
+            GameEvent.Subscribe<Event_ResetCursor>( handle => SetCursorToDefault());
             GameEvent.Subscribe<Event_ResetSelection>( handle => Reset());
             GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleCursorSystem(handle.Toggle));
         }
@@ -241,10 +241,9 @@ namespace System
             currentCursor = cursorType;
         }
 
-        public void SetToPreviousChangeCursorTo()
+        public void SetCursorToDefault()
         {
-            currentCursor = previousCursor;
-            SetCursor(currentCursor);
+            SetCursor(eCursorTypes.Default);
         }
         public void ToggleCursorSystem(bool toggle)
         {

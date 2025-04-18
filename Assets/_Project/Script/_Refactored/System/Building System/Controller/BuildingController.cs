@@ -234,11 +234,13 @@ namespace System.Building_System.Controller
             _currentTool = new IWallDoorPlacerTool();
             _currentTool.OnStart(_toolHelper);
             
+            GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
         
         private void StartInventoryItemPlacement(StoreItemSO arg1, int arg2)
         {
+            // TODO: Impelement This Later On!!!
             _toolHelper.PurchaseMode = PurchaseTypes.Free;
             throw new NotImplementedException();
         }
@@ -270,7 +272,7 @@ namespace System.Building_System.Controller
         {
             ClearBuildingCache();
             
-            GameEvent.Trigger(new Event_PreviousCursor());
+            GameEvent.Trigger(new Event_ResetCursor());
             GameEvent.Trigger(new Event_ToggleBuildingMode(false));
         }
 

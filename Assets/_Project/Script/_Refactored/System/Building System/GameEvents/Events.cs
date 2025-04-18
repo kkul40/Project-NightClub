@@ -289,10 +289,6 @@ namespace System.Building_System.GameEvents
         
     }
 
-    public class Event_PreviousCursor
-    {
-    }
-
     #endregion
 
     #region Map
