@@ -34,7 +34,6 @@ namespace System.Building_System.Controller.Tools
             _storedPosition = _storedAssignmentData.assignedWall.transform.position;
             _storedRotation = _storedAssignmentData.assignedWall.transform.rotation;
             _storedIsWallOnX = _storedRotation != RotationData.Left.rotation;
-            //
             
             var newWall = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallPrefab, _storedAssignmentData.assignedWall.transform.position, _storedAssignmentData.assignedWall.transform.rotation, false);
             newWall.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
@@ -55,19 +54,25 @@ namespace System.Building_System.Controller.Tools
             Vector3 position = GetPlacementPosition(_closestAssignmentData.assignedWall.transform.position, isWallOnX);
             
             Vector3 enterancePosition = TH.DiscoData.MapData.EnterencePosition(position.WorldPosToCellPos(eGridType.PlacementGrid));
-            Vector3Int enteranceCellPos = enterancePosition.WorldPosToCellPos(eGridType.PlacementGrid);
+            Vector3 enteranceCellPos = enterancePosition.WorldPosToCellPos(eGridType.PlacementGrid).CellCenterPosition(eGridType.PlacementGrid);
             
+            var colliders = Physics.OverlapBox(enteranceCellPos.Add(y:1),new Vector3(0.5f, 1, 0.5f) * ToolHelper.HitCollisionLeniency, Quaternion.identity);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var hitObject = colliders[i];
             
-            // TODO : Collision Check
-            // if(TH.DiscoData.placementDataHandler.ContainsKey(enteranceCellPos, ePlacementLayer.FloorProp))
-            //     return false;
-            //
-            // for (int i = 0; i < ConstantVariables.DoorHeight; i++)
-            // {
-            //     if(TH.DiscoData.placementDataHandler.ContainsKey(enteranceCellPos.Add(y:i), ePlacementLayer.WallProp))
-            //         return false;
-            // }
-            
+                var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
+                if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                    continue;
+
+                IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
+           
+                if (propUnit != null)
+                {
+                    if (propUnit.PlacementLayer == ePlacementLayer.FloorProp || propUnit.PlacementLayer == ePlacementLayer.WallProp)
+                        return false;
+                }
+            }
             return true;
         }
 

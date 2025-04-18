@@ -76,4 +76,37 @@ namespace ExtensionMethods
             return -Vector3.one;
         }
     }
+    
+    public static class DebugExtension
+    {
+        public static void DrawBox(Vector3 center, Vector3 size, Quaternion rotation, Color color, float duration = 0)
+        {
+            Vector3 halfSize = size / 2f;
+            Vector3[] points = new Vector3[8];
+            points[0] = center + rotation * new Vector3(-halfSize.x, -halfSize.y, -halfSize.z);
+            points[1] = center + rotation * new Vector3(halfSize.x, -halfSize.y, -halfSize.z);
+            points[2] = center + rotation * new Vector3(halfSize.x, -halfSize.y, halfSize.z);
+            points[3] = center + rotation * new Vector3(-halfSize.x, -halfSize.y, halfSize.z);
+            points[4] = center + rotation * new Vector3(-halfSize.x, halfSize.y, -halfSize.z);
+            points[5] = center + rotation * new Vector3(halfSize.x, halfSize.y, -halfSize.z);
+            points[6] = center + rotation * new Vector3(halfSize.x, halfSize.y, halfSize.z);
+            points[7] = center + rotation * new Vector3(-halfSize.x, halfSize.y, halfSize.z);
+
+            Debug.DrawLine(points[0], points[1], color, duration);
+            Debug.DrawLine(points[1], points[2], color, duration);
+            Debug.DrawLine(points[2], points[3], color, duration);
+            Debug.DrawLine(points[3], points[0], color, duration);
+
+            Debug.DrawLine(points[4], points[5], color, duration);
+            Debug.DrawLine(points[5], points[6], color, duration);
+            Debug.DrawLine(points[6], points[7], color, duration);
+            Debug.DrawLine(points[7], points[4], color, duration);
+
+            Debug.DrawLine(points[0], points[4], color, duration);
+            Debug.DrawLine(points[1], points[5], color, duration);
+            Debug.DrawLine(points[2], points[6], color, duration);
+            Debug.DrawLine(points[3], points[7], color, duration);
+        }
+        
+    }
 }
