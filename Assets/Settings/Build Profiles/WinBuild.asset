@@ -21,9 +21,9 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 0
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/_Project/Scene/MainMenu - Demo.unity
+    m_path: Assets/_Project/Scene/MainMenu.unity
   - m_enabled: 1
-    m_path: Assets/_Project/Scene/NightClub-Demo.unity
+    m_path: Assets/_Project/Scene/NightClub.unity
   - m_enabled: 0
     m_path: Assets/_Project/Scene/CharacterCreation-Demo.unity
   m_ScriptingDefines: []

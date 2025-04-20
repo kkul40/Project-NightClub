@@ -64,8 +64,11 @@ namespace System.Character.NPC
 
         private void OnDestroy()
         {
-            _activityHandler.ForceToEndActivity();
-            PathFinder.CancelDestination();
+            if(_activityHandler != null)
+                _activityHandler.ForceToEndActivity();
+            
+            if(PathFinder != null)
+                PathFinder.CancelDestination();
         }
 
         private void OnDrawGizmosSelected()

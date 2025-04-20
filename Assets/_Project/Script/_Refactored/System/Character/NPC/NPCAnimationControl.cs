@@ -1,5 +1,7 @@
 ﻿using System.Character.Bartender;
 using Animancer;
+using DefaultNamespace;
+using DefaultNamespace.TEST;
 using UnityEngine;
 
 namespace System.Character.NPC
@@ -49,13 +51,13 @@ namespace System.Character.NPC
             switch (eAnimationType)
             {
                 case eAnimationType.NPC_Idle:
-                    selectedAnimationClip = _npcAnimationSo.Idle[UnityEngine.Random.Range(0, _npcAnimationSo.Idle.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Idle;
                     break;
                 case eAnimationType.NPC_Walk:
-                    selectedAnimationClip = _npcAnimationSo.Walk[UnityEngine.Random.Range(0, _npcAnimationSo.Walk.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Walk;
                     break;
                 case eAnimationType.NPC_Sit:
-                    selectedAnimationClip = _npcAnimationSo.Sit[UnityEngine.Random.Range(0, _npcAnimationSo.Sit.Count)];
+                    selectedAnimationClip = _npcAnimationSo.Sit;
                     break;
                 case eAnimationType.NPC_Lean:
                     selectedAnimationClip = _npcAnimationSo.LeanOnWall[UnityEngine.Random.Range(0, _npcAnimationSo.LeanOnWall.Count)];
@@ -64,16 +66,14 @@ namespace System.Character.NPC
                     selectedAnimationClip = _npcAnimationSo.Dance[UnityEngine.Random.Range(0, _npcAnimationSo.Dance.Count)];
                     break;
                 default:
-                    selectedAnimationClip = _npcAnimationSo.Debug[UnityEngine.Random.Range(0, _npcAnimationSo.Debug.Count)];
+                    selectedAnimationClip = _npcAnimationSo.DebugAnim;
                     break;
             }
 
             if (CurrentAnimation == selectedAnimationClip) return;
 
             CurrentAnimation = selectedAnimationClip;
-            var actionLayer = animancer.Layers[0];
-            actionLayer.ApplyFootIK = true;
-            actionLayer.Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
+            animancer.Layers[0].Play(selectedAnimationClip, _npcAnimationSo.animationDuration);
             // animancer.TryPlay("S_StandToSit", 1);
 
             animatorTransform.localRotation = Quaternion.identity;
@@ -82,25 +82,16 @@ namespace System.Character.NPC
 
         public void PlayActionAnimation(eActionAnimationType eActionAnimationType)
         {
-            var actionLayer = animancer.Layers[1];
             switch (eActionAnimationType)
             {
                 case eActionAnimationType.Null:
-                    actionLayer.StartFade(0, _npcAnimationSo.animationDuration);
+                    animancer.Layers[1].Stop();
                     break;
                 case eActionAnimationType.NPC_HoldDrink:
-                    animancer.Layers[1].Mask = CreateBoneMask(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm));
-                    actionLayer.Play(_npcAnimationSo.HoldingDrink);
-                    actionLayer.StartFade(1, _npcAnimationSo.animationDuration);
+                    animancer.Layers[1].Mask = _npcAnimationSo.Drink.Mask;
+                    animancer.Layers[1].Play(_npcAnimationSo.Drink.IdleClip);
                     break;
             }
-        }
-
-        private AvatarMask CreateBoneMask(Transform bone)
-        {
-            var mask = new AvatarMask();
-            mask.AddTransformPath(bone);
-            return mask;
         }
     }
 

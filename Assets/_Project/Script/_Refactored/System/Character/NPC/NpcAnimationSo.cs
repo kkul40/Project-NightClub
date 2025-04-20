@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace System.Character.NPC
@@ -6,19 +7,28 @@ namespace System.Character.NPC
     [CreateAssetMenu(fileName = "new Npc Animation Set", menuName = "Data/Npc Animation Set")]
     public class NpcAnimationSo : ScriptableObject
     {
-        [field: SerializeField] public float animationDuration { get; private set; }
+        public float animationDuration;
 
-        [field: SerializeField] public List<AnimationClip> Idle { get; private set; }
+        [Title("Animations")] 
+        public AnimationClip Idle;
+        public AnimationClip Walk;
+        public AnimationClip Sit;
+        public List<AnimationClip> LeanOnWall;
+        public List<AnimationClip> Dance;
 
-        [field: SerializeField] public List<AnimationClip> Walk { get; private set; }
+        [Title("Action Animations")] 
+        public ActionAnimation Drink;
+        public ActionAnimation Fighh;
 
-        [field: SerializeField] public List<AnimationClip> Sit { get; private set; }
-        
-        [field: SerializeField] public List<AnimationClip> LeanOnWall { get; private set; }
+        [Title("Debug")] 
+        public AnimationClip DebugAnim;
+    }
 
-        [field: SerializeField] public List<AnimationClip> Dance { get; private set; }
-        
-        [field: SerializeField] public AnimationClip HoldingDrink { get; private set; }
-        [field: SerializeField] public List<AnimationClip> Debug { get; private set; }
+    [Serializable]
+    public class ActionAnimation
+    {
+        public AvatarMask Mask;
+        public AnimationClip IdleClip;
+        public AnimationClip ActionClip;
     }
 }
