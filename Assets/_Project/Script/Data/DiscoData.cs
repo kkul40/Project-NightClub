@@ -3,7 +3,6 @@ using System.Building_System.GameEvents;
 using System.Collections.Generic;
 using System.Linq;
 using Disco_ScriptableObject;
-using DiscoSystem;
 using PropBehaviours;
 using SaveAndLoad;
 using ScriptableObjects;
@@ -14,8 +13,10 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Data
 {
     [DisallowMultipleComponent]
-    public class DiscoData : Singleton<DiscoData>
+    public class DiscoData : MonoBehaviour
     {
+        public static DiscoData Instance;
+        
         [SerializeField] private AssetLabelReference _storeItemReference;
         [SerializeField] private AssetLabelReference _drinkDataReference;
 
@@ -33,6 +34,7 @@ namespace Data
 
         public void Initialize(GameData gameData)
         {
+            Instance = this;
             AllInGameItems = new Dictionary<int, StoreItemSO>();
             AllInGameDrinks = new Dictionary<int, DrinkSO>();
            

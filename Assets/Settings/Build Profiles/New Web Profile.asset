@@ -20,10 +20,6 @@ MonoBehaviour:
     rid: 3120503378059984897
   m_OverrideGlobalSceneList: 0
   m_Scenes:
-  - m_enabled: 1
-    m_path: Assets/_Project/Scene/MainMenu - Demo.unity
-  - m_enabled: 1
-    m_path: Assets/_Project/Scene/NightClub-Demo.unity
   - m_enabled: 0
     m_path: Assets/_Project/Scene/CharacterCreation-Demo.unity
   m_ScriptingDefines: []

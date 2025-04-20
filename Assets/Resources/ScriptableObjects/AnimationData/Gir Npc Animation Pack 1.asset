@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
   m_Name: Gir Npc Animation Pack 1
   m_EditorClassIdentifier: 
-  animationDuration: 0
+  animationDuration: 0.5
   Idle: {fileID: 7400000, guid: 1a7c2b971f72d5b48942235a9ff227ff, type: 2}
   Walk: {fileID: 7400000, guid: b8950f5fa4019034f9583e6f16bd635b, type: 2}
   Sit: {fileID: 7400000, guid: 433f14cee6a331a47b03823cc11b9149, type: 2}
