@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
-  m_Name: Boy Npc Animation Pack 1
+  m_Script: {fileID: 11500000, guid: 9ad57d7527f1443f8bb27cc26f2badc2, type: 3}
+  m_Name: Boy NPC Animations
   m_EditorClassIdentifier: 
-  animationDuration: 0.5
+  animationDuration: 0
   Idle: {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
   Walk: {fileID: 7400000, guid: 62881bcadb4b79446a533542b822a93a, type: 2}
   Sit: {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}

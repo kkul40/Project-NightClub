@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa86f298011a41298674543903157ed0, type: 3}
-  m_Name: Gir Npc Animation Pack 1
+  m_Script: {fileID: 11500000, guid: 9ad57d7527f1443f8bb27cc26f2badc2, type: 3}
+  m_Name: Girl NPC Animations
   m_EditorClassIdentifier: 
-  animationDuration: 0.5
-  Idle: {fileID: 7400000, guid: 1a7c2b971f72d5b48942235a9ff227ff, type: 2}
-  Walk: {fileID: 7400000, guid: b8950f5fa4019034f9583e6f16bd635b, type: 2}
+  animationDuration: 0
+  Idle: {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
+  Walk: {fileID: 7400000, guid: 53a89e9ddf7958347ac638335daa68a0, type: 2}
   Sit: {fileID: 7400000, guid: 433f14cee6a331a47b03823cc11b9149, type: 2}
   LeanOnWall:
-  - {fileID: 7400000, guid: b1a8aa116c825114f9afa5a78908fa02, type: 2}
   - {fileID: 7400000, guid: 5d161eafdd159064f9da1f94d0c0ebc5, type: 2}
+  - {fileID: 7400000, guid: b1a8aa116c825114f9afa5a78908fa02, type: 2}
   Dance:
   - {fileID: 7400000, guid: 7a2c2dbeab2cec64499af196f31fbc44, type: 2}
   - {fileID: 7400000, guid: d30c9c3b13609414f91d1acbbbe75e59, type: 2}

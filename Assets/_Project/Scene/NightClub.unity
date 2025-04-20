@@ -27929,8 +27929,8 @@ MonoBehaviour:
   DefaultWallMaterial: {fileID: 11400000, guid: 93f5edabc6ca8e74594e0283a425e989, type: 2}
   DefaultNPCCustomization: {fileID: 11400000, guid: ce58dbdb2e955a44b9abba3970748ed8, type: 2}
   DefaultBartenderCustomization: {fileID: 11400000, guid: acc813fae69c6424db9c4317a5c42566, type: 2}
-  DefaultBoyNpcAnimation: {fileID: 11400000, guid: d0325ffe7c3c84b4e87fcc22a88ca226, type: 2}
-  DefaultGirlNpcAnimation: {fileID: 11400000, guid: de71111a11b58454d974f5c1cae51003, type: 2}
+  DefaultBoyNpcAnimation: {fileID: 11400000, guid: 9ed719effea754e44af91bf4f8cdf8f8, type: 2}
+  DefaultGirlNpcAnimation: {fileID: 11400000, guid: 5cc27e1344031974a9cc321930ca6122, type: 2}
   DefaultBartenderAnimation: {fileID: 11400000, guid: f657ee860e5bb9447bedd03c4572e030, type: 2}
 --- !u!1001 &1451294518
 PrefabInstance:
