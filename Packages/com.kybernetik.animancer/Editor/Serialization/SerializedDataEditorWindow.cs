@@ -1,4 +1,4 @@
-// Animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -363,9 +363,9 @@ namespace Animancer.Editor
         {
             styles.CopyMissingStyles(ButtonGroupStyles.Button);
             return
-                styles.left.CalculateWidth(RevertLabel) +
-                styles.middle.CalculateWidth(ApplyLabel) +
-                styles.right.CalculateWidth(AutoApplyLabel);
+                styles.left.CalculateWidth(RevertLabel) + 1 +
+                styles.middle.CalculateWidth(ApplyLabel) + 1 +
+                styles.right.CalculateWidth(AutoApplyLabel) + 1;
         }
 
         /************************************************************************************************************************/
@@ -393,8 +393,8 @@ namespace Animancer.Editor
         {
             styles.CopyMissingStyles(ButtonGroupStyles.Button);
 
-            var leftArea = AnimancerGUI.StealFromLeft(ref area, styles.left.CalculateWidth(RevertLabel));
-            var middleArea = AnimancerGUI.StealFromLeft(ref area, styles.middle.CalculateWidth(ApplyLabel));
+            var leftArea = AnimancerGUI.StealFromLeft(ref area, styles.left.CalculateWidth(RevertLabel) + 1);
+            var middleArea = AnimancerGUI.StealFromLeft(ref area, styles.middle.CalculateWidth(ApplyLabel) + 1);
 
             DoApplyRevertGUI(leftArea, middleArea, area, styles);
         }

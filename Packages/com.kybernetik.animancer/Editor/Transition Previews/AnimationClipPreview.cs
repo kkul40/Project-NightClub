@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -52,6 +52,9 @@ namespace Animancer.Editor.Previews
             public float NormalizedStartTime { get => float.NaN; set => throw new NotSupportedException(); }
             public float MaximumDuration => _Clip.length;
             public float Speed { get => 1; set => throw new NotSupportedException(); }
+
+            AnimancerEvent.Sequence IHasEvents.Events => null;
+            ref AnimancerEvent.Sequence.Serializable IHasEvents.SerializedEvents => throw new NotSupportedException();
 
             /************************************************************************************************************************/
 

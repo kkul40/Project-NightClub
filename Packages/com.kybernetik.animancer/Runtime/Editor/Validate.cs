@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -45,9 +45,9 @@ namespace Animancer
                 !UnityEditor.EditorUtility.IsPersistent(clip))
                 OptionalWarning.DynamicAnimation.Log(
                     $"Attempted to {operation} using an {nameof(AnimationClip)} '{clip.name}' which is not an asset." +
-                    " Unity doesn't suppport dynamically creating animations for Animancer in runtime builds." +
-                    " This warning should be disabled if you only intend to use the animation in the" +
-                    " Unity Editor and not create it in a runtime build.",
+                    " Unity doesn't support dynamically creating animations for Animancer in runtime builds." +
+                    " This warning should be disabled if you're loading animations from Asset Bundles or Addressables" +
+                    " or if you only intend to use the animation in the Unity Editor.",
                     clip);
 #endif
 

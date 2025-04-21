@@ -10,6 +10,10 @@ namespace _Initializer
         private void Start()
         {
             _savingAndLoadingSystem.Initialize();
+            
+            Debug.developerConsoleEnabled = true;
+            Debug.developerConsoleVisible = true;
+            Debug.LogError("Console Is Active");
         }
     }
 }

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -240,6 +240,14 @@ namespace Animancer.Editor.Previews
 
             /************************************************************************************************************************/
 
+            /// <summary>Does nothing.</summary>
+            /// <remarks>
+            /// Doesn't trigger <see cref="OptionalWarning.UselessEvent"/>
+            /// (unlike <see cref="AnimancerEvent.DummyCallback"/>).
+            /// </remarks>
+            public static readonly Action
+                DummyCallback = () => { };
+
             public void OnPlayAnimation()
             {
                 var animancer = PreviewObject.Graph;
@@ -251,13 +259,17 @@ namespace Animancer.Editor.Previews
 
                 state.RecreatePlayableRecursive();
 
-                var events = state.SharedEvents;
-                if (events != null)
+                if (state.HasEvents)
                 {
                     var warnings = OptionalWarning.UnsupportedEvents | OptionalWarning.ProOnly;
                     warnings = warnings.DisableTemporarily();
-                    var normalizedEndTime = events.NormalizedEndTime;
-                    state.Events(this).NormalizedEndTime = normalizedEndTime;
+
+                    var events = state.Events(this);
+                    events.OnEnd = DummyCallback;
+
+                    for (int i = events.Count - 1; i >= 0; i--)
+                        events.SetCallback(i, DummyCallback);
+
                     warnings.Enable();
                 }
             }

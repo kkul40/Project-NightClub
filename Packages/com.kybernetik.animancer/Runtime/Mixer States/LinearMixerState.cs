@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -66,16 +66,39 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>The lowest threshold (which is for the first child because they must be sorted).</summary>
-        public float MinThreshold => GetThreshold(0);
+        /// <summary>The lowest threshold (which is for the first child since they must be sorted).</summary>
+        public float MinThreshold
+            => GetThreshold(0);
 
-        /// <summary>The highest threshold (which is for the last child because they must be sorted).</summary>
-        public float MaxThreshold => GetThreshold(ChildCount - 1);
+        /// <summary>The highest threshold (which is for the last child since they must be sorted).</summary>
+        public float MaxThreshold
+            => GetThreshold(ChildCount - 1);
 
         /// <inheritdoc/>
         public override float NormalizedParameter
         {
-            get => AnimancerUtilities.InverseLerpUnclamped(MinThreshold, MaxThreshold, Parameter);
+            get
+            {
+                var min = MinThreshold;
+                var max = MaxThreshold;
+
+                if (min < 0 && max > 0)// Interpolate -1 to 1.
+                {
+                    var value = Parameter;
+
+                    if (value > 0)
+                        value = AnimancerUtilities.InverseLerpUnclamped(0, max, value);
+                    else if (value < 0)
+                        value = AnimancerUtilities.InverseLerpUnclamped(0, min, -value);
+
+                    return value;
+                }
+                else// Interpolate 0 to 1.
+                {
+                    return AnimancerUtilities.InverseLerpUnclamped(MinThreshold, MaxThreshold, Parameter);
+                }
+            }
+
             set => Parameter = Mathf.LerpUnclamped(MinThreshold, MaxThreshold, value);
         }
 

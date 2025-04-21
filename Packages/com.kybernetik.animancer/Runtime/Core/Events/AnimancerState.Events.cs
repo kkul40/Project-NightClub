@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -149,6 +149,9 @@ namespace Animancer
         ///     events.OnEnd = OnAnimationEnded;
         /// }
         /// </code>
+        /// If multiple different owners need to take turns reusing the same state, 
+        /// use <see cref="Events(ref AnimancerEvent.Sequence)"/> instead.
+        /// <para></para>
         /// If you only need to initialize the End Event, 
         /// consider using <see cref="Events(object)"/> instead.
         /// </remarks>
@@ -190,14 +193,80 @@ namespace Animancer
         /// AnimancerState state = animancerComponent.Play(animation);
         /// state.Events(this).OnEnd ??= OnAnimationEnded;
         /// </code>
+        /// If multiple different owners need to take turns reusing the same state, 
+        /// use <see cref="Events(ref AnimancerEvent.Sequence)"/> instead.
+        /// <para></para>
         /// If you need to initialize more than just the End Event, 
-        /// consider using <see cref="Events(object, out AnimancerEvent.Sequence)"/> instead.
+        /// use <see cref="Events(object, out AnimancerEvent.Sequence)"/> instead.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public AnimancerEvent.Sequence Events(object owner)
         {
             Events(owner, out var events);
             return events;
+        }
+
+        /************************************************************************************************************************/
+
+        /// <summary>
+        /// If the `events` are <c>null</c>, this method assigns a <c>new</c> <see cref="AnimancerEvent.Sequence"/>
+        /// and returns <c>true</c> to indicate that the caller should now initialize their event callbacks.
+        /// Otherwise, this method simply assigns the provided `events` to this state and returns <c>false</c>.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// If this state already had events, the <c>new</c> <see cref="AnimancerEvent.Sequence"/>
+        /// will be a copy of those events for the caller to own.
+        /// <para></para>
+        /// This method allows multiple callers to safely take turns using the same state
+        /// as long as they each call this method to assign their own events.
+        /// <para></para>
+        /// Also calls <see cref="AssertOwnership"/>.
+        /// <para></para>
+        /// <strong>Documentation:</strong>
+        /// <see href="https://kybernetik.com.au/animancer/docs/manual/events/animancer">
+        /// Animancer Events</see>
+        /// <para></para>
+        /// <strong>Example:</strong>
+        /// <code>
+        /// public static readonly StringReference EventName = "Event Name";
+        /// 
+        /// private AnimancerEvent.Sequence _Events;// Don't new() this.
+        /// 
+        /// ...
+        /// 
+        /// AnimancerState state = animancerComponent.Play(animation);
+        /// 
+        /// // The first time this is called it will assign a new event sequence
+        /// // and return true so you can initialize it.
+        /// if (state.Events(ref _Events))
+        /// {
+        ///     _Events.SetCallback(EventName, OnAnimationEvent);
+        ///     _Events.OnEnd = OnAnimationEnded;
+        /// }
+        /// </code>
+        /// </remarks>
+        public bool Events(ref AnimancerEvent.Sequence events)
+        {
+            _EventDispatcher ??= new(this);
+
+            var justInitialized = events == null;
+            if (justInitialized)
+                events = new(_EventDispatcher.Events);
+
+#if UNITY_ASSERTIONS
+            // Normally swapping owners is an error,
+            // but with this method it's fine to swap between event sequences since each caller is responsible for its own.
+            if (Owner != null &&
+                Owner != events &&
+                Owner is not AnimancerEvent.Sequence)
+                AssertOwnership(events);
+            else
+                Owner = events;
+#endif
+
+            _EventDispatcher.SetEvents(events, false);
+            return justInitialized;
         }
 
         /************************************************************************************************************************/

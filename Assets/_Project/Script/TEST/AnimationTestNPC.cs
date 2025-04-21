@@ -1,5 +1,6 @@
 ﻿using System.Character.NPC;
 using Animancer;
+using Data;
 using UnityEngine;
 
 namespace DefaultNamespace.TEST

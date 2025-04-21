@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Animancer.TransitionLibraries
     /// https://kybernetik.com.au/animancer/api/Animancer.TransitionLibraries/TransitionLibraryDefinition
     [Serializable]
     public class TransitionLibraryDefinition :
-        IAnimationClipSource,
+        IAnimationClipCollection,
         ICopyable<TransitionLibraryDefinition>,
         IEquatable<TransitionLibraryDefinition>,
         IHasDescription
@@ -354,8 +354,8 @@ namespace Animancer.TransitionLibraries
         /************************************************************************************************************************/
 
         /// <summary>Gathers all the animations in this definition.</summary>
-        public void GetAnimationClips(List<AnimationClip> results)
-            => results.GatherFromSource(_Transitions);
+        public virtual void GatherAnimationClips(ICollection<AnimationClip> clips)
+            => clips.GatherFromSource(_Transitions);
 
         /************************************************************************************************************************/
 

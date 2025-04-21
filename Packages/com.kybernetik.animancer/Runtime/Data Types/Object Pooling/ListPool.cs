@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 
@@ -23,7 +23,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Clears the `list` and adds it to the list of spares so it can be reused.</summary>
-        public static void Release<T>(List<T> list)
+        public static void Release<T>(this List<T> list)
             => ListPool<T>.Instance.Release(list);
 
         /// <summary>Clears the `list`, adds it to the list of spares so it can be reused, and sets it to <c>null</c>.</summary>

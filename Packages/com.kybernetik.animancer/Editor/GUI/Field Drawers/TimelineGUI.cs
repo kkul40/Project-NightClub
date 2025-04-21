@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -501,10 +501,12 @@ namespace Animancer.Editor
             var menu = new GenericMenu();
 
             AddContextFunction(menu, context, "Add Event (Double Click)", true,
-                () => SerializableEventSequenceDrawer.AddEvent(context, time));
+                () => SerializableEventSequenceDrawer.AddEvent(context, time, null));
 
             AddContextFunction(menu, context, "Remove Event (Delete)", hasSelectedEvent,
                 () => SerializableEventSequenceDrawer.RemoveEvent(context, context.SelectedEvent));
+
+            AddCopyEventsFromAnimationClipsFunction(menu, context);
 
             const string NudgePrefix = "Nudge Event Time/";
             AddContextFunction(menu, context, NudgePrefix + "Left 1 Pixel (Left Arrow)", hasSelectedEvent,
@@ -532,7 +534,11 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         private static void AddContextFunction(
-            GenericMenu menu, SerializableEventSequenceDrawer.Context context, string label, bool enabled, Action function)
+            GenericMenu menu,
+            SerializableEventSequenceDrawer.Context context,
+            string label,
+            bool enabled,
+            Action function)
         {
             menu.AddFunction(label, enabled, () =>
             {
@@ -542,6 +548,60 @@ namespace Animancer.Editor
                     GUI.changed = true;
                 }
             });
+        }
+
+        /************************************************************************************************************************/
+
+        private void AddCopyEventsFromAnimationClipsFunction(
+            GenericMenu menu,
+            SerializableEventSequenceDrawer.Context context)
+        {
+
+            var transition = context.TransitionContext.Transition;
+
+            var clips = ListPool<AnimationClip>.Instance.Acquire();
+
+            clips.GatherFromSource(transition);
+            var enabled = clips.Count > 0;
+
+            AddContextFunction(menu, context, "Copy Events from Animation Clip", enabled,
+                () =>
+                {
+                    var names = ListPool<StringAsset>.Instance.Acquire();
+                    var normalizedTimes = ListPool<float>.Instance.Acquire();
+
+                    string createDirectory = null;
+
+                    foreach (var clip in clips)
+                    {
+                        foreach (var animancerEvent in clip.events)
+                        {
+                            var name = StringReference.Get(animancerEvent.functionName);
+                            var asset = StringAsset.Find(name, out _);
+
+                            if (asset == null)
+                            {
+                                asset = StringAsset.Create(name, ref createDirectory, out _);
+
+                                // If no directory is picked, cancel the rest of this function.
+                                if (asset == null)
+                                    return;
+                            }
+
+                            names.Add(asset);
+                            normalizedTimes.Add(animancerEvent.time / clip.length);
+                        }
+                    }
+
+                    ListPool<AnimationClip>.Instance.Release(clips);
+
+                    for (int i = 0; i < normalizedTimes.Count; i++)
+                        SerializableEventSequenceDrawer.AddEvent(context, normalizedTimes[i], names[i]);
+
+                    ListPool<StringAsset>.Instance.Release(names);
+                    ListPool<float>.Instance.Release(normalizedTimes);
+                });
+
         }
 
         /************************************************************************************************************************/

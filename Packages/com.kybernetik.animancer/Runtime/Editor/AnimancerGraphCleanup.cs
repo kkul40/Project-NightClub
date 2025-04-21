@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -164,7 +164,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>[Editor-Only] [Internal]
-        /// A stack trace captured in <see cref="CreateOutput(Animator, IAnimancerComponent)"/>
+        /// A stack trace captured in <see cref="Initialize(IAnimancerComponent, bool)"/>
         /// if the <see cref="GameObject.activeInHierarchy"/> is false.
         /// </summary>
         /// <remarks>

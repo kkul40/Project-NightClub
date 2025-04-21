@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine.Playables;
@@ -132,7 +132,7 @@ namespace Animancer
         /// </code></remarks>
         /// 
         /// <exception cref="ArgumentOutOfRangeException">The value is not finite.</exception>
-        public float Speed
+        public virtual float Speed
         {
             get => _Speed;
             set
@@ -144,7 +144,10 @@ namespace Animancer
                 if (!value.IsFinite())
                 {
                     MarkAsUsed(this);
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(Speed)} {Strings.MustBeFinite}");
+                    throw new ArgumentOutOfRangeException(
+                        nameof(value),
+                        value,
+                        $"{nameof(Speed)} {Strings.MustBeFinite}");
                 }
 #endif
                 _Speed = value;

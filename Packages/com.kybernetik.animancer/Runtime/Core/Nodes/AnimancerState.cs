@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections;
@@ -970,8 +970,9 @@ namespace Animancer
 
         /// <summary>Destroys the <see cref="Playable"/> and cleans up this state.</summary>
         /// <remarks>
-        /// This method is NOT called automatically, so when implementing a custom state type you must use
-        /// <see cref="AnimancerGraph.Disposables"/> if you need to guarantee that things will get cleaned up.
+        /// This method is NOT called automatically when the whole <see cref="AnimancerGraph"/> is destroyed,
+        /// so if you need to guarantee that things will get cleaned up you must use
+        /// <see cref="AnimancerGraph.Disposables"/>.
         /// </remarks>
         public virtual void Destroy()
         {
@@ -990,7 +991,7 @@ namespace Animancer
             {
                 graph.States.Unregister(this);
 
-                // This is slightly faster than _Playable.Destroy().
+                // Destroying via the graph seems to be slightly faster than _Playable.Destroy().
                 if (_Playable.IsValid() && graph._PlayableGraph.IsValid())
                     graph._PlayableGraph.DestroyPlayable(_Playable);
             }

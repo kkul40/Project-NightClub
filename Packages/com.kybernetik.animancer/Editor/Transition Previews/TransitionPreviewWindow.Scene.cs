@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -48,9 +48,6 @@ namespace Animancer.Editor.Previews
             /// <summary>The root object in the preview scene.</summary>
             public Transform PreviewSceneRoot { get; private set; }
 
-            /// <summary>The root of the model in the preview scene. A child of the <see cref="PreviewSceneRoot"/>.</summary>
-            public Transform InstanceRoot { get; private set; }
-
             /// <summary>
             /// An instance of the <see cref="TransitionPreviewSettings.SceneEnvironment"/>.
             /// A child of the <see cref="PreviewSceneRoot"/>.
@@ -71,7 +68,15 @@ namespace Animancer.Editor.Previews
             private Vector3 _PreviousPreviewObjectPosition;
 
             private Vector3 CurrentPreviewObjectPosition
-                => PreviewObject.SelectedInstanceAnimator.transform.position;
+            {
+                get
+                {
+                    var animator = PreviewObject.SelectedInstanceAnimator;
+                    return animator != null
+                        ? animator.transform.position
+                        : default;
+                }
+            }
 
             /************************************************************************************************************************/
             #endregion
@@ -161,16 +166,17 @@ namespace Animancer.Editor.Previews
 
             private void FocusCamera()
             {
-                if (InstanceRoot == null)
+                var instance = _PreviewObject.InstanceObject;
+                if (instance == null)
                     return;
 
-                var bounds = CalculateBounds(InstanceRoot);
+                var bounds = CalculateBounds(instance);
 
                 var rotation = _Instance.in2DMode ?
                     Quaternion.identity :
-                    Quaternion.Euler(35, 135, 0);
+                    Quaternion.Euler(15, 225, 0);
 
-                var size = bounds.extents.magnitude * 1.5f;
+                var size = bounds.extents.magnitude * 1.2f;
                 if (size == float.PositiveInfinity)
                     return;
                 else if (size == 0)

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -858,7 +858,9 @@ namespace Animancer.Editor
                     break;
 
                 case EventType.MouseUp:
-                    return TryUseMouseUp(currentEvent, controlID, true) && area.Contains(currentEvent.mousePosition);
+                    return
+                        TryUseMouseUp(currentEvent, controlID, true) &&
+                        area.Contains(currentEvent.mousePosition);
             }
 
             return false;

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -51,8 +51,24 @@ namespace Animancer
 
         private float _Length;
 
-        /// <summary>The <see cref="PlayableAsset.duration"/>.</summary>
-        public override float Length => _Length;
+        /// <summary>The <see cref="PlayableAsset.duration"/> (cached on initialization).</summary>
+        public override float Length
+            => _Length;
+
+        /************************************************************************************************************************/
+
+        /// <inheritdoc/>
+        public override float Speed
+        {
+            get => base.Speed;
+            set
+            {
+                base.Speed = value;
+
+                for (int i = Outputs.Count - 1; i >= 0; i--)
+                    Outputs[i].GetSourcePlayable().SetSpeed(value);
+            }
+        }
 
         /************************************************************************************************************************/
 
@@ -162,6 +178,9 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
+        private readonly List<PlayableOutput>
+            Outputs = new();
+
         private IList<Object> _Bindings;
         private bool _HasInitializedBindings;
 
@@ -204,6 +223,8 @@ namespace Animancer
                 ? _Bindings.Count
                 : 0;
 
+            var speed = Speed;
+
             foreach (var binding in _Asset.outputs)
             {
                 GetBindingDetails(binding, out var trackName, out var trackType, out var isMarkers);
@@ -229,6 +250,9 @@ namespace Animancer
 
                 var playable = _Playable.GetInput(bindableIndex);
 
+                if (speed != 1)
+                    playable.SetSpeed(speed);
+
                 if (trackType == typeof(Animator))// AnimationTrack.
                 {
                     if (bindable != null)
@@ -246,6 +270,7 @@ namespace Animancer
                         playableOutput.SetReferenceObject(binding.sourceObject);
                         playableOutput.SetSourcePlayable(playable);
                         playableOutput.SetWeight(1);
+                        Outputs.Add(playableOutput);
                     }
                 }
 #if UNITY_AUDIO
@@ -257,6 +282,7 @@ namespace Animancer
                         playableOutput.SetReferenceObject(binding.sourceObject);
                         playableOutput.SetSourcePlayable(playable);
                         playableOutput.SetWeight(1);
+                        Outputs.Add(playableOutput);
                     }
                 }
 #endif
@@ -268,6 +294,7 @@ namespace Animancer
                     playableOutput.SetSourcePlayable(playable);
                     playableOutput.SetWeight(1);
                     playableOutput.SetUserData(animancer);
+                    Outputs.Add(playableOutput);
 
                     var receivers = ListPool.Acquire<INotificationReceiver>();
                     animancer.GetComponents(receivers);
@@ -286,6 +313,7 @@ namespace Animancer
                     playableOutput.SetUserData(bindable);
                     if (bindable is INotificationReceiver receiver)
                         playableOutput.AddNotificationReceiver(receiver);
+                    Outputs.Add(playableOutput);
                 }
 
                 bindableIndex++;
@@ -312,6 +340,30 @@ namespace Animancer
         public override void Destroy()
         {
             _Asset = null;
+
+            if (Graph != null)
+            {
+                var graph = Graph._PlayableGraph;
+                if (graph.IsValid())
+                {
+                    for (int i = Outputs.Count - 1; i >= 0; i--)
+                    {
+                        var output = Outputs[i];
+
+                        var playable = output.GetSourcePlayable();
+                        if (playable.IsValid())
+                            graph.DestroySubgraph(playable);
+
+                        graph.DestroyOutput(output);
+                    }
+
+                    Outputs.Clear();
+
+                    if (_Playable.IsValid())
+                        graph.DestroySubgraph(_Playable);
+                }
+            }
+
             base.Destroy();
         }
 

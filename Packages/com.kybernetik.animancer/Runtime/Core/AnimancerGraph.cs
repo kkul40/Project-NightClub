@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using Animancer.TransitionLibraries;
 using System;
@@ -157,6 +157,22 @@ namespace Animancer
         /// This is the final <see cref="Playable"/> connected to the output of the <see cref="PlayableGraph"/>.
         /// </remarks>
         internal Playable _PreUpdatePlayable;// Internal for AnimancerLayerList.
+
+        /************************************************************************************************************************/
+
+        private PlayableOutput _Output;
+
+        /// <summary>The <see cref="PlayableOutput"/> connected to this <see cref="AnimancerGraph"/>.</summary>
+        public PlayableOutput Output
+        {
+            get
+            {
+                if (!_Output.IsOutputValid())
+                    _Output = _PlayableGraph.FindOutput(_PreUpdatePlayable);
+
+                return _Output;
+            }
+        }
 
         /************************************************************************************************************************/
 
@@ -403,6 +419,73 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>
+        /// Initializes this graph and plays it on the on the
+        /// <see cref="IAnimancerComponent.Animator"/> if `createOutput` is true.
+        /// </summary>
+        public void Initialize(
+            IAnimancerComponent animancer,
+            bool createOutput = true)
+        {
+            var animator = animancer.Animator;
+
+#if UNITY_ASSERTIONS
+            if (animator == null)
+                throw new ArgumentNullException(nameof(animator),
+                    $"An {nameof(Animator)} component is required to play animations.");
+
+#if UNITY_EDITOR
+            if (UnityEditor.EditorUtility.IsPersistent(animator))
+                throw new ArgumentException(
+                    $"The specified {nameof(Animator)} component is a prefab which means it cannot play animations.",
+                    nameof(animator));
+#endif
+
+            if (animancer != null)
+            {
+                Debug.Assert(animancer.IsGraphInitialized && animancer.Graph == this,
+                    $"{nameof(Initialize)} was called on an {nameof(AnimancerGraph)} which does not match the" +
+                    $" {nameof(IAnimancerComponent)}.{nameof(IAnimancerComponent.Graph)}.");
+                Debug.Assert(animator == animancer.Animator,
+                    $"{nameof(Initialize)} was called with an {nameof(Animator)} which does not match the" +
+                    $" {nameof(IAnimancerComponent)}.{nameof(IAnimancerComponent.Animator)}.");
+
+#if UNITY_EDITOR
+                CaptureInactiveInitializationStackTrace(animancer);
+#endif
+            }
+
+            if (Output.IsOutputValid())
+            {
+                Debug.LogWarning(
+                    $"A {nameof(PlayableGraph)} output is already connected to the {nameof(AnimancerGraph)}." +
+                    $" The old output should be destroyed using `animancerComponent.Graph.DestroyOutput();`" +
+                    $" before calling {nameof(Initialize)}.", animator);
+            }
+#endif
+
+            Layers ??= new AnimancerLayerMixerList(this);
+
+            Component = animancer;
+
+            // Generic Rigs can blend with an underlying Animator Controller but Humanoids can't.
+            SkipFirstFade = animator.isHuman || animator.runtimeAnimatorController == null;
+
+            AnimancerEvent.Invoker.Initialize(animator.updateMode);
+
+            if (createOutput)
+            {
+#pragma warning disable CS0618 // Type or member is obsolete.
+                // Unity 2022 marked this method as [Obsolete] even though it's the only way to use Animate Physics mode.
+                AnimationPlayableUtilities.Play(animator, _PreUpdatePlayable, _PlayableGraph);
+#pragma warning restore CS0618 // Type or member is obsolete.
+            }
+        }
+
+        /************************************************************************************************************************/
+        #region Graph Creation
+        /************************************************************************************************************************/
+
+        /// <summary>
         /// Creates a new empty <see cref="UnityEngine.Playables.PlayableGraph"/>
         /// and consumes the name set by <see cref="SetNextGraphName"/> if it was called.
         /// </summary>
@@ -454,85 +537,7 @@ namespace Animancer
 #endif
 
         /************************************************************************************************************************/
-
-        private PlayableOutput _Output;
-
-        /// <summary>The <see cref="PlayableOutput"/> connected to this <see cref="AnimancerGraph"/>.</summary>
-        public PlayableOutput Output
-        {
-            get
-            {
-                if (!_Output.IsOutputValid())
-                    _Output = _PlayableGraph.FindOutput(_PreUpdatePlayable);
-
-                return _Output;
-            }
-        }
-
-        /************************************************************************************************************************/
-
-        /// <summary>
-        /// Plays this graph on the <see cref="IAnimancerComponent.Animator"/>
-        /// and sets the <see cref="Component"/>.
-        /// </summary>
-        public void CreateOutput(IAnimancerComponent animancer)
-            => CreateOutput(animancer.Animator, animancer);
-
-        /// <summary>Plays this playable on the specified `animator` and sets the <see cref="Component"/>.</summary>
-        public void CreateOutput(Animator animator, IAnimancerComponent animancer)
-        {
-#if UNITY_ASSERTIONS
-            if (animator == null)
-                throw new ArgumentNullException(nameof(animator),
-                    $"An {nameof(Animator)} component is required to play animations.");
-
-#if UNITY_EDITOR
-            if (UnityEditor.EditorUtility.IsPersistent(animator))
-                throw new ArgumentException(
-                    $"The specified {nameof(Animator)} component is a prefab which means it cannot play animations.",
-                    nameof(animator));
-#endif
-
-            if (animancer != null)
-            {
-                Debug.Assert(animancer.IsGraphInitialized && animancer.Graph == this,
-                    $"{nameof(CreateOutput)} was called on an {nameof(AnimancerGraph)} which does not match the" +
-                    $" {nameof(IAnimancerComponent)}.{nameof(IAnimancerComponent.Graph)}.");
-                Debug.Assert(animator == animancer.Animator,
-                    $"{nameof(CreateOutput)} was called with an {nameof(Animator)} which does not match the" +
-                    $" {nameof(IAnimancerComponent)}.{nameof(IAnimancerComponent.Animator)}.");
-
-#if UNITY_EDITOR
-                CaptureInactiveInitializationStackTrace(animancer);
-#endif
-            }
-
-            if (Output.IsOutputValid())
-            {
-                Debug.LogWarning(
-                    $"A {nameof(PlayableGraph)} output is already connected to the {nameof(AnimancerGraph)}." +
-                    $" The old output should be destroyed using `animancerComponent.Graph.DestroyOutput();`" +
-                    $" before calling {nameof(CreateOutput)}.", animator);
-            }
-#endif
-
-            Layers ??= new AnimancerLayerMixerList(this);
-
-            Component = animancer;
-
-            // Generic Rigs can blend with an underlying Animator Controller but Humanoids can't.
-            SkipFirstFade = animator.isHuman || animator.runtimeAnimatorController == null;
-
-            AnimancerEvent.Invoker.Initialize(animator.updateMode);
-
-#pragma warning disable CS0618 // Type or member is obsolete.
-            // Unity 2022 marked this method as [Obsolete] even though it's the only way to use Animate Physics mode.
-            AnimationPlayableUtilities.Play(animator, _PreUpdatePlayable, _PlayableGraph);
-#pragma warning restore CS0618 // Type or member is obsolete.
-
-            _IsGraphPlaying = true;
-        }
-
+        #endregion
         /************************************************************************************************************************/
 
         /// <summary>[Pro-Only]
@@ -853,7 +858,7 @@ namespace Animancer
         /// <summary>Is least one animation being played?</summary>
         public bool IsPlaying()
         {
-            if (!_IsGraphPlaying)
+            if (!IsGraphPlaying)
                 return false;
 
             for (int i = _Layers.Count - 1; i >= 0; i--)
@@ -872,7 +877,7 @@ namespace Animancer
         /// </remarks>
         public bool IsPlayingClip(AnimationClip clip)
         {
-            if (!_IsGraphPlaying)
+            if (!IsGraphPlaying)
                 return false;
 
             for (int i = _Layers.Count - 1; i >= 0; i--)
@@ -957,12 +962,10 @@ namespace Animancer
         #region Evaluation
         /************************************************************************************************************************/
 
-        private bool _IsGraphPlaying = true;
-
         /// <summary>Indicates whether the <see cref="UnityEngine.Playables.PlayableGraph"/> is currently playing.</summary>
         public bool IsGraphPlaying
         {
-            get => _IsGraphPlaying;
+            get => _PlayableGraph.IsPlaying();
             set
             {
                 if (value)
@@ -973,36 +976,27 @@ namespace Animancer
         }
 
         /// <summary>
-        /// Resumes playing the <see cref="UnityEngine.Playables.PlayableGraph"/> if <see cref="PauseGraph"/> was called previously.
+        /// Resumes playing the <see cref="UnityEngine.Playables.PlayableGraph"/>.
         /// </summary>
         public void UnpauseGraph()
         {
-            if (!_IsGraphPlaying)
-            {
-                _PlayableGraph.Play();
-                _IsGraphPlaying = true;
+            _PlayableGraph.Play();
 
 #if UNITY_EDITOR
-                // In Edit Mode, unpausing the graph doesn't work properly unless we force it to change.
-                if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
-                    Evaluate(0.00001f);
+            // In Edit Mode, unpausing the graph doesn't work properly unless we force it to change.
+            if (!UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+                Evaluate(0.00001f);
 #endif
-            }
         }
 
         /// <summary>
         /// Freezes the <see cref="UnityEngine.Playables.PlayableGraph"/> at its current state.
-        /// <para></para>
-        /// If you call this method, you are responsible for calling <see cref="UnpauseGraph"/> to resume playing.
         /// </summary>
+        /// <remarks>
+        /// If you call this method, you are responsible for calling <see cref="UnpauseGraph"/> to resume playing.
+        /// </remarks>
         public void PauseGraph()
-        {
-            if (_IsGraphPlaying)
-            {
-                _PlayableGraph.Stop();
-                _IsGraphPlaying = false;
-            }
-        }
+            => _PlayableGraph.Stop();
 
         /************************************************************************************************************************/
 

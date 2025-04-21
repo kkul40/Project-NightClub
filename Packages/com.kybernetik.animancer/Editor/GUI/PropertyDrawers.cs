@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -10,6 +10,8 @@ using UnityEngine;
 
 #if UNITY_6000_0_OR_NEWER
 using GetDrawerTypeForTypeDelegate = System.Func<System.Type, System.Type[], bool, System.Type>;
+#elif UNITY_2022_3_OR_NEWER
+using GetDrawerTypeForTypeDelegate = System.Func<System.Type, bool, System.Type>;
 #else
 using GetDrawerTypeForTypeDelegate = System.Func<System.Type, System.Type>;
 #endif
@@ -49,6 +51,8 @@ namespace Animancer.Editor
                 null,
 #if UNITY_6000_0_OR_NEWER
                 new Type[] { typeof(Type), typeof(Type[]), typeof(bool) },
+#elif UNITY_2022_3_OR_NEWER
+                new Type[] { typeof(Type), typeof(bool) },
 #else
                 new Type[] { typeof(Type) },
 #endif
@@ -96,6 +100,8 @@ namespace Animancer.Editor
             {
 #if UNITY_6000_0_OR_NEWER
                 drawerType = GetDrawerTypeForType(objectType, Type.EmptyTypes, true);
+#elif UNITY_2022_3_OR_NEWER
+                drawerType = GetDrawerTypeForType(objectType, true);
 #else
                 drawerType = GetDrawerTypeForType(objectType);
 #endif

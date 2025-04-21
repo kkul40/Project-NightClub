@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -52,8 +52,20 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
+        /// <summary>[Editor-Only] Validates that the `mainAsset` is actually an asset.</summary>
+        public static bool CanCreateAndSave(Object mainAsset)
+        {
+            if (TransitionAssetBase.CreateInstance == null)
+                return false;
+
+            var path = AssetDatabase.GetAssetPath(mainAsset);
+            return !string.IsNullOrEmpty(path);
+        }
+
+        /************************************************************************************************************************/
+
         /// <summary>[Editor-Only] Tries to create an asset containing an appropriate transition for the `target`.</summary>
-        public static TransitionAssetBase TryCreateTransitionAsset(Object target)
+        public static TransitionAssetBase TryCreateTransitionAsset(Object target, bool saveNextToTarget = false)
         {
             if (target is TransitionAssetBase asset)
                 return asset;
@@ -71,6 +83,27 @@ namespace Animancer
                 {
                     var created = TransitionAssetBase.CreateInstance(transition);
                     created.name = target.name;
+
+                    if (saveNextToTarget)
+                    {
+                        var path = AssetDatabase.GetAssetPath(target);
+                        if (string.IsNullOrEmpty(path))
+                        {
+                            Debug.LogError(
+                                $"Can't create TransitionAsset for '{target}' because it isn't an asset.",
+                                target);
+
+                            return created;
+                        }
+
+                        path = System.IO.Path.GetDirectoryName(path);
+                        path = System.IO.Path.Combine(path, $"{target.name}.asset");
+                        path = AssetDatabase.GenerateUniqueAssetPath(path);
+
+                        AssetDatabase.CreateAsset(created, path);
+                        Selection.activeObject = created;
+                    }
+
                     return created;
                 }
             }

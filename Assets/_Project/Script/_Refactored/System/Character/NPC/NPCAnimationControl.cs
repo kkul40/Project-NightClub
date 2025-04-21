@@ -1,5 +1,6 @@
 ﻿using System.Character.Bartender;
 using Animancer;
+using Data;
 using DefaultNamespace;
 using DefaultNamespace.TEST;
 using UnityEngine;
@@ -88,7 +89,6 @@ namespace System.Character.NPC
                     animancer.Layers[1].Stop();
                     break;
                 case eActionAnimationType.NPC_HoldDrink:
-                    animancer.Layers[1].Mask = _npcAnimationSo.Drink.Mask;
                     animancer.Layers[1].Play(_npcAnimationSo.Drink.IdleClip);
                     break;
             }

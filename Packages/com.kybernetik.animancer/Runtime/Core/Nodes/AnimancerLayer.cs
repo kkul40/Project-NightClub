@@ -1,8 +1,9 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -131,21 +132,21 @@ namespace Animancer
             private set
             {
                 _CurrentState = value;
-                CommandCount++;
+                IncrementCommandCount();
             }
         }
 
-        /// <summary>
-        /// The number of times the <see cref="CurrentState"/> has changed. By storing this value and later comparing
-        /// the stored value to the current value, you can determine whether the state has been changed since then,
-        /// even it has changed back to the same state.
-        /// </summary>
+        /// <summary>The number of times the <see cref="CurrentState"/> has changed.</summary>
+        /// <remarks>
+        /// By storing this value and later comparing the stored value to the current value,
+        /// you can determine whether the state has been changed since then, even it has changed back to the same state.
+        /// </remarks>
         public int CommandCount { get; private set; }
 
-#if UNITY_EDITOR
-        /// <summary>[Editor-Only] [Internal] Increases the <see cref="CommandCount"/> by 1.</summary>
-        internal void IncrementCommandCount() => CommandCount++;
-#endif
+        /// <summary>Increases the <see cref="CommandCount"/> by 1.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void IncrementCommandCount()
+            => CommandCount++;
 
         /************************************************************************************************************************/
 
@@ -373,7 +374,7 @@ namespace Animancer
             for (int i = ActiveStatesInternal.Count - 1; i >= 0; i--)
                 ActiveStatesInternal[i].Stop();
 
-            CommandCount++;
+            IncrementCommandCount();
 
             if (!includeInactive && Weight == 0)
                 return;
@@ -639,6 +640,7 @@ namespace Animancer
             {
                 stateOnThisLayer = state.Clone();
                 stateOnThisLayer._Weight = 0;
+                stateOnThisLayer.CancelFade();
                 stateOnThisLayer.SetParent(this);
                 stateOnThisLayer.Key = key;
             }
@@ -829,7 +831,7 @@ namespace Animancer
         /// <inheritdoc/>
         protected internal override void OnStartFade()
         {
-            CommandCount++;
+            IncrementCommandCount();
         }
 
         /************************************************************************************************************************/
@@ -973,13 +975,18 @@ namespace Animancer
 
             EvaluateFadeMode(mode, ref state, fadeDuration, out var stateFadeSpeed, out var layerFadeDuration);
 
-            StartFade(1, layerFadeDuration);
-
-            // If the layer has to fade in, play the state immediately.
-            if (Weight == 0)
+            // If the layer is at 0 weight or already fading, fade it in.
+            // Otherwise it's probably at 1 weight or has been explicitly set to some other weight.
+            if (Weight == 0 || FadeGroup != null)
             {
-                AnimancerState.SkipNextExpectFade();
-                return Play(state);
+                StartFade(1, layerFadeDuration);
+
+                // If the layer has to fade in, play the state immediately.
+                if (Weight == 0)
+                {
+                    AnimancerState.SkipNextExpectFade();
+                    return Play(state);
+                }
             }
 
             state = GetOrCreateState(state);
@@ -990,11 +997,10 @@ namespace Animancer
             // continue the existing fade.
             if (IsAlreadyFadingIn(state, fadeDuration))
             {
-                CommandCount++;// Still pretend the fade was restarted.
+                IncrementCommandCount();// Still pretend the fade was restarted.
             }
             else// Otherwise fade in the target state and fade out all others.
             {
-
                 state.IsPlaying = true;
 
                 var fade = GetFade();

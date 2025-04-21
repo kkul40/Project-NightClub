@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -117,7 +117,7 @@ namespace Animancer.Editor.Previews
                     {
                         AnimancerGraph.SetNextGraphName($"{animator.name} (Animancer Preview)");
                         _Graph = new AnimancerGraph();
-                        _Graph.CreateOutput(
+                        _Graph.Initialize(
                             new DummyAnimancerComponent(animator, _Graph));
                         EventHandler?.OnCreateGraph();
                     }

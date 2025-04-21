@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -229,7 +229,13 @@ namespace Animancer.Editor
 
         private void DoRectGUI()
         {
-            var texture = ((Sprite)target).texture;
+            if (target is not Sprite sprite)
+                return;
+
+            var texture = sprite.texture;
+            if (texture == null)
+                return;
+
             _RectFields[0].normalizeMultiplier = _RectFields[2].normalizeMultiplier = 1f / texture.width;
             _RectFields[1].normalizeMultiplier = _RectFields[3].normalizeMultiplier = 1f / texture.height;
 

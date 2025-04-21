@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Animancer.TransitionLibraries
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer.TransitionLibraries/TransitionLibrary
     public class TransitionLibrary :
-        IAnimationClipSource,
+        IAnimationClipCollection,
         ICopyable<TransitionLibrary>
     {
         /************************************************************************************************************************/
@@ -68,15 +68,20 @@ namespace Animancer.TransitionLibraries
         /// </summary>
         public bool TryGetTransition(object key, out TransitionModifierGroup transition)
         {
-#if UNITY_ASSERTIONS
             if (KeyedTransitionModifiers.TryGetValue(key, out transition))
                 return true;
 
+            if (key is AnimancerState state)
+            {
+                key = AnimancerUtilities.GetRootKey(state.Key);
+
+                return
+                    key != null &&
+                    KeyedTransitionModifiers.TryGetValue(key, out transition);
+            }
+
             AssertStringReference(key);
             return false;
-#else
-            return KeyedTransitionModifiers.TryGetValue(key, out transition);
-#endif
         }
 
         /// <summary>[Pro-Only]
@@ -166,10 +171,10 @@ namespace Animancer.TransitionLibraries
         /************************************************************************************************************************/
 
         /// <summary>[Pro-Only] Gathers all the animations in this library.</summary>
-        public void GetAnimationClips(List<AnimationClip> results)
+        public virtual void GatherAnimationClips(ICollection<AnimationClip> clips)
         {
             for (int i = TransitionModifiers.Count - 1; i >= 0; i--)
-                results.GatherFromSource(TransitionModifiers[i].Transition);
+                clips.GatherFromSource(TransitionModifiers[i].Transition);
         }
 
         /************************************************************************************************************************/

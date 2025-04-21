@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using Animancer.Units;
 using UnityEngine;
@@ -139,7 +139,7 @@ namespace Animancer
 
             public const string UpdateModes = Docs + "bugs/update-modes";
 
-            public const string VersionName = "v8.0.2";
+            public const string VersionName = "v8.1.0";
 
             public const string ChangeLogURL = Docs + "changes/animancer-v8-0";
 
@@ -168,7 +168,7 @@ namespace Animancer
 
             public const string FadeDuration = ProOnlyTag +
                 "The amount of time the transition will take, e.g:" +
-                "\n• 0s = Instant" +
+                "\n• 0s = instant" +
                 "\n• 0.25s = quarter of a second (Default)" +
                 "\n• 0.25x = quarter of the animation length" +
                 "\n• " + AnimationTimeAttribute.Tooltip +

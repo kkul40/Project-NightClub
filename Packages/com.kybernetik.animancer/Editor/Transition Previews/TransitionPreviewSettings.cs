@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -167,16 +167,25 @@ namespace Animancer.Editor.Previews
         private static void DoModelsGUI()
         {
             var property = ModelsProperty;
-            var count = property.arraySize = EditorGUILayout.DelayedIntField(nameof(Models), property.arraySize);
 
-            // Drag and Drop to add model.
-            var area = GUILayoutUtility.GetLastRect();
+            var area = AnimancerGUI.LayoutSingleLineRect();
+
+            var valueArea = area;
+            valueArea.xMin = EditorGUIUtility.labelWidth - 10;
+
+            area.xMax = valueArea.xMin - AnimancerGUI.StandardSpacing;
+
+            EditorGUI.BeginChangeCheck();
+            var count = property.arraySize = EditorGUI.DelayedIntField(valueArea, property.arraySize);
+            if (EditorGUI.EndChangeCheck())
+                property.isExpanded = true;
+
             HandleModelDragAndDrop(area);
 
             if (count == 0)
                 return;
 
-            property.isExpanded = EditorGUI.Foldout(area, property.isExpanded, GUIContent.none, true);
+            property.isExpanded = EditorGUI.Foldout(area, property.isExpanded, nameof(Models), true);
             if (!property.isExpanded)
                 return;
 

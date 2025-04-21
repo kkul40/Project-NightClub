@@ -4,8 +4,8 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 #if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
 #endif
 
 namespace SingularityGroup.HotReload {

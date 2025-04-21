@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -73,7 +73,8 @@ namespace Animancer.Editor
 
             foreach (var state in layer)
             {
-                if (state.IsActive || !AnimancerGraphDrawer.SeparateActiveFromInactiveStates)
+                if (state.IsActive ||
+                    (!AnimancerGraphDrawer.SeparateActiveFromInactiveStates && AnimancerGraphDrawer.ShowInactiveStates))
                 {
                     ActiveStates.Add(state);
                     continue;

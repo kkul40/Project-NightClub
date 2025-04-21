@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Text;
@@ -171,7 +171,11 @@ namespace Animancer
 
         /************************************************************************************************************************/
 
-        /// <summary>The <see cref="Parameter"/> normalized into the range of 0 to 1 across all thresholds.</summary>
+        /// <summary>The <see cref="Parameter"/> normalized across all thresholds.</summary>
+        /// <remarks>
+        /// If the threshold range includes both negative and positive values, the normalized range is -1 to 1.
+        /// Otherwise, the normalized range is 0 to 1.
+        /// </remarks>
         public abstract TParameter NormalizedParameter { get; set; }
 
         /************************************************************************************************************************/

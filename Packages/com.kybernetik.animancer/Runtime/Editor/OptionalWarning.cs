@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using UnityEngine;
@@ -140,9 +140,7 @@ namespace Animancer
         /// <remarks>
         /// This most commonly happens when a Transition is shared by multiple characters and they
         /// all register their own callbacks to its events which leads to those events controlling
-        /// the wrong character. The
-        /// <see href="https://kybernetik.com.au/animancer/docs/manual/events/animancer/shared">Shared Events</see>
-        /// page explains various ways this issue can be avoided.
+        /// the wrong character.
         /// </remarks>
         EventPlayMismatch = 1 << 6,
 
@@ -274,13 +272,23 @@ namespace Animancer
         UnusedNode = 1 << 15,
 
         /// <summary>
+        /// An <see cref="AnimancerState.MainObject"/> doesn't match the <see cref="Transition{TState}.MainObject"/>
+        /// of the transition being applied to it.
+        /// </summary>
+        /// <remarks>
+        /// If you set the <see cref="Transition{TState}.MainObject"/> of a transition, you should also call
+        /// <see cref="Transition{TState}.ReconcileMainObject"/> to create a new state for the new object.
+        /// </remarks>
+        MainObjectMismatch = 1 << 16,
+
+        /// <summary>
         /// <see cref="PlayableAssetState.InitializeBindings"/> is trying to bind to the same <see cref="Animator"/>
         /// that is being used by Animancer.
         /// </summary>
         /// <remarks>
         /// Doing this will replace Animancer's output so its animations would not work anymore.
         /// </remarks>
-        PlayableAssetAnimatorBinding = 1 << 16,
+        PlayableAssetAnimatorBinding = 1 << 17,
 
         /// <summary>
         /// <see cref="AnimancerLayer.GetOrCreateWeightlessState"/> is cloning a complex state such as a
@@ -293,7 +301,7 @@ namespace Animancer
         /// The <see href="https://kybernetik.com.au/animancer/docs/manual/blending/fading/modes">Fade Modes</see>
         /// page explains why clones are created.
         /// </remarks>
-        CloneComplexState = 1 << 17,
+        CloneComplexState = 1 << 18,
 
         /// <summary>
         /// Unity doesn't suppport dynamically creating animations for Animancer in runtime builds
@@ -302,16 +310,16 @@ namespace Animancer
         /// </summary>
         /// 
         /// <remarks>
-        /// This warning should be disabled if you only intend to use the animation in the
-        /// Unity Editor and not create it in a runtime build.
+        /// This warning should be disabled if you're loading animations from Asset Bundles or Addressables
+        /// or if you only intend to use the animation in the Unity Editor.
         /// </remarks>
-        DynamicAnimation = 1 << 18,
+        DynamicAnimation = 1 << 19,
 
         /// <summary>
         /// <see cref="Animancer.StringReference"/>s are generally more efficient for comparisons
         /// than raw <see cref="string"/>s and are not interchangeable so references should be preferred.
         /// </summary>
-        StringReference = 1 << 19,
+        StringReference = 1 << 20,
 
         /// <summary>All warning types.</summary>
         All = ~0,

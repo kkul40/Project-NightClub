@@ -14,7 +14,6 @@ namespace System.Character.NPC
             public AnimationClip ActionClip;
         }
         
-        
         public float animationDuration;
 
         public AnimationClip Idle;
@@ -22,9 +21,9 @@ namespace System.Character.NPC
         public AnimationClip Sit;
         public List<AnimationClip> LeanOnWall;
         public List<AnimationClip> Dance;
-
+        
         public ActionAnimation Drink;
-        public ActionAnimation Fighh;
+        public ActionAnimation Fight;
 
         public AnimationClip DebugAnim;
     }

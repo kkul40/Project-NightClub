@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections;
@@ -236,10 +236,8 @@ namespace Animancer
         {
             var events = clip.events;
             for (int i = events.Length - 1; i >= 0; i--)
-            {
                 if (events[i].functionName == functionName)
                     return true;
-            }
 
             return false;
         }

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Runtime.CompilerServices;
@@ -60,7 +60,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>The index of this object in its <see cref="IndexedList{TItem, TIndexer}"/>.</summary>
-        /// <remarks>Should be initialized to -1 to indicate that this object is not yet in a list.</remarks>
+        /// <remarks>Must be initialized to -1 to indicate that this object is not yet in a list.</remarks>
         int UpdatableIndex { get; set; }
 
         /// <summary>Updates this object.</summary>

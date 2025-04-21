@@ -14,7 +14,7 @@ MonoImporter:
 AssetOrigin:
   serializedVersion: 1
   productId: 293522
-  packageName: Animancer Pro
-  packageVersion: 8.0.2
+  packageName: Animancer Pro v8
+  packageVersion: 8.1.0
   assetPath: Packages/com.kybernetik.animancer/Runtime/Core/Events/NamedEventDictionary.cs
-  uploadId: 705346
+  uploadId: 736009

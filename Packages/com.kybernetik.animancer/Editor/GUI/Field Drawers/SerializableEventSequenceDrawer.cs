@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR && UNITY_IMGUI
 
@@ -157,7 +157,7 @@ namespace Animancer.Editor
 
                 if (!float.IsNaN(addEventNormalizedTime))
                 {
-                    AddEvent(context, addEventNormalizedTime);
+                    AddEvent(context, addEventNormalizedTime, null);
                 }
             }
             else
@@ -433,6 +433,8 @@ namespace Animancer.Editor
             var timeArea = area;
             NextVerticalArea(ref area);
 
+            var middleClickedTimeArea = TryUseClickEvent(timeArea, 2);
+
             float normalizedTime;
 
             using (var label = PooledGUIContent.Acquire(timeLabel,
@@ -482,11 +484,13 @@ namespace Animancer.Editor
 
                         EditorGUI.EndProperty();
 
-                        if (TryUseClickEvent(timeArea, 2))
+                        if (middleClickedTimeArea)
                             normalizedTime = float.NaN;
 
                         var isEditingTextField = EditorGUIUtility.editingTextField;
-                        if (EditorGUI.EndChangeCheck() || (wasEditingTextField && !isEditingTextField))
+                        if (EditorGUI.EndChangeCheck() ||
+                            middleClickedTimeArea ||
+                            (wasEditingTextField && !isEditingTextField))
                         {
                             if (float.IsNaN(normalizedTime))
                             {
@@ -792,7 +796,7 @@ namespace Animancer.Editor
                     // If the target is currently being previewed, add the event at the currently selected time.
                     var state = TransitionPreviewWindow.GetCurrentState();
                     var normalizedTime = state != null ? state.NormalizedTime : float.NaN;
-                    AddEvent(context, normalizedTime);
+                    AddEvent(context, normalizedTime, null);
                 }
             }
             else
@@ -836,7 +840,10 @@ namespace Animancer.Editor
         /************************************************************************************************************************/
 
         /// <summary>Adds an event to the sequence represented by the given `context`.</summary>
-        public static void AddEvent(Context context, float normalizedTime)
+        public static void AddEvent(
+            Context context,
+            float normalizedTime,
+            StringAsset name)
         {
             // If the time is NaN, add it halfway between the last event and the end.
 
@@ -873,19 +880,34 @@ namespace Animancer.Editor
 
             WrapEventTime(context, ref normalizedTime);
 
-            var newEvent = context.Times.Count - 2;
-            context.Times.GetElement(newEvent).floatValue = normalizedTime;
-            context.SelectedEvent = newEvent;
+            var newEventIndex = context.Times.Count - 2;
+            context.Times.GetElement(newEventIndex).floatValue = normalizedTime;
+            context.SelectedEvent = newEventIndex;
 
-            if (context.Callbacks.Count > newEvent)
+            if (context.Callbacks.Count > newEventIndex)
             {
-                context.Callbacks.Property.InsertArrayElementAtIndex(newEvent);
+                context.Callbacks.Property.InsertArrayElementAtIndex(newEventIndex);
                 context.Callbacks.Property.serializedObject.ApplyModifiedProperties();
 
                 // Make sure the callback starts empty rather than copying an existing value.
-                var callback = context.Callbacks.GetElement(newEvent);
+                var callback = context.Callbacks.GetElement(newEventIndex);
                 callback.SetValue(null);
                 context.Callbacks.Property.OnPropertyChanged();
+            }
+
+            if (context.Names.Count > newEventIndex || name != null)
+            {
+                while (context.Names.Count <= newEventIndex)
+                {
+                    var index = context.Names.Count++;
+
+                    var nameProperty = context.Names.GetElement(index);
+                    nameProperty.SetValue(index != newEventIndex
+                        ? null
+                        : name);
+                }
+
+                context.Names.Property.serializedObject.ApplyModifiedProperties();
             }
 
             // Update the runtime sequence accordingly.
@@ -1215,7 +1237,8 @@ namespace Animancer.Editor
             /// <summary>[<see cref="IDisposable"/>] Calls <see cref="SerializedObject.ApplyModifiedProperties"/>.</summary>
             public void Dispose()
             {
-                if (this == Stack[_ActiveIndex])
+                if ((uint)_ActiveIndex < (uint)Stack.Count &&
+                    this == Stack[_ActiveIndex])
                     _ActiveIndex--;
 
                 Stack.TryGet(_ActiveIndex, out var current);

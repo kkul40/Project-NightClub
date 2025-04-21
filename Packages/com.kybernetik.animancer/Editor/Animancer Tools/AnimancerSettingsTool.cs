@@ -1,9 +1,8 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
 using System;
-using UnityEditor;
 
 namespace Animancer.Editor.Tools
 {

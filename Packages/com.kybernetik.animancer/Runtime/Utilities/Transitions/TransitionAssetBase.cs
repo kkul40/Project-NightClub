@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Collections.Generic;
@@ -42,16 +42,20 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <inheritdoc/>
-        public virtual float FadeDuration => GetTransition().FadeDuration;
+        public virtual float FadeDuration
+            => GetTransition().FadeDuration;
 
         /// <inheritdoc/>
-        public virtual object Key => GetTransition().Key;
+        public virtual object Key
+            => GetTransition().Key;
 
         /// <inheritdoc/>
-        public virtual FadeMode FadeMode => GetTransition().FadeMode;
+        public virtual FadeMode FadeMode
+            => GetTransition().FadeMode;
 
         /// <inheritdoc/>
-        public virtual AnimancerState CreateState() => GetTransition().CreateState();
+        public virtual AnimancerState CreateState()
+            => GetTransition().CreateState();
 
         /// <inheritdoc/>
         public virtual void Apply(AnimancerState state)
@@ -72,7 +76,8 @@ namespace Animancer
             && GetTransition().IsValid();
 
         /// <inheritdoc/>
-        public bool IsLooping => GetTransition().IsLooping;
+        public bool IsLooping
+            => GetTransition().IsLooping;
 
         /// <inheritdoc/>
         public float NormalizedStartTime
@@ -82,7 +87,8 @@ namespace Animancer
         }
 
         /// <inheritdoc/>
-        public float MaximumDuration => GetTransition().MaximumDuration;
+        public float MaximumDuration
+            => GetTransition().MaximumDuration;
 
         /// <inheritdoc/>
         public float Speed
@@ -90,6 +96,29 @@ namespace Animancer
             get => GetTransition().Speed;
             set => GetTransition().Speed = value;
         }
+
+        /************************************************************************************************************************/
+
+        /// <summary>Explains why Transition Assets warn about accessing their events.</summary>
+        public const string ObsoleteEventsMessage =
+            "Directly accessing the Events of a Transition Asset is generally not recommended" +
+            " because any modifications will affect all characters who share the same asset" +
+            " and will persist until the asset is destroyed (usually when the application exits)." +
+            "\n\n" +
+            "In most cases, the recommended approach is to initialize events on the " + nameof(AnimancerState) +
+            " returned when you Play the Transition rather than modifying the Asset itself." +
+            "\n\n" +
+            "If you really need to access these events, you can use the asset.Transition.Events.";
+
+        /// <inheritdoc/>
+        [Obsolete(ObsoleteEventsMessage)]
+        public AnimancerEvent.Sequence Events
+            => GetTransition().Events;
+
+        /// <inheritdoc/>
+        [Obsolete(ObsoleteEventsMessage)]
+        public ref AnimancerEvent.Sequence.Serializable SerializedEvents
+            => ref GetTransition().SerializedEvents;
 
         /************************************************************************************************************************/
 

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using UnityEngine;
 
@@ -12,11 +12,14 @@ namespace Animancer
     /// </remarks>
     /// https://kybernetik.com.au/animancer/api/Animancer/ITransitionDetailed
     /// 
-    public interface ITransitionDetailed : ITransition
+    public interface ITransitionDetailed : ITransition, IHasEvents
     {
         /************************************************************************************************************************/
 
         /// <summary>Can this transition create a valid <see cref="AnimancerState"/>?</summary>
+        /// <remarks>
+        /// Use <see cref="AnimancerUtilities.IsValid(ITransitionDetailed)"/> to check for <c>null</c> as well.
+        /// </remarks>
         bool IsValid { get; }
 
         /// <summary>What will the value of <see cref="AnimancerState.IsLooping"/> be for the created state?</summary>
@@ -41,9 +44,7 @@ namespace Animancer
     {
         /************************************************************************************************************************/
 
-        /// <summary>
-        /// Is the `transition` not null and <see cref="ITransitionDetailed.IsValid"/>?
-        /// </summary>
+        /// <summary>Is the `transition` not null and <see cref="ITransitionDetailed.IsValid"/>?</summary>
         public static bool IsValid(this ITransitionDetailed transition)
             => transition != null
             && transition.IsValid;
@@ -155,12 +156,9 @@ namespace Animancer
             if (!float.IsNaN(normalizedStartTime))
                 duration *= 1 - normalizedStartTime;
 
-            if (TryGetWrappedObject(transition, out ITransitionWithEvents events))
-            {
-                var normalizedEndTime = events.Events.NormalizedEndTime;
-                if (!float.IsNaN(normalizedEndTime))
-                    duration *= normalizedEndTime;
-            }
+            var normalizedEndTime = detailed.Events.NormalizedEndTime;
+            if (!float.IsNaN(normalizedEndTime))
+                duration *= normalizedEndTime;
 
             if (speed.IsFinite() && speed != 0)
                 duration /= speed;

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable IDE0016 // Use 'throw' expression.
 
@@ -1265,8 +1265,6 @@ namespace Animancer
                 if (animation == null)
                     return;
 
-                var length = animation.length;
-
                 var animationEvents = animation.events;
                 if (animationEvents.Length == 0)
                     return;
@@ -1277,6 +1275,8 @@ namespace Animancer
 
                 if (_Names.Length < Capacity)
                     Array.Resize(ref _Names, Capacity);
+
+                var length = animation.length;
 
                 var index = -1;
                 for (int i = 0; i < animationEvents.Length; i++)

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value.
 
@@ -17,11 +17,6 @@ namespace Animancer
             /// Serializable data which can be used to construct an <see cref="Sequence"/> using
             /// <see cref="StringAsset"/>s and <see cref="IInvokable"/>s.
             /// </summary>
-            /// <remarks>
-            /// <strong>Documentation:</strong>
-            /// <see href="https://kybernetik.com.au/animancer/docs/manual/events/animancer/serialization">
-            /// Serialized Events</see>
-            /// </remarks>
             /// https://kybernetik.com.au/animancer/api/Animancer/Serializable
             [Serializable]
             public class Serializable : ICloneable<Serializable>

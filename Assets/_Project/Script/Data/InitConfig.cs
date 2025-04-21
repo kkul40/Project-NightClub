@@ -1,5 +1,4 @@
-﻿using System;
-using System.Character.Bartender;
+﻿using System.Character.Bartender;
 using System.Character.NPC;
 using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
@@ -11,6 +10,8 @@ namespace Data
 {
     public class InitConfig : Singleton<InitConfig>
     {
+        public NpcAnimationSo test;
+
         [Header("UI Style")] 
         [SerializeField] private UITextStyle DefaultUITextStyle;
         [SerializeField] private UIColorStyle DefaultUIColorStyle;

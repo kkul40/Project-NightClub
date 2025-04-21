@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 using System.Text;
@@ -122,7 +122,7 @@ namespace Animancer
         /************************************************************************************************************************/
 
         /// <summary>Gets the lowest and highest threshold values on each axis.</summary>
-        public void GetThresholdBounds(out Vector2 min, out Vector2 max)
+        public void GetThresholdBounds(out Vector2 min, out Vector2 max, out bool isAroundZero)
         {
             var i = ChildCount - 1;
             min = max = GetThreshold(i);
@@ -134,16 +134,18 @@ namespace Animancer
 
                 if (min.x > threshold.x)
                     min.x = threshold.x;
+                else if (max.x < threshold.x)
+                    max.x = threshold.x;
 
                 if (min.y > threshold.y)
                     min.y = threshold.y;
-
-                if (max.x < threshold.x)
-                    max.x = threshold.x;
-
-                if (max.y < threshold.y)
+                else if (max.y < threshold.y)
                     max.y = threshold.y;
             }
+
+            isAroundZero =
+                min.x < 0 && max.x > 0 &&
+                min.y < 0 && max.y > 0;
         }
 
         /// <inheritdoc/>
@@ -151,18 +153,55 @@ namespace Animancer
         {
             get
             {
-                GetThresholdBounds(out var min, out var max);
                 var value = Parameter;
-                return new(
-                    AnimancerUtilities.InverseLerpUnclamped(min.x, max.x, value.x),
-                    AnimancerUtilities.InverseLerpUnclamped(min.y, max.y, value.y));
+
+                GetThresholdBounds(out var min, out var max, out bool isAroundZero);
+
+                if (isAroundZero)// Interpolate -1 to 1.
+                {
+                    if (value.x > 0)
+                        value.x = AnimancerUtilities.InverseLerpUnclamped(0, max.x, value.x);
+                    else if (value.x < 0)
+                        value.x = AnimancerUtilities.InverseLerpUnclamped(0, min.x, -value.x);
+
+                    if (value.y > 0)
+                        value.y = AnimancerUtilities.InverseLerpUnclamped(0, max.y, value.y);
+                    else if (value.y < 0)
+                        value.y = AnimancerUtilities.InverseLerpUnclamped(0, min.y, -value.y);
+
+                    return value;
+                }
+                else// Interpolate 0 to 1.
+                {
+                    return new(
+                        AnimancerUtilities.InverseLerpUnclamped(min.x, max.x, value.x),
+                        AnimancerUtilities.InverseLerpUnclamped(min.y, max.y, value.y));
+                }
             }
             set
             {
-                GetThresholdBounds(out var min, out var max);
-                Parameter = new(
-                    Mathf.LerpUnclamped(min.x, max.x, value.x),
-                    Mathf.LerpUnclamped(min.y, max.y, value.y));
+                GetThresholdBounds(out var min, out var max, out bool isAroundZero);
+
+                if (isAroundZero)// Interpolate -1 to 1.
+                {
+                    if (value.x > 0)
+                        value.x = Mathf.LerpUnclamped(0, max.x, value.x);
+                    else if (value.x < 0)
+                        value.x = Mathf.LerpUnclamped(0, min.x, -value.x);
+
+                    if (value.y > 0)
+                        value.y = Mathf.LerpUnclamped(0, max.y, value.y);
+                    else if (value.y < 0)
+                        value.y = Mathf.LerpUnclamped(0, min.y, -value.y);
+
+                    Parameter = value;
+                }
+                else// Interpolate 0 to 1.
+                {
+                    Parameter = new(
+                        Mathf.LerpUnclamped(min.x, max.x, value.x),
+                        Mathf.LerpUnclamped(min.y, max.y, value.y));
+                }
             }
         }
 

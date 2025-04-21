@@ -776,6 +776,41 @@ namespace Animancer.Editor
         }
 
         /************************************************************************************************************************/
+
+        /// <summary>Returns a description of the properties in the specified `serializedObject`.</summary>
+        public static string GetDescriptionOfProperties(SerializedObject serializedObject)
+        {
+            var text = new StringBuilder();
+
+            var targets = serializedObject.targetObjects;
+            text.Append(nameof(SerializedObject) + " Targets [").Append(targets.Length).Append(']');
+            for (int i = 0; i < targets.Length; i++)
+                text.AppendLine().Append(" - ").Append(targets[i]);
+
+            text.Append("Properties []");
+            var propertyCountIndex = text.Length - 2;
+
+            var propertyCount = 0;
+
+            var property = serializedObject.GetIterator();
+            while (property.Next(true))
+            {
+                propertyCount++;
+
+                text.AppendLine();
+
+                for (int i = 0; i < property.depth; i++)
+                    text.Append("    ");
+
+                text.Append(" - ").Append(property.propertyType).Append("  ").Append(property.propertyPath);
+            }
+
+            text.Insert(propertyCountIndex, propertyCount.ToString());
+
+            return text.ToString();
+        }
+
+        /************************************************************************************************************************/
         #endregion
         /************************************************************************************************************************/
         #region Accessor Pool

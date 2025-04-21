@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -48,7 +48,10 @@ namespace Animancer.Editor.TransitionLibraries
                     area.width - AnimancerGUI.StandardSpacing * 2,
                     AnimancerGUI.LineHeight);
 
-                GUI.Label(area, "Library contains no Transitions");
+                GUI.Label(
+                    area,
+                    "Library contains no Transitions." +
+                    " Drag and Drop Transition Assets into this window or use the Create Transition button.");
 
                 AnimancerGUI.NextVerticalArea(ref area);
 

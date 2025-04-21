@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +20,7 @@ namespace Animancer.TransitionLibraries
         order = Strings.AssetMenuOrder + 0)]
     [AnimancerHelpUrl(typeof(TransitionLibraryAsset))]
     public class TransitionLibraryAsset : ScriptableObject,
-        IAnimationClipSource
+        IAnimationClipCollection
     {
         /************************************************************************************************************************/
 
@@ -88,10 +88,10 @@ namespace Animancer.TransitionLibraries
         /************************************************************************************************************************/
 
         /// <summary>Gathers all the animations in the <see cref="Definition"/> and <see cref="Library"/>.</summary>
-        public void GetAnimationClips(List<AnimationClip> results)
+        public virtual void GatherAnimationClips(ICollection<AnimationClip> clips)
         {
-            results.GatherFromSource(_Definition);
-            results.GatherFromSource(Library);
+            clips.GatherFromSource(_Definition);
+            clips.GatherFromSource(Library);
         }
 
         /************************************************************************************************************************/

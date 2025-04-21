@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 using System;
 using System.Runtime.CompilerServices;
@@ -67,6 +67,7 @@ namespace Animancer
             {
                 Events = events;
                 _NextEventIndex = RecalculateEventIndex;
+                _SequenceVersion = Events.Version;
                 HasOwnEvents = isOwned;
             }
 

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 #if UNITY_EDITOR
 
@@ -78,6 +78,12 @@ namespace Animancer.Editor
 
             CalculateSizes(area, columns, rows, out var labelSize, out var cellSize);
 
+            var indexBounds = new RectInt(
+                (int)(_ScrollPosition.x / cellSize.x),
+                (int)(_ScrollPosition.y / cellSize.y),
+                Mathf.CeilToInt((area.width - labelSize.x) / cellSize.x) + 1,
+                Mathf.CeilToInt((area.height - labelSize.y) / cellSize.y) + 1);
+
             area.size += scrollBarSize;
 
             var cornerArea = new Rect(area.position, labelSize + scrollBarSize);
@@ -104,9 +110,9 @@ namespace Animancer.Editor
 
             GUI.BeginClip(area);
 
-            for (int x = 0; x < columns; x++)
+            for (int x = indexBounds.xMin; x < indexBounds.xMax; x++)
             {
-                for (int y = 0; y < rows; y++)
+                for (int y = indexBounds.yMin; y < indexBounds.yMax; y++)
                 {
                     var cellArea = new Rect(
                         (cellSize.x + Padding) * x - _ScrollPosition.x,

@@ -1,4 +1,4 @@
-// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2024 Kybernetik //
+// Animancer // https://kybernetik.com.au/animancer // Copyright 2018-2025 Kybernetik //
 
 namespace Animancer
 {
@@ -21,9 +21,5 @@ namespace Animancer
 
         /************************************************************************************************************************/
     }
-
-    /// <summary>A combination of <see cref="ITransition"/> and <see cref="IHasEvents"/>.</summary>
-    /// https://kybernetik.com.au/animancer/api/Animancer/ITransitionWithEvents
-    public interface ITransitionWithEvents : ITransition, IHasEvents { }
 }
 
