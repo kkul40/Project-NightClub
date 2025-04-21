@@ -118,20 +118,6 @@ namespace System.Building_System.Controller
 
             if (_currentTool.CheckPlaceInput(_toolHelper))
             {
-                // if (_currentTool is IWallDoorPlacerTool) // Relocate Wall Door
-                // {
-                //     if (_currentTool.OnValidate(_toolHelper))
-                //     {
-                //         _currentTool.OnPlace(_toolHelper);
-                //         ClearBuildingCache();
-                //         StopBuilding();
-                //         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
-                //     }
-                //     else
-                //     {
-                //         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingError, true));
-                //     }
-                // }
                 if (_relocateData.IsRelocating) // Relocate Handler
                 {
                     if (_currentTool.OnValidate(_toolHelper))
@@ -337,7 +323,6 @@ namespace System.Building_System.Controller
         {
             if (!_relocateData.IsRelocating) return;
             
-
             if (isVerified)
             {
                 _relocateData.SetPosition(_toolHelper.LastPosition, _toolHelper.LastRotation);

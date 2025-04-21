@@ -122,7 +122,8 @@ namespace System.Building_System.Controller.Tools
             else
                 _closestAssignmentData.AssignNewID(found);
 
-            
+            TH.FXCreatorSystem.CreateFX(FXType.Wall, position, Vector2.one, _wallRotation);
+
             isFinished = true;
         }
 

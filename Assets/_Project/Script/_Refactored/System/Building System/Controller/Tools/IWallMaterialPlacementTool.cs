@@ -15,8 +15,6 @@ namespace System.Building_System.Controller.Tools
         private IChangableMaterial _currentChangableMaterial;
         private MaterialItemSo _storedMaterial;
     
-        private Quaternion _wallRotation;
-    
         private Dictionary<Transform, MaterialColorChanger.MaterialData> _materialDatas = new();
 
         public bool isFinished { get; private set; }
@@ -58,6 +56,11 @@ namespace System.Building_System.Controller.Tools
         {
             _closestWallData.AssignNewID(_materialItemSo);
             _currentChangableMaterial = null;
+
+            Vector3 position = _closestWallData.assignedWall.transform.position;
+            Quaternion rotation = _closestWallData.assignedWall.transform.rotation;
+            TH.FXCreatorSystem.CreateFX(FXType.Wall, position , Vector2.one, rotation);
+
         }
 
         public void OnStop(ToolHelper TH)

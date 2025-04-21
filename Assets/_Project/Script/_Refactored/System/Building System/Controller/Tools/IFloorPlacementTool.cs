@@ -135,6 +135,9 @@ namespace System.Building_System.Controller.Tools
             unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.FloorProp);
 
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+            
+            TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, new Vector2(TH.colliderSize.x, TH.colliderSize.z), TH.LastRotation);
+
         }
 
         public void OnStop(ToolHelper TH)

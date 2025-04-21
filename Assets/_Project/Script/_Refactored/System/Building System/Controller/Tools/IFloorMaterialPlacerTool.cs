@@ -1,5 +1,7 @@
-﻿using Disco_ScriptableObject;
+﻿using Data;
+using Disco_ScriptableObject;
 using DiscoSystem;
+using ExtensionMethods;
 using UnityEngine;
 
 namespace System.Building_System.Controller.Tools
@@ -11,7 +13,9 @@ namespace System.Building_System.Controller.Tools
         private IChangableMaterial _mouseOnChangableMaterial;
         private IChangableMaterial _currentChangableMaterial;
         private MaterialItemSo _storedMaterial;
-    
+        private FloorData _mouseOnFloorData;
+        
+        
         public bool isFinished { get; private set; }
 
 
@@ -50,6 +54,7 @@ namespace System.Building_System.Controller.Tools
         public void OnPlace(ToolHelper TH)
         {
             _currentChangableMaterial = null;
+            TH.FXCreatorSystem.CreateFX(FXType.Floor, _mouseOnFloorData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, Quaternion.identity);
         }
 
         public void OnStop(ToolHelper TH)
@@ -68,8 +73,8 @@ namespace System.Building_System.Controller.Tools
 
             Vector3 mousePos = TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID);
             mousePos.y = 0;
-        
-            return TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z).assignedFloorTile;
+            _mouseOnFloorData = TH.DiscoData.MapData.GetFloorGridData((int)mousePos.x, (int)mousePos.z);
+            return _mouseOnFloorData.assignedFloorTile;
         }
     
         private void ResetPreviousMaterial()

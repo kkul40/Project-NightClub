@@ -103,6 +103,10 @@ namespace System.Building_System.Controller.Tools
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+
+            Quaternion rotation = Quaternion.Euler(90, TH.LastRotation.eulerAngles.y, 0);
+            
+            TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition , new Vector2(TH.colliderSize.x, TH.colliderSize.z), rotation);
         }
 
         public void OnStop(ToolHelper TH)

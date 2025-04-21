@@ -37,7 +37,6 @@ namespace System
         private GameObject Create(GameObject gameObject, Vector3 position, Vector2 objectSize, Quaternion quaternion)
         {
             var obj = Instantiate(gameObject, transform);
-            // TODO Extension Method For Getinng center of bigger objects.
             float biggest = Mathf.Max(objectSize.x, objectSize.y);
             obj.transform.localScale = new Vector3(biggest,biggest,biggest);
             obj.transform.rotation = quaternion;
