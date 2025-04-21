@@ -112,9 +112,11 @@ namespace Data
             {
                 if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
                     if (empColl.onlyEmployeeCollider == hit.collider)
+                    {
+                        node.IsWalkable = true;
                         return true;
+                    }
             }
-            
             return false;
         }
         

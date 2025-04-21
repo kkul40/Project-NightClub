@@ -10,6 +10,7 @@ namespace Root
         public GameObject TestCube;
         public bool showPlacements = false;
         public bool showPathFinder = false;
+        public bool showEmployeeFinder = false;
         public bool showAvaliableLeanPosition = false;
 
         private void OnDrawGizmos()
@@ -37,7 +38,7 @@ namespace Root
                     else
                         Gizmos.color = Color.red;
                     
-                    if (node.OnlyEmployee)
+                    if (showEmployeeFinder && node.OnlyEmployee)
                         Gizmos.color = Color.cyan;
                     
                     if (node.HasOccupied)
