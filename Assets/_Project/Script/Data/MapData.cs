@@ -117,6 +117,8 @@ namespace Data
             DoorPosition = new Vector3Int(WallDoorIndex - 1, 0, 0);
         else
             DoorPosition = new Vector3Int(0, 0, WallDoorIndex - 1);
+        
+        GameEvent.Trigger(new Event_PropRelocated(null));
 
         Path.SetFlags(avaliablePathFlag: true);
     }
