@@ -22,6 +22,8 @@ namespace System.Building_System.Controller
 
     public class BuildingController : BaseController<BuildingModel, BuildingView, BuildingService>
     {
+        
+        // TODO: Remove This Relocate Data instead use tools to relocate props.
         private class RelocateData
         {
             public bool IsRelocating;
@@ -90,6 +92,9 @@ namespace System.Building_System.Controller
 
             _view.OnSlotItemClicked += StartATool;
             _view.OnStorageItemClicked += StartInventoryItemPlacement;
+            _view.OnExtensionMapItemClicked += StartMapExtensionItem;
+            
+
 
             _relocateData = new RelocateData();
             
@@ -135,7 +140,7 @@ namespace System.Building_System.Controller
                 }
                 else // Place Handler
                 {
-                    if (_currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper))
+                    if (_currentTool.OnValidate(_toolHelper) && TryPurchase(_toolHelper.PurchaseMode, _toolHelper.SelectedStoreItem))
                     {
                         _currentTool.OnPlace(_toolHelper);
                         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
@@ -155,17 +160,19 @@ namespace System.Building_System.Controller
             }
         }
         
-        
-        private bool TryPurchase(ToolHelper toolHelper)
+        private bool TryPurchase(PurchaseTypes purchaseTypes, StoreItemSO storeItemSo)
         {
-            switch (toolHelper.PurchaseMode)
+            switch (purchaseTypes)
             {
                 case PurchaseTypes.Buy:
-                    if (DiscoData.Instance.inventory.HasEnoughMoney(_toolHelper.SelectedStoreItem.Price))
+                    if (DiscoData.Instance.inventory.HasEnoughMoney(storeItemSo.Price))
                     {
-                        GameEvent.Trigger(new Event_RemoveMoney(_toolHelper.SelectedStoreItem.Price, false));
+                        GameEvent.Trigger(new Event_RemoveMoney(storeItemSo.Price, false));
                         return true;
                     }
+                    
+                    Debug.Log("Not Enough Money To Buy");
+                    // TODO : Send a notification window
 
                     return false;
                 case PurchaseTypes.Free:
@@ -223,6 +230,21 @@ namespace System.Building_System.Controller
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
+
+        private void StartMapExtensionItem(ExtendItemSo extendItemSo)
+        {
+            if (!DiscoData.Instance.MapData.CheckMapExpendable(extendItemSo.ExtendX, extendItemSo.ExtendY))
+            {
+                Debug.Log("You Cannot Expend The Map Further");
+                // TODO : Send Notification Window
+                return;
+            }
+            
+            if (TryPurchase(PurchaseTypes.Buy, extendItemSo))
+            {
+                GameEvent.Trigger(new Event_ExpendMapSize(extendItemSo.ExtendX, extendItemSo.ExtendY));
+            }
+        }
         
         private void StartInventoryItemPlacement(StoreItemSO arg1, int arg2)
         {
@@ -234,6 +256,8 @@ namespace System.Building_System.Controller
         private void StartBuilding(StoreItemSO storeItemSo)
         {
             _toolHelper.SelectedStoreItem = storeItemSo;
+
+            _toolHelper.PurchaseMode = PurchaseTypes.Buy;
 
             _currentTool = SelectBuildingMethod(storeItemSo);
             if (_currentTool != null)

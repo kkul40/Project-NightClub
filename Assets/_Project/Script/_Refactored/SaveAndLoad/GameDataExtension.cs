@@ -128,7 +128,7 @@ namespace SaveAndLoad
 
             public InventorySaveData()
             {
-                Balance = 0;
+                Balance = 500;
                 Items = new SerializableDictionary<int, int>();
             }
         }

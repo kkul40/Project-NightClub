@@ -99,12 +99,25 @@ namespace Data
 
     #endregion
 
-    public bool SetCurrentMapSize(Vector2Int mapSize)
+    public bool ChangeMapSize(int x, int y)
     {
-        CurrentMapSize = mapSize;
+        if (CurrentMapSize.x + x > ConstantVariables.MaxMapSizeX) return false;
+        CurrentMapSize += new Vector2Int(x, 0);
+        
+        if (CurrentMapSize.y + y > ConstantVariables.MaxMapSizeY) return false;
+        CurrentMapSize += new Vector2Int(0, y);
+        
         Path.SetFlags(avaliablePathFlag: true);
 
         GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
+        return true;
+    }
+
+    public bool CheckMapExpendable(int x, int y)
+    {
+        if (CurrentMapSize.x + x > ConstantVariables.MaxMapSizeX) return false;
+        if (CurrentMapSize.y + y > ConstantVariables.MaxMapSizeY) return false;
+
         return true;
     }
 

@@ -216,7 +216,7 @@ namespace System
             SetCursor(cursorEvent.CursorType);
         }
 
-        public void SetCursor(eCursorTypes cursorType)
+        private void SetCursor(eCursorTypes cursorType)
         {
             switch (cursorType)
             {
@@ -241,11 +241,11 @@ namespace System
             currentCursor = cursorType;
         }
 
-        public void SetCursorToDefault()
+        private void SetCursorToDefault()
         {
             SetCursor(eCursorTypes.Default);
         }
-        public void ToggleCursorSystem(bool toggle)
+        private void ToggleCursorSystem(bool toggle)
         {
             StartCoroutine(ToggleCursorSystem(!toggle, 0.1f));
         }

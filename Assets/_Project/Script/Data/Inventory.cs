@@ -56,7 +56,6 @@ namespace Data
         public bool HasEnoughMoney(int balanceCheckAmount)
         {
             if (Balance < balanceCheckAmount) return false;
-
             return true;
         }
 

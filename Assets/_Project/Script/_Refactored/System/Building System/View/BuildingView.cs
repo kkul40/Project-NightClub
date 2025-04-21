@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Disco_ScriptableObject;
 using Framework.Context;
 using Framework.Mvcs.View;
-using UI.GamePages;
 using UI.GamePages.GameButtons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,12 +16,13 @@ namespace System.Building_System.View
         
         public Action<StoreItemSO> OnSlotItemClicked;
         public Action<StoreItemSO, int> OnStorageItemClicked;
+        public Action<ExtendItemSo> OnExtensionMapItemClicked;
 
         private List<UI_StoreItemSlot> _slots;
         private List<UI_CargoItemSlot> _cargoSlots;
 
         public GameObject SlotPrefab;
-        public override PageType PageType { get; protected set; } = PageType.MiniPage;
+        public override PageType PageType { get; protected set; } = PageType.FullPage;
 
         public override void Initialize(IContext context)
         {
@@ -70,9 +70,11 @@ namespace System.Building_System.View
                 Button button = slot.GetComponent<Button>();
 
                 if (storeItem is ExtendItemSo extendItemSo)
-                    button.onClick.AddListener((() => ExtensionSlotClicked(button, extendItemSo)));
+                    button.onClick.AddListener(() => ExtensionSlotClicked(button, extendItemSo));
                 else
                     button.onClick.AddListener(() => ItemSlotClicked(button, storeItem));
+                
+                // TODO : Add Storage Item Events Too Just like Above
             }
             
             SelectCategory(StoreItemTypes.Bar);
@@ -85,7 +87,7 @@ namespace System.Building_System.View
 
         public void ExtensionSlotClicked(Button button, ExtendItemSo extendItemSo)
         {
-            GameEvent.Trigger(new Event_ExpendMapSize(extendItemSo.ExtendX, extendItemSo.ExtendY));
+            OnExtensionMapItemClicked?.Invoke(extendItemSo);
         }
 
         public void StorageSlotClicked(Button button, StoreItemSO storeItemSo, int amount)

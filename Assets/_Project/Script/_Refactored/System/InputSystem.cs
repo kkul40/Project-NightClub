@@ -32,7 +32,7 @@ namespace System
         [HideInInspector] public bool IsMouseCursorOnWorld;
         [HideInInspector] public bool LeftClickOnWorld;
         [HideInInspector] public bool LeftHoldClickOnWorld;
-        [FormerlySerializedAs("RightClick")] public bool CancelClick;
+        public bool CancelClick;
         public bool RightClickOnWorld;
 
         public bool HasMouseMoveToNewCell; // Used For Optimization
@@ -185,10 +185,6 @@ namespace System
 
             RaycastHit hit;
             float maxDistance = 100;
-
-            // TODO Ignore Layer Ekle ki kapi bugg da kalmasin
-            // int ignoreLayer = ignore;
-            // int ignoreMask = ~(1 << ignoreLayer);
 
             if (Physics.Raycast(ray, out hit, maxDistance, ~ignore)) return hit.transform;
 

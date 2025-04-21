@@ -169,22 +169,20 @@ namespace System
         [ContextMenu("Expend X")]
         public void ExpendX()
         {
-            _mapData.SetCurrentMapSize(_mapData.CurrentMapSize + Vector2Int.right);
+            if (!_mapData.ChangeMapSize(1, 0)) return;
             
             if (_mapData.CurrentMapSize.x> ConstantVariables.MaxMapSizeX) return;
             InstantiateXWall(_mapData.CurrentMapSize.x);
-
             for (var i = 0; i < _mapData.CurrentMapSize.y; i++) InstantiateFloorTile(_mapData.CurrentMapSize.x - 1, i);
         }
 
         [ContextMenu("Expend Y")]
         public void ExpendY()
         {
-            _mapData.SetCurrentMapSize(_mapData.CurrentMapSize + Vector2Int.up);
+            if (!_mapData.ChangeMapSize(0, 1)) return;
 
             if (_mapData.CurrentMapSize.y> ConstantVariables.MaxMapSizeY) return;
             InstantiateYWall(_mapData.CurrentMapSize.y);
-
             for (var i = 0; i < _mapData.CurrentMapSize.x; i++) InstantiateFloorTile(i, _mapData.CurrentMapSize.y - 1);
         }
 

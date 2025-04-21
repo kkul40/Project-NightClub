@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CharacterCustomization.Scriptables;
 using Data;
-using ExtensionMethods;
 using JetBrains.Annotations;
 using SaveAndLoad;
 using Sirenix.OdinInspector;
@@ -9,6 +8,7 @@ using UnityEngine;
 
 namespace CharacterCustomization.UI
 {
+    // TODO : Implement Color Change Logic Here Somewhere
     public class PlayerCustomizationUI : MonoBehaviour, ISavable
     {
         public class EquipedItem
@@ -143,7 +143,8 @@ namespace CharacterCustomization.UI
           
             equipment.index = (equipment.index + 1) % m_ItemGroup[bodyPart].Count;
             CustomizationItem customizationItem = m_ItemGroup[bodyPart][equipment.index];
-            
+
+            PlayeAnimation(bodyPart);
             InitItem(customizationItem, equipment);
         }
         
@@ -158,6 +159,7 @@ namespace CharacterCustomization.UI
             }
             CustomizationItem customizationItem = m_ItemGroup[bodyPart][equipment.index];
             
+            PlayeAnimation(bodyPart);
             InitItem(customizationItem, equipment);
         }
 
@@ -225,6 +227,7 @@ namespace CharacterCustomization.UI
        
         private void ChangeGender(eGenderType gender)
         {
+            PlayerGenderAnimation(gender);
             InitBody(gender);
         }
 
@@ -232,6 +235,38 @@ namespace CharacterCustomization.UI
         {
         }
 
+        private void PlayerGenderAnimation(eGenderType gender)
+        {
+            // TODO : Add Animations Here
+            switch (gender)
+            {
+                case eGenderType.Male:
+                    break;
+                case eGenderType.Female:
+                    break;
+            }
+        }
+        
+        private void PlayeAnimation(BodyPart bodyPart)
+        {
+            // TODO : Add Animations Here
+            switch (bodyPart)
+            {
+                case BodyPart.Head:
+                    break;
+                case BodyPart.Hair:
+                    break;
+                case BodyPart.Accessories:
+                    break;
+                case BodyPart.Top:
+                    break;
+                case BodyPart.Bottom:
+                    break;
+                case BodyPart.Shoes:
+                    break;
+            }
+        }
+        
         public void SaveData(ref GameData gameData)
         {
             gameData.SavedPlayerCustomizationIndexData = m_PlayerEquipments.ConvertPlayerCustomizationIndexData();

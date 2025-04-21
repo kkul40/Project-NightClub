@@ -90,8 +90,6 @@ namespace Rukha93.ModularAnimeCharacter.Customization.UI
 
         public void ShowCustomization(bool value)
         {
-            //todo: add basic animation
-
             if (value == false)
             {
                 CurrentCategory = "";

@@ -30,7 +30,7 @@ namespace UI.GamePages
         public void Initialize()
         {
             _uiPageBases = FindObjectsByType<BaseView>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToHashSet();
-
+            
             foreach (var page in _uiPageBases)
             {
                 if(!page.IsInitialized)
@@ -55,13 +55,16 @@ namespace UI.GamePages
                     
                 }
                 else
+                {
                     CloseAllPages(PageType.FullPage);
+                    CloseAllPages(PageType.MiniPage);
+                }
             }
-
-            if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
-            {
-                CloseAllPages(PageType.MiniPage);
-            }
+            
+            // if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
+            // {
+            //     CloseAllPages(PageType.MiniPage);
+            // }
         }
 
         public void ShowDrinkPage(Bar bar)

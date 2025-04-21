@@ -42,7 +42,6 @@ namespace Data
 
             assignedFloorTile.UpdateMaterial(materialItemSo);
             assignedMaterialID = materialItemSo.ID;
-            
         }
     }
 

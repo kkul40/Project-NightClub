@@ -49,6 +49,18 @@ namespace UI.PopUp
             RegisterBehaviors();
         }
 
+        private void Update()
+        {
+            if (_lastData == null) return;
+            
+            if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
+            {
+                ToggleView(false);
+                _lastData = null;
+                GameEvent.Trigger(new Event_ResetSelection());
+            }
+        }
+
         public override void EventEnable()
         {
         }
@@ -244,6 +256,18 @@ namespace UI.PopUp
                 PlaySFXOnButtonClick();
                 ToggleView(false);
 
+                GameEvent.Trigger(new Event_ResetSelection());
+            }
+        }
+
+        public void Cancel()
+        {
+            if (_lastData is Bartender bartender)
+            {
+                Debug.Log("Bartender's current Task Will Cancelled");
+                // TODO : Add The logic Here
+                PlaySFXOnButtonClick();
+                ToggleView(false);
                 GameEvent.Trigger(new Event_ResetSelection());
             }
         }

@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: 
   Description: 
   Icon: {fileID: 0}
-  Price: 0
+  Price: 100
   ItemType: 10
   ExtendX: 1
   ExtendY: 1

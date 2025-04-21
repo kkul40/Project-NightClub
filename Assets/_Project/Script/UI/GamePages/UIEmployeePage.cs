@@ -4,6 +4,6 @@ namespace UI.GamePages
 {
     public class UIEmployeePage : BaseView
     {
-        public override PageType PageType { get; protected set; } = PageType.MiniPage;
+        public override PageType PageType { get; protected set; } = PageType.FullPage;
     }
 }

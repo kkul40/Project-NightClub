@@ -17,7 +17,6 @@ namespace System.Building_System.Controller.Tools
         private List<MeshRenderer> _tempMeshRenderer;
 
         private Transform hitSurface;
-        private bool isSnappedToSurface;
     
         // Box Collider Values
         // private Collider _collider;
@@ -48,9 +47,6 @@ namespace System.Building_System.Controller.Tools
         
             // Map Boundry
             if (!TH.MapBoundryCheck()) return false;
-        
-            if (isSnappedToSurface)
-                if (!CheckIfPlacedOnSurface(TH)) return false;
         
             // Collision Check
             var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
@@ -83,17 +79,6 @@ namespace System.Building_System.Controller.Tools
             FloorRotation(TH);
             FloorPositioning(TH);
 
-            // Surface Placement Check
-            if (_placementItem.canPlaceOntoOtherObjects)
-            {
-                hitSurface = TH.InputSystem.GetHitTransformWithLayer(ToolHelper.SurfaceLayerID);
-
-                if (hitSurface != null)
-                    TH.SnapToSurfaceGrid(TH, hitSurface);
-
-                isSnappedToSurface = hitSurface != null;
-            }
-         
             // Apply To Object
             _tempObject.transform.position = TH.LastPosition;
             _tempObject.transform.rotation = TH.LastRotation;
@@ -105,26 +90,7 @@ namespace System.Building_System.Controller.Tools
         {
             var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
-            // Setting Parent Object
-            if (isSnappedToSurface)
-            {
-                Transform snapHolder = hitSurface.transform.parent.Find("Snapped Object Holder");
-
-                if (snapHolder == null)
-                {
-                    GameObject newHolder = new GameObject();
-                    newHolder.transform.SetParent(hitSurface.parent);
-
-                    newHolder.name = "Snapped Object Holder";
-                    snapHolder = newHolder.transform;
-                }
-            
-                obj.transform.SetParent(snapHolder);
-            }
-            else
-            {
-                obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
-            }
+            obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
 
             IPropUnit unit;
             if (obj.TryGetComponent(out IPropUnit propUnit))
@@ -175,26 +141,6 @@ namespace System.Building_System.Controller.Tools
                 TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
             else if(TH.InputSystem.RotateRight)
                 TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
-        }
-
-        private bool CheckIfPlacedOnSurface(ToolHelper TH)
-        {
-            foreach (var vector3 in TH.GetRotatedFloorCorners(TH.LastRotation))
-            {
-                Debug.Log(vector3);
-                Ray ray = new Ray(vector3, Vector3.down);
-                // TODO + Check If It Hits a surface of a different object.
-                if (Physics.CheckSphere(vector3, 0.1f, 1 << ToolHelper.SurfaceLayerID))
-                {
-                    Debug.DrawRay(ray.origin, ray.direction, Color.green);
-                }
-                else
-                {
-                    Debug.DrawRay(ray.origin, ray.direction, Color.red);
-                    return false;
-                }
-            }
-            return true;
         }
     }
 }

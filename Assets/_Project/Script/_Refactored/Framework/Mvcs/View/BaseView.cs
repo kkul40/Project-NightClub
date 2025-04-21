@@ -1,5 +1,6 @@
 using System;
 using Framework.Context;
+using UI.GamePages;
 using UnityEngine;
 
 namespace Framework.Mvcs.View

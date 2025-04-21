@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace _Initializer
 {
+    [DefaultExecutionOrder(-50)]
     public class SceneInitializer_Game : MonoBehaviour
     {
         [SerializeField] private BuildingSystem _buildingSystem;

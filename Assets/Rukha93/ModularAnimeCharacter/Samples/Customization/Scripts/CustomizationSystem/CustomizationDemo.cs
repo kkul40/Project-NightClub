@@ -258,7 +258,6 @@ namespace Rukha93.ModularAnimeCharacter.Customization
             foreach (var part in m_BodyParts)
                 part.Value.gameObject.SetActive(!disabled.Contains(part.Key));
 
-            //todo: maybe move this offset to the CharacterController's center offset or skin width
             var localPos = m_Character.transform.localPosition;
             localPos.y = m_Equiped.ContainsKey("shoes") ? 0.02f : 0;
             m_Character.transform.localPosition = localPos;

@@ -105,7 +105,6 @@ namespace System.Character.NPC
 
         public void RemoveNPCs()
         {
-            // TODO There is bugg here 'causing null referance on Transforms
             if (_npcSpawnRoutine != null)
                 StopCoroutine(_npcSpawnRoutine);
 
