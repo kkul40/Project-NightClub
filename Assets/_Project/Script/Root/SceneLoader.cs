@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using DiscoSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,8 +8,9 @@ using UnityEngine.UI;
 
 namespace Root
 {
-    public class SceneLoader : Singleton<SceneLoader>
+    public class SceneLoader : MonoBehaviour
     {
+        public static SceneLoader Instance;
         private bool isSceneLoading = false;
 
         [SerializeField] private GameObject loadingScreen;
@@ -20,7 +20,18 @@ namespace Root
         
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
+            Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            RectTransform rect = loadingScreen.transform as RectTransform;
+            rect.anchoredPosition = Vector2.zero;
+            
             loadingScreen.SetActive(false);
         }
 

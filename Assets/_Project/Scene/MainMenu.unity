@@ -11424,6 +11424,7 @@ GameObject:
   - component: {fileID: 1873031204}
   - component: {fileID: 1873031206}
   - component: {fileID: 1873031205}
+  - component: {fileID: 1873031207}
   m_Layer: 5
   m_Name: Version
   m_TagString: Untagged
@@ -11447,7 +11448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -25}
+  m_AnchoredPosition: {x: -125, y: -50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873031205
@@ -11470,10 +11471,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: version 0.4
+  m_text: 'Alpha '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11503,7 +11504,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 9
+  m_fontStyle: 2
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -11549,6 +11550,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873031203}
   m_CullTransparentMesh: 1
+--- !u!114 &1873031207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873031203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b964c4de03684acfb88b86021b7e61ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  versionText: {fileID: 1873031205}
 --- !u!1 &1878436210
 GameObject:
   m_ObjectHideFlags: 0
@@ -13391,9 +13405,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 226671603294881229, guid: e2a2dd9ebbf2c2c47891779372c9d0bb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 226671603294881229, guid: e2a2dd9ebbf2c2c47891779372c9d0bb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1341
+      objectReference: {fileID: 0}
     - target: {fileID: 2192003353399582520, guid: e2a2dd9ebbf2c2c47891779372c9d0bb, type: 3}
       propertyPath: m_Name
       value: SceneLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192003353399582520, guid: e2a2dd9ebbf2c2c47891779372c9d0bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2869510386249671703, guid: e2a2dd9ebbf2c2c47891779372c9d0bb, type: 3}
       propertyPath: m_IsActive
