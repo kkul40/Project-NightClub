@@ -27930,8 +27930,8 @@ MonoBehaviour:
   DefaultWallMaterial: {fileID: 11400000, guid: 93f5edabc6ca8e74594e0283a425e989, type: 2}
   DefaultNPCCustomization: {fileID: 11400000, guid: ce58dbdb2e955a44b9abba3970748ed8, type: 2}
   DefaultBartenderCustomization: {fileID: 11400000, guid: acc813fae69c6424db9c4317a5c42566, type: 2}
-  DefaultBoyNpcAnimation: {fileID: 11400000, guid: 9ed719effea754e44af91bf4f8cdf8f8, type: 2}
-  DefaultGirlNpcAnimation: {fileID: 11400000, guid: 5cc27e1344031974a9cc321930ca6122, type: 2}
+  DefaultBoyNpcAnimation: {fileID: 11400000, guid: 3788cd5687976eb4199f0081d0a6b95b, type: 2}
+  DefaultGirlNpcAnimation: {fileID: 11400000, guid: bab8edc8da46b754088a1ae4f076c5a2, type: 2}
   DefaultBartenderAnimation: {fileID: 11400000, guid: f657ee860e5bb9447bedd03c4572e030, type: 2}
 --- !u!1001 &1451294518
 PrefabInstance:
@@ -28673,7 +28673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59f9e1c720d49748ca44401b151018d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _songDataSo: {fileID: 11400000, guid: c435d3ec999211f48808833414a642c3, type: 2}
+  _songDataSo: {fileID: 11400000, guid: a3be8159e48960c4083587a14ddcd1b2, type: 2}
 --- !u!1 &1497792362
 GameObject:
   m_ObjectHideFlags: 0
@@ -38522,7 +38522,7 @@ MonoBehaviour:
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
   _npcs: []
-  maxNPC: 1
+  maxNPC: 10
 --- !u!4 &2042784773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8908254307360373429, guid: cc6254185f2e6c7469fe6c148238db32, type: 3}

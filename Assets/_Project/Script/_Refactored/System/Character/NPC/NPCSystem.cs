@@ -132,7 +132,7 @@ namespace System.Character.NPC
                 return null;
 
             CharacterCustomizer customizer = null;
-            NpcAnimationSo animation = null;
+            NewAnimationSO animation = null;
 
             switch (gender)
             {

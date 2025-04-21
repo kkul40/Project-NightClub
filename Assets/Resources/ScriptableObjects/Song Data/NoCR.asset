@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036996c68f6143ff808e83bb4fb077f0, type: 3}
+  m_Name: NoCR
+  m_EditorClassIdentifier: 
+  Hiphop: []
+  Dance: []
+  Pop: []
+  Temp:
+  - Artist: 
+    SongName: 
+    Clip: {fileID: 8300000, guid: df41a2eb6a4163d458f2cd59088c46dd, type: 3}
+  - Artist: 
+    SongName: 
+    Clip: {fileID: 8300000, guid: 1453048c0c8025742a023b3a95aac7e0, type: 3}
+  - Artist: 
+    SongName: 
+    Clip: {fileID: 8300000, guid: bac6515c478610c40960b5efb35e9624, type: 3}

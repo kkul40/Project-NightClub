@@ -95,7 +95,6 @@ namespace Data
 
             foreach (var hit in colliders)
             {
-                if (hit.collider.isTrigger) continue;
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                     if (!CheckWalkable(unit)) return false;
             }

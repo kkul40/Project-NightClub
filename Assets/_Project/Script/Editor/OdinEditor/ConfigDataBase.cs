@@ -18,7 +18,7 @@ namespace _Project.OdinEditor
             var tree = new OdinMenuTree();
             tree.Add("Create New", createNewStoreItemSo);
             tree.AddAllAssetsAtPath("Store Items", "Assets/Resources/DefaultData", typeof(StoreItemSO), true);
-            tree.AddAllAssetsAtPath("Animations ", "Assets/Resources/ScriptableObjects/AnimationData", typeof(NpcAnimationSo));
+            // tree.AddAllAssetsAtPath("Animations ", "Assets/Resources/ScriptableObjects/AnimationData", typeof(NewAnimationSO));
             tree.AddAllAssetsAtPath("Song Data", "Assets/Resources/ScriptableObjects/Song Data", typeof(SongDataSo), true);
             return tree;
         }

@@ -1,8 +1,10 @@
 ﻿using System.Character.Bartender;
+using System.Collections;
 using Animancer;
 using Data;
 using DefaultNamespace;
 using DefaultNamespace.TEST;
+using DG.Tweening;
 using UnityEngine;
 
 namespace System.Character.NPC
@@ -28,7 +30,7 @@ namespace System.Character.NPC
     
     public class NPCAnimationControl : IAnimationController
     {
-        private NpcAnimationSo _npcAnimationSo;
+        private NewAnimationSO _npcAnimationSo;
         public Animator animator { get; }
         public AnimancerComponent animancer { get; }
         public AnimationClip CurrentAnimation { get; private set; }
@@ -38,7 +40,7 @@ namespace System.Character.NPC
 
         private WeightedMaskLayers rightUpperArm;
 
-        public NPCAnimationControl(Animator animator, AnimancerComponent animancer, NpcAnimationSo npcAnimationSo, Transform animatorTransform)
+        public NPCAnimationControl(Animator animator, AnimancerComponent animancer, NewAnimationSO npcAnimationSo, Transform animatorTransform)
         {
             this.animator = animator;
             this.animancer = animancer;
@@ -81,6 +83,8 @@ namespace System.Character.NPC
             animatorTransform.localPosition = Vector3.zero;
         }
 
+        private Coroutine animeRotuine;
+        
         public void PlayActionAnimation(eActionAnimationType eActionAnimationType)
         {
             switch (eActionAnimationType)
@@ -89,9 +93,28 @@ namespace System.Character.NPC
                     animancer.Layers[1].Stop();
                     break;
                 case eActionAnimationType.NPC_HoldDrink:
-                    animancer.Layers[1].Play(_npcAnimationSo.Drink.IdleClip);
+                    if (animeRotuine != null)
+                    {
+                        DOTween.instance.StopCoroutine(animeRotuine);
+                    }
+
+                    animancer.Layers[1].Mask = _npcAnimationSo.mask;
+                    animancer.Layers[1].Play(_npcAnimationSo.drinkIdle, _npcAnimationSo.animationDuration);
+                    animeRotuine = DOTween.instance.StartCoroutine(CancelActionAnim());
                     break;
             }
+        }
+
+        private IEnumerator CancelActionAnim()
+        {
+            yield return new WaitForSeconds(2);
+            animancer.Layers[1].Play(_npcAnimationSo.drinkAction, _npcAnimationSo.animationDuration);
+
+            yield return new WaitForSeconds(2);
+            animancer.Layers[1].StartFade(0, _npcAnimationSo.animationDuration);
+
+            animeRotuine = null;
+            yield return null;
         }
     }
 

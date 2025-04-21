@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61df7a7132a848c39c35d8ce69a14713, type: 3}
+  m_Name: Boy Animation
+  m_EditorClassIdentifier: 
+  animationDuration: 0.5
+  Idle: {fileID: 7400000, guid: 3c68f76aab27c7f4281d2dbb95483f99, type: 2}
+  Walk: {fileID: 7400000, guid: 62881bcadb4b79446a533542b822a93a, type: 2}
+  Sit: {fileID: 7400000, guid: e779245cc7ed9a246a5132eb7163c5a8, type: 2}
+  LeanOnWall:
+  - {fileID: 7400000, guid: 5d161eafdd159064f9da1f94d0c0ebc5, type: 2}
+  - {fileID: 7400000, guid: b1a8aa116c825114f9afa5a78908fa02, type: 2}
+  Dance:
+  - {fileID: 7400000, guid: 8bbfd0dee216b924cbd71937df882d57, type: 2}
+  - {fileID: 7400000, guid: cdf75fa44541cd746b4d3c190ae3b80d, type: 2}
+  - {fileID: 7400000, guid: 1f4857494dcd65d489da4c711a091174, type: 2}
+  - {fileID: 7400000, guid: b02f244e4d2f60545a273ce55cc40540, type: 2}
+  - {fileID: 7400000, guid: 41ec0f484b4eb8f4c9e9df540d9395ff, type: 2}
+  - {fileID: 7400000, guid: 6907247376a778848974b3b144b861cc, type: 2}
+  - {fileID: 7400000, guid: 2ff4780c1226e274793f7b3caf17a828, type: 2}
+  - {fileID: 7400000, guid: be8850245e5253b4788ebc045a559a70, type: 2}
+  - {fileID: 7400000, guid: c6b22d33b49331649ab1f52004f67938, type: 2}
+  mask: {fileID: 31900000, guid: cfbe9ecf85312e940b6d06e7ebd2d1c9, type: 2}
+  drinkIdle: {fileID: 7400000, guid: cf80154d1b713444b8590bae4730367f, type: 2}
+  drinkAction: {fileID: 7400000, guid: c3c78430c7e80104992ac7ab8b5189e9, type: 2}
+  Fight: {fileID: 0}
+  DebugAnim: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}

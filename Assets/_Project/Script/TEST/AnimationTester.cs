@@ -40,7 +40,7 @@ namespace DefaultNamespace.TEST
                 Destroy(npc);
             
             CharacterCustomizer customizer = null;
-            NpcAnimationSo animation = null;
+            NewAnimationSO animation = null;
             
             customizer = new CharacterCustomizer(eGenderType.Male, InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
             animation = InitConfig.Instance.GetDefaultBoyNpcAnimation;

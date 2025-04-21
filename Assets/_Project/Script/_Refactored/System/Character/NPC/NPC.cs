@@ -20,7 +20,7 @@ namespace System.Character.NPC
         public IPathFinder PathFinder { get; private set; }
         public ActivityHandler _activityHandler { get; private set; }
 
-        public void Initialize(NpcAnimationSo npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform, DiscoData discoData)
+        public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform, DiscoData discoData)
         {
             PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61df7a7132a848c39c35d8ce69a14713, type: 3}
+  m_Name: Girl Animation
+  m_EditorClassIdentifier: 
+  animationDuration: 0.5
+  Idle: {fileID: 7400000, guid: d49bdf7e669779249808e38f4a87e221, type: 2}
+  Walk: {fileID: 7400000, guid: 53a89e9ddf7958347ac638335daa68a0, type: 2}
+  Sit: {fileID: 7400000, guid: 433f14cee6a331a47b03823cc11b9149, type: 2}
+  LeanOnWall:
+  - {fileID: 7400000, guid: 5d161eafdd159064f9da1f94d0c0ebc5, type: 2}
+  - {fileID: 7400000, guid: b1a8aa116c825114f9afa5a78908fa02, type: 2}
+  Dance:
+  - {fileID: 7400000, guid: 7a2c2dbeab2cec64499af196f31fbc44, type: 2}
+  - {fileID: 7400000, guid: d30c9c3b13609414f91d1acbbbe75e59, type: 2}
+  - {fileID: 7400000, guid: 001223a24216aea4b9201c21cab6007d, type: 2}
+  - {fileID: 7400000, guid: 4aab0fd94bafc3a4b852c99ccbb39851, type: 2}
+  - {fileID: 7400000, guid: e8c39ed6e53d1764d8a82fc103f72ed1, type: 2}
+  - {fileID: 7400000, guid: 9623e259befcbbc4896db0da400c1a0d, type: 2}
+  - {fileID: 7400000, guid: d69c728cd53fcc241891ced7a3a69450, type: 2}
+  - {fileID: 7400000, guid: ac4be8b25deada040a4fbebc81946bfe, type: 2}
+  - {fileID: 7400000, guid: 1765a383d37fae4499c1419e2d70bb7c, type: 2}
+  - {fileID: 7400000, guid: 510eae27a4772e64a9a78423ee059a93, type: 2}
+  - {fileID: 7400000, guid: 1c9228a7f3f943a4db5901a630719d05, type: 2}
+  - {fileID: 7400000, guid: 8c28e7e05a410804da17c2c383e82a65, type: 2}
+  - {fileID: 7400000, guid: 59fcd1b74c04e4e4e9b3d08ab6d5a896, type: 2}
+  - {fileID: 7400000, guid: c208277380d783e40b105a0310cbe076, type: 2}
+  - {fileID: 7400000, guid: 9dbf64e9cde5ace45939bcccf2056f39, type: 2}
+  - {fileID: 7400000, guid: e112484ad306e7443b219531c2db2fca, type: 2}
+  - {fileID: 7400000, guid: 0faeacdf6ab3171438d9f03e04bdf64b, type: 2}
+  - {fileID: 7400000, guid: 416393afd5fe76c4fa9951d4bb404435, type: 2}
+  - {fileID: 7400000, guid: 8c058f81ec6662448be943d0b85faba3, type: 2}
+  - {fileID: 7400000, guid: 5a878d2f22464594fbab488c7788e38b, type: 2}
+  mask: {fileID: 31900000, guid: cfbe9ecf85312e940b6d06e7ebd2d1c9, type: 2}
+  drinkIdle: {fileID: 7400000, guid: cf80154d1b713444b8590bae4730367f, type: 2}
+  drinkAction: {fileID: 7400000, guid: c3c78430c7e80104992ac7ab8b5189e9, type: 2}
+  Fight: {fileID: 0}
+  DebugAnim: {fileID: 7400000, guid: 8dc302440b77b8b46aa6e0aabc2a2f94, type: 2}

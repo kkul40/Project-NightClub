@@ -9,7 +9,7 @@ namespace DefaultNamespace.TEST
     {
         public IAnimationController AnimationController { get; private set; }
         
-        public void Initialize(NpcAnimationSo npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
+        public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
         {
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
         }

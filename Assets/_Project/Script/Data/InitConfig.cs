@@ -10,7 +10,7 @@ namespace Data
 {
     public class InitConfig : Singleton<InitConfig>
     {
-        public NpcAnimationSo test;
+        public NewAnimationSO test;
 
         [Header("UI Style")] 
         [SerializeField] private UITextStyle DefaultUITextStyle;
@@ -25,8 +25,8 @@ namespace Data
         [SerializeField] private CustomizationItemsSo DefaultBartenderCustomization;
 
         [Header("Default NPC Animation")] 
-        [SerializeField] private NpcAnimationSo DefaultBoyNpcAnimation;
-        [SerializeField] private NpcAnimationSo DefaultGirlNpcAnimation;
+        [SerializeField] private NewAnimationSO DefaultBoyNpcAnimation;
+        [SerializeField] private NewAnimationSO DefaultGirlNpcAnimation;
         [SerializeField] private BartenderAnimationSo DefaultBartenderAnimation;
 
         // GETTERS
@@ -36,8 +36,8 @@ namespace Data
         public MaterialItemSo GetDefaultWallMaterial => DefaultWallMaterial;
         public CustomizationItemsSo GetDefaultNPCCustomization => DefaultNPCCustomization;
         public CustomizationItemsSo GetefaultBartenderCustomization => DefaultBartenderCustomization;
-        public NpcAnimationSo GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
-        public NpcAnimationSo GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
+        public NewAnimationSO GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
+        public NewAnimationSO GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
         public BartenderAnimationSo GetDefaultBartenderAnimation => DefaultBartenderAnimation;
     }
 }
