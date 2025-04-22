@@ -1,6 +1,6 @@
-﻿using System.Building_System.GameEvents;
-using System.Character.Bartender.Command;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.Character.Bartender.Command;
 using Framework.Context;
 using Framework.Mvcs.View;
 using Prop_Behaviours.Bar;

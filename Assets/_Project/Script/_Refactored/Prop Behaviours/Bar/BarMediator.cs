@@ -1,8 +1,8 @@
-﻿using System.Building_System.GameEvents;
-using System.Character.Bartender;
-using System.Character.Bartender.Command;
-using Data;
+﻿using Data;
 using DiscoSystem;
+using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.Character.Bartender;
+using DiscoSystem.Character.Bartender.Command;
 using PropBehaviours;
 using Sirenix.Serialization;
 using UnityEngine;

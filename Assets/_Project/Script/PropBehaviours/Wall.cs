@@ -1,6 +1,6 @@
-﻿using System.Building_System;
-using Data;
+﻿using Data;
 using Disco_ScriptableObject;
+using DiscoSystem.Building_System;
 using UnityEngine;
 
 namespace PropBehaviours

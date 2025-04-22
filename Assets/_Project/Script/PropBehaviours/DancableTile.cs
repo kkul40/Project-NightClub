@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Character.NPC;
 using Data;
+using DiscoSystem.Character.NPC;
 using UnityEngine;
 
 namespace PropBehaviours

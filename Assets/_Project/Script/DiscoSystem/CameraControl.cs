@@ -1,6 +1,5 @@
 using System;
-using System.Building_System.GameEvents;
-using System.Character.NPC;
+using DiscoSystem.Building_System.GameEvents;
 using Unity.Mathematics;
 using UnityEngine;
 

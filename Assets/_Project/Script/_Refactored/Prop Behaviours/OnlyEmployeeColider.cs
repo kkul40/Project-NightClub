@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace.Prop_Behaviours
+namespace Prop_Behaviours
 {
     public class OnlyEmployeeColider : MonoBehaviour
     {

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Building_System;
-using System.Building_System.GameEvents;
-using System.Character._Player;
-using System.Character.NPC;
 using Data;
 using DiscoSystem;
+using DiscoSystem.Building_System;
+using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.Character._Player;
+using DiscoSystem.Character.NPC;
 using SaveAndLoad;
 using UI.GamePages;
 using UnityEngine;

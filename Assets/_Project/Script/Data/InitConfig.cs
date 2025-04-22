@@ -1,8 +1,8 @@
-﻿using System.Character.Bartender;
-using System.Character.NPC;
-using CharacterCustomization.Scriptables;
+﻿using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using DiscoSystem.Character.Bartender;
+using DiscoSystem.Character.NPC;
 using ScriptableObjects;
 using UnityEngine;
 

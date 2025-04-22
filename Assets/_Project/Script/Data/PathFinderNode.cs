@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Character.NPC;
+using DiscoSystem.Character.NPC;
 using UnityEngine;
 
 namespace Data

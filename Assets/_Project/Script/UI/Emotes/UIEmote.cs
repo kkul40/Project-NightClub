@@ -1,6 +1,6 @@
 ﻿using System;
-using System.ObjectPooling;
 using DG.Tweening;
+using DiscoSystem.ObjectPooling;
 using UnityEngine;
 
 namespace UI.Emotes

@@ -1,4 +1,4 @@
-﻿using System.Building_System.GameEvents;
+﻿using DiscoSystem.Building_System.GameEvents;
 using TMPro;
 using UnityEngine;
 

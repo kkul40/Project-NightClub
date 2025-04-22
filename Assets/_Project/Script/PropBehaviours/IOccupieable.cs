@@ -1,4 +1,4 @@
-﻿using System.Character.NPC;
+﻿using DiscoSystem.Character.NPC;
 
 namespace PropBehaviours
 {

@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Building_System.GameEvents;
 using System.Collections.Generic;
+using DiscoSystem;
+using DiscoSystem.Building_System.GameEvents;
 using ExtensionMethods;
 using PropBehaviours;
 using SaveAndLoad;

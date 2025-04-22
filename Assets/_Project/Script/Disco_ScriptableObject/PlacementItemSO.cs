@@ -1,5 +1,5 @@
-﻿using System.Building_System.Controller;
-using Data;
+﻿using Data;
+using DiscoSystem.Building_System.Controller;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

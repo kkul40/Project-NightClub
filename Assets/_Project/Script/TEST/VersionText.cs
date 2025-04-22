@@ -1,8 +1,7 @@
 ﻿using TMPro;
-using UnityEditor;
 using UnityEngine;
 
-namespace DefaultNamespace.TEST
+namespace TEST
 {
     public class VersionText : MonoBehaviour
     {

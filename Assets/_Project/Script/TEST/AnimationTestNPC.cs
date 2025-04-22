@@ -1,9 +1,8 @@
-﻿using System.Character.NPC;
-using Animancer;
-using Data;
+﻿using Animancer;
+using DiscoSystem.Character.NPC;
 using UnityEngine;
 
-namespace DefaultNamespace.TEST
+namespace TEST
 {
     public class AnimationTestNPC : MonoBehaviour
     {

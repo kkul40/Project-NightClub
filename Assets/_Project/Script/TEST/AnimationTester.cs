@@ -1,10 +1,10 @@
-﻿using System.Character._Player;
-using System.Character.NPC;
-using Data;
+﻿using Data;
+using DiscoSystem.Character._Player;
+using DiscoSystem.Character.NPC;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace DefaultNamespace.TEST
+namespace TEST
 {
     public class AnimationTester : MonoBehaviour
     {

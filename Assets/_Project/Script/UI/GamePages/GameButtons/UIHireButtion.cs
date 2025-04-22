@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Character.NPC;
 using DiscoSystem;
+using DiscoSystem.Character.NPC;
 using UnityEngine;
 
 namespace UI.GamePages.GameButtons

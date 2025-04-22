@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Building_System.GameEvents;
 using Data;
 using DiscoSystem;
+using DiscoSystem.Building_System.GameEvents;
 using PropBehaviours;
 using ScriptableObjects;
 using UnityEngine;

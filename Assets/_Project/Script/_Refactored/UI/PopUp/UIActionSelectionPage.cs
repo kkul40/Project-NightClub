@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Building_System.GameEvents;
-using System.Character.Bartender;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using DiscoSystem;
+using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.Character.Bartender;
 using Framework.Context;
 using Framework.Mvcs.View;
 using PropBehaviours;

@@ -1,5 +1,5 @@
-﻿using System.Building_System.GameEvents;
-using System.ObjectPooling;
+﻿using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.ObjectPooling;
 using UnityEngine;
 
 namespace UI.Emotes
