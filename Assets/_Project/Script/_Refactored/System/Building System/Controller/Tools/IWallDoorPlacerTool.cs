@@ -45,6 +45,8 @@ namespace System.Building_System.Controller.Tools
             _tempWallDoor = _tempObject.GetComponent<WallDoor>();
             _autoDoor = _tempObject.GetComponentInChildren<AutoDoor>();
             _autoDoor.Locked = true;
+            
+            TH.TileIndicator.SetTileIndicator(ePlacingType.Direction, Vector2.one);
         }
 
         public bool OnValidate(ToolHelper TH)
@@ -100,6 +102,8 @@ namespace System.Building_System.Controller.Tools
                 
                 _currentAssignmentData = _closestAssignmentData;
                 _currentAssignmentData.assignedWall.gameObject.SetActive(false);
+                
+                TH.TileIndicator.SetPositionAndRotation(_tempObject.transform.position + _tempObject.transform.forward * 0.5f, _wallRotation);
             }
         }
 
@@ -147,6 +151,8 @@ namespace System.Building_System.Controller.Tools
             TH.DiscoData.MapData.RemoveWallData(_storeedCellPosition);
             var newData = TH.DiscoData.MapData.AddNewWallData(_storeedCellPosition, newWallDoorObject);
             newData.AssignNewID(TH.DiscoData.FindAItemByID(_storedAssignmentData.assignedMaterialID) as MaterialItemSo);
+            
+            TH.TileIndicator.CloseTileIndicator();
         }
 
         public bool CheckPlaceInput(ToolHelper TH)

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
-using DiscoSystem;
 using ExtensionMethods;
 using PropBehaviours;
 using Unity.Mathematics;
@@ -30,6 +29,8 @@ namespace System.Building_System.Controller.Tools
             TH.CalculateBounds(_tempObject.GetComponents<Collider>());
         
             _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+            
+            TH.TileIndicator.SetTileIndicator(ePlacingType.Place, Vector2.one);
         }
 
         public bool OnValidate(ToolHelper TH)
@@ -80,6 +81,8 @@ namespace System.Building_System.Controller.Tools
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, validation);
 
             _tempObject.transform.position = TH.LastPosition;
+            
+            TH.TileIndicator.SetPositionAndRotation(TH.LastPosition, Quaternion.identity);
         }
 
         public void OnPlace(ToolHelper TH)

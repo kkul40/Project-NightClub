@@ -33,6 +33,7 @@ namespace System.Building_System.Controller.Tools
             TH.CalculateBounds(_tempObject.GetComponents<Collider>());
 
             _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
+            TH.TileIndicator.SetTileIndicator(ePlacingType.Place, new Vector2(TH.colliderSize.x, TH.colliderSize.z));
         }
     
         public bool OnValidate(ToolHelper TH)
@@ -84,6 +85,7 @@ namespace System.Building_System.Controller.Tools
             _tempObject.transform.rotation = TH.LastRotation;
         
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+            TH.TileIndicator.SetPositionAndRotation(TH.LastPosition, TH.LastRotation);
         }
     
         public void OnPlace(ToolHelper TH)
@@ -103,7 +105,6 @@ namespace System.Building_System.Controller.Tools
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
             
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, new Vector2(TH.colliderSize.x, TH.colliderSize.z), TH.LastRotation);
-
         }
 
         public void OnStop(ToolHelper TH)
@@ -112,6 +113,7 @@ namespace System.Building_System.Controller.Tools
             {
                 UnityEngine.Object.Destroy(_tempObject.gameObject);
             }
+            TH.TileIndicator.CloseTileIndicator();
         }
 
         public bool CheckPlaceInput(ToolHelper TH)

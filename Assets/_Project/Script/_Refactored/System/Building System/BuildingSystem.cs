@@ -16,6 +16,7 @@ namespace System.Building_System
         [SerializeField] private DiscoData _discoData;
         [SerializeField] private MaterialColorChanger _materialColorChanger;
         [SerializeField] private FXCreatorSystem fxCreatorSystem;
+        [SerializeField] private TileIndicator _tileIndicator;
 
         public override void Initialize()
         {
@@ -29,7 +30,7 @@ namespace System.Building_System
                 _model = new BuildingModel();
                 _view = _buildingView;
                 _service = new BuildingService();
-                _controller = new BuildingController(_model, _view, _service, _inputSystem, _discoData, _materialColorChanger, fxCreatorSystem);
+                _controller = new BuildingController(_model, _view, _service, _inputSystem, _discoData, _materialColorChanger, fxCreatorSystem, _tileIndicator);
                 //
 
                 _model.Initialize(_context);

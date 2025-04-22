@@ -6,6 +6,7 @@ using System.Building_System.View;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem;
+using ExtensionMethods;
 using Framework.Context;
 using Framework.Mvcs.Controller;
 using PropBehaviours;
@@ -80,10 +81,10 @@ namespace System.Building_System.Controller
         private RelocateData _relocateData;
 
         public BuildingController(BuildingModel model, BuildingView view, BuildingService service, InputSystem inputSystem,
-            DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem) : base(model, view,
+            DiscoData discoData, MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem, TileIndicator tileIndicator) : base(model, view,
             service)
         {
-            _toolHelper = new ToolHelper(this, inputSystem, discoData, materialColorChanger, fxCreatorSystem);
+            _toolHelper = new ToolHelper(this, inputSystem, discoData, materialColorChanger, fxCreatorSystem, tileIndicator);
         }
 
         public override void Initialize(IContext context)
@@ -94,8 +95,6 @@ namespace System.Building_System.Controller
             _view.OnStorageItemClicked += StartInventoryItemPlacement;
             _view.OnExtensionMapItemClicked += StartMapExtensionItem;
             
-
-
             _relocateData = new RelocateData();
             
             GameEvent.Subscribe<Event_RelocatePlacement>(StartRelocatePlacement);
@@ -262,7 +261,7 @@ namespace System.Building_System.Controller
             _currentTool = SelectBuildingMethod(storeItemSo);
             if (_currentTool != null)
                 _currentTool.OnStart(_toolHelper);
-        
+
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
@@ -276,6 +275,7 @@ namespace System.Building_System.Controller
             _toolHelper.PurchaseMode = PurchaseTypes.None;
             _toolHelper.LastRotation = quaternion.identity;
             _toolHelper.KeepInStartPosition = false;
+            _toolHelper.TileIndicator.CloseTileIndicator();
         }
 
         private void StopBuilding()

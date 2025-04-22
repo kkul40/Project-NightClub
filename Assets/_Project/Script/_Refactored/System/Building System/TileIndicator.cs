@@ -5,6 +5,7 @@ namespace System.Building_System
 {
     public class TileIndicator : MonoBehaviour
     {
+        // TODO : refactor this script to make it so it can show 2 or more indicator at once
         [SerializeField] private GameObject placingTileIndicator;
         [SerializeField] private GameObject removingTileIndicator;
         [SerializeField] private GameObject directionIndicator;
@@ -15,7 +16,7 @@ namespace System.Building_System
             CloseTileIndicator();
         }
 
-        public void SetTileIndicator(ePlacingType placingType)
+        public void SetTileIndicator(ePlacingType placingType, Vector2 size)
         {
             CloseTileIndicator();
 
@@ -34,11 +35,16 @@ namespace System.Building_System
                     this.placingType = ePlacingType.Remove;
                     break;
             }
+            
+            SetSize(size);
         }
 
-        public void SetPosition(Vector3 newPos)
+        public void SetPositionAndRotation(Vector3 newPos, Quaternion rotation)
         {
-            transform.position = newPos.CellCenterPosition(eGridType.PlacementGrid);
+            placingTileIndicator.transform.position = newPos;
+            placingTileIndicator.transform.rotation = rotation;
+
+            // transform.position = newPos.CellCenterPosition(eGridType.PlacementGrid);
         }
 
         public void SetSize(Vector2 size)
@@ -50,11 +56,6 @@ namespace System.Building_System
         public void GetCurrentCenterPosition()
         {
             // TODO Return placing Tile Center Position
-        }
-
-        public void RoateDirectionIndicator(Quaternion quaternion)
-        {
-            transform.rotation = quaternion;
         }
 
         public void CloseTileIndicator()

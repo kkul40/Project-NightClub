@@ -22,6 +22,8 @@ namespace System.Building_System.Controller.Tools
         public void OnStart(ToolHelper TH)
         {
             _materialItemSo = TH.SelectedStoreItem as MaterialItemSo;
+
+            TH.TileIndicator.SetTileIndicator(ePlacingType.Place, Vector2.one);
         }
 
         public bool OnValidate(ToolHelper TH)
@@ -33,6 +35,8 @@ namespace System.Building_System.Controller.Tools
 
         public void OnUpdate(ToolHelper TH)
         {
+            
+            Debug.Log("Floor Material placer");
             _mouseOnChangableMaterial = GetFloorMaterial(TH);
         
             if (_mouseOnChangableMaterial == null)
@@ -48,18 +52,22 @@ namespace System.Building_System.Controller.Tools
 
                 _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
+                
+                TH.LastPosition = _mouseOnFloorData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);
+                TH.TileIndicator.SetPositionAndRotation(TH.LastPosition, Quaternion.identity);
             }
         }
 
         public void OnPlace(ToolHelper TH)
         {
             _currentChangableMaterial = null;
-            TH.FXCreatorSystem.CreateFX(FXType.Floor, _mouseOnFloorData.CellPosition.CellCenterPosition(eGridType.PlacementGrid), Vector2.one, Quaternion.identity);
+            TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, Vector2.one, Quaternion.identity);
         }
 
         public void OnStop(ToolHelper TH)
         {
             ResetPreviousMaterial();
+            TH.TileIndicator.CloseTileIndicator();
         }
 
         public bool CheckPlaceInput(ToolHelper TH)

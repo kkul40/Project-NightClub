@@ -1,6 +1,7 @@
 using System.Building_System.Controller;
 using Data;
 using Disco_ScriptableObject;
+using ExtensionMethods;
 using PropBehaviours;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ namespace System.Building_System
         public DiscoData DiscoData;
         public MaterialColorChanger MaterialColorChanger;
         public FXCreatorSystem FXCreatorSystem;
+        public TileIndicator TileIndicator;
     
         // Static Variables
         public StoreItemSO SelectedStoreItem;
@@ -48,13 +50,14 @@ namespace System.Building_System
 
     
         public ToolHelper(BuildingController controller, InputSystem inputSystem, DiscoData discoData,
-            MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem)
+            MaterialColorChanger materialColorChanger, FXCreatorSystem fxCreatorSystem, TileIndicator tileIndicator)
         {
             BuildingController = controller;
             InputSystem = inputSystem;
             DiscoData = discoData;
             MaterialColorChanger = materialColorChanger;
             FXCreatorSystem = fxCreatorSystem;
+            TileIndicator = tileIndicator;
         }
 
         #region Position Rotation Functions
@@ -130,6 +133,8 @@ namespace System.Building_System
 
         #region Helper Functions
 
+        
+        // TODO : Use this 
         public bool IsPositioningLocked()
         {
             if (KeepInStartPosition)

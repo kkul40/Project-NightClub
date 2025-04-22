@@ -35,5 +35,14 @@ namespace ExtensionMethods
         {
             return new Vector3Int(vector.x, 0, vector.z);
         }
+
+        public static Vector3 SetValue(this Vector3 vector, int? x = null, int? y = null, int? z = null)
+        {
+            vector.x = x ?? vector.x;
+            vector.y = y ?? vector.y;
+            vector.z = z ?? vector.z;
+
+            return vector;
+        }
     }
 }
