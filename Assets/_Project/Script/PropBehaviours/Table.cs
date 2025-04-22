@@ -46,27 +46,28 @@ namespace PropBehaviours
 
         private bool IsChairFacingToThisTable(Chair chair)
         {
-            switch (chair.RotationData.direction)
-            {
-                case Direction.Down:
-                    if (CellPosition.z - chair.CellPosition.z == 1)
-                        return true;
-                    break;
-                case Direction.Up:
-                    if (CellPosition.z - chair.CellPosition.z == -1)
-                        return true;
-                    break;
-                case Direction.Left:
-                    if (CellPosition.x - chair.CellPosition.x == 1)
-                        return true;
-                    break;
-                case Direction.Right:
-                    if (CellPosition.x - chair.CellPosition.x == -1)
-                        return true;
-                    break;
-            }
-
             return false;
+            // switch (chair.RotationData.direction)
+            // {
+            //     case Direction.Down:
+            //         if (CellPosition.z - chair.CellPosition.z == 1)
+            //             return true;
+            //         break;
+            //     case Direction.Up:
+            //         if (CellPosition.z - chair.CellPosition.z == -1)
+            //             return true;
+            //         break;
+            //     case Direction.Left:
+            //         if (CellPosition.x - chair.CellPosition.x == 1)
+            //             return true;
+            //         break;
+            //     case Direction.Right:
+            //         if (CellPosition.x - chair.CellPosition.x == -1)
+            //             return true;
+            //         break;
+            // }
+            //
+            // return false;
         }
     }
 }

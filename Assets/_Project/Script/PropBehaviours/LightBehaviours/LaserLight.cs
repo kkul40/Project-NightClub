@@ -24,9 +24,9 @@ namespace PropBehaviours.LightBehaviours
 
         private Direction direction;
 
-        public override void Initialize(int ID, Vector3Int cellPosition, RotationData rotationData, ePlacementLayer placementLayer)
+        public override void Initialize(int ID, Vector3Int cellPosition, ePlacementLayer placementLayer)
         {
-            base.Initialize(ID, cellPosition, rotationData, placementLayer);
+            base.Initialize(ID, cellPosition, placementLayer);
             direction = transform.rotation.GetDirectionFromQuaternion();
         }
 
@@ -172,7 +172,7 @@ namespace PropBehaviours.LightBehaviours
                     positions = new Vector3[mapSize.y * 2];
                     break;
                 default:
-                    Debug.LogError($"Its not supposed to Face This Direction - {RotationData.direction}");
+                    Debug.LogError($"Its not supposed to Face This Direction - {direction}");
                     break;
             }
 

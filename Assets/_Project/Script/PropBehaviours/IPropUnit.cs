@@ -14,7 +14,6 @@ namespace PropBehaviours
         [ShowInInspector] public int ID { get; private set; }
         [ShowInInspector] public Vector3Int CellPosition { get; private set; }
         [ShowInInspector] public Vector3 WorldPos { get; private set; }
-        [ShowInInspector] public RotationData RotationData { get; private set; }
         [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
         
         // Events
@@ -22,7 +21,6 @@ namespace PropBehaviours
         public virtual void Initialize(
             int ID, 
             Vector3Int cellPosition, 
-            RotationData rotationData, 
             ePlacementLayer placementLayer)
         {
             IsInitialized = true;
@@ -30,7 +28,6 @@ namespace PropBehaviours
             CellPosition = cellPosition;
             // WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
             WorldPos = transform.position;
-            RotationData = rotationData;
             PlacementLayer = placementLayer;
             
             mGameobject = gameObject;

@@ -25,3 +25,6 @@ MonoBehaviour:
   - Artist: 
     SongName: 
     Clip: {fileID: 8300000, guid: bac6515c478610c40960b5efb35e9624, type: 3}
+  - Artist: 
+    SongName: 
+    Clip: {fileID: 8300000, guid: 498aa6b1a2fe625429ba5ef8099aaca5, type: 3}

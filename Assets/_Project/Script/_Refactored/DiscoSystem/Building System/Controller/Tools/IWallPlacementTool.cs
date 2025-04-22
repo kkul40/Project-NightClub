@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using Disco_Building;
 using Disco_ScriptableObject;
 using ExtensionMethods;
 using PropBehaviours;
@@ -89,7 +88,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+            var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
             IPropUnit unit;
             if (obj.TryGetComponent(out IPropUnit propUnit))
@@ -97,7 +96,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             else
                 unit = obj.AddComponent<IPropUnit>();
 
-            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), RotationData.Default, ePlacementLayer.WallProp);
+            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), ePlacementLayer.WallProp);
         
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
