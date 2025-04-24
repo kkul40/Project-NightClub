@@ -142,7 +142,7 @@ namespace Data
             {
                 RemoveWallData(data.CellPosition);
                 // Object.DestroyImmediate(data.assignedWall.gameObject);
-                WallDatas.RemoveAt(i);
+                // WallDatas.RemoveAt(i);
             }
         }
 
