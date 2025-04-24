@@ -22,7 +22,6 @@ namespace DiscoSystem.Building_System.Controller
 
     public class BuildingController : BaseController<BuildingModel, BuildingView, BuildingService>
     {
-        
         // TODO: Remove This Relocate Data instead use tools to relocate props.
         private class RelocateData
         {
@@ -184,7 +183,6 @@ namespace DiscoSystem.Building_System.Controller
 
             return true;
         }
-
         
         private void StartATool(StoreItemSO storeItemSo)
         {
@@ -243,6 +241,7 @@ namespace DiscoSystem.Building_System.Controller
             
             if (TryPurchase(PurchaseTypes.Buy, extendItemSo))
             {
+                _toolHelper.PlacementTracker.AddTrack(new MapSizeUndo(extendItemSo.ID, new Vector2Int(extendItemSo.ExtendX, extendItemSo.ExtendY)));
                 GameEvent.Trigger(new Event_ExpendMapSize(extendItemSo.ExtendX, extendItemSo.ExtendY));
             }
         }

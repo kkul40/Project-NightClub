@@ -114,4 +114,23 @@ namespace DiscoSystem.Building_System
                 Debug.LogError("Assigned Materials Is Not MaterialItemSo");
         }
     }
+
+    public class MapSizeUndo : Revertable
+    {
+        public int ID;
+        public Vector2Int ExtendSize;
+
+        public MapSizeUndo(int id, Vector2Int extendSize)
+        {
+            ID = id;
+            ExtendSize = extendSize;
+        }
+
+        // TODO : Implement This later
+        public override void Undo()
+        {
+            DiscoData.Instance.MapData.RevertMapSize(ExtendSize.x, ExtendSize.y);
+            UndoMoney(ID);
+        }
+    }
 }

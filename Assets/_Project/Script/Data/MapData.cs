@@ -6,6 +6,7 @@ using ExtensionMethods;
 using PropBehaviours;
 using SaveAndLoad;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Data
 {
@@ -110,6 +111,43 @@ namespace Data
         
         GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
         return true;
+    }
+
+    public void RevertMapSize(int x, int y)
+    {
+        for (int i = CurrentMapSize.x - x; i < CurrentMapSize.x; i++)
+        {
+            for (int j = 0; j < CurrentMapSize.y; j++)
+            {
+                FloorData data = FloorGridDatas[i, j];
+                Object.DestroyImmediate(data.assignedFloorTile.gameObject);
+            }
+        }
+        
+        for (int i = CurrentMapSize.y - y; i < CurrentMapSize.y; i++)
+        {
+            for (int j = 0; j < CurrentMapSize.x; j++)
+            {
+                FloorData data = FloorGridDatas[j, i];
+                if (data.assignedFloorTile == null) continue;
+                Object.DestroyImmediate(data.assignedFloorTile.gameObject);
+            }
+        }
+
+        for (int i = WallDatas.Count - 1; i >= 0; i--)
+        {
+            WallData data = WallDatas[i];
+            
+            if (data.CellPosition.x > CurrentMapSize.x - x || data.CellPosition.z > CurrentMapSize.y - y)
+            {
+                Object.DestroyImmediate(data.assignedWall.gameObject);
+                WallDatas.RemoveAt(i);
+            }
+        }
+
+        CurrentMapSize -= new Vector2Int(x, y);
+        
+        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
     }
 
     public bool CheckMapExpendable(int x, int y)
