@@ -123,8 +123,7 @@ namespace DiscoSystem
                 {
                     if (_mapData.IsWallDoorOnX && x == _mapData.WallDoorIndex)
                     {
-                        var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
-                            RotationData.Down.rotation, true);
+                        var newWallDoorObject = InstantiateXWallDoor(x);
 
                         LoadAndAssignWallMaterial(new Vector3Int(_mapData.WallDoorIndex, 0, 0), newWallDoorObject);
                         
@@ -144,8 +143,7 @@ namespace DiscoSystem
                 {
                     if (!_mapData.IsWallDoorOnX && y == _mapData.WallDoorIndex)
                     {
-                        var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(0, 0, y - 0.5f),
-                            RotationData.Left.rotation, true);
+                        var newWallDoorObject = InstantiateYWallDoor(y);
 
                         LoadAndAssignWallMaterial(new Vector3Int(0, 0, _mapData.WallDoorIndex), newWallDoorObject);
 
@@ -164,6 +162,20 @@ namespace DiscoSystem
             }
 
             callBack?.Invoke();
+        }
+
+        public GameObject InstantiateYWallDoor(int y)
+        {
+            var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(0, 0, y - 0.5f),
+                RotationData.Left.rotation, true);
+            return newWallDoorObject;
+        }
+
+        public GameObject InstantiateXWallDoor(int x)
+        {
+            var newWallDoorObject = CreateObject(wallDoorPrefab, new Vector3(x - 0.5f, 0, 0),
+                RotationData.Down.rotation, true);
+            return newWallDoorObject;
         }
 
         [ContextMenu("Expend X")]
@@ -196,7 +208,7 @@ namespace DiscoSystem
                 ExpendY();
         }
 
-        private GameObject InstantiateYWall(int y)
+        public GameObject InstantiateYWall(int y)
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
             var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Left.rotation, true);
@@ -213,7 +225,7 @@ namespace DiscoSystem
             return newWallObject;
         }
 
-        private GameObject InstantiateXWall(int x)
+        public GameObject InstantiateXWall(int x)
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
             var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation, true);

@@ -92,5 +92,17 @@ namespace ExtensionMethods
         {
             gameObject.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutSine).OnComplete(() => OnComplete.Invoke());
         }
+
+        public static GameObject Activate(this GameObject gameObject)
+        {
+            gameObject.SetActive(true);
+            return gameObject;
+        }
+
+        public static GameObject InActivate(this GameObject gameObject)
+        {
+            gameObject.SetActive(false);
+            return gameObject;
+        }
     }
 }

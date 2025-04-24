@@ -24,16 +24,21 @@ namespace DiscoSystem.Building_System.Controller.Tools
         private Vector3 _storedPosition;
         private bool _storedIsWallOnX;
         private Quaternion _storedRotation;
-        private Vector3Int _storeedCellPosition;
+        private Vector3Int _storedCellPosition;
+
+        private int _originalMaterialID;
+        private int _originalWallIndex;
 
         public bool isFinished { get; private set; }
         public void OnStart(ToolHelper TH)
         {
             _storedAssignmentData = TH.DiscoData.MapData.WallDatas.Find(x => x.assignedWall is WallDoor);
-            _storeedCellPosition = _storedAssignmentData.CellPosition;
+            _storedCellPosition = _storedAssignmentData.CellPosition;
             _storedPosition = _storedAssignmentData.assignedWall.transform.position;
             _storedRotation = _storedAssignmentData.assignedWall.transform.rotation;
             _storedIsWallOnX = _storedRotation != RotationData.Left.rotation;
+            _originalMaterialID = _storedAssignmentData.assignedMaterialID;
+            _originalWallIndex = Mathf.Max(_storedCellPosition.x, _storedCellPosition.z); 
             
             var newWall = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallPrefab, _storedAssignmentData.assignedWall.transform.position, _storedAssignmentData.assignedWall.transform.rotation, false);
             newWall.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
@@ -41,7 +46,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             var newData = TH.DiscoData.MapData.AddNewWallData(_storedAssignmentData.CellPosition, newWall);
             newData.AssignNewID(TH.DiscoData.FindAItemByID(_storedAssignmentData.assignedMaterialID) as MaterialItemSo);
             
-            _tempObject = MonoBehaviour.Instantiate(MapGeneratorSystem.Instance.GetWallDoorPrefab, _storeedCellPosition.FlattenToGround(), Quaternion.identity);
+            _tempObject = MonoBehaviour.Instantiate(MapGeneratorSystem.Instance.GetWallDoorPrefab, _storedCellPosition.FlattenToGround(), Quaternion.identity);
             _tempWallDoor = _tempObject.GetComponent<WallDoor>();
             _autoDoor = _tempObject.GetComponentInChildren<AutoDoor>();
             _autoDoor.Locked = true;
@@ -82,7 +87,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             if (TH.InputSystem.HasMouseMoveToNewCell) return;
             
-            UpdpateClosestWall(TH);
+            UpdateClosestWall(TH);
             
             _tempObject.transform.position = GetPlacementPosition(_closestAssignmentData.assignedWall.transform.position, isWallOnX);
             _tempObject.transform.rotation = _wallRotation;
@@ -97,11 +102,11 @@ namespace DiscoSystem.Building_System.Controller.Tools
             {
                 if (_currentAssignmentData != null)
                 {
-                    _currentAssignmentData.assignedWall.gameObject.SetActive(true);
+                    _currentAssignmentData.assignedWall.gameObject.Activate();
                 }
                 
                 _currentAssignmentData = _closestAssignmentData;
-                _currentAssignmentData.assignedWall.gameObject.SetActive(false);
+                _currentAssignmentData.assignedWall.gameObject.InActivate();
                 
                 TH.TileIndicator.SetPositionAndRotation(_tempObject.transform.position + _tempObject.transform.forward * 0.5f, _wallRotation);
             }
@@ -114,8 +119,9 @@ namespace DiscoSystem.Building_System.Controller.Tools
             
             var newWallDoorObject = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallDoorPrefab, position, _wallRotation, false);
             newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
-            
-            TH.DiscoData.MapData.ChangeDoorPosition((int)Mathf.Max(position.x, position.z) + 1, isWallOnX);
+
+            int wallIndex = (int)Mathf.Max(position.x, position.z) + 1;
+            TH.DiscoData.MapData.ChangeDoorPosition(wallIndex, isWallOnX);
             
             MonoBehaviour.Destroy(_closestAssignmentData.assignedWall.gameObject);
             
@@ -128,7 +134,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
                 _closestAssignmentData.AssignNewID(found);
 
             TH.FXCreatorSystem.CreateFX(FXType.Wall, position, Vector2.one, _wallRotation);
-
+            TH.PlacementTracker.AddTrack(new WallDoorUndo(_storedIsWallOnX, _originalWallIndex, _originalMaterialID));
+            
             isFinished = true;
         }
 
@@ -139,7 +146,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
             if (_currentAssignmentData != null)
             {
-                _currentAssignmentData.assignedWall.gameObject.SetActive(true);
+                _currentAssignmentData.assignedWall.gameObject.Activate();
             }
             
             if (isFinished) return;
@@ -149,8 +156,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
             newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
 
             // var data = BD.DiscoData.MapData.GetWallDataByCellPos(_storeedCellPosition);
-            TH.DiscoData.MapData.RemoveWallData(_storeedCellPosition);
-            var newData = TH.DiscoData.MapData.AddNewWallData(_storeedCellPosition, newWallDoorObject);
+            TH.DiscoData.MapData.RemoveWallData(_storedCellPosition);
+            var newData = TH.DiscoData.MapData.AddNewWallData(_storedCellPosition, newWallDoorObject);
             newData.AssignNewID(TH.DiscoData.FindAItemByID(_storedAssignmentData.assignedMaterialID) as MaterialItemSo);
             
             TH.TileIndicator.CloseTileIndicator();
@@ -161,7 +168,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             return TH.InputSystem.LeftClickOnWorld;
         }
 
-        private void UpdpateClosestWall(ToolHelper TH)
+        private void UpdateClosestWall(ToolHelper TH)
         {
             float lastDis = 9999;
             Vector3 closestWallPos = Vector3.zero;

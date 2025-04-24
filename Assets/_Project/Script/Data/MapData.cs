@@ -140,7 +140,8 @@ namespace Data
             
             if (data.CellPosition.x > CurrentMapSize.x - x || data.CellPosition.z > CurrentMapSize.y - y)
             {
-                Object.DestroyImmediate(data.assignedWall.gameObject);
+                RemoveWallData(data.CellPosition);
+                // Object.DestroyImmediate(data.assignedWall.gameObject);
                 WallDatas.RemoveAt(i);
             }
         }

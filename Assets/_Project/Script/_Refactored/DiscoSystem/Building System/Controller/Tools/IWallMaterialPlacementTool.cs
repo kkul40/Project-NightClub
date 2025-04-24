@@ -53,7 +53,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            TH.PlacementTracker.AddTrack(new WallMaterialUndo(_storedMaterial.ID, _currentChangableMaterial.assignedMaterialID, _closestWallData));
+            TH.PlacementTracker.AddTrack(new WallMaterialUndo(_storedMaterial.ID, _currentChangableMaterial.assignedMaterialID, _closestWallData.CellPosition));
             
             _closestWallData.AssignNewID(_materialItemSo);
             _currentChangableMaterial = null;
