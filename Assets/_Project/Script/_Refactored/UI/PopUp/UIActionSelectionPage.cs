@@ -46,6 +46,12 @@ namespace UI.PopUp
             CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
 
+            GameEvent.Subscribe<Event_StartedPlacing>(handle =>
+            {
+                ToggleView(false);
+                _lastData = null;
+            });
+            
             RegisterBehaviors();
         }
 

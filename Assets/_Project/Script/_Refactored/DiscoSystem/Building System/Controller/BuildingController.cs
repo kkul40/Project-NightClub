@@ -75,6 +75,7 @@ namespace DiscoSystem.Building_System.Controller
 
         private ToolHelper _toolHelper;
         private ITool _currentTool;
+        private bool _isToggled;
 
         private RelocateData _relocateData;
 
@@ -98,6 +99,7 @@ namespace DiscoSystem.Building_System.Controller
             GameEvent.Subscribe<Event_RelocatePlacement>(StartRelocatePlacement);
             GameEvent.Subscribe<Event_RelocateWallDoor>(StartWallDoorRelocate);
             GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
+            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => _isToggled = handle.Toggle);
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
         }
 
@@ -105,6 +107,11 @@ namespace DiscoSystem.Building_System.Controller
         {
             RequireIsInitialized();
 
+            if (!_isToggled) return;
+
+            if (InputSystem.Instance.Undo && _currentTool == null)
+                _toolHelper.PlacementTracker.Undo();
+            
             if (_currentTool == null) return;
             
             if (InputSystem.Instance.Esc)
@@ -155,9 +162,6 @@ namespace DiscoSystem.Building_System.Controller
                 ClearBuildingCache();
                 StopBuilding();
             }
-            
-            if (InputSystem.Instance.Undo)
-                _toolHelper.PlacementTracker.Undo();
         }
         
         private bool TryPurchase(PurchaseTypes purchaseTypes, StoreItemSO storeItemSo)
@@ -227,7 +231,7 @@ namespace DiscoSystem.Building_System.Controller
             _currentTool.OnStart(_toolHelper);
             
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
-            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
+            GameEvent.Trigger(new Event_StartedPlacing());
         }
 
         private void StartMapExtensionItem(ExtendItemSo extendItemSo)
@@ -264,7 +268,8 @@ namespace DiscoSystem.Building_System.Controller
                 _currentTool.OnStart(_toolHelper);
 
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
-            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
+            GameEvent.Trigger(new Event_ResetSelection());
+            GameEvent.Trigger(new Event_StartedPlacing());
         }
         
         private void ClearBuildingCache()
@@ -284,7 +289,7 @@ namespace DiscoSystem.Building_System.Controller
             ClearBuildingCache();
             
             GameEvent.Trigger(new Event_ResetCursor());
-            GameEvent.Trigger(new Event_ToggleBuildingMode(false));
+            GameEvent.Trigger(new Event_StoppedPlacing());
         }
 
         private void RemovePlacement(Event_RemovePlacement removeEvent)

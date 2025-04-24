@@ -76,6 +76,16 @@ namespace DiscoSystem.Building_System.GameEvents
         }
     }
 
+    public class Event_StartedPlacing
+    {
+        
+    }
+
+    public class Event_StoppedPlacing
+    {
+        
+    }
+
     public class Event_PropPlaced
     {
         public IPropUnit PropUnit;

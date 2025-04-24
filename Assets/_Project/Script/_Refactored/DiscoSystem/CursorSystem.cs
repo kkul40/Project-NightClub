@@ -49,12 +49,13 @@ namespace DiscoSystem
         {
             _inputSystem = inputSystem;
             SetCursor(eCursorTypes.Default);
-            StartCoroutine(ToggleCursorSystem(true, delay));
+            StartCoroutine(DelayedToggleCursorSystemCo(true, delay));
             
             GameEvent.Subscribe<Event_SelectCursor>(SetCursor);
             GameEvent.Subscribe<Event_ResetCursor>( handle => SetCursorToDefault());
             GameEvent.Subscribe<Event_ResetSelection>( handle => Reset());
-            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleCursorSystem(handle.Toggle));
+            GameEvent.Subscribe<Event_StartedPlacing>(handle => _isCursorSystemToggled = false);
+            GameEvent.Subscribe<Event_StoppedPlacing>(handle => _isCursorSystemToggled = true);
         }
  
         private void Update()
@@ -243,12 +244,12 @@ namespace DiscoSystem
         {
             SetCursor(eCursorTypes.Default);
         }
-        private void ToggleCursorSystem(bool toggle)
+        private void DelayedToggleCursorSystem(bool toggle)
         {
-            StartCoroutine(ToggleCursorSystem(!toggle, 0.1f));
+            StartCoroutine(DelayedToggleCursorSystemCo(!toggle, 0.1f));
         }
 
-        private IEnumerator ToggleCursorSystem(bool toggle, float delay)
+        private IEnumerator DelayedToggleCursorSystemCo(bool toggle, float delay)
         {
             yield return new WaitForSeconds(delay);
             _isCursorSystemToggled = toggle;

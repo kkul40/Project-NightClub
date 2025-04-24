@@ -82,7 +82,7 @@ namespace Framework.Mvcs.View
             isToggled = toggle;
         }
 
-        public void ToggleView()
+        public virtual void ToggleView()
         {
             this.gameObject.SetActive(!gameObject.activeInHierarchy);
             isToggled = gameObject.activeInHierarchy;
