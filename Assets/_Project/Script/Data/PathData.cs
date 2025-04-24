@@ -48,6 +48,7 @@ namespace Data
             GameEvent.Subscribe<Event_PropRemoved>( handle => UpdateAllPaths());
             GameEvent.Subscribe<Event_PropRelocated>(handle => UpdateAllPaths());
             GameEvent.Subscribe<Event_ExpendMapSize>(handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_MapSizeChanged>(handle => UpdateAllPaths());
         }
 
         private void SetUpPaths()

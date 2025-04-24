@@ -146,7 +146,6 @@ namespace Data
         }
 
         CurrentMapSize -= new Vector2Int(x, y);
-        
         GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
     }
 
