@@ -22,8 +22,8 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.GoTargetDestination(GetRandomDestination(and));
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
+            and.Npc.PathFinder.GoToRandomDestination();
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
@@ -39,44 +39,12 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                 }
             }
         }
-
+        
         public void OnActivityEnd(ActivityNeedsData and)
         {
         }
 
-        public Vector3 GetRandomDestination(ActivityNeedsData and)
-        {
-            var loopCount = 0;
-
-            var target = and.DiscoData.MapData.GetRandomPathFinderNode();
-            if (target == null)
-                return and.Npc.transform.position;
-
-            // while (CheckTargetDestinationForHeight(and, target) || CheckTargetDestinationForDanceFloor(and,target) || target.IsWall || !target.IsWalkable)
-            // {
-            //     target = and.DiscoData.MapData.GetRandomPathFinderNode();
-            //
-            //     if (Helper.IterateTo100(ref loopCount))
-            //     {
-            //         IsEnded = true;
-            //         break;
-            //     }
-            // }
-            
-            while (target.IsWall || !target.IsWalkable)
-            {
-                target = and.DiscoData.MapData.GetRandomPathFinderNode();
-
-                if (Helper.IterateTo100(ref loopCount))
-                {
-                    IsEnded = true;
-                    break;
-                }
-            }
-
-            return target.WorldPos;
-        }
-
+        
         // private bool CheckTargetDestinationForHeight(ActivityNeedsData and, PathFinderNode target)
         // {
         //     return and.DiscoData.placementDataHandler.ContainsKeyOnWall(

@@ -53,9 +53,8 @@ namespace DiscoSystem.Character.NPC.Activity
             else if (_currentActivity.OnActivityErrorHandler(_activityNeedsData))
             {
                 GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Angry, _activityNeedsData.Npc.transform));
-                
                 _currentActivity.OnActivityEnd(_activityNeedsData);
-                StartNewActivity(new ExitDiscoActivity());
+                StartNewActivity(new ErrorHandlerActivity());
                 return;
             }
 
@@ -83,6 +82,7 @@ namespace DiscoSystem.Character.NPC.Activity
         
         public void HasPlacementOnTop(List<Vector3Int> keys)
         {
+            return;
             if (!hasActivity || !_currentActivity.CheckForPlacementOnTop) return;
             
             foreach (var key in keys)
@@ -100,18 +100,18 @@ namespace DiscoSystem.Character.NPC.Activity
                 else
                 {
                     // Is Placement on your way
-                    foreach (var path in _activityNeedsData.Npc.PathFinder.FoundPath) 
-                    {
-                        if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
-                        {
-                            if (_activityNeedsData.Npc.PathFinder.GoTargetDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
-                                return;
-                        
-                            GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc.transform));
-                            StartNewActivity(GetRandomActivity());
-                            return;
-                        }
-                    }
+                    // foreach (var path in _activityNeedsData.Npc.PathFinder.FoundPath) 
+                    // {
+                    //     if (path.WorldPosToCellPos(eGridType.PlacementGrid) == key)
+                    //     {
+                    //         if (_activityNeedsData.Npc.PathFinder.GoToDestination(_activityNeedsData.Npc.PathFinder.TargetPosition))
+                    //             return;
+                    //     
+                    //         GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Exclamation, _activityNeedsData.Npc.transform));
+                    //         StartNewActivity(GetRandomActivity());
+                    //         return;
+                    //     }
+                    // }
                 }
                
                 // Is Placement On Top Of You

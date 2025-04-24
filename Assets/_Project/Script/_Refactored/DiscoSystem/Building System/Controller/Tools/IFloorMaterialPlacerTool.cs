@@ -14,7 +14,6 @@ namespace DiscoSystem.Building_System.Controller.Tools
         private MaterialItemSo _storedMaterial;
         private FloorData _mouseOnFloorData;
         
-        
         public bool isFinished { get; private set; }
 
 
@@ -34,8 +33,6 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnUpdate(ToolHelper TH)
         {
-            
-            Debug.Log("Floor Material placer");
             _mouseOnChangableMaterial = GetFloorMaterial(TH);
         
             if (_mouseOnChangableMaterial == null)
@@ -59,6 +56,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
+            TH.PlacementTracker.AddTrack(new FloorMaterialUndo(_storedMaterial.ID, _currentChangableMaterial.assignedMaterialID, _mouseOnFloorData));
             _currentChangableMaterial = null;
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, Vector2.one, Quaternion.identity);
         }

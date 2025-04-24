@@ -30,6 +30,7 @@ namespace DiscoSystem.Building_System
         public MaterialColorChanger MaterialColorChanger;
         public FXCreatorSystem FXCreatorSystem;
         public TileIndicator TileIndicator;
+        public PlacementTracker PlacementTracker;
     
         // Static Variables
         public StoreItemSO SelectedStoreItem;
@@ -56,6 +57,8 @@ namespace DiscoSystem.Building_System
             MaterialColorChanger = materialColorChanger;
             FXCreatorSystem = fxCreatorSystem;
             TileIndicator = tileIndicator;
+            
+            PlacementTracker = new PlacementTracker();
         }
 
         #region Position Rotation Functions

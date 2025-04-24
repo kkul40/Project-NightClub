@@ -68,6 +68,9 @@ namespace _Project.OdinEditor
         
         [FoldoutGroup("Testing")]
         public bool ShowAvaliableLeanPositions;
+        
+        [FoldoutGroup("Testing")]
+        public bool ShowActivityNodes;
         #endregion
 
         private void Update()
@@ -78,6 +81,7 @@ namespace _Project.OdinEditor
             KDebug.Instance.showPathFinder = ShowPathFinderNode;
             KDebug.Instance.showEmployeeFinder = ShowEmployeeNodes;
             KDebug.Instance.showAvaliableLeanPosition = ShowAvaliableLeanPositions;
+            KDebug.Instance.showActivityNodes = ShowActivityNodes;
         }
 
         [MenuItem("Tools/Debug")]

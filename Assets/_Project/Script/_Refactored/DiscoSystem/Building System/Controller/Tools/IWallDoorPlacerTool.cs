@@ -114,6 +114,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             
             var newWallDoorObject = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallDoorPrefab, position, _wallRotation, false);
             newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            
             TH.DiscoData.MapData.ChangeDoorPosition((int)Mathf.Max(position.x, position.z) + 1, isWallOnX);
             
             MonoBehaviour.Destroy(_closestAssignmentData.assignedWall.gameObject);

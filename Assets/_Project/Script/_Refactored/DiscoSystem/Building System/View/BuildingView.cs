@@ -106,5 +106,13 @@ namespace DiscoSystem.Building_System.View
                     slot.gameObject.SetActive(false);
             }
         }
+
+        public override void ToggleView(bool toggle)
+        {
+            base.ToggleView(toggle);
+            
+            if(!toggle)
+                GameEvent.Trigger(new Event_ToggleBuildingMode(false));
+        }
     }
 }

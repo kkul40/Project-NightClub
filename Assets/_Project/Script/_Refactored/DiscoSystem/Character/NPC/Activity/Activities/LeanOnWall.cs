@@ -30,7 +30,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             
             do
             {
-                leanablePath = and.DiscoData.MapData.Path.GetAvaliableWallPaths[UnityEngine.Random.Range(0, and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count)];
+                leanablePath = and.DiscoData.MapData.Path.GetAvaliableWallPaths[Random.Range(0, and.DiscoData.MapData.Path.GetAvaliableWallPaths.Count)];
                 if (Helper.IterateTo100(ref loopCount))
                 {
                     return false;
@@ -38,12 +38,14 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
             } while (leanablePath.HasOccupied);
             
-            return and.Npc.PathFinder.CheckIfPathAvaliable(leanablePath.WorldPos);
+            return and.Npc.PathFinder.IsPathAvaliable(leanablePath.WorldPos);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
         {
             if (!and.DiscoData.MapData.Path.GetAvaliableWallPaths.Contains(leanablePath)) return true;
+            if (leanablePath.OnlyActivity) return true;
+            if (leanablePath.OnlyEmployee) return true;
             return false;
         }
 
@@ -52,7 +54,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             currentState = eState.Walk;
             leanablePath.ChangeOccupition(and.Npc, true);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoTargetDestination(leanablePath.WorldPos);
+            and.Npc.PathFinder.GoToDestination(leanablePath.WorldPos);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
@@ -68,7 +70,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                         bool isLookingRight = leanablePath.GridX > leanablePath.GridY ? true : false;
                         RotationData rotationData = isLookingRight ? RotationData.Down : RotationData.Left;
                         
-                        and.Npc.PathFinder.SetPositioning(newRotation:rotationData.rotation, newPosition:leanablePath.WorldPos);
+                        and.Npc.PathFinder.SetPositioning(rotation:rotationData.rotation, position:leanablePath.WorldPos);
                     }
                     break;
                 case eState.Lean:

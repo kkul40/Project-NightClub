@@ -105,6 +105,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             Quaternion rotation = Quaternion.Euler(90, TH.LastRotation.eulerAngles.y, 0);
             
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition , new Vector2(TH.colliderSize.x, TH.colliderSize.z), rotation);
+            TH.PlacementTracker.AddTrack(new PropUndo(_placementItem.ID, obj.transform.GetInstanceID()));
         }
 
         public void OnStop(ToolHelper TH)

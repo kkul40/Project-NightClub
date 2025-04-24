@@ -27,9 +27,6 @@ namespace Data
             
             GameEvent.Subscribe<Event_AddItem>(AddItem);
             GameEvent.Subscribe<Event_RemoveItem>(RemoveItem);
-            
-            GameEvent.Trigger(new Event_BalanceUpdated(Balance));
-            GameEvent.Trigger(new Event_InventoryItemsUpdated(Items));
         }
         
         private void AddMoney(Event_MoneyAdded moneyEvent)

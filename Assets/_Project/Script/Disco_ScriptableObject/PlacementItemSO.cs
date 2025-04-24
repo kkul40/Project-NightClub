@@ -9,14 +9,12 @@ namespace Disco_ScriptableObject
     public class PlacementItemSO : StoreItemSO
     {
         public GameObject Prefab;
-        public Vector2Int Size;
-        public bool IsBig;
-
-        public bool canPlaceOntoOtherObjects;
         public GridSizes GridSizes;
-
         [HorizontalGroup("Split", 290)] [EnumToggleButtons] [HideLabel]
         public ePlacementLayer PlacementLayer;
+
+        [Header("Path Settings")] 
+        public bool OnlyForActivity;
 
         public enum eRotationType
         {
@@ -25,7 +23,6 @@ namespace Disco_ScriptableObject
             LeftRight,
             Auto
         }
-
         [HorizontalGroup("Split", 290)] [EnumToggleButtons] [HideLabel]
         public eRotationType eRotation;
     }

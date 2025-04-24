@@ -22,7 +22,7 @@ namespace DiscoSystem.Character._Player
         {
             if (InputSystem.Instance.RightClickOnWorld && !UIPageManager.Instance.IsAnyUIToggled())
             {
-                _pathFinder.GoTargetDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
+                _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
             }
         }

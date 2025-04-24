@@ -73,7 +73,7 @@ namespace DiscoSystem.Building_System.Controller
                 SceneObject.gameObject.SetActive(toggle);
             }
         }
-        
+
         private ToolHelper _toolHelper;
         private ITool _currentTool;
 
@@ -156,6 +156,9 @@ namespace DiscoSystem.Building_System.Controller
                 ClearBuildingCache();
                 StopBuilding();
             }
+            
+            if (InputSystem.Instance.Undo)
+                _toolHelper.PlacementTracker.Undo();
         }
         
         private bool TryPurchase(PurchaseTypes purchaseTypes, StoreItemSO storeItemSo)

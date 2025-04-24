@@ -25,7 +25,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
             if (_chair.IsReservedToATable) return false;
 
-            return and.Npc.PathFinder.CheckIfPathAvaliable(_chair.GetFrontPosition().position);
+            return and.Npc.PathFinder.IsPathAvaliable(_chair.GetFrontPosition().position);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -37,7 +37,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             this.and = and;
-            and.Npc.PathFinder.GoTargetDestination(_chair.GetFrontPosition().position);
+            and.Npc.PathFinder.GoToDestination(_chair.GetFrontPosition().position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }
@@ -60,7 +60,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                         _state = eState.StandUp;
                     break;
                 case eState.StandUp:
-                    and.Npc.PathFinder.SetPositioning(newPosition: _chair.GetFrontPosition().position);
+                    and.Npc.PathFinder.SetPositioning(position: _chair.GetFrontPosition().position);
                     and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
 
                     timer = 0;

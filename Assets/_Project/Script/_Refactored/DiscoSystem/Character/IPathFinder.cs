@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data;
 using DG.Tweening;
+using ExtensionMethods;
 using UnityEngine;
 
 namespace DiscoSystem.Character
@@ -13,24 +15,25 @@ namespace DiscoSystem.Character
     }
     public interface IPathFinder
     {
-        Transform mTransform { get; }
+        public Transform FinderTransform { get; }
+        public Vector3 TargetPosition { get; }
+        public Vector3 CurrentPosition => FinderTransform.position.CellCenterPosition(eGridType.PathFinderGrid);
         PathUserType PathUserType { get; }
-        bool HasReachedDestination { get; }
-        Vector3 TargetPosition { get; }
-        Vector3 CurrentPoistion => mTransform.position;
-        bool CheckIfPathAvaliable(Vector3 targetDestination);
-        bool GoTargetDestination(Vector3 targetDestination, Action OnCompleteCallBack = null);
-        void CancelDestination();
-
-        List<Vector3> FoundPath { get; }
-
-        void SetPositioning(Quaternion? newRotation = null, Vector3? newPosition = null, float? duration = null)
+        public bool HasReachedDestination { get; }
+        public List<Vector3> GetWayPoints { get; }
+        public PathFinderNode GetDestinationNode();
+        public bool IsPathAvaliable(Vector3 destination);
+        public bool GoToDestination(Vector3 destination, Action onCompleteCallBack = null);
+        public bool GoToRandomDestination();
+        public void Cancel();
+        public void ErrorHelp(Action onCompleteCallBack = null);
+        void SetPositioning(Quaternion? rotation = null, Vector3? position = null, float? duration = null)
         {
-            if (newRotation != null)
-                mTransform.DORotate(newRotation.Value.eulerAngles, duration ?? 0.5f);
+            if (rotation != null)
+                FinderTransform.DORotate(rotation.Value.eulerAngles, duration ?? 0.5f);
 
-            if (newPosition != null)
-                mTransform.DOMove((Vector3)newPosition, duration ?? 0.5f);
+            if (position != null)
+                FinderTransform.DOMove((Vector3)position, duration ?? 0.5f);
         }
     }
 }

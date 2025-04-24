@@ -25,7 +25,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             if (dancableTiles == null)
                 return false;
 
-            _dancableTile = dancableTiles[UnityEngine.Random.Range(0, dancableTiles.Count)];
+            _dancableTile = dancableTiles[Random.Range(0, dancableTiles.Count)];
 
             if (_dancableTile == null || _dancableTile.IsOccupied)
                 return false;
@@ -33,17 +33,8 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             if (_dancableTile.WorldPos.WorldPosToCellPos(eGridType.PlacementGrid) ==
                 DiscoData.Instance.MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
                 return false;
-            
-            
-            //
-            // if (DiscoData.Instance.placementDataHandler.ContainsKey(_dancableTile.CellPosition,
-            //         ePlacementLayer.FloorProp))
-            //     return false;
-            //
-            // if (and.DiscoData.placementDataHandler.ContainsKeyOnWall(_dancableTile.CellPosition, 2))
-            //     return false;
 
-            return and.Npc.PathFinder.CheckIfPathAvaliable(_dancableTile.WorldPos);
+            return and.Npc.PathFinder.IsPathAvaliable(_dancableTile.WorldPos);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -55,7 +46,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            var foundPath = and.Npc.PathFinder.GoTargetDestination(_dancableTile.WorldPos);
+            var foundPath = and.Npc.PathFinder.GoToDestination(_dancableTile.WorldPos);
 
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.SetOccupied(and.Npc, true);

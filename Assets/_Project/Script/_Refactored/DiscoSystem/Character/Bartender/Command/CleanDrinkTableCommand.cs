@@ -39,7 +39,7 @@ namespace DiscoSystem.Character.Bartender.Command
             bartender.IsBusy = true;
             bar.IsBusy = true;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
-            bartender.PathFinder.GoTargetDestination(target.position);
+            bartender.PathFinder.GoToDestination(target.position);
         }
 
         public void UpdateCommand(BarMediator barMediator)

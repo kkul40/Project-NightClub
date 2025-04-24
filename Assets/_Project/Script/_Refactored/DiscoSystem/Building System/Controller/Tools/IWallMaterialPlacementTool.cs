@@ -53,13 +53,14 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
+            TH.PlacementTracker.AddTrack(new WallMaterialUndo(_storedMaterial.ID, _currentChangableMaterial.assignedMaterialID, _closestWallData));
+            
             _closestWallData.AssignNewID(_materialItemSo);
             _currentChangableMaterial = null;
 
             Vector3 position = _closestWallData.assignedWall.transform.position;
             Quaternion rotation = _closestWallData.assignedWall.transform.rotation;
             TH.FXCreatorSystem.CreateFX(FXType.Wall, position , Vector2.one, rotation);
-
         }
 
         public void OnStop(ToolHelper TH)

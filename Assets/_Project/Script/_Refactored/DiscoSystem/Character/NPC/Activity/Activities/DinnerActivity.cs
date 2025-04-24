@@ -29,7 +29,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
             if (chairProp == null || chairProp.IsOccupied) return false;
 
-            return and.Npc.PathFinder.CheckIfPathAvaliable(chairProp.GetFrontPosition().position);
+            return and.Npc.PathFinder.IsPathAvaliable(chairProp.GetFrontPosition().position);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -40,7 +40,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.GoTargetDestination(chairProp.GetFrontPosition().position);
+            and.Npc.PathFinder.GoToDestination(chairProp.GetFrontPosition().position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             chairProp.SetOccupied(and.Npc, true);
         }
@@ -87,7 +87,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                     break;
                 case DinnerState.StandUp:
                     and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
-                    and.Npc.PathFinder.SetPositioning(newPosition: chairProp.GetFrontPosition().position);
+                    and.Npc.PathFinder.SetPositioning(position: chairProp.GetFrontPosition().position);
 
                     timer = 0;
                     _dinnerState = DinnerState.End;

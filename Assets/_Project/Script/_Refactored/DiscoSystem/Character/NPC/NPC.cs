@@ -19,6 +19,8 @@ namespace DiscoSystem.Character.NPC
         public IPathFinder PathFinder { get; private set; }
         public ActivityHandler _activityHandler { get; private set; }
 
+        public string debugState;
+
         public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform, DiscoData discoData)
         {
             PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
@@ -33,6 +35,7 @@ namespace DiscoSystem.Character.NPC
             if (_activityHandler == null) return;
             
             _activityHandler.UpdateActivity();
+            debugState = _activityHandler.GetCurrentActivity.GetType().Name;
         }
 
         public GameObject mGameobject { get; }
@@ -65,17 +68,13 @@ namespace DiscoSystem.Character.NPC
         {
             if(_activityHandler != null)
                 _activityHandler.ForceToEndActivity();
-            
-            if(PathFinder != null)
-                PathFinder.CancelDestination();
         }
 
         private void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;
-            if (PathFinder.FoundPath == null) return;
             
-            path = PathFinder.FoundPath;
+            path = PathFinder.GetWayPoints;
             if (path.Count > 1)
                 for (var i = 1; i < path.Count; i++)
                     if (i == path.Count - 1)

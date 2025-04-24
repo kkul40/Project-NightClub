@@ -12,8 +12,9 @@ namespace Data
         public bool IsWalkable = false;
         public bool OnlyEmployee = false; // Only Employee Can Walk
         public bool IsWall = false;
-        public bool IsPlacable = true;
-
+        public bool OnlyActivity = false;
+        
+        
         public bool HasOccupied { get; private set; }
         public bool ChangeOccupition(NPC source, bool hasOccuipied) => HasOccupied = hasOccuipied;
 
@@ -25,9 +26,6 @@ namespace Data
                 return true;
             }
         }
-
-        // Testing
-        public ePathNodeType PathNodeType;
 
         public int GridX = -1;
         public int GridY = -1;
@@ -54,19 +52,13 @@ namespace Data
             output.WorldPos = WorldPos;
             output.Parent = Parent;
             output.IsWalkable = IsWalkable;
-            output.OnlyEmployee = OnlyEmployee;
             output.GridX = GridX;
             output.GridY = GridY;
+            output.OnlyEmployee = OnlyEmployee;
+            output.OnlyActivity = OnlyActivity;
             output.HasOccupied = HasOccupied;
 
             return output;
         }
-    }
-
-    public enum ePathNodeType
-    {
-        Null,
-        Walkable,
-        Waitable
     }
 }

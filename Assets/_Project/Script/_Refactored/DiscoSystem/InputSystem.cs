@@ -32,6 +32,7 @@ namespace DiscoSystem
         [HideInInspector] public bool LeftHoldClickOnWorld;
         public bool CancelClick;
         public bool RightClickOnWorld;
+        public bool Undo;
 
         public bool HasMouseMoveToNewCell; // Used For Optimization
 
@@ -74,11 +75,12 @@ namespace DiscoSystem
             }
 
             CancelClick = Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape);
+            Undo = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z);
 
             MousePosition = GetMouseMapPosition();
             Esc = Input.GetKeyDown(KeyCode.Escape);
-            RotateLeft = Input.GetKeyDown(KeyCode.Z);
-            RotateRight = Input.GetKeyDown(KeyCode.X);
+            RotateLeft = Input.GetKeyDown(KeyCode.Q);
+            RotateRight = Input.GetKeyDown(KeyCode.E);
             FreePlacementKey = Input.GetKey(KeyCode.LeftAlt);
         }
 

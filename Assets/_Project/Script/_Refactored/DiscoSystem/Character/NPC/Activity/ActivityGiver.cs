@@ -23,7 +23,7 @@ namespace DiscoSystem.Character.NPC.Activity
                 if (activity is NoneActivity) continue;
                 if (activity is WalkToEnteranceActivity) continue;
                 if (activity is ExitDiscoActivity) continue;
-                // if (activity is LeanOnWall) continue;
+                if (activity is ErrorHandlerActivity) continue;
 
                 dictionary.Add(ac, activity);
             }

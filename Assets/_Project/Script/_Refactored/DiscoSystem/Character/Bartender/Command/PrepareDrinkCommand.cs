@@ -51,7 +51,7 @@ namespace DiscoSystem.Character.Bartender.Command
             bar.IsBusy = true;
             prepareTime = _drinkSoToPrepare.PrepareTime;
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
-            bartender.PathFinder.GoTargetDestination(target.position);
+            bartender.PathFinder.GoToDestination(target.position);
         }
 
         public void UpdateCommand(BarMediator barMediator)
@@ -110,7 +110,7 @@ namespace DiscoSystem.Character.Bartender.Command
         public void SetThingsBeforeStart()
         {
             bartender.AnimationController.PlayAnimation(eAnimationType.Bartender_Walk);
-            bartender.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition());
+            bartender.PathFinder.GoToDestination(DiscoData.Instance.MapData.EnterencePosition());
         }
 
         public void UpdateCommand(BarMediator barMediator)

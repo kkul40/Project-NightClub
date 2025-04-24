@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Disco_ScriptableObject;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using ExtensionMethods;
@@ -15,7 +15,6 @@ namespace Data
     {
         private MapData _mapData;
         private PathFinderNode[,] PathFinderNodes;
-
         private PathFinderNode[,] CachedPaths;
 
         private bool isPathsDirty = true;
@@ -29,6 +28,8 @@ namespace Data
         {
             get
             {
+                if(isAvaliablePathsDirty)
+                    UpdateAvaliableWallPaths();
                 return AvaliableWallPaths;
             }
         }
@@ -80,14 +81,81 @@ namespace Data
             {
                 for (int y = 0; y < size.y; y++)
                 {
-                    PathFinderNodes[x, y].IsWalkable = IsWalkable(PathFinderNodes[x, y]);
-                    PathFinderNodes[x, y].OnlyEmployee = IsOnlyEmployee(PathFinderNodes[x, y]);
+                    PathFinderNode node = PathFinderNodes[x, y];
+                    
+                    bool isWalkable = true;
+                    bool onlyEmployee = false;
+                    bool onlyActivity = false;
+                    
+                    SetPathNode(node, ref isWalkable, ref onlyEmployee, ref onlyActivity);
+
+                    node.IsWalkable = isWalkable;
+                    node.OnlyEmployee = onlyEmployee;
+                    node.OnlyActivity = onlyActivity;
+                    
+                    //
+                    // PathFinderNodes[x, y].IsWalkable = IsWalkable(PathFinderNodes[x, y]);
+                    // PathFinderNodes[x, y].OnlyEmployee = IsOnlyEmployee(PathFinderNodes[x, y]);
+                    // PathFinderNodes[x, y].OnlyActivity = IsOnlyActivity(PathFinderNodes[x, y]);
                 }
             }
 
             isPathsDirty = true;
+            isAvaliablePathsDirty = true;
         }
 
+        private void SetPathNode(PathFinderNode node, ref bool isWalkable, ref bool onlyEmployee, ref bool onlyActivity)
+        {
+            Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
+            Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+            var colliders = Physics.RaycastAll(ray.origin, Vector3.up, ConstantVariables.DoorHeight + 0.4f);
+
+            bool dontCheckWalkable = false;
+            bool dontCheckEmployee = false;
+            bool dontCheckActivity = false;
+            
+            foreach (var hit in colliders)
+            {
+                if (!dontCheckEmployee)
+                {
+                    if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
+                        if (empColl.onlyEmployeeCollider == hit.collider)
+                        {
+                            onlyEmployee = true;
+                            isWalkable = true;
+                            
+                            dontCheckWalkable = true;
+                            dontCheckEmployee = true;
+                        }
+                }
+                
+                if (hit.transform.TryGetComponent(out IPropUnit unit))
+                {
+                    if (!dontCheckActivity)
+                    {
+                        StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                        if (item is PlacementItemSO placemen)
+                        {
+                            if (placemen.OnlyForActivity)
+                            {
+                                onlyActivity = true;
+                                dontCheckActivity = true;
+                            }
+                        }
+                    }
+                    
+                    if (!dontCheckWalkable)
+                    {
+                        if (!CheckWalkable(unit))
+                        {
+                            isWalkable = false;
+                            dontCheckWalkable = true;
+                        }
+                    }
+                }
+            }
+        }
+        
         private bool IsWalkable(PathFinderNode node)
         {
             Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
@@ -97,9 +165,23 @@ namespace Data
             foreach (var hit in colliders)
             {
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
-                    if (!CheckWalkable(unit)) return false;
+                {
+                    StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                    if (item is PlacementItemSO placemen)
+                    {
+                        if (placemen.OnlyForActivity)
+                        {
+                            Debug.Log(placemen.Name);
+                            Debug.Log("Only For Activity Set");
+                            node.OnlyActivity = true;
+                        }
+                    }
+                    
+                    if (!CheckWalkable(unit))
+                        return false;
+                }
             }
-            
+            node.OnlyActivity = false;
             return true;
         }
         
@@ -117,6 +199,24 @@ namespace Data
                         node.IsWalkable = true;
                         return true;
                     }
+            }
+            return false;
+        }
+        
+        private bool IsOnlyActivity(PathFinderNode node)
+        {
+            Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
+            Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+            var colliders = Physics.RaycastAll(ray.origin, Vector3.up, 2);
+
+            foreach (var hit in colliders)
+            {
+                if (hit.transform.TryGetComponent(out IPropUnit unit))
+                {
+                    StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                    if (item is PlacementItemSO placemen)
+                        if (placemen.OnlyForActivity) return true;
+                }
             }
             return false;
         }
@@ -166,11 +266,18 @@ namespace Data
                 for (var y = 0; y < mapSize.y; y++)
                 {
                     outputNode[x, y] = PathFinderNodes[x, y].Copy();
+
+                    int dX = x;
+                    int dY = y;
+
+                    if (!_mapData.IsWallDoorOnX)
+                    {
+                        dX = y;
+                        dY = x;
+                    }
                     
-                    if (x > _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && 
-                        x < _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize && 
-                        y == 0) continue;
-                
+                    if (dX > _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize - ConstantVariables.PathFinderGridSize && dX < _mapData.WallDoorIndex * ConstantVariables.PathFinderGridSize && dY == 0) continue;
+                    
                     if (x == 0 || y == 0 || x == mapSize.x - 1 || y == mapSize.y - 1)
                     {
                         outputNode[x, y].IsWall = true;
@@ -185,9 +292,36 @@ namespace Data
             return CachedPaths;
         }
         
-        public void SetFlags(bool? avaliablePathFlag)
+        public void UpdateAvaliableWallPaths()
         {
-            isAvaliablePathsDirty = avaliablePathFlag ?? false;
+            AvaliableWallPaths = new List<PathFinderNode>();
+
+            Vector2Int pathSize = PathFinderSize();
+            
+            int howFarFromWall = 1;
+            for (int x = ConstantVariables.PathFinderGridSize / 2; x < pathSize.x; x += ConstantVariables.PathFinderGridSize)
+            {
+                PathFinderNode node = PathFinderNodes[x, howFarFromWall];
+                if (node.GetIsWalkable && !node.OnlyEmployee && !node.OnlyActivity)
+                    AvaliableWallPaths.Add(node);
+            }
+            for (int y = ConstantVariables.PathFinderGridSize / 2; y < pathSize.y; y += ConstantVariables.PathFinderGridSize)
+            {
+                PathFinderNode node = PathFinderNodes[howFarFromWall, y];
+                if (node.GetIsWalkable && !node.OnlyEmployee && !node.OnlyActivity)
+                    AvaliableWallPaths.Add(node);
+            }
+
+            for (int i = AvaliableWallPaths.Count - 1; i >= 0; i--)
+            {
+                if (AvaliableWallPaths[i].WorldPos.WorldPosToCellPos(eGridType.PlacementGrid) == _mapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
+                {
+                    AvaliableWallPaths.RemoveAt(i);
+                    break;
+                }
+            }
+
+            isAvaliablePathsDirty = false;
         }
     }
 }

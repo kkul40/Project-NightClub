@@ -31,6 +31,8 @@ namespace Data
         
         //            instanceID   StoreID created-obj   Pos      Rot
         public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>> PlacedItems;
+        
+        // TODO : Implement Command Pattern TO Undo Placements
 
         public void Initialize(GameData gameData)
         {
@@ -80,11 +82,15 @@ namespace Data
             // });
             // _drinkItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerDrinkDataLoad(AllInGameDrinks.Values.ToList());
             
-             
             MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
         }
 
+        private void Start()
+        {
+            GameEvent.Trigger(new Event_BalanceUpdated(inventory.Balance));
+            GameEvent.Trigger(new Event_InventoryItemsUpdated(inventory.Items));
+        }
 
         private void OnDisable()
         {
@@ -200,7 +206,7 @@ namespace Data
     {
         public const int MaxMapSizeX = 50;
         public const int MaxMapSizeY = 50;
-        public const int PathFinderGridSize = 5;
+        public const int PathFinderGridSize = 6;
         public const int DoorHeight = 2;
         public const int FloorLayerID = 7;
         public const int WalllayerID = 8;

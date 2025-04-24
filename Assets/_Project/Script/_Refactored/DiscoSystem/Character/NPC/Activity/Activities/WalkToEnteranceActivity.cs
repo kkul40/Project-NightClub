@@ -25,7 +25,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         {
             and.Npc.TriggerDoor = true;
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoTargetDestination(DiscoData.Instance.MapData.EnterencePosition());
+            and.Npc.PathFinder.GoToDestination(DiscoData.Instance.MapData.EnterencePosition());
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)

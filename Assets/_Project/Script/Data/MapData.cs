@@ -108,8 +108,6 @@ namespace Data
         if (CurrentMapSize.y + y > ConstantVariables.MaxMapSizeY) return false;
         CurrentMapSize += new Vector2Int(0, y);
         
-        Path.SetFlags(avaliablePathFlag: true);
-
         GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
         return true;
     }
@@ -133,8 +131,6 @@ namespace Data
             DoorPosition = new Vector3Int(0, 0, WallDoorIndex - 1);
         
         GameEvent.Trigger(new Event_PropRelocated(null));
-
-        Path.SetFlags(avaliablePathFlag: true);
     }
 
     public PathFinderNode GetRandomPathFinderNode()
@@ -178,9 +174,6 @@ namespace Data
         }
 
         data.AssignReferance(wallObject.GetComponent<Wall>());
-
-        Path.SetFlags(avaliablePathFlag: true);
-
         return data;
     }
 
@@ -194,8 +187,6 @@ namespace Data
         }
 
         WallDatas.Remove(data);
-
-        Path.SetFlags(avaliablePathFlag: true);
     }
 
     public WallData GetWallDataByCellPos(Vector3Int cellPosition)
@@ -225,7 +216,5 @@ namespace Data
     }
 
     public Vector3 SpawnPositon => EnterencePosition() - (IsWallDoorOnX ? new Vector3(0, 0, 1) : new Vector3(1, 0, 0));
-
-   
     }
 }

@@ -19,9 +19,7 @@ MonoBehaviour:
   Price: 0
   ItemType: 6
   Prefab: {fileID: 250269504976497457, guid: c2cabc55911f18c46a98432511d2d5d5, type: 3}
-  Size: {x: 1, y: 1}
-  IsBig: 1
-  canPlaceOntoOtherObjects: 0
   GridSizes: 0
   PlacementLayer: 0
+  OnlyForActivity: 1
   eRotation: 0

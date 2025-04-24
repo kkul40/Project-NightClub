@@ -35,7 +35,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             //     if (Helper.IterateTo100(ref iteration)) return false;
             // }
  
-            return and.Npc.PathFinder.CheckIfPathAvaliable(_bar.CustomerWaitPosition.position);
+            return and.Npc.PathFinder.IsPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -47,7 +47,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             _bar.IsServing = true;
-            and.Npc.PathFinder.GoTargetDestination(_bar.CustomerWaitPosition.position);
+            and.Npc.PathFinder.GoToDestination(_bar.CustomerWaitPosition.position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _routine = DOTween.instance.StartCoroutine(CoGetDrink(and));
         }
@@ -65,7 +65,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.CancelDestination();
+            and.Npc.PathFinder.Cancel();
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
 
             if (_bar != null)

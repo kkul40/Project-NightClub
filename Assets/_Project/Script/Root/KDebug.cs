@@ -12,6 +12,7 @@ namespace Root
         public bool showPathFinder = false;
         public bool showEmployeeFinder = false;
         public bool showAvaliableLeanPosition = false;
+        public bool showActivityNodes = false;
 
         private void OnDrawGizmos()
         {
@@ -38,6 +39,9 @@ namespace Root
                     else
                         Gizmos.color = Color.red;
                     
+                    if(showActivityNodes && node.OnlyActivity)
+                        Gizmos.color = Color.yellow;
+                    
                     if (showEmployeeFinder && node.OnlyEmployee)
                         Gizmos.color = Color.cyan;
                     
@@ -48,15 +52,16 @@ namespace Root
 
                     Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
                 }
-
-            // if (showAvaliableLeanPosition)
-            // {
-            //     foreach (var node in MapGeneratorSystem.Instance.MapData.Path.GetAvaliableWallPaths)
-            //     {
-            //         Gizmos.color = Color.magenta;
-            //         Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
-            //     }
-            // }
+            
+            
+            if (showAvaliableLeanPosition)
+            {
+                foreach (var node in DiscoData.Instance.MapData.Path.GetAvaliableWallPaths)
+                {
+                    Gizmos.color = Color.magenta;
+                    Gizmos.DrawCube(node.WorldPos, DefaultSize / ConstantVariables.PathFinderGridSize);
+                }
+            }
         }
 
         public Vector3 DefaultSize => new Vector3(0.8f, 0.8f, 0.8f);

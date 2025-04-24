@@ -76,7 +76,7 @@ namespace Framework.Mvcs.View
         }
         
         //  Methods ---------------------------------------
-        public void ToggleView(bool toggle)
+        public virtual void ToggleView(bool toggle)
         {
             this.gameObject.SetActive(toggle);
             isToggled = toggle;
