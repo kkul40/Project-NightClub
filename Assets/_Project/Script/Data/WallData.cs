@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.New;
 using Disco_ScriptableObject;
 using PropBehaviours;
 using SaveAndLoad;
@@ -19,10 +20,10 @@ namespace Data
             assignedMaterialID = -1;
         }
 
-        public WallData(GameDataExtension.WallSaveData wallSaveData)
+        public WallData(SavableMapData.WallSaveData wallSaveData)
         {
-            CellPosition = wallSaveData.CellPosition;
-            assignedMaterialID = wallSaveData.AssignedMaterialID;
+            CellPosition = wallSaveData.cellPosition;
+            assignedMaterialID = wallSaveData.assignedMaterialID;
         }
 
         public void AssignReferance(Wall assignment)

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data.New;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using ExtensionMethods;
 using PropBehaviours;
 using SaveAndLoad;
+using SerializableTypes;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -60,21 +62,36 @@ namespace Data
     //     KEvent_Map.TriggerMapSizeChanged(CurrentMapSize);
     // }
 
-    public MapData(GameData gameData)
+    public MapData(NewGameData gameData)
     {
-        CurrentMapSize = gameData.SavedMapSize;
-        WallDoorIndex = gameData.WallDoorIndex;
+        CurrentMapSize = gameData.mapData.mapSize;
+        WallDoorIndex = gameData.mapData.wallDoorIndex;
         Path = new PathData(ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY, this);
 
-        ChangeDoorPosition(gameData.WallDoorIndex, gameData.IsWallOnX);
+        ChangeDoorPosition(gameData.mapData.wallDoorIndex, gameData.mapData.isWallOnX);
 
         WallDatas = new List<WallData>();
-        foreach (var wall in gameData.SavedWallDatas) WallDatas.Add(new WallData(wall));
+        foreach (var wall in gameData.mapData.wallDatas)
+            WallDatas.Add(new WallData(wall));
 
         FloorGridDatas = new FloorData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
         for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
         for (var y = 0; y < ConstantVariables.MaxMapSizeY; y++)
-            FloorGridDatas[x, y] = new FloorData(gameData.SavedFloorDatas[new Vector3Int(x, 0, y)]);
+        {
+            FloorData data;
+            Vector3Int cellPos = new Vector3Int(x, 0, y);
+            
+            if (gameData.mapData.floorDatas.TryGetValue(cellPos, out var floorData))
+                data = new FloorData(floorData);
+            else
+                data = new FloorData(cellPos);
+
+            FloorGridDatas[x, y] = data;
+            Debug.Log(data.assignedMaterialID);
+        }
+            
+        
+        GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData(ref handle.GameData));
     }
     
     public void Dispose()
@@ -84,19 +101,37 @@ namespace Data
 
     #region Saving And Loading...
 
-    public void SaveData(ref GameData gameData)
+    private void SaveData(ref NewGameData gameData)
     {
-        gameData.SavedMapSize = CurrentMapSize;
+        gameData.mapData.mapSize = CurrentMapSize;
 
-        gameData.IsWallOnX = IsWallDoorOnX;
-        gameData.WallDoorIndex = WallDoorIndex;
+        gameData.mapData.isWallOnX = IsWallDoorOnX;
+        gameData.mapData.wallDoorIndex = WallDoorIndex;
 
-        gameData.SavedWallDatas = new List<GameDataExtension.WallSaveData>();
-        foreach (var wall in WallDatas) gameData.SavedWallDatas.Add(wall.ConvertToWallSaveData());
+        gameData.mapData.wallDatas = new List<SavableMapData.WallSaveData>();
+        foreach (var wall in WallDatas) gameData.mapData.wallDatas.Add(SavableMapData.WallSaveData.Convert(wall));
 
+        gameData.mapData.floorDatas = new SerializableDictionary<Vector3Int, SavableMapData.FloorSaveData>();
+        
         for (var x = 0; x < CurrentMapSize.x; x++)
         for (var y = 0; y < CurrentMapSize.y; y++)
-            gameData.SavedFloorDatas[new Vector3Int(x, 0, y)] = FloorGridDatas[x, y].ConvertToFloorSaveData();
+        {
+            SavableMapData.FloorSaveData data = SavableMapData.FloorSaveData.Convert(FloorGridDatas[x, y]);
+            gameData.mapData.floorDatas.Add(new Vector3Int(x, 0, y), data);
+        }
+
+        gameData.mapData.placementDatas = new List<SavableMapData.PlacementSaveData>();
+        foreach (var placedItem in DiscoData.Instance.PlacedItems.Values)
+        {
+            SavableMapData.PlacementSaveData data = new SavableMapData.PlacementSaveData();
+            data.PropID = placedItem.Item1;
+            data.EularAngles = placedItem.Item2.eulerAngles;
+            data.PlacedPosition = placedItem.Item3;
+            
+            gameData.mapData.placementDatas.Add(data);
+        }
+        
+        Debug.Log("Map Data Saved");
     }
 
     #endregion

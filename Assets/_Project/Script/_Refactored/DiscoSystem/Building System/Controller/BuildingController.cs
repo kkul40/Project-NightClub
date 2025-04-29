@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller.Tools;
@@ -9,6 +10,7 @@ using DiscoSystem.Building_System.View;
 using Framework.Context;
 using Framework.Mvcs.Controller;
 using PropBehaviours;
+using SaveAndLoad.New;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -101,6 +103,29 @@ namespace DiscoSystem.Building_System.Controller
             GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
             GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => _isToggled = handle.Toggle);
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
+
+            DiscoData.Instance.StartCoroutine(LoadItems());
+        }
+        
+        
+
+        public IEnumerator LoadItems()
+        {
+            yield return new WaitForSeconds(2);
+            
+            foreach (var placementData in SaveLoadSystem.Instance.GetCurrentData().mapData.placementDatas)
+            {
+                PlacementItemSO item = DiscoData.Instance.FindAItemByID(placementData.PropID) as PlacementItemSO;
+                Vector3 position = placementData.PlacedPosition;
+                Quaternion rotation = Quaternion.Euler(placementData.EularAngles);
+                var obj = DiscoData.Instantiate(item.Prefab, position, rotation);
+                
+                obj.GetComponent<IPropUnit>().Initialize(item.ID, item.PlacementLayer);
+
+                AddPlacementItemData(item, obj.transform, position, rotation);
+            }
+            
+            KEvent_GameAssetBundle.OnGameStoreItemsLoaded -= handle => LoadItems();
         }
 
         public void Update(float deltaTime)

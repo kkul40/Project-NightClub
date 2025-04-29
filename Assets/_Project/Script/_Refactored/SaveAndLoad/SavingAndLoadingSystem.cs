@@ -71,7 +71,7 @@ namespace SaveAndLoad
         {
             GameEvent.Trigger(new Event_GameSaved());
 
-            _gameData.Details.Save(_gameData.Details.PlayTime + passedSeconds);
+            _gameData.saveDetails.Save(_gameData.saveDetails.playTime + passedSeconds);
             passedSeconds = 0;
 
             _fileDataHandler.Save(_gameData);
@@ -115,7 +115,7 @@ namespace SaveAndLoad
         public bool HasBeenSavedBefore()
         {
             if (_gameData == null) return false;
-            return _gameData.HasBeenSavedBefore;
+            return _gameData.hasBeenSavedBefore;
         }
 
         // TODO Application Quite savelemek ister misin diye sor

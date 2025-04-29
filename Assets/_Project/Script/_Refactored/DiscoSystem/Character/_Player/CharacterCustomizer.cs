@@ -27,7 +27,7 @@ namespace DiscoSystem.Character._Player
             _characterTransform = characterTransform;
             _customizationData = customizationData;
             
-            GameDataExtension.PlayerCustomizationIndexData indexData = gameData.SavedPlayerCustomizationIndexData;
+            GameDataExtension.PlayerCustomizationIndexData indexData = gameData.savedPlayerCustomizationIndexData;
             
             gender = indexData.playerGenderIndex == 0 ? eGenderType.Male : eGenderType.Female;
             CustomizationItemsSo.ItemGroup group = gender == eGenderType.Male ? customizationData.MaleItems : customizationData.FemaleItems;

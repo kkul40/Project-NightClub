@@ -32,7 +32,7 @@ namespace DiscoSystem.Character.NPC.Activity
 
                 if (prop is T propType)
                 {
-                    var distance = Vector3.Distance(Npc.transform.position, prop.CellPosition);
+                    var distance = Vector3.Distance(Npc.transform.position, prop.WorldPos);
                     if (distance < lastDistance)
                     {
                         closestProp = propType;

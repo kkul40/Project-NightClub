@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace DiscoSystem
 {
-    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, ISavable
+    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>
     {
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
@@ -37,12 +37,6 @@ namespace DiscoSystem
             GameEvent.Subscribe<Event_ExpendMapSize>(handle => ExpendXY(handle.X, handle.Y));
         }
 
-        public void LoadData(GameData gameData)
-        {
-            Debug.Log("Map Generator Loaded");
-            SetUpMap();
-        }
-
         private void SetUpMap()
         {
             var delay = 0.05f;
@@ -61,11 +55,6 @@ namespace DiscoSystem
             StartCoroutine(SetUpFloor(delay));
             // TODO Use Call Back To Place Objects From Saving File
             StartCoroutine(SetUpWall(delay, null));
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-            _mapData.SaveData(ref gameData);
         }
 
         private IEnumerator SetUpFloor(float delay, Action callBack = null)
@@ -263,13 +252,16 @@ namespace DiscoSystem
 
             data.AssignReferance(newObject.GetComponent<FloorTile>(), cellPosition);
             
+            Debug.Log(data.assignedMaterialID);
+            
             var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
+                Debug.Log("not Found");
                 data.AssignNewID(InitConfig.Instance.GetDefaultTileMaterial);
                 return;
             }
-            data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
+            data.AssignNewID(found);
         }
 
         private void LoadAndAssignWallMaterial(Vector3Int cellPosition, GameObject newWallObject)

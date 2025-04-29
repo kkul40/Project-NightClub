@@ -13,13 +13,13 @@ namespace UI.StartMenu
         {
             base.Show(ePushAnimation);
 
-            cameraTransform.DOMoveX(playerTransform.position.x, 1);
+            cameraTransform.DOMoveX(playerTransform.position.x, animDuration);
         }
 
         public override void Hide(ePushAnimation ePushAnimation)
         {
             base.Hide(ePushAnimation);
-            cameraTransform.DOMoveX(0, 0.5f);
+            cameraTransform.DOMoveX(0, animDuration);
         }
     }
 }

@@ -126,12 +126,12 @@ namespace DiscoSystem
 
         public void LoadData(GameData gameData)
         {
-            SetSoundVolume(gameData.GameSettingsData.SoundVolume);
+            SetSoundVolume(gameData.gameSettingsData.SoundVolume);
         }
 
         public void SaveData(ref GameData gameData)
         {
-            gameData.GameSettingsData.SoundVolume = SoundVolume;
+            gameData.gameSettingsData.SoundVolume = SoundVolume;
         }
     }
 }

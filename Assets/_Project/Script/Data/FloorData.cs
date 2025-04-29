@@ -1,7 +1,7 @@
 ﻿using System;
+using Data.New;
 using Disco_ScriptableObject;
 using PropBehaviours;
-using SaveAndLoad;
 using UnityEngine;
 
 namespace Data
@@ -19,9 +19,9 @@ namespace Data
             assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
         }
 
-        public FloorData(GameDataExtension.FloorSaveData floorSaveData)
+        public FloorData(SavableMapData.FloorSaveData floorSaveData)
         {
-            CellPosition = floorSaveData.CellPosition;
+            CellPosition = floorSaveData.cellPosition;
             assignedMaterialID = floorSaveData.assignedMaterialID;
         }
 

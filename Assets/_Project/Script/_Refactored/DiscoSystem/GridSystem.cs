@@ -1,4 +1,5 @@
-﻿using DiscoSystem.Building_System.GameEvents;
+﻿using System;
+using DiscoSystem.Building_System.GameEvents;
 using UnityEngine;
 
 namespace DiscoSystem
@@ -19,7 +20,6 @@ namespace DiscoSystem
             GameEvent.Subscribe<Event_MapSizeChanged>(handle => AlignGridWithMapSize(handle.Size));
             GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => ToggleGrid(handle.Toggle));
         }
-
 
         private void ToggleGrid(bool toggle)
         {

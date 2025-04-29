@@ -1,18 +1,19 @@
 using CharacterCustomization;
 using Data;
+using Data.New;
 using DiscoSystem.Character.NPC;
 using UI.GamePages;
 using UnityEngine;
 
 namespace DiscoSystem.Character._Player
 {
-    public class Player : MonoBehaviour, IDoorTrigger, ISavable
+    public class Player : MonoBehaviour, IDoorTrigger
     {
         private IAnimationController _animationController;
         private NpcPathFinder _pathFinder;
         private CharacterCustomizeLoader _customizeLoader;
 
-        public void Initialize(GameData gameData)
+        public void Initialize(NewGameData gameData)
         {
             _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
@@ -35,7 +36,7 @@ namespace DiscoSystem.Character._Player
         public bool TriggerDoor { get; set; } = true;
         
 
-        public void LoadData(GameData gameData)
+        public void LoadData(NewGameData gameData)
         {
             _customizeLoader = GetComponent<CharacterCustomizeLoader>();
             _customizeLoader.Init(gameData);

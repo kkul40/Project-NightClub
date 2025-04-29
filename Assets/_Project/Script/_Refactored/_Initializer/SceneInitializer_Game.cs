@@ -1,11 +1,12 @@
-﻿using System;
-using Data;
+﻿using Data;
+using Data.New;
 using DiscoSystem;
 using DiscoSystem.Building_System;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character._Player;
 using DiscoSystem.Character.NPC;
 using SaveAndLoad;
+using SaveAndLoad.New;
 using UI.GamePages;
 using UnityEngine;
 
@@ -49,14 +50,11 @@ namespace _Initializer
 
             _gameEvents.Initialize();
 
-            
-            SavingAndLoadingSystem.Instance.Initialize();
-            SavingAndLoadingSystem.Instance.NewGame();
 
-            GameData gameData = SavingAndLoadingSystem.GameData;
-
+            GameData gameData = new GameData();
+            NewGameData newGameData = SaveLoadSystem.Instance.GetCurrentData();
             
-            _discoData.Initialize(gameData);
+            _discoData.Initialize();
             _musicPlayer.Initialize();
             _inputSystem.Initialize();
             
@@ -68,7 +66,7 @@ namespace _Initializer
             _uiPageManager.Initialize();
             
             
-            _player.Initialize(gameData);
+            _player.Initialize(newGameData);
             _npcSystem.Initialize(_discoData);
             
             // _savingAndLoadingSystem.Initialize(); 

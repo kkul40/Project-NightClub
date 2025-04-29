@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
+using SaveAndLoad;
 using UnityEngine;
 
 namespace Data
@@ -15,10 +16,10 @@ namespace Data
 
         public Inventory(GameData gameData)
         {
-            Balance = gameData.SavedInventoryData.Balance;
+            Balance = gameData.savedInventoryData.Balance;
             Items = new Dictionary<StoreItemSO, int>();
 
-            foreach (var data in gameData.SavedInventoryData.Items)
+            foreach (var data in gameData.savedInventoryData.Items)
                 Items.Add(DiscoData.Instance.FindAItemByID(data.Key), data.Value);
             
             
@@ -27,6 +28,16 @@ namespace Data
             
             GameEvent.Subscribe<Event_AddItem>(AddItem);
             GameEvent.Subscribe<Event_RemoveItem>(RemoveItem);
+            
+            // GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData(ref handle.GameData));
+        }
+        
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.savedInventoryData = new GameDataExtension.InventorySaveData();
+
+            foreach (var pair in Items)
+                gameData.savedInventoryData.Items.Add(pair.Key.ID, pair.Value);
         }
         
         private void AddMoney(Event_MoneyAdded moneyEvent)

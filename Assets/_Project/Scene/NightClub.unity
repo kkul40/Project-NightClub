@@ -3527,6 +3527,7 @@ MonoBehaviour:
   LeftHoldClickOnWorld: 0
   CancelClick: 0
   RightClickOnWorld: 0
+  Undo: 0
   HasMouseMoveToNewCell: 0
 --- !u!4 &156046159 stripped
 Transform:
@@ -20265,7 +20266,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16343
   m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

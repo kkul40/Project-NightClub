@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DiscoSystem;
 using UnityEngine;
 
 namespace UI.StartMenu
@@ -21,7 +23,7 @@ namespace UI.StartMenu
                 {
                     page.gameObject.SetActive(true);
                 }
-                page.Initiliase();
+                page.Initialize();
                 page.HideImmidiatly();
             }
 
@@ -29,6 +31,14 @@ namespace UI.StartMenu
             _stack.Push(currentPage);
 
             currentPage.ShowImmidiatly();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                OnBackButton();
+            }
         }
 
         public void OpenNewPage(Menu_UI_Page page)
@@ -46,6 +56,19 @@ namespace UI.StartMenu
             {
                 Debug.LogError("Page not Found");
             }
+        }
+
+        public void OpenNewPageImmidiatly(Menu_UI_Page page)
+        {
+            var foundPage = FindPage(page);
+            if (foundPage != null)
+            {
+                currentPage.HideImmidiatly();
+                currentPage = foundPage;
+                _stack.Push(currentPage);
+                currentPage.ShowImmidiatly();
+            }
+
         }
 
         private Menu_UI_Page FindPage(Menu_UI_Page page)

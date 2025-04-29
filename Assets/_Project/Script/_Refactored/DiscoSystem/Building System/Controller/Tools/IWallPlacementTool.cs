@@ -96,7 +96,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             else
                 unit = obj.AddComponent<IPropUnit>();
 
-            unit.Initialize(_placementItem.ID, new Vector3Int((int)TH.LastPosition.x, (int)TH.LastPosition.y, (int)TH.LastPosition.z), ePlacementLayer.WallProp);
+            unit.Initialize(_placementItem.ID, ePlacementLayer.WallProp);
         
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         

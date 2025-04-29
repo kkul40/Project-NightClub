@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using CharacterCustomization.Scriptables;
 using Data;
 using JetBrains.Annotations;
-using SaveAndLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace CharacterCustomization.UI
 {
     // TODO : Implement Color Change Logic Here Somewhere
-    public class PlayerCustomizationUI : MonoBehaviour, ISavable
+    public class PlayerCustomizationUI : MonoBehaviour
     {
         public class EquipedItem
         {
@@ -119,7 +118,8 @@ namespace CharacterCustomization.UI
             m_skinMeshRenderers = meshes[meshes.Length / 2];
             m_BodyPartTags = m_Armature.GetComponentsInChildren<BodyPartTag>();
             m_PlayerEquipments = new PlayerEquipments();
-            
+            m_PlayerEquipments.PlayerGender = gender;
+
             m_ItemGroup = new Dictionary<BodyPart, List<CustomizationItem>>();
             m_ItemGroup.Add(BodyPart.Head, group.Head);
             m_ItemGroup.Add(BodyPart.Hair, group.Hair);
@@ -231,10 +231,6 @@ namespace CharacterCustomization.UI
             InitBody(gender);
         }
 
-        public void LoadData(GameData gameData)
-        {
-        }
-
         private void PlayerGenderAnimation(eGenderType gender)
         {
             // TODO : Add Animations Here
@@ -266,10 +262,7 @@ namespace CharacterCustomization.UI
                     break;
             }
         }
-        
-        public void SaveData(ref GameData gameData)
-        {
-            gameData.SavedPlayerCustomizationIndexData = m_PlayerEquipments.ConvertPlayerCustomizationIndexData();
-        }
+
+        public PlayerEquipments GetPlayerEquipments => m_PlayerEquipments;
     }
 }

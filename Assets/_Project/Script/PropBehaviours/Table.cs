@@ -19,7 +19,7 @@ namespace PropBehaviours
 
                 if (prop is Chair chair)
                 {
-                    var distance = chair.CellPosition - CellPosition;
+                    var distance = chair.WorldPos - WorldPos;
                     if (distance.magnitude <= 1 && IsChairFacingToThisTable(chair))
                     {
                         chair.IsReservedToATable = true;

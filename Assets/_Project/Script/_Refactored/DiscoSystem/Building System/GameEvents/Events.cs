@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Data;
+using Data.New;
 using Disco_ScriptableObject;
 using DiscoSystem.Character.Bartender;
 using PropBehaviours;
@@ -35,11 +35,11 @@ namespace DiscoSystem.Building_System.GameEvents
     
     #region Game
 
-    public class Event_StartGameSave
+    public class Event_OnGameSave
     {
-        public GameData GameData;
+        public NewGameData GameData;
 
-        public Event_StartGameSave(ref GameData gameData)
+        public Event_OnGameSave(ref NewGameData gameData)
         {
             GameData = gameData;
         }

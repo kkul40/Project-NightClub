@@ -15,7 +15,7 @@ namespace UI.StartMenu
 
         [SerializeField] protected CanvasGroup _canvasGroup;
 
-        private readonly float animDuration = 1;
+        protected readonly float animDuration = 1;
         private readonly float screenWeight = 1920;
 
         private RectTransform _rectTransform;
@@ -23,7 +23,7 @@ namespace UI.StartMenu
         private float treshHold = 0.5f;
 
 
-        public void Initiliase()
+        public virtual void Initialize()
         {
             _rectTransform = GetComponent<RectTransform>();
         }

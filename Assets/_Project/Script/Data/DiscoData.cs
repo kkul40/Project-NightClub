@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.New;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.GameEvents;
 using PropBehaviours;
 using SaveAndLoad;
+using SaveAndLoad.New;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,7 +25,6 @@ namespace Data
         private AsyncOperationHandle<IList<StoreItemSO>> _storeItemHandle;
         private AsyncOperationHandle<IList<DrinkSO>> _drinkItemHandle;
         
-        // Verileri Once Data ya yaz daha sonra Modeli datadaki veriye gore guncelle!
         public MapData MapData;
         public Inventory inventory;
         public Dictionary<int, StoreItemSO> AllInGameItems { get; private set; } = new();
@@ -32,9 +33,8 @@ namespace Data
         //            instanceID   StoreID created-obj   Pos      Rot
         public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>> PlacedItems;
         
-        // TODO : Implement Command Pattern TO Undo Placements
-
-        public void Initialize(GameData gameData)
+        
+        public void Initialize()
         {
             Instance = this;
             AllInGameItems = new Dictionary<int, StoreItemSO>();
@@ -56,7 +56,7 @@ namespace Data
                     KEvent_GameAssetBundle.TriggerStoreItemsLoad(handle.Result.ToList());
                 }
             };
-
+            
             Addressables.LoadAssetsAsync<DrinkSO>(_drinkDataReference.labelString).Completed += handle =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -70,26 +70,17 @@ namespace Data
                 }
             };
 
-            // _storeItemHandle = Addressables.LoadAssetsAsync<StoreItemSO>(_storeItemReference.labelString, addressable =>
-            // {
-            //     AllInGameItems.Add(addressable.ID, addressable);
-            // });
-            // _storeItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerStoreItemsLoad(AllInGameItems.Values.ToList());
-            //
-            // _drinkItemHandle = Addressables.LoadAssetsAsync<DrinkSO>(_drinkDataReference.labelString, addressables =>
-            // {
-            //     AllInGameDrinks.Add(addressables.ID, addressables);
-            // });
-            // _drinkItemHandle.Completed += handle => KEvent_GameAssetBundle.TriggerDrinkDataLoad(AllInGameDrinks.Values.ToList());
+            NewGameData data = SaveLoadSystem.Instance.GetCurrentData();
+            MapData = new MapData(data);
             
-            MapData = new MapData(gameData);
-            inventory = new Inventory(gameData);
+            inventory = new Inventory(new GameData());
         }
 
         private void Start()
         {
             GameEvent.Trigger(new Event_BalanceUpdated(inventory.Balance));
             GameEvent.Trigger(new Event_InventoryItemsUpdated(inventory.Items));
+            GameEvent.Trigger(new Event_MapSizeChanged(MapData.CurrentMapSize.x, MapData.CurrentMapSize.y));
         }
 
         private void OnDisable()
@@ -102,28 +93,6 @@ namespace Data
             
             inventory.Dispose();
             MapData.Dispose();
-        }
-
-        // public void Load()
-        // {
-        //     var allGameItems = Resources.LoadAll<StoreItemSO>("ScriptableObjects/").ToList();
-        //     foreach (var gItems in allGameItems)
-        //         AllInGameItems.Add(gItems.ID, gItems);
-        //
-        //     var allDrinkItems = Resources.LoadAll<DrinkSO>("ScriptableObjects/").ToList();
-        //     foreach (var dItem in allDrinkItems)
-        //         AllInGameDrinks.Add(dItem.ID, dItem);
-        //     
-        //     KEvent_GameAssetBundle.TriggerStoreItemsLoad(allGameItems);
-        // }
-
-
-        public void SaveData(ref GameData gameData)
-        {
-            gameData.SavedInventoryData = new GameDataExtension.InventorySaveData();
-
-            foreach (var pair in inventory.Items)
-                gameData.SavedInventoryData.Items.Add(pair.Key.ID, pair.Value);
         }
 
         public StoreItemSO FindAItemByID(int ID)

@@ -2,7 +2,6 @@
 using Root;
 using SaveAndLoad;
 using UI.GamePages.GameButtons;
-using UnityEngine.SceneManagement;
 
 namespace UI.StartMenu.Buttons
 {

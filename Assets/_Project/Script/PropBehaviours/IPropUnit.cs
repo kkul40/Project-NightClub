@@ -12,24 +12,18 @@ namespace PropBehaviours
     {
         [ShowInInspector] public bool IsInitialized;
         [ShowInInspector] public int ID { get; private set; }
-        [ShowInInspector] public Vector3Int CellPosition { get; private set; }
-        [ShowInInspector] public Vector3 WorldPos { get; private set; }
+        [ShowInInspector] public Vector3 WorldPos => transform.position;
         [ShowInInspector] public ePlacementLayer PlacementLayer { get; private set; }
         
         // Events
        
         public virtual void Initialize(
             int ID, 
-            Vector3Int cellPosition, 
             ePlacementLayer placementLayer)
         {
             IsInitialized = true;
             this.ID = ID;
-            CellPosition = cellPosition;
-            // WorldPos = cellPosition.CellCenterPosition(eGridType.PlacementGrid);
-            WorldPos = transform.position;
             PlacementLayer = placementLayer;
-            
             mGameobject = gameObject;
         }
 
@@ -55,15 +49,7 @@ namespace PropBehaviours
         {
             // TODO Close The Page
         }
-
-        public void SetPositionAndRotation(Vector3 position, Quaternion rotation)
-        {
-            transform.rotation = rotation;
-            transform.position = position;
-
-            WorldPos = position;
-        }
-
+        
         public virtual void OnRelocated()
         {
         }

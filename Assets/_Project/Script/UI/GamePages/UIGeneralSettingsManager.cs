@@ -4,6 +4,7 @@ using Data;
 using DiscoSystem;
 using Root;
 using SaveAndLoad;
+using SaveAndLoad.New;
 using TMPro;
 using UnityEngine;
 
@@ -123,7 +124,7 @@ namespace UI.GamePages
 
         public void SaveGame()
         {
-            SavingAndLoadingSystem.Instance.SaveGame();
+            SaveLoadSystem.Instance.SaveGame();
         }
 
         public void LoadGame()
@@ -157,8 +158,8 @@ namespace UI.GamePages
 
         public void LoadData(GameData gameData)
         {
-            EdgeScrollingEnabled = !gameData.GameSettingsData.isEdgeScrollingEnabled;
-            SnappyCameraEnabled = !gameData.GameSettingsData.isSnappyCameraEnabled;
+            EdgeScrollingEnabled = !gameData.gameSettingsData.isEdgeScrollingEnabled;
+            SnappyCameraEnabled = !gameData.gameSettingsData.isSnappyCameraEnabled;
             ToggleEdgeScrolling();
             ToggleSnappyCamera();
         }
@@ -166,8 +167,8 @@ namespace UI.GamePages
 
         public void SaveData(ref GameData gameData)
         {
-            gameData.GameSettingsData.isEdgeScrollingEnabled = EdgeScrollingEnabled;
-            gameData.GameSettingsData.isSnappyCameraEnabled = SnappyCameraEnabled;
+            gameData.gameSettingsData.isEdgeScrollingEnabled = EdgeScrollingEnabled;
+            gameData.gameSettingsData.isSnappyCameraEnabled = SnappyCameraEnabled;
         }
     }
 }

@@ -9,63 +9,6 @@ namespace SaveAndLoad
 {
     public static class GameDataExtension
     {
-        [Serializable]
-        public class Details
-        {
-            public string CreationDate;
-            public string LastSaveDate;
-            public float PlayTime;
-
-            public Details()
-            {
-                CreationDate = "";
-                LastSaveDate = "";
-                PlayTime = 0f;
-            }
-        }
-
-        public static Details CreateNew(this Details details)
-        {
-            details.CreationDate = GetCurrentDate();
-            details.LastSaveDate = "";
-            details.PlayTime = 0f;
-
-            return details;
-        }
-        
-        public static Details Save(this Details details, float playeTimeInSeconds)
-        {
-            details.LastSaveDate = GetCurrentDate();
-            details.PlayTime = playeTimeInSeconds;
-        
-            return details;
-        }
-
-        public static string ConvertToHour(this float seconds)
-        {
-            int converted = (int)seconds;
-            int hour = converted / 3600;
-            int min = (converted / 60) % 60;
-            int sec = converted % 60;
-
-            return $"{hour}:{min}:{sec}";
-        }
-
-        public static string GetCurrentDate()
-        {
-            DateTimeOffset Date = DateTime.Now;
-
-            int month = Date.Month;
-            int day = Date.Day;
-            int year = Date.Year;
-            
-            int hour = Date.Hour;
-            int minute = Date.Minute;
-            int second = Date.Second;
-            
-            return $"Date : {month}|{day}|{year}, Time : {hour}:{minute}:{second}";
-        }
-        
         
         [Serializable]
         public class FloorSaveData
@@ -157,7 +100,7 @@ namespace SaveAndLoad
             PlacementSaveData saveData = new PlacementSaveData();
 
             saveData.PropID = unit.ID;
-            saveData.PlacedPosition = unit.CellPosition;
+            saveData.PlacedPosition = unit.WorldPos;
             saveData.EularAngles = unit.transform.rotation.eulerAngles;
             
             return saveData;

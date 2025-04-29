@@ -24,9 +24,9 @@ namespace PropBehaviours.LightBehaviours
 
         private Direction direction;
 
-        public override void Initialize(int ID, Vector3Int cellPosition, ePlacementLayer placementLayer)
+        public override void Initialize(int ID, ePlacementLayer placementLayer)
         {
-            base.Initialize(ID, cellPosition, placementLayer);
+            base.Initialize(ID, placementLayer);
             direction = transform.rotation.GetDirectionFromQuaternion();
         }
 

@@ -1,9 +1,7 @@
 ﻿using Animancer;
 using CharacterCustomization.Scriptables;
-using Data;
-using ExtensionMethods;
+using Data.New;
 using JetBrains.Annotations;
-using SaveAndLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -21,9 +19,9 @@ namespace CharacterCustomization
         private SkinnedMeshRenderer _skinMeshRenderers;
         private BodyPartTag[] _bodyPartTags;
 
-        public void Init(GameData gameData)
+        public void Init(NewGameData gameData)
         {
-            GameDataExtension.PlayerCustomizationIndexData indexData = gameData.SavedPlayerCustomizationIndexData;
+            PlayerCustomizationIndexData indexData = gameData.playerCustomizationData;
             
             gender = indexData.playerGenderIndex == 0 ? eGenderType.Male : eGenderType.Female;
             CustomizationItemsSo.ItemGroup group = gender == eGenderType.Male ? _So.MaleItems : _So.FemaleItems;

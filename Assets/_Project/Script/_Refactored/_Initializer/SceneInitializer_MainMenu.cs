@@ -9,7 +9,7 @@ namespace _Initializer
         
         private void Start()
         {
-            _savingAndLoadingSystem.Initialize();
+            // SaveLoadSystem.Instance.Initialize();
         }
     }
 }
