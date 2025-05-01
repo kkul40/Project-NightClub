@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 39acd6bc46523cd48b7e209d8c0d83a3, type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 7c694ed4819dd0c4aae5cc8eb7010000, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -4496,7 +4496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!215 &246593792
 ReflectionProbe:
   m_ObjectHideFlags: 0
@@ -42137,7 +42137,7 @@ MonoBehaviour:
   _bartenderPrefab: {fileID: 3008752642366587584, guid: f0755df7cd1c80649b2b0df693a93d94, type: 3}
   _djPrefab: {fileID: 0}
   _npcs: []
-  maxNPC: 1
+  maxNPC: 50
 --- !u!1001 &2040093589
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -49,6 +49,8 @@ namespace DiscoSystem.Building_System
 
         private void OnDisable()
         {
+            if (!_isInitialized) return;
+            
             _model.Dispose();
             _view.Dispose();
             _service.Dispose();

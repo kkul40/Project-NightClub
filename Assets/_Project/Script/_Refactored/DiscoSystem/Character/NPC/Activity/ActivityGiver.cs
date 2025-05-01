@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using DiscoSystem.Character.NPC.Activity.Activities;
+using Random = UnityEngine.Random;
 
 namespace DiscoSystem.Character.NPC.Activity
 {
@@ -36,7 +37,7 @@ namespace DiscoSystem.Character.NPC.Activity
 
         public IActivity GetRandomActivity()
         {
-            var a = UnityEngine.Random.Range(0, dictionary.Count);
+            var a = Random.Range(0, dictionary.Count);
             var randomActivity = dictionary.ElementAt(a).Value;
             return GetActivity(dictionary.ElementAt(a).Key);
         }
