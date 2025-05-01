@@ -28116,12 +28116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15aaa01c4fd9e81438a583713b61f6a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _storeItemReference:
-    m_LabelString: StoreItem
-  _drinkDataReference:
-    m_LabelString: DrinkData
-  MapData:
-    WallDatas: []
   inventory:
     Balance: 0
 --- !u!114 &1451075140

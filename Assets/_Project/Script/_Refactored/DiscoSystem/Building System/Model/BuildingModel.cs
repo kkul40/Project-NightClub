@@ -26,7 +26,7 @@ namespace DiscoSystem.Building_System.Model
         public StoreItemSO GetStoreItemByID(int instanceID)
         {
             int id = DiscoData.Instance.PlacedItems[instanceID].Item1;
-            return DiscoData.Instance.AllInGameItems[id];
+            return GameBundle.Instance.AllInGameItems[id];
         }
     }
 }

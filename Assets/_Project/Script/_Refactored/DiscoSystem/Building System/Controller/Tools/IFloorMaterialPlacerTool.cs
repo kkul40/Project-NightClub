@@ -46,7 +46,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
                 ResetPreviousMaterial();
                 _currentChangableMaterial = _mouseOnChangableMaterial;
 
-                _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
+                _storedMaterial = GameBundle.Instance.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
                 
                 TH.LastPosition = _mouseOnFloorData.CellPosition.CellCenterPosition(eGridType.PlacementGrid);

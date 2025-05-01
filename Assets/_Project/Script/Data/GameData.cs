@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SaveAndLoad;
 using SerializableTypes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Data
 {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.GameEvents;
 using Framework.Context;
@@ -41,16 +43,8 @@ namespace DiscoSystem.Building_System.View
                         button.onClick.AddListener( () => SelectCategory(slotClass.ItemType));
                 }
             }
-        }
-
-        public override void EventEnable()
-        {
-            KEvent_GameAssetBundle.OnGameStoreItemsLoaded += InstantiateItems;
-        }
-
-        public override void EventDisable()
-        {
-            KEvent_GameAssetBundle.OnGameStoreItemsLoaded -= InstantiateItems;
+            
+            InstantiateItems(GameBundle.Instance.AllInGameItems.Values.ToList());
         }
 
         private void InstantiateItems(List<StoreItemSO> storeItemSos)

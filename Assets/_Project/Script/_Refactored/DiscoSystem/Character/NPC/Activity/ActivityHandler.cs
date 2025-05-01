@@ -19,10 +19,10 @@ namespace DiscoSystem.Character.NPC.Activity
 
         public IActivity GetCurrentActivity => _currentActivity;
 
-        public ActivityHandler(NPC npc, DiscoData discoData)
+        public ActivityHandler(NPC npc)
         {
             _activityGiver = new ActivityGiver();
-            _activityNeedsData = new ActivityNeedsData(npc, discoData);
+            _activityNeedsData = new ActivityNeedsData(npc);
 
             _currentActivity = new WalkToEnteranceActivity();
             _lastActivity = _currentActivity;

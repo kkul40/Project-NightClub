@@ -21,11 +21,11 @@ namespace DiscoSystem.Character.NPC
 
         public string debugState;
 
-        public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform, DiscoData discoData)
+        public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
         {
             PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
-            _activityHandler = new ActivityHandler(this, discoData);
+            _activityHandler = new ActivityHandler(this);
             
             _activityHandler.StartNewActivity(new WalkToEnteranceActivity());
         }

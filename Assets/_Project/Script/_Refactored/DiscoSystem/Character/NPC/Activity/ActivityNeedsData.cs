@@ -8,12 +8,11 @@ namespace DiscoSystem.Character.NPC.Activity
     public class ActivityNeedsData
     {
         public NPC Npc;
-        public DiscoData DiscoData;
+        public DiscoData DiscoData => DiscoData.Instance;
 
-        public ActivityNeedsData(NPC npc, DiscoData discoData)
+        public ActivityNeedsData(NPC npc)
         {
             this.Npc = npc;
-            this.DiscoData = discoData;
         }
 
         public T GetAvaliablePropByType<T>() where T : IPropUnit

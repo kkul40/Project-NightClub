@@ -41,7 +41,7 @@ namespace DiscoSystem.Building_System
 
         protected void UndoMoney(int storeItemID)
         {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(storeItemID);
+            StoreItemSO item = GameBundle.Instance.FindAItemByID(storeItemID);
             GameEvent.Trigger(new Event_MoneyAdded(item.Price));
         }
     }
@@ -79,7 +79,7 @@ namespace DiscoSystem.Building_System
 
         public override void Undo()
         {
-            var store = DiscoData.Instance.FindAItemByID(PreviousMaterilID);
+            var store = GameBundle.Instance.FindAItemByID(PreviousMaterilID);
 
             if (store is MaterialItemSo material)
             {
@@ -107,7 +107,7 @@ namespace DiscoSystem.Building_System
 
         public override void Undo()
         {
-            var store = DiscoData.Instance.FindAItemByID(PreviousMaterilID);
+            var store = GameBundle.Instance.FindAItemByID(PreviousMaterilID);
             
             if (store is MaterialItemSo material)
             {
@@ -154,7 +154,7 @@ namespace DiscoSystem.Building_System
         public override void Undo()
         {
             // Remove Current Door And Add Wall In Place
-            var wallDoorData = _mapData.WallDatas.Find(x => x.assignedWall is WallDoor);
+            var wallDoorData = _mapData.GetWallDoor();
             
             _mapData.RemoveWallData(wallDoorData.CellPosition);
 
@@ -165,7 +165,7 @@ namespace DiscoSystem.Building_System
             else
                 MapGeneratorSystem.Instance.InstantiateYWall(index);
 
-            _mapData.GetWallDataByCellPos(wallDoorData.CellPosition).AssignNewID(GetMaterial(wallDoorData.assignedMaterialID));
+            _mapData.GetWallDataByCellPos(wallDoorData.CellPosition).AssignNewID(GetMaterial(wallDoorData.AssignedMaterialID));
 
             // Remove Wall That was door before And Add Door
             Vector3Int cellPos = new Vector3Int(PreviousWallIndex, 0, 0);
@@ -189,6 +189,6 @@ namespace DiscoSystem.Building_System
 
         private MapData _mapData => DiscoData.Instance.MapData;
         
-        private MaterialItemSo GetMaterial(int index) => DiscoData.Instance.FindAItemByID(index) as MaterialItemSo;
+        private MaterialItemSo GetMaterial(int index) => GameBundle.Instance.FindAItemByID(index) as MaterialItemSo;
     }
 }

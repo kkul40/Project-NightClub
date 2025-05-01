@@ -156,9 +156,9 @@ namespace DiscoSystem.Building_System
 
             WallData output = null;
 
-            foreach (var wall in DiscoData.Instance.MapData.WallDatas)
+            foreach (var wall in DiscoData.Instance.MapData.NewWallData.Values)
             {
-                float dis = Vector3.Distance(mousePos, wall.assignedWall.transform.position);
+                float dis = Vector3.Distance(mousePos, wall.AssignedWall.transform.position);
                 if (dis < maxDistance)
                 {
                     maxDistance = dis;

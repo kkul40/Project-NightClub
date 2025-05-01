@@ -40,10 +40,14 @@ namespace UI.PopUp
         private readonly Dictionary<Type, List<Action<object>>> _typeBehaviors = new();
         private List<Tween> _tweens = new();
 
+        private void Awake()
+        {
+            CloseAllButtons();
+        }
+
         public override void Initialize(IContext context)
         {
             base.Initialize(context);
-            CloseAllButtons();
             _followTarget = GetComponent<UI_FollowTarget>();
 
             GameEvent.Subscribe<Event_StartedPlacing>(handle =>

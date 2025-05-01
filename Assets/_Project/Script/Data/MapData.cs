@@ -5,7 +5,6 @@ using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using ExtensionMethods;
 using PropBehaviours;
-using SaveAndLoad;
 using SerializableTypes;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -24,7 +23,9 @@ namespace Data
     public PathData Path;
 
     //TODO Dinamik olarak 2 dimension arraylari ayarla
-    public List<WallData> WallDatas;
+
+    public Dictionary<Vector3Int, WallData> NewWallData;
+    
     private FloorData[,] FloorGridDatas;
 
     // Referanced
@@ -70,9 +71,9 @@ namespace Data
 
         ChangeDoorPosition(gameData.mapData.wallDoorIndex, gameData.mapData.isWallOnX);
 
-        WallDatas = new List<WallData>();
+        NewWallData = new Dictionary<Vector3Int, WallData>();
         foreach (var wall in gameData.mapData.wallDatas)
-            WallDatas.Add(new WallData(wall));
+            NewWallData.Add(wall.Key, new WallData(wall.Key, wall.Value.assignedMaterialID));
 
         FloorGridDatas = new FloorData[ConstantVariables.MaxMapSizeX, ConstantVariables.MaxMapSizeY];
         for (var x = 0; x < ConstantVariables.MaxMapSizeX; x++)
@@ -108,25 +109,26 @@ namespace Data
         gameData.mapData.isWallOnX = IsWallDoorOnX;
         gameData.mapData.wallDoorIndex = WallDoorIndex;
 
-        gameData.mapData.wallDatas = new List<SavableMapData.WallSaveData>();
-        foreach (var wall in WallDatas) gameData.mapData.wallDatas.Add(SavableMapData.WallSaveData.Convert(wall));
+        gameData.mapData.wallDatas.Clear();
+        foreach (var wall in NewWallData)
+            gameData.mapData.wallDatas.Add(wall.Key, new Save_MapData.Save_WallData(wall.Value.AssignedMaterialID));
 
-        gameData.mapData.floorDatas = new SerializableDictionary<Vector3Int, SavableMapData.FloorSaveData>();
+        gameData.mapData.floorDatas = new SerializableDictionary<Vector3Int, Save_MapData.Save_FloorData>();
         
         for (var x = 0; x < CurrentMapSize.x; x++)
         for (var y = 0; y < CurrentMapSize.y; y++)
         {
-            SavableMapData.FloorSaveData data = SavableMapData.FloorSaveData.Convert(FloorGridDatas[x, y]);
-            gameData.mapData.floorDatas.Add(new Vector3Int(x, 0, y), data);
+            Save_MapData.Save_FloorData floorData = Save_MapData.Save_FloorData.Convert(FloorGridDatas[x, y]);
+            gameData.mapData.floorDatas.Add(new Vector3Int(x, 0, y), floorData);
         }
 
-        gameData.mapData.placementDatas = new List<SavableMapData.PlacementSaveData>();
+        gameData.mapData.placementDatas = new List<Save_MapData.Save_PlacementData>();
         foreach (var placedItem in DiscoData.Instance.PlacedItems.Values)
         {
-            SavableMapData.PlacementSaveData data = new SavableMapData.PlacementSaveData();
+            Save_MapData.Save_PlacementData data = new Save_MapData.Save_PlacementData();
             data.PropID = placedItem.Item1;
             data.EularAngles = placedItem.Item2.eulerAngles;
-            data.PlacedPosition = placedItem.Item3;
+            data.PlacedPosition = placedItem.Item2.position;
             
             gameData.mapData.placementDatas.Add(data);
         }
@@ -169,16 +171,10 @@ namespace Data
             }
         }
 
-        for (int i = WallDatas.Count - 1; i >= 0; i--)
+        foreach (var pair in NewWallData)
         {
-            WallData data = WallDatas[i];
-            
-            if (data.CellPosition.x > CurrentMapSize.x - x || data.CellPosition.z > CurrentMapSize.y - y)
-            {
-                RemoveWallData(data.CellPosition);
-                // Object.DestroyImmediate(data.assignedWall.gameObject);
-                // WallDatas.RemoveAt(i);
-            }
+            if (pair.Key.x > CurrentMapSize.x - x || pair.Key.z > CurrentMapSize.y - y)
+                RemoveWallData(pair.Key);
         }
 
         CurrentMapSize -= new Vector2Int(x, y);
@@ -238,43 +234,57 @@ namespace Data
     /// <returns>Return Added WallAssignmentData</returns>
     public WallData AddNewWallData(Vector3Int cellPosition, GameObject wallObject)
     {
-        var data = GetWallDataByCellPos(cellPosition);
-        if (data == null)
+        if (NewWallData.ContainsKey(cellPosition))
         {
             Debug.Log("Data Was NULL");
-            WallDatas.Add(new WallData(cellPosition));
-            data = WallDatas[^1];
+            NewWallData[cellPosition].AssignReferance(wallObject.GetComponent<Wall>());
+            return NewWallData[cellPosition];
         }
 
-        data.AssignReferance(wallObject.GetComponent<Wall>());
-        return data;
+        NewWallData.Add(cellPosition, new WallData(cellPosition, -1));
+        NewWallData[cellPosition].AssignReferance(wallObject.GetComponent<Wall>());
+        return NewWallData[cellPosition];
     }
 
     public void RemoveWallData(Vector3Int cellPosition)
     {
         var data = GetWallDataByCellPos(cellPosition);
 
-        if (data.assignedWall != null)
+        if (data.AssignedWall != null)
         {
-            MonoBehaviour.Destroy(data.assignedWall.gameObject);
+            Object.Destroy(data.AssignedWall.gameObject);
         }
 
-        WallDatas.Remove(data);
+        NewWallData.Remove(cellPosition);
     }
 
     public WallData GetWallDataByCellPos(Vector3Int cellPosition)
     {
-        return WallDatas.Find(x => x.CellPosition == cellPosition);
+        return NewWallData[cellPosition];
+    }
+
+    public WallData GetWallDoor()
+    {
+        foreach (var pair in NewWallData)
+        {
+            if (pair.Value.AssignedWall is WallDoor door)
+            {
+                return pair.Value;
+            }
+        }
+
+        return null;
     }
 
     public WallData GetWallDataByWall(Wall wall)
     {
-        return WallDatas.Find(x => x.assignedWall.GetInstanceID() == wall.GetInstanceID());
-    }
+        foreach (var value in NewWallData.Values)
+        {
+            if (value.AssignedWall.GetInstanceID() == wall.GetInstanceID())
+                return value;
+        }
 
-    public WallData GetLastIndexWallData()
-    {
-        return WallDatas[^1];
+        return null;
     }
 
     public Vector3 EnterencePosition(Vector3Int? doorPositon = null)

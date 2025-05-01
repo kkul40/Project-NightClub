@@ -46,7 +46,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
                 ResetPreviousMaterial();
                 _currentChangableMaterial = _mouseOnChangableMaterial;
 
-                _storedMaterial = TH.DiscoData.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
+                _storedMaterial = GameBundle.Instance.FindAItemByID(_currentChangableMaterial.assignedMaterialID) as MaterialItemSo;
                 _mouseOnChangableMaterial.UpdateMaterial(_materialItemSo);
             }
         }
@@ -58,8 +58,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
             _closestWallData.AssignNewID(_materialItemSo);
             _currentChangableMaterial = null;
 
-            Vector3 position = _closestWallData.assignedWall.transform.position;
-            Quaternion rotation = _closestWallData.assignedWall.transform.rotation;
+            Vector3 position = _closestWallData.AssignedWall.transform.position;
+            Quaternion rotation = _closestWallData.AssignedWall.transform.rotation;
             TH.FXCreatorSystem.CreateFX(FXType.Wall, position , Vector2.one, rotation);
         }
 
@@ -85,15 +85,15 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             float lastDis = float.MaxValue;
             IChangableMaterial closestChangableMaterial = null;
-            foreach (var wall in TH.DiscoData.MapData.WallDatas)
+            foreach (var wall in TH.DiscoData.MapData.NewWallData.Values)
             {
-                if (wall.assignedWall == null) continue;
+                if (wall.AssignedWall == null) continue;
 
-                var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.assignedWall.transform.position);
+                var dis = Vector3.Distance(TH.InputSystem.MousePosition, wall.AssignedWall.transform.position);
                 if (dis < lastDis)
                 {
                     _closestWallData = wall;
-                    closestChangableMaterial = wall.assignedWall;
+                    closestChangableMaterial = wall.AssignedWall;
                     lastDis = dis;
                 }
             }

@@ -21,7 +21,7 @@ namespace CharacterCustomization
 
         public void Init(NewGameData gameData)
         {
-            PlayerCustomizationIndexData indexData = gameData.playerCustomizationData;
+            Save_PlayerEquipmentsData indexData = gameData.savePlayerCustomizationData;
             
             gender = indexData.playerGenderIndex == 0 ? eGenderType.Male : eGenderType.Female;
             CustomizationItemsSo.ItemGroup group = gender == eGenderType.Male ? _So.MaleItems : _So.FemaleItems;

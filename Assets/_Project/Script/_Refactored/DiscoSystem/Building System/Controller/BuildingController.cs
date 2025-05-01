@@ -7,12 +7,14 @@ using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Building_System.Model;
 using DiscoSystem.Building_System.Service;
 using DiscoSystem.Building_System.View;
+using ExtensionMethods;
 using Framework.Context;
 using Framework.Mvcs.Controller;
 using PropBehaviours;
 using SaveAndLoad.New;
 using Unity.Mathematics;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DiscoSystem.Building_System.Controller
 {
@@ -77,7 +79,6 @@ namespace DiscoSystem.Building_System.Controller
 
         private ToolHelper _toolHelper;
         private ITool _currentTool;
-        private bool _isToggled;
 
         private RelocateData _relocateData;
 
@@ -101,21 +102,17 @@ namespace DiscoSystem.Building_System.Controller
             GameEvent.Subscribe<Event_RelocatePlacement>(StartRelocatePlacement);
             GameEvent.Subscribe<Event_RelocateWallDoor>(StartWallDoorRelocate);
             GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
-            GameEvent.Subscribe<Event_ToggleBuildingMode>(handle => _isToggled = handle.Toggle);
-            // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
-
+            
             DiscoData.Instance.StartCoroutine(LoadItems());
+
+            // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
         }
-        
-        
 
         public IEnumerator LoadItems()
         {
-            yield return new WaitForSeconds(2);
-            
             foreach (var placementData in SaveLoadSystem.Instance.GetCurrentData().mapData.placementDatas)
             {
-                PlacementItemSO item = DiscoData.Instance.FindAItemByID(placementData.PropID) as PlacementItemSO;
+                PlacementItemSO item = GameBundle.Instance.FindAItemByID(placementData.PropID) as PlacementItemSO;
                 Vector3 position = placementData.PlacedPosition;
                 Quaternion rotation = Quaternion.Euler(placementData.EularAngles);
                 var obj = DiscoData.Instantiate(item.Prefab, position, rotation);
@@ -123,26 +120,25 @@ namespace DiscoSystem.Building_System.Controller
                 obj.GetComponent<IPropUnit>().Initialize(item.ID, item.PlacementLayer);
 
                 AddPlacementItemData(item, obj.transform, position, rotation);
+                obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
+
+                yield return null;
             }
-            
-            KEvent_GameAssetBundle.OnGameStoreItemsLoaded -= handle => LoadItems();
         }
 
         public void Update(float deltaTime)
         {
             RequireIsInitialized();
 
-            if (!_isToggled) return;
-
-            if (InputSystem.Instance.Undo && _currentTool == null)
+            if (_view.IsToggled && InputSystem.Instance.Undo && _currentTool == null)
                 _toolHelper.PlacementTracker.Undo();
             
             if (_currentTool == null) return;
             
             if (InputSystem.Instance.Esc)
             {
-                _currentTool.OnStop(_toolHelper);
-                _currentTool = null;
+                RelocateHandler(false);
+                StopBuilding();
                 return;
             }
 
@@ -158,7 +154,6 @@ namespace DiscoSystem.Building_System.Controller
                     {
                         RelocateHandler(true);
                         _currentTool.OnStop(_toolHelper);
-                        ClearBuildingCache();
                         StopBuilding();
                         GameEvent.Trigger(new Event_Sfx(SoundFXType.BuildingSuccess));
                     }
@@ -184,7 +179,6 @@ namespace DiscoSystem.Building_System.Controller
             if (cancelClick)
             {
                 RelocateHandler(false);
-                ClearBuildingCache();
                 StopBuilding();
             }
         }
@@ -257,6 +251,7 @@ namespace DiscoSystem.Building_System.Controller
             
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
             GameEvent.Trigger(new Event_StartedPlacing());
+            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
 
         private void StartMapExtensionItem(ExtendItemSo extendItemSo)
@@ -295,6 +290,7 @@ namespace DiscoSystem.Building_System.Controller
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
             GameEvent.Trigger(new Event_ResetSelection());
             GameEvent.Trigger(new Event_StartedPlacing());
+            GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
         
         private void ClearBuildingCache()
@@ -315,6 +311,9 @@ namespace DiscoSystem.Building_System.Controller
             
             GameEvent.Trigger(new Event_ResetCursor());
             GameEvent.Trigger(new Event_StoppedPlacing());
+            
+            if(!_view.IsToggled)
+                GameEvent.Trigger(new Event_ToggleBuildingMode(false));
         }
 
         private void RemovePlacement(Event_RemovePlacement removeEvent)
@@ -388,6 +387,7 @@ namespace DiscoSystem.Building_System.Controller
             {
                 _relocateData.ResetPosition();
                 _relocateData.ToggleGameObject(true);
+                Debug.Log("Cancleeed Buildings");
             }
         }
     }

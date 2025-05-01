@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Data;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character.Bartender.Command;
 using Framework.Context;
@@ -26,16 +28,7 @@ namespace UI.GamePages
             base.Initialize(context);
             
             _followTarget = GetComponent<UI_FollowTarget>();
-        }
-
-        public override void EventEnable()
-        {
-            KEvent_GameAssetBundle.OnGameDrinkDataLoaded += LoadDrinks;
-        }
-
-        public override void EventDisable()
-        {
-            KEvent_GameAssetBundle.OnGameDrinkDataLoaded -= LoadDrinks;
+            LoadDrinks(GameBundle.Instance.AllInGameDrinks.Values.ToList());
         }
 
         public void Show(Bar bar)

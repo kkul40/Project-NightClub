@@ -29,7 +29,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         
             TH.CalculateBounds(_tempObject.GetComponents<Collider>());
 
-            _walls = TH.DiscoData.MapData.WallDatas.ToList();
+            _walls = TH.DiscoData.MapData.NewWallData.Values.ToList();
 
             _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
         }
@@ -77,7 +77,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         
             WallData closestWall = TH.GetClosestWall();
             if (closestWall != null)
-                TH.LastRotation = closestWall.assignedWall.transform.rotation;
+                TH.LastRotation = closestWall.AssignedWall.transform.rotation;
         
 
             _tempObject.transform.rotation = TH.LastRotation;

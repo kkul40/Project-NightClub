@@ -15,7 +15,6 @@ namespace DiscoSystem.Character.NPC
     public class NPCSystem : Singleton<NPCSystem>
     {
         public ActivityGiver activityGiver;
-        private DiscoData _discoData;
         
         [SerializeField] private GameObject _npcPrefab;
         [SerializeField] private GameObject _bartenderPrefab;
@@ -27,10 +26,9 @@ namespace DiscoSystem.Character.NPC
 
         public Coroutine _npcSpawnRoutine = null;
 
-        public void Initialize(DiscoData discoData)
+        public void Initialize()
         {
             activityGiver = new ActivityGiver();
-            _discoData = discoData;
         }
         
         /// <summary>
@@ -146,7 +144,7 @@ namespace DiscoSystem.Character.NPC
 
             if (customizer == null || animation == null) return null;
             
-            Npc.Initialize(animation, customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature, _discoData);
+            Npc.Initialize(animation, customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
             
             return Npc;
         }

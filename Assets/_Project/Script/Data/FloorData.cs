@@ -19,10 +19,10 @@ namespace Data
             assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
         }
 
-        public FloorData(SavableMapData.FloorSaveData floorSaveData)
+        public FloorData(Save_MapData.Save_FloorData saveFloorData)
         {
-            CellPosition = floorSaveData.cellPosition;
-            assignedMaterialID = floorSaveData.assignedMaterialID;
+            CellPosition = saveFloorData.cellPosition;
+            assignedMaterialID = saveFloorData.assignedMaterialID;
         }
 
         public void AssignReferance(FloorTile assignment, Vector3Int cellPosition)

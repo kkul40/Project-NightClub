@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace DiscoSystem
 {
-    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>
+    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, IAsyncInitializable
     {
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
@@ -25,20 +25,12 @@ namespace DiscoSystem
         private Transform sWall_X;
         private Transform sWall_Y;
 
-        private MapData _mapData;
+        private MapData _mapData => DiscoData.Instance.MapData;
 
-        // TODO Gereksizse kaldir
-
-        public void Initialize(MapData mapData)
+        public IEnumerator InitializeAsync()
         {
-            _mapData = mapData;
-            SetUpMap();
-            
             GameEvent.Subscribe<Event_ExpendMapSize>(handle => ExpendXY(handle.X, handle.Y));
-        }
 
-        private void SetUpMap()
-        {
             var delay = 0.05f;
             
             // SetUP Shadow Wall
@@ -53,9 +45,9 @@ namespace DiscoSystem
             sWall_Y.SetParent(SceneGameObjectHandler.Instance.transform);
 
             StartCoroutine(SetUpFloor(delay));
-            // TODO Use Call Back To Place Objects From Saving File
-            StartCoroutine(SetUpWall(delay, null));
+            yield return StartCoroutine(SetUpWall(delay));
         }
+       
 
         private IEnumerator SetUpFloor(float delay, Action callBack = null)
         {
@@ -254,7 +246,7 @@ namespace DiscoSystem
             
             Debug.Log(data.assignedMaterialID);
             
-            var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
+            var found = GameBundle.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
                 Debug.Log("not Found");
@@ -268,13 +260,13 @@ namespace DiscoSystem
         {
             var data = _mapData.AddNewWallData(cellPosition, newWallObject);
             
-            var found = DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
+            var found = GameBundle.Instance.FindAItemByID(data.AssignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
                 data.AssignNewID(InitConfig.Instance.GetDefaultWallMaterial);
                 return;
             }
-            data.AssignNewID(DiscoData.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo);
+            data.AssignNewID(GameBundle.Instance.FindAItemByID(data.AssignedMaterialID) as MaterialItemSo);
         }
 
         public GameObject CreateObject(GameObject gameObject, Vector3 pos, Quaternion quaternion, bool playAnimation)
@@ -301,5 +293,6 @@ namespace DiscoSystem
         }
         public GameObject GetWallDoorPrefab => wallDoorPrefab;
         public GameObject GetWallPrefab => wallPrefab;
+       
     }
 }

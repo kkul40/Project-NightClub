@@ -12,22 +12,6 @@ namespace DiscoSystem.Building_System.GameEvents
 {
     #region GameBundle
 
-    public class KEvent_GameAssetBundle
-    {
-        public static Action<List<StoreItemSO>> OnGameStoreItemsLoaded;
-        public static Action<List<DrinkSO>> OnGameDrinkDataLoaded;
-
-        public static void TriggerStoreItemsLoad(List<StoreItemSO> allGameItems)
-        {
-            OnGameStoreItemsLoaded?.Invoke(allGameItems);
-        }
-        
-        public static void TriggerDrinkDataLoad(List<DrinkSO> alldrinkData)
-        {
-            OnGameDrinkDataLoaded?.Invoke(alldrinkData);
-        }
-    }
-    
 
     #endregion GameBundle
     

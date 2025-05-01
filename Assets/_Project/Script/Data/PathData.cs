@@ -134,7 +134,7 @@ namespace Data
                 {
                     if (!dontCheckActivity)
                     {
-                        StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                        StoreItemSO item = GameBundle.Instance.FindAItemByID(unit.ID);
                         if (item is PlacementItemSO placemen)
                         {
                             if (placemen.OnlyForActivity)
@@ -167,7 +167,7 @@ namespace Data
             {
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                 {
-                    StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                    StoreItemSO item = GameBundle.Instance.FindAItemByID(unit.ID);
                     if (item is PlacementItemSO placemen)
                     {
                         if (placemen.OnlyForActivity)
@@ -214,7 +214,7 @@ namespace Data
             {
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                 {
-                    StoreItemSO item = DiscoData.Instance.FindAItemByID(unit.ID);
+                    StoreItemSO item = GameBundle.Instance.FindAItemByID(unit.ID);
                     if (item is PlacementItemSO placemen)
                         if (placemen.OnlyForActivity) return true;
                 }

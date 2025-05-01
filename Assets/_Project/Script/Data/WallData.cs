@@ -1,8 +1,6 @@
 ﻿using System;
-using Data.New;
 using Disco_ScriptableObject;
 using PropBehaviours;
-using SaveAndLoad;
 using UnityEngine;
 
 namespace Data
@@ -10,37 +8,31 @@ namespace Data
     [Serializable]
     public class WallData
     {
-        public Vector3Int CellPosition = -Vector3Int.one;
-        public Wall assignedWall { get; private set; }
-        public int assignedMaterialID { get; private set; }
+        public Wall AssignedWall { get; private set; }
+        public Vector3Int CellPosition { get; private set; }
+        public int AssignedMaterialID { get; private set; }
 
-        public WallData(Vector3Int cellPosition)
+        public WallData(Vector3Int cellPosition, int assignedMaterialID)
         {
             CellPosition = cellPosition;
-            assignedMaterialID = -1;
-        }
-
-        public WallData(SavableMapData.WallSaveData wallSaveData)
-        {
-            CellPosition = wallSaveData.cellPosition;
-            assignedMaterialID = wallSaveData.assignedMaterialID;
+            AssignedMaterialID = assignedMaterialID;
         }
 
         public void AssignReferance(Wall assignment)
         {
-            assignedWall = assignment;
+            AssignedWall = assignment;
         }
 
         public void AssignNewID(MaterialItemSo materialItemSo)
         {
-            if (assignedWall == null)
+            if (AssignedWall == null)
             {
                 Debug.LogError("Wall Object Not Assigned");
                 return;
             }
 
-            assignedWall.UpdateMaterial(materialItemSo);
-            assignedMaterialID = materialItemSo.ID;
+            AssignedWall.UpdateMaterial(materialItemSo);
+            AssignedMaterialID = materialItemSo.ID;
         }
     }
 }

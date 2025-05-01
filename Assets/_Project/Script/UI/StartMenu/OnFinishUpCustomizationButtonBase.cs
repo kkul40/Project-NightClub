@@ -18,7 +18,7 @@ namespace UI.StartMenu
         {
             NewGameData data = new NewGameData();
             data.fileName = "New Game";
-            data.playerCustomizationData = new PlayerCustomizationIndexData(customizationUI.GetPlayerEquipments);
+            data.savePlayerCustomizationData = new Save_PlayerEquipmentsData(customizationUI.GetPlayerEquipments);
             
             SaveLoadSystem.Instance.NewGame(data);
             // SceneManager.LoadScene(1);

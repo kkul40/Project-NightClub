@@ -79,6 +79,11 @@ namespace UI.GamePages
             page.Show(data);
         }
 
+        public void HideActionSelectionPage()
+        {
+            UIActionSelectionPage page = GetPage(typeof(UIActionSelectionPage)) as UIActionSelectionPage;
+        }
+
         public void ShowPropInfo(IPropUnit unit)
         {
             UIPropInfo page = GetPage(typeof(UIPropInfo)) as UIPropInfo;

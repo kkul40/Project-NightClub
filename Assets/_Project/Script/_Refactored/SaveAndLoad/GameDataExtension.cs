@@ -41,7 +41,7 @@ namespace SaveAndLoad
             WallSaveData wallSaveData = new WallSaveData();
             
             wallSaveData.CellPosition = wallData.CellPosition;
-            wallSaveData.AssignedMaterialID = wallData.assignedMaterialID;
+            wallSaveData.AssignedMaterialID = wallData.AssignedMaterialID;
 
             return wallSaveData;
         }

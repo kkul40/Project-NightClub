@@ -20,7 +20,7 @@ namespace Data
             Items = new Dictionary<StoreItemSO, int>();
 
             foreach (var data in gameData.savedInventoryData.Items)
-                Items.Add(DiscoData.Instance.FindAItemByID(data.Key), data.Value);
+                Items.Add(GameBundle.Instance.FindAItemByID(data.Key), data.Value);
             
             
             GameEvent.Subscribe<Event_MoneyAdded>(AddMoney);

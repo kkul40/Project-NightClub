@@ -47,7 +47,7 @@ namespace UI.GamePages
 
         private void UpdateVisual()
         {
-            StoreItemSO item = DiscoData.Instance.FindAItemByID(_lastINT.ID);
+            StoreItemSO item = GameBundle.Instance.FindAItemByID(_lastINT.ID);
 
             _image.sprite= item.Icon;
             _text.text = item.Name;

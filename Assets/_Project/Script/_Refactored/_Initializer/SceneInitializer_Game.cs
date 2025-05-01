@@ -1,11 +1,12 @@
-﻿using Data;
+﻿using System;
+using System.Collections;
+using Data;
 using Data.New;
 using DiscoSystem;
 using DiscoSystem.Building_System;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character._Player;
 using DiscoSystem.Character.NPC;
-using SaveAndLoad;
 using SaveAndLoad.New;
 using UI.GamePages;
 using UnityEngine;
@@ -26,48 +27,29 @@ namespace _Initializer
         [SerializeField] private Player _player;
         [SerializeField] private NPCSystem _npcSystem;
         [SerializeField] private GameEvent _gameEvents;
-        
 
-        private void Awake()
+        private IEnumerator Start()
         {
-            if (_buildingSystem == null)
-            {
-                Debug.LogError("Building System Is Null");
-                return;
-            }
-            
-            if (_gridSystem== null)
-            {
-                Debug.LogError("Building System Is Null"); 
-                return;
-            }
-            
-            
-            // Init Data
-            // Init Saving Data
-            // Generate Map
-            // Generate Scene Items
-
             _gameEvents.Initialize();
-
-
-            GameData gameData = new GameData();
-            NewGameData newGameData = SaveLoadSystem.Instance.GetCurrentData();
-            
-            _discoData.Initialize();
             _musicPlayer.Initialize();
             _inputSystem.Initialize();
-            
-            _mapGeneratorSystem.Initialize(_discoData.MapData);
-            
             _gridSystem.Initialize();
-            _cursorSystem.Initialize(_inputSystem, 1);
-            _buildingSystem.Initialize();
-            _uiPageManager.Initialize();
+            _npcSystem.Initialize();
+
+
+            NewGameData newGameData = SaveLoadSystem.Instance.GetCurrentData();
             
+            _discoData.Initialize(newGameData);
+            
+            yield return StartCoroutine(GameBundle.Instance.InitializeAsync());
+            _uiPageManager.Initialize();
+            yield return StartCoroutine(_mapGeneratorSystem.InitializeAsync());
+            
+            _buildingSystem.Initialize();
+            _cursorSystem.Initialize(_inputSystem, 1);
             
             _player.Initialize(newGameData);
-            _npcSystem.Initialize(_discoData);
+            
             
             // _savingAndLoadingSystem.Initialize(); 
             // _savingAndLoadingSystem.LoadGame();
