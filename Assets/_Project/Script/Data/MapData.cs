@@ -88,9 +88,7 @@ namespace Data
                 data = new FloorData(cellPos);
 
             FloorGridDatas[x, y] = data;
-            Debug.Log(data.assignedMaterialID);
         }
-            
         
         GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData(ref handle.GameData));
     }
@@ -236,7 +234,6 @@ namespace Data
     {
         if (NewWallData.ContainsKey(cellPosition))
         {
-            Debug.Log("Data Was NULL");
             NewWallData[cellPosition].AssignReferance(wallObject.GetComponent<Wall>());
             return NewWallData[cellPosition];
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.MusicPlayer;
 using ExtensionMethods;
 using HighlightPlus;
 using PropBehaviours;
@@ -159,7 +160,6 @@ namespace DiscoSystem
             if (selection)
             {
                 highlightEffect.ProfileLoad(_selectionHightlight);
-                Debug.Log(gameObject.name + " : Selected");
             }
             else
             {

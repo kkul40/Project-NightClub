@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SaveAndLoad.New
+namespace SaveAndLoad
 {
     public class JsonSerializer : ISerializer
     {

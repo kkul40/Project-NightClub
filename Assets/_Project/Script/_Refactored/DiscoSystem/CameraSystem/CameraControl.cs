@@ -1,13 +1,13 @@
-using System;
 using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.MusicPlayer;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DiscoSystem
+namespace DiscoSystem.CameraSystem
 {
     public class CameraControl : Singleton<CameraControl>
     {
-        [SerializeField] private Camera mainCam;
+        [SerializeField] private UnityEngine.Camera mainCam;
 
         [SerializeField] private float speed;
         [SerializeField] private float zoomMultiplier;

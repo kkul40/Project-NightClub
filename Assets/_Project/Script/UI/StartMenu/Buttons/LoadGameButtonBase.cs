@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using SaveAndLoad.New;
+using SaveAndLoad;
 using UI.GamePages.GameButtons;
 
 namespace UI.StartMenu.Buttons
@@ -8,10 +8,10 @@ namespace UI.StartMenu.Buttons
     {
         public Menu_UI_Page page;
 
-        protected override void Start()
+        private void OnEnable()
         {
             var saveNames = SaveLoadSystem.Instance.GetList().ToList();
-            button.interactable = saveNames.Count > 0 ? true : false;
+            button.interactable = saveNames.Count > 0;
         }
 
         public override void OnClick()

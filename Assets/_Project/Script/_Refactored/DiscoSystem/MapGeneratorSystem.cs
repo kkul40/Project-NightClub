@@ -244,12 +244,9 @@ namespace DiscoSystem
 
             data.AssignReferance(newObject.GetComponent<FloorTile>(), cellPosition);
             
-            Debug.Log(data.assignedMaterialID);
-            
             var found = GameBundle.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
-                Debug.Log("not Found");
                 data.AssignNewID(InitConfig.Instance.GetDefaultTileMaterial);
                 return;
             }

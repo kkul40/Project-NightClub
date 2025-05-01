@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using Data;
+using System.Linq;
 using Data.New;
 using UnityEngine;
 
-namespace SaveAndLoad.New
+namespace SaveAndLoad
 {
     public class FileDataService : IDataService
     {
@@ -12,18 +12,24 @@ namespace SaveAndLoad.New
         private string _dataPath;
         private string _fileExtension;
 
+        private List<string> _saveFiles;
+        private bool _isSaveFilesDirty;
+
         public FileDataService(ISerializer serializer)
         {
             _dataPath = Application.persistentDataPath;
             _fileExtension = ".gamedata";
             _serializer = serializer;
+            _saveFiles = new List<string>();
+            _isSaveFilesDirty = true;
         }
 
         private string GetPathToFile(string fileName)
         {
             return Path.Combine(_dataPath, string.Concat(fileName, _fileExtension));
         }
-        
+
+
         public void Save(NewGameData data, bool overwrite = true)
         {
             string fileLocation = GetPathToFile(data.fileName);
@@ -34,6 +40,7 @@ namespace SaveAndLoad.New
             // }
             //
             File.WriteAllText(fileLocation, _serializer.Serialize(data));
+            _isSaveFilesDirty = true;
         }
 
         public NewGameData Load(string name)
@@ -55,12 +62,16 @@ namespace SaveAndLoad.New
             
             if(File.Exists(fileLocation))
                 File.Delete(fileLocation);
+
+            _isSaveFilesDirty = true;
         }
 
         public void DeleteAll()
         {
             foreach (var filePath in Directory.GetFiles(_dataPath))
                 File.Delete(filePath);
+            
+            _isSaveFilesDirty = true;
         }
 
         public NewGameData GetData(string name)
@@ -74,8 +85,22 @@ namespace SaveAndLoad.New
             
             return null;
         }
+        
+        public List<string> GetSaveFiles
+        {
+            get
+            {
+                if (_isSaveFilesDirty)
+                {
+                    _saveFiles = ListSaves().ToList();
+                    _isSaveFilesDirty = false;
+                }
 
-        public IEnumerable<string> ListSaves()
+                return _saveFiles;
+            }
+        }
+
+        private IEnumerable<string> ListSaves()
         {
             foreach (var path in Directory.EnumerateFiles(_dataPath))
             {

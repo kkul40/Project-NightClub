@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
+using DiscoSystem;
 using UnityEngine;
 
-namespace DiscoSystem
+namespace UI
 {
     public class NightClock : Singleton<NightClock>
     {

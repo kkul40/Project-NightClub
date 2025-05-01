@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace DiscoSystem
+namespace DiscoSystem.MusicPlayer
 {
     public class MusicPlayer : Singleton<MusicPlayer>, ISavable
     {
@@ -17,7 +17,6 @@ namespace DiscoSystem
         {
             _audioSource = GetComponent<AudioSource>();
             _bassDetector = new BassDetector(_audioSource);
-            PauseMusic();
         }
 
         private void Update()

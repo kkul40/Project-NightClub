@@ -6,7 +6,7 @@ namespace ScriptableObjects
     public class Candidate_Bartender : UIButtonBase
     {
         public Sprite profile;
-        public string name;
+        public string bartenderName;
         public int speed;
         public int tipBonus;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using DiscoSystem;
+using DiscoSystem.Character;
 using DiscoSystem.Character.NPC;
 using UnityEngine;
 

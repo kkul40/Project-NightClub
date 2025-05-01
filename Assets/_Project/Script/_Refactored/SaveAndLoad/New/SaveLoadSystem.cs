@@ -3,7 +3,7 @@ using Data.New;
 using DiscoSystem.Building_System.GameEvents;
 using UnityEngine;
 
-namespace SaveAndLoad.New
+namespace SaveAndLoad
 {
     [CreateAssetMenu(fileName = "Save Load System", menuName = "Persist/SaveLoadSystem")]
     public class SaveLoadSystem : ScriptableObject
@@ -33,7 +33,8 @@ namespace SaveAndLoad.New
         public void NewGame(NewGameData gameData)
         {
             CurrentGameData = gameData;
-            _dataService.Save(CurrentGameData);
+            // TODO : Add Details to gamedata;
+            CurrentGameData.fileName = "Empty";
         }
         
         public void SaveGame()
@@ -42,8 +43,10 @@ namespace SaveAndLoad.New
             _dataService.Save(CurrentGameData);
         }
 
-        public void SaveGameAs()
+        public void SaveGameAs(string newFileName)
         {
+            GameEvent.Trigger(new Event_OnGameSave(ref CurrentGameData));
+            CurrentGameData.fileName = newFileName;
             _dataService.Save(CurrentGameData);
         }
 
@@ -69,7 +72,7 @@ namespace SaveAndLoad.New
 
         public NewGameData GetCurrentData()
         {
-            if (CurrentGameData == null) return new NewGameData();
+            if (CurrentGameData == null) return null;
             return CurrentGameData;
         }
 
@@ -80,7 +83,7 @@ namespace SaveAndLoad.New
 
         public IEnumerable<string> GetList()
         {
-            return _dataService.ListSaves();
+            return _dataService.GetSaveFiles;
         }
     }
 }

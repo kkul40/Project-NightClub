@@ -11,7 +11,7 @@ namespace UI.StartMenu
         private NewGameData _data;
 
         public event Action<string> OnDelete;
-        public event Action<string> OnLoad;
+        public event Action<string> OnClick;
 
         [SerializeField] private TextMeshProUGUI _saveName;
         [SerializeField] private TextMeshProUGUI _playTime;
@@ -22,15 +22,15 @@ namespace UI.StartMenu
         {
             _data = data;
 
-            // _saveName.text = data.saveDetails.fileName;
+            _saveName.text = data.fileName;
             // _playTime.text = data.saveDetails.playTime.ToString();
             // _lastSaveDate.text = data.saveDetails.lastSaveDate;
             // _balance.text = data.savedInventoryData.Balance.ToString();
         }
 
-        public void LoadGame()
+        public void Click()
         {
-            OnLoad?.Invoke(_data.fileName);
+            OnClick?.Invoke(_data.fileName);
         }
 
         public void DeleteGame()

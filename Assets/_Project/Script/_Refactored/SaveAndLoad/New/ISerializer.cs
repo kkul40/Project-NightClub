@@ -1,4 +1,4 @@
-namespace SaveAndLoad.New
+namespace SaveAndLoad
 {
     public interface ISerializer
     {

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e030c5a78bc144369ba524150b7361eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsInitialized: 0
   sitPosition: {fileID: 2485797321424670351}
   frontPosition: {fileID: 401532907938777972}
   IsReservedToATable: 0
@@ -133,7 +134,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Size: {x: 0.7, y: 1, z: 0.7}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &7927736978233187311
 GameObject:

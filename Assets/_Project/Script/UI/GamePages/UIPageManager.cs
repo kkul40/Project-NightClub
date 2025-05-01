@@ -8,6 +8,7 @@ using Framework.Context;
 using Framework.Mvcs.View;
 using PropBehaviours;
 using UI.PopUp;
+using UI.StartMenu.Popup;
 using UnityEngine;
 
 namespace UI.GamePages
@@ -80,15 +81,28 @@ namespace UI.GamePages
             page.Show(data);
         }
 
-        public void HideActionSelectionPage()
-        {
-            UIActionSelectionPage page = GetPage(typeof(UIActionSelectionPage)) as UIActionSelectionPage;
-        }
-
         public void ShowPropInfo(IPropUnit unit)
         {
             UIPropInfo page = GetPage(typeof(UIPropInfo)) as UIPropInfo;
             page.Show(unit);
+        }
+
+        public void ShowLoadPage()
+        {
+            UILoadPage page = GetPage(typeof(UILoadPage)) as UILoadPage;
+            page.ToggleView(true);
+        }
+
+        public void ShowTextFieldPopup(string message, Action<string> callback)
+        {
+            TextFieldPopup page = GetPage(typeof(TextFieldPopup)) as TextFieldPopup;
+            page.Show(message, callback);
+        }
+
+        public void ShowAreYouSurePopup(string message, Action callback)
+        {
+            UIAreYouSurePopup page = GetPage(typeof(UIAreYouSurePopup)) as UIAreYouSurePopup;
+            page.Show(message, callback);
         }
 
         // public void RequestAPage<T>(Type requestedPage, T data = null) where T : class

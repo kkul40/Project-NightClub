@@ -314,7 +314,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7558370354466567193}
         m_TargetAssemblyTypeName: UI.StartMenu.UISaveData, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

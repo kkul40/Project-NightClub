@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using DiscoSystem;
+using DiscoSystem.MusicPlayer;
 using UnityEngine;
 
 namespace PropBehaviours.LightBehaviours

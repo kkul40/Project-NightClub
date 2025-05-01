@@ -12,7 +12,7 @@ namespace Data.New
     public class NewGameData
     {
         public string fileName;
-        [FormerlySerializedAs("playerCustomizationData")] public Save_PlayerEquipmentsData savePlayerCustomizationData;
+        public Save_PlayerEquipmentsData savePlayerCustomizationData;
         public Save_MapData mapData;
         // TODO : Inventory Data Ekle
 
@@ -21,7 +21,6 @@ namespace Data.New
             savePlayerCustomizationData = new Save_PlayerEquipmentsData();
             mapData = new Save_MapData();
         }
-
     }
     
     [Serializable]

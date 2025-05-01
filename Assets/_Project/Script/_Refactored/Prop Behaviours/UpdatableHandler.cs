@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using DiscoSystem;
 using UnityEngine;
 
-namespace DiscoSystem
+namespace Prop_Behaviours
 {
     public class UpdatableHandler : Singleton<UpdatableHandler>
     {

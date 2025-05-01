@@ -3,9 +3,8 @@ using Data;
 using DiscoSystem.Building_System.GameEvents;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 
-namespace DiscoSystem
+namespace DiscoSystem.MusicPlayer
 {
     public enum SoundFXType
     {
@@ -46,15 +45,15 @@ namespace DiscoSystem
         
         public float SoundVolume { get; private set; }
 
-        private void Awake()
+        public void Initialize()
         {
             _audioSource = GetComponent<AudioSource>();
-            
             GameEvent.Subscribe<Event_Sfx>(PlaySoundFX);
         }
 
         private void PlaySoundFX(Event_Sfx sfxEvent)
         {
+            Debug.Log("Fx Calisti");
             switch (sfxEvent.FXType)
             {
                 case SoundFXType.Click:

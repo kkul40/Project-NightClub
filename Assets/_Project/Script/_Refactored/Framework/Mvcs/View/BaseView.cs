@@ -1,15 +1,14 @@
 using System;
 using Framework.Context;
-using UI.GamePages;
 using UnityEngine;
 
 namespace Framework.Mvcs.View
 {
     public enum PageType
     {
-        FullPage,
-        MiniPage,
-        PopUp,
+        FullPage, // Store Page, EmployeePage, Settings Page Etc
+        MiniPage, // Ui Selection Page, drink page, song page
+        PopUp,    
     }
 
     //  Class Attributes ----------------------------------
@@ -84,8 +83,7 @@ namespace Framework.Mvcs.View
 
         public virtual void ToggleView()
         {
-            this.gameObject.SetActive(!gameObject.activeInHierarchy);
-            isToggled = gameObject.activeInHierarchy;
+            ToggleView(!gameObject.activeInHierarchy);
         }
 
         //  Event Handlers --------------------------------

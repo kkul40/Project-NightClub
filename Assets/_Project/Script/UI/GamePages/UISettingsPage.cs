@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data;
 using DiscoSystem;
+using DiscoSystem.MusicPlayer;
 using Framework.Context;
 using Framework.Mvcs.View;
 using UnityEngine;

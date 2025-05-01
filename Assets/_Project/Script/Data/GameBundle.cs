@@ -75,6 +75,8 @@ namespace Data
             {
                 Debug.LogError("Failed to load drink data.");
             }
+            
+            Debug.Log("Asset Bundle Loaded");
         }
 
         public StoreItemSO FindAItemByID(int ID)

@@ -5,6 +5,7 @@ using DG.Tweening;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character.Bartender;
+using DiscoSystem.MusicPlayer;
 using Framework.Context;
 using Framework.Mvcs.View;
 using PropBehaviours;

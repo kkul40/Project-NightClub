@@ -43,7 +43,7 @@ namespace SaveAndLoad
             string version = "111";
             
             _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName + $"{version}.json");
-            _saveLoads = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>().ToList();
+            _saveLoads = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISavable>().ToList();
             _gameData = _fileDataHandler.Load();
             isSaveLoadDirty = true;
 

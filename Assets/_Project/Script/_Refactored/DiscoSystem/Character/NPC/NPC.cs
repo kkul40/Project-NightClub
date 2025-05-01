@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Animancer;
-using Data;
+using DiscoSystem.CameraSystem;
 using DiscoSystem.Character.NPC.Activity;
 using DiscoSystem.Character.NPC.Activity.Activities;
 using PropBehaviours;

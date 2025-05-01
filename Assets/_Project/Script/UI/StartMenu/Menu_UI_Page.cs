@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using ExtensionMethods;
 using UnityEngine;
 
 namespace UI.StartMenu
@@ -22,6 +23,7 @@ namespace UI.StartMenu
         private float speed = 7;
         private float treshHold = 0.5f;
 
+        private Tween _canvasTween;
 
         public virtual void Initialize()
         {
@@ -40,19 +42,13 @@ namespace UI.StartMenu
                     break;
             }
 
+            _canvasGroup.gameObject.InActivate();
+            _canvasGroup.gameObject.Activate();
             _canvasGroup.alpha = 0;
             _canvasGroup.interactable = true;
-            _rectTransform.DOAnchorPos(Vector2.zero, animDuration).OnComplete(SetShow);
-            _canvasGroup.DOFade(1, animDuration);
-        }
-
-        public virtual void ShowImmidiatly()
-        {
-            _canvasGroup.alpha = 1;
-            _canvasGroup.interactable = true;
-            isOpen = true;
-
-            _rectTransform.anchoredPosition = Vector2.zero;
+            _rectTransform.DOAnchorPos(Vector2.zero, animDuration);
+            _canvasTween?.Kill();
+            _canvasTween = _canvasGroup.DOFade(1, animDuration).OnComplete(SetShow);
         }
 
         public virtual void Hide(ePushAnimation ePushAnimation)
@@ -69,7 +65,18 @@ namespace UI.StartMenu
 
             isOpen = false;
             _canvasGroup.interactable = false;
-            _canvasGroup.DOFade(0, animDuration / 5);
+            _canvasTween?.Kill();
+            _canvasTween = _canvasGroup.DOFade(0, animDuration / 5);
+        }
+        
+        public virtual void ShowImmidiatly()
+        {
+            _canvasGroup.alpha = 1;
+            _canvasGroup.interactable = true;
+            isOpen = true;
+
+            _rectTransform.anchoredPosition = Vector2.zero;
+            _canvasGroup.gameObject.Activate();
         }
 
         public virtual void HideImmidiatly()
@@ -77,6 +84,7 @@ namespace UI.StartMenu
             isOpen = false;
             _canvasGroup.interactable = false;
             _canvasGroup.alpha = 0;
+            _canvasGroup.gameObject.InActivate();
         }
 
         private void SetShow()
@@ -89,6 +97,7 @@ namespace UI.StartMenu
 
         private void SetHide()
         {
+            _canvasGroup.gameObject.InActivate();
             _canvasGroup.alpha = 0;
             _rectTransform.anchoredPosition = Vector2.zero;
             _canvasGroup.interactable = false;

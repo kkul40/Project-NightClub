@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data.New;
 using Disco_ScriptableObject;
 using DiscoSystem.Character.Bartender;
+using DiscoSystem.MusicPlayer;
 using PropBehaviours;
 using ScriptableObjects;
 using UI.Emotes;

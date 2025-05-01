@@ -4,7 +4,6 @@ using Data;
 using DiscoSystem;
 using Root;
 using SaveAndLoad;
-using SaveAndLoad.New;
 using TMPro;
 using UnityEngine;
 
@@ -124,7 +123,7 @@ namespace UI.GamePages
 
         public void SaveGame()
         {
-            SaveLoadSystem.Instance.SaveGame();
+            UIPageManager.Instance.ShowLoadPage();
         }
 
         public void LoadGame()
@@ -134,12 +133,18 @@ namespace UI.GamePages
 
         public void MainMenu()
         {
-            SceneLoader.Instance.LoadScene(0);
+            UIPageManager.Instance.ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
+                {
+                    SceneLoader.Instance.LoadScene(0);
+                });
         }
 
         public void QuitGame()
         {
-            Application.Quit();
+            UIPageManager.Instance.ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
+                {
+                    Application.Quit();
+                });
         }
 
         public void ToggleEdgeScrolling()

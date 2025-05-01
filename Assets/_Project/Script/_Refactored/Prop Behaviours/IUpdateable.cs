@@ -1,4 +1,4 @@
-﻿namespace DiscoSystem
+﻿namespace Prop_Behaviours
 {
     public interface IUpdateable
     {

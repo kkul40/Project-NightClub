@@ -1,4 +1,4 @@
-﻿using DiscoSystem;
+﻿using DiscoSystem.CameraSystem;
 using UI.GamePages;
 using Unity.Mathematics;
 using UnityEngine;

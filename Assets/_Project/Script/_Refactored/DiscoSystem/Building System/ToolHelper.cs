@@ -1,3 +1,4 @@
+using System;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller;
@@ -68,6 +69,7 @@ namespace DiscoSystem.Building_System
             {
                 GridSizes.FullGrid => 1,
                 GridSizes.HalfGrid => 0.5f,
+                _ => throw new ArgumentOutOfRangeException(nameof(gridSizes), gridSizes, null)
             };
             
             float x = Mathf.Round(position.x / size) * size;

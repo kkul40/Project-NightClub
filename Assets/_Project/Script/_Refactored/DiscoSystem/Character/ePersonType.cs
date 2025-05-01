@@ -1,4 +1,4 @@
-﻿namespace DiscoSystem
+﻿namespace DiscoSystem.Character
 {
     public enum ePersonType
     {

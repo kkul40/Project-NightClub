@@ -1,7 +1,7 @@
 using Data;
 using Data.New;
 using Root;
-using SaveAndLoad.New;
+using SaveAndLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ namespace UI.StartMenu
                 UISaveData saveData = prefab.GetComponent<UISaveData>();
                 saveData.Init(SaveLoadSystem.Instance.GetGameData(sName));
                 saveData.OnDelete += DeleteGame;
-                saveData.OnLoad += LoadGame;
+                saveData.OnClick += ClickGame;
             }
         }
 
@@ -56,7 +56,7 @@ namespace UI.StartMenu
             RefreshList();
         }
 
-        private void LoadGame(string fileName)
+        private void ClickGame(string fileName)
         {
             SaveLoadSystem.Instance.SelectGame(fileName);
             SceneLoader.Instance.LoadScene(1);

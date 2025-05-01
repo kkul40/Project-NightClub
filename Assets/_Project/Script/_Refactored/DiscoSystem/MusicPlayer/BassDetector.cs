@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DiscoSystem
+namespace DiscoSystem.MusicPlayer
 {
     [Serializable]
     public class BassDetector
