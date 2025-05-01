@@ -282,12 +282,17 @@ namespace DiscoSystem.Building_System.GameEvents
         }
     }
 
-    public class Event_ResetSelection
+    public class Event_ResetCursorSelection
     {
         
     }
 
-    public class Event_ResetCursor
+    public class Event_SelectionReset
+    {
+        
+    }
+
+    public class Event_ResetCursorIcon
     {
         
     }

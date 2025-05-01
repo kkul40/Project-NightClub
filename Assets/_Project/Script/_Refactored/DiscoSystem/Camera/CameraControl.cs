@@ -77,7 +77,7 @@ namespace DiscoSystem
             if (_target != null)
             {
                 _target = null; 
-                GameEvent.Trigger(new Event_ResetSelection());
+                GameEvent.Trigger(new Event_ResetCursorSelection());
             }
         }
     }

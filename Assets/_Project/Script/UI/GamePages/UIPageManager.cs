@@ -41,7 +41,8 @@ namespace UI.GamePages
 
             CloseAllPages();
             
-            GameEvent.Trigger(new Event_ResetSelection());
+            GameEvent.Subscribe<Event_SelectionReset>( handle => CloseAllPages(PageType.MiniPage));
+            GameEvent.Trigger(new Event_ResetCursorSelection());
         }
 
         private void Update()

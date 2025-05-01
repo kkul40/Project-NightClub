@@ -288,7 +288,7 @@ namespace DiscoSystem.Building_System.Controller
                 _currentTool.OnStart(_toolHelper);
 
             GameEvent.Trigger(new Event_SelectCursor(CursorSystem.eCursorTypes.Building));
-            GameEvent.Trigger(new Event_ResetSelection());
+            GameEvent.Trigger(new Event_ResetCursorSelection());
             GameEvent.Trigger(new Event_StartedPlacing());
             GameEvent.Trigger(new Event_ToggleBuildingMode(true));
         }
@@ -309,7 +309,7 @@ namespace DiscoSystem.Building_System.Controller
         {
             ClearBuildingCache();
             
-            GameEvent.Trigger(new Event_ResetCursor());
+            GameEvent.Trigger(new Event_ResetCursorIcon());
             GameEvent.Trigger(new Event_StoppedPlacing());
             
             if(!_view.IsToggled)

@@ -57,18 +57,17 @@ namespace UI.PopUp
             });
             
             RegisterBehaviors();
+            
+            GameEvent.Subscribe<Event_SelectionReset>(handle =>
+            {
+                ToggleView(false);
+                _lastData = null;
+            });
         }
 
         private void Update()
         {
             if (_lastData == null) return;
-            
-            if (InputSystem.Instance.CancelClick || InputSystem.Instance.LeftClickOnWorld)
-            {
-                ToggleView(false);
-                _lastData = null;
-                GameEvent.Trigger(new Event_ResetSelection());
-            }
         }
 
         public override void EventEnable()
@@ -254,7 +253,7 @@ namespace UI.PopUp
                 GameEvent.Trigger(new Event_RelocatePlacement(instanceID));
                 PlaySFXOnButtonClick();
                 ToggleView(false);
-                GameEvent.Trigger(new Event_ResetSelection());
+                GameEvent.Trigger(new Event_ResetCursorSelection());
             }
         }
 
@@ -266,7 +265,7 @@ namespace UI.PopUp
                 PlaySFXOnButtonClick();
                 ToggleView(false);
 
-                GameEvent.Trigger(new Event_ResetSelection());
+                GameEvent.Trigger(new Event_ResetCursorSelection());
             }
         }
 
@@ -278,7 +277,7 @@ namespace UI.PopUp
                 // TODO : Add The logic Here
                 PlaySFXOnButtonClick();
                 ToggleView(false);
-                GameEvent.Trigger(new Event_ResetSelection());
+                GameEvent.Trigger(new Event_ResetCursorSelection());
             }
         }
 
@@ -289,7 +288,7 @@ namespace UI.PopUp
                 GameEvent.Trigger(new Event_RemovePlacement(propUnit.transform.GetInstanceID()));
                 PlaySFXOnButtonClick();
                 ToggleView(false);
-                GameEvent.Trigger(new Event_ResetSelection());
+                GameEvent.Trigger(new Event_ResetCursorSelection());
             }
         }
 
