@@ -39,6 +39,7 @@ namespace _Initializer
             _inputSystem.Initialize();
             _gridSystem.Initialize();
             _npcSystem.Initialize();
+            _cursorSystem.Initialize(_inputSystem, 0);
 
             NewGameData newGameData = SaveLoadSystem.Instance.GetCurrentData();
 
@@ -56,7 +57,6 @@ namespace _Initializer
             yield return StartCoroutine(_mapGeneratorSystem.InitializeAsync());
             
             _buildingSystem.Initialize();
-            _cursorSystem.Initialize(_inputSystem, 1);
             
             _player.Initialize(newGameData);
             

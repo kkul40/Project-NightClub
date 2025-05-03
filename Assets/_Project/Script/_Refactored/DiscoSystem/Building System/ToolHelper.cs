@@ -34,6 +34,8 @@ namespace DiscoSystem.Building_System
         public PlacementTracker PlacementTracker;
     
         // Static Variables
+        public const float Speed = 20;
+        public const float RotationSpeed = 20;
         public StoreItemSO SelectedStoreItem;
         public PurchaseTypes PurchaseMode;
         // Keep In Position
@@ -63,6 +65,17 @@ namespace DiscoSystem.Building_System
         }
 
         #region Position Rotation Functions
+
+        public Vector3 MoveObjectToLastPosition(Vector3 currentPos)
+        {
+            return Vector3.Lerp(currentPos, LastPosition, Speed * Time.deltaTime);
+        }
+
+        public Quaternion RotateObjectToLastRotation(Quaternion currentRot)
+        {
+            return Quaternion.Slerp(currentRot, LastRotation, RotationSpeed * Time.deltaTime);
+        }
+        
         public Vector3 SnapToGrid(Vector3 position, GridSizes gridSizes)
         {
             float size = gridSizes switch

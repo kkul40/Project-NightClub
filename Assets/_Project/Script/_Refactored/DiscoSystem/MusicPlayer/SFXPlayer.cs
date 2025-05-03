@@ -53,7 +53,6 @@ namespace DiscoSystem.MusicPlayer
 
         private void PlaySoundFX(Event_Sfx sfxEvent)
         {
-            Debug.Log("Fx Calisti");
             switch (sfxEvent.FXType)
             {
                 case SoundFXType.Click:

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Data;
-using Disco_Building;
 using Disco_ScriptableObject;
+using ExtensionMethods;
 using PropBehaviours;
 using Unity.Mathematics;
 using UnityEngine;
@@ -17,7 +17,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
         private List<MeshRenderer> _tempMeshRenderer;
 
         private Transform hitSurface;
-    
+
+        private bool _applyTransformInValidate = true;
         // Box Collider Values
         // private Collider _collider;
 
@@ -27,7 +28,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             _placementItem = TH.SelectedStoreItem as PlacementItemSO;
 
-            _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
+            _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
             _tempObject.transform.SetParent(null);
         
             TH.CalculateBounds(_tempObject.GetComponents<Collider>());
@@ -38,6 +39,12 @@ namespace DiscoSystem.Building_System.Controller.Tools
     
         public bool OnValidate(ToolHelper TH)
         {
+            if (_applyTransformInValidate)
+            {
+                _tempObject.transform.rotation = TH.LastRotation;
+                _tempObject.transform.position = TH.LastPosition;
+            }
+            
             // Check For Wall
             // Check For Other Object
             // Check For In Boundries
@@ -50,10 +57,11 @@ namespace DiscoSystem.Building_System.Controller.Tools
             if (!TH.MapBoundryCheck()) return false;
         
             // Collision Check
-            var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(),TH.colliderExtend * ToolHelper.HitCollisionLeniency, TH.LastRotation);
-            for (int i = 0; i < colliders.Length; i++)
+            Collider[] results = new Collider[10];
+            var size = Physics.OverlapBoxNonAlloc(TH.GetCenterOfBounds(), TH.colliderExtend * ToolHelper.HitCollisionLeniency, results, TH.LastRotation);
+            for (int i = 0; i < size; i++)
             {
-                var hitObject = colliders[i];
+                var hitObject = results[i];
             
                 if (hitObject.TryGetComponent(out AutoDoor door)) return false;
 
@@ -72,6 +80,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
                         return false;
                 }
             }
+            
             return true;
         }
     
@@ -81,16 +90,20 @@ namespace DiscoSystem.Building_System.Controller.Tools
             FloorPositioning(TH);
 
             // Apply To Object
-            _tempObject.transform.position = TH.LastPosition;
-            _tempObject.transform.rotation = TH.LastRotation;
-        
+            _tempObject.transform.position = TH.MoveObjectToLastPosition(_tempObject.transform.position);
+            _tempObject.transform.rotation = TH.RotateObjectToLastRotation(_tempObject.transform.rotation);
+            
+            DebugExtension.DrawBox(TH.GetCenterOfBounds(),TH.colliderSize, TH.LastRotation, Color.cyan, 0.2f);
+
+            _applyTransformInValidate = false;
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+            _applyTransformInValidate = true;
             TH.TileIndicator.SetPositionAndRotation(TH.LastPosition, TH.LastRotation);
         }
     
         public void OnPlace(ToolHelper TH)
         {
-            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+            var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
             obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
 
@@ -112,7 +125,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             if (_tempObject != null)
             {
-                UnityEngine.Object.Destroy(_tempObject.gameObject);
+                Object.Destroy(_tempObject.gameObject);
             }
             TH.TileIndicator.CloseTileIndicator();
         }

@@ -17,6 +17,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
         private List<MeshRenderer> _tempMeshRenderer;
 
         private List<WallData> _walls;
+        
+        private bool _applyTransformInValidate = true;
 
         public bool isFinished { get; private set; }
 
@@ -24,7 +26,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             _placementItem = TH.SelectedStoreItem as PlacementItemSO;
 
-            _tempObject = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
+            _tempObject = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, quaternion.identity);
             _tempObject.transform.SetParent(null);
         
             TH.CalculateBounds(_tempObject.GetComponents<Collider>());
@@ -36,20 +38,30 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool OnValidate(ToolHelper TH)
         {
+            if (_applyTransformInValidate)
+            {
+                _tempObject.transform.rotation = TH.LastRotation;
+                _tempObject.transform.position = TH.LastPosition;
+            }
+            
             if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
             if (!TH.HeightCheck()) return false;
-            if (!TH.MapBoundryCheck()) return false; 
+            if (!TH.MapBoundryCheck()) return false;
 
-            var colliders = Physics.OverlapBox(TH.GetCenterOfBounds(), TH.colliderExtend * (ToolHelper.HitCollisionLeniency - 0.02f), TH.LastRotation);
-            for (int i = 0; i < colliders.Length; i++)
+            Collider[] results = new Collider[10];
+            var size = Physics.OverlapBoxNonAlloc(TH.GetCenterOfBounds(), TH.colliderExtend * (ToolHelper.HitCollisionLeniency - 0.02f), results, TH.LastRotation);
+            for (int i = 0; i < size; i++)
             {
-                var hitObject = colliders[i];
+                var hitObject = results[i];
 
                 if (hitObject.TryGetComponent(out AutoDoor door)) return false;
             
                 var hitUnit = hitObject.GetComponentInParent<IPropUnit>();
-                if (hitUnit == null || hitUnit.transform == _tempObject.transform)
+                if (hitUnit == null || hitUnit.transform.GetInstanceID() == _tempObject.transform.GetInstanceID())
+                {
+                    Debug.Log("Kendine Carpiyor");
                     continue;
+                }
 
                 IPropUnit propUnit = hitObject.GetComponentInParent<IPropUnit>();
            
@@ -78,12 +90,13 @@ namespace DiscoSystem.Building_System.Controller.Tools
             WallData closestWall = TH.GetClosestWall();
             if (closestWall != null)
                 TH.LastRotation = closestWall.AssignedWall.transform.rotation;
-        
 
-            _tempObject.transform.rotation = TH.LastRotation;
-            _tempObject.transform.position = TH.LastPosition;
-        
+            _tempObject.transform.position = TH.MoveObjectToLastPosition(_tempObject.transform.position);
+            _tempObject.transform.rotation = TH.RotateObjectToLastRotation(_tempObject.transform.rotation);
+
+            _applyTransformInValidate = false;
             TH.MaterialColorChanger.SetMaterialsColorByValidity(_tempMeshRenderer, OnValidate(TH));
+            _applyTransformInValidate = true;
         }
 
         public void OnPlace(ToolHelper TH)
@@ -112,7 +125,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             if (_tempObject != null)
             {
-                UnityEngine.Object.Destroy(_tempObject.gameObject);
+                Object.Destroy(_tempObject.gameObject);
             }
         }
 
