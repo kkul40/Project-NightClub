@@ -83,7 +83,7 @@ namespace DiscoSystem
 
                     if (hitTransform.TryGetComponent(out IInteractable cursorInteraction))
                     {
-                        if (_inputSystem.LeftClickOnWorld && cursorInteraction.IsInteractable && cursorInteraction.Interaction != eInteraction.None)
+                        if (_inputSystem.GetLeftClickOnWorld(InputType.WasPressedThisFrame) && cursorInteraction.IsInteractable && cursorInteraction.Interaction != eInteraction.None)
                         {
                             Set(cursorInteraction, hitTransform.gameObject, true);
                             OnClickHandler(cursorInteraction);
@@ -97,7 +97,7 @@ namespace DiscoSystem
                     }
                     break;
                 case CursorState.Selected:
-                    if (_inputSystem.LeftClickOnWorld)
+                    if (_inputSystem.GetLeftClickOnWorld(InputType.WasPressedThisFrame))
                     {
                         if (hitTransform.gameObject == _currentGameObject)
                         {
@@ -124,7 +124,7 @@ namespace DiscoSystem
                             }
                         }
                     }
-                    else if (_inputSystem.CancelClick)
+                    else if (_inputSystem.GetCancel(InputType.WasPressedThisFrame))
                     {
                         Reset();
                         _cursorState = CursorState.Free;

@@ -7,12 +7,12 @@ namespace DiscoSystem.CameraSystem
 {
     public class CameraControl : Singleton<CameraControl>
     {
-        [SerializeField] private UnityEngine.Camera mainCam;
+        [SerializeField] private Camera mainCam;
 
         [SerializeField] private float speed;
+        [SerializeField] private float zoomSpeed;
         [SerializeField] private float zoomMultiplier;
         [SerializeField] private AnimationCurve _zoomAnimationCurve;
-
 
         [SerializeField] private Vector3 _followNPCOffset;
         
@@ -25,7 +25,7 @@ namespace DiscoSystem.CameraSystem
 
         private void LateUpdate()
         {
-            var moveDelta = InputSystem.Instance.MoveDelta;
+            var moveDelta = InputSystem.Instance.GetCameraMoveDelta();
 
             if (InputSystem.Instance.GetEdgeScrollingData() != Vector2.zero)
             {
@@ -57,10 +57,10 @@ namespace DiscoSystem.CameraSystem
 
         private void SetCameraSize()
         {
-            cameraSize -= InputSystem.Instance.ScrollWheelDelta * zoomMultiplier;
+            cameraSize -= InputSystem.Instance.GetZoomDelta() * zoomMultiplier;
             cameraSize = Mathf.Clamp(cameraSize, 1, 9);
             mainCam.orthographicSize =
-                Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomMultiplier * 2);
+                Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomSpeed * 2);
         }
 
         public float3 GetCameraSize => new float3(1, 9, cameraSize);

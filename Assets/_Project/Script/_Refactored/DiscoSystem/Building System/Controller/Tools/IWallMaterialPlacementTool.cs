@@ -71,7 +71,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool CheckPlaceInput(ToolHelper TH)
         {
-            return TH.InputSystem.LeftHoldClickOnWorld;
+            return TH.InputSystem.GetLeftClickOnWorld(InputType.InProggress);
         }
 
         private void ResetPreviousMaterial()

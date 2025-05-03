@@ -48,7 +48,7 @@ namespace UI.GamePages
 
         private void Update()
         {
-            if (InputSystem.Instance.Esc)
+            if (InputSystem.Instance.GetEscape(InputType.WasPressedThisFrame))
             {
                 if (!IsAnyUIToggled())
                 {

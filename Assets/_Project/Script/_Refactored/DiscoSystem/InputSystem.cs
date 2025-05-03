@@ -1,9 +1,18 @@
 ﻿using ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace DiscoSystem
 {
+    public enum InputType
+    {
+        WasPerformedThisFrame,
+        WasPressedThisFrame,
+        WasReleasedThisFrame,
+        InProggress,
+    }
+    
     [DisallowMultipleComponent]
     public class InputSystem : Singleton<InputSystem>
     {
@@ -16,72 +25,134 @@ namespace DiscoSystem
         public bool SnappyCamera;
         [Header("")]
 
+        [SerializeField] private float smoothTime;
+
         [SerializeField] private LayerMask mouseOverLayers;
         [SerializeField] private LayerMask ignore;
         [SerializeField] private float borderTreshold = 0.01f;
 
-        public Vector2 MoveDelta;
-        public float ScrollWheelDelta;
         public Vector3 MousePosition;
-        [HideInInspector] public bool Esc;
-        [HideInInspector] public bool RotateLeft;
-        [HideInInspector] public bool RotateRight;
-        public bool FreePlacementKey;
-        [HideInInspector] public bool IsMouseCursorOnWorld;
-        [HideInInspector] public bool LeftClickOnWorld;
-        [HideInInspector] public bool LeftHoldClickOnWorld;
-        public bool CancelClick;
-        public bool RightClickOnWorld;
-        public bool Undo;
-
         public bool HasMouseMoveToNewCell; // Used For Optimization
 
+        private Vector2 _cameraMoveDelta = Vector2.zero;        
+        // INPUTS
+        public PlayerInput _input;
+        
+        private InputAction _esc;
+        private InputAction _undo;
+        private InputAction _rotate;
+        private InputAction _zoom;
+        private InputAction _leftClick;
+        private InputAction _rigthClick;
+        private InputAction _cameraMovement;
+        private InputAction _freePlacementKey;
+        private InputAction _mousePosition;
+        
         public void Initialize()
         {
-            
+            _esc = _input.actions["ESC"];
+            _undo = _input.actions["Undo"];
+            _rotate = _input.actions["Rotate"];
+            _zoom = _input.actions["Zoom"];
+            _leftClick = _input.actions["LeftClick"];
+            _rigthClick = _input.actions["RightClick"];
+            _cameraMovement = _input.actions["CameraMovement"];
+            _freePlacementKey = _input.actions["FreePlacementKey"];
+            _mousePosition = _input.actions["MousePosition"];
         }
 
         private void Update()
         {
+            MousePosition = GetMouseMapPosition();
+        }
+
+        public Vector2 GetCameraMoveDelta()
+        {
+            Vector2 rawInput = _cameraMovement.ReadValue<Vector2>();
+
+            _cameraMoveDelta = Vector2.Lerp(_cameraMoveDelta, rawInput, Time.deltaTime / smoothTime);
+            
             if (SnappyCamera)
             {
-                MoveDelta.x = Input.GetAxisRaw("Horizontal");
-                MoveDelta.y = Input.GetAxisRaw("Vertical");
-                MoveDelta.Normalize();
-                MoveDelta /= 2;
+                rawInput.Normalize();
+                return rawInput / 2;
             }
-            else
-            {
-                MoveDelta.x = Input.GetAxis("Horizontal");
-                MoveDelta.y = Input.GetAxis("Vertical");
-                
-                if(MoveDelta.sqrMagnitude > 1)
-                    MoveDelta.Normalize();
-            }
-
             
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                LeftClickOnWorld = Input.GetMouseButtonDown(0);
-                LeftHoldClickOnWorld = Input.GetMouseButton(0);
-                RightClickOnWorld = Input.GetMouseButtonDown(1);
-                ScrollWheelDelta = Input.GetAxis("Mouse ScrollWheel");
-                IsMouseCursorOnWorld = true;
-            }
-            else
-            {
-                LeftHoldClickOnWorld = false;
-                IsMouseCursorOnWorld = false;
-            }
+            if (_cameraMoveDelta.sqrMagnitude > 1)
+                return _cameraMoveDelta.normalized;
 
-            CancelClick = Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape);
-            Undo = Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Z);
+            return _cameraMoveDelta;
+        }
 
-            MousePosition = GetMouseMapPosition();
-            Esc = Input.GetKeyDown(KeyCode.Escape);
-            RotateLeft = Input.GetKeyDown(KeyCode.Q);
-            RotateRight = Input.GetKeyDown(KeyCode.E);
-            FreePlacementKey = Input.GetKey(KeyCode.LeftAlt);
+        public bool GetLeftClickOnWorld(InputType inputType)
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) return false;
+            
+            return GetActionType(_leftClick, inputType);
+        }
+        
+        public bool GetRightClickOnWorld(InputType inputType)
+        {
+            if (EventSystem.current.IsPointerOverGameObject()) return false;
+            
+            return GetActionType(_rigthClick, inputType);
+        }
+
+        public bool GetFreePlacement(InputType inputType)
+        {
+            return GetActionType(_freePlacementKey, inputType);
+        }
+
+        public bool GetRotation(InputType inputType)
+        {
+            if (GetActionType(_rotate, inputType)) return true;
+
+            return false;
+        }
+        public int GetRotation()
+        {
+            return (int)_rotate.ReadValue<float>();
+        } 
+
+        public bool GetCancel(InputType inputType)
+        {
+            if (GetActionType(_rigthClick, inputType)) return true;
+            if (GetActionType(_esc, inputType)) return true;
+
+            return false;
+        }
+
+        public bool GetEscape(InputType inputType)
+        {
+            return GetActionType(_esc, inputType);
+        }
+
+        public float GetZoomDelta()
+        {
+            return _zoom.ReadValue<float>();
+        }
+
+        public bool Undo(InputType inputType)
+        {
+            return GetActionType(_undo, inputType);
+        }
+
+        private bool GetActionType(InputAction action, InputType actionType)
+        {
+            switch (actionType)
+            {
+                case InputType.WasPerformedThisFrame:
+                    return action.WasPerformedThisFrame();
+                case InputType.WasPressedThisFrame:
+                    return action.WasPressedThisFrame();
+                case InputType.WasReleasedThisFrame:
+                    return action.WasReleasedThisFrame();
+                case InputType.InProggress:
+                    return action.inProgress;
+            }
+            
+            Debug.LogError("Input Action Type Not Found!!!");
+            return false;
         }
 
         public Vector2 GetEdgeScrollingData()

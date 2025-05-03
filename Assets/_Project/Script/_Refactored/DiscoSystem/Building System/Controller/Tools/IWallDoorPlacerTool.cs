@@ -169,7 +169,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool CheckPlaceInput(ToolHelper TH)
         {
-            return TH.InputSystem.LeftClickOnWorld;
+            return TH.InputSystem.GetLeftClickOnWorld(InputType.WasPressedThisFrame);
         }
 
         private void UpdateClosestWall(ToolHelper TH)

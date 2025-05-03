@@ -132,7 +132,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool CheckPlaceInput(ToolHelper TH)
         {
-            return TH.InputSystem.LeftClickOnWorld;
+            return TH.InputSystem.GetLeftClickOnWorld(InputType.WasPressedThisFrame);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             TH.LastPosition = TH.SnapToGrid(TH.InputSystem.GetMousePositionOnLayer(ToolHelper.GroundLayerID), _placementItem.GridSizes);
             TH.LastPosition.y = 0;
 
-            if (TH.InputSystem.FreePlacementKey) // Free Placement
+            if (TH.InputSystem.GetFreePlacement(InputType.InProggress)) // Free Placement
             {
                 TH.LastPosition = InputSystem.Instance.MousePosition;
             }
@@ -153,10 +153,10 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         private void FloorRotation(ToolHelper TH)
         {
-            if (TH.InputSystem.RotateLeft)
-                TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, 1);
-            else if(TH.InputSystem.RotateRight)
-                TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, -1);
+            if (TH.InputSystem.GetRotation(InputType.WasPressedThisFrame))
+            {
+                TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, TH.InputSystem.GetRotation());
+            }
         }
     }
 }

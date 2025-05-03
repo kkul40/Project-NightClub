@@ -131,12 +131,12 @@ namespace DiscoSystem.Building_System.Controller
         {
             RequireIsInitialized();
 
-            if (_view.IsToggled && InputSystem.Instance.Undo && _currentTool == null)
+            if (_view.IsToggled && InputSystem.Instance.Undo(InputType.WasPressedThisFrame) && _currentTool == null)
                 _toolHelper.PlacementTracker.Undo();
             
             if (_currentTool == null) return;
             
-            if (InputSystem.Instance.Esc)
+            if (InputSystem.Instance.GetEscape(InputType.WasPressedThisFrame))
             {
                 RelocateHandler(false);
                 StopBuilding();
@@ -145,7 +145,7 @@ namespace DiscoSystem.Building_System.Controller
 
             _currentTool.OnUpdate(_toolHelper);
 
-            bool cancelClick = InputSystem.Instance.CancelClick || _currentTool.isFinished;
+            bool cancelClick = InputSystem.Instance.GetCancel(InputType.WasPressedThisFrame) || _currentTool.isFinished;
 
             if (_currentTool.CheckPlaceInput(_toolHelper))
             {
@@ -393,7 +393,6 @@ namespace DiscoSystem.Building_System.Controller
             {
                 _relocateData.ResetPosition();
                 _relocateData.ToggleGameObject(true);
-                Debug.Log("Cancleeed Buildings");
             }
         }
     }

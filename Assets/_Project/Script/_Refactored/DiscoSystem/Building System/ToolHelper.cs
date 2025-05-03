@@ -113,7 +113,7 @@ namespace DiscoSystem.Building_System
             Vector3 snappedPosition = surfaceCenter + snappedOffset;
             TH.LastPosition = snappedPosition;
 
-            if (InputSystem.FreePlacementKey) // Free Placement
+            if (InputSystem.GetFreePlacement(InputType.InProggress)) // Free Placement
             {
                 TH.LastPosition = InputSystem.Instance.MousePosition;
             }

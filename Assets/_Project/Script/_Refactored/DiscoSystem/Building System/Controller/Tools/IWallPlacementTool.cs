@@ -82,7 +82,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             TH.LastPosition = TH.SnapToGrid(TH.InputSystem.MousePosition, _placementItem.GridSizes);
         
-            if (TH.InputSystem.FreePlacementKey) // Free Placement
+            if (TH.InputSystem.GetFreePlacement(InputType.InProggress)) // Free Placement
             {
                 TH.LastPosition = TH.InputSystem.MousePosition;
             }
@@ -131,7 +131,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool CheckPlaceInput(ToolHelper TH)
         {
-            return TH.InputSystem.LeftClickOnWorld;
+            return TH.InputSystem.GetLeftClickOnWorld(InputType.WasPressedThisFrame);
         }
     }
 }

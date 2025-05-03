@@ -21,7 +21,7 @@ namespace DiscoSystem.Character._Player
   
         private void Update()
         {
-            if (InputSystem.Instance.RightClickOnWorld && !UIPageManager.Instance.IsAnyUIToggled())
+            if (InputSystem.Instance.GetRightClickOnWorld(InputType.WasPressedThisFrame) && !UIPageManager.Instance.IsAnyUIToggled())
             {
                 _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
