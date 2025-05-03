@@ -22,7 +22,7 @@ namespace ExtensionMethods
     
     public static class PlacementExtensionMethod
     {
-        private static Tween _animationTween;
+        private static Dictionary<int, Tween> _animationTweens = new Dictionary<int, Tween>();
         public static List<Vector3Int> GetNearByKeys(this Vector3Int vector)
         {
             List<Vector3Int> keys = new List<Vector3Int>();
@@ -71,23 +71,31 @@ namespace ExtensionMethods
 
         public static void AnimatedPlacement(this GameObject gameObject, ePlacementAnimationType animationType)
         {
+            if (_animationTweens.ContainsKey(gameObject.GetInstanceID()))
+            {
+                _animationTweens[gameObject.GetInstanceID()]?.Complete();
+                _animationTweens.Remove(gameObject.GetInstanceID());
+            }
+
+            Tween _tween = null;
             switch (animationType)
             {
                 case ePlacementAnimationType.BouncyScaleUp:
                     float startScale = 0.8f;
                     gameObject.transform.localScale = new Vector3(startScale, startScale, startScale);
-                    gameObject.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
+                    _tween = gameObject.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
                     break;
                 case ePlacementAnimationType.Shaky:
-                    _animationTween?.Complete();
-                    _animationTween = gameObject.transform.DOShakeScale(0.5f, 0.05f);
+                    _tween = gameObject.transform.DOShakeScale(0.5f, 0.05f);
                     break;
                 case ePlacementAnimationType.MoveDown:
                     Vector3 storedPosition = gameObject.transform.position;
                     gameObject.transform.position = storedPosition.Add(y: 1);
-                    gameObject.transform.DOMove(storedPosition, 0.5f).SetEase(Ease.OutExpo);
+                    _tween = gameObject.transform.DOMove(storedPosition, 0.5f).SetEase(Ease.OutExpo);
                     break;
             }
+
+            _animationTweens.TryAdd(gameObject.GetInstanceID(), _tween);
         }
         
         public static void AnimatedRemoval(this GameObject gameObject, Action OnComplete)

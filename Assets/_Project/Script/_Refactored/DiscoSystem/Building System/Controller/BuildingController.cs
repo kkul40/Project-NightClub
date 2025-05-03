@@ -104,12 +104,12 @@ namespace DiscoSystem.Building_System.Controller
             GameEvent.Subscribe<Event_RelocateWallDoor>(StartWallDoorRelocate);
             GameEvent.Subscribe<Event_RemovePlacement>(RemovePlacement);
             
-            DiscoData.Instance.StartCoroutine(LoadItems());
+            LoadItems();
 
             // TODO Add a Cancal Logic For All Controller when you click esc it will close the lateest one with calling a methond in controller
         }
 
-        public IEnumerator LoadItems()
+        public void LoadItems()
         {
             foreach (var placementData in SaveLoadSystem.Instance.GetCurrentData().mapData.placementDatas)
             {
@@ -121,9 +121,7 @@ namespace DiscoSystem.Building_System.Controller
                 obj.GetComponent<IPropUnit>().Initialize(item.ID, item.PlacementLayer);
 
                 AddPlacementItemData(item, obj.transform, position, rotation);
-                obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
-
-                yield return null;
+                obj.AnimatedPlacement(ePlacementAnimationType.Shaky);
             }
         }
 

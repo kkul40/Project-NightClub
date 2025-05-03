@@ -55,7 +55,6 @@ namespace _Initializer
             Debug.Log("Asset Bundle Really Downloaded");
             _uiPageManager.Initialize();
             yield return StartCoroutine(_mapGeneratorSystem.InitializeAsync());
-            
             _buildingSystem.Initialize();
             
             _player.Initialize(newGameData);

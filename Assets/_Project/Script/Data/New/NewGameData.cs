@@ -14,6 +14,7 @@ namespace Data.New
         public string fileName;
         public Save_PlayerEquipmentsData savePlayerCustomizationData;
         public Save_MapData mapData;
+        
         // TODO : Inventory Data Ekle
 
         public NewGameData()
@@ -148,5 +149,11 @@ namespace Data.New
             
             placementDatas = new List<Save_PlacementData>();
         }
+    }
+
+    [Serializable]
+    public class Save_Inventory
+    {
+        
     }
 }
