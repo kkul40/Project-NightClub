@@ -22,6 +22,7 @@ namespace ExtensionMethods
     
     public static class PlacementExtensionMethod
     {
+        private static Tween _animationTween;
         public static List<Vector3Int> GetNearByKeys(this Vector3Int vector)
         {
             List<Vector3Int> keys = new List<Vector3Int>();
@@ -78,7 +79,8 @@ namespace ExtensionMethods
                     gameObject.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
                     break;
                 case ePlacementAnimationType.Shaky:
-                    gameObject.transform.DOShakeScale(0.5f, 0.05f);
+                    _animationTween?.Complete();
+                    _animationTween = gameObject.transform.DOShakeScale(0.5f, 0.05f);
                     break;
                 case ePlacementAnimationType.MoveDown:
                     Vector3 storedPosition = gameObject.transform.position;
@@ -90,7 +92,7 @@ namespace ExtensionMethods
         
         public static void AnimatedRemoval(this GameObject gameObject, Action OnComplete)
         {
-            gameObject.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutSine).OnComplete(() => OnComplete.Invoke());
+            gameObject.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash).OnComplete(() => OnComplete.Invoke());
         }
 
         public static GameObject Activate(this GameObject gameObject)

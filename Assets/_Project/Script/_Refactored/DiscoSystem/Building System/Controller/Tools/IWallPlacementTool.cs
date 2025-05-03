@@ -90,7 +90,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             WallData closestWall = TH.GetClosestWall();
             if (closestWall != null)
                 TH.LastRotation = closestWall.AssignedWall.transform.rotation;
-
+            
             _tempObject.transform.position = TH.MoveObjectToLastPosition(_tempObject.transform.position);
             _tempObject.transform.rotation = TH.RotateObjectToLastRotation(_tempObject.transform.rotation);
 

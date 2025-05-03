@@ -117,21 +117,23 @@ namespace Data
             
             foreach (var hit in colliders)
             {
-                if (!dontCheckEmployee)
-                {
-                    if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
-                        if (empColl.onlyEmployeeCollider == hit.collider)
-                        {
-                            onlyEmployee = true;
-                            isWalkable = true;
-                            
-                            dontCheckWalkable = true;
-                            dontCheckEmployee = true;
-                        }
-                }
-                
                 if (hit.transform.TryGetComponent(out IPropUnit unit))
                 {
+                    if (!unit.IsInitialized) continue;
+                    
+                    if (!dontCheckEmployee)
+                    {
+                        if (hit.transform.TryGetComponent(out OnlyEmployeeColider empColl))
+                            if (empColl.onlyEmployeeCollider == hit.collider)
+                            {
+                                onlyEmployee = true;
+                                isWalkable = true;
+                            
+                                dontCheckWalkable = true;
+                                dontCheckEmployee = true;
+                            }
+                    }
+                    
                     if (!dontCheckActivity)
                     {
                         StoreItemSO item = GameBundle.Instance.FindAItemByID(unit.ID);

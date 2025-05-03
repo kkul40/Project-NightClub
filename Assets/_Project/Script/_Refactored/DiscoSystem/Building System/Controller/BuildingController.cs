@@ -321,12 +321,17 @@ namespace DiscoSystem.Building_System.Controller
         {
             Transform sceneObject = _model.GetPlacedSceneObjectByID(removeEvent.InstanceID);
             _model.RemovePlacementItem(removeEvent.InstanceID);
-            
-            sceneObject.gameObject.SetActive(false);
+
             if (sceneObject.TryGetComponent(out IPropUnit unit))
+            {
+                unit.IsInitialized = false;
                 GameEvent.Trigger(new Event_PropRemoved(unit));
-        
-            UnityEngine.Object.Destroy(sceneObject.gameObject);
+            }
+            
+            sceneObject.gameObject.AnimatedRemoval((() =>
+            {
+                Object.Destroy(sceneObject.gameObject);
+            }));
         }
         
         private ITool SelectBuildingMethod(StoreItemSO storeItemSo)
@@ -369,9 +374,9 @@ namespace DiscoSystem.Building_System.Controller
             _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation);
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
-            {
                 GameEvent.Trigger(new Event_PropPlaced(unit));
-            }
+            
+            sceneObject.gameObject.AnimatedPlacement(ePlacementAnimationType.Shaky);
         }
 
         private void RelocateHandler(bool isVerified)
