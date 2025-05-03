@@ -3565,6 +3565,7 @@ MonoBehaviour:
   mainCam: {fileID: 1076041693}
   EdgeScrolling: 0
   SnappyCamera: 0
+  smoothTime: 0.1
   mouseOverLayers:
     serializedVersion: 2
     m_Bits: 896
@@ -3573,15 +3574,6 @@ MonoBehaviour:
     m_Bits: 1024
   borderTreshold: 0.01
   MousePosition: {x: 0, y: 0, z: 0}
-  Esc: 0
-  RotateLeft: 0
-  RotateRight: 0
-  FreePlacementKey: 0
-  IsMouseCursorOnWorld: 0
-  LeftClickOnWorld: 0
-  LeftHoldClickOnWorld: 0
-  CancelClick: 0
-  RightClickOnWorld: 0
   HasMouseMoveToNewCell: 0
   _input: {fileID: 155991910}
 --- !u!114 &155991910
@@ -11080,7 +11072,7 @@ MonoBehaviour:
   mainCam: {fileID: 1076041693}
   speed: 20
   zoomSpeed: 10
-  zoomMultiplier: 1
+  zoomMultiplier: 0.3
   _zoomAnimationCurve:
     serializedVersion: 2
     m_Curve: []
