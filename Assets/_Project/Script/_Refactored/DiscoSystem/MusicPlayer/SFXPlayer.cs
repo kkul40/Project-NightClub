@@ -22,7 +22,7 @@ namespace DiscoSystem.MusicPlayer
         CameraFocus,
     }
     // TODO Make This Class Part Of Music Player or just put all this into MusicPlayer
-    public class SFXPlayer : Singleton<SFXPlayer>, ISavable
+    public class SFXPlayer : Singleton<SFXPlayer>
     {
         private AudioSource _audioSource;
 
@@ -120,16 +120,6 @@ namespace DiscoSystem.MusicPlayer
         {
             SoundVolume = value;
             mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20);
-        }
-
-        public void LoadData(GameData gameData)
-        {
-            SetSoundVolume(gameData.gameSettingsData.SoundVolume);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-            gameData.gameSettingsData.SoundVolume = SoundVolume;
         }
     }
 }

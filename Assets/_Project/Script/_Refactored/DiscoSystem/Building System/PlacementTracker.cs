@@ -20,22 +20,32 @@ namespace DiscoSystem.Building_System
 
         public void Undo()
         {
-            if (_revertables.Count == 0) return;
+            while (true)
+            {
+                if (_revertables.Count == 0) return;
 
-            var revertable = _revertables.Pop();
-            revertable.Undo();
-            GameEvent.Trigger(new Event_Sfx(SoundFXType.UIBack));
+                var revertable = _revertables.Pop();
+                if (!revertable.Undo())
+                    continue;
+
+                GameEvent.Trigger(new Event_Sfx(SoundFXType.UIBack));
+                break;
+            }
         }
     }
 
     public interface IRevertable
     {
-        public void Undo();
+        /// <summary>
+        ///  Returns true if successfull
+        /// </summary>
+        /// <returns></returns>
+        public bool Undo();
     }
     
     public abstract class Revertable : IRevertable
     {
-        public abstract void Undo();
+        public abstract bool Undo();
 
         protected void UndoMoney(int storeItemID)
         {
@@ -55,10 +65,16 @@ namespace DiscoSystem.Building_System
             InstanceId = instanceId;
         }
 
-        public override void Undo()
+        public override bool Undo()
         {
-            GameEvent.Trigger(new Event_RemovePlacement(InstanceId));
-            UndoMoney(StoreItemId);
+            if (DiscoData.Instance.PlacedItems.ContainsKey(InstanceId))
+            {
+                GameEvent.Trigger(new Event_RemovePlacement(InstanceId));
+                UndoMoney(StoreItemId);
+                return true;
+            }
+
+            return false;
         }
     }
 
@@ -75,7 +91,7 @@ namespace DiscoSystem.Building_System
             CellPos = cellPos;
         }
 
-        public override void Undo()
+        public override bool Undo()
         {
             var store = GameBundle.Instance.FindAItemByID(PreviousMaterilID);
 
@@ -85,7 +101,12 @@ namespace DiscoSystem.Building_System
                 UndoMoney(CurrentMaterialID);
             }
             else
+            {
                 Debug.LogError("Assigned Materials Is Not MaterialItemSo");
+                return false;
+            }
+
+            return true;
         }
     }
     
@@ -103,7 +124,7 @@ namespace DiscoSystem.Building_System
 
         }
 
-        public override void Undo()
+        public override bool Undo()
         {
             var store = GameBundle.Instance.FindAItemByID(PreviousMaterilID);
             
@@ -113,7 +134,12 @@ namespace DiscoSystem.Building_System
                 UndoMoney(CurrentMaterialID);
             }
             else
+            {
                 Debug.LogError("Assigned Materials Is Not MaterialItemSo");
+                return false;
+            }
+
+            return true;
         }
     }
 
@@ -128,11 +154,11 @@ namespace DiscoSystem.Building_System
             ExtendSize = extendSize;
         }
 
-        // TODO : Implement This later
-        public override void Undo()
+        public override bool Undo()
         {
             DiscoData.Instance.MapData.RevertMapSize(ExtendSize.x, ExtendSize.y);
             UndoMoney(ID);
+            return true;
         }
     }
 
@@ -149,7 +175,7 @@ namespace DiscoSystem.Building_System
             PreviousMaterialID = previousMaterialID;
         }
 
-        public override void Undo()
+        public override bool Undo()
         {
             // Remove Current Door And Add Wall In Place
             var wallDoorData = _mapData.GetWallDoor();
@@ -183,6 +209,7 @@ namespace DiscoSystem.Building_System
             
             
             DiscoData.Instance.MapData.ChangeDoorPosition(PreviousWallIndex, PreviousIsWallOnX);
+            return true;
         }
 
         private MapData _mapData => DiscoData.Instance.MapData;

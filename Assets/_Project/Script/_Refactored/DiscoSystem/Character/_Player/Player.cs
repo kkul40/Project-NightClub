@@ -35,7 +35,6 @@ namespace DiscoSystem.Character._Player
 
         public bool TriggerDoor { get; set; } = true;
         
-
         public void LoadData(NewGameData gameData)
         {
             _customizeLoader = GetComponent<CharacterCustomizeLoader>();
@@ -47,10 +46,6 @@ namespace DiscoSystem.Character._Player
             
             _animationController = new NPCAnimationControl(_customizeLoader.GetAnimator, _customizeLoader.GetAnimancer, animation, _customizeLoader.GetArmature);
             _animationController.PlayAnimation(eAnimationType.Bartender_Walk);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
         }
     }
 }

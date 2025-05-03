@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Data;
-using DiscoSystem;
+﻿using System.Collections.Generic;
+using DiscoSystem.Building_System.GameEvents;
+using DiscoSystem.Character._Player;
 using DiscoSystem.MusicPlayer;
 using Framework.Context;
 using Framework.Mvcs.View;
@@ -24,8 +23,17 @@ namespace UI.GamePages
         public override void Initialize(IContext context)
         {
             base.Initialize(context);
+
+            musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            soundVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+            
+            MusicPlayer.Instance.SetMusicVolume(musicVolumeSlider.value);
+            SFXPlayer.Instance.SetSoundVolume(soundVolumeSlider.value);
+            
             musicVolumeSlider.onValueChanged.AddListener(MusicPlayer.Instance.SetMusicVolume);
             soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
+            
+            GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData());
         }
 
         public override void EventEnable()
@@ -54,13 +62,11 @@ namespace UI.GamePages
                 page.SetActive(false);
             }
         }
-
-        public void LoadSettingsData(GameData gameData)
+        
+        public void SaveData()
         {
-        }
-
-        public void SaveSettingsData(ref GameData gameData)
-        {
+            PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
+            PlayerPrefs.SetFloat("SFXVolume", soundVolumeSlider.value);
         }
     }
 }

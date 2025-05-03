@@ -34,7 +34,7 @@ namespace UI.GamePages
                 Destroy(contentHolder.GetChild(i).gameObject);
             
             var saveNames = SaveLoadSystem.Instance.GetList().ToList();
-
+            
             if (saveNames.Count == 0) return;
 
             foreach (var sName in saveNames)

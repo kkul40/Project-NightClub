@@ -48,6 +48,7 @@ namespace SaveAndLoad
             GameEvent.Trigger(new Event_OnGameSave(ref CurrentGameData));
             CurrentGameData.fileName = newFileName;
             _dataService.Save(CurrentGameData);
+            PlayerPrefs.Save();
         }
 
         public void LoadGame(string gameName)

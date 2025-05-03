@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using Data.New;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using Framework.Context;
@@ -13,7 +14,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIPageManager : Singleton<UIPageManager>, ISavable
+    public class UIPageManager : Singleton<UIPageManager>
     {
         [SerializeField] private UISettingsPage _settingsPage;
         private HashSet<BaseView> _uiPageBases = new HashSet<BaseView>();
@@ -105,21 +106,6 @@ namespace UI.GamePages
             page.Show(message, callback);
         }
 
-        // public void RequestAPage<T>(Type requestedPage, T data = null) where T : class
-        // {
-        //     var page = GetPage(requestedPage);
-        //
-        //     CloseAllPages(PageType.MiniPage);
-        //
-        //     if (data != null)
-        //     {
-        //         page.Show(data);
-        //         return;
-        //     }
-        //
-        //     page.Show();
-        // }
-
         public bool IsPageToggled(Type reqeustedPage)
         {
             var page = GetPage(reqeustedPage);
@@ -188,16 +174,6 @@ namespace UI.GamePages
             return false;
         }
 
-        public void LoadData(GameData gameData)
-        {
-            _settingsPage.LoadSettingsData(gameData);
-        }
-
-        public void SaveData(ref GameData gameData)
-        {
-            _settingsPage.SaveSettingsData(ref gameData);
-        }
-        
         private void OnDestroy()
         {
             foreach (var page in _uiPageBases)

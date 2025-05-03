@@ -20,26 +20,6 @@ namespace DiscoSystem.Character._Player
         private SkinnedMeshRenderer _skinMeshRenderers;
         private BodyPartTag[] _bodyPartTags;
 
-        
-        // Load Player
-        public CharacterCustomizer(GameData gameData, CustomizationItemsSo customizationData, Transform characterTransform)
-        {
-            _characterTransform = characterTransform;
-            _customizationData = customizationData;
-            
-            GameDataExtension.PlayerCustomizationIndexData indexData = gameData.savedPlayerCustomizationIndexData;
-            
-            gender = indexData.playerGenderIndex == 0 ? eGenderType.Male : eGenderType.Female;
-            CustomizationItemsSo.ItemGroup group = gender == eGenderType.Male ? customizationData.MaleItems : customizationData.FemaleItems;
-            InitBody(gender);
-            InitItem(group.Head[indexData.playerHeadIndex]);
-            InitItem(group.Hair[indexData.playerHairIndex]);
-            InitItem(group.Accessoriees[indexData.playerAccessoriesIndex]);
-            InitItem(group.Top[indexData.playerTopIndex]);
-            InitItem(group.Bottom[indexData.playerBottomIndex]);
-            InitItem(group.Shoes[indexData.playerShoesIndex]);
-        }
-
         // Random NPC
         public CharacterCustomizer(eGenderType gender, CustomizationItemsSo customizationData, Transform characterTransform)
         {
@@ -49,24 +29,24 @@ namespace DiscoSystem.Character._Player
             
             InitBody(gender);
             if(group.Head.Count > 0) 
-                InitItem(group.Head[UnityEngine.Random.Range(0, group.Head.Count)]);
+                InitItem(group.Head[Random.Range(0, group.Head.Count)]);
             if(group.Hair.Count > 0) 
-                InitItem(group.Hair[UnityEngine.Random.Range(0, group.Hair.Count)]);
+                InitItem(group.Hair[Random.Range(0, group.Hair.Count)]);
             if(group.Accessoriees.Count > 0) 
-                InitItem(group.Accessoriees[UnityEngine.Random.Range(0, group.Accessoriees.Count)]);
+                InitItem(group.Accessoriees[Random.Range(0, group.Accessoriees.Count)]);
             if(group.Top.Count > 0) 
-                InitItem(group.Top[UnityEngine.Random.Range(0, group.Top.Count)]);
+                InitItem(group.Top[Random.Range(0, group.Top.Count)]);
             if(group.Bottom.Count > 0) 
-                InitItem(group.Bottom[UnityEngine.Random.Range(0, group.Bottom.Count)]);
+                InitItem(group.Bottom[Random.Range(0, group.Bottom.Count)]);
             if(group.Shoes.Count > 0) 
-                InitItem(group.Shoes[UnityEngine.Random.Range(0, group.Shoes.Count)]);
+                InitItem(group.Shoes[Random.Range(0, group.Shoes.Count)]);
         }
         
         private void InitBody(eGenderType gender)
         {
             if (_characterTransform.childCount > 0)
                 for (int i = 0; i < _characterTransform.childCount; i++)
-                    UnityEngine.Object.Destroy(_characterTransform.GetChild(i).gameObject);
+                    Object.Destroy(_characterTransform.GetChild(i).gameObject);
             
             CustomizationItemsSo.ItemGroup group = new CustomizationItemsSo.ItemGroup();
 
@@ -74,11 +54,11 @@ namespace DiscoSystem.Character._Player
             {
                 case eGenderType.Male:
                     group = _customizationData.MaleItems;
-                    _armature = UnityEngine.Object.Instantiate(_customizationData.MaleItems.ArmaturePrefab, _characterTransform).transform;
+                    _armature = Object.Instantiate(_customizationData.MaleItems.ArmaturePrefab, _characterTransform).transform;
                     break;
                 case eGenderType.Female:
                     group = _customizationData.FemaleItems;
-                    _armature = UnityEngine.Object.Instantiate(_customizationData.FemaleItems.ArmaturePrefab, _characterTransform).transform;
+                    _armature = Object.Instantiate(_customizationData.FemaleItems.ArmaturePrefab, _characterTransform).transform;
                     break;
             }
             
@@ -112,7 +92,7 @@ namespace DiscoSystem.Character._Player
             //instantiate objects, parent to target bones
             foreach(var obj in customization.objects)
             {
-                go = UnityEngine.Object.Instantiate(obj.prefab, _animator.GetBoneTransform(obj.targetBone));
+                go = Object.Instantiate(obj.prefab, _animator.GetBoneTransform(obj.targetBone));
             }
             
             ToggleBodyParts(customization,false);

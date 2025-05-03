@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Data;
 using DiscoSystem;
+using DiscoSystem.Building_System.GameEvents;
 using Root;
 using SaveAndLoad;
 using TMPro;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>, ISavable
+    public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>
     {
         [Header("Graphics")] 
         [Header("Resolution")]
@@ -36,9 +37,22 @@ namespace UI.GamePages
 
         private void Start()
         {
+            InitGeneralSettings();
+            
             InitResolution();
             InitFullScreenMode();
             InitQuality();
+            
+            GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData());
+        }
+
+        private void InitGeneralSettings()
+        {
+            EdgeScrollingEnabled = PlayerPrefs.GetInt("EdgeScrolling", 0) < 1 ? true : false;
+            SnappyCameraEnabled = PlayerPrefs.GetInt("SnappyCamera", 0) < 1 ? true : false;
+            
+            ToggleEdgeScrolling();
+            ToggleSnappyCamera();
         }
 
         private void InitQuality()
@@ -161,19 +175,10 @@ namespace UI.GamePages
             SnappyCameraToggle.ToggleCheckMark(SnappyCameraEnabled);
         }
 
-        public void LoadData(GameData gameData)
+        public void SaveData()
         {
-            EdgeScrollingEnabled = !gameData.gameSettingsData.isEdgeScrollingEnabled;
-            SnappyCameraEnabled = !gameData.gameSettingsData.isSnappyCameraEnabled;
-            ToggleEdgeScrolling();
-            ToggleSnappyCamera();
-        }
-
-
-        public void SaveData(ref GameData gameData)
-        {
-            gameData.gameSettingsData.isEdgeScrollingEnabled = EdgeScrollingEnabled;
-            gameData.gameSettingsData.isSnappyCameraEnabled = SnappyCameraEnabled;
+            PlayerPrefs.SetInt("EdgeScrolling", EdgeScrollingEnabled ? 1 : 0);
+            PlayerPrefs.SetInt("SnappyCamera", SnappyCameraEnabled ? 1 : 0);
         }
     }
 }

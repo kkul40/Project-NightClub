@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.New;
 using Root;
 using SaveAndLoad;
 using Sirenix.OdinInspector;
@@ -36,7 +37,7 @@ namespace _Project.OdinEditor
         [FoldoutGroup("Save And Load")]
         public void NewGame()
         {
-            SavingAndLoadingSystem.Instance.NewGame();
+            SaveLoadSystem.Instance.NewGame(new NewGameData());
             LoadScene(SceneManager.GetActiveScene().path);
         }
 
@@ -44,7 +45,7 @@ namespace _Project.OdinEditor
         [FoldoutGroup("Save And Load")]
         public void Save()
         {
-            SavingAndLoadingSystem.Instance.SaveGame();
+            SaveLoadSystem.Instance.SaveGame();
         }
 
         [Button]
