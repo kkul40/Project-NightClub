@@ -1,5 +1,4 @@
 ﻿using System;
-using Data;
 using Data.New;
 using TMPro;
 using UnityEngine;
@@ -23,6 +22,7 @@ namespace UI.StartMenu
             _data = data;
 
             _saveName.text = data.fileName;
+            _balance.text = data.inventoryData.Balance.ToString();
             // _playTime.text = data.saveDetails.playTime.ToString();
             // _lastSaveDate.text = data.saveDetails.lastSaveDate;
             // _balance.text = data.savedInventoryData.Balance.ToString();

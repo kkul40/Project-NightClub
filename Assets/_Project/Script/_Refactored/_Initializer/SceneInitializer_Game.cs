@@ -30,7 +30,12 @@ namespace _Initializer
         [SerializeField] private NPCSystem _npcSystem;
         [SerializeField] private GameEvent _gameEvents;
 
-        private IEnumerator Start()
+        private void Awake()
+        {
+            StartCoroutine(InitializeGame());
+        }
+
+        private IEnumerator InitializeGame()
         {
             _gameEvents.Initialize();
             

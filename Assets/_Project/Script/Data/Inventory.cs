@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data.New;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -15,12 +16,12 @@ namespace Data
         public int Balance;
         public Dictionary<StoreItemSO, int> Items;
 
-        public Inventory(GameData gameData)
+        public Inventory(NewGameData gameData)
         {
-            Balance = gameData.savedInventoryData.Balance;
+            Balance = gameData.inventoryData.Balance;
             Items = new Dictionary<StoreItemSO, int>();
 
-            foreach (var data in gameData.savedInventoryData.Items)
+            foreach (var data in gameData.inventoryData.Items)
                 Items.Add(GameBundle.Instance.FindAItemByID(data.Key), data.Value);
             
             
@@ -30,15 +31,16 @@ namespace Data
             GameEvent.Subscribe<Event_AddItem>(AddItem);
             GameEvent.Subscribe<Event_RemoveItem>(RemoveItem);
             
-            // GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData(ref handle.GameData));
+            GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData(ref handle.GameData));
         }
         
-        public void SaveData(ref GameData gameData)
+        public void SaveData(ref NewGameData gameData)
         {
-            gameData.savedInventoryData = new GameDataExtension.InventorySaveData();
-
+            gameData.inventoryData = new Save_Inventory();
+            
+            gameData.inventoryData.Balance = Balance;
             foreach (var pair in Items)
-                gameData.savedInventoryData.Items.Add(pair.Key.ID, pair.Value);
+                gameData.inventoryData.Items.Add(pair.Key.ID, pair.Value);
         }
         
         private void AddMoney(Event_MoneyAdded moneyEvent)

@@ -14,13 +14,13 @@ namespace Data.New
         public string fileName;
         public Save_PlayerEquipmentsData savePlayerCustomizationData;
         public Save_MapData mapData;
+        public Save_Inventory inventoryData;
         
-        // TODO : Inventory Data Ekle
-
         public NewGameData()
         {
             savePlayerCustomizationData = new Save_PlayerEquipmentsData();
             mapData = new Save_MapData();
+            inventoryData = new Save_Inventory();
         }
     }
     
@@ -154,6 +154,19 @@ namespace Data.New
     [Serializable]
     public class Save_Inventory
     {
-        
+        public class Inventory
+        {
+            public int ItemsID;
+            public int ItemAmount;
+        }
+            
+        public int Balance;
+        public SerializableDictionary<int, int> Items;
+
+        public Save_Inventory()
+        {
+            Balance = 100000;
+            Items = new SerializableDictionary<int, int>();
+        }
     }
 }

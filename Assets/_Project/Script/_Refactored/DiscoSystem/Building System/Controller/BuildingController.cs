@@ -120,9 +120,10 @@ namespace DiscoSystem.Building_System.Controller
                 
                 obj.GetComponent<IPropUnit>().Initialize(item.ID, item.PlacementLayer);
 
-                AddPlacementItemData(item, obj.transform, position, rotation);
+                AddPlacementItemData(item, obj.transform, position, rotation, false);
                 obj.AnimatedPlacement(ePlacementAnimationType.Shaky);
             }
+            GameEvent.Trigger(new Event_PropPlaced(null));
         }
 
         public void Update(float deltaTime)
@@ -367,13 +368,16 @@ namespace DiscoSystem.Building_System.Controller
             return null;
         }
 
-        public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation)
+        public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, bool triggerEvent = true)
         {
             _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation);
 
-            if (sceneObject.TryGetComponent(out IPropUnit unit))
-                GameEvent.Trigger(new Event_PropPlaced(unit));
-            
+            if (triggerEvent)
+            {
+                if (sceneObject.TryGetComponent(out IPropUnit unit))
+                    GameEvent.Trigger(new Event_PropPlaced(unit));
+            }
+
             sceneObject.gameObject.AnimatedPlacement(ePlacementAnimationType.Shaky);
         }
 

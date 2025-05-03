@@ -24,7 +24,7 @@ namespace Data
             Instance = this;
             PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
             MapData = new MapData(gameData);
-            inventory = new Inventory(new GameData());
+            inventory = new Inventory(gameData);
         }
     
         private void Start()
