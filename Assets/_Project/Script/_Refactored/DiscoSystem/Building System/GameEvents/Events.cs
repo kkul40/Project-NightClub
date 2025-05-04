@@ -5,7 +5,6 @@ using Disco_ScriptableObject;
 using DiscoSystem.Character.Bartender;
 using DiscoSystem.MusicPlayer;
 using PropBehaviours;
-using ScriptableObjects;
 using UI.Emotes;
 using UnityEngine;
 
@@ -20,6 +19,16 @@ namespace DiscoSystem.Building_System.GameEvents
     
     #region Game
 
+    public class Event_ToggleInputs
+    {
+        public bool Toggle;
+
+        public Event_ToggleInputs(bool toggle)
+        {
+            Toggle = toggle;
+        }
+    }
+    
     public class Event_OnGameSave
     {
         public NewGameData GameData;

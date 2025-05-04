@@ -47,18 +47,14 @@ namespace _Initializer
             _cursorSystem.Initialize(_inputSystem, 0);
 
             NewGameData newGameData = SaveLoadSystem.Instance.GetCurrentData();
-
-            if (newGameData == null)
-            {
-                Debug.Log("No Save File Found Created New One");
-                newGameData = new NewGameData();
-            }
             
+            Debug.Log(newGameData.fileName);
+
             _discoData.Initialize(newGameData);
             
+            _uiPageManager.Initialize();
             yield return StartCoroutine(GameBundle.Instance.InitializeAsync());
             Debug.Log("Asset Bundle Really Downloaded");
-            _uiPageManager.Initialize();
             yield return StartCoroutine(_mapGeneratorSystem.InitializeAsync());
             _buildingSystem.Initialize();
             

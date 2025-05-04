@@ -87,7 +87,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public void OnPlace(ToolHelper TH)
         {
-            var obj = UnityEngine.Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
+            var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
         
             IPropUnit unit;
             if (obj.TryGetComponent(out IPropUnit propUnit))
@@ -106,7 +106,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             if (_tempObject != null)
             {
-                UnityEngine.Object.Destroy(_tempObject.gameObject);
+                Object.Destroy(_tempObject.gameObject);
             }
         }
 

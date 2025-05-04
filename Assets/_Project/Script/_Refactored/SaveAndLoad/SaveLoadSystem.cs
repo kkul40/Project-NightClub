@@ -73,7 +73,6 @@ namespace SaveAndLoad
 
         public NewGameData GetCurrentData()
         {
-            if (CurrentGameData == null) return null;
             return CurrentGameData;
         }
 

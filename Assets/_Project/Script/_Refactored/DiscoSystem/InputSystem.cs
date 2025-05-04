@@ -1,4 +1,5 @@
-﻿using ExtensionMethods;
+﻿using DiscoSystem.Building_System.GameEvents;
+using ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -36,6 +37,8 @@ namespace DiscoSystem
 
         private Vector2 _cameraMoveDelta = Vector2.zero;        
         // INPUTS
+        private bool _inputEnabled = true;
+        
         public PlayerInput _input;
         
         private InputAction _esc;
@@ -59,6 +62,14 @@ namespace DiscoSystem
             _cameraMovement = _input.actions["CameraMovement"];
             _freePlacementKey = _input.actions["FreePlacementKey"];
             _mousePosition = _input.actions["MousePosition"];
+            
+            GameEvent.Subscribe<Event_ToggleInputs>(handle =>
+            {
+                if(handle.Toggle)
+                    EnableInputs();
+                else
+                    DisableInputs();
+            });
         }
 
         private void Update()
@@ -68,6 +79,8 @@ namespace DiscoSystem
 
         public Vector2 GetCameraMoveDelta()
         {
+            if (!_inputEnabled) return Vector2.zero;
+            
             Vector2 rawInput = _cameraMovement.ReadValue<Vector2>();
 
             _cameraMoveDelta = Vector2.Lerp(_cameraMoveDelta, rawInput, Time.deltaTime / smoothTime);
@@ -86,6 +99,8 @@ namespace DiscoSystem
 
         public bool GetLeftClickOnWorld(InputType inputType)
         {
+            if (!_inputEnabled) return false;
+
             if (EventSystem.current.IsPointerOverGameObject()) return false;
             
             return GetActionType(_leftClick, inputType);
@@ -93,6 +108,8 @@ namespace DiscoSystem
         
         public bool GetRightClickOnWorld(InputType inputType)
         {
+            if (!_inputEnabled) return false;
+
             if (EventSystem.current.IsPointerOverGameObject()) return false;
             
             return GetActionType(_rigthClick, inputType);
@@ -100,17 +117,23 @@ namespace DiscoSystem
 
         public bool GetFreePlacement(InputType inputType)
         {
+            if (!_inputEnabled) return false;
+
             return GetActionType(_freePlacementKey, inputType);
         }
 
         public bool GetRotation(InputType inputType)
         {
+            if (!_inputEnabled) return false;
+
             if (GetActionType(_rotate, inputType)) return true;
 
             return false;
         }
         public int GetRotation()
         {
+            if (!_inputEnabled) return 0;
+            
             return (int)_rotate.ReadValue<float>();
         } 
 
@@ -129,11 +152,15 @@ namespace DiscoSystem
 
         public float GetZoomDelta()
         {
+            if (!_inputEnabled) return 0;
+            
             return _zoom.ReadValue<float>();
         }
 
         public bool Undo(InputType inputType)
         {
+            if (!_inputEnabled) return false;
+            
             return GetActionType(_undo, inputType);
         }
 
@@ -157,6 +184,8 @@ namespace DiscoSystem
 
         public Vector2 GetEdgeScrollingData()
         {
+            if (!_inputEnabled) return Vector2.zero;
+            
             Vector2 vector = Vector2.zero;
             
             if (!EdgeScrolling) return vector;
@@ -201,6 +230,8 @@ namespace DiscoSystem
 
         private Vector3 GetMouseMapPosition()
         {
+            if (!_inputEnabled) return Vector3.zero;
+            
             var mousePOs = Input.mousePosition;
             mousePOs.z = mainCam.nearClipPlane;
             var ray = mainCam.ScreenPointToRay(mousePOs);
@@ -274,5 +305,8 @@ namespace DiscoSystem
             if (Physics.Raycast(ray, out hit, maxDistance, 1 << layerID)) return hit.transform;
             return null;
         }
+
+        public void EnableInputs() => _inputEnabled = true;
+        public void DisableInputs() => _inputEnabled = false;
     }
 }

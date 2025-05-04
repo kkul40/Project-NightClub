@@ -368,9 +368,10 @@ namespace DiscoSystem.Building_System.Controller
             return null;
         }
 
-        public void AddPlacementItemData(StoreItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, bool triggerEvent = true)
+        public void AddPlacementItemData(PlacementItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, bool triggerEvent = true)
         {
             _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation);
+            sceneObject.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(itemSo.PlacementLayer));
 
             if (triggerEvent)
             {

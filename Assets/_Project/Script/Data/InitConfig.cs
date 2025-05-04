@@ -10,8 +10,6 @@ namespace Data
 {
     public class InitConfig : Singleton<InitConfig>
     {
-        public NewAnimationSO test;
-
         [Header("UI Style")] 
         [SerializeField] private UITextStyle DefaultUITextStyle;
         [SerializeField] private UIColorStyle DefaultUIColorStyle;

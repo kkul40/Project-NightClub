@@ -105,8 +105,6 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
-            obj.transform.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(_placementItem.PlacementLayer));
-
             IPropUnit unit;
             if (obj.TryGetComponent(out IPropUnit propUnit))
                 unit = propUnit;
@@ -116,7 +114,6 @@ namespace DiscoSystem.Building_System.Controller.Tools
             unit.Initialize(_placementItem.ID, ePlacementLayer.FloorProp);
 
             TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
-            
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, new Vector2(TH.colliderSize.x, TH.colliderSize.z), TH.LastRotation);
             TH.PlacementTracker.AddTrack(new PropUndo(_placementItem.ID, obj.transform.GetInstanceID()));
         }

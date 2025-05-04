@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Data.New;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -169,8 +170,9 @@ namespace Data
             }
         }
 
-        foreach (var pair in NewWallData)
+        for (int i = NewWallData.ToList().Count - 1; i >= 0; i--)
         {
+            var pair = NewWallData.ToList()[i];
             if (pair.Key.x > CurrentMapSize.x - x || pair.Key.z > CurrentMapSize.y - y)
                 RemoveWallData(pair.Key);
         }

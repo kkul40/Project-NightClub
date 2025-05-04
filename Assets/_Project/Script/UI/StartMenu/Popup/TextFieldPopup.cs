@@ -1,4 +1,5 @@
 ﻿using System;
+using DiscoSystem.Building_System.GameEvents;
 using Framework.Mvcs.View;
 using TMPro;
 using UnityEngine;
@@ -37,6 +38,7 @@ namespace UI.StartMenu.Popup
         public override void ToggleView(bool toggle)
         {
             base.ToggleView(toggle);
+            GameEvent.Trigger(new Event_ToggleInputs(!toggle));
             _bg.SetActive(toggle);
         }
     }
