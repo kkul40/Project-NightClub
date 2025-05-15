@@ -46,6 +46,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1532718405-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1726907429-0
         - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1839056770-0
+        - globalObjectIdString: GlobalObjectId_V1-2-4e4517d321554a54d993e9dbc84b7b55-1928868366-0
         values:
         - colorIndex: 2
           iconNameOrGuid: 
@@ -88,7 +89,7 @@ MonoBehaviour:
         - colorIndex: 0
           iconNameOrGuid: ReflectionProbe Icon
         - colorIndex: 4
-          iconNameOrGuid: 
+          iconNameOrGuid: Folder Icon
         - colorIndex: 3
           iconNameOrGuid: Settings Icon
         - colorIndex: 0
@@ -100,6 +101,8 @@ MonoBehaviour:
         - colorIndex: 0
           iconNameOrGuid: Folder Icon
         - colorIndex: 0
+          iconNameOrGuid: PreMatQuad
+        - colorIndex: 8
           iconNameOrGuid: PreMatQuad
     - goDatas_byGlobalId:
         keys:
