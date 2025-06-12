@@ -15,8 +15,10 @@ namespace DiscoSystem.Building_System.Controller.Tools
         private PlacementItemSO _placementItem;
         private Vector3 mouseDeltaStart;
         private List<MeshRenderer> _tempMeshRenderer;
-
         private Transform hitSurface;
+
+        private Vector3 targetPosition;
+        private Quaternion targetRotation;
 
         private bool _applyTransformInValidate = true;
         // Box Collider Values
@@ -36,7 +38,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             _tempMeshRenderer = TH.MaterialColorChanger.ReturnMeshRendererList(_tempObject);
             TH.TileIndicator.SetTileIndicator(ePlacingType.Place, new Vector2(TH.colliderSize.x, TH.colliderSize.z));
         }
-    
+
         public bool OnValidate(ToolHelper TH)
         {
             if (_applyTransformInValidate)
@@ -88,10 +90,13 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             FloorRotation(TH);
             FloorPositioning(TH);
-
+            
             // Apply To Object
             _tempObject.transform.position = TH.MoveObjectToLastPosition(_tempObject.transform.position);
             _tempObject.transform.rotation = TH.RotateObjectToLastRotation(_tempObject.transform.rotation);
+            
+            // _tempObject.transform.position = TH.LastPosition;
+            // _tempObject.transform.rotation = TH.LastRotation;
             
             DebugExtension.DrawBox(TH.GetCenterOfBounds(),TH.colliderSize, TH.LastRotation, Color.cyan, 0.2f);
 
@@ -103,6 +108,9 @@ namespace DiscoSystem.Building_System.Controller.Tools
     
         public void OnPlace(ToolHelper TH)
         {
+            // _tempObject.transform.position = TH.LastPosition;
+            // _tempObject.transform.rotation = TH.LastRotation;
+            
             var obj = Object.Instantiate(_placementItem.Prefab, TH.LastPosition, TH.LastRotation);
 
             IPropUnit unit;
@@ -112,8 +120,9 @@ namespace DiscoSystem.Building_System.Controller.Tools
                 unit = obj.AddComponent<IPropUnit>();
 
             unit.Initialize(_placementItem.ID, ePlacementLayer.FloorProp);
-
-            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+            
+            Physics.SyncTransforms();
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation, TH.colliderSize, TH.GetPlacedPosition());
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, new Vector2(TH.colliderSize.x, TH.colliderSize.z), TH.LastRotation);
             TH.PlacementTracker.AddTrack(new PropUndo(_placementItem.ID, obj.transform.GetInstanceID()));
         }
@@ -121,9 +130,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
         public void OnStop(ToolHelper TH)
         {
             if (_tempObject != null)
-            {
                 Object.Destroy(_tempObject.gameObject);
-            }
+            
             TH.TileIndicator.CloseTileIndicator();
         }
 
@@ -150,7 +158,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         private void FloorRotation(ToolHelper TH)
         {
-            if (TH.InputSystem.GetRotation(InputType.WasPressedThisFrame))
+            if (TH.InputSystem.GetRotationInput(InputType.WasPressedThisFrame))
             {
                 TH.LastRotation = TH.SnappyRotate(_tempObject.transform.rotation, TH.InputSystem.GetRotation());
             }

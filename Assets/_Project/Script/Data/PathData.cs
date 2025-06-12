@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -44,11 +46,11 @@ namespace Data
 
             SetUpPaths();
             // PlacementDataHandler.OnPropPlaced += () => SetFlags(avaliablePathFlag:true);
-            GameEvent.Subscribe<Event_PropPlaced>( handle => UpdateAllPaths());
-            GameEvent.Subscribe<Event_PropRemoved>( handle => UpdateAllPaths());
-            GameEvent.Subscribe<Event_PropRelocated>(handle => UpdateAllPaths());
-            GameEvent.Subscribe<Event_ExpendMapSize>(handle => UpdateAllPaths());
-            GameEvent.Subscribe<Event_MapSizeChanged>(handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_PropPlaced>(UpdateSelectedPath);
+            GameEvent.Subscribe<Event_PropRemoved>(UpdateSelectedPath);
+            GameEvent.Subscribe<Event_PropRelocated>(handle => UpdateSelectedPath(handle.NewPoints));
+            // GameEvent.Subscribe<Event_ExpendMapSize>(handle => UpdateAllPaths());
+            GameEvent.Subscribe<Event_MapSizeChanged>(UpdateSelectedPath);
         }
 
         private void SetUpPaths()
@@ -74,32 +76,74 @@ namespace Data
 
             isPathsDirty = true;
         }
+        
+        private void UpdateSelectedPath(Event_MapSizeChanged eventData)
+        {
+            if (eventData.IsShrinked)
+            {
+                isPathsDirty = true;
+                isAvaliablePathsDirty = true;
+                return;
+            }
+
+           
+            UpdateSelectedPath(eventData.NewPoints);
+        }
+        
+        private void UpdateSelectedPath(Event_PropPlaced eventData)
+        {
+            UpdateSelectedPath(eventData.PlacedPathCoordinates);
+        }
+
+        private void UpdateSelectedPath(Event_PropRemoved eventData)
+        {
+            UpdateSelectedPath(eventData.RemovedPathCoordinates);
+        } 
+
+        private void UpdateSelectedPath(List<Vector3Int> pointsToUpdate)
+        {
+            if (pointsToUpdate.Count > 0)
+            {
+                for (int i = 0; i < pointsToUpdate.Count; i++)
+                {
+                    Vector3Int pathCordinates = pointsToUpdate[i];
+                    int x = pathCordinates.x;
+                    int y = pathCordinates.z;
+                    UpdatePath(x, y);
+                }
+            }
+            
+            isPathsDirty = true;
+            isAvaliablePathsDirty = true;
+        }
+        
+        private void UpdatePath(int x, int y)
+        {
+            if (x < 0 || y < 0 || x > PathFinderSize().x || y > PathFinderSize().y) return;
+            
+            PathFinderNode node = PathFinderNodes[x, y];
+            
+            bool isWalkable = true;
+            bool onlyEmployee = false;
+            bool onlyActivity = false;
+                    
+            SetPathNode(node, ref isWalkable, ref onlyEmployee, ref onlyActivity);
+
+            node.IsWalkable = isWalkable;
+            node.OnlyEmployee = onlyEmployee;
+            node.OnlyActivity = onlyActivity;
+            
+            // PathFinderNodes[x, y].IsWalkable = IsWalkable(PathFinderNodes[x, y]);
+            // PathFinderNodes[x, y].OnlyEmployee = IsOnlyEmployee(PathFinderNodes[x, y]);
+            // PathFinderNodes[x, y].OnlyActivity = IsOnlyActivity(PathFinderNodes[x, y]);
+        }
 
         private void UpdateAllPaths()
         {
             Vector2Int size = PathFinderSize();
             for (int x = 0; x < size.x; x++)
-            {
                 for (int y = 0; y < size.y; y++)
-                {
-                    PathFinderNode node = PathFinderNodes[x, y];
-                    
-                    bool isWalkable = true;
-                    bool onlyEmployee = false;
-                    bool onlyActivity = false;
-                    
-                    SetPathNode(node, ref isWalkable, ref onlyEmployee, ref onlyActivity);
-
-                    node.IsWalkable = isWalkable;
-                    node.OnlyEmployee = onlyEmployee;
-                    node.OnlyActivity = onlyActivity;
-                    
-                    //
-                    // PathFinderNodes[x, y].IsWalkable = IsWalkable(PathFinderNodes[x, y]);
-                    // PathFinderNodes[x, y].OnlyEmployee = IsOnlyEmployee(PathFinderNodes[x, y]);
-                    // PathFinderNodes[x, y].OnlyActivity = IsOnlyActivity(PathFinderNodes[x, y]);
-                }
-            }
+                    UpdatePath(x, y);
 
             isPathsDirty = true;
             isAvaliablePathsDirty = true;
@@ -108,7 +152,7 @@ namespace Data
         private void SetPathNode(PathFinderNode node, ref bool isWalkable, ref bool onlyEmployee, ref bool onlyActivity)
         {
             Ray ray = new Ray(node.WorldPos.Add(y:-0.5f), Vector3.up);
-            Debug.DrawRay(ray.origin, ray.direction * 2, Color.red);
+            Debug.DrawRay(ray.origin, ray.direction * 2, Color.magenta, 1f);
             var colliders = Physics.RaycastAll(ray.origin, Vector3.up, ConstantVariables.DoorHeight + 0.4f);
 
             bool dontCheckWalkable = false;

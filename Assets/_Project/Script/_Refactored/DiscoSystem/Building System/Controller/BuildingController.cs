@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller.Tools;
@@ -36,6 +37,8 @@ namespace DiscoSystem.Building_System.Controller
             public Vector3 SavedPosition;
             public Quaternion SavedRotation;
 
+            public List<Vector3Int> UpdatePoints;
+
             /// <summary>
             /// Null Constructor
             /// </summary>
@@ -46,9 +49,10 @@ namespace DiscoSystem.Building_System.Controller
                 PropUnit = null;
                 SavedPosition = Vector3.zero;
                 SavedRotation = quaternion.identity;
+                UpdatePoints = new List<Vector3Int>();
             }
 
-            public RelocateData(IPropUnit propUnit)
+            public RelocateData(IPropUnit propUnit, ToolHelper TH)
             {
                 IsRelocating = true;
                 SceneObject = propUnit.transform;
@@ -57,13 +61,21 @@ namespace DiscoSystem.Building_System.Controller
                 SavedPosition = SceneObject.position;
                 SavedRotation = SceneObject.rotation;
 
+                UpdatePoints = TH.GetPlacedPosition(SceneObject);
+
                 SceneObject.gameObject.SetActive(false);
             }
 
-            public void SetPosition(Vector3 newPosition, Quaternion newRotation)
+            public void SetPosition(Vector3 newPosition, Quaternion newRotation, ToolHelper toolHelper)
             {
                 SceneObject.rotation = newRotation;
                 SceneObject.position = newPosition;
+
+                List<Vector3Int> newPoints = toolHelper.GetPlacedPosition();
+
+                foreach (var point in newPoints)
+                    if (!UpdatePoints.Contains(point))
+                        UpdatePoints.Add(point);
             }
 
             public void ResetPosition()
@@ -111,6 +123,7 @@ namespace DiscoSystem.Building_System.Controller
 
         public void LoadItems()
         {
+            List<Vector3Int> pathCoordinates = new List<Vector3Int>();
             foreach (var placementData in SaveLoadSystem.Instance.GetCurrentData().mapData.placementDatas)
             {
                 PlacementItemSO item = GameBundle.Instance.FindAItemByID(placementData.PropID) as PlacementItemSO;
@@ -120,10 +133,14 @@ namespace DiscoSystem.Building_System.Controller
                 
                 obj.GetComponent<IPropUnit>().Initialize(item.ID, item.PlacementLayer);
 
-                AddPlacementItemData(item, obj.transform, position, rotation, false);
+                _toolHelper.CalculateBounds(obj.GetComponents<Collider>());
+                foreach (var pos in _toolHelper.GetPlacedPosition())
+                    pathCoordinates.Add(pos);
+
+                AddPlacementItemData(item, obj.transform, position, rotation, _toolHelper.colliderSize, null, false);
                 obj.AnimatedPlacement(ePlacementAnimationType.Shaky);
             }
-            GameEvent.Trigger(new Event_PropPlaced(null));
+            GameEvent.Trigger(new Event_PropPlaced(null, pathCoordinates));
         }
 
         public void Update(float deltaTime)
@@ -224,7 +241,7 @@ namespace DiscoSystem.Building_System.Controller
 
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
-                _relocateData = new RelocateData(unit);
+                _relocateData = new RelocateData(unit, _toolHelper);
                 _toolHelper.KeepInStartPosition = true;
                 _toolHelper.StartMousePos = _toolHelper.InputSystem.MousePosition;
                 _toolHelper.LastPosition = _relocateData.SavedPosition;
@@ -299,6 +316,7 @@ namespace DiscoSystem.Building_System.Controller
 
             _currentTool = null;
             _relocateData = new RelocateData();
+            _toolHelper.SelectedStoreItem = null;
             _toolHelper.PurchaseMode = PurchaseTypes.None;
             _toolHelper.LastRotation = quaternion.identity;
             _toolHelper.KeepInStartPosition = false;
@@ -320,11 +338,11 @@ namespace DiscoSystem.Building_System.Controller
         {
             Transform sceneObject = _model.GetPlacedSceneObjectByID(removeEvent.InstanceID);
             _model.RemovePlacementItem(removeEvent.InstanceID);
-
+            
             if (sceneObject.TryGetComponent(out IPropUnit unit))
             {
                 unit.IsInitialized = false;
-                GameEvent.Trigger(new Event_PropRemoved(unit));
+                GameEvent.Trigger(new Event_PropRemoved(unit, _toolHelper.GetPlacedPosition(sceneObject)));
             }
             
             sceneObject.gameObject.AnimatedRemoval((() =>
@@ -368,15 +386,15 @@ namespace DiscoSystem.Building_System.Controller
             return null;
         }
 
-        public void AddPlacementItemData(PlacementItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, bool triggerEvent = true)
+        public void AddPlacementItemData(PlacementItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, Vector3 colliderSize, List<Vector3Int> placedPoints = null, bool triggerEvent = true)
         {
-            _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation);
+            _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation, colliderSize);
             sceneObject.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(itemSo.PlacementLayer));
 
             if (triggerEvent)
             {
                 if (sceneObject.TryGetComponent(out IPropUnit unit))
-                    GameEvent.Trigger(new Event_PropPlaced(unit));
+                    GameEvent.Trigger(new Event_PropPlaced(unit, placedPoints ?? new List<Vector3Int>()));
             }
 
             sceneObject.gameObject.AnimatedPlacement(ePlacementAnimationType.Shaky);
@@ -388,9 +406,10 @@ namespace DiscoSystem.Building_System.Controller
             
             if (isVerified)
             {
-                _relocateData.SetPosition(_toolHelper.LastPosition, _toolHelper.LastRotation);
+                _relocateData.SetPosition(_toolHelper.LastPosition, _toolHelper.LastRotation, _toolHelper);
                 _relocateData.ToggleGameObject(true);
-                GameEvent.Trigger(new Event_PropRelocated(_relocateData.PropUnit));
+                
+                GameEvent.Trigger(new Event_PropRelocated(_relocateData.PropUnit, _relocateData.UpdatePoints));
             }
             else
             {

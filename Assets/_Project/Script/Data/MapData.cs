@@ -144,8 +144,8 @@ namespace Data
         
         if (CurrentMapSize.y + y > ConstantVariables.MaxMapSizeY) return false;
         CurrentMapSize += new Vector2Int(0, y);
-        
-        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
+
+        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize, new Vector2Int(x, y)));
         return true;
     }
 
@@ -178,7 +178,7 @@ namespace Data
         }
 
         CurrentMapSize -= new Vector2Int(x, y);
-        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize));
+        GameEvent.Trigger(new Event_MapSizeChanged(CurrentMapSize, true));
     }
 
     public bool CheckMapExpendable(int x, int y)
@@ -199,7 +199,7 @@ namespace Data
         else
             DoorPosition = new Vector3Int(0, 0, WallDoorIndex - 1);
         
-        GameEvent.Trigger(new Event_PropRelocated(null));
+        // GameEvent.Trigger(new Event_PropRelocated(null, ));
     }
 
     public PathFinderNode GetRandomPathFinderNode()

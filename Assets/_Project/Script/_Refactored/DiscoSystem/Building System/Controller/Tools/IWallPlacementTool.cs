@@ -42,6 +42,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             {
                 _tempObject.transform.rotation = TH.LastRotation;
                 _tempObject.transform.position = TH.LastPosition;
+                Physics.SyncTransforms();
             }
             
             if (TH.InputSystem.GetHitTransformWithLayer(ToolHelper.WallLayerID) == null) return false;
@@ -113,7 +114,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
         
             obj.AnimatedPlacement(ePlacementAnimationType.MoveDown);
         
-            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+            Physics.SyncTransforms();
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation, TH.colliderSize, TH.GetPlacedPosition());
 
             Quaternion rotation = Quaternion.Euler(90, TH.LastRotation.eulerAngles.y, 0);
             

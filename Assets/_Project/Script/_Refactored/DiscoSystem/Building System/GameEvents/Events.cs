@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Data;
 using Data.New;
 using Disco_ScriptableObject;
 using DiscoSystem.Character.Bartender;
 using DiscoSystem.MusicPlayer;
+using ExtensionMethods;
+using JetBrains.Annotations;
 using PropBehaviours;
 using UI.Emotes;
 using UnityEngine;
@@ -83,20 +85,24 @@ namespace DiscoSystem.Building_System.GameEvents
     public class Event_PropPlaced
     {
         public IPropUnit PropUnit;
+        public List<Vector3Int> PlacedPathCoordinates;
     
-        public Event_PropPlaced(IPropUnit propUnit)
+        public Event_PropPlaced(IPropUnit propUnit, List<Vector3Int> placedPathCoordinates)
         {
             PropUnit = propUnit;
+            PlacedPathCoordinates = placedPathCoordinates;
         }
     }
     
     public class Event_PropRemoved
     {
         public IPropUnit PropUnit;
+        public List<Vector3Int> RemovedPathCoordinates;
     
-        public Event_PropRemoved(IPropUnit propUnit)
+        public Event_PropRemoved(IPropUnit propUnit, List<Vector3Int> removedPathCoordinates)
         {
             PropUnit = propUnit;
+            RemovedPathCoordinates = removedPathCoordinates;
         }
     }
 
@@ -123,10 +129,12 @@ namespace DiscoSystem.Building_System.GameEvents
     public class Event_PropRelocated
     {
         public IPropUnit ProUnit;
+        public List<Vector3Int> NewPoints;
 
-        public Event_PropRelocated(IPropUnit proUnit)
+        public Event_PropRelocated(IPropUnit proUnit, List<Vector3Int> newPoints)
         {
             ProUnit = proUnit;
+            NewPoints = newPoints;
         }
     }
 
@@ -335,18 +343,52 @@ namespace DiscoSystem.Building_System.GameEvents
         public int X;
         public int Y;
         
+        public List<Vector3Int> NewPoints;
+        public bool IsShrinked;
+        
         public Vector2Int Size => new Vector2Int(X, Y);
         
-        public Event_MapSizeChanged(int x, int y)
+        public Event_MapSizeChanged(int x, int y, Vector2Int changeAmount)
         {
             X = x;
             Y = y;
+            IsShrinked = false;
+            NewPoints = GetNewPoints(changeAmount);
         }
         
-        public Event_MapSizeChanged(Vector2Int vector2Int)
+        public Event_MapSizeChanged(Vector2Int vector2Int, Vector2Int changeAmount)
         {
             X = vector2Int.x;
             Y = vector2Int.y;
+            IsShrinked = false;
+            NewPoints = GetNewPoints(changeAmount);
+        }
+
+        public Event_MapSizeChanged(Vector2Int vector2Int, bool isShrinked)
+        {
+            X = vector2Int.x;
+            Y = vector2Int.y;
+            IsShrinked = isShrinked;
+        }
+
+        private List<Vector3Int> GetNewPoints(Vector2Int changeAmount)
+        {
+            changeAmount *= ConstantVariables.PathFinderGridSize;
+            List<Vector3Int> newPoints = new List<Vector3Int>();
+            Vector2Int pathSize = DiscoData.Instance.MapData.PathFinderSize;
+
+            for (int i = 0; i < pathSize.x; i++)
+            {
+                for (int j = 0; j < pathSize.y; j++)
+                {
+                    if (i >= pathSize.x - changeAmount.x || j >= pathSize.y - changeAmount.y)
+                    {
+                        Vector3Int point = new Vector3Int(i, 0, j);
+                        newPoints.Add(point);
+                    }
+                }
+            }
+            return newPoints;
         }
 
     }

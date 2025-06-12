@@ -122,7 +122,7 @@ namespace DiscoSystem
             return GetActionType(_freePlacementKey, inputType);
         }
 
-        public bool GetRotation(InputType inputType)
+        public bool GetRotationInput(InputType inputType)
         {
             if (!_inputEnabled) return false;
 

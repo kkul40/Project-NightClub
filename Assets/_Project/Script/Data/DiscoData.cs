@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Data.New;
 using DiscoSystem.Building_System.GameEvents;
@@ -13,16 +12,18 @@ namespace Data
     {
         public static DiscoData Instance;
 
+        public PlayerData PlayerData;
         public MapData MapData;
         public Inventory inventory;
         
-        //            instanceID   StoreID created-obj   Pos      Rot
-        public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>> PlacedItems;
+        //            instanceID   StoreID created-obj   Pos      Rot    colliderSize
+        public Dictionary<int, Tuple<int, Transform, Vector3, Quaternion, Vector3>> PlacedItems;
 
         public void Initialize(NewGameData gameData)
         {
             Instance = this;
-            PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion>>();
+            PlacedItems = new Dictionary<int, Tuple<int, Transform, Vector3, Quaternion, Vector3>>();
+            PlayerData = new PlayerData();
             MapData = new MapData(gameData);
             inventory = new Inventory(gameData);
         }
@@ -31,7 +32,7 @@ namespace Data
         {
             GameEvent.Trigger(new Event_BalanceUpdated(inventory.Balance));
             GameEvent.Trigger(new Event_InventoryItemsUpdated(inventory.Items));
-            GameEvent.Trigger(new Event_MapSizeChanged(MapData.CurrentMapSize.x, MapData.CurrentMapSize.y));
+            GameEvent.Trigger(new Event_MapSizeChanged(MapData.CurrentMapSize.x, MapData.CurrentMapSize.y, MapData.CurrentMapSize));
         }
 
         private void OnDisable()
@@ -108,5 +109,17 @@ namespace Data
         public const int DoorHeight = 2;
         public const int FloorLayerID = 7;
         public const int WalllayerID = 8;
+    }
+
+    [Serializable]
+    public class PlayerData
+    {
+        public int Level;
+        public int Prestige;
+        public float Happiness; // Percentage %100-0
+        public float EmployeeHappiness; // Percentage %100-0
+        public int CustomerCount;
+
+
     }
 }

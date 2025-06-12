@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller;
+using ExtensionMethods;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace DiscoSystem.Building_System
@@ -223,7 +226,7 @@ namespace DiscoSystem.Building_System
         public Vector3[] GetRotatedFloorCorners(Quaternion rotation)
         {
             Vector3 size = colliderSize * HitCollisionLeniency;
-            Vector3[] localCorners = new Vector3[]
+            Vector3[] localCorners =
             {
                 new Vector3(-size.x / 2, -size.y / 2, -size.z / 2), // Bottom Front Left
                 new Vector3(size.x / 2, -size.y / 2, -size.z / 2),  // Bottom Front Right
@@ -238,6 +241,48 @@ namespace DiscoSystem.Building_System
 
             return localCorners;
         }
+        
+        public List<Vector3Int> GetPlacedPosition()
+        {
+            var cornerPoints = new List<Vector3Int>();
+            var corners = GetRotatedFloorCorners(LastRotation);
+            int minX, maxX, minZ, maxZ;
+
+            minX = Mathf.FloorToInt(Mathf.Min(corners[0].x, corners[1].x, corners[2].x, corners[3].x) * ConstantVariables.PathFinderGridSize);
+            maxX = Mathf.CeilToInt(Mathf.Max(corners[0].x, corners[1].x, corners[2].x, corners[3].x) * ConstantVariables.PathFinderGridSize);
+            minZ = Mathf.FloorToInt(Mathf.Min(corners[0].z, corners[1].z, corners[2].z, corners[3].z) * ConstantVariables.PathFinderGridSize);
+            maxZ = Mathf.CeilToInt(Mathf.Max(corners[0].z, corners[1].z, corners[2].z, corners[3].z) * ConstantVariables.PathFinderGridSize);
+            
+            for (int x = minX - 1; x <= maxX + 1; x++)
+            for (int z = minZ - 1; z <= maxZ +1; z++)
+            {
+                if(x <= 0 || z <= 0 || x >= DiscoData.MapData.PathFinderSize.x || z >= DiscoData.MapData.PathFinderSize.y) continue;
+                cornerPoints.Add(new Vector3Int(x, 0, z));
+            }
+
+            return cornerPoints;
+        }
+
+        /// <summary>
+        /// It Recalculates Placed Points of an object in world
+        /// </summary>
+        /// <param name="sceneObject"></param>
+        /// <returns></returns>
+        public List<Vector3Int> GetPlacedPosition(Transform sceneObject)
+        {
+            Quaternion preRotation = LastRotation;
+            Vector3 prePosition = LastPosition;
+            
+            LastRotation = quaternion.identity;
+            LastPosition = sceneObject.position;
+            
+            CalculateBounds(sceneObject.GetComponents<Collider>());
+
+            LastRotation = preRotation;
+            LastPosition = prePosition;
+            return GetPlacedPosition();
+        }
+        
     
         #endregion
 

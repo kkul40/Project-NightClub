@@ -97,7 +97,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
             unit.Initialize(_placementItem.ID, ePlacementLayer.BaseSurface);
         
-            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation);
+            TH.BuildingController.AddPlacementItemData(_placementItem, obj.transform, TH.LastPosition, TH.LastRotation, TH.colliderSize);
             TH.FXCreatorSystem.CreateFX(FXType.Floor, TH.LastPosition, new Vector2(TH.colliderSize.x, TH.colliderSize.z), TH.LastRotation);
             TH.PlacementTracker.AddTrack(new PropUndo(_placementItem.ID, obj.transform.GetInstanceID()));
         }
