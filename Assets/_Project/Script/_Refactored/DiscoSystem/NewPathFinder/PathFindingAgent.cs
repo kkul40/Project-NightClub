@@ -10,17 +10,15 @@ namespace DiscoSystem.NewPathFinder
         private Queue<Vector3> path;
         private Vector3 nextPosition;
         private Transform agent;
-        private PathData pathGrid;
         
         public float speed { get; set; }
         public float rotationSpeed { get; set; }
         public float minimumStoppingDistance { get; set; }
         public bool isStopped { get; set; }
 
-        public PathFindingAgent(Transform agent, PathData pathGrid)
+        public PathFindingAgent(Transform agent)
         {
             this.agent = agent;
-            this.pathGrid = pathGrid;
             speed = 1.5f;
             rotationSpeed = 7.5f;
             minimumStoppingDistance = 0.1f;
@@ -55,7 +53,7 @@ namespace DiscoSystem.NewPathFinder
 
         public bool SetDestination(Vector3 target)
         {
-            return PathFindingSystem.Instance.RequestPath(agent.position, target, pathGrid, OnRequestPathComplete);
+            return PathFindingSystem.Instance.RequestPath(agent.position, target, OnRequestPathComplete);
         }
 
         public bool CalculatePath(Vector3 targetPosition, List<Vector3> path)
@@ -78,27 +76,7 @@ namespace DiscoSystem.NewPathFinder
         {
             path.Clear();
             for (int i = 0; i < resultPath.Count; i++)
-            {
-                // if (i == 0)
-                // {
-                //     Debug.DrawRay(resultPath[i], Vector3.up * 2, Color.blue, 5);
-                //     path.Push(resultPath[i]);
-                //
-                //     continue;
-                // }
-                //
-                // if (i == resultPath.Count - 1)
-                // {
-                //     Debug.DrawRay(resultPath[i], Vector3.up * 2, Color.magenta, 5);
-                //     path.Push(resultPath[i]);
-                //
-                //     continue;
-                // }
-                //
-                // Debug.DrawRay(resultPath[i], Vector3.up * 2, Color.green, 5);
-                
                 path.Enqueue(resultPath[i]);
-            }
 
             isStopped = false;
             nextPosition = agent.position;

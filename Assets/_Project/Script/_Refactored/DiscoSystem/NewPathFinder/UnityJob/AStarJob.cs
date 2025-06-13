@@ -33,8 +33,8 @@ namespace DiscoSystem.NewPathFinder
         public int2 startCoord;
         public int2 destCoord;
         public NativeArray<byte> validGrid; // 1=walkable, 0=not walkable
-        public int gridWidth;
-        public int gridHeight;
+        public int gridWidth; // X
+        public int gridHeight; // Y
 
         public NativeList<int3> indexPath; // Output Path
 
@@ -46,11 +46,24 @@ namespace DiscoSystem.NewPathFinder
             var openSet = new NativeList<int2>(Allocator.Temp);
             var closedSet = new NativeHashSet<int2>(gridWidth * gridHeight, Allocator.Temp);
 
-            Node startNode = new Node(startCoord)
+            // Node startNode = new Node(startCoord)
+            // {
+            //     G = 0,
+            //     H = Heuristic(startCoord, destCoord)
+            // };
+
+            //
+            Node startNode = new Node(FindNearestValidNode(startCoord));
+            if (!math.all(startNode.Coordinates == new int2(-1,-1)))
             {
-                G = 0,
-                H = Heuristic(startCoord, destCoord)
-            };
+                startNode.G = 0;
+                startNode.H = Heuristic(startCoord, destCoord);
+            }
+            destCoord = FindNearestValidNode(destCoord);
+            if (!math.all(destCoord == new int2(-1, -1)))
+            {
+            }
+            //
 
             allNodes[startCoord] = startNode;
             openSet.Add(startCoord);
@@ -137,6 +150,40 @@ namespace DiscoSystem.NewPathFinder
             tempPath.Dispose();
         }
 
+        private int2 FindNearestValidNode(int2 position)
+        {
+            NativeQueue<int2> nodeQueue = new NativeQueue<int2>(Allocator.TempJob);
+            NativeHashSet<int2> visitedNodes = new NativeHashSet<int2>(50, Allocator.TempJob);
+
+            nodeQueue.Enqueue(position);
+            visitedNodes.Add(position);
+
+            while (nodeQueue.Count > 0)
+            {
+                var current = nodeQueue.Dequeue();
+
+                if (IsValid(current))
+                {
+                    nodeQueue.Dispose();
+                    visitedNodes.Dispose();
+                    return current;
+                }
+
+                foreach (var neighbor in GetNeighbors(current))
+                {
+                    if (!visitedNodes.Contains(neighbor))
+                    {
+                        nodeQueue.Enqueue(neighbor);
+                        visitedNodes.Add(neighbor);
+                    }
+                }
+            }
+            
+            nodeQueue.Dispose();
+            visitedNodes.Dispose();
+            return new int2(-1,-1);
+        }
+
         private bool IsInsideGrid(int2 coord)
         {
             return coord.x >= 0 && coord.x < gridWidth && coord.y >= 0 && coord.y < gridHeight;
@@ -144,6 +191,9 @@ namespace DiscoSystem.NewPathFinder
 
         private bool IsValid(int2 coord)
         {
+            if (!IsInsideGrid(coord)) return false;
+            // if (coord.x > gridWidth || coord.y > gridHeight) return false;
+            // if (coord.x < 1 || coord.y > 1) return false; // 1 Because There is Wall in 0s
             return validGrid[ToIndex(coord)] == 1;
         }
 

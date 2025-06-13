@@ -45,10 +45,13 @@ namespace DiscoSystem.NewPathFinder
             }
         }
 
-        public bool RequestPath(Vector3 startPos, Vector3 endPos, PathData pathData, Action<List<Vector3>> resultPath)
+        public bool RequestPath(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> resultPath)
         {
-            int gridWidth = pathData.PathFinderSize().x;
-            int gridHeight = pathData.PathFinderSize().y;
+            if (GetPathData == null) 
+                return false;
+            
+            int gridWidth = GetPathData.PathFinderSize().x;
+            int gridHeight = GetPathData.PathFinderSize().y;
 
             // Bunu Cachele
             NativeArray<byte> validGrid = new NativeArray<byte>(gridWidth * gridHeight, Allocator.TempJob);
@@ -58,7 +61,7 @@ namespace DiscoSystem.NewPathFinder
                 for (int y = 0; y < gridHeight; y++)
                 {
                     Vector2Int cell = new Vector2Int(x, y);
-                    bool isValid = IsValid(cell, pathData);
+                    bool isValid = IsValid(cell);
                     int index = x * gridWidth + y;
                     validGrid[index] = (byte)(isValid ? 1 : 0);
                 }
@@ -88,9 +91,9 @@ namespace DiscoSystem.NewPathFinder
             return true;
         }
         
-        private bool IsValid(Vector2Int index, PathData pathData)
+        private bool IsValid(Vector2Int index)
         {
-            PathFinderNode node = GetNode(index, pathData);
+            PathFinderNode node = GetNode(index);
             if (node.IsWall) return false;
             
             return node.IsWalkable;
@@ -102,9 +105,24 @@ namespace DiscoSystem.NewPathFinder
             return new int2(index.x, index.z);
         }
         
-        private PathFinderNode GetNode(Vector2Int index, PathData pathData)
+        private PathFinderNode GetNode(Vector2Int index)
         {
-            return pathData.GetPath(index.x, index.y);
+            return GetPathData.GetPath(index.x, index.y);
+        }
+
+        private PathData GetPathData => DiscoData.Instance.MapData.Path;
+
+        private void OnDestroy()
+        {
+            for (int i = jobHandles.Count - 1; i >= 0; i--)
+            {
+                PathFindingJobHandle jobHandle = jobHandles[i];
+                jobHandle.handle.Complete();
+                
+                jobHandle.indexPath.Dispose();
+                jobHandle.validGrid.Dispose();
+                jobHandles.RemoveAt(i);
+            }
         }
     }
 }

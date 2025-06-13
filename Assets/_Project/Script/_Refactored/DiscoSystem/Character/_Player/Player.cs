@@ -22,12 +22,14 @@ namespace DiscoSystem.Character._Player
             _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
 
-            _agent = new PathFindingAgent(transform, discoData.MapData.Path);
+            _agent = new PathFindingAgent(transform);
 
         }
   
         private void Update()
         {
+            if (_agent == null) return;
+            
             if (InputSystem.Instance.GetRightClickOnWorld(InputType.WasPressedThisFrame) && !UIPageManager.Instance.IsAnyUIToggled())
             {
                 // Original
