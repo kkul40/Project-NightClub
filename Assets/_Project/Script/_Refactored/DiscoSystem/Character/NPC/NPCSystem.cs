@@ -20,7 +20,8 @@ namespace DiscoSystem.Character.NPC
         [SerializeField] private GameObject _bartenderPrefab;
         [SerializeField] private GameObject _djPrefab;
 
-        [SerializeField] private List<NPC> _npcs = new();
+        [SerializeField] private List<NPC> npcList;
+        [SerializeField] private List<Bartender.Bartender> bartenderList;
 
         public int maxNPC = 25;
 
@@ -29,8 +30,49 @@ namespace DiscoSystem.Character.NPC
         public void Initialize()
         {
             activityGiver = new ActivityGiver();
+            npcList = new List<NPC>();
+            bartenderList = new List<Bartender.Bartender>();
+        }
+
+        public void RegisterNPC(NPC npc)
+        {
+            npcList.Add(npc);
+        }
+
+        public void RegisterBartender(Bartender.Bartender bartender)
+        {
+            bartenderList.Add(bartender);
+        }
+
+        public void UnRegisterNPC(NPC npc)
+        {
+            if(npcList.Contains(npc))
+                npcList.Remove(npc);
         }
         
+        public void UnRegisterBartender(Bartender.Bartender bartender)
+        {
+            if(bartenderList.Contains(bartender))
+                bartenderList.Remove(bartender);
+        }
+        
+        private void Update()
+        {
+            foreach (var npc in npcList)
+            {
+                if (npc.ActivityHandler == null) continue;
+                
+                npc.ActivityHandler.UpdateActivity();
+                npc.debugState = npc.ActivityHandler.GetCurrentActivity.GetType().Name;
+            }
+
+            foreach (var bartender in bartenderList)
+            {
+                if (bartender.BartenderCommands.Count > 0)
+                    bartender.UpdateCommand();
+            }
+        }
+
         /// <summary>
         /// Sends NPC TO Disco
         /// </summary>
@@ -94,8 +136,8 @@ namespace DiscoSystem.Character.NPC
             while (npcCount < maxNPC)
             {
                 yield return new WaitForSeconds(0.1f);
-                NPC npc = CreateNPC();
-                _npcs.Add(npc);
+                CreateNPC();
+                // _npcs.Add(npc);
                 npcCount++;
             }
         }
@@ -105,14 +147,14 @@ namespace DiscoSystem.Character.NPC
             if (_npcSpawnRoutine != null)
                 StopCoroutine(_npcSpawnRoutine);
 
-            foreach (var npc in _npcs)
+            foreach (var npc in npcList)
             {
                 if (npc == null) continue;
-                if(npc._activityHandler.GetCurrentActivity is ExitDiscoActivity) continue;
-                npc._activityHandler.StartNewActivity(new ExitDiscoActivity());
+                if(npc.ActivityHandler.GetCurrentActivity is ExitDiscoActivity) continue;
+                npc.ActivityHandler.StartNewActivity(new ExitDiscoActivity());
             }
 
-            _npcs.Clear();
+            // _npcs.Clear();
         }
 
         private NPC CreateNPC()

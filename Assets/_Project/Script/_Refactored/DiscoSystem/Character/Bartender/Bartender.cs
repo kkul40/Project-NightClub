@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Animancer;
 using Data;
 using DiscoSystem.Character.Bartender.Command;
@@ -32,13 +33,15 @@ namespace DiscoSystem.Character.Bartender
             AnimationController = new BartenderAnimationControl(animator, animancer, InitConfig.Instance.GetDefaultBartenderAnimation, armature);
 
             mGameobject = gameObject;
+
+            NPCSystem.Instance.RegisterBartender(this);
         }
 
-        private void Update()
-        {
-            if(BartenderCommands.Count > 0)
-                UpdateCommand();
-        }
+        // private void Update()
+        // {
+        //     if(BartenderCommands.Count > 0)
+        //         UpdateCommand();
+        // }
 
         public void UpdateCommand()
         {
@@ -93,6 +96,11 @@ namespace DiscoSystem.Character.Bartender
         public void OnDeselect()
         {
             // TODO CLose The Page
+        }
+
+        private void OnDestroy()
+        {
+            NPCSystem.Instance.UnRegisterBartender(this);
         }
 
         public bool TriggerDoor { get; set; } = true;

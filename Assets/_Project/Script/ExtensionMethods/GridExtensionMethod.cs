@@ -1,6 +1,7 @@
 using System;
 using Data;
 using DiscoSystem;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ExtensionMethods
@@ -17,6 +18,16 @@ namespace ExtensionMethods
         public static Vector2Int PlacementPosToPathFinderIndex(this Vector3Int vector)
         {
             return new Vector2Int(vector.x, vector.z) * ConstantVariables.PathFinderGridSize;
+        }
+
+        public static Vector3 CoordinatesToWorldPosition(this Vector2Int vector)
+        {
+            return new Vector3(vector.x, 0f, vector.y) / ConstantVariables.PathFinderGridSize;
+        }
+
+        public static Vector3 CoordinatesToWorldPosition(this float3 vector)
+        {
+            return new Vector3(vector.x, 0f, vector.y) / ConstantVariables.PathFinderGridSize;
         }
 
         /// <summary>

@@ -287,19 +287,13 @@ namespace Data
         
         public PathFinderNode GetPath(int x, int y)
         {
-            return PathFinderNodes[x, y];
+            return GetPaths()[x, y];
         }
 
         public PathFinderNode GetRandomPathNode()
         {
             Vector2Int Size = PathFinderSize();
-            return PathFinderNodes[Random.Range(0, Size.x), Random.Range(0, Size.y)];
-        }
-        
-        public PathFinderNode GetPathNodeByWorldPos(Vector3 worldPos)
-        {
-            var convert = worldPos.WorldPosToCellPos(eGridType.PathFinderGrid);
-            return PathFinderNodes[convert.x, convert.z];
+            return GetPaths()[Random.Range(0, Size.x), Random.Range(0, Size.y)];
         }
         
         public PathFinderNode[,] GetPaths()

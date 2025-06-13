@@ -2,8 +2,10 @@ using CharacterCustomization;
 using Data;
 using Data.New;
 using DiscoSystem.Character.NPC;
+using DiscoSystem.NewPathFinder;
 using UI.GamePages;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace DiscoSystem.Character._Player
 {
@@ -17,14 +19,29 @@ namespace DiscoSystem.Character._Player
         {
             _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
+            
         }
   
         private void Update()
         {
             if (InputSystem.Instance.GetRightClickOnWorld(InputType.WasPressedThisFrame) && !UIPageManager.Instance.IsAnyUIToggled())
             {
-                _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
-                _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
+                // _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
+                // _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
+
+                for (int i = 0; i < 100; i++)
+                {
+                    PathFinderTester.Instance.finder.StartAStarJob(transform.position,
+                        InputSystem.Instance.MousePosition);
+                }
+
+                return;
+
+
+                var path = PathFinderTester.Instance.finder.StartAStarJob(transform.position, InputSystem.Instance.MousePosition);
+                
+                if(path != null && path.Count > 0)
+                    transform.position = path[^1];
             }
         }
 

@@ -17,7 +17,7 @@ namespace DiscoSystem.Character.NPC
         public eGenderType GenderType { get; private set; }
         public IAnimationController AnimationController { get; private set; }
         public IPathFinder PathFinder { get; private set; }
-        public ActivityHandler _activityHandler { get; private set; }
+        public ActivityHandler ActivityHandler { get; private set; }
 
         public string debugState;
 
@@ -25,18 +25,19 @@ namespace DiscoSystem.Character.NPC
         {
             PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
-            _activityHandler = new ActivityHandler(this);
-            
-            _activityHandler.StartNewActivity(new WalkToEnteranceActivity());
+            ActivityHandler = new ActivityHandler(this);
+            ActivityHandler.StartNewActivity(new WalkToEnteranceActivity());
+            NPCSystem.Instance.RegisterNPC(this);
         }
 
-        private void Update()
-        {
-            if (_activityHandler == null) return;
-            
-            _activityHandler.UpdateActivity();
-            debugState = _activityHandler.GetCurrentActivity.GetType().Name;
-        }
+        // Carried To NPCSystem
+        // private void Update()
+        // {
+        //     if (ActivityHandler == null) return;
+        //     
+        //     ActivityHandler.UpdateActivity();
+        //     debugState = ActivityHandler.GetCurrentActivity.GetType().Name;
+        // }
 
         public GameObject mGameobject { get; }
         public bool IsInteractable { get; } = true;
@@ -66,8 +67,10 @@ namespace DiscoSystem.Character.NPC
 
         private void OnDestroy()
         {
-            if(_activityHandler != null)
-                _activityHandler.ForceToEndActivity();
+            if(ActivityHandler != null)
+                ActivityHandler.ForceToEndActivity();
+            
+            NPCSystem.Instance.UnRegisterNPC(this);
         }
 
         private void OnDrawGizmosSelected()
