@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace DiscoSystem.NewPathFinder
 {
@@ -14,9 +15,12 @@ namespace DiscoSystem.NewPathFinder
         public PathGrid grid;
         public NativePathFinder finder;
 
+
         private void Awake()
         {
             Instance = this;
+            NavMeshPath path = new NavMeshPath();
+
         }
 
         private void Start()
@@ -46,7 +50,7 @@ namespace DiscoSystem.NewPathFinder
                 }
             }
 
-            var path = new NativeList<float3>(Allocator.TempJob);
+            var path = new NativeList<int3>(Allocator.TempJob);
 
             AStarJob job = new AStarJob
             {
@@ -55,7 +59,7 @@ namespace DiscoSystem.NewPathFinder
                 gridWidth = gridWidth,
                 gridHeight = gridHeight,
                 validGrid = validGrid,
-                path = path
+                indexPath = path
             };
 
             JobHandle handle = job.Schedule();

@@ -15,34 +15,33 @@ namespace DiscoSystem.Character._Player
         private NpcPathFinder _pathFinder;
         private CharacterCustomizeLoader _customizeLoader;
 
-        public void Initialize(NewGameData gameData)
+        private PathFindingAgent _agent;
+
+        public void Initialize(NewGameData gameData, DiscoData discoData)
         {
             _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
-            
+
+            _agent = new PathFindingAgent(transform, discoData.MapData.Path);
+
         }
   
         private void Update()
         {
             if (InputSystem.Instance.GetRightClickOnWorld(InputType.WasPressedThisFrame) && !UIPageManager.Instance.IsAnyUIToggled())
             {
+                // Original
                 // _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 // _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
-
-                for (int i = 0; i < 100; i++)
-                {
-                    PathFinderTester.Instance.finder.StartAStarJob(transform.position,
-                        InputSystem.Instance.MousePosition);
-                }
-
-                return;
-
-
-                var path = PathFinderTester.Instance.finder.StartAStarJob(transform.position, InputSystem.Instance.MousePosition);
-                
-                if(path != null && path.Count > 0)
-                    transform.position = path[^1];
+                _agent.SetDestination(InputSystem.Instance.MousePosition);
             }
+            
+            _agent.Update(Time.deltaTime);
+
+            if (!_agent.isStopped)
+                _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
+            else
+                _animationController?.PlayAnimation(eAnimationType.NPC_Idle);
         }
 
         private void SetIdleAnimation()

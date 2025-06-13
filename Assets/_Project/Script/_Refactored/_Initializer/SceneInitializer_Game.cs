@@ -58,7 +58,7 @@ namespace _Initializer
             yield return StartCoroutine(_mapGeneratorSystem.InitializeAsync());
             _buildingSystem.Initialize();
             
-            _player.Initialize(newGameData);
+            _player.Initialize(newGameData, _discoData);
             
             
             // _savingAndLoadingSystem.Initialize(); 

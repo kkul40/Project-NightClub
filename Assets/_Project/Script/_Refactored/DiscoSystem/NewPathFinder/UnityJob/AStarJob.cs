@@ -6,6 +6,28 @@ using Unity.Mathematics;
 namespace DiscoSystem.NewPathFinder
 {
     [BurstCompile]
+    public struct Node
+    {
+        public int2 Coordinates;
+        public float G;
+        public float H;
+        public int2 Parent;
+
+        public float F => G + H;
+
+        public Node(int2 coordinates)
+        {
+            Coordinates = coordinates;
+            G = float.MaxValue;
+            H = 0f;
+            Parent = coordinates;
+        }
+        
+        public bool2 Compare(int2 index) => Coordinates == index;
+        public bool2 Compare(Node node) => node.Coordinates == Coordinates;
+    }
+    
+    [BurstCompile]
     public struct AStarJob : IJob
     {
         public int2 startCoord;
@@ -14,7 +36,7 @@ namespace DiscoSystem.NewPathFinder
         public int gridWidth;
         public int gridHeight;
 
-        public NativeList<float3> path; // Output Path
+        public NativeList<int3> indexPath; // Output Path
 
         private int ToIndex(int2 pos) => pos.x * gridWidth + pos.y;
 
@@ -100,17 +122,17 @@ namespace DiscoSystem.NewPathFinder
 
         private void ReconstructPath(NativeHashMap<int2, Node> allNodes, int2 currentCoord)
         {
-            var tempPath = new NativeList<float3>(Allocator.Temp);
+            var tempPath = new NativeList<int3>(Allocator.Temp);
             while (true)
             {
-                tempPath.Add(new float3(currentCoord.x, 0, currentCoord.y));
+                tempPath.Add(new int3(currentCoord.x, 0, currentCoord.y));
                 Node node = allNodes[currentCoord];
                 if (node.Parent.Equals(currentCoord))
                     break;
                 currentCoord = node.Parent;
             }
             for (int i = tempPath.Length - 1; i >= 0; i--)
-                path.Add(tempPath[i]);
+                indexPath.Add(tempPath[i]);
 
             tempPath.Dispose();
         }
@@ -140,26 +162,5 @@ namespace DiscoSystem.NewPathFinder
         {
             return math.abs(a.x - b.x) + math.abs(a.y - b.y);
         }
-    }
-    
-    public struct Node
-    {
-        public int2 Coordinates;
-        public float G;
-        public float H;
-        public int2 Parent;
-
-        public float F => G + H;
-
-        public Node(int2 coordinates)
-        {
-            Coordinates = coordinates;
-            G = float.MaxValue;
-            H = 0f;
-            Parent = coordinates;
-        }
-        
-        public bool2 Compare(int2 index) => Coordinates == index;
-        public bool2 Compare(Node node) => node.Coordinates == Coordinates;
     }
 }
