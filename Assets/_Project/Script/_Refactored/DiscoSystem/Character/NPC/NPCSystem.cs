@@ -107,7 +107,7 @@ namespace DiscoSystem.Character.NPC
 
             newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
 
-            var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
+            var gender = Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
             CharacterCustomizer customizer =
                 new CharacterCustomizer(gender, InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
@@ -161,7 +161,7 @@ namespace DiscoSystem.Character.NPC
         {
             var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
             newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
-            var gender = UnityEngine.Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
+            var gender = Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
             NPC Npc;
             if (newNPC.TryGetComponent(out NPC npc))

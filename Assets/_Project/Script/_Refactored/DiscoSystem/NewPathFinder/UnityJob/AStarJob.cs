@@ -98,8 +98,11 @@ namespace DiscoSystem.NewPathFinder
 
                 openSet.RemoveAtSwapBack(lowestIndex);
                 closedSet.Add(currentCoord);
+                
+                NativeList<int2> neighbors = new NativeList<int2>(8, Allocator.TempJob);
+                GetNeighbors(currentCoord, neighbors);
 
-                foreach (var neighbor in GetNeighbors(currentCoord))
+                foreach (var neighbor in neighbors)
                 {
                     if (!IsInsideGrid(neighbor)) continue;
                     if (!IsValid(neighbor)) continue;
@@ -168,8 +171,11 @@ namespace DiscoSystem.NewPathFinder
                     visitedNodes.Dispose();
                     return current;
                 }
+                
+                NativeList<int2> neighbors = new NativeList<int2>(8, Allocator.TempJob);
+                GetNeighbors(current, neighbors);
 
-                foreach (var neighbor in GetNeighbors(current))
+                foreach (var neighbor in neighbors)
                 {
                     if (!visitedNodes.Contains(neighbor))
                     {
@@ -197,15 +203,23 @@ namespace DiscoSystem.NewPathFinder
             return validGrid[ToIndex(coord)] == 1;
         }
 
-        private NativeArray<int2> GetNeighbors(int2 pos)
+        public void GetNeighbors(int2 pos, NativeList<int2> neighbors)
         {
-            return new NativeArray<int2>(new int2[]
+            neighbors.Clear();
+
+            for (int x = -1; x <= 1; x++)
+            for (int y = -1; y <= 1; y++)
             {
-                pos + new int2( 0,  1),
-                pos + new int2( 0, -1),
-                pos + new int2( 1,  0),
-                pos + new int2(-1,  0)
-            }, Allocator.Temp);
+                if (x == 0 && y == 0) continue;
+
+                int checkX = pos.x + x;
+                int checkY = pos.y + y;
+
+                if (checkX <= 0 || checkY <= 0) continue;
+                if (checkX >= gridWidth || checkY >= gridHeight) continue;
+
+                neighbors.Add(new int2(checkX, checkY));
+            }
         }
 
         private float Heuristic(int2 a, int2 b)

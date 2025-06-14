@@ -37,8 +37,9 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                 }
 
             } while (leanablePath.HasOccupied);
-            
-            return and.Npc.PathFinder.IsPathAvaliable(leanablePath.WorldPos);
+
+            return true;
+            // return and.Npc.PathFinder.IsPathAvaliable(leanablePath.WorldPos);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -54,15 +55,16 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             currentState = eState.Walk;
             leanablePath.ChangeOccupition(and.Npc, true);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoToDestination(leanablePath.WorldPos);
+            and.Npc.PathAgent.SetDestination(leanablePath.WorldPos);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            and.Npc.PathAgent.Update(Time.deltaTime);
             switch (currentState)
             {
                 case eState.Walk:
-                    if (and.Npc.PathFinder.HasReachedDestination)
+                    if (and.Npc.PathAgent.isStopped)
                     {
                         currentState = eState.Lean;
                         and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Lean);
@@ -70,7 +72,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                         bool isLookingRight = leanablePath.GridX > leanablePath.GridY ? true : false;
                         RotationData rotationData = isLookingRight ? RotationData.Down : RotationData.Left;
                         
-                        and.Npc.PathFinder.SetPositioning(rotation:rotationData.rotation, position:leanablePath.WorldPos);
+                        and.Npc.PathAgent.SetPositioning(rotation:rotationData.rotation, position:leanablePath.WorldPos);
                     }
                     break;
                 case eState.Lean:

@@ -15,7 +15,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             // Save If Stuck
-            and.Npc.PathFinder.ErrorHelp(() => IsEnded = true);
+            // and.Npc.PathFinder.ErrorHelp(() => IsEnded = true);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)

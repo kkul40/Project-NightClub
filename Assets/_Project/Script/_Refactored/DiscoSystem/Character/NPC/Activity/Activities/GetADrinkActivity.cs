@@ -34,8 +34,9 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
             //
             //     if (Helper.IterateTo100(ref iteration)) return false;
             // }
- 
-            return and.Npc.PathFinder.IsPathAvaliable(_bar.CustomerWaitPosition.position);
+
+            return true;
+            // return and.Npc.PathFinder.IsPathAvaliable(_bar.CustomerWaitPosition.position);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -47,13 +48,14 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             _bar.IsServing = true;
-            and.Npc.PathFinder.GoToDestination(_bar.CustomerWaitPosition.position);
+            and.Npc.PathAgent.SetDestination(_bar.CustomerWaitPosition.position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _routine = DOTween.instance.StartCoroutine(CoGetDrink(and));
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            and.Npc.PathAgent.Update(Time.deltaTime);
             if (!_bar.HasDrinks)
             {
                 GameEvent.Trigger(new Event_ShowEmote(EmoteTypes.Sad, and.Npc.transform));
@@ -65,7 +67,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityEnd(ActivityNeedsData and)
         {
-            and.Npc.PathFinder.Cancel();
+            and.Npc.PathAgent.ResetPath();
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
 
             if (_bar != null)
@@ -81,10 +83,10 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         private IEnumerator CoGetDrink(ActivityNeedsData and)
         {
-            yield return new WaitUntil(() => and.Npc.PathFinder.HasReachedDestination);
+            yield return new WaitUntil(() => and.Npc.PathAgent.isStopped);
 
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
-            and.Npc.PathFinder.SetPositioning(_bar.CustomerWaitPosition.rotation);
+            and.Npc.PathAgent.SetPositioning(_bar.CustomerWaitPosition.rotation);
             yield return new WaitForSeconds(1);
             if (_bar.HasDrinks)
             {

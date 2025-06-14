@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
+using DiscoSystem.Character;
 using ExtensionMethods;
 using Unity.Collections;
 using Unity.Jobs;
@@ -45,7 +46,7 @@ namespace DiscoSystem.NewPathFinder
             }
         }
 
-        public bool RequestPath(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> resultPath)
+        public bool RequestPath(Vector3 startPos, Vector3 endPos, PathUserType userType, Action<List<Vector3>> resultPath)
         {
             if (GetPathData == null) 
                 return false;
@@ -61,7 +62,7 @@ namespace DiscoSystem.NewPathFinder
                 for (int y = 0; y < gridHeight; y++)
                 {
                     Vector2Int cell = new Vector2Int(x, y);
-                    bool isValid = IsValid(cell);
+                    bool isValid = IsValid(cell, userType);
                     int index = x * gridWidth + y;
                     validGrid[index] = (byte)(isValid ? 1 : 0);
                 }
@@ -91,12 +92,29 @@ namespace DiscoSystem.NewPathFinder
             return true;
         }
         
-        private bool IsValid(Vector2Int index)
+        private bool IsValid(Vector2Int index, PathUserType userType)
         {
             PathFinderNode node = GetNode(index);
             if (node.IsWall) return false;
+            if (!IsUserAllowed(node, userType)) return false;
             
             return node.IsWalkable;
+        }
+        
+        private bool IsUserAllowed(PathFinderNode node, PathUserType userType)
+        {
+            switch (userType)
+            {
+                case PathUserType.Player:
+                    return true;
+                case PathUserType.Employee:
+                    return true;
+                case PathUserType.Customer:
+                    if (node.OnlyEmployee) return false;
+                    return true;
+            }
+
+            return true;
         }
         
         private int2 WorldPosToGrid(Vector3 pos)

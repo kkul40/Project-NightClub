@@ -83,6 +83,7 @@ namespace DiscoSystem.Character.NPC.Activity
         public void HasPlacementOnTop(List<Vector3Int> keys)
         {
             return;
+            /*
             if (!hasActivity || !_currentActivity.CheckForPlacementOnTop) return;
             
             foreach (var key in keys)
@@ -122,6 +123,7 @@ namespace DiscoSystem.Character.NPC.Activity
                     return;
                 }
             }
+            */
         }
         
         /// <summary>

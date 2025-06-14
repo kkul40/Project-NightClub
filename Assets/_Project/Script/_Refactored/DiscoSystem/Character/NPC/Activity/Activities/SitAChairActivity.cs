@@ -25,7 +25,8 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
             if (_chair.IsReservedToATable) return false;
 
-            return and.Npc.PathFinder.IsPathAvaliable(_chair.GetFrontPosition().position);
+            return true;
+            // return and.Npc.PathFinder.IsPathAvaliable(_chair.GetFrontPosition().position);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -37,19 +38,20 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             this.and = and;
-            and.Npc.PathFinder.GoToDestination(_chair.GetFrontPosition().position);
+            and.Npc.PathAgent.SetDestination(_chair.GetFrontPosition().position);
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _chair.SetOccupied(and.Npc, true);
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            and.Npc.PathAgent.Update(Time.deltaTime);
             switch (_state)
             {
                 case eState.Null:
-                    if (and.Npc.PathFinder.HasReachedDestination)
+                    if (and.Npc.PathAgent.isStopped)
                     {
-                        and.Npc.PathFinder.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
+                        and.Npc.PathAgent.SetPositioning(_chair.GetFrontPosition().rotation, _chair.GetSitPosition());
                         and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Sit);
                         _state = eState.SitDown;
                     }
@@ -60,7 +62,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                         _state = eState.StandUp;
                     break;
                 case eState.StandUp:
-                    and.Npc.PathFinder.SetPositioning(position: _chair.GetFrontPosition().position);
+                    and.Npc.PathAgent.SetPositioning(position: _chair.GetFrontPosition().position);
                     and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
 
                     timer = 0;

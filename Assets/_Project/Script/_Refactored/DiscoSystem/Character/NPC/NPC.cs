@@ -3,6 +3,7 @@ using Animancer;
 using DiscoSystem.CameraSystem;
 using DiscoSystem.Character.NPC.Activity;
 using DiscoSystem.Character.NPC.Activity.Activities;
+using DiscoSystem.NewPathFinder;
 using PropBehaviours;
 using UnityEngine;
 
@@ -16,18 +17,20 @@ namespace DiscoSystem.Character.NPC
          */
         public eGenderType GenderType { get; private set; }
         public IAnimationController AnimationController { get; private set; }
-        public IPathFinder PathFinder { get; private set; }
+        // public IPathFinder PathFinder { get; private set; }
+        
+        public PathFindingAgent PathAgent { get; private set; }
         public ActivityHandler ActivityHandler { get; private set; }
 
         public string debugState;
 
         public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
         {
-            PathFinder = new NpcPathFinder(transform, PathUserType.Customer);
+            PathAgent = new PathFindingAgent(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
             ActivityHandler = new ActivityHandler(this);
-            ActivityHandler.StartNewActivity(new WalkToEnteranceActivity());
             NPCSystem.Instance.RegisterNPC(this);
+            // ActivityHandler.StartNewActivity(new WalkToEnteranceActivity());
         }
 
         // Carried To NPCSystem
@@ -77,7 +80,7 @@ namespace DiscoSystem.Character.NPC
         {
             if (!Application.isPlaying) return;
             
-            path = PathFinder.GetWayPoints;
+            path = PathAgent.GetPath();
             if (path.Count > 1)
                 for (var i = 1; i < path.Count; i++)
                     if (i == path.Count - 1)

@@ -22,7 +22,7 @@ namespace DiscoSystem.Character._Player
             _pathFinder = new NpcPathFinder(transform, PathUserType.Player);
             LoadData(gameData);
 
-            _agent = new PathFindingAgent(transform);
+            _agent = new PathFindingAgent(transform, PathUserType.Player);
 
         }
   

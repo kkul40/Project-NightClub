@@ -25,12 +25,14 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         {
             and.Npc.TriggerDoor = true;
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoToDestination(DiscoData.Instance.MapData.EnterencePosition());
+            and.Npc.PathAgent.NextPosition = DiscoData.Instance.MapData.EnterencePosition();
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (and.Npc.PathFinder.HasReachedDestination)
+            and.Npc.PathAgent.Update(Time.deltaTime);
+
+            if (and.Npc.PathAgent.isStopped)
             {
                 and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
                 timer += Time.deltaTime;

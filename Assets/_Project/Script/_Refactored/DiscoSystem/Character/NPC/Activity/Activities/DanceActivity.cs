@@ -34,7 +34,8 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
                 DiscoData.Instance.MapData.EnterencePosition().WorldPosToCellPos(eGridType.PlacementGrid))
                 return false;
 
-            return and.Npc.PathFinder.IsPathAvaliable(_dancableTile.WorldPos);
+            return true;
+            // return and.Npc.PathFinder.IsPathAvaliable(_dancableTile.WorldPos);
         }
 
         public bool OnActivityErrorHandler(ActivityNeedsData and)
@@ -46,7 +47,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityStart(ActivityNeedsData and)
         {
-            var foundPath = and.Npc.PathFinder.GoToDestination(_dancableTile.WorldPos);
+            var foundPath = and.Npc.PathAgent.SetDestination(_dancableTile.WorldPos);
 
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
             _dancableTile.SetOccupied(and.Npc, true);
@@ -56,10 +57,11 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
+            and.Npc.PathAgent.Update(Time.deltaTime);
             switch (_danceState)
             {
                 case DanceState.None:
-                    if (and.Npc.PathFinder.HasReachedDestination)
+                    if (and.Npc.PathAgent.isStopped)
                     {
                         and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Dance);
                         and.Npc.AnimationController.SetRootMotion(true);

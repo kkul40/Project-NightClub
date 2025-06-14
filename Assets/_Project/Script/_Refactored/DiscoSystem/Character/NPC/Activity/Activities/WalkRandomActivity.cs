@@ -23,12 +23,13 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathFinder.GoToRandomDestination();
+            and.Npc.PathAgent.SetDestination(new Vector3(7,0, 7));
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)
         {
-            if (and.Npc.PathFinder.HasReachedDestination)
+            and.Npc.PathAgent.Update(Time.deltaTime);
+            if (and.Npc.PathAgent.isStopped)
             {
                 and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Idle);
                 timer += Time.deltaTime;
