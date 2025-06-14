@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Initializer;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.GameEvents;
@@ -185,9 +186,9 @@ namespace DiscoSystem.Building_System
             bool isOnX = wallDoorData.CellPosition.x > wallDoorData.CellPosition.z;
             int index = Mathf.Max(wallDoorData.CellPosition.x, wallDoorData.CellPosition.z);
             if (isOnX)
-                MapGeneratorSystem.Instance.InstantiateXWall(index);
+                ServiceLocator.Get<MapGeneratorSystem>().InstantiateXWall(index);
             else
-                MapGeneratorSystem.Instance.InstantiateYWall(index);
+                ServiceLocator.Get<MapGeneratorSystem>().InstantiateYWall(index);
 
             _mapData.GetWallDataByCellPos(wallDoorData.CellPosition).AssignNewID(GetMaterial(wallDoorData.AssignedMaterialID));
 
@@ -200,9 +201,9 @@ namespace DiscoSystem.Building_System
 
             GameObject door;
             if (PreviousIsWallOnX)
-                door = MapGeneratorSystem.Instance.InstantiateXWallDoor(index);
+                door = ServiceLocator.Get<MapGeneratorSystem>().InstantiateXWallDoor(index);
             else
-                door = MapGeneratorSystem.Instance.InstantiateYWallDoor(index);
+                door = ServiceLocator.Get<MapGeneratorSystem>().InstantiateYWallDoor(index);
 
             var doorData =_mapData.AddNewWallData(cellPos, door);
             doorData.AssignNewID(GetMaterial(PreviousMaterialID));

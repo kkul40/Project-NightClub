@@ -1,4 +1,6 @@
-﻿using CharacterCustomization.Scriptables;
+﻿using System;
+using _Initializer;
+using CharacterCustomization.Scriptables;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using DiscoSystem.Character.Bartender;
@@ -8,7 +10,7 @@ using UnityEngine;
 
 namespace Data
 {
-    public class InitConfig : Singleton<InitConfig>
+    public class InitConfig : MonoBehaviour
     {
         [Header("UI Style")] 
         [SerializeField] private UITextStyle DefaultUITextStyle;
@@ -37,5 +39,10 @@ namespace Data
         public NewAnimationSO GetDefaultGirlNpcAnimation => DefaultGirlNpcAnimation;
         public NewAnimationSO GetDefaultBoyNpcAnimation => DefaultBoyNpcAnimation;
         public BartenderAnimationSo GetDefaultBartenderAnimation => DefaultBartenderAnimation;
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
     }
 }

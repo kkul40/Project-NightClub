@@ -16,11 +16,13 @@ namespace DiscoSystem.Character.NPC.Activity
         private ActivityGiver _activityGiver;
 
         public bool hasActivity => _currentActivity != null;
-
         public IActivity GetCurrentActivity => _currentActivity;
+
+        public bool isDead { get; set; }
 
         public ActivityHandler(NPC npc)
         {
+            isDead = false;
             _activityGiver = new ActivityGiver();
             _activityNeedsData = new ActivityNeedsData(npc);
 
@@ -43,7 +45,7 @@ namespace DiscoSystem.Character.NPC.Activity
 
         public void UpdateActivity()
         {
-            if (!hasActivity) return;
+            if (!hasActivity || isDead) return;
 
             if (_currentActivity.IsEnded)
             {

@@ -1,3 +1,5 @@
+using System;
+using _Initializer;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.MusicPlayer;
 using Unity.Mathematics;
@@ -5,7 +7,7 @@ using UnityEngine;
 
 namespace DiscoSystem.CameraSystem
 {
-    public class CameraControl : Singleton<CameraControl>
+    public class CameraControl : MonoBehaviour
     {
         [SerializeField] private Camera mainCam;
 
@@ -23,13 +25,18 @@ namespace DiscoSystem.CameraSystem
 
         private Transform _target;
 
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
+
         private void LateUpdate()
         {
-            var moveDelta = InputSystem.Instance.GetCameraMoveDelta();
+            var moveDelta = ServiceLocator.Get<InputSystem>().GetCameraMoveDelta();
 
-            if (InputSystem.Instance.GetEdgeScrollingData() != Vector2.zero)
+            if (ServiceLocator.Get<InputSystem>().GetEdgeScrollingData() != Vector2.zero)
             {
-                moveDelta = InputSystem.Instance.GetEdgeScrollingData();
+                moveDelta = ServiceLocator.Get<InputSystem>().GetEdgeScrollingData();
             }
 
             if (moveDelta.magnitude > 1) moveDelta = moveDelta.normalized;
@@ -57,7 +64,7 @@ namespace DiscoSystem.CameraSystem
 
         private void SetCameraSize()
         {
-            cameraSize -= InputSystem.Instance.GetZoomDelta() * zoomMultiplier;
+            cameraSize -= ServiceLocator.Get<InputSystem>().GetZoomDelta() * zoomMultiplier;
             cameraSize = Mathf.Clamp(cameraSize, 1, 9);
             mainCam.orthographicSize =
                 Mathf.Lerp(mainCam.orthographicSize, cameraSize, Time.deltaTime * zoomSpeed * 2);

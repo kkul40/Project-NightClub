@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using Disco_ScriptableObject;
 using DiscoSystem;
 using TMPro;
@@ -33,10 +34,10 @@ namespace UI
         public void OnClick()
         {
             for (var i = 0; i < _extendItemSo.ExtendX; i++)
-                MapGeneratorSystem.Instance.ExpendX();
+                ServiceLocator.Get<MapGeneratorSystem>().ExpendX();
 
             for (var i = 0; i < _extendItemSo.ExtendY; i++)
-                MapGeneratorSystem.Instance.ExpendY();
+                ServiceLocator.Get<MapGeneratorSystem>().ExpendY();
         }
     }
 }

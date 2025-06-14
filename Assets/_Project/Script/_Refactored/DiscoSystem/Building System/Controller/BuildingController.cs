@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller.Tools;
@@ -147,12 +148,12 @@ namespace DiscoSystem.Building_System.Controller
         {
             RequireIsInitialized();
 
-            if (_view.IsToggled && InputSystem.Instance.Undo(InputType.WasPressedThisFrame) && _currentTool == null)
+            if (_view.IsToggled && ServiceLocator.Get<InputSystem>().Undo(InputType.WasPressedThisFrame) && _currentTool == null)
                 _toolHelper.PlacementTracker.Undo();
             
             if (_currentTool == null) return;
             
-            if (InputSystem.Instance.GetEscape(InputType.WasPressedThisFrame))
+            if (ServiceLocator.Get<InputSystem>().GetEscape(InputType.WasPressedThisFrame))
             {
                 RelocateHandler(false);
                 StopBuilding();
@@ -161,7 +162,7 @@ namespace DiscoSystem.Building_System.Controller
 
             _currentTool.OnUpdate(_toolHelper);
 
-            bool cancelClick = InputSystem.Instance.GetCancel(InputType.WasPressedThisFrame) || _currentTool.isFinished;
+            bool cancelClick = ServiceLocator.Get<InputSystem>().GetCancel(InputType.WasPressedThisFrame) || _currentTool.isFinished;
 
             if (_currentTool.CheckPlaceInput(_toolHelper))
             {
@@ -389,7 +390,7 @@ namespace DiscoSystem.Building_System.Controller
         public void AddPlacementItemData(PlacementItemSO itemSo, Transform sceneObject, Vector3 placedPosition, Quaternion placedRotation, Vector3 colliderSize, List<Vector3Int> placedPoints = null, bool triggerEvent = true)
         {
             _model.AddPlacmeentItem(itemSo, sceneObject, placedPosition, placedRotation, colliderSize);
-            sceneObject.SetParent(SceneGameObjectHandler.Instance.GetHolderByLayer(itemSo.PlacementLayer));
+            sceneObject.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetHolderByLayer(itemSo.PlacementLayer));
 
             if (triggerEvent)
             {

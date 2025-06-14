@@ -23,7 +23,7 @@ namespace DiscoSystem.Character.NPC.Activity.Activities
         public void OnActivityStart(ActivityNeedsData and)
         {
             and.Npc.AnimationController.PlayAnimation(eAnimationType.NPC_Walk);
-            and.Npc.PathAgent.SetDestination(new Vector3(7,0, 7));
+            and.Npc.PathAgent.SetRandomDestination();
         }
 
         public void OnActivityUpdate(ActivityNeedsData and)

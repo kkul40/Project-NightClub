@@ -1,8 +1,7 @@
-﻿using Data;
-using Disco_Building;
+﻿using _Initializer;
+using Data;
 using Sirenix.OdinInspector;
 using UI.GamePages;
-using UI.PopUp;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -42,7 +41,7 @@ namespace PropBehaviours
 
         public virtual void OnClick()
         {
-            UIPageManager.Instance.ShowActionSelectionPage(this);
+            ServiceLocator.Get<UIPageManager>().ShowActionSelectionPage(this);
         }
 
         public void OnDeselect()

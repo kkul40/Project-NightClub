@@ -1,11 +1,12 @@
 ﻿using System;
+using _Initializer;
 using Data;
 using DiscoSystem;
 using UnityEngine;
 
 namespace Root
 {
-    public class KDebug : Singleton<KDebug>
+    public class KDebug : MonoBehaviour
     {
         public GameObject TestCube;
         public bool showPlacements = false;
@@ -14,6 +15,12 @@ namespace Root
         public bool showAvaliableLeanPosition = false;
         public bool showActivityNodes = false;
 
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
+
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (!Application.isPlaying) return;
@@ -63,6 +70,7 @@ namespace Root
                 }
             }
         }
+#endif
 
         public Vector3 DefaultSize => new Vector3(0.8f, 0.8f, 0.8f);
 

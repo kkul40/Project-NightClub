@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using UnityEngine;
 
 namespace DiscoSystem.Building_System
 {
-    public class SceneGameObjectHandler : Singleton<SceneGameObjectHandler>
+    public class SceneGameObjectHandler : MonoBehaviour
     {
         [field: SerializeField] public Transform GetFloorPropHolderTransform { get; private set; }
         [field: SerializeField] public Transform GetWallPropHolderTransform { get; private set; }
@@ -15,6 +16,11 @@ namespace DiscoSystem.Building_System
         [field: SerializeField] public Transform GetWallHolder { get; private set; }
         [field: SerializeField] public Transform PooledObjectHolder { get; private set; }
         [field: SerializeField] public Transform NullHolder { get; private set; }
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
 
         public Transform GetHolderByLayer(ePlacementLayer layer)
         {

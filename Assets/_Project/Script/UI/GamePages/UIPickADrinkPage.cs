@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _Initializer;
 using Data;
 using DiscoSystem.Character.Bartender.Command;
 using Framework.Context;
@@ -55,7 +56,7 @@ namespace UI.GamePages
 
         public void SelectADrink(DrinkSO selectedDrinkSo)
         {
-            BarMediator.Instance.AddCommand(_lastBar, new PrepareDrinkCommand(selectedDrinkSo));
+            ServiceLocator.Get<BarMediator>().AddCommand(_lastBar, new PrepareDrinkCommand(selectedDrinkSo));
             ToggleView(false);
         }
 

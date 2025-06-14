@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Initializer;
 using DiscoSystem.Building_System;
 using Prop_Behaviours;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace DiscoSystem.ObjectPooling
             for (int i = 0; i < 10; i++)
                 CreateNew();
             
-            UpdatableHandler.Instance.RegisterUpdate(this);
+            ServiceLocator.Get<UpdatableHandler>().RegisterUpdate(this);
         }
 
         public void TickUpdate(float deltaTime)
@@ -59,7 +60,7 @@ namespace DiscoSystem.ObjectPooling
         
         private IPoolable CreateNew()
         {
-            var obj = MonoBehaviour.Instantiate(_prefab, SceneGameObjectHandler.Instance.PooledObjectHolder);
+            var obj = MonoBehaviour.Instantiate(_prefab, ServiceLocator.Get<SceneGameObjectHandler>().PooledObjectHolder);
             var pooledObject = obj.GetComponent<IPoolable>();
             obj.SetActive(false);
 

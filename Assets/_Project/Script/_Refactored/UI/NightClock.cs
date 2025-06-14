@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using _Initializer;
 using DiscoSystem;
 using UnityEngine;
 
 namespace UI
 {
-    public class NightClock : Singleton<NightClock>
+    public class NightClock : MonoBehaviour
     {
         public int HourMark;
         public int MinuteMark;
@@ -15,6 +16,11 @@ namespace UI
         public static event Action<int, int> OnClockUpdate;
         public static event Action<int> OnHourPassed;
         public static event Action<int> OnMinutePassed;
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
 
         private void Start()
         {

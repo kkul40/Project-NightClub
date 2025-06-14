@@ -6,6 +6,9 @@ namespace _Initializer
     {
         private void Awake()
         {
+            ServiceLocator.Clear();
         }
     }
+
+    
 }

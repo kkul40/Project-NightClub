@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using DiscoSystem.Character;
 using ExtensionMethods;
@@ -7,10 +8,11 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DiscoSystem.NewPathFinder
 {
-    public sealed class PathFindingSystem : Singleton<PathFindingSystem>
+    public sealed class PathFindingSystem : MonoBehaviour
     {
         struct PathFindingJobHandle
         {
@@ -21,7 +23,12 @@ namespace DiscoSystem.NewPathFinder
         }
 
         private List<PathFindingJobHandle> jobHandles = new List<PathFindingJobHandle>();
-        
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
+
         private void Update()
         { 
             for (int i = jobHandles.Count - 1; i >= 0; i--)
@@ -44,6 +51,11 @@ namespace DiscoSystem.NewPathFinder
                     jobHandles.RemoveAt(i);
                 }
             }
+        }
+
+        public bool RequestRandomPath(Vector3 startPos, PathUserType userType, Action<List<Vector3>> resultPath)
+        {
+            return RequestPath(startPos, GetPathData.GetRandomPathNode().WorldPos, userType, resultPath);
         }
 
         public bool RequestPath(Vector3 startPos, Vector3 endPos, PathUserType userType, Action<List<Vector3>> resultPath)

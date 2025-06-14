@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using Disco_ScriptableObject;
 using DiscoSystem.Building_System.Controller;
@@ -101,7 +102,7 @@ namespace DiscoSystem.Building_System
         
             float gridSize = 0.25f;
             Vector3 surfaceCenter = surfaceBounds.center;
-            Vector3 localPosition = InputSystem.Instance.GetMousePositionOnLayer(ToolHelper.SurfaceLayerID);
+            Vector3 localPosition = ServiceLocator.Get<InputSystem>().GetMousePositionOnLayer(ToolHelper.SurfaceLayerID);
         
             Debug.Log(localPosition);
 
@@ -118,7 +119,7 @@ namespace DiscoSystem.Building_System
 
             if (InputSystem.GetFreePlacement(InputType.InProggress)) // Free Placement
             {
-                TH.LastPosition = InputSystem.Instance.MousePosition;
+                TH.LastPosition = ServiceLocator.Get<InputSystem>().MousePosition;
             }
         }
 

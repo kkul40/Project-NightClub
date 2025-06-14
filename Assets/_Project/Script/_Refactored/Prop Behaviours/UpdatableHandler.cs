@@ -1,12 +1,18 @@
-﻿using System.Collections.Generic;
-using DiscoSystem;
+﻿using System;
+using System.Collections.Generic;
+using _Initializer;
 using UnityEngine;
 
 namespace Prop_Behaviours
 {
-    public class UpdatableHandler : Singleton<UpdatableHandler>
+    public class UpdatableHandler : MonoBehaviour
     {
         public List<IUpdateable> updates = new List<IUpdateable>();
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
 
         private void Update()
         {

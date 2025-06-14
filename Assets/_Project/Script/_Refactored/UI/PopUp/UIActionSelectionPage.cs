@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Initializer;
 using DG.Tweening;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -221,7 +222,7 @@ namespace UI.PopUp
         {
             if (_lastData is IPropUnit propUnit)
             {
-                UIPageManager.Instance.ShowPropInfo(propUnit);
+                ServiceLocator.Get<UIPageManager>().ShowPropInfo(propUnit);
                 PlaySFXOnButtonClick();
                 ToggleView(false);
             }
@@ -231,7 +232,7 @@ namespace UI.PopUp
         {
             if (_lastData is Bar bar)
             {
-                UIPageManager.Instance.ShowDrinkPage(bar);
+                ServiceLocator.Get<UIPageManager>().ShowDrinkPage(bar);
                 PlaySFXOnButtonClick();
                 ToggleView(false);
             }
@@ -241,7 +242,7 @@ namespace UI.PopUp
         {
             if (_lastData is DJ dj)
             {
-                DJMusicManager.Instance.PlayeNextSong();
+                ServiceLocator.Get<DJMusicManager>().PlayeNextSong();
                 PlaySFXOnButtonClick();
             }
         }

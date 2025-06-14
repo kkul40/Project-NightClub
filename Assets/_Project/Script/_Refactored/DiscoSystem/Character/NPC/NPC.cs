@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using _Initializer;
 using Animancer;
 using DiscoSystem.CameraSystem;
 using DiscoSystem.Character.NPC.Activity;
-using DiscoSystem.Character.NPC.Activity.Activities;
 using DiscoSystem.NewPathFinder;
 using PropBehaviours;
 using UnityEngine;
@@ -21,16 +21,16 @@ namespace DiscoSystem.Character.NPC
         
         public PathFindingAgent PathAgent { get; private set; }
         public ActivityHandler ActivityHandler { get; private set; }
-
+        
+#if UNITY_EDITOR
         public string debugState;
+#endif
 
         public void Initialize(NewAnimationSO npcAnimationSo, Animator animator, AnimancerComponent animancerComponent, Transform armatureTransform)
         {
             PathAgent = new PathFindingAgent(transform, PathUserType.Customer);
             AnimationController = new NPCAnimationControl(animator, animancerComponent, npcAnimationSo, armatureTransform);
             ActivityHandler = new ActivityHandler(this);
-            NPCSystem.Instance.RegisterNPC(this);
-            // ActivityHandler.StartNewActivity(new WalkToEnteranceActivity());
         }
 
         // Carried To NPCSystem
@@ -58,22 +58,23 @@ namespace DiscoSystem.Character.NPC
 
         public void OnClick()
         {
-            CameraControl.Instance.FollowTarget(transform);
+            ServiceLocator.Get<CameraControl>().FollowTarget(transform);
         }
 
         public void OnDeselect()
         {
-            CameraControl.Instance.ResetTarget();
+            ServiceLocator.Get<CameraControl>().ResetTarget();
         }
 
         private List<Vector3> path = new();
 
         private void OnDestroy()
         {
-            if(ActivityHandler != null)
+            if (ActivityHandler != null)
+            {
                 ActivityHandler.ForceToEndActivity();
-            
-            NPCSystem.Instance.UnRegisterNPC(this);
+                ActivityHandler.isDead = true;
+            }
         }
 
         private void OnDrawGizmosSelected()

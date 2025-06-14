@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIGeneralSettingsManager : Singleton<UIGeneralSettingsManager>
+    public class UIGeneralSettingsManager : MonoBehaviour
     {
         [Header("Graphics")] 
         [Header("Resolution")]
@@ -34,6 +35,11 @@ namespace UI.GamePages
         [SerializeField] private UIToggleButton SnappyCameraToggle;
         private bool EdgeScrollingEnabled = false;
         private bool SnappyCameraEnabled = false;
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
 
         private void Start()
         {
@@ -137,7 +143,7 @@ namespace UI.GamePages
 
         public void SaveGame()
         {
-            UIPageManager.Instance.ShowLoadPage();
+            ServiceLocator.Get<UIPageManager>().ShowLoadPage();
         }
 
         public void LoadGame()
@@ -147,7 +153,7 @@ namespace UI.GamePages
 
         public void MainMenu()
         {
-            UIPageManager.Instance.ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
+            ServiceLocator.Get<UIPageManager>().ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
                 {
                     SceneLoader.Instance.LoadScene(0);
                 });
@@ -155,7 +161,7 @@ namespace UI.GamePages
 
         public void QuitGame()
         {
-            UIPageManager.Instance.ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
+            ServiceLocator.Get<UIPageManager>().ShowAreYouSurePopup("All unsaved progress will be lost. Are you sure you want to continue", () =>
                 {
                     Application.Quit();
                 });
@@ -164,14 +170,14 @@ namespace UI.GamePages
         public void ToggleEdgeScrolling()
         {
             EdgeScrollingEnabled = !EdgeScrollingEnabled;
-            InputSystem.Instance.EdgeScrolling = EdgeScrollingEnabled;
+            ServiceLocator.Get<InputSystem>().EdgeScrolling = EdgeScrollingEnabled;
             EdgeScrollingToggle.ToggleCheckMark(EdgeScrollingEnabled);
         }
     
         public void ToggleSnappyCamera()
         {
             SnappyCameraEnabled = !SnappyCameraEnabled;
-            InputSystem.Instance.SnappyCamera = SnappyCameraEnabled;
+            ServiceLocator.Get<InputSystem>().SnappyCamera = SnappyCameraEnabled;
             SnappyCameraToggle.ToggleCheckMark(SnappyCameraEnabled);
         }
 

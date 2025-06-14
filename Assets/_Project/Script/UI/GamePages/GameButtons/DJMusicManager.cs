@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using Data;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace UI.GamePages.GameButtons
 {
-    public class DJMusicManager : Singleton<DJMusicManager>
+    public class DJMusicManager : MonoBehaviour
     {
         [SerializeField] private SongDataSo _songDataSo;
         private int index = 0;
@@ -27,6 +28,7 @@ namespace UI.GamePages.GameButtons
 
         private void Awake()
         {
+            ServiceLocator.Register(this);
             GameEvent.Subscribe<Event_PropPlaced>( handle=> StartSong(handle.PropUnit));
             GameEvent.Subscribe<Event_PropRemoved>(handle=> StopSong(handle.PropUnit));
         }
@@ -38,7 +40,7 @@ namespace UI.GamePages.GameButtons
             if (isPlaying) return;
             
             if(_songDataSo.Temp.Count > 0)
-                MusicPlayer.Instance.ChangeMusic(_songDataSo.Temp[index].Clip);
+                ServiceLocator.Get<MusicPlayer>().ChangeMusic(_songDataSo.Temp[index].Clip);
 
             isPlaying = true;
         }
@@ -53,7 +55,7 @@ namespace UI.GamePages.GameButtons
             if (djs.Count > 0)
                 return;
 
-            MusicPlayer.Instance.PauseMusic();
+            ServiceLocator.Get<MusicPlayer>().PauseMusic();
             isPlaying = false;
         }
 
@@ -63,7 +65,7 @@ namespace UI.GamePages.GameButtons
             if (index >= _songDataSo.Temp.Count)
                 index = 0;
             
-            MusicPlayer.Instance.ChangeMusic(_songDataSo.Temp[index].Clip);
+            ServiceLocator.Get<MusicPlayer>().ChangeMusic(_songDataSo.Temp[index].Clip);
         }
     }
 }

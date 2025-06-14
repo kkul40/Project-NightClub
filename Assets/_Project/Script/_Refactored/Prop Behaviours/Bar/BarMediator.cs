@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using System;
+using _Initializer;
+using Data;
 using DiscoSystem;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character.Bartender;
@@ -13,12 +15,17 @@ namespace Prop_Behaviours.Bar
     // TODO Bartender Manager Class
     // TODO Add ReAssignment Logic
     // TODO Use This Script To Manage All Your Bartenders. Give them states(orders), have them clean stuff.
-    public class BarMediator : Singleton<BarMediator>
+    public class BarMediator : MonoBehaviour
     {
         [SerializeField] public GameObject DrinkTablePrefab;
 
         [OdinSerialize] public SerializedDictionary<int, IBartender> _bartenders;
         [OdinSerialize] public SerializedDictionary<int, IBar> _bars;
+
+        private void Awake()
+        {
+            ServiceLocator.Register(this);
+        }
 
         private void Start()
         {

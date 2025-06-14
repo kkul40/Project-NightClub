@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using DiscoSystem;
 using DiscoSystem.Character;
 using DiscoSystem.Character.NPC;
@@ -14,7 +15,7 @@ namespace UI.GamePages.GameButtons
 
         public void OnClick()
         {
-            NPCSystem.Instance.CreateCharacter(ePersonType.Bartender);
+            ServiceLocator.Get<NPCSystem>().CreateCharacter(ePersonType.Bartender);
         }
     }
 }

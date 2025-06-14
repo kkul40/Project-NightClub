@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using Data.New;
 using Disco_ScriptableObject;
 using PropBehaviours;
@@ -16,7 +17,7 @@ namespace Data
         public FloorData(Vector3Int cellPosition)
         {
             CellPosition = cellPosition;
-            assignedMaterialID = InitConfig.Instance.GetDefaultTileMaterial.ID;
+            assignedMaterialID = ServiceLocator.Get<InitConfig>().GetDefaultTileMaterial.ID;
         }
 
         public FloorData(Save_MapData.Save_FloorData saveFloorData)

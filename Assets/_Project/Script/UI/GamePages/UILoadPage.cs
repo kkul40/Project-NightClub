@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using _Initializer;
 using Framework.Context;
 using Framework.Mvcs.View;
 using SaveAndLoad;
@@ -49,7 +50,7 @@ namespace UI.GamePages
 
         private void DeleteSave(string fileName)
         {
-            UIPageManager.Instance.ShowAreYouSurePopup("Are you sure you want to delete this save file?", () =>
+            ServiceLocator.Get<UIPageManager>().ShowAreYouSurePopup("Are you sure you want to delete this save file?", () =>
             {
                 SaveLoadSystem.Instance.DeleteGame(fileName);
                 RefreshList();
@@ -58,7 +59,7 @@ namespace UI.GamePages
 
         private void SaveGame(string fileName)
         {
-            UIPageManager.Instance.ShowAreYouSurePopup("Are you sure you want to overwrite this save file?", () =>
+            ServiceLocator.Get<UIPageManager>().ShowAreYouSurePopup("Are you sure you want to overwrite this save file?", () =>
             {
                 SaveLoadSystem.Instance.SaveGame();
             });
@@ -66,7 +67,7 @@ namespace UI.GamePages
 
         public void SaveGameAs()
         {
-            UIPageManager.Instance.ShowTextFieldPopup("Name It", newFileName =>
+            ServiceLocator.Get<UIPageManager>().ShowTextFieldPopup("Name It", newFileName =>
             {
                 foreach (var fileName in SaveLoadSystem.Instance.GetList())
                 {

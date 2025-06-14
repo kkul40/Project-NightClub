@@ -1,4 +1,5 @@
-﻿using DiscoSystem.Building_System;
+﻿using _Initializer;
+using DiscoSystem.Building_System;
 using UnityEngine;
 
 namespace DiscoSystem.ObjectPooling
@@ -23,7 +24,7 @@ namespace DiscoSystem.ObjectPooling
             IsActive = false;
             RemainingTime = 0;
             mTransform.gameObject.SetActive(false);
-            mTransform.SetParent(SceneGameObjectHandler.Instance.PooledObjectHolder);
+            mTransform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().PooledObjectHolder);
         }
     }
 }

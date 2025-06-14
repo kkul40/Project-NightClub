@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using _Initializer;
+using Data;
 using DiscoSystem.Character._Player;
 using DiscoSystem.Character.NPC;
 using Sirenix.OdinInspector;
@@ -42,8 +43,8 @@ namespace TEST
             CharacterCustomizer customizer = null;
             NewAnimationSO animation = null;
             
-            customizer = new CharacterCustomizer(eGenderType.Male, InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
-            animation = InitConfig.Instance.GetDefaultBoyNpcAnimation;
+            customizer = new CharacterCustomizer(eGenderType.Male, ServiceLocator.Get<InitConfig>().GetDefaultNPCCustomization, newNPC.transform);
+            animation = ServiceLocator.Get<InitConfig>().GetDefaultBoyNpcAnimation;
 
             if (customizer == null || animation == null) return;
             

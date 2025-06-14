@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using _Initializer;
 using Data;
 using DiscoSystem.Building_System;
 using DiscoSystem.Building_System.GameEvents;
@@ -12,7 +13,7 @@ using UnityEngine;
 
 namespace DiscoSystem.Character.NPC
 {
-    public class NPCSystem : Singleton<NPCSystem>
+    public class NPCSystem : MonoBehaviour
     {
         public ActivityGiver activityGiver;
         
@@ -32,22 +33,12 @@ namespace DiscoSystem.Character.NPC
             activityGiver = new ActivityGiver();
             npcList = new List<NPC>();
             bartenderList = new List<Bartender.Bartender>();
-        }
-
-        public void RegisterNPC(NPC npc)
-        {
-            npcList.Add(npc);
+            ServiceLocator.Register(this);
         }
 
         public void RegisterBartender(Bartender.Bartender bartender)
         {
             bartenderList.Add(bartender);
-        }
-
-        public void UnRegisterNPC(NPC npc)
-        {
-            if(npcList.Contains(npc))
-                npcList.Remove(npc);
         }
         
         public void UnRegisterBartender(Bartender.Bartender bartender)
@@ -58,12 +49,26 @@ namespace DiscoSystem.Character.NPC
         
         private void Update()
         {
+            List<NPC> toRemove = new List<NPC>();
+            
             foreach (var npc in npcList)
             {
                 if (npc.ActivityHandler == null) continue;
                 
                 npc.ActivityHandler.UpdateActivity();
+#if UNITY_EDITOR
                 npc.debugState = npc.ActivityHandler.GetCurrentActivity.GetType().Name;
+#endif
+                if (npc.ActivityHandler.isDead)
+                {
+                    toRemove.Add(npc);
+                }
+            }
+
+            foreach (var npc in toRemove)
+            {
+                npcList.Remove(npc);
+                Destroy(npc.gameObject);
             }
 
             foreach (var bartender in bartenderList)
@@ -105,12 +110,12 @@ namespace DiscoSystem.Character.NPC
             var newBartender = Instantiate(_bartenderPrefab, DiscoData.Instance.MapData.SpawnPositon,
                 Quaternion.identity);
 
-            newBartender.transform.SetParent(SceneGameObjectHandler.Instance.GetEmployeeHolderTransform);
+            newBartender.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetEmployeeHolderTransform);
 
             var gender = Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
             CharacterCustomizer customizer =
-                new CharacterCustomizer(gender, InitConfig.Instance.GetefaultBartenderCustomization, newBartender.transform);
+                new CharacterCustomizer(gender, ServiceLocator.Get<InitConfig>().GetefaultBartenderCustomization, newBartender.transform);
 
             newBartender.GetComponent<Bartender.Bartender>().Init(customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
 
@@ -160,7 +165,7 @@ namespace DiscoSystem.Character.NPC
         private NPC CreateNPC()
         {
             var newNPC = Instantiate(_npcPrefab, DiscoData.Instance.MapData.SpawnPositon, Quaternion.identity);
-            newNPC.transform.SetParent(SceneGameObjectHandler.Instance.GetNPCHolderTransform);
+            newNPC.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetNPCHolderTransform);
             var gender = Random.value > 0.5f ? eGenderType.Male : eGenderType.Female;
 
             NPC Npc;
@@ -175,18 +180,19 @@ namespace DiscoSystem.Character.NPC
             switch (gender)
             {
                 case eGenderType.Male:
-                    customizer = new CharacterCustomizer(eGenderType.Male ,InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
-                    animation = InitConfig.Instance.GetDefaultBoyNpcAnimation;
+                    customizer = new CharacterCustomizer(eGenderType.Male ,ServiceLocator.Get<InitConfig>().GetDefaultNPCCustomization, newNPC.transform);
+                    animation = ServiceLocator.Get<InitConfig>().GetDefaultBoyNpcAnimation;
                     break;
                 case eGenderType.Female:
-                    customizer = new CharacterCustomizer(eGenderType.Female, InitConfig.Instance.GetDefaultNPCCustomization, newNPC.transform);
-                    animation = InitConfig.Instance.GetDefaultGirlNpcAnimation;
+                    customizer = new CharacterCustomizer(eGenderType.Female, ServiceLocator.Get<InitConfig>().GetDefaultNPCCustomization, newNPC.transform);
+                    animation = ServiceLocator.Get<InitConfig>().GetDefaultGirlNpcAnimation;
                     break;
             }
 
             if (customizer == null || animation == null) return null;
             
             Npc.Initialize(animation, customizer.GetAnimator, customizer.GetAnimancer, customizer.GetArmature);
+            npcList.Add(npc);
             
             return Npc;
         }

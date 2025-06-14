@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Initializer;
 using Animancer;
 using Data;
 using DiscoSystem.Character.Bartender.Command;
@@ -29,12 +30,12 @@ namespace DiscoSystem.Character.Bartender
         {
             PathFinder = new NpcPathFinder(transform, PathUserType.Employee);
             mTransform = transform;
-            BarMediator = BarMediator.Instance;
-            AnimationController = new BartenderAnimationControl(animator, animancer, InitConfig.Instance.GetDefaultBartenderAnimation, armature);
+            BarMediator = ServiceLocator.Get<BarMediator>();
+            AnimationController = new BartenderAnimationControl(animator, animancer, ServiceLocator.Get<InitConfig>().GetDefaultBartenderAnimation, armature);
 
             mGameobject = gameObject;
 
-            NPCSystem.Instance.RegisterBartender(this);
+            ServiceLocator.Get<NPCSystem>().RegisterBartender(this);
         }
 
         // private void Update()
@@ -90,7 +91,7 @@ namespace DiscoSystem.Character.Bartender
 
         public void OnClick()
         {
-            UIPageManager.Instance.ShowActionSelectionPage(this);
+            ServiceLocator.Get<UIPageManager>().ShowActionSelectionPage(this);
         }
 
         public void OnDeselect()
@@ -100,7 +101,7 @@ namespace DiscoSystem.Character.Bartender
 
         private void OnDestroy()
         {
-            NPCSystem.Instance.UnRegisterBartender(this);
+            ServiceLocator.Get<NPCSystem>().UnRegisterBartender(this);
         }
 
         public bool TriggerDoor { get; set; } = true;

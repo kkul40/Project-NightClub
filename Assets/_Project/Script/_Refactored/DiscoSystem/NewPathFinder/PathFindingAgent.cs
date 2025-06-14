@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Initializer;
 using DG.Tweening;
 using DiscoSystem.Character;
 using UnityEngine;
@@ -68,7 +69,12 @@ namespace DiscoSystem.NewPathFinder
 
         public bool SetDestination(Vector3 target)
         {
-            return PathFindingSystem.Instance.RequestPath(agent.position, target, userType, OnRequestPathComplete);
+            return ServiceLocator.Get<PathFindingSystem>().RequestPath(agent.position, target, userType, OnRequestPathComplete);
+        }
+        
+        public bool SetRandomDestination()
+        {
+            return ServiceLocator.Get<PathFindingSystem>().RequestRandomPath(agent.position, userType, OnRequestPathComplete);
         }
 
         public bool CalculatePath(Vector3 targetPosition, List<Vector3> path)
@@ -76,8 +82,13 @@ namespace DiscoSystem.NewPathFinder
             return true;
         }
 
+        
+
         public bool Warp(Vector3 newPosition)
         {
+            nextPosition = newPosition;
+            agent.position = newPosition;
+            path.Clear();
             return true;
         }
 
@@ -108,7 +119,7 @@ namespace DiscoSystem.NewPathFinder
         private void OnRequestPathComplete(List<Vector3> resultPath)
         {
             path.Clear();
-            for (int i = 0; i < resultPath.Count; i++)
+            for (int i = 1; i < resultPath.Count; i++)
                 path.Enqueue(resultPath[i]);
 
             isStopped = false;

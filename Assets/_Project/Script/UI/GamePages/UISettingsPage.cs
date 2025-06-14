@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Initializer;
 using DiscoSystem.Building_System.GameEvents;
 using DiscoSystem.Character._Player;
 using DiscoSystem.MusicPlayer;
@@ -27,19 +28,19 @@ namespace UI.GamePages
             musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
             soundVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
             
-            MusicPlayer.Instance.SetMusicVolume(musicVolumeSlider.value);
-            SFXPlayer.Instance.SetSoundVolume(soundVolumeSlider.value);
+            ServiceLocator.Get<MusicPlayer>().SetMusicVolume(musicVolumeSlider.value);
+            ServiceLocator.Get<SFXPlayer>().SetSoundVolume(soundVolumeSlider.value);
             
-            musicVolumeSlider.onValueChanged.AddListener(MusicPlayer.Instance.SetMusicVolume);
-            soundVolumeSlider.onValueChanged.AddListener(SFXPlayer.Instance.SetSoundVolume);
+            musicVolumeSlider.onValueChanged.AddListener(ServiceLocator.Get<MusicPlayer>().SetMusicVolume);
+            soundVolumeSlider.onValueChanged.AddListener(ServiceLocator.Get<SFXPlayer>().SetSoundVolume);
             
             GameEvent.Subscribe<Event_OnGameSave>(handle => SaveData());
         }
 
         public override void EventEnable()
         {
-            musicVolumeSlider.value = MusicPlayer.Instance.MusicVolume;
-            soundVolumeSlider.value = SFXPlayer.Instance.SoundVolume;
+            musicVolumeSlider.value = ServiceLocator.Get<MusicPlayer>().MusicVolume;
+            soundVolumeSlider.value = ServiceLocator.Get<SFXPlayer>().SoundVolume;
 
             OpenADropDownPage(_lastDropDownPage);
         }

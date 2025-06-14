@@ -1,4 +1,4 @@
-﻿using Data;
+﻿using _Initializer;
 using Data.New;
 using Root;
 using SaveAndLoad;
@@ -78,11 +78,11 @@ namespace _Project.OdinEditor
         {
             if (!Application.isPlaying) return;
 
-            KDebug.Instance.showPlacements = ShowPlacement;
-            KDebug.Instance.showPathFinder = ShowPathFinderNode;
-            KDebug.Instance.showEmployeeFinder = ShowEmployeeNodes;
-            KDebug.Instance.showAvaliableLeanPosition = ShowAvaliableLeanPositions;
-            KDebug.Instance.showActivityNodes = ShowActivityNodes;
+            ServiceLocator.Get<KDebug>().showPlacements = ShowPlacement;
+            ServiceLocator.Get<KDebug>().showPathFinder = ShowPathFinderNode;
+            ServiceLocator.Get<KDebug>().showEmployeeFinder = ShowEmployeeNodes;
+            ServiceLocator.Get<KDebug>().showAvaliableLeanPosition = ShowAvaliableLeanPositions;
+            ServiceLocator.Get<KDebug>().showActivityNodes = ShowActivityNodes;
         }
 
         [MenuItem("Tools/Debug")]

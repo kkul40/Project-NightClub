@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using _Initializer;
+using Data;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,11 @@ namespace UI
         private void Awake()
         {
             _textMeshPro = GetComponent<TextMeshProUGUI>();
-            _textMeshPro.font = InitConfig.Instance.GetDefaultUITextStyle.UITextAsset;
+        }
+
+        private void Start()
+        {
+            _textMeshPro.font = ServiceLocator.Get<InitConfig>().GetDefaultUITextStyle.UITextAsset;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Initializer;
 using Data;
 using Disco_ScriptableObject;
 using ExtensionMethods;
@@ -152,7 +153,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
             if (TH.InputSystem.GetFreePlacement(InputType.InProggress)) // Free Placement
             {
-                TH.LastPosition = InputSystem.Instance.MousePosition;
+                TH.LastPosition = ServiceLocator.Get<InputSystem>().MousePosition;
             }
         }
 

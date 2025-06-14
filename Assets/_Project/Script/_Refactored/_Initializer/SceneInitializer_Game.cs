@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Data;
 using Data.New;
 using DiscoSystem;
@@ -14,7 +15,20 @@ using UnityEngine;
 
 namespace _Initializer
 {
-    [DefaultExecutionOrder(-50)]
+    public static class ServiceLocator
+    {
+        public static Dictionary<Type, object> services = new Dictionary<Type, object>();
+        public static T Get<T>()
+        {
+            if (services.TryGetValue(typeof(T), out var service))
+                return (T)service;
+            throw new Exception($"Service {typeof(T)} not found");
+        }
+        public static void Register<T>(T service) => services[typeof(T)] = service;
+        public static void Clear() => services.Clear();
+    }
+    
+    [DefaultExecutionOrder(0)]
     public class SceneInitializer_Game : MonoBehaviour
     {
         [SerializeField] private BuildingSystem _buildingSystem;
@@ -32,6 +46,7 @@ namespace _Initializer
 
         private void Awake()
         {
+            ServiceLocator.Clear();
             StartCoroutine(InitializeGame());
         }
 

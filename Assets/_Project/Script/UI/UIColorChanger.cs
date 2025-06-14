@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using Data;
 using ScriptableObjects;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace UI
         [SerializeField] private eUIType _uiType;
         private void Start()
         {
-            UpdateUIColor(InitConfig.Instance.GetDefaultUIColorStyle);
+            UpdateUIColor(ServiceLocator.Get<InitConfig>().GetDefaultUIColorStyle);
         }
 
         public void UpdateUIColor(UIColorStyle colorStyle)

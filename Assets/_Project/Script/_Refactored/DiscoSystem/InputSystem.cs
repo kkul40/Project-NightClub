@@ -1,4 +1,5 @@
-﻿using DiscoSystem.Building_System.GameEvents;
+﻿using _Initializer;
+using DiscoSystem.Building_System.GameEvents;
 using ExtensionMethods;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ namespace DiscoSystem
     }
     
     [DisallowMultipleComponent]
-    public class InputSystem : Singleton<InputSystem>
+    public class InputSystem : MonoBehaviour
     {
         [SerializeField] private Camera mainCam;
         private RaycastHit lastHit;
@@ -63,6 +64,7 @@ namespace DiscoSystem
             _freePlacementKey = _input.actions["FreePlacementKey"];
             _mousePosition = _input.actions["MousePosition"];
             
+            ServiceLocator.Register(this);
             GameEvent.Subscribe<Event_ToggleInputs>(handle =>
             {
                 if(handle.Toggle)

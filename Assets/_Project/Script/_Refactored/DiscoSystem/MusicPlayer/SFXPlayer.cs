@@ -1,4 +1,5 @@
 ﻿using System;
+using _Initializer;
 using Data;
 using DiscoSystem.Building_System.GameEvents;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace DiscoSystem.MusicPlayer
         CameraFocus,
     }
     // TODO Make This Class Part Of Music Player or just put all this into MusicPlayer
-    public class SFXPlayer : Singleton<SFXPlayer>
+    public class SFXPlayer : MonoBehaviour
     {
         private AudioSource _audioSource;
 
@@ -49,6 +50,7 @@ namespace DiscoSystem.MusicPlayer
         {
             _audioSource = GetComponent<AudioSource>();
             GameEvent.Subscribe<Event_Sfx>(PlaySoundFX);
+            ServiceLocator.Register(this);
         }
 
         private void PlaySoundFX(Event_Sfx sfxEvent)

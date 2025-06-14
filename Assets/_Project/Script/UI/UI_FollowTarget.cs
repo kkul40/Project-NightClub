@@ -1,4 +1,6 @@
-﻿using DiscoSystem.CameraSystem;
+﻿using System;
+using _Initializer;
+using DiscoSystem.CameraSystem;
 using UI.GamePages;
 using Unity.Mathematics;
 using UnityEngine;
@@ -15,9 +17,9 @@ namespace UI
         private Vector3 centerPosition;
         private float3 _cameraMinMaxCurrentSize;
 
-        private void Awake()
+        private void Start()
         {
-            _cameraMinMaxCurrentSize = CameraControl.Instance.GetCameraSize;
+            _cameraMinMaxCurrentSize = ServiceLocator.Get<CameraControl>().GetCameraSize;
         }
 
         public void SetTarget(GameObject target)
@@ -40,7 +42,7 @@ namespace UI
             if (targetObject == null)
                 return;
 
-            Canvas _canvas = UIPageManager.Instance.GetCanvas;
+            Canvas _canvas = ServiceLocator.Get<UIPageManager>().GetCanvas;
 
             if (_canvas == null)
             {

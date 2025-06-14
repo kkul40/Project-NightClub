@@ -1,7 +1,6 @@
-﻿using Disco_ScriptableObject;
+﻿using _Initializer;
+using Disco_ScriptableObject;
 using UI.GamePages;
-using UI.PopUp;
-using UI.StartMenu;
 using UnityEngine;
 
 namespace PropBehaviours
@@ -27,7 +26,7 @@ namespace PropBehaviours
 
         public override void OnClick()
         {
-            UIPageManager.Instance.ShowActionSelectionPage(this);
+            ServiceLocator.Get<UIPageManager>().ShowActionSelectionPage(this);
         }
 
         #endregion

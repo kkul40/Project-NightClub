@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using _Initializer;
+using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
 using ExtensionMethods;
@@ -40,8 +41,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
             _originalMaterialID = _storedAssignmentData.AssignedMaterialID;
             _originalWallIndex = Mathf.Max(_storedCellPosition.x, _storedCellPosition.z); 
             
-            var newWall = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallPrefab, _storedAssignmentData.AssignedWall.transform.position, _storedAssignmentData.AssignedWall.transform.rotation, false);
-            newWall.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            var newWall = ServiceLocator.Get<MapGeneratorSystem>().CreateObject(ServiceLocator.Get<MapGeneratorSystem>().GetWallPrefab, _storedAssignmentData.AssignedWall.transform.position, _storedAssignmentData.AssignedWall.transform.rotation, false);
+            newWall.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
 
             
             TH.DiscoData.MapData.RemoveWallData(_storedAssignmentData.CellPosition);
@@ -50,7 +51,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             
             newData.AssignNewID(GameBundle.Instance.FindAItemByID(_storedAssignmentData.AssignedMaterialID) as MaterialItemSo);
             
-            _tempObject = Object.Instantiate(MapGeneratorSystem.Instance.GetWallDoorPrefab, _storedCellPosition.FlattenToGround(), Quaternion.identity);
+            _tempObject = Object.Instantiate(ServiceLocator.Get<MapGeneratorSystem>().GetWallDoorPrefab, _storedCellPosition.FlattenToGround(), Quaternion.identity);
             _tempWallDoor = _tempObject.GetComponent<WallDoor>();
             _autoDoor = _tempObject.GetComponentInChildren<AutoDoor>();
             _autoDoor.Locked = true;
@@ -60,7 +61,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
 
         public bool OnValidate(ToolHelper TH)
         {
-            if (InputSystem.Instance.HasMouseMoveToNewCell) return false;
+            if (ServiceLocator.Get<InputSystem>().HasMouseMoveToNewCell) return false;
 
             Vector3 position = GetPlacementPosition(_closestAssignmentData.AssignedWall.transform.position, isWallOnX);
             
@@ -121,8 +122,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
         {
             Vector3 position = GetPlacementPosition(_closestAssignmentData.AssignedWall.transform.position, isWallOnX);
             
-            var newWallDoorObject = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallDoorPrefab, position, _wallRotation, false);
-            newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            var newWallDoorObject = ServiceLocator.Get<MapGeneratorSystem>().CreateObject(ServiceLocator.Get<MapGeneratorSystem>().GetWallDoorPrefab, position, _wallRotation, false);
+            newWallDoorObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
 
             int wallIndex = (int)Mathf.Max(position.x, position.z) + 1;
             TH.DiscoData.MapData.ChangeDoorPosition(wallIndex, isWallOnX);
@@ -133,7 +134,7 @@ namespace DiscoSystem.Building_System.Controller.Tools
             
             var found = GameBundle.Instance.FindAItemByID(_closestAssignmentData.AssignedMaterialID) as MaterialItemSo;
             if (found == null)
-                _closestAssignmentData.AssignNewID(InitConfig.Instance.GetDefaultWallMaterial);
+                _closestAssignmentData.AssignNewID(ServiceLocator.Get<InitConfig>().GetDefaultWallMaterial);
             else
                 _closestAssignmentData.AssignNewID(found);
 
@@ -156,8 +157,8 @@ namespace DiscoSystem.Building_System.Controller.Tools
             if (isFinished) return;
             
             Vector3 position = GetPlacementPosition(_storedPosition, _storedIsWallOnX);
-            var newWallDoorObject = MapGeneratorSystem.Instance.CreateObject(MapGeneratorSystem.Instance.GetWallDoorPrefab, position, _storedRotation, false);
-            newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            var newWallDoorObject = ServiceLocator.Get<MapGeneratorSystem>().CreateObject(ServiceLocator.Get<MapGeneratorSystem>().GetWallDoorPrefab, position, _storedRotation, false);
+            newWallDoorObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
 
             // var data = BD.DiscoData.MapData.GetWallDataByCellPos(_storeedCellPosition);
             TH.DiscoData.MapData.RemoveWallData(_storedCellPosition);

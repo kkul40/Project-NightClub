@@ -1,4 +1,5 @@
-﻿using DiscoSystem.Character.Bartender.Command;
+﻿using _Initializer;
+using DiscoSystem.Character.Bartender.Command;
 using Prop_Behaviours.Bar;
 using ScriptableObjects;
 using UI.GamePages;
@@ -68,7 +69,7 @@ namespace PropBehaviours
         
         private DrinkTable CreateDrinkTable(DrinkSO drinkData)
         {
-            var obj = Instantiate(BarMediator.Instance.DrinkTablePrefab, counterPlacePosition);
+            var obj = Instantiate(ServiceLocator.Get<BarMediator>().DrinkTablePrefab, counterPlacePosition);
             obj.transform.position = counterPlacePosition.position;
             var drinkTable = obj.GetComponent<DrinkTable>();
             drinkTable.SetUpTable(drinkData, this);
@@ -86,11 +87,11 @@ namespace PropBehaviours
         {
             if (HasBarCleaned)
             {
-                UIPageManager.Instance.ShowActionSelectionPage(this);
+                ServiceLocator.Get<UIPageManager>().ShowActionSelectionPage(this);
             }
             else if(_drinkTable.IsOutOfDrinks)
             {
-                BarMediator.Instance.AddCommand(this, new CleanDrinkTableCommand());
+                ServiceLocator.Get<BarMediator>().AddCommand(this, new CleanDrinkTableCommand());
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Initializer;
 using Data;
 using Data.New;
 using DiscoSystem;
@@ -14,7 +15,7 @@ using UnityEngine;
 
 namespace UI.GamePages
 {
-    public class UIPageManager : Singleton<UIPageManager>
+    public class UIPageManager : MonoBehaviour
     {
         [SerializeField] private UISettingsPage _settingsPage;
         private HashSet<BaseView> _uiPageBases = new HashSet<BaseView>();
@@ -43,13 +44,14 @@ namespace UI.GamePages
 
             CloseAllPages();
             
+            ServiceLocator.Register(this);
             GameEvent.Subscribe<Event_SelectionReset>( handle => CloseAllPages(PageType.MiniPage));
             GameEvent.Trigger(new Event_ResetCursorSelection());
         }
 
         private void Update()
         {
-            if (InputSystem.Instance.GetEscape(InputType.WasPressedThisFrame))
+            if (ServiceLocator.Get<InputSystem>().GetEscape(InputType.WasPressedThisFrame))
             {
                 if (!IsAnyUIToggled())
                 {

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using _Initializer;
+using UnityEngine;
 using UnityEngine.Audio;
 
 namespace DiscoSystem.MusicPlayer
 {
-    public class MusicPlayer : Singleton<MusicPlayer>
+    public class MusicPlayer : MonoBehaviour
     {
         private AudioSource _audioSource;
 
@@ -16,6 +17,7 @@ namespace DiscoSystem.MusicPlayer
         {
             _audioSource = GetComponent<AudioSource>();
             _bassDetector = new BassDetector(_audioSource);
+            ServiceLocator.Register(this);
         }
 
         private void Update()

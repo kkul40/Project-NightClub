@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using _Initializer;
 using Data;
 using Disco_Building;
 using Disco_ScriptableObject;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace DiscoSystem
 {
-    public class MapGeneratorSystem : Singleton<MapGeneratorSystem>, IAsyncInitializable
+    public class MapGeneratorSystem : MonoBehaviour
     {
         [SerializeField] private GameObject floorTilePrefab;
         [SerializeField] private GameObject wallPrefab;
@@ -29,20 +30,21 @@ namespace DiscoSystem
 
         public IEnumerator InitializeAsync()
         {
+            ServiceLocator.Register(this);
             GameEvent.Subscribe<Event_ExpendMapSize>(handle => ExpendXY(handle.X, handle.Y));
 
             var delay = 0.05f;
             
             // SetUP Shadow Wall
             sCeiling = Instantiate(shadowCeilingPrefab).transform;
-            sCeiling.SetParent(SceneGameObjectHandler.Instance.transform);
+            sCeiling.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().transform);
             sCeiling.position = new Vector3(-0.05f, 3.005f, -0.05f);
 
             sWall_X = Instantiate(shadowWall_X_Prefab).transform;
-            sWall_X.SetParent(SceneGameObjectHandler.Instance.transform);
+            sWall_X.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().transform);
             
             sWall_Y = Instantiate(shadowWall_Y_Prefab).transform;
-            sWall_Y.SetParent(SceneGameObjectHandler.Instance.transform);
+            sWall_Y.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().transform);
 
             StartCoroutine(SetUpFloor(delay));
             yield return StartCoroutine(SetUpWall(delay));
@@ -108,7 +110,7 @@ namespace DiscoSystem
 
                         LoadAndAssignWallMaterial(new Vector3Int(_mapData.WallDoorIndex, 0, 0), newWallDoorObject);
                         
-                        newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+                        newWallDoorObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
                     }
                     else
                     {
@@ -128,7 +130,7 @@ namespace DiscoSystem
 
                         LoadAndAssignWallMaterial(new Vector3Int(0, 0, _mapData.WallDoorIndex), newWallDoorObject);
 
-                        newWallDoorObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+                        newWallDoorObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
                     }
                     else
                     {
@@ -193,7 +195,7 @@ namespace DiscoSystem
         {
             var pos2 = new Vector3(0, 0, y - 0.5f);
             var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Left.rotation, true);
-            newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            newWallObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(0, 0, y), newWallObject);
 
             Vector3 scale = sCeiling.localScale;
@@ -210,7 +212,7 @@ namespace DiscoSystem
         {
             var pos2 = new Vector3(x - 0.5f, 0, 0);
             var newWallObject = CreateObject(wallPrefab, pos2, RotationData.Down.rotation, true);
-            newWallObject.transform.SetParent(SceneGameObjectHandler.Instance.GetWallHolder);
+            newWallObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetWallHolder);
             LoadAndAssignWallMaterial(new Vector3Int(x, 0, 0), newWallObject);
 
             Vector3 scale = sCeiling.localScale;
@@ -228,7 +230,7 @@ namespace DiscoSystem
             var offset = new Vector3(0.5f, 0, 0.5f);
             var pos = new Vector3Int(x, 0, y);
             var newObject = CreateObject(floorTilePrefab, pos + offset, Quaternion.identity, true);
-            newObject.transform.SetParent(SceneGameObjectHandler.Instance.GetFloorTileHolder);
+            newObject.transform.SetParent(ServiceLocator.Get<SceneGameObjectHandler>().GetFloorTileHolder);
 
             LoadAndAssignFloorTileMaterial(new Vector3Int(x, 0, y), newObject);
         }
@@ -247,7 +249,7 @@ namespace DiscoSystem
             var found = GameBundle.Instance.FindAItemByID(data.assignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
-                data.AssignNewID(InitConfig.Instance.GetDefaultTileMaterial);
+                data.AssignNewID(ServiceLocator.Get<InitConfig>().GetDefaultTileMaterial);
                 return;
             }
             data.AssignNewID(found);
@@ -260,7 +262,7 @@ namespace DiscoSystem
             var found = GameBundle.Instance.FindAItemByID(data.AssignedMaterialID) as MaterialItemSo;
             if (found == null)
             {
-                data.AssignNewID(InitConfig.Instance.GetDefaultWallMaterial);
+                data.AssignNewID(ServiceLocator.Get<InitConfig>().GetDefaultWallMaterial);
                 return;
             }
             data.AssignNewID(GameBundle.Instance.FindAItemByID(data.AssignedMaterialID) as MaterialItemSo);

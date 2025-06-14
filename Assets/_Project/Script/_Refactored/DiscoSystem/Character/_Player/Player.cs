@@ -1,3 +1,4 @@
+using _Initializer;
 using CharacterCustomization;
 using Data;
 using Data.New;
@@ -30,12 +31,12 @@ namespace DiscoSystem.Character._Player
         {
             if (_agent == null) return;
             
-            if (InputSystem.Instance.GetRightClickOnWorld(InputType.WasPressedThisFrame) && !UIPageManager.Instance.IsAnyUIToggled())
+            if (ServiceLocator.Get<InputSystem>().GetRightClickOnWorld(InputType.WasPressedThisFrame) && !ServiceLocator.Get<UIPageManager>().IsAnyUIToggled())
             {
                 // Original
                 // _pathFinder.GoToDestination(InputSystem.Instance.MousePosition, SetIdleAnimation);
                 // _animationController?.PlayAnimation(eAnimationType.NPC_Walk);
-                _agent.SetDestination(InputSystem.Instance.MousePosition);
+                _agent.SetDestination(ServiceLocator.Get<InputSystem>().MousePosition);
             }
             
             _agent.Update(Time.deltaTime);
@@ -59,8 +60,8 @@ namespace DiscoSystem.Character._Player
             _customizeLoader.Init(gameData);
             
             var animation = _customizeLoader.gender == eGenderType.Male
-                ? InitConfig.Instance.GetDefaultBoyNpcAnimation
-                : InitConfig.Instance.GetDefaultGirlNpcAnimation;
+                ? ServiceLocator.Get<InitConfig>().GetDefaultBoyNpcAnimation
+                : ServiceLocator.Get<InitConfig>().GetDefaultGirlNpcAnimation;
             
             _animationController = new NPCAnimationControl(_customizeLoader.GetAnimator, _customizeLoader.GetAnimancer, animation, _customizeLoader.GetArmature);
             _animationController.PlayAnimation(eAnimationType.Bartender_Walk);
