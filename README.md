@@ -12,3 +12,7 @@ Controls
     Undo Recent Placements: Ctrl-Z
     Place Objects: Left Click
     Cancel: ESC, Right Click
+
+The Project is not copmleted. Updated Path Finder is not reliable. The game is lacking game loop.
+
+I simply made the repository public to show it on my portfolio. I decided not to develop the game anymore since it would take me too much time to complete.
