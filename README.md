@@ -13,6 +13,8 @@ Controls
     Place Objects: Left Click
     Cancel: ESC, Right Click
 
-The Project is not copmleted. Updated Path Finder is not reliable. The game is lacking game loop.
+The Project is not completed. Updated Path Finder is not reliable (In Dev-2 branch). The game is lacking game loop.
 
 I simply made the repository public to show it on my portfolio. I decided not to develop the game anymore since it would take me too much time to complete.
+
+For Developers who wants to learn some complex systems I think this is a good half baked project. Please check Dev-2 branch to see the latest updates.
