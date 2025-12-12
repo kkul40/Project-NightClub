@@ -2,7 +2,7 @@
 
 Create, customize, and manage your ultimate nightclub! Design the vibe, pick the music, and keep the party alive. From hiring staff to crafting cocktails, every choice shapes your nightlife empire.
 
-Controls
+    *** Controls ***
     Camera Movement: WASD
     Camera Zoom In-Out: Scrool Wheel
     Select Objects: Left Click
