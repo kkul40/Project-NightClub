@@ -13,6 +13,8 @@ Create, customize, and manage your ultimate nightclub! Design the vibe, pick the
     Place Objects: Left Click
     Cancel: ESC, Right Click
 
+Check out the Project on Itch: https://kugon.itch.io/night-club
+
 The Project is not completed. Updated Path Finder is not working properly in some cases (In Dev-2 branch). Some systems may or be broken. The game is lacking game loop.
 
 I simply made the repository public to show it on my portfolio. I decided not to develop the game anymore since it would take me too much time to complete.
